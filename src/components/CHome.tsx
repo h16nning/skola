@@ -1,5 +1,26 @@
-import React from "react";
+import { Center, Stack } from "@mantine/core";
+import CategoryCard from "./category/CategoryCard";
 
 export default function CHome() {
-    return <div>CHome</div>;
+    return (
+        <Center>
+            <Stack sx={{ width: "600px" }}>
+                <CategoryCard id="sdf" />
+                <CategoryCard id="sdf" />
+                <CategoryCard id="sdf" />
+                <CategoryCard id="sdf" />
+                <CategoryCard id="sdf" />
+                <CategoryCard id="sdf" />
+                <CategoryCard id="sdf" />
+                <CategoryCard id="sdf" />
+                <CategoryCard id="sdf" />
+                <CategoryCard id="sdf" />
+                <CategoryCard id="sdf" />
+                <CategoryCard id="sdf" />
+                <CategoryCard id="sdf" />
+                <CategoryCard id="sdf" />
+                <CategoryCard id="sdf" />
+            </Stack>
+        </Center>
+    );
 }

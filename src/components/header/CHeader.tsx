@@ -1,44 +1,32 @@
-import {
-    useMantineTheme,
-    Burger,
-    Header,
-    MediaQuery,
-    Text,
-    ActionIcon,
-} from "@mantine/core";
-import { IconSettings } from "@tabler/icons";
+import { Header, Text, ActionIcon, Flex } from "@mantine/core";
+import { Icon3dCubeSphere, IconSettings } from "@tabler/icons";
 
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function CHeader(props: {
-    showSidebar: boolean;
-    setShowSidebar: Function;
-}) {
-    const theme = useMantineTheme();
+export default function CHeader() {
+    const navigate = useNavigate();
+
     return (
         <Header height={{ base: 50, md: 70 }} p="md">
-            <div
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    height: "100%",
-                }}
+            <Flex
+                justify="space-between"
+                align="center"
+                direction="row"
+                wrap="nowrap"
+                gap="md"
+                style={{ height: "100%" }}
             >
-                <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-                    <Burger
-                        opened={props.showSidebar}
-                        onClick={() => props.setShowSidebar((o: boolean) => !o)}
-                        size="sm"
-                        color={theme.colors.gray[6]}
-                        mr="xl"
-                    />
-                </MediaQuery>
+                <Text fw={700} onClick={() => navigate("/")}>
+                    Application header
+                </Text>
 
-                <Text>Application header</Text>
-                <ActionIcon size="lg" variant="default">
-                    <IconSettings size={20} />
+                <ActionIcon onClick={() => navigate("/settings")}>
+                    <IconSettings />
                 </ActionIcon>
-            </div>
+                <ActionIcon onClick={() => navigate("/settings")}>
+                    <Icon3dCubeSphere />
+                </ActionIcon>
+            </Flex>
         </Header>
     );
 }

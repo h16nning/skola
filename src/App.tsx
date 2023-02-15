@@ -1,57 +1,45 @@
-import { useState } from "react";
 import {
     AppShell,
-    Navbar,
-    Text,
     useMantineTheme,
     MantineProvider,
+    ColorScheme,
+    ColorSchemeProvider, Button, Input,
 } from "@mantine/core";
-import { BrowserRouter, Route } from "react-router-dom";
 
 import { getBaseTheme } from "./style/StyleProvider";
 import CHeader from "./components/header/CHeader";
+import CMain from "./components/CMain";
+import { useState } from "react";
 
 export default function App() {
     const theme = useMantineTheme();
-    const [showSidebar, setShowSidebar] = useState(false);
+    const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
+    const toggleColorScheme = (value?: ColorScheme) =>
+        setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
     return (
-        <MantineProvider
-            theme={getBaseTheme()}
-            withGlobalStyles
-            withNormalizeCSS
+        <ColorSchemeProvider
+            colorScheme={colorScheme}
+            toggleColorScheme={toggleColorScheme}
         >
-            <AppShell
-                styles={{
-                    main: {
-                        background:
-                            theme.colorScheme === "dark"
-                                ? theme.colors.dark[8]
-                                : theme.colors.gray[0],
-                    },
-                }}
-                navbarOffsetBreakpoint="sm"
-                navbar={
-                    <Navbar
-                        p="md"
-                        hiddenBreakpoint="sm"
-                        hidden={!showSidebar}
-                        width={{ sm: 200, lg: 300 }}
-                    >
-                        <Text>Application navbar</Text>
-                    </Navbar>
-                }
-                header={
-                    <CHeader
-                        showSidebar={showSidebar}
-                        setShowSidebar={setShowSidebar}
-                    />
-                }
+            <MantineProvider
+                theme={getBaseTheme(theme, colorScheme)}
+                withGlobalStyles
+                withNormalizeCSS
             >
-                <BrowserRouter>
-                    <Route path="/" element={<p>Hello</p>} />
-                </BrowserRouter>
-            </AppShell>
-            );
-        </MantineProvider>
+                <AppShell
+                    styles={{
+                        main: {
+                            background:
+                                colorScheme === "light"
+                                    ? theme.colors.gray[0]
+                                    : theme.colors.dark[9],
+                        },
+                    }}
+                    header={<CHeader />}
+                >
+                    <CMain />
+                </AppShell>
+            </MantineProvider>
+        </ColorSchemeProvider>
     );
 }
