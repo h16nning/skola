@@ -6,7 +6,7 @@ import {
     useMantineTheme,
     MantineProvider,
 } from "@mantine/core";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 
 import { getBaseTheme } from "./style/StyleProvider";
 import CHeader from "./components/header/CHeader";
@@ -47,7 +47,9 @@ export default function App() {
                     />
                 }
             >
-                <BrowserRouter></BrowserRouter>
+                <BrowserRouter>
+                    <Route path="/" element={<p>Hello</p>} />
+                </BrowserRouter>
             </AppShell>
             );
         </MantineProvider>
