@@ -1,4 +1,4 @@
-import { Header, Text, ActionIcon, Flex } from "@mantine/core";
+import {Header, Text, ActionIcon, Flex, UnstyledButton} from "@mantine/core";
 import { Icon3dCubeSphere, IconSettings } from "@tabler/icons";
 
 import { useNavigate } from "react-router-dom";
@@ -16,15 +16,12 @@ export default function CHeader() {
                 gap="md"
                 style={{ height: "100%" }}
             >
-                <Text fw={700} onClick={() => navigate("/")}>
-                    Application header
-                </Text>
+                <UnstyledButton fw={700} onClick={() => navigate("/")}>
+                    Super Anki
+                </UnstyledButton>
 
                 <ActionIcon onClick={() => navigate("/settings")}>
                     <IconSettings />
-                </ActionIcon>
-                <ActionIcon onClick={() => navigate("/settings")}>
-                    <Icon3dCubeSphere />
                 </ActionIcon>
             </Flex>
         </Header>

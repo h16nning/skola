@@ -1,20 +1,20 @@
 import { Stack } from "@mantine/core";
 import React from "react";
 import CColorSchemeToggle from "./CColorSchemeToggle";
-import CSection from "./CSection";
+import Section from "./Section";
 
-export default function CSettings() {
+export default function SettingsView() {
     return (
         <Stack spacing="xl">
-            <CSection title="Appearance">
+            <Section title="Appearance">
                 <CColorSchemeToggle />
-            </CSection>
-            <CSection title="Account">
+            </Section>
+            <Section title="Account">
                 <>Change your accont settings</>
-            </CSection>
-            <CSection title="About">
+            </Section>
+            <Section title="About">
                 <>This program was made by h16nnning</>
-            </CSection>
+            </Section>
         </Stack>
     );
 }
