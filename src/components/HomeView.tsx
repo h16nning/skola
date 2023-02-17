@@ -1,9 +1,8 @@
-import { Button, Card, Center, Group, Stack, Table } from "@mantine/core";
-import CategoryPreview from "./category/CategoryPreview";
+import { Button, Center, Group, Stack } from "@mantine/core";
 import { IconPlus } from "@tabler/icons";
 import { useState } from "react";
 import NewCategoryModal from "./category/NewCategoryModal";
-import newCategoryModal from "./category/NewCategoryModal";
+import CategoryTable from "./category/CategoryTable";
 
 export default function HomeView() {
   const [newCategoryModalOpened, setNewCategoryModalOpened] = useState(false);
@@ -21,21 +20,15 @@ export default function HomeView() {
               New Category
             </Button>
           </Group>
-          <Stack spacing="xs" sx={{ width: "600px" }}>
-            <CategoryPreview id="sdfsfd" i={0} />
-            <CategoryPreview id="sdfsfd" i={1} />
-            <CategoryPreview id="sdfsfd" i={2} />
-            <CategoryPreview id="sdfsfd" i={3} />
-            <CategoryPreview id="sdfsfd" i={4} />
-          </Stack>
+          <CategoryTable
+            categoryIDList={["slkdfj", "ösdlkfj", "söldkfj", "söldkfj"]}
+          />
         </Stack>
       </Center>
       <NewCategoryModal
         opened={newCategoryModalOpened}
         setOpened={setNewCategoryModalOpened}
-      >
-        Test
-      </NewCategoryModal>
+      />
     </>
   );
 }

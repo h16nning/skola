@@ -1,13 +1,4 @@
-import {
-  ActionIconStylesParams,
-  BadgeStylesParams,
-  ButtonStylesParams,
-  ColorScheme,
-  MantineTheme,
-  MantineThemeOverride,
-  TableStylesParams,
-  TextStylesParams,
-} from "@mantine/core";
+import { ColorScheme, MantineTheme, MantineThemeOverride } from "@mantine/core";
 import { getButtonStyles } from "./ButtonStyleProvider";
 
 export function getBaseTheme(
@@ -19,13 +10,6 @@ export function getBaseTheme(
     headings: headingStyle,
     colorScheme: colorScheme,
     fontFamily: "Open Sans, sans-serif",
-    fontSizes: {
-      xs: 9,
-      sm: 12,
-      md: 14,
-      lg: 16,
-      xl: 20,
-    },
     colors: {
       seaweed: [
         "#dffbff",
@@ -51,17 +35,17 @@ export function getBaseTheme(
         "#420910",
         "#1d0003",
       ],
-      gull: [
+      seagull: [
         "#e6f2ff",
-        "#c5d6ed",
-        "#a3bbdc",
-        "#80a0cb",
-        "#5e84bb",
-        "#446ba1",
-        "#34537f",
-        "#243b5c",
-        "#12243a",
-        "#010c1a",
+        "#CFDCED",
+        "#B8C7DB",
+        "#A1B2C9",
+        "#8A9DB7",
+        "#7388A6",
+        "#5C7394",
+        "#455E82",
+        "#2E4970",
+        "#17345F",
       ],
     },
 
@@ -71,22 +55,14 @@ export function getBaseTheme(
       from: theme.colors.blue[5],
       to: theme.colors.blue[9],
     },
-    globalStyles: (theme) => ({
-      ".icon-tabler": {
-        strokeWidth: "1.2",
-        width: "20px",
-      },
-      "*": {
-        transition: "all 0.1s",
-      },
-    }),
+    globalStyles: globalStyle,
     components: {
       ActionIcon: {
         defaultProps: {
           size: "lg",
           variant: "default",
         },
-        styles: (theme, params: ActionIconStylesParams) => ({
+        styles: (theme) => ({
           root: {
             color:
               theme.colorScheme === "light"
@@ -96,14 +72,14 @@ export function getBaseTheme(
         }),
       },
       Badge: {
-        styles: (theme, params: BadgeStylesParams) => ({
+        styles: () => ({
           root: {
             textTransform: "none",
           },
         }),
       },
       Text: {
-        styles: (theme, params: TextStylesParams) => ({
+        styles: (theme) => ({
           root: {
             color:
               theme.colorScheme === "light"
@@ -122,11 +98,42 @@ export function getBaseTheme(
           closeOnEscape: true,
           radius: "md",
         },
-        styles: (theme, params: TextStylesParams) => ({
+        styles: (theme) => ({
           title: {
             fontFamily: theme.headings.fontFamily,
             fontSize: theme.headings.sizes.h3.fontSize,
             fontWeight: "bold",
+          },
+        }),
+      },
+      Menu: {
+        defaultProps: {
+          position: "bottom-end",
+        },
+        styles: (theme) => ({
+          dropdown: {
+            boxShadow: theme.shadows.xl,
+          },
+        }),
+      },
+      RichTextEditor: {
+        styles: (theme) => ({
+          root: {
+            border: "none",
+          },
+          toolbar: {
+            tabIndex: "-1",
+            borderBottom: "none",
+            paddingLeft: 0,
+            backgroundColor: "transparent",
+          },
+          content: {
+            border: "solid 1px",
+            borderColor:
+              theme.colorScheme === "light"
+                ? theme.colors.gray[4]
+                : theme.colors.dark[4],
+            backgroundColor: "transparent",
           },
         }),
       },
@@ -148,4 +155,14 @@ const headingStyle = {
   },
 };
 
-const tableStyle = {};
+function globalStyle() {
+  return {
+    ".icon-tabler": {
+      strokeWidth: "1.5",
+      width: "20px",
+    },
+    "*": {
+      transition: "all 0.1s",
+    },
+  };
+}

@@ -7,21 +7,21 @@ export function getButtonStyles(theme: MantineTheme) {
 }
 
 function getStyles(theme: MantineTheme, params: ButtonStylesParams) {
-  if (params.variant === "filled") {
+  /*if (params.variant === "filled") {
     return getFilledButtonStyles(theme, params);
   } else if (params.variant === "default") {
     return getDefaultButtonStyles(theme, params);
-  }
+  }*/
 
   return {
     root: {
-      backgroundColor: "transparent",
+      /*backgroundColor: "transparent",
       "&:hover": {
         backgroundColor:
           theme.colorScheme === "dark"
             ? theme.colors[params.color || theme.primaryColor][7]
             : undefined,
-      },
+      },*/
       "&:active": { transform: "scale(0.96)" },
     },
   };

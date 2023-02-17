@@ -1,6 +1,6 @@
 import React from "react";
-import { ActionIcon, Group, UnstyledButton } from "@mantine/core";
-import { IconArrowRight, IconChevronRight } from "@tabler/icons";
+import { Group, UnstyledButton } from "@mantine/core";
+import { IconChevronRight } from "@tabler/icons";
 
 interface TableRowProps {
   children: JSX.Element;
@@ -17,24 +17,21 @@ function TableRowButton({ children, i, onClick }: TableRowProps) {
         }
       }}
       sx={(theme) => ({
+        fontSize: theme.fontSizes.sm,
+        fontWeight: 600,
         backgroundColor:
           i % 2 === 0
             ? theme.colorScheme === "light"
-              ? theme.white
-              : theme.colors.dark[6]
+              ? theme.colors.gray[1]
+              : theme.colors.dark[7]
             : "transparent",
         padding: theme.spacing.sm,
         borderRadius: theme.radius.md,
-        boxShadow: i % 2 === 0 ? theme.shadows.sm : "none",
         "&:hover": {
           backgroundColor:
-            i % 2 === 0
-              ? theme.colorScheme === "light"
-                ? theme.colors.gray[3]
-                : theme.colors.dark[4]
-              : theme.colorScheme === "light"
-              ? theme.colors.gray[3]
-              : theme.colors.dark[4],
+            theme.colorScheme === "light"
+              ? theme.colors.gray[2]
+              : theme.colors.dark[6],
           boxShadow: "none",
         },
 

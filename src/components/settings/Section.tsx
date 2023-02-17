@@ -1,15 +1,15 @@
-import { Space, Stack, Title } from "@mantine/core";
-import React from "react";
+import { Stack, Title } from "@mantine/core";
+import React, { ReactNode } from "react";
 
 type SectionProps = {
-    title: String;
-    children: JSX.Element;
+  title: String | ReactNode;
+  children: ReactNode;
 };
 export default function Section({ title, children }: SectionProps) {
-    return (
-        <Stack spacing="xs">
-            <Title order={4}>{title}</Title>
-            {children}
-        </Stack>
-    );
+  return (
+    <Stack spacing="md">
+      <Title order={4}>{title}</Title>
+      {children}
+    </Stack>
+  );
 }

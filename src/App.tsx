@@ -4,12 +4,10 @@ import {
   MantineProvider,
   ColorScheme,
   ColorSchemeProvider,
-  Button,
-  Input,
 } from "@mantine/core";
 
 import { getBaseTheme } from "./style/StyleProvider";
-import CHeader from "./components/header/CHeader";
+import TopBar from "./components/header/TopBar";
 import Main from "./components/Main";
 import { useState } from "react";
 
@@ -31,13 +29,10 @@ export default function App() {
         <AppShell
           styles={{
             main: {
-              background:
-                colorScheme === "light"
-                  ? theme.colors.gray[0]
-                  : theme.colors.dark[9],
+              background: colorScheme === "light" ? theme.white : theme.black,
             },
           }}
-          header={<CHeader />}
+          header={<TopBar />}
         >
           <Main />
         </AppShell>
