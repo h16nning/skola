@@ -12,12 +12,13 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import SubdeckSection from "./SubdeckSection";
+import SubDeckSection from "./SubDeckSection";
 import { IconBolt, IconPlus } from "@tabler/icons";
 import DeckMenu from "./DeckMenu";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Deck, getDeck } from "../../logic/deck";
+import { Deck, getDeck, useSuperDecks } from "../../logic/deck";
 import DeckOptionsModal from "./DeckOptionsModal";
+import LazySkeleton from "../../logic/LazySkeleton";
 
 function useDeckFromUrl(): [Deck | undefined, boolean] {
   const [deck, setDeck] = useState<Deck | undefined>();
@@ -47,6 +48,7 @@ function DeckView() {
   const [deckOptionsOpened, setDeckOptionsOpened] = useState(false);
 
   const [deck, failed] = useDeckFromUrl();
+  const [superDecks] = useSuperDecks(deck);
 
   if (failed) {
     return <FailedDeckView />;
@@ -56,21 +58,35 @@ function DeckView() {
         <Center>
           <Stack spacing="lg" sx={() => ({ width: "600px" })}>
             <Stack spacing={0}>
-              <Breadcrumbs>
-                {[
-                  <Anchor key={1} href="/">
+              {superDecks ? (
+                <Breadcrumbs>
+                  <Anchor
+                    key={0}
+                    component="button"
+                    type="button"
+                    onClick={() => navigate("/")}
+                  >
                     Home
-                  </Anchor>,
-                  <Anchor key={2} href="/">
-                    Test
-                  </Anchor>,
-                ]}
-              </Breadcrumbs>
+                  </Anchor>
+                  {superDecks.map((s) => (
+                    <Anchor
+                      key={s.id}
+                      component="button"
+                      type="button"
+                      onClick={() => navigate("/deck/" + s.id)}
+                    >
+                      {s.name}
+                    </Anchor>
+                  ))}
+                </Breadcrumbs>
+              ) : (
+                <LazySkeleton w="300px" h="16px" />
+              )}
               <Group position="apart">
                 {deck ? (
                   <Title order={2}>{deck.name}</Title>
                 ) : (
-                  <Skeleton width="200px" height="30px" />
+                  <LazySkeleton w="200px" h="30px" />
                 )}
                 <Group spacing="xs">
                   <Button
@@ -112,7 +128,7 @@ function DeckView() {
             </Stack>
 
             <Space h="xl" />
-            <SubdeckSection deck={deck} />
+            <SubDeckSection deck={deck} />
             {deck ? (
               <DeckOptionsModal
                 deck={deck}

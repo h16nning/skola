@@ -175,7 +175,7 @@ function globalStyle() {
       width: "20px",
     },
     "*": {
-      transition: "all 0.1s",
+      //transition: "all 0.1s",
     },
   };
 }

@@ -28,6 +28,7 @@ function DeckMenu({ deck, setDeckOptionsOpened }: DeckMenuProps) {
     }
     try {
       await deleteDeck(deck.id);
+      setDeleteModalOpened(false);
       navigate(-1);
     } catch (error) {
       console.error("Failed to delete deck: " + error);
