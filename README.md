@@ -6,7 +6,7 @@ A little (very very very early) project to create a web based spaced repetition 
 - open source
 - user-friendly, intuitive design (maybe customizable using css later down the road)
 - storing data locally (with IndexedDB) but also syncing via a server
-- PWAs
+- PWA?
 
 #### Technologies:
 - React
