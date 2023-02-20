@@ -1,11 +1,15 @@
 import { Button, Center, Group, Stack } from "@mantine/core";
 import { IconPlus } from "@tabler/icons";
 import { useState } from "react";
-import NewCategoryModal from "./category/NewCategoryModal";
-import CategoryTable from "./category/CategoryTable";
+import NewDeckModal from "./deck/NewDeckModal";
+import DeckTable from "./deck/DeckTable";
+import { useLiveQuery } from "dexie-react-hooks";
+import { db } from "../logic/db";
+import { useDecks } from "../logic/deck";
 
 export default function HomeView() {
-  const [newCategoryModalOpened, setNewCategoryModalOpened] = useState(false);
+  const [newDeckModalOpened, setNewDeckModalOpened] = useState(false);
+  const decks = useDecks();
 
   return (
     <>
@@ -13,21 +17,19 @@ export default function HomeView() {
         <Stack spacing="md" sx={{ width: "600px" }}>
           <Group position="right">
             <Button
-              onClick={() => setNewCategoryModalOpened(true)}
+              onClick={() => setNewDeckModalOpened(true)}
               variant="default"
               leftIcon={<IconPlus />}
             >
-              New Category
+              New Deck
             </Button>
           </Group>
-          <CategoryTable
-            categoryIDList={["slkdfj", "ösdlkfj", "söldkfj", "söldkfj"]}
-          />
+          <DeckTable deckList={decks ? decks : []} />
         </Stack>
       </Center>
-      <NewCategoryModal
-        opened={newCategoryModalOpened}
-        setOpened={setNewCategoryModalOpened}
+      <NewDeckModal
+        opened={newDeckModalOpened}
+        setOpened={setNewDeckModalOpened}
       />
     </>
   );

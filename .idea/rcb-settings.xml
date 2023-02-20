@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ReactBuddyPluginProjectSettings">
+    <option name="devServerConfigs">
+      <DevServerState>
+        <option name="packageJsonPath" value="$PROJECT_DIR$/package.json" />
+        <option name="scriptName" value="start" />
+      </DevServerState>
+    </option>
+  </component>
+</project>

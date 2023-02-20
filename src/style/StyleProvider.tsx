@@ -49,7 +49,7 @@ export function getBaseTheme(
       ],
     },
 
-    primaryColor: "blue",
+    primaryColor: "seaweed",
     defaultGradient: {
       deg: 150,
       from: theme.colors.blue[5],
@@ -117,23 +117,36 @@ export function getBaseTheme(
         }),
       },
       RichTextEditor: {
+        defaultProps: {
+          labels: "hello",
+        },
         styles: (theme) => ({
           root: {
             border: "none",
           },
           toolbar: {
-            tabIndex: "-1",
+            tabindex: "-1",
             borderBottom: "none",
             paddingLeft: 0,
             backgroundColor: "transparent",
           },
           content: {
-            border: "solid 1px",
-            borderColor:
-              theme.colorScheme === "light"
-                ? theme.colors.gray[4]
-                : theme.colors.dark[4],
             backgroundColor: "transparent",
+            borderColor: "transparent",
+            ".ProseMirror": {
+              borderRadius: theme.radius.sm,
+              border: "solid 1px",
+              borderColor:
+                theme.colorScheme === "light"
+                  ? theme.colors.gray[4]
+                  : theme.colors.dark[4],
+            },
+            ".ProseMirror-focused": {
+              borderColor:
+                theme.colorScheme === "light"
+                  ? theme.colors.seaweed[6]
+                  : theme.colors.seaweed[8],
+            },
           },
         }),
       },

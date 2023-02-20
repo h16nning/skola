@@ -1,31 +1,27 @@
 import { Alert, Badge, Group, Text } from "@mantine/core";
-import React, { useEffect, useState } from "react";
-import { Category, getCategory } from "../../logic/category";
+import React from "react";
+import { Deck } from "../../logic/deck";
 import { useNavigate } from "react-router-dom";
 import TableRowButton from "../custom/TableRowButton";
 
-type CategoryPreviewProps = {
-  id: String;
+type DeckPreviewProps = {
+  deck: Deck;
   i: number;
 };
 
-export default function CategoryPreview({ id, i }: CategoryPreviewProps) {
-  const [category, setCategory] = useState<Category>();
+export default function DeckPreview({ deck, i }: DeckPreviewProps) {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setCategory(getCategory(id));
-  }, [id]);
   return (
     <TableRowButton
       i={i}
       onClick={() => {
-        navigate("/category/" + id);
+        navigate("/deck/" + deck.id);
       }}
     >
-      {category ? (
+      {deck ? (
         <Group position="apart" w="100%" noWrap={true}>
-          <Text>{category.name}</Text>
+          <Text>{deck.name}</Text>
           <Group spacing="xs" noWrap={true}>
             <Badge variant="dot" color="red">
               3 fällig

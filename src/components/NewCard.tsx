@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Center, Group, Stack, Text } from "@mantine/core";
+import { Button, Center, Group, Space, Stack, Text } from "@mantine/core";
 import { IconPlus } from "@tabler/icons";
 import CardTextEditor from "./CardTextEditor";
 interface NewCardProps {}
@@ -8,6 +8,15 @@ function NewCard({}: NewCardProps) {
   return (
     <Center>
       <Stack sx={{ width: "600px" }}>
+        <Group>
+          <Stack spacing={0}>
+            <Text fz="sm" c="gray">
+              Adding Cards to
+            </Text>
+            <Text fw="600">Kategorie-Name</Text>
+          </Stack>
+        </Group>
+        <Space h="md" />
         <Stack spacing={0}>
           <Text fz="sm" fw={700}>
             Front Side
@@ -21,7 +30,7 @@ function NewCard({}: NewCardProps) {
           <CardTextEditor />
         </Stack>
         <Group position="right">
-          <Button leftIcon={<IconPlus />}>Karte hinzufügen</Button>
+          <Button leftIcon={<IconPlus />}>Add Card</Button>
         </Group>
       </Stack>
     </Center>
