@@ -4,14 +4,15 @@ import { db } from "./db";
 import { IndexableType } from "dexie";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useDebugValue, useEffect, useState } from "react";
-import { getDate } from "@mantine/dates/lib/components/TimeInputBase/get-date/get-date";
+import { useLocation } from "react-router-dom";
+import { CardType } from "./card";
 
 export interface Deck {
   id: string;
   name: string;
   subDecks: string[];
   superDecks?: string[];
-  cards: Array<Card>;
+  cards: Array<Card<CardType>>;
 }
 
 export async function newDeck(
@@ -59,6 +60,12 @@ export function useDecks() {
   return useLiveQuery(() => db.decks.toArray());
 }
 
+export function useTopLevelDecks() {
+  return useLiveQuery(() =>
+    db.decks.filter((deck) => !deck.superDecks).sortBy("name")
+  );
+}
+
 export function useSubDecks(deck?: Deck): [Deck[] | undefined, boolean] {
   const [subDecks, setSubDecks] = useState<Deck[] | undefined>(undefined);
   const [failed, setFailed] = useState<boolean>(false);
@@ -72,7 +79,6 @@ export function useSubDecks(deck?: Deck): [Deck[] | undefined, boolean] {
   async function determineSubDecks() {
     if (deck) {
       try {
-        //await new Promise((resolve) => setTimeout(resolve, 5000));
         const sd = await getDecks(deck.subDecks);
         const includesUndefined = sd.includes(undefined);
         if (sd !== undefined && !includesUndefined) {
@@ -152,4 +158,35 @@ export async function deleteDeck(id: string, calledRecursively?: boolean) {
     }
   }
   await db.decks.delete(id);
+}
+
+export function useDeckFromUrl(): [Deck | undefined, boolean, Function] {
+  const [deck, setDeck] = useState<Deck | undefined>();
+  const [failed, setFailed] = useState<boolean>(false);
+  const [reFetch, setReFetch] = useState<boolean>(false);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const id = location.pathname.split("/")[2];
+    if (id) {
+      void tryFetchDeck(id);
+    } else {
+      setFailed(true);
+    }
+  }, [location, reFetch]);
+
+  async function tryFetchDeck(id: string) {
+    const d = await getDeck(id);
+    if (d === undefined) {
+      setFailed(true);
+    }
+    setDeck(d);
+  }
+
+  function reload() {
+    setReFetch(!reFetch);
+  }
+
+  return [deck, failed, reload];
 }

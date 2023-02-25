@@ -5,11 +5,11 @@ import NewDeckModal from "./deck/NewDeckModal";
 import DeckTable from "./deck/DeckTable";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "../logic/db";
-import { useDecks } from "../logic/deck";
+import { useDecks, useTopLevelDecks } from "../logic/deck";
 
 export default function HomeView() {
   const [newDeckModalOpened, setNewDeckModalOpened] = useState(false);
-  const decks = useDecks();
+  const decks = useTopLevelDecks();
 
   return (
     <>

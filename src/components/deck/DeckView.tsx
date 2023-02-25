@@ -1,74 +1,56 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
+  ActionIcon,
   Anchor,
   Badge,
   Breadcrumbs,
   Button,
   Center,
   Group,
-  Skeleton,
   Space,
   Stack,
   Text,
   Title,
 } from "@mantine/core";
 import SubDeckSection from "./SubDeckSection";
-import { IconBolt, IconPlus } from "@tabler/icons";
+import { IconBolt, IconChevronLeft, IconPlus } from "@tabler/icons";
 import DeckMenu from "./DeckMenu";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Deck, getDeck, useSuperDecks } from "../../logic/deck";
+import { useNavigate } from "react-router-dom";
+import { useDeckFromUrl, useSuperDecks } from "../../logic/deck";
 import DeckOptionsModal from "./DeckOptionsModal";
 import LazySkeleton from "../../logic/LazySkeleton";
-
-function useDeckFromUrl(): [Deck | undefined, boolean] {
-  const [deck, setDeck] = useState<Deck | undefined>();
-  const [failed, setFailed] = useState<boolean>(false);
-  const location = useLocation();
-  useEffect(() => {
-    const id = location.pathname.split("/")[2];
-    if (id) {
-      void tryFetchDeck(id);
-    } else {
-      setFailed(true);
-    }
-  }, [location]);
-  async function tryFetchDeck(id: string) {
-    const d = await getDeck(id);
-    if (d === undefined) {
-      setFailed(true);
-    }
-    setDeck(d);
-  }
-
-  return [deck, failed];
-}
+import MissingObject from "../MissingObject";
 
 function DeckView() {
   const navigate = useNavigate();
   const [deckOptionsOpened, setDeckOptionsOpened] = useState(false);
 
-  const [deck, failed] = useDeckFromUrl();
+  const [deck, failed, reload] = useDeckFromUrl();
   const [superDecks] = useSuperDecks(deck);
 
   if (failed) {
-    return <FailedDeckView />;
-  } else {
-    return (
-      <>
-        <Center>
-          <Stack spacing="lg" sx={() => ({ width: "600px" })}>
-            <Stack spacing={0}>
-              {superDecks ? (
+    return <MissingObject />;
+  }
+  return (
+    <>
+      <Center>
+        <Stack spacing="lg" sx={() => ({ width: "600px" })}>
+          <Group position="apart">
+            <Group spacing="xs" align="end">
+              <ActionIcon onClick={() => navigate(-1)}>
+                <IconChevronLeft />
+              </ActionIcon>
+              <Stack spacing={0}>
                 <Breadcrumbs>
                   <Anchor
                     key={0}
                     component="button"
                     type="button"
-                    onClick={() => navigate("/")}
+                    onClick={() => navigate("/home")}
                   >
                     Home
                   </Anchor>
-                  {superDecks.map((s) => (
+                  {superDecks?.map((s) => (
                     <Anchor
                       key={s.id}
                       component="button"
@@ -79,73 +61,61 @@ function DeckView() {
                     </Anchor>
                   ))}
                 </Breadcrumbs>
-              ) : (
-                <LazySkeleton w="300px" h="16px" />
-              )}
-              <Group position="apart">
-                {deck ? (
-                  <Title order={2}>{deck.name}</Title>
-                ) : (
-                  <LazySkeleton w="200px" h="30px" />
-                )}
-                <Group spacing="xs">
-                  <Button
-                    leftIcon={<IconBolt />}
-                    onClick={() => navigate("/learn")}
-                  >
-                    Learn
-                  </Button>
-                  <DeckMenu
-                    deck={deck}
-                    setDeckOptionsOpened={setDeckOptionsOpened}
-                  />
-                </Group>
-              </Group>
-            </Stack>
-
-            <Space h="xl" />
-            <Stack spacing={0}>
-              <Group position="apart">
-                <Group>
-                  <Text fz="sm" fw={600}>
-                    216 Karten
-                  </Text>
-                  <Badge variant="dot" color="red">
-                    16 due
-                  </Badge>
-                  <Badge variant="dot" color="blue">
-                    10 new
-                  </Badge>
-                </Group>
-                <Button
-                  leftIcon={<IconPlus />}
-                  variant="default"
-                  onClick={() => navigate("/new")}
-                >
-                  Add Cards
-                </Button>
-              </Group>
-            </Stack>
-
-            <Space h="xl" />
-            <SubDeckSection deck={deck} />
-            {deck ? (
-              <DeckOptionsModal
+                <Title order={2}>{deck ? deck.name : "Test"}</Title>
+              </Stack>
+            </Group>
+            <Group spacing="xs">
+              <Button
+                leftIcon={<IconBolt />}
+                onClick={() => navigate("/learn")}
+              >
+                Learn
+              </Button>
+              <DeckMenu
                 deck={deck}
-                opened={deckOptionsOpened}
-                setOpened={setDeckOptionsOpened}
+                setDeckOptionsOpened={setDeckOptionsOpened}
               />
-            ) : (
-              ""
-            )}
-          </Stack>
-        </Center>
-      </>
-    );
-  }
-}
+            </Group>
+          </Group>
 
-function FailedDeckView() {
-  return <Text>Sadly no deck exists here :(</Text>;
+          <Space h="xl" />
+          <Stack spacing={0}>
+            <Group position="apart">
+              <Group>
+                <Text fz="sm" fw={600}>
+                  216 Karten
+                </Text>
+                <Badge variant="dot" color="red">
+                  16 due
+                </Badge>
+                <Badge variant="dot" color="blue">
+                  10 new
+                </Badge>
+              </Group>
+              <Button
+                leftIcon={<IconPlus />}
+                variant="default"
+                onClick={() => navigate("/new/" + deck?.id)}
+              >
+                Add Cards
+              </Button>
+            </Group>
+          </Stack>
+
+          <Space h="xl" />
+          <SubDeckSection deck={deck} reloadDeck={reload} />
+          {deck ? (
+            <DeckOptionsModal
+              deck={deck}
+              opened={deckOptionsOpened}
+              setOpened={setDeckOptionsOpened}
+            />
+          ) : (
+            ""
+          )}
+        </Stack>
+      </Center>
+    </>
+  );
 }
 export default DeckView;

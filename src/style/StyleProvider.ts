@@ -1,5 +1,7 @@
 import { ColorScheme, MantineTheme, MantineThemeOverride } from "@mantine/core";
 import { getButtonStyles } from "./ButtonStyleProvider";
+import getRichTextEditorStyles from "./RichTextEditorStyleProvider";
+import { getNavLinkStyles } from "./NavStyleProvider";
 
 export function getBaseTheme(
   theme: MantineTheme,
@@ -12,16 +14,16 @@ export function getBaseTheme(
     fontFamily: "Open Sans, sans-serif",
     colors: {
       seaweed: [
-        "#dffbff",
-        "#bdeaf1",
+        "#e5f9fd",
+        "#c4edf3",
         "#99dae5",
-        "#72ccd9",
-        "#4ebdcd",
+        "#7bd3e0",
+        "#50bece",
         "#36a3b4",
-        "#267f8d",
-        "#175b65",
-        "#04373e",
-        "#001418",
+        "#288391",
+        "#227885",
+        "#1d6873",
+        "#12545d",
       ],
       coral: [
         "#ffe6ea",
@@ -48,15 +50,27 @@ export function getBaseTheme(
         "#17345F",
       ],
     },
-
     primaryColor: "seaweed",
     defaultGradient: {
       deg: 150,
-      from: theme.colors.blue[5],
-      to: theme.colors.blue[9],
+      from: "seaweed.5",
+      to: "seaweed.9",
     },
     globalStyles: globalStyle,
     components: {
+      Badge: {
+        styles: () => ({
+          root: {
+            textTransform: "none",
+          },
+        }),
+      },
+      Text: {
+        styles: (theme) => ({
+          root: {},
+        }),
+      },
+      Button: getButtonStyles(theme),
       ActionIcon: {
         defaultProps: {
           size: "lg",
@@ -68,27 +82,10 @@ export function getBaseTheme(
               theme.colorScheme === "light"
                 ? theme.colors.gray[9]
                 : theme.colors.gray[0],
+            "&:active": { transform: "scale(0.95)" },
           },
         }),
       },
-      Badge: {
-        styles: () => ({
-          root: {
-            textTransform: "none",
-          },
-        }),
-      },
-      Text: {
-        styles: (theme) => ({
-          root: {
-            color:
-              theme.colorScheme === "light"
-                ? theme.colors.gray[9]
-                : theme.colors.gray[0],
-          },
-        }),
-      },
-      Button: getButtonStyles(theme),
       Modal: {
         defaultProps: {
           overlayColor: "#00000011",
@@ -96,13 +93,13 @@ export function getBaseTheme(
           size: "500px",
           closeOnClickOutside: false,
           closeOnEscape: true,
+          withCloseButton: false,
           radius: "md",
         },
         styles: (theme) => ({
           title: {
-            fontFamily: theme.headings.fontFamily,
-            fontSize: theme.headings.sizes.h3.fontSize,
-            fontWeight: "bold",
+            fontSize: theme.headings.sizes.h4.fontSize,
+            fontWeight: "bolder",
           },
         }),
       },
@@ -112,41 +109,41 @@ export function getBaseTheme(
         },
         styles: (theme) => ({
           dropdown: {
-            boxShadow: theme.shadows.xl,
+            boxShadow: theme.shadows.md,
+          },
+          item: {
+            fontWeight: 500,
           },
         }),
       },
-      RichTextEditor: {
+      Breadcrumbs: {
+        styles: (theme) => ({
+          breadcrumb: {
+            fontSize: theme.fontSizes.sm,
+            color:
+              theme.colorScheme === "light"
+                ? theme.colors.gray[6]
+                : theme.colors.dark[2],
+          },
+        }),
+      },
+      RichTextEditor: getRichTextEditorStyles(),
+      NavLink: getNavLinkStyles(),
+      Popover: {
+        styles: (theme) => ({
+          dropdown: {
+            boxShadow: theme.shadows.sm,
+          },
+        }),
+      },
+      Select: {
         defaultProps: {
-          labels: "hello",
+          transition: "fade",
+          transitionDuration: 150,
         },
         styles: (theme) => ({
-          root: {
-            border: "none",
-          },
-          toolbar: {
-            tabindex: "-1",
-            borderBottom: "none",
-            paddingLeft: 0,
-            backgroundColor: "transparent",
-          },
-          content: {
-            backgroundColor: "transparent",
-            borderColor: "transparent",
-            ".ProseMirror": {
-              borderRadius: theme.radius.sm,
-              border: "solid 1px",
-              borderColor:
-                theme.colorScheme === "light"
-                  ? theme.colors.gray[4]
-                  : theme.colors.dark[4],
-            },
-            ".ProseMirror-focused": {
-              borderColor:
-                theme.colorScheme === "light"
-                  ? theme.colors.seaweed[6]
-                  : theme.colors.seaweed[8],
-            },
+          dropdown: {
+            boxShadow: theme.shadows.md,
           },
         }),
       },
@@ -175,7 +172,8 @@ function globalStyle() {
       width: "20px",
     },
     "*": {
-      //transition: "all 0.1s",
+      transitionDuration: "0.1s",
+      transitionProperty: "background, focus",
     },
   };
 }

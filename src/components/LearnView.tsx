@@ -7,11 +7,12 @@ interface LearnViewProps {}
 function LearnView({}: LearnViewProps) {
   const navigate = useNavigate();
   const [showingAnswer, setShowingAnswer] = useState<Boolean>(false);
+
   return (
     <Center>
       <Stack w="600px">
         <Group>
-          <Button onClick={() => navigate("/")} variant="default">
+          <Button onClick={() => navigate("/home")} variant="default">
             Quit Learning
           </Button>
         </Group>
@@ -25,16 +26,16 @@ function LearnView({}: LearnViewProps) {
         <Group>
           {showingAnswer ? (
             <Group spacing="xs">
-              <Button bg="red" onClick={() => answer(4)}>
+              <Button color="red" onClick={() => answer(4)}>
                 Again
               </Button>
-              <Button bg="yellow" onClick={() => answer(3)}>
+              <Button color="yellow" onClick={() => answer(3)}>
                 Hard
               </Button>
-              <Button bg="green" onClick={() => answer(2)}>
+              <Button color="green" onClick={() => answer(2)}>
                 Normal
               </Button>
-              <Button bg="blue" onClick={() => answer(1)}>
+              <Button color="blue" onClick={() => answer(1)}>
                 Easy
               </Button>
             </Group>

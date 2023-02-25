@@ -16,6 +16,7 @@ function TableRowButton({ children, i, onClick }: TableRowProps) {
           onClick();
         }
       }}
+      component="button"
       sx={(theme) => ({
         fontSize: theme.fontSizes.sm,
         fontWeight: 600,
@@ -23,7 +24,7 @@ function TableRowButton({ children, i, onClick }: TableRowProps) {
           i % 2 === 0
             ? theme.colorScheme === "light"
               ? theme.colors.gray[1]
-              : theme.colors.dark[7]
+              : theme.colors.dark[6]
             : "transparent",
         padding: theme.spacing.sm,
         borderRadius: theme.radius.md,
@@ -31,7 +32,7 @@ function TableRowButton({ children, i, onClick }: TableRowProps) {
           backgroundColor:
             theme.colorScheme === "light"
               ? theme.colors.gray[2]
-              : theme.colors.dark[6],
+              : theme.colors.dark[5],
           boxShadow: "none",
         },
 

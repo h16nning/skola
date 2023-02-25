@@ -5,9 +5,15 @@ import { Deck, newDeck } from "../../logic/deck";
 
 interface NewDeckModalProps extends ModalProps {
   superDeck?: Deck;
+  reloadDeck?: Function;
 }
 
-function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
+function NewDeckModal({
+  opened,
+  setOpened,
+  superDeck,
+  reloadDeck,
+}: NewDeckModalProps) {
   const [nameValue, setNameValue] = useState<string>("");
   const [addingDeck, setAddingDeck] = useState<boolean>(false);
   const [status, setStatus] = useState<string>("initial");
@@ -18,6 +24,7 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
       setStatus("Deck sucessfully added. Id: " + id);
       setNameValue("");
       setOpened(false);
+      reloadDeck?.();
     } catch (error) {
       setStatus("Failed to add deck: " + error);
     }

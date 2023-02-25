@@ -25,8 +25,9 @@ function DangerousConfirmModal({
     >
       <Stack>
         <Text fz="sm">{dangerousDescription}</Text>
-        <Group position="right" spacing="xs">
-          <Button variant="default">Cancel</Button>
+        <Group position="right" spacing="sm">
+          <Button variant="default"
+                  onClick={() => setOpened(false)}>Cancel</Button>
           <Button
             color="red"
             onClick={() => dangerousAction(...dangerousDependencies)}
