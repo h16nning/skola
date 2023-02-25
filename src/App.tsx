@@ -1,15 +1,15 @@
 import {
   AppShell,
-  useMantineTheme,
-  MantineProvider,
   ColorScheme,
   ColorSchemeProvider,
+  MantineProvider,
+  useMantineTheme,
 } from "@mantine/core";
 
 import { getBaseTheme } from "./style/StyleProvider";
-import TopBar from "./components/header/TopBar";
 import Main from "./components/Main";
 import { useState } from "react";
+import Sidebar from "./components/sidebar/Sidebar";
 
 export default function App() {
   const theme = useMantineTheme();
@@ -28,11 +28,11 @@ export default function App() {
       >
         <AppShell
           styles={{
-            main: {
-              background: colorScheme === "light" ? theme.white : theme.black,
-            },
+            main: {},
           }}
-          header={<TopBar />}
+          //header={<TopBar />}
+          navbarOffsetBreakpoint="sm"
+          navbar={<Sidebar />}
         >
           <Main />
         </AppShell>

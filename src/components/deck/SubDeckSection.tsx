@@ -8,9 +8,10 @@ import NewDeckModal from "./NewDeckModal";
 
 interface SubDeckSectionProps {
   deck?: Deck;
+  reloadDeck: Function;
 }
 
-function SubDeckSection({ deck }: SubDeckSectionProps) {
+function SubDeckSection({ deck, reloadDeck }: SubDeckSectionProps) {
   const [subDecks, failed] = useSubDecks(deck);
   const [newDeckModalOpened, setNewDeckModalOpened] = useState(false);
 
@@ -45,6 +46,7 @@ function SubDeckSection({ deck }: SubDeckSectionProps) {
         opened={newDeckModalOpened}
         setOpened={setNewDeckModalOpened}
         superDeck={deck}
+        reloadDeck={reloadDeck}
       />
     </>
   );

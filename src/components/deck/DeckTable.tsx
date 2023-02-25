@@ -2,6 +2,7 @@ import React from "react";
 import { Skeleton, Text, Stack } from "@mantine/core";
 import DeckPreview from "./DeckPreview";
 import { Deck } from "../../logic/deck";
+import LazySkeleton from "../../logic/LazySkeleton";
 
 interface DeckTableProps {
   deckList?: Deck[];
@@ -29,9 +30,9 @@ function SkeletonTable() {
   return (
     <>
       <Stack spacing="xs">
-        <Skeleton key={1} h="48px"></Skeleton>
-        <Skeleton key={2} h="48px"></Skeleton>
-        <Skeleton key={3} h="48px"></Skeleton>
+        <LazySkeleton key={1} h="48px"></LazySkeleton>
+        <LazySkeleton key={2} h="48px"></LazySkeleton>
+        <LazySkeleton key={3} h="48px"></LazySkeleton>
       </Stack>
     </>
   );

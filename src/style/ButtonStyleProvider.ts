@@ -7,11 +7,11 @@ export function getButtonStyles(theme: MantineTheme) {
 }
 
 function getStyles(theme: MantineTheme, params: ButtonStylesParams) {
-  /*if (params.variant === "filled") {
+  if (params.variant === "filled") {
     return getFilledButtonStyles(theme, params);
   } else if (params.variant === "default") {
     return getDefaultButtonStyles(theme, params);
-  }*/
+  }
 
   return {
     root: {
@@ -33,7 +33,6 @@ function getFilledButtonStyles(
 ) {
   return {
     root: {
-      backgroundColor: "transparent",
       "&:hover": {
         backgroundColor:
           theme.colorScheme === "dark"
