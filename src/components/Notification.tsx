@@ -45,3 +45,14 @@ export function addFailed() {
     icon: <IconX />,
   });
 }
+
+export function generalFail() {
+  return notifications.show({
+    title: "Something went wrong!",
+    message: "This action could not be completed. Please try again later!",
+    autoClose: 1500,
+    color: "red",
+    withCloseButton: false,
+    icon: <IconX />,
+  });
+}

@@ -20,7 +20,7 @@ interface NewCardProps {}
 function NewCard({}: NewCardProps) {
   const navigate = useNavigate();
 
-  const [deck, failed, reloadDeck] = useDeckFromUrl();
+  const [deck, failed] = useDeckFromUrl();
   const [cardType, setCardType] = useState<string | null>(CardType.Normal);
 
   if (failed) {

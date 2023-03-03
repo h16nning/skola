@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Card, CardType } from "../../logic/card";
 import { createStyles, Table } from "@mantine/core";
 import { useDeckOf } from "../../logic/deck";
@@ -95,7 +95,7 @@ function CardTableItem({
     if (selectedIndex === index) {
       setSelectedCard(card);
     }
-  }, [selectedIndex]);
+  }, [selectedIndex, setSelectedCard, index, card]);
   return (
     <tr
       className={cx(classes.tr, {

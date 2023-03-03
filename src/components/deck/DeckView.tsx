@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import {
   ActionIcon,
-  Anchor,
   Badge,
-  Breadcrumbs,
   Button,
   Center,
   Group,
@@ -18,9 +16,9 @@ import DeckMenu from "./DeckMenu";
 import { useNavigate } from "react-router-dom";
 import { useDeckFromUrl, useSuperDecks } from "../../logic/deck";
 import DeckOptionsModal from "./DeckOptionsModal";
-import LazySkeleton from "../../logic/LazySkeleton";
 import MissingObject from "../MissingObject";
 import SuperDecksBreadcrumbs from "../SuperDecksBreadcrumbs";
+import { useCardsOf } from "../../logic/card";
 
 function DeckView() {
   const navigate = useNavigate();
@@ -28,6 +26,7 @@ function DeckView() {
 
   const [deck, failed, reload] = useDeckFromUrl();
   const [superDecks] = useSuperDecks(deck);
+  const cards = useCardsOf(deck);
 
   if (failed) {
     return <MissingObject />;
@@ -47,7 +46,7 @@ function DeckView() {
                 <Group spacing="xs">
                   <Button
                     leftIcon={<IconBolt />}
-                    onClick={() => navigate("/learn")}
+                    onClick={() => navigate("/learn/" + deck?.id)}
                   >
                     Learn
                   </Button>
@@ -65,7 +64,7 @@ function DeckView() {
             <Group position="apart">
               <Group>
                 <Text fz="sm" fw={600}>
-                  {deck?.cards.length} Karten
+                  {cards.length} Karten
                 </Text>
                 <Badge variant="dot" color="red">
                   16 due
