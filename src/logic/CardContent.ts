@@ -1,18 +1,15 @@
-import { CardType } from "./card";
+import { Card, CardType } from "./card";
 
-export type Content<T> = BaseContent<T> & (NormalContent | ClozeContent);
-
-export type BaseContent<T> = {
+export type Content<T extends CardType> = {
   type: T;
+  front: string;
+} & (T extends CardType.Normal ? NormalContent : {}) &
+  (T extends CardType.Cloze ? ClozeContent : {});
+
+type NormalContent = {
+  back: string;
 };
 
-interface NormalContent extends BaseContent<CardType.Normal> {
-  type: CardType.Normal;
-  front: string;
-  back: string;
-}
-
-interface ClozeContent extends BaseContent<CardType.Cloze> {
-  front: string;
+type ClozeContent = {
   clozeCards: Array<string>;
-}
+};

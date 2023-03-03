@@ -16,12 +16,11 @@ function NewDeckModal({
 }: NewDeckModalProps) {
   const [nameValue, setNameValue] = useState<string>("");
   const [addingDeck, setAddingDeck] = useState<boolean>(false);
-  const [status, setStatus] = useState<string>("initial");
+  const [status, setStatus] = useState<string | null>(null);
   async function tryAddDeck() {
     setAddingDeck(true);
     try {
       const id = await newDeck(nameValue, superDeck);
-      setStatus("Deck sucessfully added. Id: " + id);
       setNameValue("");
       setOpened(false);
       reloadDeck?.();
@@ -29,6 +28,7 @@ function NewDeckModal({
       setStatus("Failed to add deck: " + error);
     }
     setAddingDeck(false);
+    setNameValue("");
   }
 
   return (
@@ -40,11 +40,12 @@ function NewDeckModal({
     >
       <Stack justify="space-between">
         <TextInput
+          data-autofocus
           label="Name"
           value={nameValue}
           onChange={(e) => setNameValue(e.currentTarget.value)}
         />
-        <Text>{status}</Text>
+        {status ? <Text>{status}</Text> : <></>}
         <Group position="right">
           <Button
             variant="default"

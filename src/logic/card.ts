@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from "uuid";
 import { Deck } from "./deck";
 import { db } from "./db";
 import { useLiveQuery } from "dexie-react-hooks";
+import { newRepetition, Repetition } from "./Repetition";
+import { ReviewModel, sm2 } from "./SpacedRepetition";
 
 export enum CardType {
   Normal = "normal",
@@ -12,8 +14,10 @@ export enum CardType {
 
 export interface CardSkeleton {
   id: string;
-  history: Array<Object>;
+  history: Repetition[];
+  model: ReviewModel;
   decks: string[];
+  dueDate: Date | null;
 }
 
 export interface Card<T extends CardType> extends CardSkeleton {
@@ -22,7 +26,13 @@ export interface Card<T extends CardType> extends CardSkeleton {
 
 export function createCardSkeleton(): CardSkeleton {
   const id = uuidv4();
-  return { id: id, history: [], decks: ["-1"] };
+  return {
+    id: id,
+    history: [],
+    decks: [],
+    dueDate: null,
+    model: { repetitions: 0, easeFactor: 2.5, interval: 0 },
+  };
 }
 
 function isCard(card: Card<CardType> | undefined): card is Card<CardType> {
@@ -38,13 +48,6 @@ export async function newCard(card: Card<CardType>, deck: Deck) {
   return db.transaction("rw", db.decks, db.cards, () => {
     db.cards.add(card, card.id);
     db.decks.update(deck.id, { cards: deck.cards });
-    deck.superDecks?.forEach((d) =>
-      db.decks.get(d).then((d) => {
-        if (d) {
-          db.decks.update(d, { cards: [...d.cards, card.id] });
-        }
-      })
-    );
   });
 }
 
@@ -60,16 +63,21 @@ export async function updateCard(
 export async function deleteCard(card: Card<CardType>) {
   return db.transaction("rw", db.decks, db.cards, () => {
     db.cards.delete(card.id);
-    db.decks.delete(card.decks[0]);
-    card.decks.forEach((d) =>
-      db.decks.get(d).then((d) => {
-        if (d?.id) {
-          db.decks.update(d.id, {
-            cards: d.cards.filter((c) => c !== card.id),
-          });
-        }
-      })
-    );
+    db.decks.get(card.decks[0]).then((d) => {
+      if (d?.id) {
+        db.decks.update(d.id, {
+          cards: d.cards.filter((c) => c !== card.id),
+        });
+      }
+    });
+  });
+}
+
+export async function answerCard(card: Card<CardType>, quality: number) {
+  const newModel = sm2(quality, card.model);
+  await updateCard(card.id, {
+    model: newModel,
+    history: [...card.history, newRepetition(quality)],
   });
 }
 
@@ -77,13 +85,33 @@ export function useCards() {
   return useLiveQuery(() => db.cards.orderBy("content.front").toArray());
 }
 
-export function useCardsOf(deck: Deck): Card<CardType>[] {
+export function useCardsOf(deck: Deck | undefined): Card<CardType>[] {
   return useLiveQuery(() => getCardsOf(deck), [deck]) ?? [];
 }
-export async function getCardsOf(deck: Deck) {
-  return db.cards
+export async function getCardsOf(deck: Deck | undefined) {
+  if (!deck) {
+    return [];
+  }
+  let cards: Card<CardType>[] = await db.cards
     .where("id")
     .anyOf(deck.cards ?? [])
     .filter((c) => isCard(c))
     .toArray();
+  await Promise.all(
+    deck.subDecks.map((subDeckID) =>
+      db.decks
+        .get(subDeckID)
+        .then((subDeck) => {
+          if (subDeck) {
+            return getCardsOf(subDeck);
+          }
+        })
+        .then((c) => {
+          if (c) {
+            cards = cards.concat(c);
+          }
+        })
+    )
+  );
+  return cards;
 }
