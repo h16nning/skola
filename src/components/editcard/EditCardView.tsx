@@ -28,7 +28,7 @@ function CardView({ card }: { card: Card<CardType> }) {
     <Stack>
       <Group position="apart">
         <Text fz="xs">Edit Card</Text>
-        <CardMenu />
+        <CardMenu card={card} />
       </Group>{" "}
       {getViewFromCardType(deck, card.content.type, card)}
     </Stack>

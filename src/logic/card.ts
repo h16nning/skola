@@ -57,6 +57,22 @@ export async function updateCard(
   return db.cards.update(id, changes);
 }
 
+export async function deleteCard(card: Card<CardType>) {
+  return db.transaction("rw", db.decks, db.cards, () => {
+    db.cards.delete(card.id);
+    db.decks.delete(card.decks[0]);
+    card.decks.forEach((d) =>
+      db.decks.get(d).then((d) => {
+        if (d?.id) {
+          db.decks.update(d.id, {
+            cards: d.cards.filter((c) => c !== card.id),
+          });
+        }
+      })
+    );
+  });
+}
+
 export function useCards() {
   return useLiveQuery(() => db.cards.orderBy("content.front").toArray());
 }
