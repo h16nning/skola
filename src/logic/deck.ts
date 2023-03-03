@@ -1,4 +1,4 @@
-import { Card, CardType } from "./card";
+import { Card, CardType, deleteCard } from "./card";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "./db";
 import { IndexableType } from "dexie";
@@ -154,13 +154,15 @@ export async function getDecks(ids: string[]) {
   return db.decks.bulkGet(ids);
 }
 
-export async function deleteDeck(id: string, calledRecursively?: boolean) {
-  const deck = await getDeck(id);
+export async function deleteDeck(deck: Deck, calledRecursively?: boolean) {
   if (!deck) {
     return;
   }
   for (const subDeck of deck?.subDecks) {
-    await deleteDeck(subDeck, true);
+    const s = await db.decks.get(subDeck);
+    if (s) {
+      await deleteDeck(s, true);
+    }
   }
   if (deck.superDecks && deck.superDecks[0] && !calledRecursively) {
     const superDeck = await getDeck(deck.superDecks[0]);
@@ -171,7 +173,14 @@ export async function deleteDeck(id: string, calledRecursively?: boolean) {
       });
     }
   }
-  await db.decks.delete(id);
+  deck.cards.forEach((c) =>
+    db.cards.get(c).then((c) => {
+      if (c) {
+        deleteCard(c);
+      }
+    })
+  );
+  await db.decks.delete(deck.id);
 }
 
 export function useDeckFromUrl(): [Deck | undefined, boolean, Function] {

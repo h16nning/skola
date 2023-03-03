@@ -9,7 +9,7 @@ import {
 } from "@tabler/icons-react";
 import DangerousConfirmModal from "../DangerousConfirmModal";
 import { useNavigate } from "react-router-dom";
-import { Card, CardType } from "../../logic/card";
+import { Card, CardType, deleteCard } from "../../logic/card";
 
 interface CardMenuProps {
   card?: Card<CardType>;
@@ -19,14 +19,13 @@ function CardMenu({ card }: CardMenuProps) {
   const navigate = useNavigate();
   const [deleteModalOpened, setDeleteModalOpened] = useState<boolean>(false);
 
-  async function tryDeleteDeck() {
+  async function tryDeleteCard() {
     if (!card) {
       return;
     }
     try {
-      //await deleteDeck(deck.id);
+      await deleteCard(card);
       setDeleteModalOpened(false);
-      navigate(-1);
     } catch (error) {
       console.error("Failed to delete card: " + error);
     }
@@ -58,7 +57,7 @@ function CardMenu({ card }: CardMenuProps) {
         </Menu.Dropdown>
       </Menu>
       <DangerousConfirmModal
-        dangerousAction={(card: Card<CardType>) => tryDeleteDeck()}
+        dangerousAction={(card: Card<CardType>) => tryDeleteCard()}
         dangerousDependencies={[card]}
         dangerousTitle={"Delete Card"}
         dangerousDescription={

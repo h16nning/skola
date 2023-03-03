@@ -27,7 +27,7 @@ function DeckMenu({ deck, setDeckOptionsOpened }: DeckMenuProps) {
       return;
     }
     try {
-      await deleteDeck(deck.id);
+      await deleteDeck(deck);
       setDeleteModalOpened(false);
       navigate(-1);
     } catch (error) {
