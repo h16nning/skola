@@ -1,0 +1,37 @@
+import React from "react";
+import { getViewFromCardType } from "./ViewFromCardType";
+import { Card, CardType } from "../../logic/card";
+import { useDeckOf } from "../../logic/deck";
+import { Group, Stack, Text } from "@mantine/core";
+import CardMenu from "./CardMenu";
+
+interface EditCardsProps {
+  card?: Card<CardType>;
+}
+function EditCardView({ card }: EditCardsProps) {
+  if (card === undefined) {
+    return <NoCardView />;
+  }
+  return <CardView card={card} />;
+}
+function NoCardView() {
+  return (
+    <Text fz="sm" color="dimmed">
+      No card
+    </Text>
+  );
+}
+
+function CardView({ card }: { card: Card<CardType> }) {
+  const deck = useDeckOf(card);
+  return (
+    <Stack>
+      <Group position="apart">
+        <Text fz="xs">Edit Card</Text>
+        <CardMenu />
+      </Group>{" "}
+      {getViewFromCardType(deck, card.content.type, card)}
+    </Stack>
+  );
+}
+export default EditCardView;

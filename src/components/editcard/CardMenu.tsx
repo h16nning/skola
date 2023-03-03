@@ -3,35 +3,32 @@ import { ActionIcon, Menu } from "@mantine/core";
 import {
   IconAdjustmentsHorizontal,
   IconArrowsExchange,
-  IconCards,
   IconCode,
-  IconCursorText,
   IconDots,
   IconTrash,
 } from "@tabler/icons-react";
-import { Deck, deleteDeck } from "../../logic/deck";
 import DangerousConfirmModal from "../DangerousConfirmModal";
 import { useNavigate } from "react-router-dom";
+import { Card, CardType } from "../../logic/card";
 
-interface DeckMenuProps {
-  deck?: Deck;
-  setDeckOptionsOpened: Function;
+interface CardMenuProps {
+  card?: Card<CardType>;
 }
 
-function DeckMenu({ deck, setDeckOptionsOpened }: DeckMenuProps) {
+function CardMenu({ card }: CardMenuProps) {
   const navigate = useNavigate();
   const [deleteModalOpened, setDeleteModalOpened] = useState<boolean>(false);
 
   async function tryDeleteDeck() {
-    if (!deck) {
+    if (!card) {
       return;
     }
     try {
-      await deleteDeck(deck.id);
+      //await deleteDeck(deck.id);
       setDeleteModalOpened(false);
       navigate(-1);
     } catch (error) {
-      console.error("Failed to delete deck: " + error);
+      console.error("Failed to delete card: " + error);
     }
   }
 
@@ -45,22 +42,12 @@ function DeckMenu({ deck, setDeckOptionsOpened }: DeckMenuProps) {
         </Menu.Target>
         <Menu.Dropdown>
           <Menu.Item icon={<IconCode size={16} />}>Debug</Menu.Item>
-          <Menu.Item
-            icon={<IconCards size={16} />}
-            onClick={() => navigate("/cards/" + deck?.id)}
-          >
-            Manage Cards
-          </Menu.Item>
-          <Menu.Item
-            onClick={() => setDeckOptionsOpened(true)}
-            icon={<IconAdjustmentsHorizontal size={16} />}
-          >
+          <Menu.Item icon={<IconAdjustmentsHorizontal size={16} />}>
             Options
           </Menu.Item>
           <Menu.Item icon={<IconArrowsExchange size={16} />}>
-            Move Deck
+            Move Card
           </Menu.Item>
-          <Menu.Item icon={<IconCursorText size={16} />}>Rename</Menu.Item>
           <Menu.Item
             color="red"
             icon={<IconTrash size={16} />}
@@ -71,11 +58,11 @@ function DeckMenu({ deck, setDeckOptionsOpened }: DeckMenuProps) {
         </Menu.Dropdown>
       </Menu>
       <DangerousConfirmModal
-        dangerousAction={(deck: Deck) => tryDeleteDeck()}
-        dangerousDependencies={[deck]}
-        dangerousTitle={"Delete Deck"}
+        dangerousAction={(card: Card<CardType>) => tryDeleteDeck()}
+        dangerousDependencies={[card]}
+        dangerousTitle={"Delete Card"}
         dangerousDescription={
-          "You are about to delete this deck. This cannot be undone. Do you wish to continue?"
+          "You are about to delete this card. This cannot be undone. Do you wish to continue?"
         }
         opened={deleteModalOpened}
         setOpened={setDeleteModalOpened}
@@ -84,4 +71,4 @@ function DeckMenu({ deck, setDeckOptionsOpened }: DeckMenuProps) {
   );
 }
 
-export default DeckMenu;
+export default CardMenu;

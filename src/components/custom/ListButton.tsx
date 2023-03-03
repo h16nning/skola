@@ -1,14 +1,14 @@
 import React from "react";
 import { Group, UnstyledButton } from "@mantine/core";
-import { IconChevronRight } from "@tabler/icons";
+import { IconChevronRight } from "@tabler/icons-react";
 
-interface TableRowProps {
+interface ListButtonProps {
   children: JSX.Element;
   i: number;
   onClick?: Function;
 }
 
-function TableRowButton({ children, i, onClick }: TableRowProps) {
+function ListButton({ children, i, onClick }: ListButtonProps) {
   return (
     <UnstyledButton
       onClick={() => {
@@ -49,4 +49,4 @@ function TableRowButton({ children, i, onClick }: TableRowProps) {
   );
 }
 
-export default TableRowButton;
+export default ListButton;

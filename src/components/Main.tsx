@@ -2,8 +2,9 @@ import { Route, Routes } from "react-router-dom";
 import HomeView from "./HomeView";
 import SettingsView from "./settings/SettingsView";
 import DeckView from "./deck/DeckView";
-import NewCardView from "./NewCard";
+import NewCardView from "./editcard/NewCard";
 import LearnView from "./LearnView";
+import CardManagerView from "./CardManagerView";
 
 export default function Main() {
   return (
@@ -13,6 +14,7 @@ export default function Main() {
       <Route path="/deck/*" element={<DeckView />} />
       <Route path="/new/*" element={<NewCardView />} />
       <Route path="/learn/*" element={<LearnView />} />
+      <Route path="/cards/*" element={<CardManagerView />} />
     </Routes>
   );
 }

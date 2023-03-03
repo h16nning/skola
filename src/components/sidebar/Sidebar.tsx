@@ -12,11 +12,10 @@ import {
   IconBolt,
   IconCards,
   IconChartBar,
-  IconDialpad,
   IconHome,
   IconHomeStats,
   IconSettings,
-} from "@tabler/icons";
+} from "@tabler/icons-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function Sidebar() {
@@ -38,7 +37,12 @@ function Sidebar() {
         />
         <NavLink label="Today" icon={<IconBolt />} />
         <NavLink label="Statistics" icon={<IconChartBar />} />
-        <NavLink label="Manage Cards" icon={<IconCards />} />
+        <NavLink
+          label="Manage Cards"
+          icon={<IconCards />}
+          onClick={() => navigate("/cards")}
+          active={location.pathname.startsWith("/cards")}
+        />
         <NavLink
           label="Settings"
           icon={<IconSettings />}

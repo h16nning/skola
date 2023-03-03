@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { Anchor, Group } from "@mantine/core";
-import { IconChevronRight } from "@tabler/icons";
+import { IconChevronRight } from "@tabler/icons-react";
 
 interface LinkButtonProps {
   children: ReactNode;
