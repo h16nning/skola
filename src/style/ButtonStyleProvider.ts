@@ -1,4 +1,9 @@
-import { ButtonStylesParams, MantineTheme } from "@mantine/core";
+import {
+  ButtonProps,
+  ButtonStylesParams,
+  MantineColor,
+  MantineTheme,
+} from "@mantine/core";
 
 export function getButtonStyles(theme: MantineTheme) {
   return {
@@ -6,11 +11,11 @@ export function getButtonStyles(theme: MantineTheme) {
   };
 }
 
-function getStyles(theme: MantineTheme, params: ButtonStylesParams) {
-  if (params.variant === "filled") {
-    return getFilledButtonStyles(theme, params);
-  } else if (params.variant === "default") {
-    return getDefaultButtonStyles(theme, params);
+function getStyles(theme: MantineTheme, { variant, color }: ButtonProps) {
+  if (variant === "filled") {
+    return getFilledButtonStyles(theme, color);
+  } else if (variant === "default") {
+    return getDefaultButtonStyles(theme);
   }
 
   return {
@@ -29,14 +34,14 @@ function getStyles(theme: MantineTheme, params: ButtonStylesParams) {
 
 function getFilledButtonStyles(
   theme: MantineTheme,
-  params: ButtonStylesParams
+  color: MantineColor | undefined
 ) {
   return {
     root: {
       "&:hover": {
         backgroundColor:
           theme.colorScheme === "dark"
-            ? theme.colors[params.color || theme.primaryColor][7]
+            ? theme.colors[color || theme.primaryColor][7]
             : undefined,
       },
       "&:active": { transform: "scale(0.96)" },
@@ -44,10 +49,7 @@ function getFilledButtonStyles(
   };
 }
 
-function getDefaultButtonStyles(
-  theme: MantineTheme,
-  params: ButtonStylesParams
-) {
+function getDefaultButtonStyles(theme: MantineTheme) {
   return {
     root: {
       "&:hover": {

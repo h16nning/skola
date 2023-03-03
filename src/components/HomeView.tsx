@@ -1,11 +1,9 @@
 import { Button, Center, Group, Stack } from "@mantine/core";
-import { IconPlus } from "@tabler/icons";
+import { IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 import NewDeckModal from "./deck/NewDeckModal";
 import DeckTable from "./deck/DeckTable";
-import { useLiveQuery } from "dexie-react-hooks";
-import { db } from "../logic/db";
-import { useDecks, useTopLevelDecks } from "../logic/deck";
+import { useTopLevelDecks } from "../logic/deck";
 
 export default function HomeView() {
   const [newDeckModalOpened, setNewDeckModalOpened] = useState(false);

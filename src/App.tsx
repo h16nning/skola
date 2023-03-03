@@ -10,6 +10,7 @@ import { getBaseTheme } from "./style/StyleProvider";
 import Main from "./components/Main";
 import { useState } from "react";
 import Sidebar from "./components/sidebar/Sidebar";
+import { Notifications } from "@mantine/notifications";
 
 export default function App() {
   const theme = useMantineTheme();
@@ -26,13 +27,12 @@ export default function App() {
         withGlobalStyles
         withNormalizeCSS
       >
+        <Notifications />
         <AppShell
-          styles={{
-            main: {},
-          }}
           //header={<TopBar />}
           navbarOffsetBreakpoint="sm"
           navbar={<Sidebar />}
+          pt={32}
         >
           <Main />
         </AppShell>

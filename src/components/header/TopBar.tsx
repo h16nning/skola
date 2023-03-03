@@ -1,5 +1,5 @@
 import { Header, ActionIcon, Flex, UnstyledButton } from "@mantine/core";
-import { IconSettings } from "@tabler/icons";
+import { IconSettings } from "@tabler/icons-react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -7,7 +7,7 @@ export default function TopBar() {
   const navigate = useNavigate();
 
   return (
-<Header height="100" p="sm" withBorder={false}>
+    <Header height="100" p="sm" withBorder={false}>
       <Flex
         justify="space-between"
         align="center"

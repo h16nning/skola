@@ -2,7 +2,7 @@ import { Alert, Badge, Group, Text } from "@mantine/core";
 import React from "react";
 import { Deck } from "../../logic/deck";
 import { useNavigate } from "react-router-dom";
-import TableRowButton from "../custom/TableRowButton";
+import ListButton from "../custom/ListButton";
 
 type DeckPreviewProps = {
   deck: Deck;
@@ -13,7 +13,7 @@ export default function DeckPreview({ deck, i }: DeckPreviewProps) {
   const navigate = useNavigate();
 
   return (
-    <TableRowButton
+    <ListButton
       i={i}
       onClick={() => {
         navigate("/deck/" + deck.id);
@@ -36,6 +36,6 @@ export default function DeckPreview({ deck, i }: DeckPreviewProps) {
           This card failed to load
         </Alert>
       )}
-    </TableRowButton>
+    </ListButton>
   );
 }

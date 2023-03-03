@@ -7,6 +7,7 @@ export type BaseContent<T> = {
 };
 
 interface NormalContent extends BaseContent<CardType.Normal> {
+  type: CardType.Normal;
   front: string;
   back: string;
 }

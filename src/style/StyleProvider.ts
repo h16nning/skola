@@ -156,19 +156,19 @@ const headingStyle = {
   fontWeight: 600,
   lineHeight: "1.25",
   sizes: {
-    h1: { fontSize: 50 },
-    h2: { fontSize: 26 },
-    h3: { fontSize: 20 },
-    h4: { fontSize: 18 },
-    h5: { fontSize: 16 },
-    h6: { fontSize: 14 },
+    h1: { fontSize: "3.125rem" },
+    h2: { fontSize: "1.625rem" },
+    h3: { fontSize: "1.25rem" },
+    h4: { fontSize: "1.125rem" },
+    h5: { fontSize: "1rem" },
+    h6: { fontSize: "0.875rem" },
   },
 };
 
 function globalStyle() {
   return {
-    ".icon-tabler": {
-      strokeWidth: "1.5",
+    ".tabler-icon": {
+      strokeWidth: "1.5px",
       width: "20px",
     },
     "*": {

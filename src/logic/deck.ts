@@ -1,20 +1,25 @@
-import { Card } from "./card";
+import { Card, CardType } from "./card";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "./db";
 import { IndexableType } from "dexie";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useDebugValue, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { CardType } from "./card";
 
 export interface Deck {
   id: string;
   name: string;
   subDecks: string[];
   superDecks?: string[];
-  cards: Array<Card<CardType>>;
+  cards: Array<string>;
 }
 
+export const dummyDeck: Deck = {
+  id: "no_id",
+  name: "-",
+  subDecks: [],
+  cards: [],
+};
 export async function newDeck(
   name: string,
   superDeck?: Deck
@@ -56,6 +61,10 @@ function isDeck(deck: unknown): deck is Deck {
   return (deck as Deck).subDecks !== undefined;
 }
 
+export function useDeckOf(card: Card<CardType>) {
+  return useLiveQuery(() => db.decks.get(card.decks[0]));
+}
+
 export function useDecks() {
   return useLiveQuery(() => db.decks.toArray());
 }
@@ -73,28 +82,33 @@ export function useSubDecks(deck?: Deck): [Deck[] | undefined, boolean] {
   useEffect(() => {
     setSubDecks(undefined);
     setFailed(false);
-    void determineSubDecks();
+    void determineSubDecks(deck, setSubDecks, setFailed);
   }, [deck]);
 
-  async function determineSubDecks() {
-    if (deck) {
-      try {
-        const sd = await getDecks(deck.subDecks);
-        const includesUndefined = sd.includes(undefined);
-        if (sd !== undefined && !includesUndefined) {
-          setSubDecks(sd as Deck[]);
-        } else {
-          setSubDecks(undefined);
-          setFailed(true);
-        }
-      } catch (error) {
-        setFailed(true);
-      }
-    }
-  }
   useDebugValue(deck);
 
   return [subDecks, failed];
+}
+
+async function determineSubDecks(
+  deck: Deck | undefined,
+  setSubDecks: Function,
+  setFailed: Function
+) {
+  if (deck) {
+    try {
+      const sd = await getDecks(deck.subDecks);
+      const includesUndefined = sd.includes(undefined);
+      if (sd !== undefined && !includesUndefined) {
+        setSubDecks(sd as Deck[]);
+      } else {
+        setSubDecks(undefined);
+        setFailed(true);
+      }
+    } catch (error) {
+      setFailed(true);
+    }
+  }
 }
 
 export function useSuperDecks(deck?: Deck): [Deck[] | undefined, boolean] {
@@ -111,7 +125,6 @@ export function useSuperDecks(deck?: Deck): [Deck[] | undefined, boolean] {
     if (deck) {
       if (deck.superDecks) {
         try {
-          //await new Promise((resolve) => setTimeout(resolve, 5000));
           const sd = await getDecks(deck.superDecks);
           const includesUndefined = sd.includes(undefined);
           if (sd !== undefined && !includesUndefined) {
@@ -136,6 +149,7 @@ export function useSuperDecks(deck?: Deck): [Deck[] | undefined, boolean] {
 export async function getDeck(id: string) {
   return db.decks.get(id);
 }
+
 export async function getDecks(ids: string[]) {
   return db.decks.bulkGet(ids);
 }
