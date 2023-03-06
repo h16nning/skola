@@ -3,6 +3,7 @@ import {
   ActionIcon,
   Badge,
   Button,
+  Card,
   Center,
   Group,
   Space,
@@ -19,12 +20,13 @@ import DeckOptionsModal from "./DeckOptionsModal";
 import MissingObject from "../MissingObject";
 import SuperDecksBreadcrumbs from "../SuperDecksBreadcrumbs";
 import { useCardsOf } from "../../logic/card";
+import HeroDeckSection from "./HeroDeckSection";
 
 function DeckView() {
   const navigate = useNavigate();
   const [deckOptionsOpened, setDeckOptionsOpened] = useState(false);
 
-  const [deck, failed, reload] = useDeckFromUrl();
+  const [deck, failed] = useDeckFromUrl();
   const [superDecks] = useSuperDecks(deck);
   const cards = useCardsOf(deck);
 
@@ -39,16 +41,17 @@ function DeckView() {
             <ActionIcon onClick={() => navigate(-1)}>
               <IconChevronLeft />
             </ActionIcon>
-            <Stack spacing={0} w="100%">
+            <Stack spacing="0.25rem" w="100%">
               <SuperDecksBreadcrumbs superDecks={superDecks} />
               <Group position="apart" noWrap>
                 <Title order={2}>{deck ? deck.name : ""}</Title>
                 <Group spacing="xs">
                   <Button
-                    leftIcon={<IconBolt />}
-                    onClick={() => navigate("/learn/" + deck?.id)}
+                    leftIcon={<IconPlus />}
+                    variant="default"
+                    onClick={() => navigate("/new/" + deck?.id)}
                   >
-                    Learn
+                    Add Cards
                   </Button>
                   <DeckMenu
                     deck={deck}
@@ -60,31 +63,10 @@ function DeckView() {
           </Group>
 
           <Space h="xl" />
-          <Stack spacing={0}>
-            <Group position="apart">
-              <Group>
-                <Text fz="sm" fw={600}>
-                  {cards.length} Karten
-                </Text>
-                <Badge variant="dot" color="red">
-                  16 due
-                </Badge>
-                <Badge variant="dot" color="blue">
-                  10 new
-                </Badge>
-              </Group>
-              <Button
-                leftIcon={<IconPlus />}
-                variant="default"
-                onClick={() => navigate("/new/" + deck?.id)}
-              >
-                Add Cards
-              </Button>
-            </Group>
-          </Stack>
+          <HeroDeckSection deck={deck} cards={cards} />
 
           <Space h="xl" />
-          <SubDeckSection deck={deck} reloadDeck={reload} />
+          <SubDeckSection deck={deck} />
           {deck ? (
             <DeckOptionsModal
               deck={deck}

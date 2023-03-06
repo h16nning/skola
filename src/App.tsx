@@ -8,15 +8,24 @@ import {
 
 import { getBaseTheme } from "./style/StyleProvider";
 import Main from "./components/Main";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Sidebar from "./components/sidebar/Sidebar";
 import { Notifications } from "@mantine/notifications";
+import { useEventListener } from "@mantine/hooks";
 
 export default function App() {
   const theme = useMantineTheme();
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
-  const toggleColorScheme = (value?: ColorScheme) =>
-    setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+
+  const toggleColorScheme = useCallback(
+    (value?: ColorScheme) =>
+      setColorScheme(value || (colorScheme === "dark" ? "light" : "dark")),
+    [colorScheme]
+  );
+  const ref = useEventListener("keydown", (ev) => {
+    if (ev.altKey) toggleColorScheme();
+  });
+
   return (
     <ColorSchemeProvider
       colorScheme={colorScheme}
@@ -33,6 +42,12 @@ export default function App() {
           navbarOffsetBreakpoint="sm"
           navbar={<Sidebar />}
           pt={32}
+          ref={ref}
+          bg={
+            colorScheme === "light"
+              ? "linear-gradient(-55deg, rgba(255,255,255,1) 85%, rgba(225,239,230,0.5) 100%)"
+              : "linear-gradient(-55deg, rgba(26,27,30,1) 85%, rgba(10,60,49,0.5) 100%)"
+          }
         >
           <Main />
         </AppShell>

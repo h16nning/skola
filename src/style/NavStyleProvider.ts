@@ -1,24 +1,26 @@
 import { MantineTheme, NavLinkStylesParams } from "@mantine/core";
+import { swap, swapMono } from "../logic/ui";
 
 export function getNavLinkStyles() {
   return {
     defaultProps: {
-      variant: "filled",
+      variant: "light",
     },
     styles: (theme: MantineTheme, params: NavLinkStylesParams) => ({
       root: {
         borderRadius: theme.radius.sm,
         "&:hover": {
-          backgroundColor:
-            theme.colorScheme === "light"
-              ? theme.colors.gray[1]
-              : theme.colors.dark[5],
+          backgroundColor: swapMono(theme, 6, 0, 0.1),
+        },
+        "&[data-active]": {
+          backgroundColor: "transparent",
+        },
+        "&[data-active] span": {
+          fontWeight: 600,
+          color: swap(theme, "primary", 6, 6),
         },
         "&[data-active]:hover": {
-          backgroundColor:
-            theme.colorScheme === "light"
-              ? theme.colors.seaweed[6]
-              : theme.colors.seaweed[8],
+          backgroundColor: swap(theme, "primary", 1, 9, 0.25),
         },
         "&:active": {
           transform: "scale(0.98)",
@@ -26,10 +28,16 @@ export function getNavLinkStyles() {
       },
       label: {
         fontSize: theme.fontSizes.sm,
-        fontWeight: 500,
+        fontWeight: 300,
+        color: swap(theme, "gray", 7, 5),
+      },
+      icon: {
+        color: swap(theme, "gray", 6, 6),
       },
     }),
   };
 }
 
-export function getNavBarStyles() {}
+export function getNavBarStyles() {
+  return { styles: { root: { backgroundColor: "transparent" } } };
+}

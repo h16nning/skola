@@ -8,13 +8,7 @@ interface SidebarItemProps {
 }
 
 function SidebarItem({ action, icon, children }: SidebarItemProps) {
-  return (
-    <UnstyledButton
-      component="button"
-      type="button"
-      sx={(theme) => ({ fw: "bolder" })}
-    ></UnstyledButton>
-  );
+  return <UnstyledButton component="button" type="button"></UnstyledButton>;
 }
 
 export default SidebarItem;

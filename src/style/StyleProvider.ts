@@ -1,18 +1,30 @@
 import { ColorScheme, MantineTheme, MantineThemeOverride } from "@mantine/core";
 import { getButtonStyles } from "./ButtonStyleProvider";
 import getRichTextEditorStyles from "./RichTextEditorStyleProvider";
-import { getNavLinkStyles } from "./NavStyleProvider";
+import { getNavBarStyles, getNavLinkStyles } from "./NavStyleProvider";
 
 export function getBaseTheme(
   theme: MantineTheme,
   colorScheme: ColorScheme
 ): MantineThemeOverride {
   return {
-    other: undefined,
+    other: {},
     headings: headingStyle,
     colorScheme: colorScheme,
     fontFamily: "Open Sans, sans-serif",
     colors: {
+      forest: [
+        "#E1EFE6",
+        "#BADBC9",
+        "#87C0A4",
+        "#75B797",
+        "#63AE8A",
+        "#52A57E",
+        "#439C72",
+        "#378C6A",
+        "#2E8064",
+        "#1E6B5A",
+      ],
       seaweed: [
         "#e5f9fd",
         "#c4edf3",
@@ -50,11 +62,11 @@ export function getBaseTheme(
         "#17345F",
       ],
     },
-    primaryColor: "seaweed",
+    primaryColor: "forest",
     defaultGradient: {
       deg: 150,
-      from: "seaweed.5",
-      to: "seaweed.9",
+      from: "forest.4",
+      to: "forest.8",
     },
     globalStyles: globalStyle,
     components: {
@@ -76,8 +88,10 @@ export function getBaseTheme(
           size: "lg",
           variant: "default",
         },
-        styles: (theme) => ({
+        styles: (theme, params) => ({
           root: {
+            minWidth: "2.25rem",
+            minHeight: "2.25rem",
             color:
               theme.colorScheme === "light"
                 ? theme.colors.gray[9]
@@ -88,18 +102,22 @@ export function getBaseTheme(
       },
       Modal: {
         defaultProps: {
-          overlayColor: "#00000011",
           shadow: "xl",
           size: "500px",
           closeOnClickOutside: false,
           closeOnEscape: true,
-          withCloseButton: false,
           radius: "md",
         },
         styles: (theme) => ({
           title: {
-            fontSize: theme.headings.sizes.h4.fontSize,
-            fontWeight: "bolder",
+            fontSize: theme.fontSizes.sm,
+            fontWeight: 600,
+          },
+          overlay: {
+            background:
+              theme.colorScheme === "light"
+                ? "linear-gradient(165deg, rgba(173,181,189,0.2) 80%, rgba(117,183,151,0.2) 100%)"
+                : "red",
           },
         }),
       },
@@ -128,6 +146,7 @@ export function getBaseTheme(
         }),
       },
       RichTextEditor: getRichTextEditorStyles(),
+      Navbar: getNavBarStyles(),
       NavLink: getNavLinkStyles(),
       Popover: {
         styles: (theme) => ({
@@ -153,11 +172,10 @@ export function getBaseTheme(
 
 const headingStyle = {
   fontFamily: "Playfair Display",
-  fontWeight: 600,
-  lineHeight: "1.25",
+  fontWeight: 500,
   sizes: {
-    h1: { fontSize: "3.125rem" },
-    h2: { fontSize: "1.625rem" },
+    h1: { fontSize: "2rem" },
+    h2: { fontSize: "1.5rem" },
     h3: { fontSize: "1.25rem" },
     h4: { fontSize: "1.125rem" },
     h5: { fontSize: "1rem" },
@@ -169,11 +187,12 @@ function globalStyle() {
   return {
     ".tabler-icon": {
       strokeWidth: "1.5px",
-      width: "20px",
+      width: "19px",
     },
     "*": {
       transitionDuration: "0.1s",
       transitionProperty: "background, focus",
     },
+    html: { overflow: "hidden" },
   };
 }

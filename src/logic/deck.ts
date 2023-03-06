@@ -154,6 +154,9 @@ export async function getDecks(ids: string[]) {
   return db.decks.bulkGet(ids);
 }
 
+export async function renameDeck(id: string, newName: string) {
+  return db.decks.update(id, { name: newName });
+}
 export async function deleteDeck(deck: Deck, calledRecursively?: boolean) {
   if (!deck) {
     return;
@@ -183,7 +186,11 @@ export async function deleteDeck(deck: Deck, calledRecursively?: boolean) {
   await db.decks.delete(deck.id);
 }
 
-export function useDeckFromUrl(): [Deck | undefined, boolean, Function] {
+export function useDeckFromUrl1_legacy(): [
+  Deck | undefined,
+  boolean,
+  Function
+] {
   const [deck, setDeck] = useState<Deck | undefined>();
   const [failed, setFailed] = useState<boolean>(false);
   const [reFetch, setReFetch] = useState<boolean>(false);
@@ -212,4 +219,23 @@ export function useDeckFromUrl(): [Deck | undefined, boolean, Function] {
   }
 
   return [deck, failed, reload];
+}
+
+export function useDeckFromUrl(): [Deck | undefined, boolean] {
+  const location = useLocation();
+
+  const [id, setID] = useState<string | null>(null);
+  const deck = useLiveQuery(() => db.decks.get(id ?? ""), [id]);
+  const [failed, setFailed] = useState<boolean>(false);
+
+  useEffect(() => {
+    const sequence = location.pathname.split("/")[2];
+    if (sequence) {
+      setID(sequence);
+    } else {
+      setFailed(true);
+    }
+  }, [location]);
+
+  return [deck, failed];
 }

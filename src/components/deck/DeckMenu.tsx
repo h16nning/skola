@@ -12,6 +12,7 @@ import {
 import { Deck, deleteDeck } from "../../logic/deck";
 import DangerousConfirmModal from "../DangerousConfirmModal";
 import { useNavigate } from "react-router-dom";
+import RenameModal from "../editcard/RenameModal";
 
 interface DeckMenuProps {
   deck?: Deck;
@@ -21,6 +22,7 @@ interface DeckMenuProps {
 function DeckMenu({ deck, setDeckOptionsOpened }: DeckMenuProps) {
   const navigate = useNavigate();
   const [deleteModalOpened, setDeleteModalOpened] = useState<boolean>(false);
+  const [renameModalOpened, setRenameModalOpened] = useState<boolean>(false);
 
   async function tryDeleteDeck() {
     if (!deck) {
@@ -60,7 +62,12 @@ function DeckMenu({ deck, setDeckOptionsOpened }: DeckMenuProps) {
           <Menu.Item icon={<IconArrowsExchange size={16} />}>
             Move Deck
           </Menu.Item>
-          <Menu.Item icon={<IconCursorText size={16} />}>Rename</Menu.Item>
+          <Menu.Item
+            icon={<IconCursorText size={16} />}
+            onClick={() => setRenameModalOpened(true)}
+          >
+            Rename
+          </Menu.Item>
           <Menu.Item
             color="red"
             icon={<IconTrash size={16} />}
@@ -79,6 +86,11 @@ function DeckMenu({ deck, setDeckOptionsOpened }: DeckMenuProps) {
         }
         opened={deleteModalOpened}
         setOpened={setDeleteModalOpened}
+      />
+      <RenameModal
+        deck={deck}
+        opened={renameModalOpened}
+        setOpened={setRenameModalOpened}
       />
     </>
   );
