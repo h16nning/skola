@@ -12,12 +12,20 @@ import { Link, RichTextEditor } from "@mantine/tiptap";
 import { Color } from "@tiptap/extension-color";
 import { TextStyle } from "@tiptap/extension-text-style";
 import { IconFile } from "@tabler/icons-react";
-import { FileButton } from "@mantine/core";
+import { createStyles, FileButton } from "@mantine/core";
 
 interface CardTextEditorProps {
   editor: Editor | null;
 }
 
+const useStyles = createStyles((theme) => ({
+  content: {
+    "& .ProseMirror": {
+      maxHeight: "400px",
+      overflow: "scroll",
+    },
+  },
+}));
 export function useCardEditor(content?: string) {
   return useEditor(
     {
@@ -42,6 +50,7 @@ export function useCardEditor(content?: string) {
 }
 
 function CardTextEditor({ editor }: CardTextEditorProps) {
+  const { classes } = useStyles();
   return (
     <RichTextEditor editor={editor} itemRef="ref">
       <RichTextEditor.Toolbar
@@ -123,7 +132,7 @@ function CardTextEditor({ editor }: CardTextEditorProps) {
           )}
         </FileButton>
       </RichTextEditor.Toolbar>
-      <RichTextEditor.Content />
+      <RichTextEditor.Content className={classes.content} />
     </RichTextEditor>
   );
 }

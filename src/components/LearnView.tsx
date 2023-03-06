@@ -13,7 +13,6 @@ import { useDeckFromUrl } from "../logic/deck";
 import { answerCard, Card, CardType, getCardsOf } from "../logic/card";
 import MissingObject from "./MissingObject";
 import { getUtils } from "../logic/CardTypeManager";
-import { notifications } from "@mantine/notifications";
 import { generalFail } from "./Notification";
 
 interface LearnViewProps {}

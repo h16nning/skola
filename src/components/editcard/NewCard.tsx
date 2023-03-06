@@ -14,6 +14,7 @@ import MissingObject from "../MissingObject";
 import { CardType } from "../../logic/card";
 import { useNavigate } from "react-router-dom";
 import { getViewFromCardType } from "./ViewFromCardType";
+import { swapLight } from "../../logic/ui";
 
 interface NewCardProps {}
 
@@ -36,10 +37,15 @@ function NewCard({}: NewCardProps) {
               <IconChevronLeft />
             </ActionIcon>
             <Stack spacing={0}>
-              <Text fz="sm" c="gray">
+              <Text
+                sx={(theme) => ({
+                  color: swapLight(theme),
+                  fontSize: theme.fontSizes.sm,
+                })}
+              >
                 Adding Cards to
               </Text>
-              <Text fw="600">{deck?.name}</Text>
+              <Text fw="500">{deck?.name}</Text>
             </Stack>
           </Group>
 

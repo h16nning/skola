@@ -27,7 +27,7 @@ const useStyles = createStyles((theme) => ({
     },
   },
   selected: {
-    backgroundColor: theme.colors.seaweed[6] + " !important",
+    backgroundColor: theme.colors.forest[6] + " !important",
     color: theme.white,
   },
 }));
