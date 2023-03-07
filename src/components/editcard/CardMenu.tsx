@@ -12,10 +12,11 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardType, deleteCard } from "../../logic/card";
 
 interface CardMenuProps {
-  card?: Card<CardType>;
+  card: Card<CardType> | null;
+  onDelete?: Function;
 }
 
-function CardMenu({ card }: CardMenuProps) {
+function CardMenu({ card, onDelete }: CardMenuProps) {
   const navigate = useNavigate();
   const [deleteModalOpened, setDeleteModalOpened] = useState<boolean>(false);
 
@@ -25,6 +26,9 @@ function CardMenu({ card }: CardMenuProps) {
     }
     try {
       await deleteCard(card);
+      if (onDelete) {
+        onDelete();
+      }
       setDeleteModalOpened(false);
     } catch (error) {
       console.error("Failed to delete card: " + error);

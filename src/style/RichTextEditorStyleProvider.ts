@@ -1,4 +1,5 @@
 import { MantineTheme } from "@mantine/core";
+import { swap, swapMono } from "../logic/ui";
 
 export default function getRichTextEditorStyles() {
   return {
@@ -21,16 +22,10 @@ export default function getRichTextEditorStyles() {
         ".ProseMirror": {
           borderRadius: theme.radius.sm,
           border: "solid 1px",
-          borderColor:
-            theme.colorScheme === "light"
-              ? theme.colors.gray[4]
-              : theme.colors.dark[4],
+          borderColor: swapMono(theme, 4, 4),
         },
         ".ProseMirror-focused": {
-          borderColor:
-            theme.colorScheme === "light"
-              ? theme.colors.seaweed[6]
-              : theme.colors.seaweed[8],
+          borderColor: swap(theme, "primary", 6, 8),
         },
       },
       control: {},

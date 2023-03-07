@@ -3,7 +3,7 @@ import HomeView from "./HomeView";
 import SettingsView from "./settings/SettingsView";
 import DeckView from "./deck/DeckView";
 import NewCardView from "./editcard/NewCard";
-import LearnView from "./LearnView";
+import LearnView from "./learning/LearnView";
 import CardManagerView from "./CardManagerView";
 
 export default function Main() {
