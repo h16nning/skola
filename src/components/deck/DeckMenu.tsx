@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { ActionIcon, Menu } from "@mantine/core";
 import {
   IconAdjustmentsHorizontal,
@@ -24,7 +24,7 @@ function DeckMenu({ deck, setDeckOptionsOpened }: DeckMenuProps) {
   const [deleteModalOpened, setDeleteModalOpened] = useState<boolean>(false);
   const [renameModalOpened, setRenameModalOpened] = useState<boolean>(false);
 
-  async function tryDeleteDeck() {
+  const tryDeleteDeck = useCallback(async () => {
     if (!deck) {
       return;
     }
@@ -35,7 +35,7 @@ function DeckMenu({ deck, setDeckOptionsOpened }: DeckMenuProps) {
     } catch (error) {
       console.error("Failed to delete deck: " + error);
     }
-  }
+  }, [deck, navigate]);
 
   return (
     <>
@@ -78,7 +78,7 @@ function DeckMenu({ deck, setDeckOptionsOpened }: DeckMenuProps) {
         </Menu.Dropdown>
       </Menu>
       <DangerousConfirmModal
-        dangerousAction={(deck: Deck) => tryDeleteDeck()}
+        dangerousAction={() => tryDeleteDeck()}
         dangerousDependencies={[deck]}
         dangerousTitle={"Delete Deck"}
         dangerousDescription={

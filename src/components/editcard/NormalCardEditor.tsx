@@ -11,7 +11,6 @@ import {
 import { NormalCardUtils } from "../../logic/CardTypeManager";
 import { Card, CardType, newCard, updateCard } from "../../logic/card";
 import { Deck } from "../../logic/deck";
-import { notifications } from "@mantine/notifications";
 import {
   addFailed,
   saveFailed,
@@ -55,6 +54,9 @@ function NormalCardEditor({ deck, card }: NormalCardEditorProps) {
                   }),
                   deck
                 );
+                frontEditor?.commands.setContent("");
+                backEditor?.commands.setContent("");
+                frontEditor?.commands.focus();
                 successfullyAdded();
               } catch (error) {
                 addFailed();

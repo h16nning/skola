@@ -1,9 +1,9 @@
 export function sm2(quality: number, model: ReviewModel): ReviewModel {
   if (quality >= 3) {
     if (model.repetitions === 0) {
-      model.interval = 1;
+      model.interval = 0;
     } else if (model.repetitions === 1) {
-      model.interval = 6;
+      model.interval = 1;
     } else {
       model.interval = Math.ceil(model.interval * model.easeFactor);
     }
@@ -25,6 +25,7 @@ export function sm2(quality: number, model: ReviewModel): ReviewModel {
 
 export type ReviewModel = {
   interval: number;
+  learned: boolean;
   repetitions: number;
   easeFactor: number;
 };

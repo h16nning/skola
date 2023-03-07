@@ -41,7 +41,6 @@ export default function App() {
           //header={<TopBar />}
           navbarOffsetBreakpoint="sm"
           navbar={<Sidebar />}
-          pt={32}
           ref={ref}
           bg={
             colorScheme === "light"

@@ -12,7 +12,7 @@ import { Deck } from "../../logic/deck";
 import { swap } from "../../logic/ui";
 import { IconBolt, IconPlus } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardType } from "../../logic/card";
+import { Card, CardType, useStatsOf } from "../../logic/card";
 
 interface HeroDeckSectionProps {
   deck?: Deck;
@@ -36,19 +36,22 @@ const useStyles = createStyles((theme) => ({
 function HeroDeckSection({ deck, cards }: HeroDeckSectionProps) {
   const { classes } = useStyles();
   const navigate = useNavigate();
+  const stats = useStatsOf(cards);
   return (
     <Paper className={classes.container}>
       <Stack spacing="md" align="center">
         <Group>
-          <Stat value={15} name="New Cards" color="blue" />
-          <Stat value={8} name="Learning" color="red" />
-          <Stat value={69} name="Review" color="green" />
+          <Stat value={stats.newCards ?? 0} name="New Cards" color="blue" />
+          <Stat value={stats.learningCards ?? 0} name="Learning" color="red" />
+          <Stat value={stats.dueCards ?? 0} name="Review" color="green" />
+          <Stat value={stats.learnedCards ?? 0} name="Learned" color="yellow" />
+          <Stat value={cards.length ?? 0} name="All" color="gray" />
         </Group>
         <Button
           disabled={cards.length === 0}
           leftIcon={<IconBolt />}
           w="40%"
-          variant="gradient"
+          size="md"
           onClick={() => navigate("/learn/" + deck?.id)}
         >
           Learn

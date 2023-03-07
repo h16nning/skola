@@ -1,10 +1,11 @@
 import { Content } from "./CardContent";
 import { v4 as uuidv4 } from "uuid";
-import { Deck } from "./deck";
+import { Deck, useTopLevelDecks } from "./deck";
 import { db } from "./db";
 import { useLiveQuery } from "dexie-react-hooks";
 import { newRepetition, Repetition } from "./Repetition";
 import { ReviewModel, sm2 } from "./SpacedRepetition";
+import { useEffect, useState } from "react";
 
 export enum CardType {
   Normal = "normal",
@@ -31,7 +32,7 @@ export function createCardSkeleton(): CardSkeleton {
     history: [],
     decks: [],
     dueDate: null,
-    model: { repetitions: 0, easeFactor: 2.5, interval: 0 },
+    model: { repetitions: 0, easeFactor: 2.5, interval: 0, learned: false },
   };
 }
 
@@ -73,12 +74,37 @@ export async function deleteCard(card: Card<CardType>) {
   });
 }
 
-export async function answerCard(card: Card<CardType>, quality: number) {
-  const newModel = sm2(quality, card.model);
-  await updateCard(card.id, {
-    model: newModel,
-    history: [...card.history, newRepetition(quality)],
-  });
+/*export async function learnCard(potentiallyOldCard: Card<CardType>, learned: boolean) {
+  const card = await getCard(potentiallyOldCard.id);
+  if (card) {
+    card.model.learned = learned;
+    const dueDate = new Date();
+    await updateCard(card.id, {
+      model: card.model,
+      history: [...card.history, newRepetition(quality)],
+      dueDate: dueDate,
+    });
+  }
+}*/
+
+export async function answerCard(
+  potentiallyOldCard: Card<CardType>,
+  quality: number,
+  learned: boolean
+) {
+  //The card object passed does not have to represent the current version stored in the database due to the implementation in LearnView. Therefore, the card is loaded from the database.
+  const card = await getCard(potentiallyOldCard.id);
+  if (card) {
+    card.model.learned = learned;
+    const newModel = sm2(quality, card.model);
+    const dueDate = new Date();
+    dueDate.setDate(dueDate.getDate() + newModel.interval);
+    await updateCard(card.id, {
+      model: newModel,
+      history: [...card.history, newRepetition(quality)],
+      dueDate: dueDate,
+    });
+  }
 }
 
 export function useCards() {
@@ -115,3 +141,54 @@ export async function getCardsOf(deck: Deck | undefined) {
   );
   return cards;
 }
+
+export async function getCard(id: string) {
+  return db.cards.get(id);
+}
+
+export function useStatsOf(cards?: Card<CardType>[]): CardsStats {
+  const [dueCards, setDueCards] = useState<number | null>(null);
+  const [learnedCards, setLearnedCards] = useState<number | null>(null);
+  const [newCards, setNewCards] = useState<number | null>(null);
+  const [learningCards, setLearningCards] = useState<number | null>(null);
+
+  useEffect(() => {
+    let dueCounter = 0;
+    let learnedCounter = 0;
+    let newCounter = 0;
+    let learningCounter = 0;
+
+    cards?.forEach((card) => {
+      if (card.history.length === 0) {
+        newCounter++;
+      } else {
+        if (card.model.interval !== 0) {
+          if (!card.dueDate || card.dueDate?.getTime() <= Date.now()) {
+            dueCounter++;
+          } else {
+            learnedCounter++;
+          }
+        } else {
+          learningCounter++;
+        }
+      }
+      setDueCards(dueCounter);
+      setLearnedCards(learnedCounter);
+      setNewCards(newCounter);
+      setLearningCards(learningCounter);
+    });
+  }, [cards]);
+  return {
+    dueCards: dueCards,
+    learnedCards: learnedCards,
+    newCards: newCards,
+    learningCards: learningCards,
+  };
+}
+
+export type CardsStats = {
+  dueCards: number | null;
+  learnedCards: number | null;
+  newCards: number | null;
+  learningCards: number | null;
+};
