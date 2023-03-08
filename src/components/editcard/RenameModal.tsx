@@ -10,7 +10,7 @@ interface RenameModalProps {
 }
 
 function RenameModal({ deck, opened, setOpened }: RenameModalProps) {
-  const [nameValue, setNameValue] = useState<string>("");
+  const [nameValue, setNameValue] = useState<string>(deck?.name ?? "");
   return (
     <Modal
       title={"Rename " + deck?.name}

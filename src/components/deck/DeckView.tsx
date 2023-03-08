@@ -1,26 +1,24 @@
 import React, { useState } from "react";
 import {
   ActionIcon,
-  Badge,
   Button,
-  Card,
   Center,
   Group,
   Space,
   Stack,
-  Text,
   Title,
 } from "@mantine/core";
 import SubDeckSection from "./SubDeckSection";
-import { IconBolt, IconChevronLeft, IconPlus } from "@tabler/icons-react";
+import { IconChevronLeft, IconPlus } from "@tabler/icons-react";
 import DeckMenu from "./DeckMenu";
 import { useNavigate } from "react-router-dom";
 import { useDeckFromUrl, useSuperDecks } from "../../logic/deck";
 import DeckOptionsModal from "./DeckOptionsModal";
 import MissingObject from "../MissingObject";
 import SuperDecksBreadcrumbs from "../SuperDecksBreadcrumbs";
-import { useCardsOf } from "../../logic/card";
+import { useCardsOf, useStatsOf } from "../../logic/card";
 import HeroDeckSection from "./HeroDeckSection";
+import { useDocumentTitle } from "@mantine/hooks";
 
 function DeckView() {
   const navigate = useNavigate();
@@ -29,13 +27,15 @@ function DeckView() {
   const [deck, failed] = useDeckFromUrl();
   const [superDecks] = useSuperDecks(deck);
   const cards = useCardsOf(deck);
+  const stats = useStatsOf(cards);
 
+  useDocumentTitle(deck?.name ? deck?.name : "Super Anki");
   if (failed) {
     return <MissingObject />;
   }
   return (
     <>
-      <Center>
+      <Center pt="md">
         <Stack spacing="lg" sx={() => ({ width: "600px" })}>
           <Group spacing="xs" align="end" noWrap>
             <ActionIcon onClick={() => navigate(-1)}>
@@ -55,6 +55,8 @@ function DeckView() {
                   </Button>
                   <DeckMenu
                     deck={deck}
+                    cards={cards}
+                    stats={stats}
                     setDeckOptionsOpened={setDeckOptionsOpened}
                   />
                 </Group>
@@ -63,7 +65,7 @@ function DeckView() {
           </Group>
 
           <Space h="xl" />
-          <HeroDeckSection deck={deck} cards={cards} />
+          <HeroDeckSection deck={deck} cards={cards} stats={stats} />
 
           <Space h="xl" />
           <SubDeckSection deck={deck} />

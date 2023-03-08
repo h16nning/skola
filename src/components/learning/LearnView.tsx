@@ -29,41 +29,51 @@ function useLearning(
   const [currentCard, setCurrentCard] = useState<Card<CardType> | null>(null);
   const [repetitionCount, setRepetitionCount] = useState<number>(0);
   const [finished, setFinished] = useState<boolean>(false);
+  const [requestingNext, setRequestingNext] = useState<boolean>(false);
 
-  const next = useCallback(() => {
-    console.log("next called");
-    //Check if there are urgent items to be presented
+  const requestNext = useCallback(
+    () => setRequestingNext(true),
+    [setRequestingNext]
+  );
+
+  useEffect(() => {
+    console.log("use effect");
+    console.log(currentCard);
     if (
-      urgentQueue.length !== 0 &&
-      (urgentQueue[0].due <= Date.now() || reservoir.length === 0)
+      requestingNext ||
+      (!currentCard && (reservoir.length !== 0 || urgentQueue.length !== 0))
     ) {
-      const topItem = urgentQueue[0];
-      if (!topItem) {
-        console.log("invalid urgent queue item");
-        return;
+      setRequestingNext(false);
+      console.log("next called");
+      //Check if there are urgent items to be presented
+      console.log("urgent queue:");
+      console.log(urgentQueue);
+      if (
+        urgentQueue.length !== 0 &&
+        (urgentQueue[0].due <= Date.now() || reservoir.length === 0)
+      ) {
+        const topItem = urgentQueue[0];
+        if (!topItem) {
+          console.log("invalid urgent queue item");
+          return;
+        }
+        setCurrentCard(topItem.card);
+        console.log("next: shift first item");
+        let newUrgentQueue = urgentQueue.filter((_, i) => i !== 0);
+        console.log(urgentQueue.length);
+        console.log(newUrgentQueue.length);
+        console.log(newUrgentQueue);
+
+        setUrgentQueue(newUrgentQueue);
+      } else if (reservoir.length !== 0) {
+        //If not pull card from the card reservoir
+        setCurrentCard(reservoir[0]);
+        setReservoir(reservoir.filter((_, i) => i !== 0));
+      } else {
+        setFinished(true);
       }
-      setCurrentCard(topItem.card);
-      console.log("next: shift first item");
-      let newUrgentQueue = urgentQueue.filter((_, i) => i !== 0);
-      console.log(urgentQueue.length);
-      console.log(newUrgentQueue.length);
-      console.log(newUrgentQueue);
-      if (!topItem.card.model.learned) {
-        newUrgentQueue = newUrgentQueue.concat({
-          card: topItem.card,
-          due: Date.now() + 60_000,
-        });
-        console.log("next: push again");
-      }
-      setUrgentQueue(newUrgentQueue);
-    } else if (reservoir.length !== 0) {
-      //If not pull card from the card reservoir
-      setCurrentCard(reservoir[0]);
-      setReservoir(reservoir.filter((_, i) => i !== 0));
-    } else {
-      setFinished(true);
     }
-  }, [urgentQueue, reservoir]);
+  }, [urgentQueue, reservoir, requestNext, currentCard, requestingNext]);
 
   const answer = useCallback(
     async (quality: number) => {
@@ -108,8 +118,10 @@ function useLearning(
 
         console.log("answer finished");
       }
+
+      requestNext();
     },
-    [currentCard, urgentQueue, repetitionCount]
+    [currentCard, urgentQueue, repetitionCount, requestNext]
   );
 
   useEffect(() => {
@@ -127,26 +139,26 @@ function useLearning(
           .map((card) => ({ card: card, due: Date.now() }))
       );
     }
-  }, [cardSet]);
+  }, [cardSet, repetitionCount]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (!currentCard && (urgentQueue.length !== 0 || reservoir.length !== 0)) {
-      next();
+      requestNext();
     }
-  }, [currentCard, urgentQueue, reservoir, next]);
+  }, [currentCard, urgentQueue, reservoir]);*/
 
   useDebugValue(currentCard);
   useDebugValue(urgentQueue);
   useDebugValue(reservoir);
   useDebugValue(finished);
   useDebugValue(repetitionCount);
-  return [currentCard, next, answer, finished, repetitionCount];
+  return [currentCard, requestNext, answer, finished, repetitionCount];
 }
 function LearnView({}: LearnViewProps) {
   const [showingAnswer, setShowingAnswer] = useState<boolean>(false);
   const [deck, failed] = useDeckFromUrl();
   const [cardSet, setCardSet] = useState<Card<CardType>[] | null>(null);
-  const [currentCard, next, answer, finished, repetitions] =
+  const [currentCard, requestNext, answer, finished, repetitions] =
     useLearning(cardSet);
   const stopwatch = useStopwatch({ autoStart: true });
 
@@ -154,14 +166,13 @@ function LearnView({}: LearnViewProps) {
     async (quality: number) => {
       try {
         await answer(quality);
-        next();
         setShowingAnswer(false);
       } catch (error) {
         generalFail();
         console.log(error);
       }
     },
-    [answer, next]
+    [answer, requestNext]
   );
 
   useEffect(() => {
@@ -181,7 +192,7 @@ function LearnView({}: LearnViewProps) {
       <LearnViewHeader
         stopwatch={stopwatch}
         currentCard={currentCard}
-        next={next}
+        next={requestNext}
       />
       <Center>
         <Paper
@@ -197,18 +208,20 @@ function LearnView({}: LearnViewProps) {
           <Stack>
             {currentCard ? (
               getUtils(currentCard).displayQuestion(
-                // @ts-ignore
+                // @ts-ignore how to solve this???
                 currentCard
               )
             ) : (
               <></>
             )}
-            <Divider />
             {showingAnswer && currentCard ? (
-              getUtils(currentCard).displayAnswer(
-                // @ts-ignore
-                currentCard
-              )
+              <>
+                <Divider />
+                {getUtils(currentCard).displayAnswer(
+                  // @ts-ignore how to solve this???
+                  currentCard
+                )}
+              </>
             ) : (
               <></>
             )}
