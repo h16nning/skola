@@ -10,13 +10,14 @@ import {
 } from "@mantine/core";
 import { Deck } from "../../logic/deck";
 import { swap } from "../../logic/ui";
-import { IconBolt, IconPlus } from "@tabler/icons-react";
+import { IconBolt } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardType, useStatsOf } from "../../logic/card";
+import { Card, CardsStats, CardType, useStatsOf } from "../../logic/card";
 
 interface HeroDeckSectionProps {
   deck?: Deck;
   cards: Card<CardType>[];
+  stats: CardsStats;
 }
 
 const useStyles = createStyles((theme) => ({
@@ -33,10 +34,9 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 400,
   },
 }));
-function HeroDeckSection({ deck, cards }: HeroDeckSectionProps) {
+function HeroDeckSection({ deck, cards, stats }: HeroDeckSectionProps) {
   const { classes } = useStyles();
   const navigate = useNavigate();
-  const stats = useStatsOf(cards);
   return (
     <Paper className={classes.container}>
       <Stack spacing="md" align="center">

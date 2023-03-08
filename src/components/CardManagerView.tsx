@@ -44,7 +44,7 @@ function Core({ cardSet, name }: CoreProps) {
   const [selectedCard, setSelectedCard] = useState<Card<CardType>>();
   const navigate = useNavigate();
   return (
-    <Center>
+    <Center pt="md">
       <Group spacing="lg" align="start">
         <Stack w="600px">
           <Group>

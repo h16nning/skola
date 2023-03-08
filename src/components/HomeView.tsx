@@ -11,7 +11,7 @@ export default function HomeView() {
 
   return (
     <>
-      <Center>
+      <Center pt="md">
         <Stack spacing="md" sx={{ width: "600px" }}>
           <Group position="right">
             <Button

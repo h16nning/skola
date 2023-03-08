@@ -5,7 +5,6 @@ import { IndexableType } from "dexie";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useDebugValue, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-
 export interface Deck {
   id: string;
   name: string;
@@ -170,6 +169,8 @@ export async function deleteDeck(deck: Deck, calledRecursively?: boolean) {
   if (deck.superDecks && deck.superDecks[0] && !calledRecursively) {
     const superDeck = await getDeck(deck.superDecks[0]);
     if (superDeck) {
+      console.log("remove from super");
+      console.log(deck.id);
       await db.decks.update(superDeck.id, {
         ...superDeck,
         subDecks: superDeck?.subDecks.filter((s) => s !== deck.id),
@@ -184,41 +185,6 @@ export async function deleteDeck(deck: Deck, calledRecursively?: boolean) {
     })
   );
   await db.decks.delete(deck.id);
-}
-
-export function useDeckFromUrl1_legacy(): [
-  Deck | undefined,
-  boolean,
-  Function
-] {
-  const [deck, setDeck] = useState<Deck | undefined>();
-  const [failed, setFailed] = useState<boolean>(false);
-  const [reFetch, setReFetch] = useState<boolean>(false);
-
-  const location = useLocation();
-
-  useEffect(() => {
-    const id = location.pathname.split("/")[2];
-    if (id) {
-      void tryFetchDeck(id);
-    } else {
-      setFailed(true);
-    }
-  }, [location, reFetch]);
-
-  async function tryFetchDeck(id: string) {
-    const d = await getDeck(id);
-    if (d === undefined) {
-      setFailed(true);
-    }
-    setDeck(d);
-  }
-
-  function reload() {
-    setReFetch(!reFetch);
-  }
-
-  return [deck, failed, reload];
 }
 
 export function useDeckFromUrl(): [Deck | undefined, boolean] {

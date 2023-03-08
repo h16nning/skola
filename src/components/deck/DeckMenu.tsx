@@ -13,16 +13,21 @@ import { Deck, deleteDeck } from "../../logic/deck";
 import DangerousConfirmModal from "../DangerousConfirmModal";
 import { useNavigate } from "react-router-dom";
 import RenameModal from "../editcard/RenameModal";
+import DebugDeckModal from "./DebugDeckModal";
+import { Card, CardsStats, CardType } from "../../logic/card";
 
 interface DeckMenuProps {
   deck?: Deck;
+  cards: Card<CardType>[];
+  stats: CardsStats;
   setDeckOptionsOpened: Function;
 }
 
-function DeckMenu({ deck, setDeckOptionsOpened }: DeckMenuProps) {
+function DeckMenu({ deck, setDeckOptionsOpened, cards, stats }: DeckMenuProps) {
   const navigate = useNavigate();
   const [deleteModalOpened, setDeleteModalOpened] = useState<boolean>(false);
   const [renameModalOpened, setRenameModalOpened] = useState<boolean>(false);
+  const [debugModalOpened, setDebugModalOpened] = useState<boolean>(false);
 
   const tryDeleteDeck = useCallback(async () => {
     if (!deck) {
@@ -46,7 +51,12 @@ function DeckMenu({ deck, setDeckOptionsOpened }: DeckMenuProps) {
           </ActionIcon>
         </Menu.Target>
         <Menu.Dropdown>
-          <Menu.Item icon={<IconCode size={16} />}>Debug</Menu.Item>
+          <Menu.Item
+            icon={<IconCode size={16} />}
+            onClick={() => setDebugModalOpened(true)}
+          >
+            Debug
+          </Menu.Item>
           <Menu.Item
             icon={<IconCards size={16} />}
             onClick={() => navigate("/cards/" + deck?.id)}
@@ -91,6 +101,13 @@ function DeckMenu({ deck, setDeckOptionsOpened }: DeckMenuProps) {
         deck={deck}
         opened={renameModalOpened}
         setOpened={setRenameModalOpened}
+      />
+      <DebugDeckModal
+        deck={deck}
+        cards={cards}
+        stats={stats}
+        opened={debugModalOpened}
+        setOpened={setDebugModalOpened}
       />
     </>
   );
