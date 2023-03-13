@@ -1,18 +1,10 @@
 import React from "react";
-import {
-  Badge,
-  Button,
-  createStyles,
-  Group,
-  Paper,
-  Stack,
-  Text,
-} from "@mantine/core";
+import { Button, createStyles, Group, Paper, Stack, Text } from "@mantine/core";
 import { Deck } from "../../logic/deck";
 import { swap } from "../../logic/ui";
 import { IconBolt } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardsStats, CardType, useStatsOf } from "../../logic/card";
+import { Card, CardsStats, CardType } from "../../logic/card";
 
 interface HeroDeckSectionProps {
   deck?: Deck;
@@ -21,7 +13,9 @@ interface HeroDeckSectionProps {
 }
 
 const useStyles = createStyles((theme) => ({
-  container: { padding: theme.spacing.sm },
+  container: {
+    padding: theme.spacing.sm,
+  },
   stat: {
     minWidth: "6rem",
     padding: theme.spacing.xs,
@@ -48,7 +42,12 @@ function HeroDeckSection({ deck, cards, stats }: HeroDeckSectionProps) {
           <Stat value={cards.length ?? 0} name="All" color="gray" />
         </Group>
         <Button
-          disabled={cards.length === 0}
+          disabled={
+            !deck ||
+            (stats.newCards === 0 &&
+              stats.learningCards === 0 &&
+              stats.dueCards === 0)
+          }
           leftIcon={<IconBolt />}
           w="40%"
           size="md"

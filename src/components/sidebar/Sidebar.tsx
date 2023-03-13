@@ -1,20 +1,10 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Card,
-  Navbar,
-  NavLink,
-  Stack,
-  Text,
-  UnstyledButton,
-} from "@mantine/core";
+import { Navbar, NavLink, Stack, Text } from "@mantine/core";
 import {
   IconBolt,
   IconCards,
   IconChartBar,
   IconHome,
-  IconHomeStats,
   IconSettings,
 } from "@tabler/icons-react";
 import { useLocation, useNavigate } from "react-router-dom";

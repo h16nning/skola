@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Card, CardType } from "../../logic/card";
-import { createStyles, Table } from "@mantine/core";
+import { createStyles, Table, Text } from "@mantine/core";
 import { useDeckOf } from "../../logic/deck";
 
 const useStyles = createStyles((theme) => ({
@@ -10,6 +10,7 @@ const useStyles = createStyles((theme) => ({
     border: "none",
     borderRadius: theme.radius.lg,
     cursor: "pointer",
+    userSelect: "none",
     //"&:active": { transform: "scale(0.99)" },
   },
   th: { borderBottom: "none !important" },
@@ -57,19 +58,25 @@ function CardTable({
           <th className={classes.th}>Deck</th>
         </tr>
       </thead>
-      <tbody>
-        {cardSet.map((card, index) => (
-          <CardTableItem
-            card={card}
-            key={index}
-            index={index}
-            selectedIndex={selectedIndex}
-            setSelectedIndex={setSelectedIndex}
-            selectedCard={selectedCard}
-            setSelectedCard={setSelectedCard}
-          />
-        ))}
-      </tbody>
+      {cardSet.length > 0 ? (
+        <tbody>
+          {cardSet.map((card, index) => (
+            <CardTableItem
+              card={card}
+              key={index}
+              index={index}
+              selectedIndex={selectedIndex}
+              setSelectedIndex={setSelectedIndex}
+              selectedCard={selectedCard}
+              setSelectedCard={setSelectedCard}
+            />
+          ))}
+        </tbody>
+      ) : (
+        <Text fz="sm" color="dimmed">
+          No cards found
+        </Text>
+      )}
     </Table>
   );
 }
@@ -79,7 +86,6 @@ function CardTableItem({
   index,
   selectedIndex,
   setSelectedIndex,
-  selectedCard,
   setSelectedCard,
 }: {
   card: Card<CardType>;
@@ -109,7 +115,7 @@ function CardTableItem({
       </td>
       <td className={classes.td}>{card.content.type}</td>
 
-      <td className={classes.td}>{deck?.name}</td>
+      <td className={classes.td}>{deck?.name ?? "?"}</td>
     </tr>
   );
 }

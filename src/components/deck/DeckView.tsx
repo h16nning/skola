@@ -35,7 +35,7 @@ function DeckView() {
   }
   return (
     <>
-      <Center pt="md">
+      <Center pt="md" pr="md">
         <Stack spacing="lg" sx={() => ({ width: "600px" })}>
           <Group spacing="xs" align="end" noWrap>
             <ActionIcon onClick={() => navigate(-1)}>

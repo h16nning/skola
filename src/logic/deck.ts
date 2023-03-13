@@ -61,7 +61,7 @@ function isDeck(deck: unknown): deck is Deck {
 }
 
 export function useDeckOf(card: Card<CardType>) {
-  return useLiveQuery(() => db.decks.get(card.decks[0]));
+  return useLiveQuery(() => db.decks.get(card.decks[0]), [card]);
 }
 
 export function useDecks() {
@@ -98,7 +98,7 @@ async function determineSubDecks(
     try {
       const sd = await getDecks(deck.subDecks);
       const includesUndefined = sd.includes(undefined);
-      if (sd !== undefined && !includesUndefined) {
+      if (!includesUndefined) {
         setSubDecks(sd as Deck[]);
       } else {
         setSubDecks(undefined);
@@ -118,7 +118,7 @@ export function useSuperDecks(deck?: Deck): [Deck[] | undefined, boolean] {
     setSuperDecks(undefined);
     setFailed(false);
     void determineSuperDecks();
-  }, [deck]);
+  }, [deck, determineSubDecks]);
 
   async function determineSuperDecks() {
     if (deck) {
@@ -126,7 +126,7 @@ export function useSuperDecks(deck?: Deck): [Deck[] | undefined, boolean] {
         try {
           const sd = await getDecks(deck.superDecks);
           const includesUndefined = sd.includes(undefined);
-          if (sd !== undefined && !includesUndefined) {
+          if (!includesUndefined) {
             setSuperDecks(sd as Deck[]);
           } else {
             setSuperDecks(undefined);
