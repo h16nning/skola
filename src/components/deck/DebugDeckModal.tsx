@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Group, Modal, Stack, Text } from "@mantine/core";
+import { Anchor, Button, Group, Modal, Stack, Text } from "@mantine/core";
 import { Deck } from "../../logic/deck";
 import { Card, CardsStats, CardType } from "../../logic/card";
 
@@ -35,7 +35,15 @@ function DebugDeckModal({
               <b>ID: </b>"{deck.id}"
             </Text>
             <Text>
-              <b>SubDecks: </b>"{deck.subDecks.map((s) => s + "  ")}"
+              <b>SubDecks: </b>
+              {deck.subDecks.map((subDeckId, i) => (
+                <>
+                  <Anchor key={i} href={"/deck/" + subDeckId}>
+                    {subDeckId}
+                  </Anchor>
+                  <span>, </span>
+                </>
+              ))}
             </Text>
             <Text>
               <b>SuperDecks: </b>"{deck.superDecks}"

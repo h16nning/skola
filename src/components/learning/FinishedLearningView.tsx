@@ -28,7 +28,7 @@ function FinishedLearningView({
     <Center>
       <Stack spacing="xl" align="center" pt="xl">
         <Image
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Circle-icons-trophy_%28dark%29.svg/2048px-Circle-icons-trophy_%28dark%29.svg.png"
+          src={process.env.PUBLIC_URL + "/badge.svg"}
           maw="10rem"
           alt="placeholder trophy image"
         />
@@ -38,7 +38,11 @@ function FinishedLearningView({
           yourself!
         </Text>
         <Group>
-          <LearningStat title="Super fast" value="35 sec" color="orange" />
+          <LearningStat
+            title="Duration"
+            value={time.minutes + "m " + time.seconds + "s"}
+            color="orange"
+          />
           <LearningStat title="Accuracy" value="97%" color="green" />
           <LearningStat title="Repetitions" value={repetitions} color="blue" />
         </Group>
@@ -67,25 +71,35 @@ function LearningStat({
     <Paper
       sx={(theme) => ({
         border: "solid 1px",
-        borderColor: swap(theme, color, 6, 6),
+        borderColor: swap(theme, color, 4, 9, 0.2),
+        background:
+          "radial-gradient(farthest-side at 70% 70%," +
+          swap(theme, color, 3, 9, 0.3) +
+          "," +
+          swap(theme, color, 3, 7, 0.1) +
+          ")",
         borderRadius: theme.radius.sm,
         padding: theme.spacing.sm,
         minWidth: "8rem",
       })}
     >
-      <Stack align="center" spacing="xs">
+      <Stack align="center" spacing="0">
         <Text
           sx={(theme) => ({
-            fontSize: theme.fontSizes.sm,
+            fontSize: theme.fontSizes.lg,
+            fontWeight: 700,
             color: swap(theme, color, 6, 6),
           })}
         >
-          {title}
+          {value}
         </Text>
         <Text
-          sx={(theme) => ({ fontWeight: 700, color: swap(theme, color, 6, 6) })}
+          sx={(theme) => ({
+            fontSize: theme.fontSizes.sm,
+            color: swap(theme, color, 8, 4),
+          })}
         >
-          {value}
+          {title}
         </Text>
       </Stack>
     </Paper>

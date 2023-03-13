@@ -1,24 +1,63 @@
 import React, { useState } from "react";
-import { ActionIcon, Center, Group, Stack, Text } from "@mantine/core";
+import { ActionIcon, Center, Group, Select, Stack, Text } from "@mantine/core";
 import { Card, CardType, useCards, useCardsOf } from "../logic/card";
 import { useLocation, useNavigate } from "react-router-dom";
 import CardTable from "./sidebar/CardTable";
 import EditCardView from "./editcard/EditCardView";
-import { dummyDeck, useDeckFromUrl } from "../logic/deck";
+import { dummyDeck, useDeckFromUrl, useDecks } from "../logic/deck";
 import MissingObject from "./MissingObject";
-import { swapLight } from "../logic/ui";
+import { swapLight, swapMono } from "../logic/ui";
 import { IconChevronLeft } from "@tabler/icons-react";
 
-interface CardManagerViewProps {}
-
-function useDeckGiven(): boolean {
+function CardManagerView() {
+  const navigate = useNavigate();
   const location = useLocation();
-  return typeof location.pathname.split("/")[2] === "string";
-}
-function CardManagerView({}: CardManagerViewProps) {
-  const [cardSet, setCardSet] = useState<Card<CardType>[]>();
-  const deckGiven = useDeckGiven();
-  return deckGiven ? <DeckCards /> : <AllCards />;
+
+  const deckGiven = typeof location.pathname.split("/")[2] === "string";
+  const decks = useDecks();
+
+  return (
+    <Center pt="md" w="100%">
+      <Stack w="100%">
+        <Group>
+          <ActionIcon
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            <IconChevronLeft />
+          </ActionIcon>
+          <Stack spacing="xs">
+            <Text
+              sx={(theme) => ({
+                color: swapLight(theme),
+                fontSize: theme.fontSizes.sm,
+              })}
+            >
+              Showing cards in
+            </Text>
+            <Select
+              placeholder="Pick one"
+              searchable
+              nothingFound="No Decks Found"
+              data={[{ value: "", label: "All" }].concat(
+                decks?.map((deck) => ({
+                  value: deck.id,
+                  label: deck.name,
+                })) ?? []
+              )}
+              value={location.pathname.split("/")[2]}
+              onChange={(value) =>
+                navigate(value !== "" ? "/cards/" + value : "/cards")
+              }
+            />
+            {/*<Text fw={600}>{name}</Text>*/}
+          </Stack>
+        </Group>
+        {deckGiven ? <DeckCards /> : <AllCards />}
+      </Stack>
+    </Center>
+  );
 }
 
 function AllCards() {
@@ -39,55 +78,35 @@ interface CoreProps {
   cardSet: Card<CardType>[];
   name: string;
 }
-function Core({ cardSet, name }: CoreProps) {
+
+function Core({ cardSet }: CoreProps) {
   const [selectedIndex, setSelectedIndex] = useState<number>();
   const [selectedCard, setSelectedCard] = useState<Card<CardType>>();
-  const navigate = useNavigate();
   return (
-    <Center pt="md">
-      <Group spacing="lg" align="start">
-        <Stack w="600px">
-          <Group>
-            <ActionIcon
-              onClick={() => {
-                navigate(-1);
-              }}
-            >
-              <IconChevronLeft />
-            </ActionIcon>
-            <Stack spacing={0}>
-              <Text
-                sx={(theme) => ({
-                  color: swapLight(theme),
-                  fontSize: theme.fontSizes.sm,
-                })}
-              >
-                Showing cards in
-              </Text>
-              <Text fw={600}>{name}</Text>
-            </Stack>
-          </Group>
-          <CardTable
-            cardSet={cardSet}
-            selectedIndex={selectedIndex}
-            setSelectedIndex={setSelectedIndex}
-            selectedCard={selectedCard}
-            setSelectedCard={setSelectedCard}
-          />
-        </Stack>
-        <Stack
-          w="600px"
-          h="800px"
-          p="sm"
-          sx={(theme) => ({
-            border: "solid 1px " + theme.colors.gray[3],
-            borderRadius: theme.radius.md,
-          })}
-        >
-          <EditCardView card={selectedCard} />
-        </Stack>
-      </Group>
-    </Center>
+    <Group spacing="lg" grow pr="lg">
+      <Stack miw="300px" w="400px" maw="100%">
+        <CardTable
+          cardSet={cardSet}
+          selectedIndex={selectedIndex}
+          setSelectedIndex={setSelectedIndex}
+          selectedCard={selectedCard}
+          setSelectedCard={setSelectedCard}
+        />
+      </Stack>
+      <Stack
+        miw="300px"
+        w="400px"
+        maw="100%"
+        h="800px"
+        p="sm"
+        sx={(theme) => ({
+          border: "solid 1px " + swapMono(theme, 3, 5),
+          borderRadius: theme.radius.md,
+        })}
+      >
+        <EditCardView card={selectedCard} />
+      </Stack>
+    </Group>
   );
 }
 export default CardManagerView;

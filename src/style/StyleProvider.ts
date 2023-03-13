@@ -78,7 +78,7 @@ export function getBaseTheme(
         }),
       },
       Text: {
-        styles: (theme) => ({
+        styles: () => ({
           root: {},
         }),
       },
@@ -88,7 +88,7 @@ export function getBaseTheme(
           size: "lg",
           variant: "default",
         },
-        styles: (theme, params) => ({
+        styles: (theme) => ({
           root: {
             minWidth: "2.25rem",
             minHeight: "2.25rem",
@@ -165,6 +165,11 @@ export function getBaseTheme(
             boxShadow: theme.shadows.md,
           },
         }),
+      },
+      TabsPanel: {
+        defaultProps: {
+          pt: "sm",
+        },
       },
     },
   };
