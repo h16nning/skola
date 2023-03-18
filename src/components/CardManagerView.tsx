@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { ActionIcon, Center, Group, Select, Stack, Text } from "@mantine/core";
 import { Card, CardType, useCards, useCardsOf } from "../logic/card";
 import { useLocation, useNavigate } from "react-router-dom";
-import CardTable from "./sidebar/CardTable";
+import CardTable from "./CardTable";
 import EditCardView from "./editcard/EditCardView";
 import { dummyDeck, useDeckFromUrl, useDecks } from "../logic/deck";
-import MissingObject from "./MissingObject";
+import MissingObject from "./custom/MissingObject";
 import { swapLight, swapMono } from "../logic/ui";
 import { IconChevronLeft } from "@tabler/icons-react";
 
@@ -17,46 +17,44 @@ function CardManagerView() {
   const decks = useDecks();
 
   return (
-    <Center pt="md" w="100%">
-      <Stack w="100%">
-        <Group>
-          <ActionIcon
-            onClick={() => {
-              navigate(-1);
-            }}
+    <Stack w="100%">
+      <Group>
+        <ActionIcon
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          <IconChevronLeft />
+        </ActionIcon>
+        <Stack spacing="xs">
+          <Text
+            sx={(theme) => ({
+              color: swapLight(theme),
+              fontSize: theme.fontSizes.sm,
+            })}
           >
-            <IconChevronLeft />
-          </ActionIcon>
-          <Stack spacing="xs">
-            <Text
-              sx={(theme) => ({
-                color: swapLight(theme),
-                fontSize: theme.fontSizes.sm,
-              })}
-            >
-              Showing cards in
-            </Text>
-            <Select
-              placeholder="Pick one"
-              searchable
-              nothingFound="No Decks Found"
-              data={[{ value: "", label: "All" }].concat(
-                decks?.map((deck) => ({
-                  value: deck.id,
-                  label: deck.name,
-                })) ?? []
-              )}
-              value={location.pathname.split("/")[2]}
-              onChange={(value) =>
-                navigate(value !== "" ? "/cards/" + value : "/cards")
-              }
-            />
-            {/*<Text fw={600}>{name}</Text>*/}
-          </Stack>
-        </Group>
-        {deckGiven ? <DeckCards /> : <AllCards />}
-      </Stack>
-    </Center>
+            Showing cards in
+          </Text>
+          <Select
+            placeholder="Pick one"
+            searchable
+            nothingFound="No Decks Found"
+            data={[{ value: "", label: "All" }].concat(
+              decks?.map((deck) => ({
+                value: deck.id,
+                label: deck.name,
+              })) ?? []
+            )}
+            value={location.pathname.split("/")[2]}
+            onChange={(value) =>
+              navigate(value !== "" ? "/cards/" + value : "/cards")
+            }
+          />
+          {/*<Text fw={600}>{name}</Text>*/}
+        </Stack>
+      </Group>
+      {deckGiven ? <DeckCards /> : <AllCards />}
+    </Stack>
   );
 }
 
@@ -83,7 +81,7 @@ function Core({ cardSet }: CoreProps) {
   const [selectedIndex, setSelectedIndex] = useState<number>();
   const [selectedCard, setSelectedCard] = useState<Card<CardType>>();
   return (
-    <Group spacing="lg" grow pr="lg">
+    <Group spacing="lg" grow pr="lg" align="start">
       <Stack miw="300px" w="400px" maw="100%">
         <CardTable
           cardSet={cardSet}

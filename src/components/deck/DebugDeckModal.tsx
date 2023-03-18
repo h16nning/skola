@@ -37,12 +37,12 @@ function DebugDeckModal({
             <Text>
               <b>SubDecks: </b>
               {deck.subDecks.map((subDeckId, i) => (
-                <>
+                <span>
                   <Anchor key={i} href={"/deck/" + subDeckId}>
                     {subDeckId}
                   </Anchor>
-                  <span>, </span>
-                </>
+                  ,{" "}
+                </span>
               ))}
             </Text>
             <Text>

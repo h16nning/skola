@@ -1,17 +1,23 @@
 import React, { useEffect } from "react";
-import { Card, CardType } from "../../logic/card";
+import { Card, CardType } from "../logic/card";
 import { createStyles, Table, Text } from "@mantine/core";
-import { useDeckOf } from "../../logic/deck";
+import { useDeckOf } from "../logic/deck";
+import { swap } from "../logic/ui";
+import { useEventListener } from "@mantine/hooks";
 
 const useStyles = createStyles((theme) => ({
-  table: { fontSize: "2rem !important" },
+  table: {
+    fontSize: "2rem !important",
+    overflowX: "scroll",
+    "&:focus": { outline: "none" },
+  },
   tr: {
-    borderColor: "red",
     border: "none",
     borderRadius: theme.radius.lg,
     cursor: "pointer",
     userSelect: "none",
-    //"&:active": { transform: "scale(0.99)" },
+    borderCollapse: "separate",
+    "&:active": { transform: "scale(0.99)" },
   },
   th: { borderBottom: "none !important" },
   td: {
@@ -28,7 +34,7 @@ const useStyles = createStyles((theme) => ({
     },
   },
   selected: {
-    backgroundColor: theme.colors.forest[6] + " !important",
+    backgroundColor: swap(theme, "primary", 6, 8) + " !important",
     color: theme.white,
   },
 }));
@@ -49,8 +55,31 @@ function CardTable({
   setSelectedCard,
 }: CardTableProps) {
   const { classes } = useStyles();
+
+  const ref = useEventListener("keydown", (event) => {
+    if (event.key === "ArrowDown") {
+      setSelectedIndex(
+        selectedIndex !== undefined
+          ? Math.min(selectedIndex + 1, cardSet.length - 1)
+          : 0
+      );
+    } else if (event.key === "ArrowUp") {
+      setSelectedIndex(
+        selectedIndex !== undefined
+          ? Math.max(selectedIndex - 1, 0)
+          : cardSet.length - 1
+      );
+    }
+  });
+
   return (
-    <Table highlightOnHover striped className={classes.table}>
+    <Table
+      highlightOnHover
+      striped
+      className={classes.table}
+      ref={ref}
+      tabIndex={0}
+    >
       <thead>
         <tr className={classes.tr}>
           <th className={classes.th}>Name</th>
@@ -96,19 +125,21 @@ function CardTableItem({
   setSelectedCard: Function;
 }) {
   const { classes, cx } = useStyles();
+
   const deck = useDeckOf(card);
+
   useEffect(() => {
     if (selectedIndex === index) {
       setSelectedCard(card);
     }
   }, [selectedIndex, setSelectedCard, index, card]);
+
   return (
     <tr
       className={cx(classes.tr, {
         [classes.selected]: selectedIndex === index,
       })}
       onClick={() => setSelectedIndex(index)}
-      tabIndex={index}
     >
       <td className={classes.td}>
         {card.content.front.replace(/<[^>]*>/g, "")}

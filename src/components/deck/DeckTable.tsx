@@ -2,7 +2,7 @@ import React from "react";
 import { Skeleton, Text, Stack } from "@mantine/core";
 import DeckPreview from "./DeckPreview";
 import { Deck } from "../../logic/deck";
-import LazySkeleton from "../../logic/LazySkeleton";
+import LazySkeleton from "../custom/LazySkeleton";
 
 interface DeckTableProps {
   deckList?: Deck[];

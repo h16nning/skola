@@ -70,6 +70,16 @@ export function getBaseTheme(
     },
     globalStyles: globalStyle,
     components: {
+      AppShell: {
+        styles: () => ({
+          main: {
+            paddingLeft: "var(--mantine-navbar-width)",
+            [`@media (max-width: 47.9375em)`]: {
+              paddingLeft: "0",
+            },
+          },
+        }),
+      },
       Badge: {
         styles: () => ({
           root: {
@@ -107,6 +117,8 @@ export function getBaseTheme(
           closeOnClickOutside: false,
           closeOnEscape: true,
           radius: "md",
+          centered: true,
+          withCloseButton: false,
         },
         styles: (theme) => ({
           title: {
@@ -117,7 +129,7 @@ export function getBaseTheme(
             background:
               theme.colorScheme === "light"
                 ? "linear-gradient(165deg, rgba(173,181,189,0.2) 80%, rgba(117,183,151,0.2) 100%)"
-                : "red",
+                : "linear-gradient(165deg, rgba(0,0,0,0.3) 80%, rgba(7, 61, 4, 0.2) 100%)",
           },
         }),
       },
@@ -164,6 +176,11 @@ export function getBaseTheme(
           dropdown: {
             boxShadow: theme.shadows.md,
           },
+        }),
+      },
+      Tabs: {
+        styles: (theme) => ({
+          tab: { padding: "0.25rem 0.75rem" },
         }),
       },
       TabsPanel: {

@@ -1,4 +1,4 @@
-import { Button, Center, Group, Stack } from "@mantine/core";
+import { Button, Group, Space, Stack, Title } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 import NewDeckModal from "./deck/NewDeckModal";
@@ -11,20 +11,20 @@ export default function HomeView() {
 
   return (
     <>
-      <Center pt="md">
-        <Stack spacing="md" sx={{ width: "600px" }}>
-          <Group position="right">
-            <Button
-              onClick={() => setNewDeckModalOpened(true)}
-              variant="default"
-              leftIcon={<IconPlus />}
-            >
-              New Deck
-            </Button>
-          </Group>
-          <DeckTable deckList={decks ? decks : []} />
-        </Stack>
-      </Center>
+      <Stack spacing="0" sx={{ width: "600px" }}>
+        <Group position="apart">
+          <Title order={3}>Welcome back!</Title>
+          <Button
+            onClick={() => setNewDeckModalOpened(true)}
+            variant="default"
+            leftIcon={<IconPlus />}
+          >
+            New Deck
+          </Button>
+        </Group>
+        <Space h="3rem" />
+        <DeckTable deckList={decks ? decks : []} />
+      </Stack>
       <NewDeckModal
         opened={newDeckModalOpened}
         setOpened={setNewDeckModalOpened}
