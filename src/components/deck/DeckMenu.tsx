@@ -10,7 +10,7 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 import { Deck, deleteDeck } from "../../logic/deck";
-import DangerousConfirmModal from "../DangerousConfirmModal";
+import DangerousConfirmModal from "../custom/DangerousConfirmModal";
 import { useNavigate } from "react-router-dom";
 import RenameModal from "../editcard/RenameModal";
 import DebugDeckModal from "./DebugDeckModal";

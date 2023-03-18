@@ -17,10 +17,9 @@ function LearnViewFooter({
     <Group
       position="center"
       sx={(theme) => ({
-        width: "calc(100% +" + theme.spacing.md + ")",
         padding: theme.spacing.lg,
         backgroundColor: swapMono(theme, 0, 6),
-        marginLeft: "-" + theme.spacing.md,
+        margin: "0 -" + theme.spacing.md,
       })}
     >
       {showingAnswer ? (

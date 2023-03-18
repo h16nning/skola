@@ -1,10 +1,10 @@
 import React, { useCallback, useDebugValue, useEffect, useState } from "react";
-import { Center, Divider, Paper, Stack } from "@mantine/core";
+import { Center, Divider, Paper, Stack, Flex } from "@mantine/core";
 import { useDeckFromUrl } from "../../logic/deck";
 import { answerCard, Card, CardType, getCardsOf } from "../../logic/card";
-import MissingObject from "../MissingObject";
-import { getUtils } from "../../logic/CardTypeManager";
-import { generalFail } from "../Notification";
+import MissingObject from "../custom/MissingObject";
+import { getUtils } from "../CardTypeManager";
+import { generalFail } from "../custom/Notification";
 import FinishedLearningView from "./FinishedLearningView";
 import { useStopwatch } from "react-timer-hook";
 import LearnViewFooter from "./LearnViewFooter";
@@ -185,10 +185,10 @@ function LearnView() {
   }
   // @ts-ignore
   return (
-    <Stack w="100%" h="100%" justify="space-between">
+    <Flex direction="column" justify="space-between" h="100%" w="100%">
       <LearnViewHeader
         stopwatch={stopwatch}
-        currentCard={currentCard}
+        currentCard={currentCard ?? undefined}
         next={requestNext}
       />
       <Center>
@@ -230,7 +230,7 @@ function LearnView() {
         showingAnswer={showingAnswer}
         setShowingAnswer={setShowingAnswer}
       />
-    </Stack>
+    </Flex>
   );
 }
 

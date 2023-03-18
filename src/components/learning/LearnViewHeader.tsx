@@ -9,7 +9,7 @@ import { IconX } from "@tabler/icons-react";
 
 interface LearnViewHeaderProps {
   stopwatch: StopwatchResult;
-  currentCard: Card<CardType> | null;
+  currentCard: Card<CardType> | undefined;
   next: Function;
 }
 function LearnViewHeader({
@@ -19,14 +19,7 @@ function LearnViewHeader({
 }: LearnViewHeaderProps) {
   const navigate = useNavigate();
   return (
-    <Group
-      position="apart"
-      sx={(theme) => ({
-        width: "calc(100% +" + theme.spacing.md + ")",
-        padding: theme.spacing.sm,
-        marginLeft: "-" + theme.spacing.md,
-      })}
-    >
+    <Group position="apart" sx={(theme) => ({})}>
       <Button
         onClick={() => navigate("/home")}
         variant="subtle"

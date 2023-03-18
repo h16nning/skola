@@ -5,6 +5,7 @@ export function getNavLinkStyles() {
   return {
     defaultProps: {
       variant: "light",
+      className: "nav-link",
     },
     styles: (theme: MantineTheme, params: NavLinkStylesParams) => ({
       root: {
@@ -39,5 +40,5 @@ export function getNavLinkStyles() {
 }
 
 export function getNavBarStyles() {
-  return { styles: { root: { backgroundColor: "transparent" } } };
+  return { styles: { root: {} } };
 }

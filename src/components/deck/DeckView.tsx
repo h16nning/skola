@@ -14,7 +14,7 @@ import DeckMenu from "./DeckMenu";
 import { useNavigate } from "react-router-dom";
 import { useDeckFromUrl, useSuperDecks } from "../../logic/deck";
 import DeckOptionsModal from "./DeckOptionsModal";
-import MissingObject from "../MissingObject";
+import MissingObject from "../custom/MissingObject";
 import SuperDecksBreadcrumbs from "../SuperDecksBreadcrumbs";
 import { useCardsOf, useStatsOf } from "../../logic/card";
 import HeroDeckSection from "./HeroDeckSection";
@@ -35,51 +35,49 @@ function DeckView() {
   }
   return (
     <>
-      <Center pt="md" pr="md">
-        <Stack spacing="lg" sx={() => ({ width: "600px" })}>
-          <Group spacing="xs" align="end" noWrap>
-            <ActionIcon onClick={() => navigate(-1)}>
-              <IconChevronLeft />
-            </ActionIcon>
-            <Stack spacing="0.25rem" w="100%">
-              <SuperDecksBreadcrumbs superDecks={superDecks} />
-              <Group position="apart" noWrap>
-                <Title order={2}>{deck ? deck.name : ""}</Title>
-                <Group spacing="xs">
-                  <Button
-                    leftIcon={<IconPlus />}
-                    variant="default"
-                    onClick={() => navigate("/new/" + deck?.id)}
-                  >
-                    Add Cards
-                  </Button>
-                  <DeckMenu
-                    deck={deck}
-                    cards={cards}
-                    stats={stats}
-                    setDeckOptionsOpened={setDeckOptionsOpened}
-                  />
-                </Group>
+      <Stack spacing="lg" sx={() => ({ width: "600px" })}>
+        <Group spacing="xs" align="end" noWrap>
+          <ActionIcon onClick={() => navigate(-1)}>
+            <IconChevronLeft />
+          </ActionIcon>
+          <Stack spacing="0.25rem" w="100%">
+            <SuperDecksBreadcrumbs superDecks={superDecks} />
+            <Group position="apart" noWrap>
+              <Title order={2}>{deck ? deck.name : ""}</Title>
+              <Group spacing="xs">
+                <Button
+                  leftIcon={<IconPlus />}
+                  variant="default"
+                  onClick={() => navigate("/new/" + deck?.id)}
+                >
+                  Add Cards
+                </Button>
+                <DeckMenu
+                  deck={deck}
+                  cards={cards}
+                  stats={stats}
+                  setDeckOptionsOpened={setDeckOptionsOpened}
+                />
               </Group>
-            </Stack>
-          </Group>
+            </Group>
+          </Stack>
+        </Group>
 
-          <Space h="xl" />
-          <HeroDeckSection deck={deck} cards={cards} stats={stats} />
+        <Space h="xl" />
+        <HeroDeckSection deck={deck} cards={cards} stats={stats} />
 
-          <Space h="xl" />
-          <SubDeckSection deck={deck} />
-          {deck ? (
-            <DeckOptionsModal
-              deck={deck}
-              opened={deckOptionsOpened}
-              setOpened={setDeckOptionsOpened}
-            />
-          ) : (
-            ""
-          )}
-        </Stack>
-      </Center>
+        <Space h="xl" />
+        <SubDeckSection deck={deck} />
+        {deck ? (
+          <DeckOptionsModal
+            deck={deck}
+            opened={deckOptionsOpened}
+            setOpened={setDeckOptionsOpened}
+          />
+        ) : (
+          ""
+        )}
+      </Stack>
     </>
   );
 }

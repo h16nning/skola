@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Card, CardType, createCardSkeleton } from "./card";
+import { Card, CardType, createCardSkeleton } from "../logic/card";
 
 export interface CardTypeManager<T extends CardType> {
   create: (params: any) => Card<T>;

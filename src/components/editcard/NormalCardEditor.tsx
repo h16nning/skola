@@ -8,7 +8,7 @@ import {
   IconPlus,
   IconX,
 } from "@tabler/icons-react";
-import { NormalCardUtils } from "../../logic/CardTypeManager";
+import { NormalCardUtils } from "../CardTypeManager";
 import { Card, CardType, newCard, updateCard } from "../../logic/card";
 import { Deck } from "../../logic/deck";
 import {
@@ -16,7 +16,7 @@ import {
   saveFailed,
   successfullyAdded,
   successfullySaved,
-} from "../Notification";
+} from "../custom/Notification";
 
 interface NormalCardEditorProps {
   deck: Deck;

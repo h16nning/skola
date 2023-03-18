@@ -4,5 +4,5 @@ export type Repetition = {
 };
 
 export function newRepetition(result: number) {
-  return { date: Date.now(), result: result };
+  return { date: new Date(Date.now()), result: result };
 }

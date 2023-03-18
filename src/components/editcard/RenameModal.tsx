@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Group, Modal, Stack, Text, TextInput } from "@mantine/core";
 import { Deck, renameDeck } from "../../logic/deck";
-import { generalFail } from "../Notification";
+import { generalFail } from "../custom/Notification";
 
 interface RenameModalProps {
   deck?: Deck;

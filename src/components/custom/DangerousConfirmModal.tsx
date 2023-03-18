@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import ModalProps from "./custom/ModalProps";
+import ModalProps from "./ModalProps";
 import { Button, Group, Modal, Stack, Text } from "@mantine/core";
 
 interface DangerousConfirmModalProps extends ModalProps {
@@ -26,8 +26,9 @@ function DangerousConfirmModal({
       <Stack>
         <Text fz="sm">{dangerousDescription}</Text>
         <Group position="right" spacing="sm">
-          <Button variant="default"
-                  onClick={() => setOpened(false)}>Cancel</Button>
+          <Button variant="default" onClick={() => setOpened(false)}>
+            Cancel
+          </Button>
           <Button
             color="red"
             onClick={() => dangerousAction(...dangerousDependencies)}
