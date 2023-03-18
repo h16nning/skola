@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Group } from "@mantine/core";
 import { swapMono } from "../../logic/ui";
+import { useHotkeys } from "@mantine/hooks";
 
 interface LearnViewFooterProps {
   answer: Function;
@@ -13,6 +14,15 @@ function LearnViewFooter({
   showingAnswer,
   setShowingAnswer,
 }: LearnViewFooterProps) {
+  useHotkeys([
+    ["1", () => answer(0)],
+    ["2", () => answer(1)],
+    ["3", () => answer(3)],
+    ["4", () => answer(5)],
+    ["Space", () => (!showingAnswer ? setShowingAnswer(true) : answer(3))],
+    ["Enter", () => (!showingAnswer ? setShowingAnswer(true) : answer(3))],
+  ]);
+
   return (
     <Group
       position="center"

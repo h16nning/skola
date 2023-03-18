@@ -152,6 +152,7 @@ function LearnView() {
   const [cardSet, setCardSet] = useState<Card<CardType>[] | null>(null);
   const [currentCard, requestNext, answer, finished, repetitions] =
     useLearning(cardSet);
+
   const stopwatch = useStopwatch({ autoStart: true });
 
   const answerButtonPressed = useCallback(
@@ -176,6 +177,7 @@ function LearnView() {
       stopwatch.pause();
     }
   }, [finished, stopwatch]);
+
   if (failed) {
     return <MissingObject />;
   }

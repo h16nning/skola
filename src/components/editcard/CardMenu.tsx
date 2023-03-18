@@ -8,9 +8,9 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 import DangerousConfirmModal from "../custom/DangerousConfirmModal";
-import { useNavigate } from "react-router-dom";
 import { Card, CardType, deleteCard } from "../../logic/card";
 import DebugCardModal from "../DebugCardModal";
+import { useSetting } from "../../logic/Settings";
 
 interface CardMenuProps {
   card: Card<CardType> | undefined;
@@ -18,7 +18,8 @@ interface CardMenuProps {
 }
 
 function CardMenu({ card, onDelete }: CardMenuProps) {
-  const navigate = useNavigate();
+  const developerMode = useSetting("developerMode");
+
   const [debugModalOpened, setDebugModalOpened] = useState<boolean>(false);
   const [deleteModalOpened, setDeleteModalOpened] = useState<boolean>(false);
   async function tryDeleteCard() {
@@ -45,12 +46,14 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
           </ActionIcon>
         </Menu.Target>
         <Menu.Dropdown>
-          <Menu.Item
-            icon={<IconCode size={16} />}
-            onClick={() => setDebugModalOpened(true)}
-          >
-            Debug
-          </Menu.Item>
+          {developerMode ? (
+            <Menu.Item
+              icon={<IconCode size={16} />}
+              onClick={() => setDebugModalOpened(true)}
+            >
+              Debug
+            </Menu.Item>
+          ) : null}
           <Menu.Item icon={<IconAdjustmentsHorizontal size={16} />}>
             Options
           </Menu.Item>
@@ -71,6 +74,7 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
         setOpened={setDebugModalOpened}
         card={card}
       />
+      )
       <DangerousConfirmModal
         dangerousAction={(card: Card<CardType>) => tryDeleteCard()}
         dangerousDependencies={[card]}

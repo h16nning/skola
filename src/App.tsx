@@ -1,6 +1,5 @@
 import {
   AppShell,
-  ColorScheme,
   ColorSchemeProvider,
   MantineProvider,
   useMantineTheme,
@@ -8,33 +7,36 @@ import {
 
 import { getBaseTheme } from "./style/StyleProvider";
 import Main from "./components/Main";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import Sidebar from "./components/sidebar/Sidebar";
 import { Notifications } from "@mantine/notifications";
-import { useEventListener } from "@mantine/hooks";
+import { useColorScheme } from "@mantine/hooks";
 import Header from "./components/Header";
+import { useSetting } from "./logic/Settings";
 
 export default function App() {
   const theme = useMantineTheme();
-  const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
+  const colorSchemePreference = useSetting("colorSchemePreference");
+  const systemColorScheme = useColorScheme();
   const [sidebarOpened, setSidebarOpened] = useState<boolean>(false);
-
-  const toggleColorScheme = useCallback(
-    (value?: ColorScheme) =>
-      setColorScheme(value || (colorScheme === "dark" ? "light" : "dark")),
-    [colorScheme]
-  );
-  const ref = useEventListener("keydown", (ev) => {
-    if (ev.altKey) toggleColorScheme();
-  });
 
   return (
     <ColorSchemeProvider
-      colorScheme={colorScheme}
-      toggleColorScheme={toggleColorScheme}
+      colorScheme={
+        colorSchemePreference === "system"
+          ? systemColorScheme
+          : colorSchemePreference
+      }
+      //not working use setSetting("colorSchemePreference", ...)
+      toggleColorScheme={() => {}}
     >
       <MantineProvider
-        theme={getBaseTheme(theme, colorScheme)}
+        theme={getBaseTheme(
+          theme,
+          colorSchemePreference === "system"
+            ? systemColorScheme
+            : colorSchemePreference
+        )}
         withGlobalStyles
         withNormalizeCSS
       >
@@ -48,7 +50,7 @@ export default function App() {
               <></>
             )
           }
-          ref={ref}
+          //gradients are currently not used
           /*bg={
             colorScheme === "light"
               ? "linear-gradient(-55deg, rgba(255,255,255,1) 85%, rgba(225,239,230,0.5) 100%)"

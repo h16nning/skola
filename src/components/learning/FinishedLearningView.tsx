@@ -13,6 +13,7 @@ import { swap } from "../../logic/ui";
 import { IconHome } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { StopwatchResult } from "react-timer-hook";
+import { useHotkeys } from "@mantine/hooks";
 
 interface FinishedLearningViewProps {
   repetitions: number;
@@ -24,6 +25,10 @@ function FinishedLearningView({
   time,
 }: FinishedLearningViewProps) {
   const navigate = useNavigate();
+
+  useHotkeys([["Space", () => navigate("/home")]]);
+  useHotkeys([["Enter", () => navigate("/home")]]);
+
   return (
     <Center>
       <Stack spacing="xl" align="center" pt="xl">

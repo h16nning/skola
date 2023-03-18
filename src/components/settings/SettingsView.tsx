@@ -8,8 +8,11 @@ import {
   IconSettings,
   IconUser,
 } from "@tabler/icons-react";
+import GeneralSettingsView from "./GeneralSettingsView";
+import { useSetting } from "../../logic/Settings";
 
 export default function SettingsView() {
+  const developerMode = useSetting("developerMode");
   return (
     <Stack spacing="xl" w="600px">
       <Tabs orientation="horizontal" defaultValue="General" variant="pills">
@@ -26,11 +29,15 @@ export default function SettingsView() {
           <Tabs.Tab value="About" icon={<IconInfoCircle />}>
             About
           </Tabs.Tab>
-          <Tabs.Tab value="Developer" icon={<IconBraces />}>
-            Developer
-          </Tabs.Tab>
+          {developerMode ? (
+            <Tabs.Tab value="Developer" icon={<IconBraces />}>
+              Developer
+            </Tabs.Tab>
+          ) : null}
         </Tabs.List>{" "}
-        <Tabs.Panel value="General">General</Tabs.Panel>
+        <Tabs.Panel value="General">
+          <GeneralSettingsView />
+        </Tabs.Panel>
         <Tabs.Panel value="Appearance">
           <CColorSchemeToggle />
         </Tabs.Panel>

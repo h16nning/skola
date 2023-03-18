@@ -13,8 +13,8 @@ export default function Main() {
     <Center
       px="md"
       pt="5rem"
-      mt="-4rem"
-      sx={(theme) => ({
+      mt="-3.5rem"
+      sx={() => ({
         overflowY: "scroll",
         height: "100vh",
         alignItems: "start",
