@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Group, Modal, Stack, Text, TextInput } from "@mantine/core";
+import React, { useEffect, useState } from "react";
+import { Button, Group, Modal, Stack, TextInput } from "@mantine/core";
 import { Deck, renameDeck } from "../../logic/deck";
 import { generalFail } from "../custom/Notification";
 
@@ -11,6 +11,9 @@ interface RenameModalProps {
 
 function RenameModal({ deck, opened, setOpened }: RenameModalProps) {
   const [nameValue, setNameValue] = useState<string>(deck?.name ?? "");
+
+  useEffect(() => setNameValue(deck?.name ?? ""), []);
+
   return (
     <Modal
       title={"Rename " + deck?.name}

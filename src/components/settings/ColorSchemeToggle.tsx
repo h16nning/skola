@@ -1,42 +1,57 @@
-import {
-  useMantineColorScheme,
-  SegmentedControl,
-  Center,
-  Box,
-} from "@mantine/core";
-import { IconSun, IconMoon } from "@tabler/icons-react";
+import { Box, Center, Input, SegmentedControl } from "@mantine/core";
+import { IconMoon, IconSun, IconSunMoon } from "@tabler/icons-react";
+import { setSetting, useSetting } from "../../logic/Settings";
 
 export default function SegmentedToggle() {
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const colorSchemePreference = useSetting("colorSchemePreference");
 
   return (
-    <SegmentedControl
-      value={colorScheme}
-      onChange={(value: "light" | "dark") => toggleColorScheme(value)}
-      data={[
-        {
-          value: "light",
-          label: (
-            <Center>
-              <IconSun size={16} />
-              <Box fz="xs" fw={600} ml={10}>
-                Light
-              </Box>
-            </Center>
-          ),
-        },
-        {
-          value: "dark",
-          label: (
-            <Center>
-              <IconMoon size={16} />
-              <Box fz="xs" fw={600} ml={10}>
-                Dark
-              </Box>
-            </Center>
-          ),
-        },
-      ]}
-    />
+    <Input.Wrapper
+      label="Color Scheme Preference"
+      description="You can choose between light or dark mode. Alternatively, you can use the color scheme of your system."
+    >
+      <SegmentedControl
+        mt="xs"
+        value={colorSchemePreference}
+        onChange={(value: "light" | "dark" | "system") =>
+          setSetting("colorSchemePreference", value)
+        }
+        data={[
+          {
+            value: "light",
+            label: (
+              <Center>
+                <IconSun size={16} />
+                <Box fz="xs" fw={600} ml={10}>
+                  Light
+                </Box>
+              </Center>
+            ),
+          },
+          {
+            value: "dark",
+            label: (
+              <Center>
+                <IconMoon size={16} />
+                <Box fz="xs" fw={600} ml={10}>
+                  Dark
+                </Box>
+              </Center>
+            ),
+          },
+          {
+            value: "system",
+            label: (
+              <Center>
+                <IconSunMoon size={16} />
+                <Box fz="xs" fw={600} ml={10}>
+                  System
+                </Box>
+              </Center>
+            ),
+          },
+        ]}
+      />
+    </Input.Wrapper>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ActionIcon, Center, Group, Select, Stack, Text } from "@mantine/core";
+import { ActionIcon, Group, Select, Stack, Text } from "@mantine/core";
 import { Card, CardType, useCards, useCardsOf } from "../logic/card";
 import { useLocation, useNavigate } from "react-router-dom";
 import CardTable from "./CardTable";
@@ -45,7 +45,7 @@ function CardManagerView() {
                 label: deck.name,
               })) ?? []
             )}
-            value={location.pathname.split("/")[2]}
+            value={location.pathname.split("/")[2] ?? ""}
             onChange={(value) =>
               navigate(value !== "" ? "/cards/" + value : "/cards")
             }

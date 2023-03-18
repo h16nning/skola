@@ -1,12 +1,10 @@
 import React, { useCallback } from "react";
 import {
   ActionIcon,
-  Group,
   MediaQuery,
   Navbar,
   NavLink,
   Stack,
-  Text,
   Tooltip,
   useMantineTheme,
 } from "@mantine/core";
@@ -85,8 +83,8 @@ function Sidebar({
         <Navbar
           hiddenBreakpoint="sm"
           hidden={!opened}
-          width={{ sm: "3.825rem", md: 300 }}
-          p="md"
+          width={{ sm: "3.825rem", md: "15rem" }}
+          p="xs"
           sx={{
             "& .mantine-Tooltip-tooltip": { display: "none" },
           }}

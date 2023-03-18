@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import RenameModal from "../editcard/RenameModal";
 import DebugDeckModal from "./DebugDeckModal";
 import { Card, CardsStats, CardType } from "../../logic/card";
+import { useSetting } from "../../logic/Settings";
 
 interface DeckMenuProps {
   deck?: Deck;
@@ -25,6 +26,9 @@ interface DeckMenuProps {
 
 function DeckMenu({ deck, setDeckOptionsOpened, cards, stats }: DeckMenuProps) {
   const navigate = useNavigate();
+
+  const developerMode = useSetting("developerMode");
+
   const [deleteModalOpened, setDeleteModalOpened] = useState<boolean>(false);
   const [renameModalOpened, setRenameModalOpened] = useState<boolean>(false);
   const [debugModalOpened, setDebugModalOpened] = useState<boolean>(false);
@@ -51,12 +55,14 @@ function DeckMenu({ deck, setDeckOptionsOpened, cards, stats }: DeckMenuProps) {
           </ActionIcon>
         </Menu.Target>
         <Menu.Dropdown>
-          <Menu.Item
-            icon={<IconCode size={16} />}
-            onClick={() => setDebugModalOpened(true)}
-          >
-            Debug
-          </Menu.Item>
+          {developerMode ? (
+            <Menu.Item
+              icon={<IconCode size={16} />}
+              onClick={() => setDebugModalOpened(true)}
+            >
+              Debug
+            </Menu.Item>
+          ) : null}
           <Menu.Item
             icon={<IconCards size={16} />}
             onClick={() => navigate("/cards/" + deck?.id)}
