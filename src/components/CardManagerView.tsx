@@ -50,7 +50,6 @@ function CardManagerView() {
               navigate(value !== "" ? "/cards/" + value : "/cards")
             }
           />
-          {/*<Text fw={600}>{name}</Text>*/}
         </Stack>
       </Group>
       {deckGiven ? <DeckCards /> : <AllCards />}
@@ -95,7 +94,6 @@ function Core({ cardSet }: CoreProps) {
         miw="300px"
         w="400px"
         maw="100%"
-        h="800px"
         p="sm"
         sx={(theme) => ({
           border: "solid 1px " + swapMono(theme, 3, 5),

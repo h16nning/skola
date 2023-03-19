@@ -1,35 +1,33 @@
-import React, { useState } from "react";
-import {
-  ActionIcon,
-  Center,
-  Group,
-  Select,
-  Space,
-  Stack,
-  Text,
-} from "@mantine/core";
+import React, { useMemo, useState } from "react";
+import { ActionIcon, Group, Select, Space, Stack, Text } from "@mantine/core";
 import { IconChevronLeft } from "@tabler/icons-react";
 import { useDeckFromUrl } from "../../logic/deck";
 import MissingObject from "../custom/MissingObject";
 import { CardType } from "../../logic/card";
 import { useNavigate } from "react-router-dom";
-import { getViewFromCardType } from "./ViewFromCardType";
 import { swapLight } from "../../logic/ui";
+import { getUtils } from "../CardTypeManager";
 
-interface NewCardProps {}
-
-function NewCard({}: NewCardProps) {
+function NewCardsView() {
   const navigate = useNavigate();
 
   const [deck, failed] = useDeckFromUrl();
-  const [cardType, setCardType] = useState<string | null>(CardType.Normal);
+  const [cardType, setCardType] = useState<CardType>(CardType.Normal);
+
+  const CardEditor = useMemo(() => {
+    return deck ? getUtils(cardType).editor(null, deck, "new") : null;
+  }, [deck, cardType]);
 
   if (failed) {
     return <MissingObject />;
   }
 
+  if (!deck) {
+    return null;
+  }
+
   return (
-    <Stack sx={{ width: "600px" }}>
+    <Stack sx={{ width: "600px" }} key="stack">
       <Group position="apart">
         <Group spacing="xs">
           <ActionIcon onClick={() => navigate(-1)}>
@@ -50,7 +48,9 @@ function NewCard({}: NewCardProps) {
 
         <Select
           value={cardType}
-          onChange={setCardType}
+          onChange={(type) =>
+            setCardType((type as CardType) ?? CardType.Normal)
+          }
           label="Card Type"
           data={[
             { label: "Normal", value: CardType.Normal },
@@ -60,9 +60,9 @@ function NewCard({}: NewCardProps) {
         />
       </Group>
       <Space h="md" />
-      {getViewFromCardType(deck, cardType)}
+      {CardEditor}
     </Stack>
   );
 }
 
-export default NewCard;
+export default NewCardsView;

@@ -74,7 +74,7 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
         setOpened={setDebugModalOpened}
         card={card}
       />
-      )
+
       <DangerousConfirmModal
         dangerousAction={(card: Card<CardType>) => tryDeleteCard()}
         dangerousDependencies={[card]}

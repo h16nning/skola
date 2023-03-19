@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import HomeView from "./HomeView";
 import SettingsView from "./settings/SettingsView";
 import DeckView from "./deck/DeckView";
-import NewCardView from "./editcard/NewCard";
+import NewCardView from "./editcard/NewCardsView";
 import LearnView from "./learning/LearnView";
 import CardManagerView from "./CardManagerView";
 import { Center } from "@mantine/core";

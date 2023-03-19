@@ -1,5 +1,9 @@
 import { ReactNode } from "react";
 import { Card, CardType, createCardSkeleton } from "../logic/card";
+import { Title } from "@mantine/core";
+import NormalCardEditor from "./editcard/NormalCardEditor";
+import ClozeCardEditor from "./editcard/ClozeCardEditor";
+import { Deck } from "../logic/deck";
 
 export interface CardTypeManager<T extends CardType> {
   create: (params: any) => Card<T>;
@@ -7,8 +11,13 @@ export interface CardTypeManager<T extends CardType> {
   update: (params: any, existingCard: Card<T>) => Card<T>;
 
   displayQuestion(card: Card<T>): ReactNode;
+
   displayAnswer(card: Card<T>): ReactNode;
+
+  editor(card: Card<CardType> | null, deck: Deck, mode: EditMode): JSX.Element;
 }
+
+export type EditMode = "edit" | "new";
 
 export const NormalCardUtils: CardTypeManager<CardType.Normal> = {
   update(
@@ -37,10 +46,21 @@ export const NormalCardUtils: CardTypeManager<CardType.Normal> = {
   },
 
   displayQuestion(card: Card<CardType.Normal>) {
-    return <div dangerouslySetInnerHTML={{ __html: card.content.front }}></div>;
+    return (
+      <Title
+        order={3}
+        fw={600}
+        dangerouslySetInnerHTML={{ __html: card.content.front }}
+      ></Title>
+    );
   },
+
   displayAnswer(card: Card<CardType.Normal>) {
     return <div dangerouslySetInnerHTML={{ __html: card.content.back }}></div>;
+  },
+
+  editor(card: Card<CardType.Normal> | null, deck: Deck, mode: EditMode) {
+    return <NormalCardEditor card={card} deck={deck} mode={mode} />;
   },
 };
 
@@ -76,10 +96,13 @@ export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
   displayAnswer(card: Card<CardType.Cloze>) {
     return card.content.front;
   },
+  editor(card: Card<CardType.Cloze> | null, deck: Deck, mode: EditMode) {
+    return <ClozeCardEditor card={card} deck={deck} mode={mode} />;
+  },
 };
 
-export function getUtils<T extends CardType>(card: Card<T>) {
-  switch (card.content.type) {
+export function getUtils(cardType: CardType) {
+  switch (cardType) {
     case CardType.Normal:
       return NormalCardUtils;
     case CardType.Cloze:

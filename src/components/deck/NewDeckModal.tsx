@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { Button, Group, Modal, Stack, Text, TextInput } from "@mantine/core";
 import ModalProps from "../custom/ModalProps";
 import { Deck, newDeck } from "../../logic/deck";
+import { useNavigate } from "react-router-dom";
 
 interface NewDeckModalProps extends ModalProps {
   superDeck?: Deck;
 }
 
 function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
+  const navigate = useNavigate();
+
   const [nameValue, setNameValue] = useState<string>("");
   const [addingDeck, setAddingDeck] = useState<boolean>(false);
   const [status, setStatus] = useState<string | null>(null);
@@ -17,6 +20,7 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
       const id = await newDeck(nameValue, superDeck);
       setNameValue("");
       setOpened(false);
+      navigate("/deck/" + id);
     } catch (error) {
       setStatus("Failed to add deck: " + error);
     }

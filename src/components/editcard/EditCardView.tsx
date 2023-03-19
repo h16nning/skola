@@ -1,9 +1,9 @@
-import React from "react";
-import { getViewFromCardType } from "./ViewFromCardType";
+import React, { useMemo } from "react";
 import { Card, CardType } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
 import { Group, Stack, Text } from "@mantine/core";
 import CardMenu from "./CardMenu";
+import { getUtils } from "../CardTypeManager";
 
 interface EditCardsProps {
   card?: Card<CardType>;
@@ -24,13 +24,18 @@ function NoCardView() {
 
 function CardView({ card }: { card: Card<CardType> }) {
   const deck = useDeckOf(card);
+
+  const CardEditor = useMemo(() => {
+    return deck ? getUtils(card.content.type).editor(card, deck, "edit") : null;
+  }, [card, deck]);
+
   return (
     <Stack>
       <Group position="apart">
         <Text fz="xs">Edit Card</Text>
         <CardMenu card={card} />
-      </Group>{" "}
-      {getViewFromCardType(deck, card.content.type, card)}
+        {CardEditor}
+      </Group>
     </Stack>
   );
 }
