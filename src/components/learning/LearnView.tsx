@@ -1,5 +1,5 @@
 import React, { useCallback, useDebugValue, useEffect, useState } from "react";
-import { Center, Divider, Paper, Stack, Flex } from "@mantine/core";
+import { Center, Divider, Flex, Stack } from "@mantine/core";
 import { useDeckFromUrl } from "../../logic/deck";
 import { answerCard, Card, CardType, getCardsOf } from "../../logic/card";
 import MissingObject from "../custom/MissingObject";
@@ -194,38 +194,37 @@ function LearnView() {
         next={requestNext}
       />
       <Center>
-        <Paper
-          sx={(theme) => ({
-            maxWidth: "600px",
-            width: "100%",
-            maxHeight: "90%",
-            backgroundColor: swapMono(theme, 0, 6),
-            borderRadius: theme.radius.sm,
-            padding: theme.spacing.sm,
+        <Stack
+          spacing="xl"
+          w="100%"
+          maw="600px"
+          sx={() => ({
+            "& p:first-of-type": {
+              marginTop: 0,
+            },
+            "& p:last-of-type": { marginBottom: 0 },
           })}
         >
-          <Stack>
-            {currentCard ? (
-              getUtils(currentCard).displayQuestion(
+          {currentCard
+            ? getUtils(currentCard.content.type).displayQuestion(
                 // @ts-ignore how to solve this???
                 currentCard
               )
-            ) : (
-              <></>
-            )}
-            {showingAnswer && currentCard ? (
-              <>
-                <Divider />
-                {getUtils(currentCard).displayAnswer(
-                  // @ts-ignore how to solve this???
-                  currentCard
-                )}
-              </>
-            ) : (
-              <></>
-            )}
-          </Stack>
-        </Paper>
+            : null}
+          {showingAnswer && currentCard ? (
+            <>
+              <Divider
+                sx={(theme) => ({ borderColor: swapMono(theme, 2, 6) })}
+              />
+              {getUtils(currentCard.content.type).displayAnswer(
+                // @ts-ignore how to solve this???
+                currentCard
+              )}
+            </>
+          ) : (
+            <></>
+          )}
+        </Stack>
       </Center>
       <LearnViewFooter
         answer={answerButtonPressed}

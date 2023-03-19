@@ -26,7 +26,7 @@ const useStyles = createStyles((theme) => ({
     },
   },
 }));
-export function useCardEditor(content?: string) {
+export function useCardEditor(content: string) {
   return useEditor(
     {
       extensions: [
@@ -43,7 +43,7 @@ export function useCardEditor(content?: string) {
           allowBase64: true,
         }),
       ],
-      content: content ?? "",
+      content: content,
     },
     [content]
   );
@@ -61,23 +61,40 @@ function CardTextEditor({ editor }: CardTextEditorProps) {
           <RichTextEditor.Italic tabIndex={-1} />
           <RichTextEditor.Underline tabIndex={-1} />
           <RichTextEditor.Strikethrough tabIndex={-1} />
-          <RichTextEditor.ClearFormatting tabIndex={-1} />
           <RichTextEditor.Highlight tabIndex={-1} />
           <RichTextEditor.Code tabIndex={-1} />
-        </RichTextEditor.ControlsGroup>
-        <RichTextEditor.ControlsGroup>
-          <RichTextEditor.H1 tabIndex={-1} />
-          <RichTextEditor.H2 tabIndex={-1} />
-          <RichTextEditor.H3 tabIndex={-1} />
-          <RichTextEditor.H4 tabIndex={-1} />
+          <RichTextEditor.Subscript tabIndex={-1} />
+          <RichTextEditor.Superscript tabIndex={-1} />
+          <RichTextEditor.ClearFormatting tabIndex={-1} />
         </RichTextEditor.ControlsGroup>
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Blockquote tabIndex={-1} />
           <RichTextEditor.Hr tabIndex={-1} />
           <RichTextEditor.BulletList tabIndex={-1} />
           <RichTextEditor.OrderedList tabIndex={-1} />
-          <RichTextEditor.Subscript tabIndex={-1} />
-          <RichTextEditor.Superscript tabIndex={-1} />
+          <FileButton
+            onChange={(file) => {
+              const fileReader = new FileReader();
+              let data: string | ArrayBuffer | null;
+              if (file) {
+                fileReader.readAsDataURL(file);
+              }
+              fileReader.onloadend = () => {
+                data = fileReader.result;
+                editor?.commands.insertContent(
+                  `<img src="` + data + `" alt="Image inserted by user"/>`
+                );
+                editor?.commands.focus();
+              };
+            }}
+            accept={"image/jpeg, image/jpg, image/png, image/heic"}
+          >
+            {(props) => (
+              <RichTextEditor.Control {...props} tabIndex={-1}>
+                <IconFile />
+              </RichTextEditor.Control>
+            )}
+          </FileButton>
         </RichTextEditor.ControlsGroup>
 
         <RichTextEditor.ControlsGroup>
@@ -85,12 +102,6 @@ function CardTextEditor({ editor }: CardTextEditorProps) {
           <RichTextEditor.Unlink tabIndex={-1} />
         </RichTextEditor.ControlsGroup>
 
-        <RichTextEditor.ControlsGroup>
-          <RichTextEditor.AlignLeft tabIndex={-1} />
-          <RichTextEditor.AlignCenter tabIndex={-1} />
-          <RichTextEditor.AlignJustify tabIndex={-1} />
-          <RichTextEditor.AlignRight tabIndex={-1} />
-        </RichTextEditor.ControlsGroup>
         <RichTextEditor.ColorPicker
           tabIndex={-1}
           colors={[
@@ -110,27 +121,6 @@ function CardTextEditor({ editor }: CardTextEditorProps) {
             "#fd7e14",
           ]}
         />
-        <FileButton
-          onChange={(file) => {
-            const fileReader = new FileReader();
-            let data: string | ArrayBuffer | null;
-            if (file) {
-              fileReader.readAsDataURL(file);
-            }
-            fileReader.onloadend = () => {
-              data = fileReader.result;
-              editor?.commands.insertContent(`<img src="` + data + `"/>`);
-              editor?.commands.focus();
-            };
-          }}
-          accept={"image/jpeg, image/jpg, image/png, image/heic"}
-        >
-          {(props) => (
-            <RichTextEditor.Control {...props} tabIndex={-1}>
-              <IconFile />
-            </RichTextEditor.Control>
-          )}
-        </FileButton>
       </RichTextEditor.Toolbar>
       <RichTextEditor.Content className={classes.content} />
     </RichTextEditor>

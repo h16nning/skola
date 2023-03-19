@@ -1,10 +1,9 @@
 import React from "react";
-import { Button, Group, Text } from "@mantine/core";
+import { ActionIcon, Group, Progress, Text } from "@mantine/core";
 import CardMenu from "../editcard/CardMenu";
 import { useNavigate } from "react-router-dom";
 import { StopwatchResult } from "react-timer-hook";
 import { Card, CardType } from "../../logic/card";
-import { swapMono } from "../../logic/ui";
 import { IconX } from "@tabler/icons-react";
 
 interface LearnViewHeaderProps {
@@ -19,17 +18,23 @@ function LearnViewHeader({
 }: LearnViewHeaderProps) {
   const navigate = useNavigate();
   return (
-    <Group position="apart" sx={(theme) => ({})}>
-      <Button
-        onClick={() => navigate("/home")}
-        variant="subtle"
-        color="gray"
-        leftIcon={<IconX />}
-      >
-        Quit Learning
-      </Button>
-      <Text>{stopwatch.minutes + ":" + stopwatch.seconds}</Text>
-      <CardMenu card={currentCard} onDelete={next} />
+    <Group position="apart">
+      <Group w="10rem" noWrap>
+        <ActionIcon
+          onClick={() => navigate("/home")}
+          variant="subtle"
+          color="gray"
+        >
+          <IconX />
+        </ActionIcon>
+        <Text ff="monospace">
+          {stopwatch.minutes + ":" + stopwatch.seconds}
+        </Text>
+      </Group>
+      <Progress size="sm" value={70} w="50%" />
+      <Group w="10rem" position="right">
+        <CardMenu card={currentCard} onDelete={next} />
+      </Group>
     </Group>
   );
 }

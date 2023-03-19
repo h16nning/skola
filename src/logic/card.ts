@@ -1,6 +1,6 @@
 import { Content } from "./CardContent";
 import { v4 as uuidv4 } from "uuid";
-import { Deck, useTopLevelDecks } from "./deck";
+import { Deck } from "./deck";
 import { db } from "./db";
 import { useLiveQuery } from "dexie-react-hooks";
 import { newRepetition, Repetition } from "./Repetition";
@@ -19,6 +19,7 @@ export interface CardSkeleton {
   model: ReviewModel;
   decks: string[];
   dueDate: Date | null;
+  creationDate: Date;
 }
 
 export interface Card<T extends CardType> extends CardSkeleton {
@@ -33,6 +34,7 @@ export function createCardSkeleton(): CardSkeleton {
     decks: [],
     dueDate: null,
     model: { repetitions: 0, easeFactor: 2.5, interval: 0, learned: false },
+    creationDate: new Date(Date.now()),
   };
 }
 

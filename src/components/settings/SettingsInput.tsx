@@ -48,6 +48,7 @@ export default function SettingsInput({
     case "text":
       return (
         <TextInput
+          value={value as string}
           label={label}
           description={description}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {

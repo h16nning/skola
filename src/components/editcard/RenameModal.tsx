@@ -12,7 +12,7 @@ interface RenameModalProps {
 function RenameModal({ deck, opened, setOpened }: RenameModalProps) {
   const [nameValue, setNameValue] = useState<string>(deck?.name ?? "");
 
-  useEffect(() => setNameValue(deck?.name ?? ""), []);
+  useEffect(() => setNameValue(deck?.name ?? ""), [deck]);
 
   return (
     <Modal
