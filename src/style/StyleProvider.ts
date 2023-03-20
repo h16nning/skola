@@ -193,7 +193,7 @@ export function getBaseTheme(
 }
 
 const headingStyle = {
-  fontFamily: "Playfair Display",
+  fontFamily: "Noto Serif Lao",
   fontWeight: 500,
   sizes: {
     h1: { fontSize: "2rem" },

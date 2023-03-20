@@ -35,7 +35,7 @@ function DeckView() {
   }
   return (
     <>
-      <Stack spacing="lg" sx={() => ({ width: "600px" })}>
+      <Stack spacing="4rem" sx={() => ({ width: "600px" })}>
         <Group spacing="xs" align="end" noWrap>
           <ActionIcon onClick={() => navigate(-1)}>
             <IconChevronLeft />
@@ -63,10 +63,8 @@ function DeckView() {
           </Stack>
         </Group>
 
-        <Space h="xl" />
         <HeroDeckSection deck={deck} cards={cards} stats={stats} />
 
-        <Space h="xl" />
         <SubDeckSection deck={deck} />
         {deck ? (
           <DeckOptionsModal

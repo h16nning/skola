@@ -14,9 +14,11 @@ const useStyles = createStyles((theme) => ({
   tr: {
     border: "none",
     borderRadius: theme.radius.lg,
-    cursor: "pointer",
     userSelect: "none",
     borderCollapse: "separate",
+  },
+  bodyTr: {
+    cursor: "pointer",
     "&:active": { transform: "scale(0.99)" },
   },
   th: { borderBottom: "none !important" },
@@ -85,6 +87,7 @@ function CardTable({
           <th className={classes.th}>Name</th>
           <th className={classes.th}>Type</th>
           <th className={classes.th}>Deck</th>
+          <th className={classes.th}>Creation Date</th>
         </tr>
       </thead>
       {cardSet.length > 0 ? (
@@ -136,7 +139,7 @@ function CardTableItem({
 
   return (
     <tr
-      className={cx(classes.tr, {
+      className={cx(classes.tr, classes.bodyTr, {
         [classes.selected]: selectedIndex === index,
       })}
       onClick={() => setSelectedIndex(index)}
@@ -147,6 +150,7 @@ function CardTableItem({
       <td className={classes.td}>{card.content.type}</td>
 
       <td className={classes.td}>{deck?.name ?? "?"}</td>
+      <td className={classes.td}>{card.creationDate.toLocaleDateString()}</td>
     </tr>
   );
 }
