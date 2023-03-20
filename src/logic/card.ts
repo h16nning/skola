@@ -148,6 +148,24 @@ export async function getCard(id: string) {
   return db.cards.get(id);
 }
 
+export function getStateOf(
+  card: Card<CardType>
+): "due" | "learned" | "new" | "learning" {
+  if (card.history.length === 0) {
+    return "new";
+  } else {
+    if (card.model.interval !== 0) {
+      if (!card.dueDate || card.dueDate?.getTime() <= Date.now()) {
+        return "due";
+      } else {
+        return "learned";
+      }
+    } else {
+      return "learning";
+    }
+  }
+}
+
 export function useStatsOf(cards?: Card<CardType>[]): CardsStats {
   const [dueCards, setDueCards] = useState<number | null>(null);
   const [learnedCards, setLearnedCards] = useState<number | null>(null);

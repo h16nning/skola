@@ -17,7 +17,7 @@ function EditCardView({ card }: EditCardsProps) {
 function NoCardView() {
   return (
     <Text fz="sm" color="dimmed">
-      No card
+      No card selected
     </Text>
   );
 }
@@ -31,11 +31,11 @@ function CardView({ card }: { card: Card<CardType> }) {
 
   return (
     <Stack>
-      <Group position="apart">
+      <Group position="apart" noWrap>
         <Text fz="xs">Edit Card</Text>
         <CardMenu card={card} />
-        {CardEditor}
       </Group>
+      {CardEditor}
     </Stack>
   );
 }

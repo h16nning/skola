@@ -11,6 +11,22 @@ interface SubDeckSectionProps {
 }
 
 function SubDeckSection({ deck }: SubDeckSectionProps) {
+  function AddSubDeckButton() {
+    return (
+      <Button
+        disabled={!deck || failed || !subDecks}
+        variant="default"
+        leftIcon={<IconPlus />}
+        onClick={() => {
+          if (deck) {
+            setNewDeckModalOpened(true);
+          }
+        }}
+      >
+        Add Sub Deck
+      </Button>
+    );
+  }
   const [subDecks, failed] = useSubDecks(deck);
   const [newDeckModalOpened, setNewDeckModalOpened] = useState(false);
 
@@ -19,26 +35,15 @@ function SubDeckSection({ deck }: SubDeckSectionProps) {
       <Section
         title={
           <Group position="apart">
-            <span>Sub Decks</span>
-            <Button
-              disabled={!deck || failed || !subDecks}
-              variant="default"
-              leftIcon={<IconPlus />}
-              onClick={() => {
-                if (deck) {
-                  setNewDeckModalOpened(true);
-                }
-              }}
-            >
-              New Sub Deck
-            </Button>
+            <>Sub Decks</>
+            <AddSubDeckButton />
           </Group>
         }
       >
         {!failed ? (
           <DeckTable deckList={subDecks} />
         ) : (
-          <Text c="gray">Failed to load decks</Text>
+          <Text c="gray">Failed to load sub decks.</Text>
         )}
       </Section>
       <NewDeckModal

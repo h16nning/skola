@@ -1,7 +1,15 @@
 import React from "react";
-import { Button, createStyles, Group, Paper, Stack, Text } from "@mantine/core";
+import {
+  Button,
+  createStyles,
+  Group,
+  Paper,
+  Stack,
+  Text,
+  Title,
+} from "@mantine/core";
 import { Deck } from "../../logic/deck";
-import { swap } from "../../logic/ui";
+import { swap, swapMono } from "../../logic/ui";
 import { IconBolt } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardsStats, CardType } from "../../logic/card";
@@ -14,7 +22,14 @@ interface HeroDeckSectionProps {
 
 const useStyles = createStyles((theme) => ({
   container: {
-    padding: theme.spacing.sm,
+    border: "solid 1px " + swapMono(theme, 2, 5),
+    boxShadow: theme.shadows.xs,
+    height: "15rem",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: theme.spacing.md,
+    textAlign: "center",
   },
   stat: {
     minWidth: "6rem",
@@ -22,7 +37,7 @@ const useStyles = createStyles((theme) => ({
 
     borderRadius: theme.radius.sm,
   },
-  statValue: { fontWeight: 700 },
+  statValue: { fontWeight: 600, fontSize: theme.fontSizes.lg },
   statName: {
     fontSize: theme.fontSizes.sm,
     fontWeight: 400,
@@ -31,31 +46,64 @@ const useStyles = createStyles((theme) => ({
 function HeroDeckSection({ deck, cards, stats }: HeroDeckSectionProps) {
   const { classes } = useStyles();
   const navigate = useNavigate();
+
+  function isDone() {
+    return (
+      stats.newCards === 0 && stats.learningCards === 0 && stats.dueCards === 0
+    );
+  }
+
   return (
     <Paper className={classes.container}>
-      <Stack spacing="md" align="center">
-        <Group>
-          <Stat value={stats.newCards ?? 0} name="New Cards" color="blue" />
-          <Stat value={stats.learningCards ?? 0} name="Learning" color="red" />
-          <Stat value={stats.dueCards ?? 0} name="Review" color="green" />
-          <Stat value={stats.learnedCards ?? 0} name="Learned" color="yellow" />
-          <Stat value={cards.length ?? 0} name="All" color="gray" />
-        </Group>
-        <Button
-          disabled={
-            !deck ||
-            (stats.newCards === 0 &&
-              stats.learningCards === 0 &&
-              stats.dueCards === 0)
-          }
-          leftIcon={<IconBolt />}
-          w="40%"
-          size="md"
-          onClick={() => navigate("/learn/" + deck?.id)}
-        >
-          Learn
-        </Button>
-      </Stack>
+      {cards.length === 0 ? (
+        <Stack spacing="0" align="center">
+          <Text fz="sm" fw={500}>
+            It is looking empty here!
+          </Text>
+          <Text fz="sm" color="dimmed">
+            Start by creating some cards!
+          </Text>
+        </Stack>
+      ) : isDone() ? (
+        <Stack spacing="md" align="center">
+          <Title order={3}>Congratulations! This deck is done for today!</Title>
+          <Text fz="sm">
+            Return back tomorrow or choose to practice anyway.
+          </Text>
+          <Button
+            variant="subtle"
+            w="50%"
+            onClick={() => navigate("/learn/" + deck?.id + "/all")}
+          >
+            Practice anyways
+          </Button>
+        </Stack>
+      ) : (
+        <Stack spacing="md" align="center">
+          <Group>
+            <Stat value={stats.newCards ?? 0} name="New" color="blue" />
+            <Stat
+              value={stats.learningCards ?? 0}
+              name="Learning"
+              color="red"
+            />
+            <Stat value={stats.dueCards ?? 0} name="Review" color="green" />
+          </Group>
+          <Button
+            disabled={
+              !deck ||
+              (stats.newCards === 0 &&
+                stats.learningCards === 0 &&
+                stats.dueCards === 0)
+            }
+            leftIcon={<IconBolt />}
+            w="50%"
+            onClick={() => navigate("/learn/" + deck?.id)}
+          >
+            Learn
+          </Button>
+        </Stack>
+      )}
     </Paper>
   );
 }
@@ -76,7 +124,7 @@ function Stat({
       className={classes.stat}
       sx={(theme) => ({ backgroundColor: swap(theme, color, 4, 9, 0.1) })}
     >
-      <Stack spacing="0.25rem" align="center">
+      <Stack spacing="0.125rem" align="center">
         <Text
           className={classes.statValue}
           sx={(theme) => ({ color: swap(theme, color, 6, 5) })}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Group } from "@mantine/core";
+import { Button, Group, Stack, Text } from "@mantine/core";
 import { swapMono } from "../../logic/ui";
 import { useHotkeys } from "@mantine/hooks";
 
@@ -33,9 +33,14 @@ function LearnViewFooter({
       })}
     >
       {showingAnswer ? (
-        <Group spacing="xs">
-          <Button color="red" onClick={() => answer(0)} size="md">
-            Again
+        <Group spacing="xs" noWrap>
+          <Button color="red" onClick={() => answer(0)} size="lg">
+            <Stack spacing={0} align="center">
+              <Text fz="xs" fw={400}>
+                {"< 10 min"}
+              </Text>
+              <Text fz="sm">Again</Text>
+            </Stack>
           </Button>
           <Button color="yellow" onClick={() => answer(1)} size="md">
             Hard
