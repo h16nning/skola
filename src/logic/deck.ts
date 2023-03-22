@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { db } from "./db";
 import { IndexableType } from "dexie";
 import { useLiveQuery } from "dexie-react-hooks";
-import { useDebugValue, useEffect, useState } from "react";
+import { useDebugValue, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 export interface Deck {
   id: string;
@@ -52,97 +52,96 @@ export async function newDeck(
   return uuid;
 }
 
-/**
- * Type guard for Deck
- * @param deck
- */
-function isDeck(deck: unknown): deck is Deck {
-  return (deck as Deck).subDecks !== undefined;
+export function useDeckOf(card: Card<CardType>): [Deck | undefined, boolean] {
+  return useLiveQuery(
+    () => db.decks.get(card.decks[0]).then((deck) => [deck, true]),
+    [card],
+    [undefined, false]
+  );
 }
 
-export function useDeckOf(card: Card<CardType>) {
-  return useLiveQuery(() => db.decks.get(card.decks[0]), [card]);
+export function useDecks(): [Deck[] | undefined, boolean] {
+  return useLiveQuery(
+    () => db.decks.toArray().then((decks) => [decks, true]),
+    [],
+    [undefined, false]
+  );
 }
 
-export function useDecks() {
-  return useLiveQuery(() => db.decks.toArray());
-}
-
-export function useTopLevelDecks() {
-  return useLiveQuery(() =>
-    db.decks.filter((deck) => !deck.superDecks).sortBy("name")
+export function useTopLevelDecks(): [Deck[] | undefined, boolean] {
+  return useLiveQuery(
+    () =>
+      db.decks
+        .filter((deck) => !deck.superDecks)
+        .sortBy("name")
+        .then((decks) => [decks, true]),
+    [],
+    [undefined, false]
   );
 }
 
 export function useSubDecks(deck?: Deck): [Deck[] | undefined, boolean] {
-  const [subDecks, setSubDecks] = useState<Deck[] | undefined>(undefined);
-  const [failed, setFailed] = useState<boolean>(false);
+  const [result, setResult] = useState<[Deck[] | undefined, boolean]>([
+    undefined,
+    false,
+  ]);
 
   useEffect(() => {
-    setSubDecks(undefined);
-    setFailed(false);
-    void determineSubDecks(deck, setSubDecks, setFailed);
+    setResult([undefined, false]);
+    void determineSubDecks(deck).then((result) => setResult(result));
   }, [deck]);
 
-  useDebugValue(deck);
-
-  return [subDecks, failed];
+  return result;
 }
 
 async function determineSubDecks(
-  deck: Deck | undefined,
-  setSubDecks: Function,
-  setFailed: Function
-) {
-  if (deck) {
-    try {
-      const sd = await getDecks(deck.subDecks);
-      const includesUndefined = sd.includes(undefined);
-      if (!includesUndefined) {
-        setSubDecks(sd as Deck[]);
-      } else {
-        setSubDecks(undefined);
-        setFailed(true);
-      }
-    } catch (error) {
-      setFailed(true);
+  deck: Deck | undefined
+): Promise<[Deck[] | undefined, boolean]> {
+  if (!deck) {
+    return [undefined, false];
+  }
+  try {
+    const subDecks = await getDecks(deck.subDecks);
+    if (!subDecks.includes(undefined)) {
+      return [subDecks as Deck[], true];
+    } else {
+      return [undefined, true];
     }
+  } catch (error) {
+    return [undefined, true];
   }
 }
 
 export function useSuperDecks(deck?: Deck): [Deck[] | undefined, boolean] {
-  const [superDecks, setSuperDecks] = useState<Deck[] | undefined>(undefined);
-  const [failed, setFailed] = useState<boolean>(false);
+  const [result, setResult] = useState<[Deck[] | undefined, boolean]>([
+    undefined,
+    false,
+  ]);
 
   useEffect(() => {
-    setSuperDecks(undefined);
-    setFailed(false);
-    void determineSuperDecks();
-  }, [deck, determineSubDecks]);
+    setResult([undefined, false]);
+    void determineSuperDecks(deck).then((result) => setResult(result));
+  }, [deck]);
 
-  async function determineSuperDecks() {
-    if (deck) {
-      if (deck.superDecks) {
-        try {
-          const sd = await getDecks(deck.superDecks);
-          const includesUndefined = sd.includes(undefined);
-          if (!includesUndefined) {
-            setSuperDecks(sd as Deck[]);
-          } else {
-            setSuperDecks(undefined);
-            setFailed(true);
-          }
-        } catch (error) {
-          setFailed(true);
-        }
-      } else {
-        setSuperDecks([]);
-      }
-    }
+  return result;
+}
+
+async function determineSuperDecks(
+  deck: Deck | undefined
+): Promise<[Deck[] | undefined, boolean]> {
+  if (!deck) {
+    return [undefined, false];
   }
-  useDebugValue(deck);
-
-  return [superDecks, failed];
+  try {
+    const superDecks = await getDecks(deck.superDecks ?? []);
+    if (!superDecks.includes(undefined)) {
+      return [superDecks as Deck[], true];
+    } else {
+      return [undefined, true];
+    }
+  } catch (error) {
+    return [undefined, true];
+  }
 }
 
 export async function getDeck(id: string) {
@@ -156,6 +155,7 @@ export async function getDecks(ids: string[]) {
 export async function renameDeck(id: string, newName: string) {
   return db.decks.update(id, { name: newName });
 }
+
 export async function deleteDeck(deck: Deck, calledRecursively?: boolean) {
   if (!deck) {
     return;
@@ -189,19 +189,15 @@ export async function deleteDeck(deck: Deck, calledRecursively?: boolean) {
 
 export function useDeckFromUrl(): [Deck | undefined, boolean] {
   const location = useLocation();
-
-  const [id, setID] = useState<string | null>(null);
-  const deck = useLiveQuery(() => db.decks.get(id ?? ""), [id]);
-  const [failed, setFailed] = useState<boolean>(false);
+  const [id, setID] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    const sequence = location.pathname.split("/")[2];
-    if (sequence) {
-      setID(sequence);
-    } else {
-      setFailed(true);
-    }
+    setID(location.pathname.split("/")[2]);
   }, [location]);
 
-  return [deck, failed];
+  return useLiveQuery(
+    () => db.decks.get(id ?? "").then((deck) => [deck, true]),
+    [id],
+    [undefined, false]
+  );
 }

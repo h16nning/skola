@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  ActionIcon,
-  Button,
-  Center,
-  Group,
-  Space,
-  Stack,
-  Title,
-} from "@mantine/core";
+import { ActionIcon, Button, Group, Stack, Title } from "@mantine/core";
 import SubDeckSection from "./SubDeckSection";
 import { IconChevronLeft, IconPlus } from "@tabler/icons-react";
 import DeckMenu from "./DeckMenu";
@@ -24,13 +16,13 @@ function DeckView() {
   const navigate = useNavigate();
   const [deckOptionsOpened, setDeckOptionsOpened] = useState(false);
 
-  const [deck, failed] = useDeckFromUrl();
-  const [superDecks] = useSuperDecks(deck);
-  const cards = useCardsOf(deck);
+  const [deck, isDeckReady] = useDeckFromUrl();
+  const [superDecks, areSuperDecksReady] = useSuperDecks(deck);
+  const [cards, areCardsReady] = useCardsOf(deck);
   const stats = useStatsOf(cards);
 
   useDocumentTitle(deck?.name ? deck?.name : "Super Anki");
-  if (failed) {
+  if (isDeckReady && !deck) {
     return <MissingObject />;
   }
   return (
@@ -54,7 +46,9 @@ function DeckView() {
                 </Button>
                 <DeckMenu
                   deck={deck}
+                  isDeckReady={isDeckReady}
                   cards={cards}
+                  areCardsReady={areCardsReady}
                   stats={stats}
                   setDeckOptionsOpened={setDeckOptionsOpened}
                 />
@@ -63,7 +57,13 @@ function DeckView() {
           </Stack>
         </Group>
 
-        <HeroDeckSection deck={deck} cards={cards} stats={stats} />
+        <HeroDeckSection
+          deck={deck}
+          isDeckReady={isDeckReady}
+          cards={cards}
+          areCardsReady={areCardsReady}
+          stats={stats}
+        />
 
         <SubDeckSection deck={deck} />
         {deck ? (

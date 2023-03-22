@@ -11,14 +11,14 @@ import { getUtils } from "../CardTypeManager";
 function NewCardsView() {
   const navigate = useNavigate();
 
-  const [deck, failed] = useDeckFromUrl();
+  const [deck, isReady] = useDeckFromUrl();
   const [cardType, setCardType] = useState<CardType>(CardType.Normal);
 
   const CardEditor = useMemo(() => {
     return deck ? getUtils(cardType).editor(null, deck, "new") : null;
   }, [deck, cardType]);
 
-  if (failed) {
+  if (isReady && !deck) {
     return <MissingObject />;
   }
 

@@ -6,10 +6,11 @@ import LazySkeleton from "../custom/LazySkeleton";
 
 interface DeckTableProps {
   deckList?: Deck[];
+  isReady: boolean;
 }
 
-function DeckTable({ deckList }: DeckTableProps) {
-  return deckList ? (
+function DeckTable({ deckList, isReady }: DeckTableProps) {
+  return isReady && deckList ? (
     deckList.length !== 0 ? (
       <Stack spacing={0}>
         {deckList.map((deck, index) => (

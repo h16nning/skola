@@ -1,4 +1,4 @@
-import { answerCard, Card, CardType } from "./card";
+import { answerCard, Card, CardType, getStateOf } from "./card";
 import { useCallback, useDebugValue, useEffect, useState } from "react";
 
 export type LearnController = {
@@ -7,8 +7,9 @@ export type LearnController = {
   answerCard: Function;
   learningIsFinished: boolean;
   repetitionCount: number;
-  lengthOfUrgentQueue: number;
-  lengthOfReservoir: number;
+  learnedCardsLength: number;
+  newCardsLength: number;
+  learningQueueLength: number;
 };
 
 const timeInUrgentQueue: Record<number, number> = {
@@ -18,12 +19,22 @@ const timeInUrgentQueue: Record<number, number> = {
   5: 1_200_000,
 };
 
+function pullCardFrom(
+  reservoir: Card<CardType>[],
+  setReservoir: Function,
+  setCurrentCard: Function
+) {
+  setCurrentCard(reservoir[0]);
+  setReservoir(reservoir.filter((_, i) => i !== 0));
+}
+
 export function useLearning(
   cardSet: Card<CardType>[] | null,
   options?: {}
 ): LearnController {
-  const [reservoir, setReservoir] = useState<Card<CardType>[]>([]);
-  const [urgentQueue, setUrgentQueue] = useState<
+  const [newCards, setNewCards] = useState<Card<CardType>[]>([]);
+  const [learnedCards, setLearnedCards] = useState<Card<CardType>[]>([]);
+  const [learningQueue, setLearningQueue] = useState<
     { card: Card<CardType>; due: number }[]
   >([]);
   const [currentCard, setCurrentCard] = useState<Card<CardType> | null>(null);
@@ -31,6 +42,8 @@ export function useLearning(
   const [finished, setFinished] = useState<boolean>(false);
   const [requestingNext, setRequestingNext] = useState<boolean>(false);
 
+  //This is the function which is presented to the outside scope
+  //It will set the request next state to true, which will trigger the useEffect below
   const requestNext = useCallback(
     () => setRequestingNext(true),
     [setRequestingNext]
@@ -39,47 +52,77 @@ export function useLearning(
   useEffect(() => {
     console.log("use effect");
     console.log(currentCard);
+    //IF another card is requested
+    //OR there is no current card and there are still cards in the card reservoirs
     if (
       requestingNext ||
-      (!currentCard && (reservoir.length !== 0 || urgentQueue.length !== 0))
+      (!currentCard &&
+        (newCards.length !== 0 ||
+          learnedCards.length !== 0 ||
+          learningQueue.length !== 0))
     ) {
       setRequestingNext(false);
       console.log("next called");
-      //Check if there are urgent items to be presented
       console.log("urgent queue:");
-      console.log(urgentQueue);
+      console.log(learningQueue);
+
+      //Check if there are any learning cards to be presented
+      //There have to be items in the learningQueue
+      //and the oldest one hast to be due, or instead there have to be no cards
+      //left in the other card reservoirs
       if (
-        urgentQueue.length !== 0 &&
-        (urgentQueue[0].due <= Date.now() || reservoir.length === 0)
+        learningQueue.length !== 0 &&
+        (learningQueue[0].due <= Date.now() ||
+          (newCards.length === 0 && learnedCards.length === 0))
       ) {
-        const topItem = urgentQueue[0];
+        const topItem = learningQueue[0];
+
+        //Double check if the item really exists
         if (!topItem) {
-          console.log("invalid urgent queue item");
+          console.error("invalid urgent queue item");
           return;
         }
-        setCurrentCard(topItem.card);
-        console.log("next: shift first item");
-        let newUrgentQueue = urgentQueue.filter((_, i) => i !== 0);
-        console.log(urgentQueue.length);
-        console.log(newUrgentQueue.length);
-        console.log(newUrgentQueue);
 
-        setUrgentQueue(newUrgentQueue);
-      } else if (reservoir.length !== 0) {
-        //If not pull card from the card reservoir
-        setCurrentCard(reservoir[0]);
-        setReservoir(reservoir.filter((_, i) => i !== 0));
+        //Set the currently presented card to the item
+        setCurrentCard(topItem.card);
+
+        //Shift (remove) the first item using filter(), shift() can't be used as it will directly modify the queue.
+        const newUrgentQueue = learningQueue.filter((_, i) => i !== 0);
+        setLearningQueue(newUrgentQueue);
       } else {
-        setFinished(true);
+        const newCardsAvailable = newCards.length > 0;
+        const learnedCardsAvailable = learnedCards.length > 0;
+
+        //If there are new cards and learned cards left, decide from which reservoir to pull from
+        //TODO use other method than doing to than random, maybe incorporate a parameter from settings
+        //If only one reservoir holds cards, pull it from that one
+        //If no reservoir holds any more cards, then learning can be considered finished
+        if (newCardsAvailable && learnedCardsAvailable) {
+          if (Math.random() < 0.5) {
+            pullCardFrom(newCards, setNewCards, setCurrentCard);
+          } else {
+            pullCardFrom(learnedCards, setLearnedCards, setCurrentCard);
+          }
+        } else if (newCardsAvailable) {
+          pullCardFrom(newCards, setNewCards, setCurrentCard);
+        } else if (learnedCardsAvailable) {
+          pullCardFrom(learnedCards, setLearnedCards, setCurrentCard);
+        } else {
+          setFinished(true);
+        }
       }
     }
-  }, [urgentQueue, reservoir, requestNext, currentCard, requestingNext]);
+  }, [
+    learningQueue,
+    newCards,
+    learnedCards,
+    requestNext,
+    currentCard,
+    requestingNext,
+  ]);
 
   const answer = useCallback(
     async (quality: number) => {
-      console.log("answer function was called. currentCard: ");
-      console.log(currentCard);
-
       //Increase repetition count for stats
       setRepetitionCount(repetitionCount + 1);
       if (currentCard) {
@@ -88,16 +131,11 @@ export function useLearning(
 
         //If card was answered badly, the learned stat is reset to false, and it is added back to the urgent queue
         if (quality <= 1) {
-          console.log("check: insufficient quality");
           currentCard.model.learned = false;
           pushToUrgentQueue = true;
         } else {
-          console.log("check: sufficient quality");
           //If card was answered correctly, but it wasn't learned before, it is added one more time to the urgent queue. But learned gets set to true
           if (!currentCard.model.learned) {
-            console.log(
-              "check: card isn't set to learned yet and will be set to learned now"
-            );
             pushToUrgentQueue = true;
           }
           //Finally, if the card is answered correctly and has been learned before, keep learned true and do nothing
@@ -107,8 +145,8 @@ export function useLearning(
         //If previously determined, the card is pushed to urgent queue
         if (pushToUrgentQueue) {
           console.log("pushing to urgent queue");
-          setUrgentQueue(
-            urgentQueue.concat({
+          setLearningQueue(
+            learningQueue.concat({
               card: currentCard,
               due: Date.now() + timeInUrgentQueue[quality],
             })
@@ -124,31 +162,21 @@ export function useLearning(
 
       requestNext();
     },
-    [currentCard, urgentQueue, repetitionCount, requestNext]
+    [currentCard, learningQueue, repetitionCount, requestNext]
   );
 
+  //This useEffect is used to filter the cards given in using cardSet and spreading them to the learningQueue and the newCards / learnedCards reservoir
   useEffect(() => {
     if (cardSet && cardSet[0] && repetitionCount === 0) {
-      setReservoir(
+      setNewCards(cardSet.filter((card) => getStateOf(card) === "new"));
+      setLearnedCards(cardSet.filter((card) => getStateOf(card) === "due"));
+      setLearningQueue(
         cardSet
-          .filter((card) => card.model.learned)
-          .filter(
-            (card) => !card.dueDate || card.dueDate.getTime() <= Date.now()
-          )
-      );
-      setUrgentQueue(
-        cardSet
-          .filter((card) => !card.model.learned)
+          .filter((card) => getStateOf(card) === "learning")
           .map((card) => ({ card: card, due: Date.now() }))
       );
     }
   }, [cardSet, repetitionCount]);
-
-  useDebugValue(currentCard);
-  useDebugValue(urgentQueue);
-  useDebugValue(reservoir);
-  useDebugValue(finished);
-  useDebugValue(repetitionCount);
 
   return {
     currentCard: currentCard,
@@ -156,7 +184,8 @@ export function useLearning(
     nextCard: requestNext,
     learningIsFinished: finished,
     repetitionCount: repetitionCount,
-    lengthOfUrgentQueue: urgentQueue.length,
-    lengthOfReservoir: reservoir.length,
+    learnedCardsLength: learnedCards.length,
+    newCardsLength: newCards.length,
+    learningQueueLength: learningQueue.length,
   };
 }

@@ -8,7 +8,7 @@ import { useSetting } from "../logic/Settings";
 
 export default function HomeView() {
   const [newDeckModalOpened, setNewDeckModalOpened] = useState(false);
-  const decks = useTopLevelDecks();
+  const [decks, isReady] = useTopLevelDecks();
 
   const userName = useSetting("name");
 
@@ -26,7 +26,7 @@ export default function HomeView() {
           </Button>
         </Group>
         <Space h="1.5rem" />
-        <DeckTable deckList={decks ? decks : []} />
+        <DeckTable deckList={decks} isReady={isReady} />
       </Stack>
       <NewDeckModal
         opened={newDeckModalOpened}

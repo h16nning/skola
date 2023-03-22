@@ -4,19 +4,19 @@ import { Deck, renameDeck } from "../../logic/deck";
 import { generalFail } from "../custom/Notification";
 
 interface RenameModalProps {
-  deck?: Deck;
+  deck: Deck;
   opened: boolean;
   setOpened: Function;
 }
 
 function RenameModal({ deck, opened, setOpened }: RenameModalProps) {
-  const [nameValue, setNameValue] = useState<string>(deck?.name ?? "");
+  const [nameValue, setNameValue] = useState<string>(deck.name);
 
-  useEffect(() => setNameValue(deck?.name ?? ""), [deck]);
+  useEffect(() => setNameValue(deck.name), [deck]);
 
   return (
     <Modal
-      title={"Rename " + deck?.name}
+      title={"Rename " + deck.name}
       opened={opened}
       onClose={() => setOpened(false)}
     >
@@ -32,10 +32,10 @@ function RenameModal({ deck, opened, setOpened }: RenameModalProps) {
             Cancel
           </Button>
           <Button
-            disabled={!deck || nameValue === ""}
+            disabled={nameValue === ""}
             onClick={() => {
-              if (deck && nameValue !== "") {
-                renameDeck(deck?.id, nameValue)
+              if (nameValue !== "") {
+                renameDeck(deck.id, nameValue)
                   .then(() => {
                     setNameValue("");
                     setOpened(false);
