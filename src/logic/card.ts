@@ -5,7 +5,7 @@ import { db } from "./db";
 import { useLiveQuery } from "dexie-react-hooks";
 import { newRepetition, Repetition } from "./Repetition";
 import { ReviewModel, sm2 } from "./SpacedRepetition";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export enum CardType {
   Normal = "normal",
@@ -113,16 +113,22 @@ export function useCards() {
   return useLiveQuery(() => db.cards.orderBy("content.front").toArray());
 }
 
-export function useCardsOf(deck: Deck | undefined): Card<CardType>[] {
-  return useLiveQuery(() => getCardsOf(deck), [deck]) ?? [];
+export function useCardsOf(
+  deck: Deck | undefined
+): [Card<CardType>[] | undefined, boolean] {
+  return useLiveQuery(
+    () => getCardsOf(deck).then((cards) => [cards, deck !== undefined]),
+    [deck],
+    [undefined, false]
+  );
 }
-export async function getCardsOf(deck: Deck | undefined) {
-  if (!deck) {
-    return [];
-  }
+export async function getCardsOf(
+  deck?: Deck
+): Promise<Card<CardType>[] | undefined> {
+  if (!deck) return undefined;
   let cards: Card<CardType>[] = await db.cards
     .where("id")
-    .anyOf(deck.cards ?? [])
+    .anyOf(deck.cards)
     .filter((c) => isCard(c))
     .toArray();
   await Promise.all(
@@ -167,12 +173,7 @@ export function getStateOf(
 }
 
 export function useStatsOf(cards?: Card<CardType>[]): CardsStats {
-  const [dueCards, setDueCards] = useState<number | null>(null);
-  const [learnedCards, setLearnedCards] = useState<number | null>(null);
-  const [newCards, setNewCards] = useState<number | null>(null);
-  const [learningCards, setLearningCards] = useState<number | null>(null);
-
-  useEffect(() => {
+  return useMemo(() => {
     let dueCounter = 0;
     let learnedCounter = 0;
     let newCounter = 0;
@@ -192,18 +193,14 @@ export function useStatsOf(cards?: Card<CardType>[]): CardsStats {
           learningCounter++;
         }
       }
-      setDueCards(dueCounter);
-      setLearnedCards(learnedCounter);
-      setNewCards(newCounter);
-      setLearningCards(learningCounter);
     });
+    return {
+      dueCards: dueCounter,
+      learnedCards: learnedCounter,
+      newCards: newCounter,
+      learningCards: learningCounter,
+    };
   }, [cards]);
-  return {
-    dueCards: dueCards,
-    learnedCards: learnedCards,
-    newCards: newCards,
-    learningCards: learningCards,
-  };
 }
 
 export type CardsStats = {

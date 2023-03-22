@@ -19,12 +19,21 @@ import { useSetting } from "../../logic/Settings";
 
 interface DeckMenuProps {
   deck?: Deck;
-  cards: Card<CardType>[];
+  isDeckReady: boolean;
+  cards?: Card<CardType>[];
+  areCardsReady: boolean;
   stats: CardsStats;
   setDeckOptionsOpened: Function;
 }
 
-function DeckMenu({ deck, setDeckOptionsOpened, cards, stats }: DeckMenuProps) {
+function DeckMenu({
+  deck,
+  isDeckReady,
+  setDeckOptionsOpened,
+  cards,
+  areCardsReady,
+  stats,
+}: DeckMenuProps) {
   const navigate = useNavigate();
 
   const developerMode = useSetting("developerMode");
@@ -50,7 +59,9 @@ function DeckMenu({ deck, setDeckOptionsOpened, cards, stats }: DeckMenuProps) {
     <>
       <Menu position="bottom-end">
         <Menu.Target>
-          <ActionIcon>
+          <ActionIcon
+            disabled={(isDeckReady && !deck) || (areCardsReady && !cards)}
+          >
             <IconDots />
           </ActionIcon>
         </Menu.Target>
@@ -93,28 +104,32 @@ function DeckMenu({ deck, setDeckOptionsOpened, cards, stats }: DeckMenuProps) {
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>
-      <DangerousConfirmModal
-        dangerousAction={() => tryDeleteDeck()}
-        dangerousDependencies={[deck]}
-        dangerousTitle={"Delete Deck"}
-        dangerousDescription={
-          "You are about to delete this deck. This cannot be undone. Do you wish to continue?"
-        }
-        opened={deleteModalOpened}
-        setOpened={setDeleteModalOpened}
-      />
-      <RenameModal
-        deck={deck}
-        opened={renameModalOpened}
-        setOpened={setRenameModalOpened}
-      />
-      <DebugDeckModal
-        deck={deck}
-        cards={cards}
-        stats={stats}
-        opened={debugModalOpened}
-        setOpened={setDebugModalOpened}
-      />
+      {deck && cards && (
+        <>
+          <DangerousConfirmModal
+            dangerousAction={() => tryDeleteDeck()}
+            dangerousDependencies={[deck]}
+            dangerousTitle={"Delete Deck"}
+            dangerousDescription={
+              "You are about to delete this deck. This cannot be undone. Do you wish to continue?"
+            }
+            opened={deleteModalOpened}
+            setOpened={setDeleteModalOpened}
+          />
+          <RenameModal
+            deck={deck}
+            opened={renameModalOpened}
+            setOpened={setRenameModalOpened}
+          />
+          <DebugDeckModal
+            deck={deck}
+            cards={cards}
+            stats={stats}
+            opened={debugModalOpened}
+            setOpened={setDebugModalOpened}
+          />
+        </>
+      )}
     </>
   );
 }

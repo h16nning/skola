@@ -13,12 +13,12 @@ import { swapMono } from "../../logic/ui";
 import { useLearning } from "../../logic/learn";
 
 function LearnView() {
-  const [deck, failed] = useDeckFromUrl();
+  const [deck, isReady] = useDeckFromUrl();
 
   const [cardSet, setCardSet] = useState<Card<CardType>[] | null>(null);
 
   useEffect(() => {
-    getCardsOf(deck).then((cards) => setCardSet(cards));
+    getCardsOf(deck).then((cards) => setCardSet(cards ?? null));
   }, [deck]);
 
   const controller = useLearning(cardSet);
@@ -46,7 +46,7 @@ function LearnView() {
     }
   }, [controller.learningIsFinished, stopwatch]);
 
-  if (failed) {
+  if (isReady && !deck) {
     return <MissingObject />;
   }
 
@@ -64,7 +64,7 @@ function LearnView() {
       <LearnViewHeader
         stopwatch={stopwatch}
         currentCard={controller.currentCard ?? undefined}
-        next={controller.nextCard}
+        controller={controller}
       />
       <Center>
         <Stack

@@ -23,7 +23,7 @@ function NoCardView() {
 }
 
 function CardView({ card }: { card: Card<CardType> }) {
-  const deck = useDeckOf(card);
+  const [deck, isReady] = useDeckOf(card);
 
   const CardEditor = useMemo(() => {
     return deck ? getUtils(card.content.type).editor(card, deck, "edit") : null;

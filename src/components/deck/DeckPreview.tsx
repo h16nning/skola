@@ -12,7 +12,7 @@ type DeckPreviewProps = {
 
 export default function DeckPreview({ deck, i }: DeckPreviewProps) {
   const navigate = useNavigate();
-  const cards = useCardsOf(deck);
+  const [cards, areCardsReady] = useCardsOf(deck);
   const stats = useStatsOf(cards);
 
   return (

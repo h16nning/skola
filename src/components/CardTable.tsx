@@ -129,7 +129,7 @@ function CardTableItem({
 }) {
   const { classes, cx } = useStyles();
 
-  const deck = useDeckOf(card);
+  const [deck, isReady] = useDeckOf(card);
 
   useEffect(() => {
     if (selectedIndex === index) {

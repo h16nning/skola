@@ -14,7 +14,7 @@ function CardManagerView() {
   const location = useLocation();
 
   const deckGiven = typeof location.pathname.split("/")[2] === "string";
-  const decks = useDecks();
+  const [decks, isReady] = useDecks();
 
   return (
     <Stack w="100%">
@@ -63,16 +63,23 @@ function AllCards() {
 }
 
 function DeckCards() {
-  const [deck, failed] = useDeckFromUrl();
-  const cards = useCardsOf(deck ?? dummyDeck);
-  if (failed) {
+  const [deck, isReady] = useDeckFromUrl();
+  const [cards, areCardsReady] = useCardsOf(deck);
+  if (!deck && isReady) {
     return <MissingObject />;
+  }
+  if (areCardsReady && !cards) {
+    return (
+      <Text c="red" fw={700}>
+        Something went wrong while loading thse cards.
+      </Text>
+    );
   }
   return <Core cardSet={cards} name={deck?.name ?? ""} />;
 }
 
 interface CoreProps {
-  cardSet: Card<CardType>[];
+  cardSet?: Card<CardType>[];
   name: string;
 }
 
@@ -82,13 +89,15 @@ function Core({ cardSet }: CoreProps) {
   return (
     <Group spacing="lg" grow pr="lg" align="start">
       <Stack miw="300px" w="400px" maw="100%">
-        <CardTable
-          cardSet={cardSet}
-          selectedIndex={selectedIndex}
-          setSelectedIndex={setSelectedIndex}
-          selectedCard={selectedCard}
-          setSelectedCard={setSelectedCard}
-        />
+        {cardSet && (
+          <CardTable
+            cardSet={cardSet}
+            selectedIndex={selectedIndex}
+            setSelectedIndex={setSelectedIndex}
+            selectedCard={selectedCard}
+            setSelectedCard={setSelectedCard}
+          />
+        )}
       </Stack>
       <Stack
         miw="300px"
