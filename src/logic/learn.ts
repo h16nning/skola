@@ -1,6 +1,9 @@
 import { answerCard, Card, CardType, getStateOf } from "./card";
-import { useCallback, useDebugValue, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
+/**
+ * This type specifies the return value of the useLearning hook. It contains all the functions and variables needed to control the learning process.
+ */
 export type LearnController = {
   currentCard: Card<CardType> | null;
   nextCard: Function;
@@ -12,6 +15,9 @@ export type LearnController = {
   learningQueueLength: number;
 };
 
+/**
+ * This objects maps the maximum time a card can be in the urgent queue to the answer given by the user
+ */
 const timeInUrgentQueue: Record<number, number> = {
   0: 60_000,
   1: 300_000,
@@ -19,6 +25,12 @@ const timeInUrgentQueue: Record<number, number> = {
   5: 1_200_000,
 };
 
+/**
+ * This function pulls a card from the reservoir and sets it as the current card
+ * @param reservoir The reservoir from which the card is pulled
+ * @param setReservoir The function to set the reservoir
+ * @param setCurrentCard The function to set the current card
+ */
 function pullCardFrom(
   reservoir: Card<CardType>[],
   setReservoir: Function,
@@ -28,6 +40,11 @@ function pullCardFrom(
   setReservoir(reservoir.filter((_, i) => i !== 0));
 }
 
+/**
+ * This hook controls the learning process. It takes a card set and returns a {@link LearnController} object.
+ * @param cardSet
+ * @param options
+ */
 export function useLearning(
   cardSet: Card<CardType>[] | null,
   options?: {}

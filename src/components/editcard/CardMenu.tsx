@@ -18,7 +18,7 @@ interface CardMenuProps {
 }
 
 function CardMenu({ card, onDelete }: CardMenuProps) {
-  const developerMode = useSetting("developerMode");
+  const [developerMode] = useSetting("developerMode");
 
   const [debugModalOpened, setDebugModalOpened] = useState<boolean>(false);
   const [deleteModalOpened, setDeleteModalOpened] = useState<boolean>(false);

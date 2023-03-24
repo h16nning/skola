@@ -8,17 +8,24 @@ import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
 import Image from "@tiptap/extension-image";
 
-import { Link, RichTextEditor } from "@mantine/tiptap";
+import {
+  Link,
+  RichTextEditor,
+  RichTextEditorStylesNames,
+} from "@mantine/tiptap";
 import { Color } from "@tiptap/extension-color";
 import { TextStyle } from "@tiptap/extension-text-style";
-import { IconFile } from "@tabler/icons-react";
-import { createStyles, FileButton } from "@mantine/core";
+import { Box, createStyles, Styles } from "@mantine/core";
+import { useSettings } from "../../logic/Settings";
+import EditorOptionsMenu from "./EditorOptionsMenu";
+import AddImageControl from "./AddImageControl";
 
 interface CardTextEditorProps {
   editor: Editor | null;
+  styles?: Styles<RichTextEditorStylesNames, Record<string, any>>;
 }
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
   content: {
     "& .ProseMirror": {
       maxHeight: "400px",
@@ -49,78 +56,61 @@ export function useCardEditor(content: string) {
   );
 }
 
-function CardTextEditor({ editor }: CardTextEditorProps) {
+function CardTextEditor({ editor, styles }: CardTextEditorProps) {
+  const [settings, areSettingsReady] = useSettings();
+
   const { classes } = useStyles();
   return (
-    <RichTextEditor editor={editor} itemRef="ref">
+    <RichTextEditor editor={editor} withTypographyStyles={true} styles={styles}>
       <RichTextEditor.Toolbar
-        sx={() => ({ display: !editor?.isFocused ? "flex" : "flex" })}
+        sx={() => ({
+          visibility: areSettingsReady ? "visible" : "hidden",
+        })}
       >
-        <RichTextEditor.ControlsGroup>
-          <RichTextEditor.Bold tabIndex={-1} />
-          <RichTextEditor.Italic tabIndex={-1} />
-          <RichTextEditor.Underline tabIndex={-1} />
-          <RichTextEditor.Strikethrough tabIndex={-1} />
-          <RichTextEditor.Highlight tabIndex={-1} />
-          <RichTextEditor.Code tabIndex={-1} />
-          <RichTextEditor.Subscript tabIndex={-1} />
-          <RichTextEditor.Superscript tabIndex={-1} />
-          <RichTextEditor.ClearFormatting tabIndex={-1} />
-        </RichTextEditor.ControlsGroup>
-        <RichTextEditor.ControlsGroup>
-          <RichTextEditor.Blockquote tabIndex={-1} />
-          <RichTextEditor.Hr tabIndex={-1} />
-          <RichTextEditor.BulletList tabIndex={-1} />
-          <RichTextEditor.OrderedList tabIndex={-1} />
-          <FileButton
-            onChange={(file) => {
-              const fileReader = new FileReader();
-              let data: string | ArrayBuffer | null;
-              if (file) {
-                fileReader.readAsDataURL(file);
-              }
-              fileReader.onloadend = () => {
-                data = fileReader.result;
-                editor?.commands.insertContent(
-                  `<img src="` + data + `" alt="Image inserted by user"/>`
-                );
-                editor?.commands.focus();
-              };
-            }}
-            accept={"image/jpeg, image/jpg, image/png, image/heic"}
-          >
-            {(props) => (
-              <RichTextEditor.Control {...props} tabIndex={-1}>
-                <IconFile />
-              </RichTextEditor.Control>
+        <Box sx={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.Bold tabIndex={-1} />
+            <RichTextEditor.Italic tabIndex={-1} />
+            <RichTextEditor.Underline tabIndex={-1} />
+            {settings.showStrikethroughOptionInEditor && (
+              <RichTextEditor.Strikethrough tabIndex={-1} />
             )}
-          </FileButton>
-        </RichTextEditor.ControlsGroup>
+            {settings.showHighlightOptionInEditor && (
+              <RichTextEditor.Highlight tabIndex={-1} />
+            )}
+            {settings.showCodeOptionInEditor && (
+              <RichTextEditor.Code tabIndex={-1} />
+            )}
+            {settings.showSubAndSuperScriptOptionInEditor && (
+              <>
+                <RichTextEditor.Subscript tabIndex={-1} />
+                <RichTextEditor.Superscript tabIndex={-1} />
+              </>
+            )}
 
-        <RichTextEditor.ControlsGroup>
-          <RichTextEditor.Link tabIndex={-1} />
-          <RichTextEditor.Unlink tabIndex={-1} />
-        </RichTextEditor.ControlsGroup>
+            <RichTextEditor.ClearFormatting tabIndex={-1} />
+          </RichTextEditor.ControlsGroup>
 
-        <RichTextEditor.ColorPicker
-          tabIndex={-1}
-          colors={[
-            "#25262b",
-            "#868e96",
-            "#fa5252",
-            "#e64980",
-            "#be4bdb",
-            "#7950f2",
-            "#4c6ef5",
-            "#228be6",
-            "#15aabf",
-            "#12b886",
-            "#40c057",
-            "#82c91e",
-            "#fab005",
-            "#fd7e14",
-          ]}
-        />
+          <RichTextEditor.ControlsGroup>
+            {settings.showListOptionInEditor && (
+              <>
+                <RichTextEditor.BulletList tabIndex={-1} />
+                <RichTextEditor.OrderedList tabIndex={-1} />
+              </>
+            )}
+
+            <AddImageControl editor={editor} />
+          </RichTextEditor.ControlsGroup>
+
+          {settings.showLinkOptionInEditor && (
+            <RichTextEditor.ControlsGroup>
+              <RichTextEditor.Link tabIndex={-1} />
+              <RichTextEditor.Unlink tabIndex={-1} />
+            </RichTextEditor.ControlsGroup>
+          )}
+        </Box>
+
+        <EditorOptionsMenu />
       </RichTextEditor.Toolbar>
       <RichTextEditor.Content className={classes.content} />
     </RichTextEditor>

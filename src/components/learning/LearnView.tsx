@@ -1,7 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Center, Divider, Flex, Stack } from "@mantine/core";
+import { Box, Center, Divider, Flex, Stack } from "@mantine/core";
 import { useDeckFromUrl } from "../../logic/deck";
-import { Card, CardType, getCardsOf } from "../../logic/card";
+import {
+  Card,
+  CardState,
+  CardType,
+  getCardsOf,
+  getStateOf,
+} from "../../logic/card";
 import MissingObject from "../custom/MissingObject";
 import { getUtils } from "../CardTypeManager";
 import { generalFail } from "../custom/Notification";
@@ -9,19 +15,29 @@ import FinishedLearningView from "./FinishedLearningView";
 import { useStopwatch } from "react-timer-hook";
 import LearnViewFooter from "./LearnViewFooter";
 import LearnViewHeader from "./LearnViewHeader";
+import LearnViewCurrentCardStateIndicator from "./LearnViewCurrentCardStateIndicator";
 import { swapMono } from "../../logic/ui";
 import { useLearning } from "../../logic/learn";
 
 function LearnView() {
   const [deck, isReady] = useDeckFromUrl();
-
   const [cardSet, setCardSet] = useState<Card<CardType>[] | null>(null);
+  const controller = useLearning(cardSet);
+  const [currentCardState, setCurrentCardState] = useState<
+    CardState | undefined
+  >(undefined);
 
   useEffect(() => {
     getCardsOf(deck).then((cards) => setCardSet(cards ?? null));
   }, [deck]);
 
-  const controller = useLearning(cardSet);
+  useEffect(() => {
+    if (controller.currentCard) {
+      setCurrentCardState(getStateOf(controller.currentCard));
+    } else {
+      setCurrentCardState(undefined);
+    }
+  }, [controller.currentCard]);
 
   const [showingAnswer, setShowingAnswer] = useState<boolean>(false);
 
@@ -78,12 +94,17 @@ function LearnView() {
             "& p:last-of-type": { marginBottom: 0 },
           })}
         >
-          {controller.currentCard
-            ? getUtils(controller.currentCard.content.type).displayQuestion(
-                // @ts-ignore how to solve this???
+          {controller.currentCard && (
+            <Box component="div" pos="relative">
+              <LearnViewCurrentCardStateIndicator
+                currentCardState={currentCardState}
+              />
+              {getUtils(controller.currentCard.content.type).displayQuestion(
+                //@ts-ignore how to solve this???
                 controller.currentCard
-              )
-            : null}
+              )}
+            </Box>
+          )}
           {showingAnswer && controller.currentCard ? (
             <>
               <Divider

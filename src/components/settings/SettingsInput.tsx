@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { setSetting, SettingsValues, useSetting } from "../../logic/Settings";
 import { SettingStatus, StatusIndicator } from "./SettingStatus";
 import { useDebouncedValue } from "@mantine/hooks";
-import { Group, Switch, TextInput } from "@mantine/core";
+import { Checkbox, Group, Switch, TextInput } from "@mantine/core";
 
 interface SettingsInputProps {
-  label: string;
+  label: string | React.ReactNode;
   description?: JSX.Element | string;
   settingsKey: keyof SettingsValues;
-  inputType: "text" | "number" | "switch";
+  inputType: "text" | "number" | "switch" | "checkbox";
 }
 
 export default function SettingsInput({
@@ -18,7 +18,7 @@ export default function SettingsInput({
   settingsKey,
 }: SettingsInputProps) {
   const [status, setStatus] = useState(SettingStatus.NONE);
-  const setting = useSetting(settingsKey);
+  const [setting] = useSetting(settingsKey);
 
   const [value, setValue] =
     useState<SettingsValues[typeof settingsKey]>(setting);
@@ -60,7 +60,7 @@ export default function SettingsInput({
       );
     case "switch":
       return (
-        <Group align="start" noWrap spacing="xs">
+        <Group align="start" noWrap spacing="xs" position="apart">
           <Switch
             checked={value as boolean | undefined}
             label={label}
@@ -71,6 +71,21 @@ export default function SettingsInput({
               setValue(event.currentTarget.checked);
             }}
           ></Switch>
+          <StatusIndicator status={status} />
+        </Group>
+      );
+    case "checkbox":
+      return (
+        <Group align="start" noWrap spacing="xs" position="apart">
+          <Checkbox
+            checked={value as boolean | undefined}
+            label={label}
+            description={description}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setTouched(true);
+              setValue(event.currentTarget.checked);
+            }}
+          ></Checkbox>
           <StatusIndicator status={status} />
         </Group>
       );

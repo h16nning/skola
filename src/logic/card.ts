@@ -5,7 +5,7 @@ import { db } from "./db";
 import { useLiveQuery } from "dexie-react-hooks";
 import { newRepetition, Repetition } from "./Repetition";
 import { ReviewModel, sm2 } from "./SpacedRepetition";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 export enum CardType {
   Normal = "normal",
@@ -154,9 +154,13 @@ export async function getCard(id: string) {
   return db.cards.get(id);
 }
 
-export function getStateOf(
-  card: Card<CardType>
-): "due" | "learned" | "new" | "learning" {
+export type CardState = "due" | "learned" | "new" | "learning";
+
+/**
+ * Returns the state of a card. It can be "due", "learned", "new" or "learning". See {@link CardState} for more information.
+ * @param card The card to get the state of.
+ */
+export function getStateOf(card: Card<CardType>): CardState {
   if (card.history.length === 0) {
     return "new";
   } else {
@@ -172,6 +176,10 @@ export function getStateOf(
   }
 }
 
+/**
+ * Returns the number of cards in each state. See {@link CardsStats} for more information.
+ * @param cards The cards to get the stats of.
+ */
 export function useStatsOf(cards?: Card<CardType>[]): CardsStats {
   return useMemo(() => {
     let dueCounter = 0;

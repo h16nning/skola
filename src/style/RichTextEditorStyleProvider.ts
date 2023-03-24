@@ -14,7 +14,9 @@ export default function getRichTextEditorStyles() {
         tabindex: "-1",
         borderBottom: "none",
         paddingLeft: 0,
+        paddingRight: 0,
         backgroundColor: "transparent",
+        justifyContent: "space-between",
       },
       content: {
         backgroundColor: "transparent",
@@ -28,7 +30,11 @@ export default function getRichTextEditorStyles() {
           borderColor: swap(theme, "primary", 6, 8),
         },
       },
-      control: {},
+      control: {
+        border: "none !important",
+        backgroundColor: "transparent",
+        borderRadius: theme.radius.sm,
+      },
     }),
   };
 }

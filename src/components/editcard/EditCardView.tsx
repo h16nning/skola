@@ -23,7 +23,7 @@ function NoCardView() {
 }
 
 function CardView({ card }: { card: Card<CardType> }) {
-  const [deck, isReady] = useDeckOf(card);
+  const [deck] = useDeckOf(card);
 
   const CardEditor = useMemo(() => {
     return deck ? getUtils(card.content.type).editor(card, deck, "edit") : null;
@@ -32,7 +32,9 @@ function CardView({ card }: { card: Card<CardType> }) {
   return (
     <Stack>
       <Group position="apart" noWrap>
-        <Text fz="xs">Edit Card</Text>
+        <Text fz="xs" fw={600}>
+          Edit Card
+        </Text>
         <CardMenu card={card} />
       </Group>
       {CardEditor}
