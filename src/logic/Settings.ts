@@ -11,22 +11,59 @@ export interface SettingsValues {
   colorSchemePreference: "light" | "dark" | "system";
   name?: string;
   developerMode: boolean;
+  showSubAndSuperScriptOptionInEditor: boolean;
+  showStrikethroughOptionInEditor: boolean;
+  showHighlightOptionInEditor: boolean;
+  showListOptionInEditor: boolean;
+  showCodeOptionInEditor: boolean;
+  showLinkOptionInEditor: boolean;
 }
 
 export const defaultSettings: SettingsValues = {
   language: "en",
   colorSchemePreference: "system",
   developerMode: false,
+  showSubAndSuperScriptOptionInEditor: true,
+  showStrikethroughOptionInEditor: true,
+  showHighlightOptionInEditor: true,
+  showListOptionInEditor: true,
+  showCodeOptionInEditor: true,
+  showLinkOptionInEditor: true,
 };
 
 export function useSetting<T extends keyof SettingsValues>(
   key: T
-): SettingsValues[T] {
-  const query = useLiveQuery(() => db.settings.get(key), [key])?.value;
-  return (
-    query !== undefined ? query : defaultSettings[key]
-  ) as SettingsValues[T];
+): [SettingsValues[T], boolean] {
+  return useLiveQuery(
+    () =>
+      db.settings
+        .get(key)
+        .then((setting) => [
+          (setting?.value as SettingsValues[T]) ?? defaultSettings[key],
+          true,
+        ]),
+    [key],
+    [defaultSettings[key], false]
+  );
 }
+
+export function useSettings(): [SettingsValues, boolean] {
+  return useLiveQuery(
+    () =>
+      db.settings
+        .toArray()
+        .then((settings) => [
+          (settings ?? []).reduce(
+            (acc, cur) => ({ ...acc, [cur.key]: cur.value }),
+            defaultSettings
+          ),
+          true,
+        ]),
+    [],
+    [defaultSettings, false]
+  );
+}
+
 export async function setSetting<T extends keyof SettingsValues>(
   key: T,
   newValue: SettingsValues[T]

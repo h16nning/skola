@@ -3,7 +3,7 @@ import { IconMoon, IconSun, IconSunMoon } from "@tabler/icons-react";
 import { setSetting, useSetting } from "../../logic/Settings";
 
 export default function SegmentedToggle() {
-  const colorSchemePreference = useSetting("colorSchemePreference");
+  const [colorSchemePreference] = useSetting("colorSchemePreference");
 
   return (
     <Input.Wrapper

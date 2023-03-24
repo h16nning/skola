@@ -36,7 +36,7 @@ function DeckMenu({
 }: DeckMenuProps) {
   const navigate = useNavigate();
 
-  const developerMode = useSetting("developerMode");
+  const [developerMode] = useSetting("developerMode");
 
   const [deleteModalOpened, setDeleteModalOpened] = useState<boolean>(false);
   const [renameModalOpened, setRenameModalOpened] = useState<boolean>(false);

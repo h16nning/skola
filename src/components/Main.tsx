@@ -22,7 +22,7 @@ export default function Main() {
     >
       <Routes>
         <Route path="/home" element={<HomeView />} />
-        <Route path="/settings" element={<SettingsView />} />
+        <Route path="/settings/*" element={<SettingsView />} />
         <Route path="/deck/*" element={<DeckView />} />
         <Route path="/new/*" element={<NewCardView />} />
         <Route path="/learn/*" element={<LearnView />} />

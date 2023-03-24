@@ -10,7 +10,7 @@ export default function HomeView() {
   const [newDeckModalOpened, setNewDeckModalOpened] = useState(false);
   const [decks, isReady] = useTopLevelDecks();
 
-  const userName = useSetting("name");
+  const [userName] = useSetting("name");
 
   return (
     <>

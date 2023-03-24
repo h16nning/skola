@@ -16,7 +16,7 @@ import { useSetting } from "./logic/Settings";
 
 export default function App() {
   const theme = useMantineTheme();
-  const colorSchemePreference = useSetting("colorSchemePreference");
+  const [colorSchemePreference] = useSetting("colorSchemePreference");
   const systemColorScheme = useColorScheme();
   const [sidebarOpened, setSidebarOpened] = useState<boolean>(false);
 

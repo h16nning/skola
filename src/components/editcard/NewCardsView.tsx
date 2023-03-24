@@ -1,16 +1,17 @@
 import React, { useMemo, useState } from "react";
-import { ActionIcon, Group, Select, Space, Stack, Text } from "@mantine/core";
+import { ActionIcon, Group, Select, Space, Stack } from "@mantine/core";
 import { IconChevronLeft } from "@tabler/icons-react";
-import { useDeckFromUrl } from "../../logic/deck";
+import { useDeckFromUrl, useDecks } from "../../logic/deck";
 import MissingObject from "../custom/MissingObject";
 import { CardType } from "../../logic/card";
 import { useNavigate } from "react-router-dom";
-import { swapLight } from "../../logic/ui";
 import { getUtils } from "../CardTypeManager";
+import SelectDecksHeader from "../custom/SelectDecksHeader";
 
 function NewCardsView() {
   const navigate = useNavigate();
 
+  const [decks] = useDecks();
   const [deck, isReady] = useDeckFromUrl();
   const [cardType, setCardType] = useState<CardType>(CardType.Normal);
 
@@ -29,21 +30,11 @@ function NewCardsView() {
   return (
     <Stack sx={{ width: "600px" }} key="stack">
       <Group position="apart">
-        <Group spacing="xs">
+        <Group spacing="xs" align="end">
           <ActionIcon onClick={() => navigate(-1)}>
             <IconChevronLeft />
           </ActionIcon>
-          <Stack spacing={0}>
-            <Text
-              sx={(theme) => ({
-                color: swapLight(theme),
-                fontSize: theme.fontSizes.sm,
-              })}
-            >
-              Adding Cards to
-            </Text>
-            <Text fw="500">{deck?.name}</Text>
-          </Stack>
+          <SelectDecksHeader label="Adding cards to" decks={decks} disableAll />
         </Group>
 
         <Select

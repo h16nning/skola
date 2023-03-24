@@ -6,6 +6,7 @@ import { StopwatchResult } from "react-timer-hook";
 import { Card, CardType } from "../../logic/card";
 import { IconX } from "@tabler/icons-react";
 import { LearnController } from "../../logic/learn";
+import { getCounterString } from "../../logic/timeUtils";
 
 interface LearnViewHeaderProps {
   stopwatch: StopwatchResult;
@@ -35,8 +36,8 @@ function LearnViewHeader({
     ]
   );
   return (
-    <Group position="apart">
-      <Group w="10rem" noWrap>
+    <Group position="apart" noWrap>
+      <Group w="10%" noWrap>
         <ActionIcon
           onClick={() => navigate("/home")}
           variant="subtle"
@@ -44,17 +45,10 @@ function LearnViewHeader({
         >
           <IconX />
         </ActionIcon>
-        <Text ff="monospace">
-          {stopwatch.minutes + ":" + stopwatch.seconds}
-        </Text>
+        <Text ff="monospace">{getCounterString(stopwatch)}</Text>
       </Group>
-      <Progress size="sm" value={progress} w="50%" />
-      <Group>
-        <Text c="blue">{controller.newCardsLength} new</Text>
-        <Text c="red">{controller.learningQueueLength} learn</Text>
-        <Text c="green">{controller.learnedCardsLength} repeat</Text>
-      </Group>
-      <Group w="10rem" position="right">
+      <Progress size="md" value={progress} w="50%" />
+      <Group w="10%" position="right">
         <CardMenu card={currentCard} onDelete={controller.nextCard} />
       </Group>
     </Group>

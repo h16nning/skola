@@ -1,24 +1,25 @@
 import React, { useState } from "react";
-import { ActionIcon, Group, Select, Stack, Text } from "@mantine/core";
+import { ActionIcon, Group, Stack, Text } from "@mantine/core";
 import { Card, CardType, useCards, useCardsOf } from "../logic/card";
 import { useLocation, useNavigate } from "react-router-dom";
 import CardTable from "./CardTable";
 import EditCardView from "./editcard/EditCardView";
-import { dummyDeck, useDeckFromUrl, useDecks } from "../logic/deck";
+import { useDeckFromUrl, useDecks } from "../logic/deck";
 import MissingObject from "./custom/MissingObject";
-import { swapLight, swapMono } from "../logic/ui";
+import { swapMono } from "../logic/ui";
 import { IconChevronLeft } from "@tabler/icons-react";
+import SelectDecksHeader from "./custom/SelectDecksHeader";
 
 function CardManagerView() {
   const navigate = useNavigate();
   const location = useLocation();
 
   const deckGiven = typeof location.pathname.split("/")[2] === "string";
-  const [decks, isReady] = useDecks();
+  const [decks] = useDecks();
 
   return (
     <Stack w="100%">
-      <Group>
+      <Group align="end" spacing="xs">
         <ActionIcon
           onClick={() => {
             navigate(-1);
@@ -26,31 +27,7 @@ function CardManagerView() {
         >
           <IconChevronLeft />
         </ActionIcon>
-        <Stack spacing="xs">
-          <Text
-            sx={(theme) => ({
-              color: swapLight(theme),
-              fontSize: theme.fontSizes.sm,
-            })}
-          >
-            Showing cards in
-          </Text>
-          <Select
-            placeholder="Pick one"
-            searchable
-            nothingFound="No Decks Found"
-            data={[{ value: "", label: "All" }].concat(
-              decks?.map((deck) => ({
-                value: deck.id,
-                label: deck.name,
-              })) ?? []
-            )}
-            value={location.pathname.split("/")[2] ?? ""}
-            onChange={(value) =>
-              navigate(value !== "" ? "/cards/" + value : "/cards")
-            }
-          />
-        </Stack>
+        <SelectDecksHeader label="Showing cards in" decks={decks} />
       </Group>
       {deckGiven ? <DeckCards /> : <AllCards />}
     </Stack>
