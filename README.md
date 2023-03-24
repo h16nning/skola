@@ -2,7 +2,7 @@
 ![Bildschirm­foto 2023-03-24 um 16 38 23](https://user-images.githubusercontent.com/48356881/227647754-24bd757c-2d52-43f6-ae4d-a40e5e48e039.png)
 ![Bildschirm­foto 2023-03-24 um 16 51 02](https://user-images.githubusercontent.com/48356881/227647758-4584000e-eb56-483e-a329-cf393a2ac921.png)
 
-A very early project to create a web based spaced repetition flash card app like anki.
+A very early project to create a web based spaced repetition flash card app like anki. View a demo [here](https://www.skola.web.app).
 
 #### Motivation
 Many students any other learners including myself use spaced repetition tools, that being mainly Anki. Anki is certainly very useful, but it has a overall offputting user interface that is often unintuitive und doesn't reward the user for learning. Other alternatives are costly and closed source.
