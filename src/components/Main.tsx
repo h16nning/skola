@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import HomeView from "./HomeView";
 import SettingsView from "./settings/SettingsView";
 import DeckView from "./deck/DeckView";
@@ -21,6 +21,7 @@ export default function Main() {
       })}
     >
       <Routes>
+        <Route path="/" element={<Navigate to="/home" replace={true}/>} />
         <Route path="/home" element={<HomeView />} />
         <Route path="/settings/*" element={<SettingsView />} />
         <Route path="/deck/*" element={<DeckView />} />
