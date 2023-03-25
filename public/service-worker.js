@@ -14,31 +14,35 @@
 // Names of the two caches used in this version of the service worker.
 // Change to v2, etc. when you update any of the local resources, which will
 // in turn trigger the install event again.
-const PRECACHE = "precache-v1";
+const CACHE = "skola-cache-v0.0.1";
 const RUNTIME = "runtime";
 
 // A list of local resources we always want to be cached.
 const PRECACHE_URLS = [
   "index.html",
-  "./", // Alias for index.html
-  "styles.css",
-  "../../styles/main.css",
-  "demo.js",
+  "/",
+  "../"
 ];
 
 // The install handler takes care of precaching the resources we always need.
+
+// eslint-disable-next-line no-restricted-globals
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches
-      .open(PRECACHE)
+      .open(CACHE)
       .then((cache) => cache.addAll(PRECACHE_URLS))
+
+      // eslint-disable-next-line no-restricted-globals
       .then(self.skipWaiting())
   );
 });
 
 // The activate handler takes care of cleaning up old caches.
+
+// eslint-disable-next-line no-restricted-globals
 self.addEventListener("activate", (event) => {
-  const currentCaches = [PRECACHE, RUNTIME];
+  const currentCaches = [CACHE, RUNTIME];
   event.waitUntil(
     caches
       .keys()
@@ -54,6 +58,8 @@ self.addEventListener("activate", (event) => {
           })
         );
       })
+
+      // eslint-disable-next-line no-restricted-globals
       .then(() => self.clients.claim())
   );
 });
@@ -61,8 +67,12 @@ self.addEventListener("activate", (event) => {
 // The fetch handler serves responses for same-origin resources from a cache.
 // If no response is found, it populates the runtime cache with the response
 // from the network before returning it to the page.
+
+// eslint-disable-next-line no-restricted-globals
 self.addEventListener("fetch", (event) => {
   // Skip cross-origin requests, like those for Google Analytics.
+
+// eslint-disable-next-line no-restricted-globals
   if (event.request.url.startsWith(self.location.origin)) {
     event.respondWith(
       caches.match(event.request).then((cachedResponse) => {

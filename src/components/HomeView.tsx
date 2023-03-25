@@ -16,7 +16,7 @@ export default function HomeView() {
     <>
       <Stack spacing="0" sx={{ width: "600px" }}>
         <Group position="apart">
-          <Title order={3}>Welcome back, {userName}!</Title>
+          <Title order={3}>Welcome back {userName && `, ${userName}`}!</Title>
           <Button
             onClick={() => setNewDeckModalOpened(true)}
             variant="default"

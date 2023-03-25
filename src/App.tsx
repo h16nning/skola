@@ -10,15 +10,18 @@ import Main from "./components/Main";
 import React, { useState } from "react";
 import Sidebar from "./components/sidebar/Sidebar";
 import { Notifications } from "@mantine/notifications";
-import { useColorScheme } from "@mantine/hooks";
+import { useColorScheme, useLocalStorage } from "@mantine/hooks";
 import Header from "./components/Header";
 import { useSetting } from "./logic/Settings";
+import WelcomeView from "./components/WelcomeView";
 
 export default function App() {
   const theme = useMantineTheme();
   const [colorSchemePreference] = useSetting("colorSchemePreference");
   const systemColorScheme = useColorScheme();
   const [sidebarOpened, setSidebarOpened] = useState<boolean>(false);
+
+  const [registered, setRegistered] = useLocalStorage({ key: 'registered', defaultValue: false });
 
   return (
     <ColorSchemeProvider
@@ -41,7 +44,7 @@ export default function App() {
         withNormalizeCSS
       >
         <Notifications />
-        <AppShell
+        {registered ? <AppShell
           navbarOffsetBreakpoint="sm"
           navbar={
             sidebarOpened ? (
@@ -62,7 +65,7 @@ export default function App() {
             setSidebarOpened={setSidebarOpened}
           />
           <Main />
-        </AppShell>
+        </AppShell> : <WelcomeView />}
       </MantineProvider>
     </ColorSchemeProvider>
   );
