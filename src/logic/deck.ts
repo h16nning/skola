@@ -13,12 +13,6 @@ export interface Deck {
   cards: Array<string>;
 }
 
-export const dummyDeck: Deck = {
-  id: "no_id",
-  name: "-",
-  subDecks: [],
-  cards: [],
-};
 export async function newDeck(
   name: string,
   superDeck?: Deck
@@ -157,35 +151,35 @@ export async function renameDeck(id: string, newName: string) {
 }
 
 export async function deleteDeck(deck: Deck, calledRecursively?: boolean) {
+  await db.transaction("rw", db.decks, db.cards, () => {
   if (!deck) {
     return;
   }
-  for (const subDeck of deck?.subDecks) {
-    const s = await db.decks.get(subDeck);
-    if (s) {
-      await deleteDeck(s, true);
-    }
-  }
-  if (deck.superDecks && deck.superDecks[0] && !calledRecursively) {
-    const superDeck = await getDeck(deck.superDecks[0]);
-    if (superDeck) {
-      console.log("remove from super");
-      console.log(deck.id);
-      await db.decks.update(superDeck.id, {
-        ...superDeck,
-        subDecks: superDeck?.subDecks.filter((s) => s !== deck.id),
-      });
-    }
-  }
-  deck.cards.forEach((c) =>
-    db.cards.get(c).then((c) => {
-      if (c) {
-        deleteCard(c);
-      }
-    })
+
+  Promise.all(
+    deck.subDecks.map((subDeckID) => getDeck(subDeckID)
+      .then((subDeck) => subDeck && deleteDeck(subDeck, true)))
   );
-  await db.decks.delete(deck.id);
+
+  if (!calledRecursively && deck.superDecks && deck.superDecks[deck.superDecks.length - 1]) {
+    getDeck(deck.superDecks[deck.superDecks.length - 1])
+      .then((superDeck) => superDeck &&
+        db.decks.update(superDeck.id, {
+          ...superDeck,
+          subDecks: superDeck?.subDecks.filter((s) => s !== deck.id),
+    }));
+  }
+
+  Promise.all(deck.cards.map((cardID) =>
+    db.cards.get(cardID).then((card) => {
+      card && deleteCard(card);
+    })
+  ));
+
+  db.decks.delete(deck.id);});
 }
+
+
 
 export function useDeckFromUrl(): [Deck | undefined, boolean] {
   const location = useLocation();

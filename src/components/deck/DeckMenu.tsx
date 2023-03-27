@@ -49,7 +49,7 @@ function DeckMenu({
     try {
       await deleteDeck(deck);
       setDeleteModalOpened(false);
-      navigate(-1);
+      navigate((deck.superDecks && deck.superDecks[deck.superDecks.length - 1]) ? "/deck/" + deck.superDecks[deck.superDecks.length - 1] : "/home");
     } catch (error) {
       console.error("Failed to delete deck: " + error);
     }
