@@ -8,12 +8,14 @@ import {
   Paper,
   Button,
   Image,
+  Card,
 } from "@mantine/core";
 import { swap } from "../../logic/ui";
 import { IconHome } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { StopwatchResult } from "react-timer-hook";
 import { useHotkeys } from "@mantine/hooks";
+import { useSetting } from "../../logic/Settings";
 
 interface FinishedLearningViewProps {
   repetitions: number;
@@ -25,6 +27,7 @@ function FinishedLearningView({
   time,
 }: FinishedLearningViewProps) {
   const navigate = useNavigate();
+  const [name] = useSetting("name");
 
   useHotkeys([["Space", () => navigate("/home")]]);
   useHotkeys([["Enter", () => navigate("/home")]]);
@@ -37,7 +40,7 @@ function FinishedLearningView({
           maw="10rem"
           alt="placeholder trophy image"
         />
-        <Title>Congratulations, Name!</Title>
+        <Title>Congratulations{name && ", " + name}!</Title>
         <Text align="center">
           You learned all cards of today for this deck. You can be proud of
           yourself!
@@ -73,18 +76,12 @@ function LearningStat({
   color: string;
 }) {
   return (
-    <Paper
+    <Card
       sx={(theme) => ({
-        border: "solid 1px",
-        borderColor: swap(theme, color, 4, 9, 0.2),
-        background:
-          "radial-gradient(farthest-side at 70% 70%," +
-          swap(theme, color, 3, 9, 0.3) +
-          "," +
-          swap(theme, color, 3, 7, 0.1) +
-          ")",
+        boxShadow: theme.shadows.xs,
+        border: "1px solid " + swap(theme, color, 4, 4),
         borderRadius: theme.radius.sm,
-        padding: theme.spacing.sm,
+        padding: theme.spacing.xs,
         minWidth: "8rem",
       })}
     >
@@ -107,7 +104,7 @@ function LearningStat({
           {title}
         </Text>
       </Stack>
-    </Paper>
+    </Card>
   );
 }
 export default FinishedLearningView;

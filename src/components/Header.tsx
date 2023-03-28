@@ -1,5 +1,5 @@
 import React from "react";
-import { ActionIcon, Group } from "@mantine/core";
+import { ActionIcon } from "@mantine/core";
 import { IconMenu2 } from "@tabler/icons-react";
 
 interface HeaderProps {
@@ -12,22 +12,17 @@ export default function Header({
   setSidebarOpened,
 }: HeaderProps) {
   return (
-    <Group
+    <ActionIcon
       sx={(theme) => ({
-        padding: theme.spacing.xs + " " + theme.spacing.md,
-        position: "sticky",
-        width: "100%",
-        left: "0px",
-        right: "0px",
+        boxShadow: theme.shadows.lg,
+        position: "relative",
+        top: theme.spacing.md,
+        left: theme.spacing.md,
         zIndex: 2,
-        backgroundColor:
-          theme.colorScheme === "light" ? theme.white : theme.colors.dark[7],
-        boxShadow: theme.shadows.xs,
       })}
+      onClick={() => setSidebarOpened(!sidebarOpened)}
     >
-      <ActionIcon onClick={() => setSidebarOpened(!sidebarOpened)}>
-        <IconMenu2 />
-      </ActionIcon>
-    </Group>
+      <IconMenu2 />
+    </ActionIcon>
   );
 }

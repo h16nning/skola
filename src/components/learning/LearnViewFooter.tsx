@@ -29,7 +29,9 @@ function LearnViewFooter({
       sx={(theme) => ({
         padding: theme.spacing.lg,
         backgroundColor: swapMono(theme, 0, 6),
-        margin: "0 -" + theme.spacing.md,
+        marginBottom: "-" + theme.spacing.lg,
+        marginLeft: "-" + theme.spacing.md,
+        marginRight: "-" + theme.spacing.md,
       })}
     >
       {showingAnswer ? (

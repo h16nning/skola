@@ -27,7 +27,9 @@ function Indicator({
       align="center"
       sx={(theme) => ({
         position: "absolute",
-        bottom: "3.5rem",
+        top: "-3rem",
+        left: 0,
+        height: "1.5rem",
         color: swap(theme, color, 7, 5),
       })}
     >

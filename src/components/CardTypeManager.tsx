@@ -1,9 +1,10 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { Card, CardType, createCardSkeleton } from "../logic/card";
-import { Title } from "@mantine/core";
+import { Divider, Stack, Title } from "@mantine/core";
 import NormalCardEditor from "./editcard/NormalCardEditor";
 import ClozeCardEditor from "./editcard/ClozeCardEditor";
 import { Deck } from "../logic/deck";
+import { swapMono } from "../logic/ui";
 
 export interface CardTypeManager<T extends CardType> {
   create: (params: any) => Card<T>;
@@ -56,7 +57,13 @@ export const NormalCardUtils: CardTypeManager<CardType.Normal> = {
   },
 
   displayAnswer(card: Card<CardType.Normal>) {
-    return <div dangerouslySetInnerHTML={{ __html: card.content.back }}></div>;
+    return (
+      <Stack spacing="xl">
+        {NormalCardUtils.displayQuestion(card)}
+        <Divider sx={(theme) => ({ borderColor: swapMono(theme, 2, 6) })} />
+        <div dangerouslySetInnerHTML={{ __html: card.content.back }}></div>
+      </Stack>
+    );
   },
 
   editor(card: Card<CardType.Normal> | null, deck: Deck, mode: EditMode) {

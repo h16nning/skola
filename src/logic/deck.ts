@@ -1,10 +1,11 @@
-import { Card, CardType, deleteCard } from "./card";
+import { Card, CardType } from "./card";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "./db";
 import { IndexableType } from "dexie";
 import { useLiveQuery } from "dexie-react-hooks";
-import { useDebugValue, useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+
 export interface Deck {
   id: string;
   name: string;
@@ -152,34 +153,38 @@ export async function renameDeck(id: string, newName: string) {
 
 export async function deleteDeck(deck: Deck, calledRecursively?: boolean) {
   await db.transaction("rw", db.decks, db.cards, () => {
-  if (!deck) {
-    return;
-  }
+    if (!deck) {
+      return;
+    }
 
-  Promise.all(
-    deck.subDecks.map((subDeckID) => getDeck(subDeckID)
-      .then((subDeck) => subDeck && deleteDeck(subDeck, true)))
-  );
+    Promise.all(
+      deck.subDecks.map((subDeckID) =>
+        getDeck(subDeckID).then(
+          (subDeck) => subDeck && deleteDeck(subDeck, true)
+        )
+      )
+    );
 
-  if (!calledRecursively && deck.superDecks && deck.superDecks[deck.superDecks.length - 1]) {
-    getDeck(deck.superDecks[deck.superDecks.length - 1])
-      .then((superDeck) => superDeck &&
-        db.decks.update(superDeck.id, {
-          ...superDeck,
-          subDecks: superDeck?.subDecks.filter((s) => s !== deck.id),
-    }));
-  }
+    if (
+      !calledRecursively &&
+      deck.superDecks &&
+      deck.superDecks[deck.superDecks.length - 1]
+    ) {
+      getDeck(deck.superDecks[deck.superDecks.length - 1]).then(
+        (superDeck) =>
+          superDeck &&
+          db.decks.update(superDeck.id, {
+            ...superDeck,
+            subDecks: superDeck?.subDecks.filter((s) => s !== deck.id),
+          })
+      );
+    }
 
-  Promise.all(deck.cards.map((cardID) =>
-    db.cards.get(cardID).then((card) => {
-      card && deleteCard(card);
-    })
-  ));
+    Promise.all(deck.cards.map((cardID) => db.cards.delete(cardID)));
 
-  db.decks.delete(deck.id);});
+    db.decks.delete(deck.id);
+  });
 }
-
-
 
 export function useDeckFromUrl(): [Deck | undefined, boolean] {
   const location = useLocation();

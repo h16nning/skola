@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Box, Center, Divider, Flex, Stack } from "@mantine/core";
+import { Box, Center, Flex } from "@mantine/core";
 import { useDeckFromUrl } from "../../logic/deck";
 import {
   Card,
@@ -16,7 +16,6 @@ import { useStopwatch } from "react-timer-hook";
 import LearnViewFooter from "./LearnViewFooter";
 import LearnViewHeader from "./LearnViewHeader";
 import LearnViewCurrentCardStateIndicator from "./LearnViewCurrentCardStateIndicator";
-import { swapMono } from "../../logic/ui";
 import { useLearning } from "../../logic/learn";
 
 function LearnView() {
@@ -83,8 +82,9 @@ function LearnView() {
         controller={controller}
       />
       <Center>
-        <Stack
-          spacing="xl"
+        <Box
+          component="div"
+          pos="relative"
           w="100%"
           maw="600px"
           sx={() => ({
@@ -92,33 +92,27 @@ function LearnView() {
               marginTop: 0,
             },
             "& p:last-of-type": { marginBottom: 0 },
+            "& img": {
+              maxWidth: "100%",
+            },
           })}
         >
-          {controller.currentCard && (
-            <Box component="div" pos="relative">
-              <LearnViewCurrentCardStateIndicator
-                currentCardState={currentCardState}
-              />
-              {getUtils(controller.currentCard.content.type).displayQuestion(
-                //@ts-ignore how to solve this???
-                controller.currentCard
-              )}
-            </Box>
-          )}
-          {showingAnswer && controller.currentCard ? (
-            <>
-              <Divider
-                sx={(theme) => ({ borderColor: swapMono(theme, 2, 6) })}
-              />
-              {getUtils(controller.currentCard.content.type).displayAnswer(
-                // @ts-ignore how to solve this???
-                controller.currentCard
-              )}
-            </>
-          ) : (
-            <></>
-          )}
-        </Stack>
+          <LearnViewCurrentCardStateIndicator
+            currentCardState={currentCardState}
+          />
+          {!showingAnswer &&
+            controller.currentCard &&
+            getUtils(controller.currentCard.content.type).displayQuestion(
+              //@ts-ignore how to solve this???
+              controller.currentCard
+            )}
+          {showingAnswer &&
+            controller.currentCard &&
+            getUtils(controller.currentCard.content.type).displayAnswer(
+              // @ts-ignore how to solve this???
+              controller.currentCard
+            )}
+        </Box>
       </Center>
       <LearnViewFooter
         answer={answerButtonPressed}

@@ -1,14 +1,18 @@
 import React, { useEffect } from "react";
 import { Card, CardType } from "../logic/card";
-import { createStyles, Table, Text } from "@mantine/core";
+import { Box, createStyles, Table, Text } from "@mantine/core";
 import { useDeckOf } from "../logic/deck";
-import { swap } from "../logic/ui";
+import { swap, swapLight, swapMono } from "../logic/ui";
 import { useEventListener } from "@mantine/hooks";
 
 const useStyles = createStyles((theme) => ({
-  table: {
-    fontSize: "2rem !important",
+  tableWrapper: {
+    width: "100%",
     overflowX: "scroll",
+  },
+  table: {
+    whiteSpace: "nowrap",
+    fontSize: "2rem !important",
     "&:focus": { outline: "none" },
   },
   tr: {
@@ -21,9 +25,18 @@ const useStyles = createStyles((theme) => ({
     cursor: "pointer",
     "&:active": { transform: "scale(0.99)" },
   },
-  th: { borderBottom: "none !important" },
+  th: {
+    borderBottom: "none !important",
+    fontSize: theme.fontSizes.xs + " !important",
+    color:
+      (theme.colorScheme === "light" ? theme.black : theme.white) +
+      " !important",
+  },
   td: {
     fontSize: theme.fontSizes.xs + " !important",
+    overflow: "hidden",
+    maxWidth: "15rem",
+    whiteSpace: "nowrap",
     fontWeight: 500,
     borderTop: "none !important",
     "&:first-of-type": {
@@ -75,41 +88,43 @@ function CardTable({
   });
 
   return (
-    <Table
-      highlightOnHover
-      striped
-      className={classes.table}
-      ref={ref}
-      tabIndex={0}
-    >
-      <thead>
-        <tr className={classes.tr}>
-          <th className={classes.th}>Name</th>
-          <th className={classes.th}>Type</th>
-          <th className={classes.th}>Deck</th>
-          <th className={classes.th}>Creation Date</th>
-        </tr>
-      </thead>
-      {cardSet.length > 0 ? (
-        <tbody>
-          {cardSet.map((card, index) => (
-            <CardTableItem
-              card={card}
-              key={index}
-              index={index}
-              selectedIndex={selectedIndex}
-              setSelectedIndex={setSelectedIndex}
-              selectedCard={selectedCard}
-              setSelectedCard={setSelectedCard}
-            />
-          ))}
-        </tbody>
-      ) : (
-        <Text fz="sm" color="dimmed">
-          No cards found
-        </Text>
-      )}
-    </Table>
+    <Box component="div" className={classes.tableWrapper}>
+      <Table
+        highlightOnHover
+        striped
+        className={classes.table}
+        ref={ref}
+        tabIndex={0}
+      >
+        <thead>
+          <tr className={classes.tr}>
+            <th className={classes.th}>Name</th>
+            <th className={classes.th}>Type</th>
+            <th className={classes.th}>Deck</th>
+            <th className={classes.th}>Creation Date</th>
+          </tr>
+        </thead>
+        {cardSet.length > 0 ? (
+          <tbody>
+            {cardSet.map((card, index) => (
+              <CardTableItem
+                card={card}
+                key={index}
+                index={index}
+                selectedIndex={selectedIndex}
+                setSelectedIndex={setSelectedIndex}
+                selectedCard={selectedCard}
+                setSelectedCard={setSelectedCard}
+              />
+            ))}
+          </tbody>
+        ) : (
+          <Text fz="sm" color="dimmed">
+            No cards found
+          </Text>
+        )}
+      </Table>
+    </Box>
   );
 }
 

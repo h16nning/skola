@@ -118,7 +118,7 @@ export function getBaseTheme(
           closeOnEscape: true,
           radius: "md",
           centered: true,
-          withCloseButton: false,
+          withCloseButton: true,
         },
         styles: (theme) => ({
           title: {
