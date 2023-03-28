@@ -64,7 +64,7 @@ function Core({ cardSet }: CoreProps) {
   const [selectedIndex, setSelectedIndex] = useState<number>();
   const [selectedCard, setSelectedCard] = useState<Card<CardType>>();
   return (
-    <Group spacing="lg" grow pr="lg" align="start">
+    <Group spacing="md" grow align="start">
       <Stack miw="300px" w="400px" maw="100%">
         {cardSet && (
           <CardTable

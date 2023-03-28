@@ -32,6 +32,7 @@ const useStyles = createStyles((theme) => ({
     justifyContent: "center",
     padding: theme.spacing.md,
     textAlign: "center",
+    width: "100%",
   },
   stat: {
     minWidth: "6rem",
