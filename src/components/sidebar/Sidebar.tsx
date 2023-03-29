@@ -1,36 +1,47 @@
 import React, { useCallback } from "react";
 import {
   ActionIcon,
+  Group,
   MediaQuery,
   Navbar,
   NavLink,
   Stack,
+  Title,
   Tooltip,
+  Image,
   useMantineTheme,
 } from "@mantine/core";
 import {
   IconBolt,
   IconCards,
   IconChartBar,
+  IconChevronRight,
   IconHome,
-  IconMenu2,
   IconSettings,
 } from "@tabler/icons-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mantine/hooks";
 
 function Sidebar({
-  opened,
-  setOpened,
+  menuOpened,
+  setMenuOpened,
 }: {
-  opened: boolean;
-  setOpened: Function;
+  menuOpened: boolean;
+  setMenuOpened: Function;
 }) {
   const location = useLocation();
   const navigate = useNavigate();
   const theme = useMantineTheme();
+
   const usesFullScreen = useMediaQuery(
     "(max-width: " + theme.breakpoints.sm + ")"
+  );
+  const usesOnlyIcons = useMediaQuery(
+    "(max-width: " +
+      theme.breakpoints.md +
+      ") and (min-width: " +
+      theme.breakpoints.sm +
+      ")"
   );
 
   const InteractiveNavLink = useCallback(
@@ -50,19 +61,19 @@ function Sidebar({
             icon={icon}
             onClick={() => {
               navigate(path);
-              usesFullScreen && setOpened(false);
+              usesFullScreen && setMenuOpened(false);
             }}
             active={location.pathname.startsWith(path)}
           />
         </Tooltip>
       );
     },
-    [location.pathname, navigate, setOpened, usesFullScreen]
+    [location.pathname, navigate, setMenuOpened, usesFullScreen]
   );
 
   const onlyIcons = {
     display: "inline-block",
-    padding: theme.spacing.xs,
+    padding: theme.spacing.md + " " + theme.spacing.xs,
     "& .app-name": { display: "none" },
     "& .mantine-NavLink-root": {
       gap: "0",
@@ -75,27 +86,47 @@ function Sidebar({
     "& .mantine-Tooltip-tooltip": { display: "initial !important" },
   };
 
-  const fullScreen = {};
+  const fullScreen = {
+    transform: menuOpened ? "none" : "translateX(-100vh)",
+    visible: menuOpened ? "visible" : "hidden",
+    boxShadow: theme.shadows.xl,
+    transition: "transform 200ms ease-in-out",
+  };
 
   return (
     <MediaQuery smallerThan="md" largerThan="sm" styles={onlyIcons}>
       <MediaQuery smallerThan="sm" styles={fullScreen}>
         <Navbar
           hiddenBreakpoint="sm"
-          hidden={!opened}
           width={{ sm: "3.825rem", md: "15rem" }}
-          p="xs"
+          p="0.5rem"
           sx={{
             "& .mantine-Tooltip-tooltip": { display: "none" },
           }}
         >
           <Navbar.Section>
             <Stack spacing="xs">
-              {opened && usesFullScreen ? (
-                <ActionIcon onClick={() => setOpened(false)}>
-                  <IconMenu2 />
-                </ActionIcon>
-              ) : null}
+              <Group
+                position="apart"
+                align="center"
+                py="0.5rem"
+                h="3.25rem"
+                pl="xs"
+                display={!usesOnlyIcons ? "flex" : "none"}
+              >
+                <Group spacing="xs" align="center">
+                  <Image src="/logo.svg" alt="Skola Logo" maw="1.5rem" />
+                  <Title order={5}>Skola</Title>
+                </Group>
+                {usesFullScreen ? (
+                  <ActionIcon
+                    onClick={() => setMenuOpened(false)}
+                    sx={() => ({ alignSelf: "end" })}
+                  >
+                    <IconChevronRight />
+                  </ActionIcon>
+                ) : null}
+              </Group>
               <InteractiveNavLink
                 label="Home"
                 path="/home"

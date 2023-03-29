@@ -31,7 +31,7 @@ const firebaseConfig = {
   storageBucket: "skola-cards.appspot.com",
   messagingSenderId: "517096864681",
   appId: "1:517096864681:web:32b586f02e5fae8eaa22b8",
-  measurementId: "G-E1P08QX0MX"
+  measurementId: "G-E1P08QX0MX",
 };
 
 // Initialize Firebase

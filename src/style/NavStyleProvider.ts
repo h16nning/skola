@@ -40,5 +40,9 @@ export function getNavLinkStyles() {
 }
 
 export function getNavBarStyles() {
-  return { styles: { root: {} } };
+  return {
+    styles: {
+      root: { top: "0" },
+    },
+  };
 }

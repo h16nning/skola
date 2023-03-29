@@ -7,24 +7,28 @@ import LearnView from "./learning/LearnView";
 import CardManagerView from "./CardManagerView";
 import { Center } from "@mantine/core";
 import React from "react";
-import { useViewportSize } from "@mantine/hooks";
-
-export default function Main() {
-  const { height } = useViewportSize();
+export default function Main({
+  menuOpened,
+  setMenuOpened,
+}: {
+  menuOpened: boolean;
+  setMenuOpened: Function;
+}) {
   return (
     <Center
-      px="md"
-      py="xl"
-      sx={() => ({
-        overflowY: "scroll",
-        height: height,
+      p="md"
+      sx={(theme) => ({
         alignItems: "start",
-        webKitOverflowScrolling: "touch",
       })}
     >
       <Routes>
         <Route path="/" element={<Navigate to="/home" replace={true} />} />
-        <Route path="/home" element={<HomeView />} />
+        <Route
+          path="/home"
+          element={
+            <HomeView menuOpened={menuOpened} setMenuOpened={setMenuOpened} />
+          }
+        />
         <Route path="/settings/*" element={<SettingsView />} />
         <Route path="/deck/*" element={<DeckView />} />
         <Route path="/new/*" element={<NewCardView />} />

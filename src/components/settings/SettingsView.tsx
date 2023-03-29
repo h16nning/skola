@@ -1,8 +1,9 @@
-import { Anchor, Stack, Tabs } from "@mantine/core";
+import { ActionIcon, Anchor, Group, Stack, Tabs } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import CColorSchemeToggle from "./ColorSchemeToggle";
 import {
   IconBraces,
+  IconChevronLeft,
   IconInfoCircle,
   IconPalette,
   IconPencil,
@@ -11,11 +12,12 @@ import {
 import GeneralSettingsView from "./GeneralSettingsView";
 import { useSetting } from "../../logic/Settings";
 import EditingSettingsView from "./EditingSettingsView";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function SettingsView() {
   const [value, setValue] = useState("General");
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (location.pathname === "/settings") {
@@ -29,6 +31,11 @@ export default function SettingsView() {
 
   return (
     <Stack spacing="xl" w="600px">
+      <Group>
+        <ActionIcon onClick={() => navigate(-1)}>
+          <IconChevronLeft />
+        </ActionIcon>
+      </Group>
       <Tabs
         orientation="horizontal"
         defaultValue="General"

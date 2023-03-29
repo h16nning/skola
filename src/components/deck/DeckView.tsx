@@ -10,7 +10,8 @@ import MissingObject from "../custom/MissingObject";
 import SuperDecksBreadcrumbs from "../SuperDecksBreadcrumbs";
 import { useCardsOf, useStatsOf } from "../../logic/card";
 import HeroDeckSection from "./HeroDeckSection";
-import { useDocumentTitle } from "@mantine/hooks";
+import { useDocumentTitle, useWindowScroll } from "@mantine/hooks";
+import { useScrollResetOnLocationChange } from "../../logic/ui";
 
 function DeckView() {
   const navigate = useNavigate();
@@ -21,10 +22,13 @@ function DeckView() {
   const [cards, areCardsReady] = useCardsOf(deck);
   const stats = useStatsOf(cards);
 
+  useScrollResetOnLocationChange();
+
   useDocumentTitle(deck?.name ? deck?.name : "Super Anki");
   if (isDeckReady && !deck) {
     return <MissingObject />;
   }
+
   return (
     <>
       <Stack spacing="4rem" sx={() => ({ width: "600px", maxWidth: "100%" })}>
