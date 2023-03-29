@@ -14,7 +14,7 @@ function SubDeckSection({ deck }: SubDeckSectionProps) {
   const [subDecks, areSubDecksReady] = useSubDecks(deck);
   const [newDeckModalOpened, setNewDeckModalOpened] = useState(false);
 
-  function AddSubDeckButton() {
+  function NewSubDeckButton() {
     return (
       <Button
         disabled={!deck || !areSubDecksReady || !subDecks}
@@ -26,7 +26,7 @@ function SubDeckSection({ deck }: SubDeckSectionProps) {
           }
         }}
       >
-        Add Sub Deck
+        New Sub Deck
       </Button>
     );
   }
@@ -37,7 +37,7 @@ function SubDeckSection({ deck }: SubDeckSectionProps) {
         title={
           <Group position="apart">
             <>Sub Decks</>
-            <AddSubDeckButton />
+            <NewSubDeckButton />
           </Group>
         }
       >

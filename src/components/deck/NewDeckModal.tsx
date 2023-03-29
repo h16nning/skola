@@ -14,6 +14,7 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
   const [nameValue, setNameValue] = useState<string>("");
   const [addingDeck, setAddingDeck] = useState<boolean>(false);
   const [status, setStatus] = useState<string | null>(null);
+
   async function tryAddDeck() {
     setAddingDeck(true);
     try {

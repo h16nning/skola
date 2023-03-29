@@ -19,7 +19,7 @@ export default function App() {
   const theme = useMantineTheme();
   const [colorSchemePreference] = useSetting("colorSchemePreference");
   const systemColorScheme = useColorScheme();
-  const [sidebarOpened, setSidebarOpened] = useState<boolean>(true);
+  const [sidebarMenuOpened, setSidebarMenuOpened] = useState<boolean>(false);
 
   const [registered] = useLocalStorage({
     key: "registered",
@@ -50,15 +50,18 @@ export default function App() {
         {registered ? (
           <AppShell
             navbarOffsetBreakpoint="sm"
+            fixed
             navbar={
-              sidebarOpened ? (
-                <Sidebar opened={sidebarOpened} setOpened={setSidebarOpened} />
-              ) : (
-                <></>
-              )
+              <Sidebar
+                menuOpened={sidebarMenuOpened}
+                setMenuOpened={setSidebarMenuOpened}
+              />
             }
           >
-            <Main />
+            <Main
+              menuOpened={sidebarMenuOpened}
+              setMenuOpened={setSidebarMenuOpened}
+            />
           </AppShell>
         ) : (
           <WelcomeView />

@@ -77,6 +77,7 @@ export function getBaseTheme(
             [`@media (max-width: 47.9375em)`]: {
               paddingLeft: "0",
             },
+            minHeight: "0",
           },
         }),
       },
@@ -215,6 +216,5 @@ function globalStyle() {
       transitionDuration: "0.1s",
       transitionProperty: "background, focus",
     },
-    html: { overflow: "hidden" },
   };
 }

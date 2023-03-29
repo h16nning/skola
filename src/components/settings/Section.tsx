@@ -7,7 +7,7 @@ type SectionProps = {
 };
 export default function Section({ title, children }: SectionProps) {
   return (
-    <Stack spacing="md">
+    <Stack spacing="sm">
       <Title order={4}>{title}</Title>
       {children}
     </Stack>

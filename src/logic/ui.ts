@@ -1,4 +1,6 @@
 import { MantineColor, MantineTheme } from "@mantine/core";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 export function swap(
   theme: MantineTheme,
@@ -31,4 +33,24 @@ export function swapMono(
 
 export function swapLight(theme: MantineTheme) {
   return swap(theme, "gray", 5, 7);
+}
+
+export function useScrollResetOnLocationChange() {
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+}
+
+export function useDynamicPageTheme(theme: MantineTheme) {
+  useEffect(() => {
+    /*if (document && document.querySelector("meta[name='theme-color']")) {
+      document
+        .querySelector("meta[name='theme-color']")
+        .setAttribute(
+          "content",
+          theme.colorScheme === "light" ? "#fff" : "#000"
+        );
+    }*/
+  }, [theme.colorScheme]);
 }

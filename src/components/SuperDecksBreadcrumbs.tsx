@@ -26,7 +26,7 @@ function SuperDecksBreadcrumbs({ superDecks }: SuperDecksBreadcrumbsProps) {
           bottom: 0,
           width: "2rem",
           background: `linear-gradient(to left, ${
-            theme.colorScheme === "light" ? theme.white : theme.colors.gray[0]
+            theme.colorScheme === "light" ? theme.white : theme.colors.dark[7]
           }, transparent)`,
         },
       })}
