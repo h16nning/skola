@@ -64,11 +64,7 @@ function DebugCardModal({ opened, setOpened, card }: DebugCardModalProps) {
               <tr>
                 <th>Decks:</th>
                 <td>
-                  {card.decks.map((deck) => (
-                    <span>
-                      <Anchor href={"/deck/" + deck}>{deck}</Anchor>,{" "}
-                    </span>
-                  ))}
+                  <Anchor href={"/deck/" + card.deck}>{card.deck}</Anchor>,{" "}
                 </td>
               </tr>
               <tr>

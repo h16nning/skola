@@ -19,6 +19,7 @@ export default function Main({
       p="md"
       sx={(theme) => ({
         alignItems: "start",
+        height: "100%",
       })}
     >
       <Routes>

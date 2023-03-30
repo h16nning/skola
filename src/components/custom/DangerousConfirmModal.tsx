@@ -31,7 +31,10 @@ function DangerousConfirmModal({
           </Button>
           <Button
             color="red"
-            onClick={() => dangerousAction(...dangerousDependencies)}
+            onClick={() => {
+              dangerousAction(...dangerousDependencies);
+              setOpened(false);
+            }}
           >
             {dangerousTitle}
           </Button>

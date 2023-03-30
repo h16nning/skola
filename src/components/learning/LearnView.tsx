@@ -12,9 +12,8 @@ import MissingObject from "../custom/MissingObject";
 import { getUtils } from "../CardTypeManager";
 import { generalFail } from "../custom/Notification";
 import FinishedLearningView from "./FinishedLearningView";
-import { useStopwatch } from "react-timer-hook";
 import LearnViewFooter from "./LearnViewFooter";
-import LearnViewHeader from "./LearnViewHeader";
+import LearnViewHeader, { stopwatchResult } from "./LearnViewHeader";
 import LearnViewCurrentCardStateIndicator from "./LearnViewCurrentCardStateIndicator";
 import { useLearning } from "../../logic/learn";
 
@@ -40,8 +39,6 @@ function LearnView() {
 
   const [showingAnswer, setShowingAnswer] = useState<boolean>(false);
 
-  const stopwatch = useStopwatch({ autoStart: true });
-
   const answerButtonPressed = useCallback(
     async (quality: number) => {
       try {
@@ -52,14 +49,14 @@ function LearnView() {
         console.log(error);
       }
     },
-    [controller.answerCard]
+    [controller]
   );
 
   useEffect(() => {
     if (controller.learningIsFinished) {
-      stopwatch.pause();
+      stopwatchResult.pause();
     }
-  }, [controller.learningIsFinished, stopwatch]);
+  }, [controller.learningIsFinished]);
 
   if (isReady && !deck) {
     return <MissingObject />;
@@ -69,7 +66,7 @@ function LearnView() {
     return (
       <FinishedLearningView
         repetitions={controller.repetitionCount}
-        time={stopwatch}
+        time={stopwatchResult}
       />
     );
   }
@@ -77,7 +74,6 @@ function LearnView() {
   return (
     <Flex direction="column" justify="space-between" h="100%" w="100%">
       <LearnViewHeader
-        stopwatch={stopwatch}
         currentCard={controller.currentCard ?? undefined}
         controller={controller}
       />
@@ -115,6 +111,7 @@ function LearnView() {
         </Box>
       </Center>
       <LearnViewFooter
+        controller={controller}
         answer={answerButtonPressed}
         showingAnswer={showingAnswer}
         setShowingAnswer={setShowingAnswer}

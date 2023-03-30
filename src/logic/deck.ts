@@ -49,7 +49,7 @@ export async function newDeck(
 
 export function useDeckOf(card: Card<CardType>): [Deck | undefined, boolean] {
   return useLiveQuery(
-    () => db.decks.get(card.decks[0]).then((deck) => [deck, true]),
+    () => db.decks.get(card.deck).then((deck) => [deck, true]),
     [card],
     [undefined, false]
   );
