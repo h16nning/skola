@@ -1,15 +1,19 @@
-import React from "react";
-import { Button, Group, Stack, Text } from "@mantine/core";
+import React, { useMemo } from "react";
+import { Button, Group } from "@mantine/core";
 import { swapMono } from "../../logic/ui";
 import { useHotkeys } from "@mantine/hooks";
+import { LearnController } from "../../logic/learn";
+import { sm2 } from "../../logic/SpacedRepetition";
+import AnswerCardButton from "../../logic/AnswerCardButton";
 
 interface LearnViewFooterProps {
+  controller: LearnController;
   answer: Function;
   showingAnswer: boolean;
   setShowingAnswer: Function;
 }
-
 function LearnViewFooter({
+  controller,
   answer,
   showingAnswer,
   setShowingAnswer,
@@ -23,12 +27,26 @@ function LearnViewFooter({
     ["Enter", () => (!showingAnswer ? setShowingAnswer(true) : answer(3))],
   ]);
 
+  const sm2Normal = useMemo(() => {
+    if (controller.currentCard) {
+      const days = sm2(3, controller.currentCard.model).interval;
+      return days === 0 ? "< 10 min" : days + " d";
+    } else return "";
+  }, [controller.currentCard]);
+
+  const sm2Easy = useMemo(() => {
+    if (controller.currentCard) {
+      const days = sm2(5, controller.currentCard.model).interval;
+      return days === 0 ? "< 10 min" : days + " d";
+    } else return "";
+  }, [controller.currentCard]);
+
   return (
     <Group
       position="center"
       sx={(theme) => ({
         padding: theme.spacing.lg,
-        backgroundColor: swapMono(theme, 0, 6),
+        borderTop: `1px solid ${swapMono(theme, 2, 5)}`,
         marginBottom: "-" + theme.spacing.lg,
         marginLeft: "-" + theme.spacing.md,
         marginRight: "-" + theme.spacing.md,
@@ -36,26 +54,33 @@ function LearnViewFooter({
     >
       {showingAnswer ? (
         <Group spacing="xs" noWrap>
-          <Button color="red" onClick={() => answer(0)} size="lg">
-            <Stack spacing={0} align="center">
-              <Text fz="xs" fw={400}>
-                {"< 10 min"}
-              </Text>
-              <Text fz="sm">Again</Text>
-            </Stack>
-          </Button>
-          <Button color="yellow" onClick={() => answer(1)} size="md">
-            Hard
-          </Button>
-          <Button color="green" onClick={() => answer(3)} size="md">
-            Normal
-          </Button>
-          <Button color="blue" onClick={() => answer(5)} size="md">
-            Easy
-          </Button>
+          <AnswerCardButton
+            label="Again"
+            timeInfo="< 10 min"
+            color="red"
+            action={() => answer(0)}
+          />
+          <AnswerCardButton
+            label="Hard"
+            timeInfo="< 6 min"
+            color="yellow"
+            action={() => answer(1)}
+          />
+          <AnswerCardButton
+            label="Normal"
+            timeInfo={sm2Normal}
+            color="green"
+            action={() => answer(3)}
+          />
+          <AnswerCardButton
+            label="Easy"
+            timeInfo={sm2Easy}
+            color="blue"
+            action={() => answer(5)}
+          />
         </Group>
       ) : (
-        <Button onClick={() => setShowingAnswer(true)} size="md">
+        <Button onClick={() => setShowingAnswer(true)} size="lg">
           Show Answer
         </Button>
       )}

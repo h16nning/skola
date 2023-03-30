@@ -1,6 +1,7 @@
 import {
   ActionIcon,
   Button,
+  Group,
   Stack,
   Title,
   useMantineTheme,
@@ -30,13 +31,16 @@ export default function HomeView({
 
   return (
     <>
-      <Stack spacing="1.5rem" sx={{ width: "600px" }}>
-        {hasSmallScreen && (
-          <ActionIcon onClick={() => setMenuOpened(true)}>
-            <IconMenu2 />
-          </ActionIcon>
-        )}
-        <Title order={3}>Welcome back{userName && `, ${userName}`}!</Title>
+      <Stack spacing="3rem" sx={{ width: "600px" }}>
+        <Group>
+          {hasSmallScreen && (
+            <ActionIcon onClick={() => setMenuOpened(true)}>
+              <IconMenu2 />
+            </ActionIcon>
+          )}
+          <Title order={3}>Welcome back{userName && `, ${userName}`}!</Title>
+        </Group>
+
         <Stack spacing="sm">
           <Button
             onClick={() => setNewDeckModalOpened(true)}

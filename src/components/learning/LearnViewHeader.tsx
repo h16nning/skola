@@ -1,23 +1,31 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { ActionIcon, Group, Progress, Text } from "@mantine/core";
 import CardMenu from "../editcard/CardMenu";
 import { useNavigate } from "react-router-dom";
-import { StopwatchResult } from "react-timer-hook";
+import { StopwatchResult, useStopwatch } from "react-timer-hook";
 import { Card, CardType } from "../../logic/card";
 import { IconX } from "@tabler/icons-react";
 import { LearnController } from "../../logic/learn";
 import { getCounterString } from "../../logic/timeUtils";
 
+export let stopwatchResult: StopwatchResult;
+
+function Stopwatch() {
+  const stopwatch = useStopwatch({ autoStart: true });
+
+  useEffect(() => {
+    stopwatchResult = stopwatch;
+  }, [stopwatch]);
+
+  return <Text ff="monospace">{getCounterString(stopwatch)}</Text>;
+}
+
 interface LearnViewHeaderProps {
-  stopwatch: StopwatchResult;
   currentCard: Card<CardType> | undefined;
   controller: LearnController;
 }
-function LearnViewHeader({
-  stopwatch,
-  currentCard,
-  controller,
-}: LearnViewHeaderProps) {
+
+function LearnViewHeader({ currentCard, controller }: LearnViewHeaderProps) {
   const navigate = useNavigate();
   const progress = useMemo(
     () =>
@@ -45,7 +53,7 @@ function LearnViewHeader({
         >
           <IconX />
         </ActionIcon>
-        <Text ff="monospace">{getCounterString(stopwatch)}</Text>
+        <Stopwatch />
       </Group>
       <Progress size="md" value={progress} w="50%" />
       <Group w="10%" position="right">

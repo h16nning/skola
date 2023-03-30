@@ -11,15 +11,22 @@ import React, { useState } from "react";
 import Sidebar from "./components/sidebar/Sidebar";
 import { Notifications } from "@mantine/notifications";
 import { useColorScheme, useLocalStorage } from "@mantine/hooks";
-import Header from "./components/Header";
 import { useSetting } from "./logic/Settings";
 import WelcomeView from "./components/WelcomeView";
+import { useDynamicPageTheme } from "./logic/ui";
 
 export default function App() {
   const theme = useMantineTheme();
   const [colorSchemePreference] = useSetting("colorSchemePreference");
   const systemColorScheme = useColorScheme();
   const [sidebarMenuOpened, setSidebarMenuOpened] = useState<boolean>(false);
+
+  useDynamicPageTheme(
+    theme,
+    colorSchemePreference === "system"
+      ? systemColorScheme
+      : colorSchemePreference
+  );
 
   const [registered] = useLocalStorage({
     key: "registered",

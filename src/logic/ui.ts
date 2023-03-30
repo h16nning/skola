@@ -42,15 +42,19 @@ export function useScrollResetOnLocationChange() {
   }, [location]);
 }
 
-export function useDynamicPageTheme(theme: MantineTheme) {
+export function useDynamicPageTheme(
+  theme: MantineTheme,
+  colorScheme: "light" | "dark"
+) {
   useEffect(() => {
-    /*if (document && document.querySelector("meta[name='theme-color']")) {
-      document
-        .querySelector("meta[name='theme-color']")
-        .setAttribute(
-          "content",
-          theme.colorScheme === "light" ? "#fff" : "#000"
-        );
-    }*/
-  }, [theme.colorScheme]);
+    console.log(colorScheme);
+    if (document && document.querySelector("meta[name='theme-color']")) {
+      // @ts-ignore
+      document.querySelector("meta[name='theme-color']").setAttribute(
+        "content",
+
+        colorScheme === "light" ? "#fff" : theme.colors.dark[7]
+      );
+    }
+  }, [theme, colorScheme]);
 }

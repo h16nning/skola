@@ -1,4 +1,4 @@
-import { answerCard, Card, CardType, getStateOf } from "./card";
+import { answerCard, Card, CardType, getCard, getStateOf } from "./card";
 import { useCallback, useEffect, useState } from "react";
 
 /**
@@ -31,13 +31,31 @@ const timeInUrgentQueue: Record<number, number> = {
  * @param setReservoir The function to set the reservoir
  * @param setCurrentCard The function to set the current card
  */
-function pullCardFrom(
+async function pullCardFromReservoir(
   reservoir: Card<CardType>[],
   setReservoir: Function,
   setCurrentCard: Function
 ) {
-  setCurrentCard(reservoir[0]);
-  setReservoir(reservoir.filter((_, i) => i !== 0));
+  getCard(reservoir[0].id).then((card) => {
+    if (card) {
+      setCurrentCard(card);
+      setReservoir(reservoir.filter((_, i) => i !== 0));
+    }
+  });
+}
+
+async function pullCardFromLearningQueue(
+  queue: { card: Card<CardType>; due: number }[],
+  setQueue: Function,
+  setCurrentCard: Function
+) {
+  getCard(queue[0].card.id).then((card) => {
+    if (card) {
+      console.log("Pulled card from reservoir: " + card.id);
+      setCurrentCard(card);
+      setQueue(queue.filter((_, i) => i !== 0));
+    }
+  });
 }
 
 /**
@@ -92,7 +110,12 @@ export function useLearning(
         (learningQueue[0].due <= Date.now() ||
           (newCards.length === 0 && learnedCards.length === 0))
       ) {
-        const topItem = learningQueue[0];
+        void pullCardFromLearningQueue(
+          learningQueue,
+          setLearningQueue,
+          setCurrentCard
+        );
+        /*const topItem = learningQueue[0];
 
         //Double check if the item really exists
         if (!topItem) {
@@ -105,7 +128,7 @@ export function useLearning(
 
         //Shift (remove) the first item using filter(), shift() can't be used as it will directly modify the queue.
         const newUrgentQueue = learningQueue.filter((_, i) => i !== 0);
-        setLearningQueue(newUrgentQueue);
+        setLearningQueue(newUrgentQueue);*/
       } else {
         const newCardsAvailable = newCards.length > 0;
         const learnedCardsAvailable = learnedCards.length > 0;
@@ -116,14 +139,22 @@ export function useLearning(
         //If no reservoir holds any more cards, then learning can be considered finished
         if (newCardsAvailable && learnedCardsAvailable) {
           if (Math.random() < 0.5) {
-            pullCardFrom(newCards, setNewCards, setCurrentCard);
+            void pullCardFromReservoir(newCards, setNewCards, setCurrentCard);
           } else {
-            pullCardFrom(learnedCards, setLearnedCards, setCurrentCard);
+            void pullCardFromReservoir(
+              learnedCards,
+              setLearnedCards,
+              setCurrentCard
+            );
           }
         } else if (newCardsAvailable) {
-          pullCardFrom(newCards, setNewCards, setCurrentCard);
+          void pullCardFromReservoir(newCards, setNewCards, setCurrentCard);
         } else if (learnedCardsAvailable) {
-          pullCardFrom(learnedCards, setLearnedCards, setCurrentCard);
+          void pullCardFromReservoir(
+            learnedCards,
+            setLearnedCards,
+            setCurrentCard
+          );
         } else {
           setFinished(true);
         }

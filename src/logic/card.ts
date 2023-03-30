@@ -6,6 +6,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { newRepetition, Repetition } from "./Repetition";
 import { ReviewModel, sm2 } from "./SpacedRepetition";
 import { useMemo } from "react";
+import { Table } from "dexie";
 
 export enum CardType {
   Normal = "normal",
@@ -17,7 +18,7 @@ export interface CardSkeleton {
   id: string;
   history: Repetition[];
   model: ReviewModel;
-  decks: string[];
+  deck: string;
   dueDate: Date | null;
   creationDate: Date;
 }
@@ -31,7 +32,7 @@ export function createCardSkeleton(): CardSkeleton {
   return {
     id: id,
     history: [],
-    decks: [],
+    deck: "",
     dueDate: null,
     model: { repetitions: 0, easeFactor: 2.5, interval: 0, learned: false },
     creationDate: new Date(Date.now()),
@@ -42,11 +43,7 @@ function isCard(card: Card<CardType> | undefined): card is Card<CardType> {
   return !!card;
 }
 export async function newCard(card: Card<CardType>, deck: Deck) {
-  if (deck.superDecks) {
-    card.decks = [deck.id, ...deck.superDecks];
-  } else {
-    card.decks = [deck.id];
-  }
+  card.deck = deck.id;
   deck.cards.push(card.id);
   return db.transaction("rw", db.decks, db.cards, () => {
     db.cards.add(card, card.id);
@@ -66,7 +63,7 @@ export async function updateCard(
 export async function deleteCard(card: Card<CardType>) {
   return db.transaction("rw", db.decks, db.cards, () => {
     db.cards.delete(card.id);
-    db.decks.get(card.decks[0]).then((d) => {
+    db.decks.get(card.deck).then((d) => {
       if (d?.id) {
         db.decks.update(d.id, {
           cards: d.cards.filter((c) => c !== card.id),
@@ -76,25 +73,13 @@ export async function deleteCard(card: Card<CardType>) {
   });
 }
 
-/*export async function learnCard(potentiallyOldCard: Card<CardType>, learned: boolean) {
-  const card = await getCard(potentiallyOldCard.id);
-  if (card) {
-    card.model.learned = learned;
-    const dueDate = new Date();
-    await updateCard(card.id, {
-      model: card.model,
-      history: [...card.history, newRepetition(quality)],
-      dueDate: dueDate,
-    });
-  }
-}*/
-
 export async function answerCard(
   potentiallyOldCard: Card<CardType>,
   quality: number,
   learned: boolean
 ) {
   //The card object passed does not have to represent the current version stored in the database due to the implementation in LearnView. Therefore, the card is loaded from the database.
+  //TODO check this new implementation could mean that the card is actually loaded twice see pullCardFrom() in useLearning
   const card = await getCard(potentiallyOldCard.id);
   if (card) {
     card.model.learned = learned;
@@ -122,6 +107,20 @@ export function useCardsOf(
     [undefined, false]
   );
 }
+
+export function useCardsWith(
+  querier: (
+    cards: Table<Card<CardType>>
+  ) => Promise<Card<CardType>[] | undefined>,
+  dependencies: any[]
+): [Card<CardType>[] | undefined, boolean] {
+  return useLiveQuery(
+    () => querier(db.cards).then((cards) => [cards, cards !== undefined]),
+    dependencies,
+    [undefined, false]
+  );
+}
+
 export async function getCardsOf(
   deck?: Deck
 ): Promise<Card<CardType>[] | undefined> {
