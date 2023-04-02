@@ -36,12 +36,9 @@ function DebugDeckModal({
             </Text>
             <Text>
               <b>SubDecks: </b>
-              {deck.subDecks.map((subDeckId, i) => (
-                <span>
-                  <Anchor key={i} href={"/deck/" + subDeckId}>
-                    {subDeckId}
-                  </Anchor>
-                  ,{" "}
+              {deck.subDecks.map((subDeckId) => (
+                <span key={subDeckId}>
+                  <Anchor href={"/deck/" + subDeckId}>{subDeckId}</Anchor>,{" "}
                 </span>
               ))}
             </Text>
@@ -49,7 +46,11 @@ function DebugDeckModal({
               <b>SuperDecks: </b>"{deck.superDecks}"
             </Text>
             <Text>
-              <b>Cards: </b>"{deck.cards.map((s) => s + ", ")}"
+              <b>Cards: </b>"
+              {deck.cards.map((s) => (
+                <span key={s}>{s + ", "}</span>
+              ))}
+              "
             </Text>
 
             <Text>
@@ -71,10 +72,6 @@ function DebugDeckModal({
             <Text>
               <b>Due Cards: </b>
               {stats.dueCards}
-            </Text>
-            <Text>
-              <b>Learned Cards: </b>
-              {stats.learnedCards}
             </Text>
           </Stack>
         ) : (

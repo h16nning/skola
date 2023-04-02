@@ -21,15 +21,22 @@ function LearnViewFooter({
   useHotkeys([
     ["1", () => answer(0)],
     ["2", () => answer(1)],
-    ["3", () => answer(3)],
+    ["3", () => answer(4)],
     ["4", () => answer(5)],
-    ["Space", () => (!showingAnswer ? setShowingAnswer(true) : answer(3))],
-    ["Enter", () => (!showingAnswer ? setShowingAnswer(true) : answer(3))],
+    ["Space", () => (!showingAnswer ? setShowingAnswer(true) : answer(4))],
+    ["Enter", () => (!showingAnswer ? setShowingAnswer(true) : answer(4))],
   ]);
+
+  const sm2Hard = useMemo(() => {
+    if (controller.currentCard) {
+      const days = sm2(1, controller.currentCard.model).interval;
+      return days === 0 ? "< 6 min" : days + " d";
+    } else return "";
+  }, [controller.currentCard]);
 
   const sm2Normal = useMemo(() => {
     if (controller.currentCard) {
-      const days = sm2(3, controller.currentCard.model).interval;
+      const days = sm2(4, controller.currentCard.model).interval;
       return days === 0 ? "< 10 min" : days + " d";
     } else return "";
   }, [controller.currentCard]);
@@ -45,15 +52,15 @@ function LearnViewFooter({
     <Group
       position="center"
       sx={(theme) => ({
-        padding: theme.spacing.lg,
+        padding: theme.spacing.md,
         borderTop: `1px solid ${swapMono(theme, 2, 5)}`,
-        marginBottom: "-" + theme.spacing.lg,
+        marginBottom: "-" + theme.spacing.md,
         marginLeft: "-" + theme.spacing.md,
         marginRight: "-" + theme.spacing.md,
       })}
     >
       {showingAnswer ? (
-        <Group spacing="xs" noWrap>
+        <Group spacing="xs" noWrap w="100%" maw="25rem">
           <AnswerCardButton
             label="Again"
             timeInfo="< 10 min"
@@ -62,7 +69,7 @@ function LearnViewFooter({
           />
           <AnswerCardButton
             label="Hard"
-            timeInfo="< 6 min"
+            timeInfo={sm2Hard}
             color="yellow"
             action={() => answer(1)}
           />
@@ -70,7 +77,7 @@ function LearnViewFooter({
             label="Normal"
             timeInfo={sm2Normal}
             color="green"
-            action={() => answer(3)}
+            action={() => answer(4)}
           />
           <AnswerCardButton
             label="Easy"
@@ -80,7 +87,7 @@ function LearnViewFooter({
           />
         </Group>
       ) : (
-        <Button onClick={() => setShowingAnswer(true)} size="lg">
+        <Button onClick={() => setShowingAnswer(true)} h="2.5rem">
           Show Answer
         </Button>
       )}

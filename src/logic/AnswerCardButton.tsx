@@ -16,12 +16,21 @@ export default function AnswerCardButton({
   action,
 }: AnswerCardButtonProps) {
   return (
-    <Button color={color} onClick={() => action()} size="lg">
-      <Stack spacing={0} align="center">
-        <Text fz="xs" fw={400}>
+    <Button
+      color={color}
+      onClick={() => action()}
+      h="2.5rem"
+      px={0}
+      fullWidth
+      miw="0"
+    >
+      <Stack spacing="0" align="center">
+        <Text fz="xs" fw={400} lh="1">
           {timeInfo}
         </Text>
-        <Text fz="sm">{label}</Text>
+        <Text fz="sm" lh="1.25">
+          {label}
+        </Text>
       </Stack>
     </Button>
   );

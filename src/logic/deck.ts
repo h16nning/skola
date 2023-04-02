@@ -186,17 +186,23 @@ export async function deleteDeck(deck: Deck, calledRecursively?: boolean) {
   });
 }
 
-export function useDeckFromUrl(): [Deck | undefined, boolean] {
+export function useDeckFromUrl(): [
+  Deck | undefined,
+  boolean,
+  string | undefined
+] {
   const location = useLocation();
   const [id, setID] = useState<string | undefined>(undefined);
+  const [params, setParams] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     setID(location.pathname.split("/")[2]);
+    setParams(location.pathname.split("/")[3]);
   }, [location]);
 
   return useLiveQuery(
-    () => db.decks.get(id ?? "").then((deck) => [deck, true]),
+    () => db.decks.get(id ?? "").then((deck) => [deck, true, params]),
     [id],
-    [undefined, false]
+    [undefined, false, undefined]
   );
 }

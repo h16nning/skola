@@ -21,8 +21,8 @@ export default function WelcomeView() {
 
   useEffect(() => {}, []);
   return (
-    <Center py="4rem" px="0.5rem" sx={() => ({ maxWidth: "600px" })}>
-      <Stack spacing="2rem">
+    <Center py="4rem" px="0.5rem" w="100%">
+      <Stack spacing="2rem" maw="600px">
         <Image src="logo.svg" alt="Skola Logo" maw="4rem" />
         <Stack spacing="xs">
           <Title order={1}>Welcome to Skola!</Title>
@@ -30,8 +30,8 @@ export default function WelcomeView() {
             An open-source and free flash card learning app in your browser.
           </Text>
         </Stack>
-        <Card>
-          <Group spacing="md" align="center" noWrap sx={(theme) => ({})}>
+        <Card withBorder>
+          <Group spacing="md" align="center" noWrap sx={() => ({})}>
             <IconInfoCircle />
             <Text fz="sm">
               Please note that this app is still in very early development and
@@ -48,7 +48,7 @@ export default function WelcomeView() {
             is a web app written in React and Typescript and uses the Mantine UI
             library as well as dexie.js. You can find more information on the{" "}
             <Anchor href="https://www.github.com/h16nning/skola">
-              GitHub page
+              GitHub repository
             </Anchor>
             .
           </Text>
@@ -68,7 +68,13 @@ export default function WelcomeView() {
           </Text>
         </Stack>
         <Group align="start">
-          <Button onClick={() => setRegistered(true)}>Get started</Button>
+          <Button
+            onClick={() => setRegistered(true)}
+            size="md"
+            variant="gradient"
+          >
+            Get started
+          </Button>
         </Group>
       </Stack>
     </Center>

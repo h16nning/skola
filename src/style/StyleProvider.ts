@@ -65,8 +65,8 @@ export function getBaseTheme(
     primaryColor: "forest",
     defaultGradient: {
       deg: 150,
-      from: "forest.4",
-      to: "forest.8",
+      from: "forest.5",
+      to: "forest.7",
     },
     globalStyles: globalStyle,
     components: {
@@ -180,7 +180,7 @@ export function getBaseTheme(
         }),
       },
       Tabs: {
-        styles: (theme) => ({
+        styles: () => ({
           tab: { padding: "0.25rem 0.75rem" },
         }),
       },

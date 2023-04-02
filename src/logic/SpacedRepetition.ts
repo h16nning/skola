@@ -1,6 +1,6 @@
 import { Card, CardType } from "./card";
 
-export function sm2(quality: number, model: ReviewModel): ReviewModel {
+export function legacySM2(quality: number, model: ReviewModel): ReviewModel {
   const newModel: ReviewModel = structuredClone(model);
 
   if (quality >= 3) {
@@ -36,6 +36,52 @@ export function sm2(quality: number, model: ReviewModel): ReviewModel {
   return newModel;
 }
 
+export function sm2(quality: number, model: ReviewModel): ReviewModel {
+  const newModel: ReviewModel = structuredClone(model);
+
+  function progress() {
+    newModel.interval =
+      Math.ceil(model.interval * model.easeFactor) + (quality - 4);
+    newModel.repetitions++;
+  }
+
+  function reset() {
+    newModel.interval = 0;
+    newModel.repetitions = 0;
+  }
+
+  if (quality >= 4) {
+    if (model.repetitions === 0) {
+      newModel.interval = 0;
+      newModel.repetitions++;
+    } else if (model.repetitions === 1) {
+      //interval of 1 for quality = 4 and interval of 3 for quality = 5
+      newModel.interval = (quality - 4) * 2 + 1;
+      newModel.repetitions++;
+    } else {
+      progress();
+    }
+  } else if (quality > 0) {
+    if (model.repetitions < 2) {
+      reset();
+    } else {
+      progress();
+      newModel.interval = Math.max(1, newModel.interval);
+    }
+  } else {
+    reset();
+  }
+
+  newModel.easeFactor =
+    model.easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
+
+  if (newModel.easeFactor < 1.3) {
+    newModel.easeFactor = 1.3;
+  }
+
+  return newModel;
+}
+
 export function testSM2(startModel: ReviewModel, qualitySequence: number[]) {
   let model = startModel;
   console.log("--------------------");
@@ -44,8 +90,9 @@ export function testSM2(startModel: ReviewModel, qualitySequence: number[]) {
   for (const quality of qualitySequence) {
     console.log("Simulate answer of: " + quality);
     model = sm2(quality, model);
-    console.log("Interval is now:");
-    console.log(model.interval);
+    console.log(
+      "Interval is now: " + model.interval + ", EaseFactor: " + model.easeFactor
+    );
   }
   console.log("SM2 test finished");
   console.log("--------------------");
@@ -57,6 +104,7 @@ export function updateModel(quality: number, card: Card<CardType>) {
 }
 export type ReviewModel = {
   interval: number;
+  //TODO not used anymore, remove
   learned: boolean;
   repetitions: number;
   easeFactor: number;

@@ -18,9 +18,11 @@ import LearnViewCurrentCardStateIndicator from "./LearnViewCurrentCardStateIndic
 import { useLearning } from "../../logic/learn";
 
 function LearnView() {
-  const [deck, isReady] = useDeckFromUrl();
+  const [deck, isReady, params] = useDeckFromUrl();
   const [cardSet, setCardSet] = useState<Card<CardType>[] | null>(null);
-  const controller = useLearning(cardSet);
+
+  const controller = useLearning(cardSet, { learnAll: params === "all" });
+
   const [currentCardState, setCurrentCardState] = useState<
     CardState | undefined
   >(undefined);
