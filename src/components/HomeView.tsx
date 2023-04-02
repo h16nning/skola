@@ -13,6 +13,7 @@ import DeckTable from "./deck/DeckTable";
 import { useTopLevelDecks } from "../logic/deck";
 import { useSetting } from "../logic/Settings";
 import { useMediaQuery } from "@mantine/hooks";
+import { testSM2 } from "../logic/SpacedRepetition";
 
 export default function HomeView({
   menuOpened,
@@ -52,6 +53,20 @@ export default function HomeView({
           </Button>
           <DeckTable deckList={decks} isReady={isReady} />
         </Stack>
+        <Button
+          onClick={() => {
+            testSM2(
+              { repetitions: 0, easeFactor: 1.3, interval: 0, learned: false },
+              [4, 4, 4, 4, 4, 4, 4]
+            );
+            testSM2(
+              { repetitions: 0, easeFactor: 1.3, interval: 0, learned: false },
+              [5, 5, 5, 5, 5, 5, 5]
+            );
+          }}
+        >
+          Test
+        </Button>
       </Stack>
       <NewDeckModal
         opened={newDeckModalOpened}

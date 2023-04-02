@@ -44,6 +44,8 @@ function Sidebar({
       ")"
   );
 
+  const landscapeMode = useMediaQuery("(orientation: landscape)");
+
   const InteractiveNavLink = useCallback(
     ({
       label,
@@ -87,7 +89,9 @@ function Sidebar({
   };
 
   const fullScreen = {
-    transform: menuOpened ? "none" : "translateX(-100vh)",
+    transform: menuOpened
+      ? "none"
+      : `translateX(-100${landscapeMode ? "vw" : "vh"})`,
     visible: menuOpened ? "visible" : "hidden",
     boxShadow: theme.shadows.xl,
     transition: "transform 200ms ease-in-out",

@@ -27,7 +27,7 @@ export default function SettingsView() {
     }
   }, [location]);
 
-  const developerMode = useSetting("developerMode");
+  const [developerMode] = useSetting("developerMode");
 
   return (
     <Stack spacing="xl" w="600px">

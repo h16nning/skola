@@ -1,6 +1,10 @@
 import { answerCard, Card, CardType, getCard, getStateOf } from "./card";
 import { useCallback, useEffect, useState } from "react";
 
+export type LearnOptions = {
+  learnAll: boolean;
+};
+
 /**
  * This type specifies the return value of the useLearning hook. It contains all the functions and variables needed to control the learning process.
  */
@@ -21,7 +25,7 @@ export type LearnController = {
 const timeInUrgentQueue: Record<number, number> = {
   0: 60_000,
   1: 300_000,
-  3: 600_000,
+  4: 600_000,
   5: 1_200_000,
 };
 
@@ -65,7 +69,7 @@ async function pullCardFromLearningQueue(
  */
 export function useLearning(
   cardSet: Card<CardType>[] | null,
-  options?: {}
+  options?: LearnOptions
 ): LearnController {
   const [newCards, setNewCards] = useState<Card<CardType>[]>([]);
   const [learnedCards, setLearnedCards] = useState<Card<CardType>[]>([]);
@@ -171,27 +175,16 @@ export function useLearning(
 
   const answer = useCallback(
     async (quality: number) => {
-      //Increase repetition count for stats
-      setRepetitionCount(repetitionCount + 1);
       if (currentCard) {
-        console.log("check: current card exists");
-        let pushToUrgentQueue = false;
+        //Increase repetition count for stats
+        setRepetitionCount(repetitionCount + 1);
 
-        //If card was answered badly, the learned stat is reset to false, and it is added back to the urgent queue
-        if (quality <= 1) {
-          currentCard.model.learned = false;
-          pushToUrgentQueue = true;
-        } else {
-          //If card was answered correctly, but it wasn't learned before, it is added one more time to the urgent queue. But learned gets set to true
-          if (!currentCard.model.learned) {
-            pushToUrgentQueue = true;
-          }
-          //Finally, if the card is answered correctly and has been learned before, keep learned true and do nothing
-          currentCard.model.learned = true;
-        }
-
-        //If previously determined, the card is pushed to urgent queue
-        if (pushToUrgentQueue) {
+        //If the quality is 0 or the card has never been repeated before or the quality is 1 and the repetition count is less than 2, push the card to the urgent queue
+        if (
+          quality === 0 ||
+          currentCard.model.repetitions === 0 ||
+          (quality <= 1 && currentCard.model.repetitions < 2)
+        ) {
           console.log("pushing to urgent queue");
           setLearningQueue(
             learningQueue.concat({
@@ -217,14 +210,25 @@ export function useLearning(
   useEffect(() => {
     if (cardSet && cardSet[0] && repetitionCount === 0) {
       setNewCards(cardSet.filter((card) => getStateOf(card) === "new"));
-      setLearnedCards(cardSet.filter((card) => getStateOf(card) === "due"));
+
+      if (options?.learnAll) {
+        setLearnedCards(
+          cardSet.filter((card) => {
+            const state = getStateOf(card);
+            return state === "due" || state === "learned";
+          })
+        );
+      } else {
+        setLearnedCards(cardSet.filter((card) => getStateOf(card) === "due"));
+      }
+
       setLearningQueue(
         cardSet
           .filter((card) => getStateOf(card) === "learning")
           .map((card) => ({ card: card, due: Date.now() }))
       );
     }
-  }, [cardSet, repetitionCount]);
+  }, [cardSet, repetitionCount, options?.learnAll]);
 
   return {
     currentCard: currentCard,
