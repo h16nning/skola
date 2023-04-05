@@ -11,6 +11,8 @@ import DangerousConfirmModal from "../custom/DangerousConfirmModal";
 import { Card, CardType, deleteCard } from "../../logic/card";
 import DebugCardModal from "../DebugCardModal";
 import { useSetting } from "../../logic/Settings";
+import { notifications } from "@mantine/notifications";
+import { deleteFailed, successfullyDeleted } from "../custom/Notification";
 
 interface CardMenuProps {
   card: Card<CardType> | undefined;
@@ -32,8 +34,10 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
         onDelete();
       }
       setDeleteModalOpened(false);
+      successfullyDeleted("card");
     } catch (error) {
-      console.error("Failed to delete card: " + error);
+      deleteFailed("card");
+      console.log(error);
     }
   }
 
