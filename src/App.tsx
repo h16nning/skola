@@ -53,7 +53,13 @@ export default function App() {
         withGlobalStyles
         withNormalizeCSS
       >
-        <Notifications />
+        <Notifications
+          transitionDuration={400}
+          containerWidth="20rem"
+          position="bottom-center"
+          autoClose={2000}
+          limit={1}
+        />
         {registered ? (
           <AppShell
             navbarOffsetBreakpoint="sm"
