@@ -1,21 +1,26 @@
 import React from "react";
 import {
-  Center,
-  Stack,
-  Title,
-  Text,
-  Group,
-  Paper,
   Button,
-  Image,
   Card,
+  Center,
+  Group,
+  Stack,
+  Text,
+  ThemeIcon,
+  Title,
 } from "@mantine/core";
 import { swap } from "../../logic/ui";
-import { IconHome } from "@tabler/icons-react";
+import {
+  IconClockHour9,
+  IconHome,
+  IconTallymarks,
+  IconTrophy,
+} from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { StopwatchResult } from "react-timer-hook";
 import { useHotkeys } from "@mantine/hooks";
 import { useSetting } from "../../logic/Settings";
+import Stat from "../custom/Stat";
 
 interface FinishedLearningViewProps {
   repetitions: number;
@@ -35,24 +40,50 @@ function FinishedLearningView({
   return (
     <Center>
       <Stack spacing="xl" align="center" pt="xl">
-        <Image
-          src={process.env.PUBLIC_URL + "/badge.svg"}
-          maw="10rem"
-          alt="placeholder trophy image"
-        />
+        <ThemeIcon
+          variant="gradient"
+          size="6rem"
+          radius="50%"
+          sx={(theme) => ({
+            background: `linear-gradient(to bottom right, ${swap(
+              theme,
+              "primary",
+              1,
+              6,
+              0.5
+            )}, ${swap(theme, "primary", 4, 9, 0.5)})`,
+            color: swap(theme, "primary", 5, 5),
+          })}
+        >
+          <IconTrophy stroke={0.75} size={50} />
+        </ThemeIcon>
         <Title>Congratulations{name && ", " + name}!</Title>
         <Text align="center">
           You learned all cards of today for this deck. You can be proud of
           yourself!
         </Text>
         <Group>
-          <LearningStat
-            title="Duration"
+          <Stat
+            name="Duration"
             value={time.minutes + "m " + time.seconds + "s"}
+            icon={IconClockHour9}
             color="orange"
+            width="7rem"
           />
-          <LearningStat title="Accuracy" value="97%" color="green" />
-          <LearningStat title="Repetitions" value={repetitions} color="blue" />
+          <Stat
+            name="Accuracy"
+            value="97%"
+            icon={IconTrophy}
+            color="green"
+            width="7rem"
+          />
+          <Stat
+            name="Repetitions"
+            value={repetitions}
+            icon={IconTallymarks}
+            color="blue"
+            width="7rem"
+          />
         </Group>
         <Button
           onClick={() => navigate("/home")}

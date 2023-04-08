@@ -10,7 +10,7 @@ import MissingObject from "../custom/MissingObject";
 import SuperDecksBreadcrumbs from "../SuperDecksBreadcrumbs";
 import { useCardsOf, useStatsOf } from "../../logic/card";
 import HeroDeckSection from "./HeroDeckSection";
-import { useDocumentTitle, useWindowScroll } from "@mantine/hooks";
+import { useDocumentTitle } from "@mantine/hooks";
 import { useScrollResetOnLocationChange } from "../../logic/ui";
 
 function DeckView() {
@@ -60,8 +60,8 @@ function DeckView() {
               })}
             >
               <SuperDecksBreadcrumbs superDecks={superDecks} />
-              <Title order={2} truncate>
-                {deck ? deck.name : ""}
+              <Title order={2} truncate h="2rem">
+                {deck && deck.name}
               </Title>
             </Stack>
           </Group>

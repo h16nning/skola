@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardType } from "../logic/card";
 import { Box, createStyles, Table, Text } from "@mantine/core";
 import { useDeckOf } from "../logic/deck";
-import { swap, swapLight, swapMono } from "../logic/ui";
+import { swap } from "../logic/ui";
 import { useEventListener } from "@mantine/hooks";
+import CardTableHeadItem from "./CardTableHeadItem";
 
 const useStyles = createStyles((theme) => ({
   tableWrapper: {
@@ -16,21 +17,13 @@ const useStyles = createStyles((theme) => ({
     "&:focus": { outline: "none" },
   },
   tr: {
-    border: "none",
+    border: "none !important",
     borderRadius: theme.radius.lg,
     userSelect: "none",
-    borderCollapse: "separate",
   },
   bodyTr: {
     cursor: "pointer",
     "&:active": { transform: "scale(0.99)" },
-  },
-  th: {
-    borderBottom: "none !important",
-    fontSize: theme.fontSizes.xs + " !important",
-    color:
-      (theme.colorScheme === "light" ? theme.black : theme.white) +
-      " !important",
   },
   td: {
     fontSize: theme.fontSizes.xs + " !important",
@@ -87,6 +80,8 @@ function CardTable({
     }
   });
 
+  const [sort, setSort] = useState<[string, boolean]>(["name", true]);
+
   return (
     <Box component="div" className={classes.tableWrapper}>
       <Table
@@ -98,10 +93,30 @@ function CardTable({
       >
         <thead>
           <tr className={classes.tr}>
-            <th className={classes.th}>Name</th>
-            <th className={classes.th}>Type</th>
-            <th className={classes.th}>Deck</th>
-            <th className={classes.th}>Creation Date</th>
+            <CardTableHeadItem
+              name={"Name"}
+              id="name"
+              sort={sort}
+              setSort={setSort}
+            />
+            <CardTableHeadItem
+              name={"Type"}
+              id="type"
+              sort={sort}
+              setSort={setSort}
+            />
+            <CardTableHeadItem
+              name={"Deck"}
+              id="deck"
+              sort={sort}
+              setSort={setSort}
+            />
+            <CardTableHeadItem
+              name={"Creation Date"}
+              id="creation_date"
+              sort={sort}
+              setSort={setSort}
+            />
           </tr>
         </thead>
         {cardSet.length > 0 ? (

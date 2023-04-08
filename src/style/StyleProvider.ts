@@ -90,7 +90,7 @@ export function getBaseTheme(
       },
       Text: {
         styles: () => ({
-          root: {},
+          root: { userSelect: "none" },
         }),
       },
       Button: getButtonStyles(theme),
@@ -115,16 +115,21 @@ export function getBaseTheme(
         defaultProps: {
           shadow: "xl",
           size: "500px",
-          closeOnClickOutside: false,
-          closeOnEscape: true,
           radius: "md",
           centered: true,
+          closeOnClickOutside: false,
+          closeOnEscape: true,
           withCloseButton: true,
+          closeButtonProps: {
+            variant: "subtle",
+            size: "sm",
+          },
         },
         styles: (theme) => ({
           title: {
             fontSize: theme.fontSizes.sm,
             fontWeight: 600,
+            userSelect: "none",
           },
           overlay: {
             background:
@@ -181,13 +186,37 @@ export function getBaseTheme(
       },
       Tabs: {
         styles: () => ({
-          tab: { padding: "0.25rem 0.75rem" },
+          tab: { padding: "0.25rem 0.75rem", userSelect: "none" },
         }),
       },
       TabsPanel: {
         defaultProps: {
           pt: "sm",
         },
+      },
+      Tooltip: {
+        styles: () => ({
+          tooltip: {
+            userSelect: "none",
+          },
+        }),
+      },
+      InputWrapper: {
+        styles: () => ({
+          label: {
+            userSelect: "none",
+          },
+        }),
+      },
+      Input: {
+        styles: () => ({
+          icon: {
+            "& svg": {
+              strokeWidth: "1.5px",
+              width: "1.2rem",
+            },
+          },
+        }),
       },
     },
   };
@@ -208,9 +237,9 @@ const headingStyle = {
 
 function globalStyle() {
   return {
-    ".tabler-icon": {
+    "button .tabler-icon, input .tabler-icon": {
       strokeWidth: "1.5px",
-      width: "19px",
+      width: "1.2rem",
     },
     "*": {
       transitionDuration: "0.1s",

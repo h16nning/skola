@@ -13,7 +13,6 @@ import DeckTable from "./deck/DeckTable";
 import { useTopLevelDecks } from "../logic/deck";
 import { useSetting } from "../logic/Settings";
 import { useMediaQuery } from "@mantine/hooks";
-import { test } from "../components/custom/Notification";
 
 export default function HomeView({
   menuOpened,
@@ -32,7 +31,7 @@ export default function HomeView({
 
   return (
     <>
-      <Stack spacing="3rem" sx={{ width: "600px" }}>
+      <Stack spacing="3rem" pt="lg" sx={{ width: "600px" }}>
         <Group>
           {hasSmallScreen && (
             <ActionIcon onClick={() => setMenuOpened(true)}>
