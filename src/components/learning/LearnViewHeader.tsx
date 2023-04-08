@@ -7,6 +7,7 @@ import { Card, CardType } from "../../logic/card";
 import { IconX } from "@tabler/icons-react";
 import { LearnController } from "../../logic/learn";
 import { getCounterString } from "../../logic/timeUtils";
+import RemainingCardsStats from "./RemainingCardsStats";
 
 export let stopwatchResult: StopwatchResult;
 
@@ -44,22 +45,31 @@ function LearnViewHeader({ currentCard, controller }: LearnViewHeaderProps) {
     ]
   );
   return (
-    <Group position="apart" noWrap>
-      <Group w="10%" noWrap>
-        <ActionIcon
-          onClick={() => navigate("/home")}
-          variant="subtle"
-          color="gray"
-        >
-          <IconX />
-        </ActionIcon>
-        <Stopwatch />
+    <div>
+      <Group position="apart" pb="md" noWrap>
+        <Group w="10%" noWrap>
+          <ActionIcon
+            onClick={() => navigate("/home")}
+            variant="subtle"
+            color="gray"
+          >
+            <IconX />
+          </ActionIcon>
+          <Stopwatch />
+        </Group>
+        <RemainingCardsStats controller={controller} />
+        <Group w="10%" position="right">
+          <CardMenu card={currentCard} onDelete={controller.nextCard} />
+        </Group>
       </Group>
-      <Progress size="md" value={progress} w="50%" />
-      <Group w="10%" position="right">
-        <CardMenu card={currentCard} onDelete={controller.nextCard} />
-      </Group>
-    </Group>
+      <Progress
+        size="xs"
+        value={progress}
+        radius="0"
+        w="calc(100% + 2rem)"
+        mx="-1rem"
+      />
+    </div>
   );
 }
 

@@ -9,10 +9,16 @@ import {
   Title,
 } from "@mantine/core";
 import { Deck } from "../../logic/deck";
-import { swap, swapMono } from "../../logic/ui";
-import { IconBolt } from "@tabler/icons-react";
+import { swapMono } from "../../logic/ui";
+import {
+  IconBolt,
+  IconBook,
+  IconCircleArrowUpRight,
+  IconSparkles,
+} from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardsStats, CardType } from "../../logic/card";
+import Stat from "../custom/Stat";
 
 interface HeroDeckSectionProps {
   deck?: Deck;
@@ -33,17 +39,6 @@ const useStyles = createStyles((theme) => ({
     padding: theme.spacing.md,
     textAlign: "center",
     width: "100%",
-  },
-  stat: {
-    minWidth: "6rem",
-    padding: theme.spacing.xs,
-
-    borderRadius: theme.radius.sm,
-  },
-  statValue: { fontWeight: 600, fontSize: theme.fontSizes.lg },
-  statName: {
-    fontSize: theme.fontSizes.sm,
-    fontWeight: 400,
   },
 }));
 function HeroDeckSection({
@@ -97,13 +92,24 @@ function HeroDeckSection({
         ) : (
           <Stack spacing="md" align="center">
             <Group>
-              <Stat value={stats.newCards ?? 0} name="New" color="blue" />
+              <Stat
+                value={stats.newCards ?? 0}
+                name="New"
+                color="purple"
+                icon={IconSparkles}
+              />
               <Stat
                 value={stats.learningCards ?? 0}
-                name="Learning"
-                color="red"
+                name="Learn"
+                color="orange"
+                icon={IconCircleArrowUpRight}
               />
-              <Stat value={stats.dueCards ?? 0} name="Review" color="green" />
+              <Stat
+                value={stats.dueCards ?? 0}
+                name="Review"
+                color="teal"
+                icon={IconBook}
+              />
             </Group>
             <Button
               disabled={
@@ -124,37 +130,4 @@ function HeroDeckSection({
   );
 }
 
-function Stat({
-  value,
-  name,
-  color,
-}: {
-  value: number;
-  name: string;
-  color: string;
-}) {
-  const { classes } = useStyles();
-
-  return (
-    <Paper
-      className={classes.stat}
-      sx={(theme) => ({ backgroundColor: swap(theme, color, 4, 9, 0.1) })}
-    >
-      <Stack spacing="0.125rem" align="center">
-        <Text
-          className={classes.statValue}
-          sx={(theme) => ({ color: swap(theme, color, 6, 5) })}
-        >
-          {value}
-        </Text>
-        <Text
-          className={classes.statName}
-          sx={(theme) => ({ color: swap(theme, color, 9, 3, 0.75) })}
-        >
-          {name}
-        </Text>
-      </Stack>
-    </Paper>
-  );
-}
 export default HeroDeckSection;

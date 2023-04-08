@@ -10,6 +10,7 @@ export type LearnOptions = {
  */
 export type LearnController = {
   currentCard: Card<CardType> | null;
+  currentCardFromReservoir: "new" | "learned" | "learning" | null;
   nextCard: Function;
   answerCard: Function;
   learningIsFinished: boolean;
@@ -77,6 +78,9 @@ export function useLearning(
     { card: Card<CardType>; due: number }[]
   >([]);
   const [currentCard, setCurrentCard] = useState<Card<CardType> | null>(null);
+  const [currentCardFromReservoir, setCurrentCardFromReservoir] = useState<
+    "new" | "learned" | "learning" | null
+  >(null);
   const [repetitionCount, setRepetitionCount] = useState<number>(0);
   const [finished, setFinished] = useState<boolean>(false);
   const [requestingNext, setRequestingNext] = useState<boolean>(false);
@@ -119,6 +123,7 @@ export function useLearning(
           setLearningQueue,
           setCurrentCard
         );
+        setCurrentCardFromReservoir("learning");
         /*const topItem = learningQueue[0];
 
         //Double check if the item really exists
@@ -144,12 +149,14 @@ export function useLearning(
         if (newCardsAvailable && learnedCardsAvailable) {
           if (Math.random() < 0.5) {
             void pullCardFromReservoir(newCards, setNewCards, setCurrentCard);
+            setCurrentCardFromReservoir("new");
           } else {
             void pullCardFromReservoir(
               learnedCards,
               setLearnedCards,
               setCurrentCard
             );
+            setCurrentCardFromReservoir("learned");
           }
         } else if (newCardsAvailable) {
           void pullCardFromReservoir(newCards, setNewCards, setCurrentCard);
@@ -159,6 +166,7 @@ export function useLearning(
             setLearnedCards,
             setCurrentCard
           );
+          setCurrentCardFromReservoir("learned");
         } else {
           setFinished(true);
         }
@@ -232,6 +240,7 @@ export function useLearning(
 
   return {
     currentCard: currentCard,
+    currentCardFromReservoir: currentCardFromReservoir,
     answerCard: answer,
     nextCard: requestNext,
     learningIsFinished: finished,
