@@ -1,6 +1,15 @@
 import { answerCard, Card, CardType, getCard, getStateOf } from "./card";
 import { useCallback, useEffect, useState } from "react";
 
+export type Answer = "again" | "hard" | "good" | "easy";
+
+export const AnswerQuality: Record<Answer, number> = {
+  again: 0,
+  hard: 1,
+  good: 4,
+  easy: 5,
+};
+
 export type LearnOptions = {
   learnAll: boolean;
 };
@@ -14,7 +23,7 @@ export type LearnController = {
   nextCard: Function;
   answerCard: Function;
   learningIsFinished: boolean;
-  repetitionCount: number;
+  repetitionList: number[];
   learnedCardsLength: number;
   newCardsLength: number;
   learningQueueLength: number;
@@ -81,7 +90,7 @@ export function useLearning(
   const [currentCardFromReservoir, setCurrentCardFromReservoir] = useState<
     "new" | "learned" | "learning" | null
   >(null);
-  const [repetitionCount, setRepetitionCount] = useState<number>(0);
+  const [repetitionList, setRepetitionList] = useState<number[]>([]);
   const [finished, setFinished] = useState<boolean>(false);
   const [requestingNext, setRequestingNext] = useState<boolean>(false);
 
@@ -185,7 +194,7 @@ export function useLearning(
     async (quality: number) => {
       if (currentCard) {
         //Increase repetition count for stats
-        setRepetitionCount(repetitionCount + 1);
+        setRepetitionList(repetitionList.concat(quality));
 
         //If the quality is 0 or the card has never been repeated before or the quality is 1 and the repetition count is less than 2, push the card to the urgent queue
         if (
@@ -211,12 +220,12 @@ export function useLearning(
 
       requestNext();
     },
-    [currentCard, learningQueue, repetitionCount, requestNext]
+    [currentCard, learningQueue, repetitionList, requestNext]
   );
 
   //This useEffect is used to filter the cards given in using cardSet and spreading them to the learningQueue and the newCards / learnedCards reservoir
   useEffect(() => {
-    if (cardSet && cardSet[0] && repetitionCount === 0) {
+    if (cardSet && cardSet[0] && repetitionList.length === 0) {
       setNewCards(cardSet.filter((card) => getStateOf(card) === "new"));
 
       if (options?.learnAll) {
@@ -236,7 +245,7 @@ export function useLearning(
           .map((card) => ({ card: card, due: Date.now() }))
       );
     }
-  }, [cardSet, repetitionCount, options?.learnAll]);
+  }, [cardSet, repetitionList, options?.learnAll]);
 
   return {
     currentCard: currentCard,
@@ -244,9 +253,25 @@ export function useLearning(
     answerCard: answer,
     nextCard: requestNext,
     learningIsFinished: finished,
-    repetitionCount: repetitionCount,
+    repetitionList: repetitionList,
     learnedCardsLength: learnedCards.length,
     newCardsLength: newCards.length,
     learningQueueLength: learningQueue.length,
   };
+}
+
+export function useRepetitionAccuracy(repetitionList: number[]): number | null {
+  const [accuracy, setAccuracy] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (repetitionList.length !== 0) {
+      let sum = 0;
+      repetitionList.forEach(
+        (quality) => (sum += quality / AnswerQuality.good)
+      );
+      setAccuracy(Math.round((sum / repetitionList.length) * 1000) / 10);
+    }
+  }, [repetitionList]);
+
+  return accuracy;
 }

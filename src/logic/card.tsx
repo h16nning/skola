@@ -12,6 +12,7 @@ export enum CardType {
   Normal = "normal",
   Cloze = "cloze",
   ImageOcclusion = "imageOcclusion",
+  Undefined = "undefined",
 }
 
 export interface CardSkeleton {

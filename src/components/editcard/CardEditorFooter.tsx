@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Group } from "@mantine/core";
-import { EditMode } from "../CardTypeManager";
+import { EditMode } from "../../logic/CardTypeManager";
 import { IconDeviceFloppy, IconPlus } from "@tabler/icons-react";
 
 interface CardEditorFooterProps {

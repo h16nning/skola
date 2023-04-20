@@ -3,7 +3,7 @@ import { Card, CardType } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
 import { Group, Stack, Text } from "@mantine/core";
 import CardMenu from "./CardMenu";
-import { getUtils } from "../CardTypeManager";
+import { getUtils } from "../../logic/CardTypeManager";
 
 interface EditCardsProps {
   card?: Card<CardType>;
@@ -26,11 +26,11 @@ function CardView({ card }: { card: Card<CardType> }) {
   const [deck] = useDeckOf(card);
 
   const CardEditor = useMemo(() => {
-    return deck ? getUtils(card.content.type).editor(card, deck, "edit") : null;
+    return deck ? getUtils(card).editor(card, deck, "edit") : null;
   }, [card, deck]);
 
   return (
-    <Stack>
+    <Stack sx={() => ({ height: "100%", overflowY: "scroll" })}>
       <Group position="apart" noWrap>
         <Text fz="xs" fw={600}>
           Edit Card

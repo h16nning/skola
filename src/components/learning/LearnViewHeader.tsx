@@ -30,15 +30,15 @@ function LearnViewHeader({ currentCard, controller }: LearnViewHeaderProps) {
   const navigate = useNavigate();
   const progress = useMemo(
     () =>
-      (controller.repetitionCount /
+      (controller.repetitionList.length /
         (1 +
-          controller.repetitionCount +
+          controller.repetitionList.length +
           controller.learnedCardsLength +
           controller.newCardsLength +
           controller.learningQueueLength * 2)) *
       100,
     [
-      controller.repetitionCount,
+      controller.repetitionList,
       controller.learnedCardsLength,
       controller.newCardsLength,
       controller.learningQueueLength,

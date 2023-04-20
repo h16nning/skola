@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { Stack, Text, useMantineTheme } from "@mantine/core";
 import CardTextEditor, { useCardEditor } from "./CardTextEditor";
-import { EditMode, NormalCardUtils } from "../CardTypeManager";
+import { EditMode } from "../../logic/CardTypeManager";
 import { Card, CardType, newCard, updateCard } from "../../logic/card";
 import { Deck } from "../../logic/deck";
 import CardEditorFooter from "./CardEditorFooter";
@@ -13,6 +13,7 @@ import {
 } from "../custom/Notification";
 import { useHotkeys } from "@mantine/hooks";
 import { Editor } from "@tiptap/react";
+import { NormalCardUtils } from "../../logic/CardTypeImplementations/NormalCard";
 
 interface NormalCardEditorProps {
   card: Card<CardType.Normal> | null;

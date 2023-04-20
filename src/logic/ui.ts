@@ -47,7 +47,6 @@ export function useDynamicPageTheme(
   colorScheme: "light" | "dark"
 ) {
   useEffect(() => {
-    console.log(colorScheme);
     if (document && document.querySelector("meta[name='theme-color']")) {
       // @ts-ignore
       document.querySelector("meta[name='theme-color']").setAttribute(

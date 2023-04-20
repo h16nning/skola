@@ -38,7 +38,7 @@ function Sidebar({
   );
   const usesOnlyIcons = useMediaQuery(
     "(max-width: " +
-      theme.breakpoints.md +
+      theme.breakpoints.lg +
       ") and (min-width: " +
       theme.breakpoints.sm +
       ")"
@@ -98,11 +98,11 @@ function Sidebar({
   };
 
   return (
-    <MediaQuery smallerThan="md" largerThan="sm" styles={onlyIcons}>
+    <MediaQuery smallerThan="lg" largerThan="sm" styles={onlyIcons}>
       <MediaQuery smallerThan="sm" styles={fullScreen}>
         <Navbar
           hiddenBreakpoint="sm"
-          width={{ sm: "3.825rem", md: "15rem" }}
+          width={{ sm: "3.825rem", lg: "15rem" }}
           p="0.5rem"
           sx={{
             "& .mantine-Tooltip-tooltip": { display: "none" },

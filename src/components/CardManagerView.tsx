@@ -8,33 +8,8 @@ import { useDecks } from "../logic/deck";
 import { swapMono } from "../logic/ui";
 import { IconChevronLeft, IconSearch } from "@tabler/icons-react";
 import SelectDecksHeader from "./custom/SelectDecksHeader";
-import { Collection, IndexableType, Table } from "dexie";
 import { useDebouncedState } from "@mantine/hooks";
-
-function selectCards(
-  cards: Table<Card<CardType>>,
-  deckGiven: boolean,
-  filter: string,
-  location: any
-): Promise<Card<CardType>[] | undefined> {
-  let filteredCards:
-    | Table<Card<CardType>>
-    | Collection<Card<CardType>, IndexableType> = cards;
-  console.log(filteredCards);
-
-  if (deckGiven) {
-    const deckId = location.pathname.split("/")[2];
-    filteredCards = filteredCards.where("deck").equals(deckId);
-  }
-  if (filter.length > 0) {
-    console.log(filter);
-    filteredCards = filteredCards.filter((card) =>
-      // @ts-ignore
-      card.content.front.toLowerCase().includes(filter.toLowerCase())
-    );
-  }
-  return filteredCards.toArray();
-}
+import selectCards from "../logic/card_filter";
 
 function CardManagerView() {
   const navigate = useNavigate();
@@ -45,16 +20,18 @@ function CardManagerView() {
 
   const [filter, setFilter] = useDebouncedState<string>("", 250);
 
+  const [sort, setSort] = useState<[string, boolean]>(["front", true]);
+
   const [cards, cardsAreReady] = useCardsWith(
-    (cards) => selectCards(cards, deckGiven, filter, location),
-    [deckGiven, location, filter]
+    (cards) => selectCards(cards, deckGiven, filter, sort, location),
+    [deckGiven, location, filter, sort]
   );
 
   const [selectedIndex, setSelectedIndex] = useState<number>();
   const [selectedCard, setSelectedCard] = useState<Card<CardType>>();
 
   return (
-    <Stack w="100%">
+    <Stack sx={() => ({ overflow: "hidden", width: "100%", height: "100%" })}>
       <Group align="end" spacing="xs">
         <ActionIcon
           onClick={() => {
@@ -72,8 +49,13 @@ function CardManagerView() {
         maw="20rem"
         onChange={(event) => setFilter(event.currentTarget.value)}
       />
-      <Group spacing="md" grow align="start">
-        <Stack miw="300px" w="400px" maw="100%">
+      <Group
+        spacing="md"
+        grow
+        align="start"
+        sx={(theme) => ({ overflow: "hidden", height: "100%" })}
+      >
+        <Stack miw="300px" w="400px" maw="100%" h="100%">
           {cards && (
             <CardTable
               cardSet={cards ?? []}
@@ -81,6 +63,8 @@ function CardManagerView() {
               setSelectedIndex={setSelectedIndex}
               selectedCard={selectedCard}
               setSelectedCard={setSelectedCard}
+              sort={sort}
+              setSort={setSort}
             />
           )}
         </Stack>
@@ -89,6 +73,7 @@ function CardManagerView() {
           w="400px"
           maw="100%"
           p="sm"
+          h="100%"
           sx={(theme) => ({
             border: "solid 1px " + swapMono(theme, 3, 5),
             borderRadius: theme.radius.md,

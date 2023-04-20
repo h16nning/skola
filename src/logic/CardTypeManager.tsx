@@ -1,0 +1,42 @@
+import { ReactNode } from "react";
+import { Card, CardType } from "./card";
+import { Deck } from "./deck";
+import { NormalCardUtils } from "./CardTypeImplementations/NormalCard";
+import { ClozeCardUtils } from "./CardTypeImplementations/ClozeCard";
+import { UndefinedCardUtils } from "./CardTypeImplementations/UndefinedCard";
+
+export interface CardTypeManager<T extends CardType> {
+  create: (params: any) => Card<T>;
+
+  update: (params: any, existingCard: Card<T>) => Card<T>;
+
+  displayPreview: (card: Card<T>) => string;
+
+  displayQuestion(card: Card<T>): ReactNode;
+
+  displayAnswer(card: Card<T>): ReactNode;
+
+  editor(card: Card<CardType> | null, deck: Deck, mode: EditMode): JSX.Element;
+}
+
+export type EditMode = "edit" | "new";
+
+export function getUtils(card: Card<CardType>): CardTypeManager<CardType> {
+  return getUtilsOfType(card.content ? card.content.type : CardType.Undefined);
+}
+
+export function getUtilsOfType(cardType: CardType): CardTypeManager<CardType> {
+  switch (cardType) {
+    case CardType.Normal:
+      // @ts-ignore
+      return NormalCardUtils;
+    case CardType.Cloze:
+      // @ts-ignore
+      return ClozeCardUtils;
+    case CardType.Undefined:
+      // @ts-ignore
+      return UndefinedCardUtils;
+  }
+  // @ts-ignore
+  return NormalCardUtils;
+}
