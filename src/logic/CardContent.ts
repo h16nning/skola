@@ -1,15 +1,8 @@
-import { Card, CardType } from "./card";
+import { CardType } from "./card";
+import { NormalContent } from "./CardTypeImplementations/NormalCard";
+import { ClozeContent } from "./CardTypeImplementations/ClozeCard";
 
 export type Content<T extends CardType> = {
   type: T;
-  front: string;
 } & (T extends CardType.Normal ? NormalContent : {}) &
   (T extends CardType.Cloze ? ClozeContent : {});
-
-type NormalContent = {
-  back: string;
-};
-
-type ClozeContent = {
-  clozeCards: Array<string>;
-};

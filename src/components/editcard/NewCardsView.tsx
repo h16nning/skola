@@ -5,7 +5,7 @@ import { useDeckFromUrl, useDecks } from "../../logic/deck";
 import MissingObject from "../custom/MissingObject";
 import { CardType } from "../../logic/card";
 import { useNavigate } from "react-router-dom";
-import { getUtils } from "../CardTypeManager";
+import { getUtilsOfType } from "../../logic/CardTypeManager";
 import SelectDecksHeader from "../custom/SelectDecksHeader";
 
 function NewCardsView() {
@@ -16,7 +16,7 @@ function NewCardsView() {
   const [cardType, setCardType] = useState<CardType>(CardType.Normal);
 
   const CardEditor = useMemo(() => {
-    return deck ? getUtils(cardType).editor(null, deck, "new") : null;
+    return deck ? getUtilsOfType(cardType).editor(null, deck, "new") : null;
   }, [deck, cardType]);
 
   if (isReady && !deck) {

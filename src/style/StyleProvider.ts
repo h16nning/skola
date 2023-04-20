@@ -7,6 +7,8 @@ export function getBaseTheme(
   theme: MantineTheme,
   colorScheme: ColorScheme
 ): MantineThemeOverride {
+  // @ts-ignore
+  // @ts-ignore
   return {
     other: {},
     headings: headingStyle,

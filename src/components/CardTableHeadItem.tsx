@@ -21,19 +21,24 @@ export default function CardTableHeadItem({
       component="th"
       sx={(theme) => ({
         borderBottom: "none !important",
-        borderTopLeftRadius: theme.radius.sm,
-        borderTopRightRadius: theme.radius.sm,
+        borderRadius: "0px !important",
         fontSize: theme.fontSizes.xs + " !important",
         lineHeight: "1rem",
-        "&&": { fontWeight: 500 }, //override table default
+        position: "sticky",
+        top: "0px",
+        backgroundColor:
+          theme.colorScheme === "light" ? theme.white : theme.colors.dark[7],
+
+        "&&": {
+          fontWeight: 500,
+        },
         color:
           (theme.colorScheme === "light" ? theme.black : theme.white) +
           " !important",
         cursor: "pointer",
         "&:hover": {
-          backgroundColor: swapMono(theme, 1, 7),
+          backgroundColor: swapMono(theme, 1, 6),
         },
-        "&:active": { transform: "scale(0.97)" },
       })}
       onClick={() => {
         setSort([id, sort[0] === id ? !sort[1] : true]);
@@ -48,7 +53,7 @@ export default function CardTableHeadItem({
           gap: "0.25rem",
           height: "1rem",
           "& svg": {
-            color: swapMono(theme, 6, 6),
+            color: swapMono(theme, 6, 2),
             opacity: sort[0] === id ? 1 : 0,
             transition: "transform 0.2s ease, opacity 0.1s ease",
             transform: sort[0] === id && !sort[1] ? "rotate(180deg)" : "none",

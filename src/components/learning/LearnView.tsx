@@ -9,7 +9,7 @@ import {
   getStateOf,
 } from "../../logic/card";
 import MissingObject from "../custom/MissingObject";
-import { getUtils } from "../CardTypeManager";
+import { getUtils } from "../../logic/CardTypeManager";
 import { generalFail } from "../custom/Notification";
 import FinishedLearningView from "./FinishedLearningView";
 import LearnViewFooter from "./LearnViewFooter";
@@ -67,7 +67,7 @@ function LearnView() {
   if (controller.learningIsFinished) {
     return (
       <FinishedLearningView
-        repetitions={controller.repetitionCount}
+        repetitionList={controller.repetitionList}
         time={stopwatchResult}
       />
     );
@@ -100,14 +100,12 @@ function LearnView() {
           />
           {!showingAnswer &&
             controller.currentCard &&
-            getUtils(controller.currentCard.content.type).displayQuestion(
-              //@ts-ignore how to solve this???
+            getUtils(controller.currentCard).displayQuestion(
               controller.currentCard
             )}
           {showingAnswer &&
             controller.currentCard &&
-            getUtils(controller.currentCard.content.type).displayAnswer(
-              // @ts-ignore how to solve this???
+            getUtils(controller.currentCard).displayAnswer(
               controller.currentCard
             )}
         </Box>

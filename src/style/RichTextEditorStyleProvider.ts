@@ -1,7 +1,16 @@
 import { MantineTheme } from "@mantine/core";
 import { swap, swapMono } from "../logic/ui";
+import { CSSObject } from "@mantine/styles/lib/tss";
+import { ContextStylesParams } from "@mantine/styles/lib/theme/types/MantineTheme";
 
-export default function getRichTextEditorStyles() {
+export default function getRichTextEditorStyles(): {
+  defaultProps: Object;
+  styles: (
+    theme: MantineTheme,
+    params: any,
+    context: ContextStylesParams
+  ) => Record<string, CSSObject>;
+} {
   return {
     defaultProps: {
       labels: "hello",
@@ -17,6 +26,14 @@ export default function getRichTextEditorStyles() {
         paddingRight: 0,
         backgroundColor: "transparent",
         justifyContent: "space-between",
+        overflowX: "scroll",
+        overflowY: "visible",
+        //hiding scrollbars on ios
+        scrollbarWidth: "none",
+        "&::-webkit-scrollbar": {
+          display: "none",
+        },
+        flexWrap: "nowrap" as "nowrap",
       },
       content: {
         backgroundColor: "transparent",

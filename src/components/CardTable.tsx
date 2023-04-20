@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Card, CardType } from "../logic/card";
 import { Box, createStyles, Table, Text } from "@mantine/core";
 import { useDeckOf } from "../logic/deck";
 import { swap } from "../logic/ui";
 import { useEventListener } from "@mantine/hooks";
 import CardTableHeadItem from "./CardTableHeadItem";
+import { getUtils } from "../logic/CardTypeManager";
 
 const useStyles = createStyles((theme) => ({
   tableWrapper: {
     width: "100%",
+    height: "100%",
+    overflowY: "scroll",
     overflowX: "scroll",
   },
   table: {
@@ -17,13 +20,14 @@ const useStyles = createStyles((theme) => ({
     "&:focus": { outline: "none" },
   },
   tr: {
+    backgroundColor:
+      theme.colorScheme === "light" ? theme.white : theme.colors.dark[7],
     border: "none !important",
     borderRadius: theme.radius.lg,
     userSelect: "none",
   },
   bodyTr: {
     cursor: "pointer",
-    "&:active": { transform: "scale(0.99)" },
   },
   td: {
     fontSize: theme.fontSizes.xs + " !important",
@@ -53,6 +57,8 @@ interface CardTableProps {
   setSelectedIndex: Function;
   selectedCard: Card<CardType> | undefined;
   setSelectedCard: Function;
+  sort: [string, boolean];
+  setSort: (sort: [string, boolean]) => void;
 }
 
 function CardTable({
@@ -61,6 +67,8 @@ function CardTable({
   setSelectedIndex,
   selectedCard,
   setSelectedCard,
+  sort,
+  setSort,
 }: CardTableProps) {
   const { classes } = useStyles();
 
@@ -80,8 +88,6 @@ function CardTable({
     }
   });
 
-  const [sort, setSort] = useState<[string, boolean]>(["name", true]);
-
   return (
     <Box component="div" className={classes.tableWrapper}>
       <Table
@@ -95,7 +101,7 @@ function CardTable({
           <tr className={classes.tr}>
             <CardTableHeadItem
               name={"Name"}
-              id="name"
+              id="front"
               sort={sort}
               setSort={setSort}
             />
@@ -174,9 +180,7 @@ function CardTableItem({
       })}
       onClick={() => setSelectedIndex(index)}
     >
-      <td className={classes.td}>
-        {card.content.front.replace(/<[^>]*>/g, "")}
-      </td>
+      <td className={classes.td}>{getUtils(card).displayPreview(card)}</td>
       <td className={classes.td}>{card.content.type}</td>
 
       <td className={classes.td}>{deck?.name ?? "?"}</td>

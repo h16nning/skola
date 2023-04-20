@@ -21,18 +21,21 @@ import { StopwatchResult } from "react-timer-hook";
 import { useHotkeys } from "@mantine/hooks";
 import { useSetting } from "../../logic/Settings";
 import Stat from "../custom/Stat";
+import { useRepetitionAccuracy } from "../../logic/learn";
 
 interface FinishedLearningViewProps {
-  repetitions: number;
+  repetitionList: number[];
   time: StopwatchResult;
 }
 
 function FinishedLearningView({
-  repetitions,
+  repetitionList,
   time,
 }: FinishedLearningViewProps) {
   const navigate = useNavigate();
   const [name] = useSetting("name");
+
+  const accuracy = useRepetitionAccuracy(repetitionList);
 
   useHotkeys([["Space", () => navigate("/home")]]);
   useHotkeys([["Enter", () => navigate("/home")]]);
@@ -72,14 +75,14 @@ function FinishedLearningView({
           />
           <Stat
             name="Accuracy"
-            value="97%"
+            value={accuracy ? accuracy + "%" : "not available"}
             icon={IconTrophy}
             color="green"
             width="7rem"
           />
           <Stat
             name="Repetitions"
-            value={repetitions}
+            value={repetitionList.length}
             icon={IconTallymarks}
             color="blue"
             width="7rem"
