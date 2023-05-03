@@ -38,6 +38,7 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
     >
       <Stack justify="space-between">
         <TextInput
+          placeholder="for example 'Spanish', 'Anatomy' or 'History'"
           data-autofocus
           label="Name"
           value={nameValue}

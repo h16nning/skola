@@ -61,6 +61,21 @@ export async function updateCard(
   return db.cards.update(id, changes);
 }
 
+export async function moveCard(card: Card<CardType>, newDeck: Deck) {
+  //Remove card from old deck
+  const oldDeck = await db.decks.get(card.deck);
+  if (oldDeck) {
+    oldDeck.cards = oldDeck.cards.filter((c) => c !== card.id);
+    await db.decks.update(oldDeck.id, { cards: oldDeck.cards });
+  }
+  newDeck.cards.push(card.id);
+  //Add card to new deck
+  await db.decks.update(newDeck.id, { cards: newDeck.cards });
+  //Update in card object
+  card.deck = newDeck.id;
+  return db.cards.update(card.id, { deck: newDeck.id });
+}
+
 export async function deleteCard(card: Card<CardType>) {
   return db.transaction("rw", db.decks, db.cards, () => {
     db.cards.delete(card.id);

@@ -28,18 +28,7 @@ export default function DeckPreview({ deck, i }: DeckPreviewProps) {
           <Text>{deck.name}</Text>
           <Group spacing="xs" noWrap={true}>
             {stats.dueCards && stats.dueCards > 0 ? (
-              <Badge
-                variant="dot"
-                color="green"
-                sx={(theme) => ({
-                  border: "none",
-                  backgroundColor: swapMono(
-                    theme,
-                    i % 2 === 0 ? 3 : 2,
-                    i % 2 === 0 ? 4 : 5
-                  ),
-                })}
-              >
+              <Badge variant="dot" color="green">
                 {stats.dueCards} due
               </Badge>
             ) : (

@@ -14,6 +14,7 @@ import { useColorScheme, useLocalStorage } from "@mantine/hooks";
 import { useSetting } from "./logic/Settings";
 import WelcomeView from "./components/WelcomeView";
 import { useDynamicPageTheme } from "./logic/ui";
+import GlobalApplicationInfo from "./components/GlobalApplicationInfo";
 
 export default function App() {
   const theme = useMantineTheme();
@@ -60,6 +61,7 @@ export default function App() {
           autoClose={2000}
           limit={1}
         />
+        <GlobalApplicationInfo />
         {registered ? (
           <AppShell
             navbarOffsetBreakpoint="sm"

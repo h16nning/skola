@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Button, Stack } from "@mantine/core";
+import { Button, Card, Stack, Text, Title } from "@mantine/core";
 import SettingsInput from "./SettingsInput";
 import { IconTrash } from "@tabler/icons-react";
 import DangerousConfirmModal from "../custom/DangerousConfirmModal";
 import { db } from "../../logic/db";
+import { swap } from "../../logic/ui";
 
 export default function GeneralSettingsView() {
   const [deleteAllDataModalOpened, setDeleteAllDataModalOpened] =
@@ -25,14 +26,29 @@ export default function GeneralSettingsView() {
           settingsKey="developerMode"
           inputType={"switch"}
         />
-        <Button
-          leftIcon={<IconTrash />}
-          variant="filled"
-          color="red"
-          onClick={() => setDeleteAllDataModalOpened(true)}
+        <Card
+          withBorder
+          w="100%"
+          sx={(theme) => ({
+            borderColor: swap(theme, "red", 7, 5) + " !important",
+          })}
         >
-          Delete all Data
-        </Button>
+          <Stack spacing="md" align="start">
+            <Title order={6}>Danger Zone</Title>
+            <Text size="sm">
+              This section contains potentially dangerous settings. Proceed with
+              utmost caution!
+            </Text>
+            <Button
+              leftIcon={<IconTrash />}
+              variant="filled"
+              color="red"
+              onClick={() => setDeleteAllDataModalOpened(true)}
+            >
+              Delete all Data
+            </Button>
+          </Stack>
+        </Card>
       </Stack>
       <DangerousConfirmModal
         dangerousAction={() => db.delete()}

@@ -12,7 +12,7 @@ import {
 import { Deck, deleteDeck } from "../../logic/deck";
 import DangerousConfirmModal from "../custom/DangerousConfirmModal";
 import { useNavigate } from "react-router-dom";
-import RenameModal from "../editcard/RenameModal";
+import RenameCardModal from "../editcard/RenameCardModal";
 import DebugDeckModal from "./DebugDeckModal";
 import { Card, CardsStats, CardType } from "../../logic/card";
 import { useSetting } from "../../logic/Settings";
@@ -49,7 +49,11 @@ function DeckMenu({
     try {
       await deleteDeck(deck);
       setDeleteModalOpened(false);
-      navigate((deck.superDecks && deck.superDecks[deck.superDecks.length - 1]) ? "/deck/" + deck.superDecks[deck.superDecks.length - 1] : "/home");
+      navigate(
+        deck.superDecks && deck.superDecks[deck.superDecks.length - 1]
+          ? "/deck/" + deck.superDecks[deck.superDecks.length - 1]
+          : "/home"
+      );
     } catch (error) {
       console.error("Failed to delete deck: " + error);
     }
@@ -116,7 +120,7 @@ function DeckMenu({
             opened={deleteModalOpened}
             setOpened={setDeleteModalOpened}
           />
-          <RenameModal
+          <RenameCardModal
             deck={deck}
             opened={renameModalOpened}
             setOpened={setRenameModalOpened}

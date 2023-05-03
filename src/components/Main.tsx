@@ -5,7 +5,7 @@ import DeckView from "./deck/DeckView";
 import NewCardView from "./editcard/NewCardsView";
 import LearnView from "./learning/LearnView";
 import CardManagerView from "./CardManagerView";
-import { Center } from "@mantine/core";
+import { Center, Text } from "@mantine/core";
 import React from "react";
 export default function Main({
   menuOpened,
@@ -35,6 +35,19 @@ export default function Main({
         <Route path="/new/*" element={<NewCardView />} />
         <Route path="/learn/*" element={<LearnView />} />
         <Route path="/cards/*" element={<CardManagerView />} />
+        <Route
+          path="/today"
+          element={
+            <Text>
+              The today view is a planned feature. Here you will be provided a
+              feed of upcoming decks that need to be reviewed.
+            </Text>
+          }
+        />
+        <Route
+          path="/stats"
+          element={<Text>The statistics view is under development.</Text>}
+        />
       </Routes>
     </Center>
   );
