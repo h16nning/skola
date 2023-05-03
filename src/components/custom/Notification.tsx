@@ -1,5 +1,11 @@
 import { notifications } from "@mantine/notifications";
-import { IconCheck, IconTrash, IconX } from "@tabler/icons-react";
+import {
+  IconArrowsExchange,
+  IconArrowsMove,
+  IconCheck,
+  IconTrash,
+  IconX,
+} from "@tabler/icons-react";
 import React from "react";
 import { swap } from "../../logic/ui";
 import { MantineTheme } from "@mantine/core";
@@ -50,6 +56,18 @@ export function successfullyAdded() {
     color: "teal",
     withCloseButton: false,
     icon: <IconCheck />,
+    styles: toastStyles,
+  });
+}
+
+export function successfullyMovedTo(deckName: string) {
+  return notifications.show({
+    title: "Card Moved",
+    message: `Card moved to ${deckName}!`,
+    autoClose: 1000,
+    color: "teal",
+    withCloseButton: false,
+    icon: <IconArrowsExchange />,
     styles: toastStyles,
   });
 }

@@ -86,7 +86,7 @@ function HeroDeckSection({
               w="50%"
               onClick={() => navigate("/learn/" + deck?.id + "/all")}
             >
-              Practice anyways
+              Practice anyway
             </Button>
           </Stack>
         ) : (

@@ -18,8 +18,9 @@ function DeckTable({ deckList, isReady }: DeckTableProps) {
         ))}
       </Stack>
     ) : (
-      <Text fz="sm" c="gray">
-        There are not any decks here.
+      <Text fz="sm" c="gray" pt="lg" ta="center">
+        You have not created any decks yet. Click the button above to create
+        one!
       </Text>
     )
   ) : (

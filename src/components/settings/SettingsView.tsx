@@ -13,6 +13,7 @@ import GeneralSettingsView from "./GeneralSettingsView";
 import { useSetting } from "../../logic/Settings";
 import EditingSettingsView from "./EditingSettingsView";
 import { useLocation, useNavigate } from "react-router-dom";
+import AboutSettingsView from "./AboutSettingsView";
 
 export default function SettingsView() {
   const [value, setValue] = useState("General");
@@ -91,11 +92,7 @@ export default function SettingsView() {
           <EditingSettingsView />
         </Tabs.Panel>
         <Tabs.Panel value="about">
-          This program was made by h16nning. It is in very early development.
-          Please check out the{" "}
-          <Anchor href="https://www.github.com/h16nning/super-anki">
-            git repository
-          </Anchor>
+          <AboutSettingsView />
         </Tabs.Panel>
         <Tabs.Panel value="Developer">
           This is the developer tab. It will contain extra settings for

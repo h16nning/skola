@@ -9,7 +9,7 @@ interface RenameModalProps {
   setOpened: Function;
 }
 
-function RenameModal({ deck, opened, setOpened }: RenameModalProps) {
+function RenameCardModal({ deck, opened, setOpened }: RenameModalProps) {
   const [nameValue, setNameValue] = useState<string>(deck.name);
 
   useEffect(() => setNameValue(deck.name), [deck]);
@@ -52,4 +52,4 @@ function RenameModal({ deck, opened, setOpened }: RenameModalProps) {
   );
 }
 
-export default RenameModal;
+export default RenameCardModal;

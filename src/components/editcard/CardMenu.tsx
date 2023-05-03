@@ -13,6 +13,7 @@ import DebugCardModal from "../DebugCardModal";
 import { useSetting } from "../../logic/Settings";
 import { notifications } from "@mantine/notifications";
 import { deleteFailed, successfullyDeleted } from "../custom/Notification";
+import MoveCardModal from "./MoveCardModal";
 
 interface CardMenuProps {
   card: Card<CardType> | undefined;
@@ -23,6 +24,7 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
   const [developerMode] = useSetting("developerMode");
 
   const [debugModalOpened, setDebugModalOpened] = useState<boolean>(false);
+  const [moveModalOpened, setMoveModalOpened] = useState<boolean>(false);
   const [deleteModalOpened, setDeleteModalOpened] = useState<boolean>(false);
   async function tryDeleteCard() {
     if (!card) {
@@ -61,7 +63,10 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
           <Menu.Item icon={<IconAdjustmentsHorizontal size={16} />}>
             Options
           </Menu.Item>
-          <Menu.Item icon={<IconArrowsExchange size={16} />}>
+          <Menu.Item
+            icon={<IconArrowsExchange size={16} />}
+            onClick={() => setMoveModalOpened(true)}
+          >
             Move Card
           </Menu.Item>
           <Menu.Item
@@ -78,6 +83,13 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
         setOpened={setDebugModalOpened}
         card={card}
       />
+      {card && (
+        <MoveCardModal
+          card={card}
+          opened={moveModalOpened}
+          setOpened={setMoveModalOpened}
+        />
+      )}
 
       <DangerousConfirmModal
         dangerousAction={(card: Card<CardType>) => tryDeleteCard()}

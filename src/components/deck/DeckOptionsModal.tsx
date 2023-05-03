@@ -10,7 +10,7 @@ interface DeckOptionsModalProps extends ModalProps {
 function DeckOptionsModal({ opened, setOpened, deck }: DeckOptionsModalProps) {
   return (
     <Modal opened={opened} onClose={() => setOpened(false)} title="Options">
-      Options
+      Here is where deck options will reside.
     </Modal>
   );
 }

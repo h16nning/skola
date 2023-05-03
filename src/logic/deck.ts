@@ -55,9 +55,14 @@ export function useDeckOf(card: Card<CardType>): [Deck | undefined, boolean] {
   );
 }
 
-export function useDecks(): [Deck[] | undefined, boolean] {
+export function useDecks(
+  modify?: (decks: Deck[] | undefined) => Deck[] | undefined
+): [Deck[] | undefined, boolean] {
   return useLiveQuery(
-    () => db.decks.toArray().then((decks) => [decks, true]),
+    () =>
+      db.decks
+        .toArray()
+        .then((decks) => [modify ? modify(decks) : decks, true]),
     [],
     [undefined, false]
   );

@@ -62,8 +62,7 @@ function FinishedLearningView({
         </ThemeIcon>
         <Title>Congratulations{name && ", " + name}!</Title>
         <Text align="center">
-          You learned all cards of today for this deck. You can be proud of
-          yourself!
+          You learned all cards for today of this deck.
         </Text>
         <Group>
           <Stat
