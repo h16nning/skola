@@ -9,9 +9,9 @@ import SubScript from "@tiptap/extension-subscript";
 import Image from "@tiptap/extension-image";
 
 import {
-  Link,
-  RichTextEditor,
-  RichTextEditorStylesNames,
+    Link,
+    RichTextEditor,
+    RichTextEditorStylesNames,
 } from "@mantine/tiptap";
 import { Color } from "@tiptap/extension-color";
 import { TextStyle } from "@tiptap/extension-text-style";
@@ -21,100 +21,109 @@ import EditorOptionsMenu from "./EditorOptionsMenu";
 import AddImageControl from "./AddImageControl";
 
 interface CardTextEditorProps {
-  editor: Editor | null;
-  styles?: Styles<RichTextEditorStylesNames, Record<string, any>>;
+    editor: Editor | null;
+    styles?: Styles<RichTextEditorStylesNames, Record<string, any>>;
+    controls?: React.ReactNode;
 }
 
 const useStyles = createStyles(() => ({
-  content: {
-    "& .ProseMirror": {
-      maxHeight: "400px",
-      overflow: "scroll",
+    content: {
+        "& .ProseMirror": {
+            maxHeight: "400px",
+            overflow: "scroll",
+        },
     },
-  },
 }));
-export function useCardEditor(content: string) {
-  return useEditor(
-    {
-      extensions: [
-        StarterKit,
-        Underline,
-        Link,
-        Superscript,
-        SubScript,
-        Highlight,
-        TextAlign.configure({ types: ["heading", "paragraph"] }),
-        Color,
-        TextStyle,
-        Image.configure({
-          allowBase64: true,
-        }),
-      ],
-      content: content,
-    },
-    [content]
-  );
+export function useCardEditor(content: string, ...extensions: any[]) {
+    return useEditor(
+        {
+            extensions: [
+                StarterKit,
+                Underline,
+                Link,
+                Superscript,
+                SubScript,
+                Highlight,
+                TextAlign.configure({ types: ["heading", "paragraph"] }),
+                Color,
+                TextStyle,
+                Image.configure({
+                    allowBase64: true,
+                }),
+                ...(extensions ?? []),
+            ],
+            content: content,
+        },
+        [content]
+    );
 }
 
-function CardTextEditor({ editor, styles }: CardTextEditorProps) {
-  const [settings, areSettingsReady] = useSettings();
+function CardTextEditor({ editor, styles, controls }: CardTextEditorProps) {
+    const [settings, areSettingsReady] = useSettings();
 
-  const { classes } = useStyles();
-  return (
-    <RichTextEditor editor={editor} withTypographyStyles={true} styles={styles}>
-      <RichTextEditor.Toolbar
-        sx={() => ({
-          visibility: areSettingsReady ? "visible" : "hidden",
-        })}
-      >
-        <Box sx={{ display: "flex", alignItems: "center", gap: "2rem" }}>
-          <RichTextEditor.ControlsGroup>
-            <RichTextEditor.Bold tabIndex={-1} />
-            <RichTextEditor.Italic tabIndex={-1} />
-            <RichTextEditor.Underline tabIndex={-1} />
-            {settings.showStrikethroughOptionInEditor && (
-              <RichTextEditor.Strikethrough tabIndex={-1} />
-            )}
-            {settings.showHighlightOptionInEditor && (
-              <RichTextEditor.Highlight tabIndex={-1} />
-            )}
-            {settings.showCodeOptionInEditor && (
-              <RichTextEditor.Code tabIndex={-1} />
-            )}
-            {settings.showSubAndSuperScriptOptionInEditor && (
-              <>
-                <RichTextEditor.Subscript tabIndex={-1} />
-                <RichTextEditor.Superscript tabIndex={-1} />
-              </>
-            )}
+    const { classes } = useStyles();
+    return (
+        <RichTextEditor
+            editor={editor}
+            withTypographyStyles={true}
+            styles={styles}
+        >
+            <RichTextEditor.Toolbar
+                sx={() => ({
+                    visibility: areSettingsReady ? "visible" : "hidden",
+                })}
+            >
+                <Box
+                    sx={{ display: "flex", alignItems: "center", gap: "2rem" }}
+                >
+                    <RichTextEditor.ControlsGroup>
+                        <RichTextEditor.Bold tabIndex={-1} />
+                        <RichTextEditor.Italic tabIndex={-1} />
+                        <RichTextEditor.Underline tabIndex={-1} />
+                        {settings.showStrikethroughOptionInEditor && (
+                            <RichTextEditor.Strikethrough tabIndex={-1} />
+                        )}
+                        {settings.showHighlightOptionInEditor && (
+                            <RichTextEditor.Highlight tabIndex={-1} />
+                        )}
+                        {settings.showCodeOptionInEditor && (
+                            <RichTextEditor.Code tabIndex={-1} />
+                        )}
+                        {settings.showSubAndSuperScriptOptionInEditor && (
+                            <>
+                                <RichTextEditor.Subscript tabIndex={-1} />
+                                <RichTextEditor.Superscript tabIndex={-1} />
+                            </>
+                        )}
 
-            <RichTextEditor.ClearFormatting tabIndex={-1} />
-          </RichTextEditor.ControlsGroup>
+                        <RichTextEditor.ClearFormatting tabIndex={-1} />
+                    </RichTextEditor.ControlsGroup>
 
-          <RichTextEditor.ControlsGroup>
-            {settings.showListOptionInEditor && (
-              <>
-                <RichTextEditor.BulletList tabIndex={-1} />
-                <RichTextEditor.OrderedList tabIndex={-1} />
-              </>
-            )}
+                    <RichTextEditor.ControlsGroup>
+                        {settings.showListOptionInEditor && (
+                            <>
+                                <RichTextEditor.BulletList tabIndex={-1} />
+                                <RichTextEditor.OrderedList tabIndex={-1} />
+                            </>
+                        )}
 
-            <AddImageControl editor={editor} />
-          </RichTextEditor.ControlsGroup>
+                        <AddImageControl editor={editor} />
+                    </RichTextEditor.ControlsGroup>
 
-          {settings.showLinkOptionInEditor && (
-            <RichTextEditor.ControlsGroup>
-              <RichTextEditor.Link tabIndex={-1} />
-              <RichTextEditor.Unlink tabIndex={-1} />
-            </RichTextEditor.ControlsGroup>
-          )}
-        </Box>
+                    {settings.showLinkOptionInEditor && (
+                        <RichTextEditor.ControlsGroup>
+                            <RichTextEditor.Link tabIndex={-1} />
+                            <RichTextEditor.Unlink tabIndex={-1} />
+                        </RichTextEditor.ControlsGroup>
+                    )}
+                    {controls}
+                </Box>
 
-        <EditorOptionsMenu />
-      </RichTextEditor.Toolbar>
-      <RichTextEditor.Content className={classes.content} />
-    </RichTextEditor>
-  );
+                <EditorOptionsMenu />
+            </RichTextEditor.Toolbar>
+            <RichTextEditor.Content className={classes.content} />
+        </RichTextEditor>
+    );
 }
 
 export default CardTextEditor;

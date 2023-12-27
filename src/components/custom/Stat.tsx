@@ -31,21 +31,13 @@ export default function Stat({
   width?: string;
 }) {
   const { classes } = useStyles();
-
   return (
-    <Paper
-      className={classes.stat}
-      sx={(theme) => ({ backgroundColor: swap(theme, color, 4, 9, 0.1) })}
-      miw={width ?? "6rem"}
-    >
-      <Group align="center" spacing="xs" c={color}>
+    <Paper className={classes.stat} bg={color} miw={width ?? "6rem"}>
+      <Group align="center" spacing="xs" c="white">
         <Icon className={classes.statIcon} />
         <Stack spacing="0rem" align="start">
           <Text className={classes.statValue}>{value}</Text>
-          <Text
-            className={classes.statName}
-            sx={(theme) => ({ color: swap(theme, color, 9, 3, 0.75) })}
-          >
+          <Text className={classes.statName} opacity="0.7">
             {name}
           </Text>
         </Stack>

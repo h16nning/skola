@@ -60,7 +60,7 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
               Debug
             </Menu.Item>
           ) : null}
-          <Menu.Item icon={<IconAdjustmentsHorizontal size={16} />}>
+          <Menu.Item icon={<IconAdjustmentsHorizontal size={16} />} disabled>
             Options
           </Menu.Item>
           <Menu.Item

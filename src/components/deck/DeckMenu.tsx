@@ -7,6 +7,7 @@ import {
   IconCode,
   IconCursorText,
   IconDots,
+  IconFileImport,
   IconTrash,
 } from "@tabler/icons-react";
 import { Deck, deleteDeck } from "../../logic/deck";
@@ -16,6 +17,7 @@ import RenameCardModal from "../editcard/RenameCardModal";
 import DebugDeckModal from "./DebugDeckModal";
 import { Card, CardsStats, CardType } from "../../logic/card";
 import { useSetting } from "../../logic/Settings";
+import ImportCardsModal from "../settings/importexport/ImportCardsModal";
 
 interface DeckMenuProps {
   deck?: Deck;
@@ -40,6 +42,7 @@ function DeckMenu({
 
   const [deleteModalOpened, setDeleteModalOpened] = useState<boolean>(false);
   const [renameModalOpened, setRenameModalOpened] = useState<boolean>(false);
+  const [importModalOpened, setImportModalOpened] = useState<boolean>(false);
   const [debugModalOpened, setDebugModalOpened] = useState<boolean>(false);
 
   const tryDeleteDeck = useCallback(async () => {
@@ -85,12 +88,18 @@ function DeckMenu({
             Manage Cards
           </Menu.Item>
           <Menu.Item
+          icon={<IconFileImport size={16} />}
+            onClick={() => setImportModalOpened(true)}
+          >
+            Import Cards
+          </Menu.Item>
+          <Menu.Item
             onClick={() => setDeckOptionsOpened(true)}
             icon={<IconAdjustmentsHorizontal size={16} />}
           >
             Options
           </Menu.Item>
-          <Menu.Item icon={<IconArrowsExchange size={16} />}>
+          <Menu.Item icon={<IconArrowsExchange size={16} />} disabled>
             Move Deck
           </Menu.Item>
           <Menu.Item
@@ -131,6 +140,11 @@ function DeckMenu({
             stats={stats}
             opened={debugModalOpened}
             setOpened={setDebugModalOpened}
+          />
+          <ImportCardsModal
+            deck={deck}
+            opened={importModalOpened}
+            setOpened={setImportModalOpened}
           />
         </>
       )}

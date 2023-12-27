@@ -1,10 +1,11 @@
 import React, { useMemo } from "react";
-import { Button, Group } from "@mantine/core";
+import { ActionIcon, Button, Group } from "@mantine/core";
 import { swapMono } from "../../logic/ui";
 import { useHotkeys } from "@mantine/hooks";
 import { LearnController } from "../../logic/learn";
 import { sm2 } from "../../logic/SpacedRepetition";
 import AnswerCardButton from "../../logic/AnswerCardButton";
+import { IconCheck, IconX } from "@tabler/icons-react";
 
 interface LearnViewFooterProps {
   controller: LearnController;
@@ -53,14 +54,13 @@ function LearnViewFooter({
       position="center"
       sx={(theme) => ({
         padding: theme.spacing.md,
-        borderTop: `1px solid ${swapMono(theme, 2, 5)}`,
         marginBottom: "-" + theme.spacing.md,
         marginLeft: "-" + theme.spacing.md,
         marginRight: "-" + theme.spacing.md,
       })}
     >
       {showingAnswer ? (
-        <Group spacing="xs" noWrap w="100%" maw="25rem">
+        <Group spacing="xs" noWrap position="center" w="100%" maw="25rem">
           <AnswerCardButton
             label="Again"
             timeInfo="< 10 min"
@@ -96,3 +96,5 @@ function LearnViewFooter({
 }
 
 export default LearnViewFooter;
+
+/**/

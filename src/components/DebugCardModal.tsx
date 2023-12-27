@@ -37,7 +37,7 @@ function DebugCardModal({ opened, setOpened, card }: DebugCardModalProps) {
       display: "block",
     },
   }))();
-
+  try {
   return (
     <Modal
       opened={opened}
@@ -129,7 +129,10 @@ function DebugCardModal({ opened, setOpened, card }: DebugCardModalProps) {
         </Group>
       </Stack>
     </Modal>
-  );
+  )} catch (e) {
+    console.error(e);
+    return <Text c="red" fw="700" fz="sm">Faulty cart</Text>;
+  }
 }
 
 export default DebugCardModal;

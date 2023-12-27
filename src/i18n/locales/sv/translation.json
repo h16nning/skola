@@ -1,0 +1,27 @@
+{
+  "home": {
+    "welcome-back": "Välkommen tillbaka, {{name}}!"
+  },
+  "deck": {
+    "new-deck": "Ny bunt",
+    "review-cards-label": "Repetera",
+    "new-cards-label": "Nya",
+    "learning-cards-label": "Plugga"
+  },
+  "settings": {
+    "general": {
+      "title": "General",
+      "name": "Namn",
+      "name-description": "This name will be used to customize the user experience.",
+      "language": "Språk",
+      "language-description": "Språk som används i gränssnittet.",
+      "enable-developer-mode": "Aktivera utvecklarläge",
+      "enable-developer-mode-description": "Visa utvecklarverktyg för att inspektera webbsidor och aktivera utvecklarverktyg i appen."
+    },
+    "appereance": { "title": "Utseende" },
+    "editing": { "title": "Redigering" },
+    "database": { "title": "Databas" },
+    "about": { "title": "Om Skola" },
+    "developer": { "title": "Utvecklare" }
+  }
+}

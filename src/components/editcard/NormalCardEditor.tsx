@@ -78,6 +78,7 @@ function createCardInstance(
         back: backEditor?.getHTML() ?? "",
       });
 }
+
 function NormalCardEditor({ card, deck, mode }: NormalCardEditorProps) {
   const theme = useMantineTheme();
 

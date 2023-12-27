@@ -7,7 +7,7 @@ export type Settings<T extends keyof SettingsValues> = {
 };
 
 export interface SettingsValues {
-  language: "en" | "de" | "es" | "se";
+  language: "en" | "de" | "es" | "sv";
   colorSchemePreference: "light" | "dark" | "system";
   name?: string;
   developerMode: boolean;

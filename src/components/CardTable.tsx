@@ -173,6 +173,17 @@ function CardTableItem({
     }
   }, [selectedIndex, setSelectedCard, index, card]);
 
+  const [preview, setPreview] = React.useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    const preview = getUtils(card).displayPreview(card);
+    if(preview instanceof Promise) {
+      preview.then((preview) => setPreview(preview));
+    } else {
+      setPreview(preview);
+    }
+  }, [card]);
+
   return (
     <tr
       className={cx(classes.tr, classes.bodyTr, {
@@ -180,7 +191,7 @@ function CardTableItem({
       })}
       onClick={() => setSelectedIndex(index)}
     >
-      <td className={classes.td}>{getUtils(card).displayPreview(card)}</td>
+      <td className={classes.td}>{preview}</td>
       <td className={classes.td}>{card.content.type}</td>
 
       <td className={classes.td}>{deck?.name ?? "?"}</td>
