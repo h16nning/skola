@@ -22,7 +22,7 @@ function CardManagerView() {
 
   const [sort, setSort] = useState<[string, boolean]>(["front", true]);
 
-  const [cards, cardsAreReady] = useCardsWith(
+  const [cards] = useCardsWith(
     (cards) => selectCards(cards, deckGiven, filter, sort, location),
     [deckGiven, location, filter, sort]
   );

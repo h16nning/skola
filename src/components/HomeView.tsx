@@ -7,12 +7,13 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { IconMenu2, IconPlus } from "@tabler/icons-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NewDeckModal from "./deck/NewDeckModal";
 import DeckTable from "./deck/DeckTable";
 import { useTopLevelDecks } from "../logic/deck";
 import { useSetting } from "../logic/Settings";
 import { useMediaQuery } from "@mantine/hooks";
+import { useTranslation } from "react-i18next";
 
 export default function HomeView({
   menuOpened,
@@ -22,11 +23,11 @@ export default function HomeView({
   setMenuOpened: Function;
 }) {
   const theme = useMantineTheme();
+  const [t, i18n] = useTranslation();
   const hasSmallScreen = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
 
   const [newDeckModalOpened, setNewDeckModalOpened] = useState(false);
   const [decks, isReady] = useTopLevelDecks();
-
   const [userName] = useSetting("name");
 
   return (
@@ -38,7 +39,7 @@ export default function HomeView({
               <IconMenu2 />
             </ActionIcon>
           )}
-          <Title order={3}>Welcome back{userName && `, ${userName}`}!</Title>
+          <Title order={3}>{t("home.welcome-back", { name: userName })}</Title>
         </Group>
 
         <Stack spacing="sm">
@@ -48,7 +49,7 @@ export default function HomeView({
             variant="default"
             sx={() => ({ alignSelf: "end" })}
           >
-            New Deck
+            {t("deck.new-deck-button")}
           </Button>
           <DeckTable deckList={decks} isReady={isReady} />
         </Stack>

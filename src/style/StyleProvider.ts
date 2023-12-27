@@ -177,8 +177,10 @@ export function getBaseTheme(
       },
       Select: {
         defaultProps: {
-          transition: "fade",
-          transitionDuration: 150,
+          transitionProps: {
+            transition: "fade",
+            duration: 300,
+          },
         },
         styles: (theme) => ({
           dropdown: {

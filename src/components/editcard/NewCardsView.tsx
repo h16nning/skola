@@ -45,6 +45,7 @@ function NewCardsView() {
           label="Card Type"
           data={[
             { label: "Normal", value: CardType.Normal },
+            { label: "Double Sided", value: CardType.DoubleSided },
             { label: "Cloze", value: CardType.Cloze },
             { label: "Image Occlusion", value: CardType.ImageOcclusion },
           ]}

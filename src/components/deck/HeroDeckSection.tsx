@@ -19,6 +19,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { Card, CardsStats, CardType } from "../../logic/card";
 import Stat from "../custom/Stat";
+import { useTranslation } from "react-i18next";
 
 interface HeroDeckSectionProps {
   deck?: Deck;
@@ -50,6 +51,7 @@ function HeroDeckSection({
 }: HeroDeckSectionProps) {
   const { classes } = useStyles();
   const navigate = useNavigate();
+  const [t, i18n] = useTranslation();
 
   function isDone() {
     return (
@@ -94,20 +96,20 @@ function HeroDeckSection({
             <Group>
               <Stat
                 value={stats.newCards ?? 0}
-                name="New"
-                color="purple"
+                name={t("deck.new-cards-label")}
+                color="grape"
                 icon={IconSparkles}
               />
               <Stat
                 value={stats.learningCards ?? 0}
-                name="Learn"
+                name={t("deck.learning-cards-label")}
                 color="orange"
                 icon={IconCircleArrowUpRight}
               />
               <Stat
                 value={stats.dueCards ?? 0}
-                name="Review"
-                color="teal"
+                name={t("deck.review-cards-label")}
+                color="blue"
                 icon={IconBook}
               />
             </Group>

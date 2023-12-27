@@ -4,7 +4,7 @@ import { Deck } from "../../logic/deck";
 import { useNavigate } from "react-router-dom";
 import ListButton from "../custom/ListButton";
 import { useCardsOf, useStatsOf } from "../../logic/card";
-import { swapMono } from "../../logic/ui";
+import { useTranslation } from "react-i18next";
 
 type DeckPreviewProps = {
   deck: Deck;
@@ -13,7 +13,8 @@ type DeckPreviewProps = {
 
 export default function DeckPreview({ deck, i }: DeckPreviewProps) {
   const navigate = useNavigate();
-  const [cards, areCardsReady] = useCardsOf(deck);
+  const [t, i18n] = useTranslation();
+  const [cards] = useCardsOf(deck);
   const stats = useStatsOf(cards);
 
   return (
@@ -28,22 +29,22 @@ export default function DeckPreview({ deck, i }: DeckPreviewProps) {
           <Text>{deck.name}</Text>
           <Group spacing="xs" noWrap={true}>
             {stats.dueCards && stats.dueCards > 0 ? (
-              <Badge variant="dot" color="green">
-                {stats.dueCards} due
+              <Badge variant="dot" color="blue">
+                {stats.dueCards + " " + t("deck.review-cards-label")}
               </Badge>
             ) : (
               <></>
             )}
             {stats.newCards && stats.newCards > 0 ? (
-              <Badge variant="dot" color="blue">
-                {stats.newCards} new
+              <Badge variant="dot" color="grape">
+                {stats.newCards + " " + t("deck.new-cards-label")}
               </Badge>
             ) : (
               <></>
             )}
             {stats.learningCards && stats.learningCards > 0 ? (
-              <Badge variant="dot" color="red">
-                {stats.learningCards} learning
+              <Badge variant="dot" color="orange">
+                {stats.learningCards + " " + t("deck.learning-cards-label")}
               </Badge>
             ) : (
               <></>

@@ -102,8 +102,6 @@ export function useLearning(
   );
 
   useEffect(() => {
-    console.log("use effect");
-    console.log(currentCard);
     //IF another card is requested
     //OR there is no current card and there are still cards in the card reservoirs
     if (
@@ -114,9 +112,6 @@ export function useLearning(
           learningQueue.length !== 0))
     ) {
       setRequestingNext(false);
-      console.log("next called");
-      console.log("urgent queue:");
-      console.log(learningQueue);
 
       //Check if there are any learning cards to be presented
       //There have to be items in the learningQueue
@@ -133,20 +128,6 @@ export function useLearning(
           setCurrentCard
         );
         setCurrentCardFromReservoir("learning");
-        /*const topItem = learningQueue[0];
-
-        //Double check if the item really exists
-        if (!topItem) {
-          console.error("invalid urgent queue item");
-          return;
-        }
-
-        //Set the currently presented card to the item
-        setCurrentCard(topItem.card);
-
-        //Shift (remove) the first item using filter(), shift() can't be used as it will directly modify the queue.
-        const newUrgentQueue = learningQueue.filter((_, i) => i !== 0);
-        setLearningQueue(newUrgentQueue);*/
       } else {
         const newCardsAvailable = newCards.length > 0;
         const learnedCardsAvailable = learnedCards.length > 0;
@@ -226,7 +207,8 @@ export function useLearning(
   //This useEffect is used to filter the cards given in using cardSet and spreading them to the learningQueue and the newCards / learnedCards reservoir
   useEffect(() => {
     if (cardSet && cardSet[0] && repetitionList.length === 0) {
-      setNewCards(cardSet.filter((card) => getStateOf(card) === "new"));
+
+      setNewCards(cardSet.filter((card) => getStateOf(card) === "new").sort((a, b) => a.creationDate.getTime() - b.creationDate.getTime()));
 
       if (options?.learnAll) {
         setLearnedCards(

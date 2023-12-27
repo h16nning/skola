@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Box, Center, Flex } from "@mantine/core";
+import { Box, Center, Flex, Modal, Overlay } from "@mantine/core";
 import { useDeckFromUrl } from "../../logic/deck";
 import {
   Card,
@@ -16,8 +16,11 @@ import LearnViewFooter from "./LearnViewFooter";
 import LearnViewHeader, { stopwatchResult } from "./LearnViewHeader";
 import LearnViewCurrentCardStateIndicator from "./LearnViewCurrentCardStateIndicator";
 import { useLearning } from "../../logic/learn";
+import { useDebouncedValue } from "@mantine/hooks";
+import { useNavigate } from "react-router-dom";
 
 function LearnView() {
+  const navigate = useNavigate();
   const [deck, isReady, params] = useDeckFromUrl();
   const [cardSet, setCardSet] = useState<Card<CardType>[] | null>(null);
 
@@ -40,6 +43,10 @@ function LearnView() {
   }, [controller.currentCard]);
 
   const [showingAnswer, setShowingAnswer] = useState<boolean>(false);
+  const [debouncedLearningIsFinished] = useDebouncedValue(
+    controller.learningIsFinished,
+    1000
+  );
 
   const answerButtonPressed = useCallback(
     async (quality: number) => {
@@ -64,15 +71,6 @@ function LearnView() {
     return <MissingObject />;
   }
 
-  if (controller.learningIsFinished) {
-    return (
-      <FinishedLearningView
-        repetitionList={controller.repetitionList}
-        time={stopwatchResult}
-      />
-    );
-  }
-  // @ts-ignore
   return (
     <Flex direction="column" justify="space-between" h="100%" w="100%">
       <LearnViewHeader
@@ -116,6 +114,20 @@ function LearnView() {
         showingAnswer={showingAnswer}
         setShowingAnswer={setShowingAnswer}
       />
+      <Modal
+        opened={controller.learningIsFinished}
+        onClose={() => navigate("/home")}
+        fullScreen
+        closeOnClickOutside={false}
+        closeOnEscape={false}
+        withCloseButton={false}
+        transitionProps={{ transition: 'fade' }}
+      >
+        <FinishedLearningView
+          repetitionList={controller.repetitionList}
+          time={stopwatchResult}
+        />
+      </Modal>
     </Flex>
   );
 }

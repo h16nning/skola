@@ -6,9 +6,10 @@ interface ListButtonProps {
   children: JSX.Element;
   i: number;
   onClick?: Function;
+  onContextMenu?: Function;
 }
 
-function ListButton({ children, i, onClick }: ListButtonProps) {
+function ListButton({ children, i, onClick, onContextMenu }: ListButtonProps) {
   return (
     <UnstyledButton
       onClick={() => {
@@ -16,6 +17,12 @@ function ListButton({ children, i, onClick }: ListButtonProps) {
           onClick();
         }
       }}
+      onContextMenu={() => {
+          if (onContextMenu) {
+            onContextMenu();
+          }
+        }
+      }
       component="button"
       sx={(theme) => ({
         fontSize: theme.fontSizes.sm,

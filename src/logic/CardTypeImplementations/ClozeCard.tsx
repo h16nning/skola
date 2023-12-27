@@ -5,45 +5,47 @@ import React from "react";
 import { CardTypeManager, EditMode } from "../CardTypeManager";
 
 export type ClozeContent = {
-  clozeCards: Array<string>;
+    occlusionId: string;
 };
 
 export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
-  update(
-    params: { front: string; clozeCards: [] },
-    existingCard: Card<CardType.Cloze>
-  ) {
-    return {
-      ...existingCard,
-      content: {
-        type: existingCard.content.type,
-        front: params.front,
-        clozeCards: [],
-      },
-    };
-  },
+    update(
+        params: { },
+        existingCard: Card<CardType.Cloze>
+    ) {
+        return {
+            ...existingCard,
+            content: {
+                type: existingCard.content.type,
+                occlusionId:" params.occlusionId",
+            },
+        };
+    },
 
-  create(params: { front: string; clozeCards: [] }): Card<CardType.Cloze> {
-    return {
-      ...createCardSkeleton(),
-      content: {
-        type: CardType.Cloze,
-        clozeCards: [],
-      },
-    };
-  },
+    create(params: {
+        front: string;
+        occlusionId: string;
+    }): Card<CardType.Cloze> {
+        return {
+            ...createCardSkeleton(),
+            content: {
+                type: CardType.Cloze,
+                occlusionId: "params.occlusionId",
+            },
+        };
+    },
 
-  displayPreview(card: Card<CardType.Cloze>) {
-    return "Cloze Card";
-  },
+    displayPreview(card: Card<CardType.Cloze>) {
+        return "Cloze Card";
+    },
 
-  displayQuestion(card: Card<CardType.Cloze>) {
-    return "card.content.front;";
-  },
-  displayAnswer(card: Card<CardType.Cloze>) {
-    return "card.content.front;";
-  },
-  editor(card: Card<CardType.Cloze> | null, deck: Deck, mode: EditMode) {
-    return <ClozeCardEditor card={card} deck={deck} mode={mode} />;
-  },
+    displayQuestion(card: Card<CardType.Cloze>) {
+        return "card.content.front;";
+    },
+    displayAnswer(card: Card<CardType.Cloze>) {
+        return "card.content.front;";
+    },
+    editor(card: Card<CardType.Cloze> | null, deck: Deck, mode: EditMode) {
+        return <ClozeCardEditor card={card} deck={deck} mode={mode} />;
+    },
 };

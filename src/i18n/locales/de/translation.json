@@ -1,0 +1,25 @@
+{
+  "home": { "welcome-back": "Wilkommen zurück, {{name}}!" },
+  "deck": {
+    "new-deck-button": "Neues Deck",
+    "review-cards-label": "Wiederholen",
+    "new-cards-label": "Neu",
+    "learning-cards-label": "Lernen"
+  },
+  "settings": {
+    "general": {
+      "title": "Allgemein",
+      "name": "Name",
+      "name-description": "Dein Name wird zur Anpassung der Benutzeroberfläche genutzt.",
+      "language": "Sprache",
+      "language-description": "Ändere die Sprache der Benutzeroberfläche.",
+      "enable-developer-mode": "Entwicklermodus aktivieren",
+      "enable-developer-mode-description": "Dies aktiviert erweiterte Optionen zum Debuggen und Entwickeln von Erweiterungen und Themes."
+    },
+    "appereance": { "title": "Erscheinungsbild" },
+    "editing": { "title": "Bearbeitung" },
+    "database": { "title": "Datenbank" },
+    "about": { "title": "Über" },
+    "developer": { "title": "Entwickler" }
+  }
+}

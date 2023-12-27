@@ -99,45 +99,5 @@ function FinishedLearningView({
   );
 }
 
-function LearningStat({
-  title,
-  value,
-  color,
-}: {
-  title: string;
-  value: string | number;
-  color: string;
-}) {
-  return (
-    <Card
-      sx={(theme) => ({
-        boxShadow: theme.shadows.xs,
-        border: "1px solid " + swap(theme, color, 4, 4),
-        borderRadius: theme.radius.sm,
-        padding: theme.spacing.xs,
-        minWidth: "8rem",
-      })}
-    >
-      <Stack align="center" spacing="0">
-        <Text
-          sx={(theme) => ({
-            fontSize: theme.fontSizes.lg,
-            fontWeight: 700,
-            color: swap(theme, color, 6, 6),
-          })}
-        >
-          {value}
-        </Text>
-        <Text
-          sx={(theme) => ({
-            fontSize: theme.fontSizes.sm,
-            color: swap(theme, color, 8, 4),
-          })}
-        >
-          {title}
-        </Text>
-      </Stack>
-    </Card>
-  );
-}
+
 export default FinishedLearningView;

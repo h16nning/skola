@@ -7,7 +7,7 @@ import { Card, CardType } from "../../logic/card";
 import { IconX } from "@tabler/icons-react";
 import { LearnController } from "../../logic/learn";
 import { getCounterString } from "../../logic/timeUtils";
-import RemainingCardsStats from "./RemainingCardsStats";
+import { useDebouncedValue } from "@mantine/hooks";
 
 export let stopwatchResult: StopwatchResult;
 
@@ -30,45 +30,37 @@ function LearnViewHeader({ currentCard, controller }: LearnViewHeaderProps) {
   const navigate = useNavigate();
   const progress = useMemo(
     () =>
-      (controller.repetitionList.length /
-        (1 +
-          controller.repetitionList.length +
+      (controller.learningIsFinished ? 100 : (controller.repetitionList.length /
+        (1 + controller.repetitionList.length +
           controller.learnedCardsLength +
           controller.newCardsLength +
           controller.learningQueueLength * 2)) *
-      100,
+      100),
     [
+      controller.learningIsFinished,
       controller.repetitionList,
       controller.learnedCardsLength,
       controller.newCardsLength,
       controller.learningQueueLength,
     ]
   );
+  const [debouncedProgress] = useDebouncedValue(progress, 100);
   return (
     <div>
       <Group position="apart" pb="md" noWrap>
-        <Group w="10%" noWrap>
-          <ActionIcon
-            onClick={() => navigate("/home")}
-            variant="subtle"
-            color="gray"
-          >
-            <IconX />
-          </ActionIcon>
-          <Stopwatch />
-        </Group>
-        <RemainingCardsStats controller={controller} />
+        <ActionIcon
+          onClick={() => navigate("/home")}
+          variant="subtle"
+          color="gray"
+        >
+          <IconX />
+        </ActionIcon>
+        <Stopwatch />
+        <Progress size="md" value={debouncedProgress} radius="md" w="100%" />
         <Group w="10%" position="right">
           <CardMenu card={currentCard} onDelete={controller.nextCard} />
         </Group>
       </Group>
-      <Progress
-        size="xs"
-        value={progress}
-        radius="0"
-        w="calc(100% + 2rem)"
-        mx="-1rem"
-      />
     </div>
   );
 }

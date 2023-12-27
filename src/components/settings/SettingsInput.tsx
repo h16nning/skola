@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 import { setSetting, SettingsValues, useSetting } from "../../logic/Settings";
 import { SettingStatus, StatusIndicator } from "./SettingStatus";
 import { useDebouncedValue } from "@mantine/hooks";
-import { Checkbox, Group, Switch, TextInput } from "@mantine/core";
+import {
+  Checkbox,
+  Group,
+  Select,
+  SelectItem,
+  Switch,
+  TextInput,
+} from "@mantine/core";
 
 interface SettingsInputProps {
   label: string | React.ReactNode;
