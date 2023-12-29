@@ -1,0 +1,30 @@
+.content {
+  & .gap {
+    border-bottom: 2px solid
+      light-dark(var(--mantine-primary-color-5), var(--mantine-primary-color-7));
+    background-color: light-dark(
+      var(--mantine-primary-color-0),
+      var(--mantine-primary-color-5)
+    );
+    border-radius: var(--mantine-radius-xs);
+    padding: 0px 3px;
+    position: relative;
+  }
+
+  & .gap.clicked {
+    background-color: red;
+  }
+
+  & .inline-menu {
+    position: absolute;
+    bottom: 0px;
+    background-color: light-dark(
+      var(--mantine-color-white),
+      var(--mantine-color-dark-8)
+    );
+    border-radius: var(--mantine-radius-xs);
+    padding: 3px 5px;
+    font-size: 0.8em;
+    box-shadow: var(--mantine-shadow-sm);
+  }
+}

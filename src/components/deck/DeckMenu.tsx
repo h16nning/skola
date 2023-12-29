@@ -75,42 +75,42 @@ function DeckMenu({
         <Menu.Dropdown>
           {developerMode ? (
             <Menu.Item
-              icon={<IconCode size={16} />}
+              leftSection={<IconCode size={16} />}
               onClick={() => setDebugModalOpened(true)}
             >
               Debug
             </Menu.Item>
           ) : null}
           <Menu.Item
-            icon={<IconCards size={16} />}
+            leftSection={<IconCards size={16} />}
             onClick={() => navigate("/cards/" + deck?.id)}
           >
             Manage Cards
           </Menu.Item>
           <Menu.Item
-          icon={<IconFileImport size={16} />}
+            leftSection={<IconFileImport size={16} />}
             onClick={() => setImportModalOpened(true)}
           >
             Import Cards
           </Menu.Item>
           <Menu.Item
             onClick={() => setDeckOptionsOpened(true)}
-            icon={<IconAdjustmentsHorizontal size={16} />}
+            leftSection={<IconAdjustmentsHorizontal size={16} />}
           >
             Options
           </Menu.Item>
-          <Menu.Item icon={<IconArrowsExchange size={16} />} disabled>
+          <Menu.Item leftSection={<IconArrowsExchange size={16} />} disabled>
             Move Deck
           </Menu.Item>
           <Menu.Item
-            icon={<IconCursorText size={16} />}
+            leftSection={<IconCursorText size={16} />}
             onClick={() => setRenameModalOpened(true)}
           >
             Rename
           </Menu.Item>
           <Menu.Item
             color="red"
-            icon={<IconTrash size={16} />}
+            leftSection={<IconTrash size={16} />}
             onClick={() => setDeleteModalOpened(true)}
           >
             Delete

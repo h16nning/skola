@@ -12,10 +12,10 @@ function MissingObject() {
           Something went wrong!
         </Text>
         <Text>Unfortunately what you are looking for couldn't be found.</Text>
-        <Group position="left">
+        <Group justify="flex-start">
           <Button
             variant="default"
-            leftIcon={<IconHome />}
+            leftSection={<IconHome />}
             onClick={() => navigate("/home")}
           >
             Go home

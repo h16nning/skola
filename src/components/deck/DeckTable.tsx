@@ -1,5 +1,5 @@
 import React from "react";
-import { Skeleton, Text, Stack } from "@mantine/core";
+import { Text, Stack } from "@mantine/core";
 import DeckPreview from "./DeckPreview";
 import { Deck } from "../../logic/deck";
 import LazySkeleton from "../custom/LazySkeleton";
@@ -12,7 +12,7 @@ interface DeckTableProps {
 function DeckTable({ deckList, isReady }: DeckTableProps) {
   return isReady && deckList ? (
     deckList.length !== 0 ? (
-      <Stack spacing={0}>
+      <Stack gap="0" w="100%">
         {deckList.map((deck, index) => (
           <DeckPreview key={index} deck={deck} i={index} />
         ))}
@@ -31,7 +31,7 @@ function DeckTable({ deckList, isReady }: DeckTableProps) {
 function SkeletonTable() {
   return (
     <>
-      <Stack spacing="xs">
+      <Stack gap="xs">
         <LazySkeleton key={1} h="48px"></LazySkeleton>
         <LazySkeleton key={2} h="48px"></LazySkeleton>
         <LazySkeleton key={3} h="48px"></LazySkeleton>

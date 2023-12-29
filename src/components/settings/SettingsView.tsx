@@ -12,10 +12,10 @@ import {
 } from "@tabler/icons-react";
 import GeneralSettingsView from "./GeneralSettingsView";
 import { useSetting } from "../../logic/Settings";
-import EditingSettingsView from "./EditingSettingsView";
+import EditingSettingsView from "./EditingSettingsView/EditingSettingsView";
 import { useLocation, useNavigate } from "react-router-dom";
 import AboutSettingsView from "./AboutSettingsView";
-import DatabaseSettingsView from "./DatabaseSettingsView";
+import DatabaseSettingsView from "./DatabaseSettingsView/DatabaseSettingsView";
 
 export default function SettingsView() {
   const [value, setValue] = useState("General");
@@ -33,7 +33,7 @@ export default function SettingsView() {
   const [developerMode] = useSetting("developerMode");
 
   return (
-    <Stack spacing="xl" w="600px">
+    <Stack gap="xl" w="600px">
       <Group>
         <ActionIcon onClick={() => navigate(-1)}>
           <IconChevronLeft />
@@ -48,35 +48,35 @@ export default function SettingsView() {
         <Tabs.List>
           <Tabs.Tab
             value="general"
-            icon={<IconSettings />}
+            leftSection={<IconSettings />}
             onClick={() => setValue("general")}
           >
             General
           </Tabs.Tab>
           <Tabs.Tab
             value="appearance"
-            icon={<IconPalette />}
+            leftSection={<IconPalette />}
             onClick={() => setValue("appearance")}
           >
             Appearance
           </Tabs.Tab>
           <Tabs.Tab
             value="editing"
-            icon={<IconPencil />}
+            leftSection={<IconPencil />}
             onClick={() => setValue("editing")}
           >
             Editing
           </Tabs.Tab>
           <Tabs.Tab
             value="database"
-            icon={<IconDatabase />}
+            leftSection={<IconDatabase />}
             onClick={() => setValue("database")}
           >
             Database
           </Tabs.Tab>
           <Tabs.Tab
             value="about"
-            icon={<IconInfoCircle />}
+            leftSection={<IconInfoCircle />}
             onClick={() => setValue("about")}
           >
             About
@@ -84,7 +84,7 @@ export default function SettingsView() {
           {developerMode ? (
             <Tabs.Tab
               value="developer"
-              icon={<IconBraces />}
+              leftSection={<IconBraces />}
               onClick={() => setValue("developer")}
             >
               Developer

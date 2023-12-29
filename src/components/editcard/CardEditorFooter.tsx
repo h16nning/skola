@@ -13,11 +13,11 @@ export default function CardEditorFooter({
   finish,
 }: CardEditorFooterProps) {
   return (
-    <Group position="right">
+    <Group justify="flex-end">
       {" "}
       <Button
         onClick={() => finish()}
-        leftIcon={mode === "edit" ? <IconDeviceFloppy /> : <IconPlus />}
+        leftSection={mode === "edit" ? <IconDeviceFloppy /> : <IconPlus />}
       >
         {mode === "edit" ? "Save" : "Add"}
       </Button>

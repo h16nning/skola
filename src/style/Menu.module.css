@@ -1,0 +1,7 @@
+.dropdown {
+  box-shadow: var(--mantine-shadow-md);
+}
+
+.item {
+  font-weight: 500;
+}

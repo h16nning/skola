@@ -1,14 +1,22 @@
-import { Stack, Title } from "@mantine/core";
+import { Group, Stack, Title } from "@mantine/core";
 import React, { ReactNode } from "react";
 
 type SectionProps = {
   title: String | ReactNode;
   children: ReactNode;
+  rightSection?: ReactNode;
 };
-export default function Section({ title, children }: SectionProps) {
+export default function Section({
+  title,
+  children,
+  rightSection,
+}: SectionProps) {
   return (
-    <Stack spacing="sm">
-      <Title order={4}>{title}</Title>
+    <Stack gap="sm">
+      <Group justify="space-between">
+        <Title order={4}>{title}</Title>
+        {rightSection}
+      </Group>
       {children}
     </Stack>
   );

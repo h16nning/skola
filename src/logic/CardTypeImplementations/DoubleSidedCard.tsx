@@ -1,3 +1,4 @@
+import common from "../../style/CommonStyles.module.css";
 import { Card, CardType, createCardSkeleton, updateCard } from "../card";
 import { Deck } from "../deck";
 import React from "react";
@@ -8,9 +9,8 @@ import {
   setSharedValue,
   useSharedValue,
 } from "../sharedvalue";
-import DoubleSidedCardEditor from "../../components/editcard/DoubleSidedCardEditor";
+import DoubleSidedCardEditor from "../../components/editcard/CardEditor/DoubleSidedCardEditor";
 import { Divider, Stack, Title } from "@mantine/core";
-import { swapMono } from "../ui";
 
 export type DoubleSidedContent = {
   frontReferenceId: string;
@@ -42,8 +42,8 @@ export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
   },
   displayPreview(card: Card<CardType.DoubleSided>) {
     return getSharedValue(card.content.frontReferenceId)
-    .then((front) => front?.value.replace(/<[^>]*>/g, "") ?? "error")
-    .catch(() => "error");;
+      .then((front) => front?.value.replace(/<[^>]*>/g, "") ?? "error")
+      .catch(() => "error");
   },
 
   displayQuestion(card: Card<CardType.DoubleSided>) {
@@ -70,9 +70,9 @@ export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
       );
     }
     return (
-      <Stack spacing="xl">
+      <Stack gap="xl">
         {DoubleSidedCardUtils.displayQuestion(card)}
-        <Divider sx={(theme) => ({ borderColor: swapMono(theme, 2, 6) })} />
+        <Divider className={common.lightBorder} />
         <BackComponent />
       </Stack>
     );

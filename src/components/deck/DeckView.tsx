@@ -7,9 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { useDeckFromUrl, useSuperDecks } from "../../logic/deck";
 import DeckOptionsModal from "./DeckOptionsModal";
 import MissingObject from "../custom/MissingObject";
-import SuperDecksBreadcrumbs from "../SuperDecksBreadcrumbs";
+import SuperDecksBreadcrumbs from "../SuperDecksBreadcrumbs/SuperDecksBreadcrumbs";
 import { useCardsOf, useStatsOf } from "../../logic/card";
-import HeroDeckSection from "./HeroDeckSection";
+import HeroDeckSection from "./HeroDeckSection/HeroDeckSection";
 import { useDocumentTitle } from "@mantine/hooks";
 import { useScrollResetOnLocationChange } from "../../logic/ui";
 
@@ -31,13 +31,13 @@ function DeckView() {
 
   return (
     <>
-      <Stack spacing="4rem" sx={() => ({ width: "600px", maxWidth: "100%" })}>
-        <Group position="apart" spacing="xs" align="end">
+      <Stack gap="4rem" w="600px" maw="100%">
+        <Group justify="space-between" gap="xs" align="end">
           <Group
-            spacing="xs"
+            gap="xs"
             align="end"
-            noWrap
-            sx={() => ({ flexBasis: "50%", flexGrow: 2, minWidth: "10rem" })}
+            wrap="nowrap"
+            style={{ flexBasis: "50%", flexGrow: 2, minWidth: "10rem" }}
           >
             <ActionIcon
               onClick={() =>
@@ -53,14 +53,14 @@ function DeckView() {
               <IconChevronLeft />
             </ActionIcon>
             <Stack
-              spacing="0.25rem"
-              sx={() => ({
-                minWidth: 0,
+              gap="0.25rem"
+              miw="0"
+              style={{
                 whiteSpace: "nowrap",
-              })}
+              }}
             >
               <SuperDecksBreadcrumbs superDecks={superDecks} />
-              <Title order={2} truncate h="2rem">
+              <Title order={2} lineClamp={1} h="2rem">
                 {deck && deck.name}
               </Title>
             </Stack>
@@ -76,9 +76,9 @@ function DeckView() {
           />
         </Group>
 
-        <Stack spacing="xs" align="end">
+        <Stack gap="xs" align="end">
           <Button
-            leftIcon={<IconPlus />}
+            leftSection={<IconPlus />}
             variant="default"
             onClick={() => navigate("/new/" + deck?.id)}
           >

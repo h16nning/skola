@@ -2,7 +2,7 @@ import { Alert, Badge, Group, Text } from "@mantine/core";
 import React from "react";
 import { Deck } from "../../logic/deck";
 import { useNavigate } from "react-router-dom";
-import ListButton from "../custom/ListButton";
+import ListButton from "../custom/ListButton/ListButton";
 import { useCardsOf, useStatsOf } from "../../logic/card";
 import { useTranslation } from "react-i18next";
 
@@ -13,7 +13,7 @@ type DeckPreviewProps = {
 
 export default function DeckPreview({ deck, i }: DeckPreviewProps) {
   const navigate = useNavigate();
-  const [t, i18n] = useTranslation();
+  const [t] = useTranslation();
   const [cards] = useCardsOf(deck);
   const stats = useStatsOf(cards);
 
@@ -25,9 +25,9 @@ export default function DeckPreview({ deck, i }: DeckPreviewProps) {
       }}
     >
       {deck ? (
-        <Group position="apart" w="100%" noWrap={true}>
+        <Group justify="space-between" w="100%" wrap="nowrap">
           <Text>{deck.name}</Text>
-          <Group spacing="xs" noWrap={true}>
+          <Group gap="xs" wrap="nowrap">
             {stats.dueCards && stats.dueCards > 0 ? (
               <Badge variant="dot" color="blue">
                 {stats.dueCards + " " + t("deck.review-cards-label")}

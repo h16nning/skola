@@ -25,7 +25,7 @@ function DangerousConfirmModal({
     >
       <Stack>
         <Text fz="sm">{dangerousDescription}</Text>
-        <Group position="right" spacing="sm">
+        <Group justify="flex-end" gap="sm">
           <Button variant="default" onClick={() => setOpened(false)}>
             Cancel
           </Button>

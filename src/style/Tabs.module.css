@@ -1,0 +1,11 @@
+.tab {
+  padding: 0.25rem 0.75rem;
+  user-select: none;
+}
+
+.tabSection {
+  svg {
+    stroke-width: 1.5px;
+    width: 1.2rem;
+  }
+}

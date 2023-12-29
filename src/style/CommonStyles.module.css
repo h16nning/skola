@@ -1,0 +1,10 @@
+.lightBorderColor {
+  border-color: light-dark(
+    var(--mantine-color-gray-2),
+    var(--mantine-color-dark-6)
+  );
+}
+
+.lightTextColor {
+  color: light-dark(var(--mantine-color-gray-5), var(--mantine-color-gray-7));
+}

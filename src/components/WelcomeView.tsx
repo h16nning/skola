@@ -22,16 +22,16 @@ export default function WelcomeView() {
   useEffect(() => {}, []);
   return (
     <Center py="4rem" px="0.5rem" w="100%">
-      <Stack spacing="2rem" maw="600px">
+      <Stack gap="2rem" maw="600px">
         <Image src="logo.svg" alt="Skola Logo" maw="4rem" />
-        <Stack spacing="xs">
+        <Stack gap="xs">
           <Title order={1}>Welcome to Skola!</Title>
           <Text fz="sm">
             An open-source and free flash card learning app in your browser.
           </Text>
         </Stack>
         <Card withBorder>
-          <Group spacing="md" align="center" noWrap sx={() => ({})}>
+          <Group gap="md" align="center" wrap="nowrap">
             <IconInfoCircle />
             <Text fz="sm">
               Please note that this app is still in early development. You may
@@ -39,7 +39,7 @@ export default function WelcomeView() {
             </Text>
           </Group>
         </Card>
-        <Stack spacing="xs">
+        <Stack gap="xs">
           <Title order={3}>About the project</Title>
           <Text fz="sm">
             Skola is a hobby project of mine. I am Henning Thomas Flath, a
@@ -55,7 +55,7 @@ export default function WelcomeView() {
             .
           </Text>
         </Stack>
-        <Stack spacing="xs">
+        <Stack gap="xs">
           <Title order={3}>About privacy</Title>
           <Text fz="sm">
             Privacy is a focus of this project. Skola saves decks and cards

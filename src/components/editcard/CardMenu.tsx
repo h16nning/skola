@@ -9,10 +9,12 @@ import {
 } from "@tabler/icons-react";
 import DangerousConfirmModal from "../custom/DangerousConfirmModal";
 import { Card, CardType, deleteCard } from "../../logic/card";
-import DebugCardModal from "../DebugCardModal";
+import DebugCardModal from "../DebugCardModal/DebugCardModal";
 import { useSetting } from "../../logic/Settings";
-import { notifications } from "@mantine/notifications";
-import { deleteFailed, successfullyDeleted } from "../custom/Notification";
+import {
+  deleteFailed,
+  successfullyDeleted,
+} from "../custom/Notification/Notification";
 import MoveCardModal from "./MoveCardModal";
 
 interface CardMenuProps {
@@ -54,24 +56,27 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
         <Menu.Dropdown>
           {developerMode ? (
             <Menu.Item
-              icon={<IconCode size={16} />}
+              leftSection={<IconCode size={16} />}
               onClick={() => setDebugModalOpened(true)}
             >
               Debug
             </Menu.Item>
           ) : null}
-          <Menu.Item icon={<IconAdjustmentsHorizontal size={16} />} disabled>
+          <Menu.Item
+            leftSection={<IconAdjustmentsHorizontal size={16} />}
+            disabled
+          >
             Options
           </Menu.Item>
           <Menu.Item
-            icon={<IconArrowsExchange size={16} />}
+            leftSection={<IconArrowsExchange size={16} />}
             onClick={() => setMoveModalOpened(true)}
           >
             Move Card
           </Menu.Item>
           <Menu.Item
             color="red"
-            icon={<IconTrash size={16} />}
+            leftSection={<IconTrash size={16} />}
             onClick={() => setDeleteModalOpened(true)}
           >
             Delete

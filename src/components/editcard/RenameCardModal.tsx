@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Group, Modal, Stack, TextInput } from "@mantine/core";
 import { Deck, renameDeck } from "../../logic/deck";
-import { generalFail } from "../custom/Notification";
+import { generalFail } from "../custom/Notification/Notification";
 
 interface RenameModalProps {
   deck: Deck;
@@ -27,7 +27,7 @@ function RenameCardModal({ deck, opened, setOpened }: RenameModalProps) {
           value={nameValue}
           onChange={(e) => setNameValue(e.currentTarget.value)}
         />
-        <Group position="right" spacing="sm">
+        <Group justify="flex-end" gap="sm">
           <Button variant="default" onClick={() => setOpened(false)}>
             Cancel
           </Button>

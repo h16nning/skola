@@ -1,0 +1,7 @@
+.header {
+  box-shadow: var(--mantine-shadow-lg);
+  position: relative;
+  top: var(--mantine-spacing-md);
+  left: var(--mantine-spacing-md);
+  z-index: 2;
+}

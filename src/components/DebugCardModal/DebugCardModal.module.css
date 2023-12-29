@@ -1,0 +1,20 @@
+.table {
+  font-size: var(--mantine-font-size-xs);
+  text-align: left;
+  & th {
+    width: 25%;
+    vertical-align: top;
+  }
+  & thead {
+    font-family: var(--mantine-font-family-headings);
+    font-size: var(--mantine-font-size-sm);
+    & th {
+      padding: 0;
+      padding-top: var(--mantine-spacing-md);
+    }
+  }
+}
+
+.title {
+  display: block;
+}

@@ -1,15 +1,16 @@
+import classes from "./Sidebar.module.css";
+import cx from "clsx";
 import React, { useCallback } from "react";
 import {
   ActionIcon,
   Group,
-  MediaQuery,
-  Navbar,
   NavLink,
   Stack,
   Title,
   Tooltip,
   Image,
   useMantineTheme,
+  Box,
 } from "@mantine/core";
 import {
   IconBolt,
@@ -33,14 +34,14 @@ function Sidebar({
   const navigate = useNavigate();
   const theme = useMantineTheme();
 
-  const usesFullScreen = useMediaQuery(
-    "(max-width: " + theme.breakpoints.sm + ")"
+  const fullscreenMode = useMediaQuery(
+    "(max-width: " + theme.breakpoints.xs + ")"
   );
-  const usesOnlyIcons = useMediaQuery(
+  const minimalMode = useMediaQuery(
     "(max-width: " +
       theme.breakpoints.lg +
       ") and (min-width: " +
-      theme.breakpoints.sm +
+      theme.breakpoints.xs +
       ")"
   );
 
@@ -57,36 +58,33 @@ function Sidebar({
       icon: JSX.Element;
     }) => {
       return (
-        <Tooltip label={label} position="right">
+        <Tooltip
+          label={label}
+          disabled={!minimalMode || !fullscreenMode}
+          position="right"
+          keepMounted={false}
+        >
           <NavLink
+            classNames={{
+              root: classes.sidebarItem,
+              body: classes.sidebarItemBody,
+              label: classes.sidebarItemLabel,
+              section: classes.sidebarItemIcon,
+            }}
+            variant="subtle"
             label={label}
-            icon={icon}
+            leftSection={icon}
             onClick={() => {
               navigate(path);
-              usesFullScreen && setMenuOpened(false);
+              fullscreenMode && setMenuOpened(false);
             }}
             active={location.pathname.startsWith(path)}
           />
         </Tooltip>
       );
     },
-    [location.pathname, navigate, setMenuOpened, usesFullScreen]
+    [location.pathname, navigate, setMenuOpened, fullscreenMode]
   );
-
-  const onlyIcons = {
-    display: "inline-block",
-    padding: theme.spacing.md + " " + theme.spacing.xs,
-    "& .app-name": { display: "none" },
-    "& .mantine-NavLink-root": {
-      gap: "0",
-      padding: "0.5rem",
-      width: "2.5rem",
-      justifyContent: "center",
-    },
-    "& .mantine-NavLink-icon": { marginRight: "0" },
-    "& .mantine-NavLink-body": { display: "none" },
-    "& .mantine-Tooltip-tooltip": { display: "initial !important" },
-  };
 
   const fullScreen = {
     transform: menuOpened
@@ -98,70 +96,51 @@ function Sidebar({
   };
 
   return (
-    <MediaQuery smallerThan="lg" largerThan="sm" styles={onlyIcons}>
-      <MediaQuery smallerThan="sm" styles={fullScreen}>
-        <Navbar
-          hiddenBreakpoint="sm"
-          width={{ sm: "3.825rem", lg: "15rem" }}
-          p="0.5rem"
-          sx={{
-            "& .mantine-Tooltip-tooltip": { display: "none" },
-          }}
-        >
-          <Navbar.Section>
-            <Stack spacing="xs">
-              <Group
-                position="apart"
-                align="center"
-                py="0.5rem"
-                h="3.25rem"
-                pl="xs"
-                display={!usesOnlyIcons ? "flex" : "none"}
-              >
-                <Group spacing="xs" align="center">
-                  <Image src="/logo.svg" alt="Skola Logo" maw="1.5rem" />
-                  <Title order={5}>Skola</Title>
-                </Group>
-                {usesFullScreen ? (
-                  <ActionIcon
-                    onClick={() => setMenuOpened(false)}
-                    sx={() => ({ alignSelf: "end" })}
-                  >
-                    <IconChevronRight />
-                  </ActionIcon>
-                ) : null}
-              </Group>
-              <InteractiveNavLink
-                label="Home"
-                path="/home"
-                icon={<IconHome />}
-              />
-              <InteractiveNavLink
-                label="Today"
-                path="/today"
-                icon={<IconBolt />}
-              />
-              <InteractiveNavLink
-                label="Statistics"
-                path="/stats"
-                icon={<IconChartBar />}
-              />
+    <Box
+      p="0.5rem"
+      className={cx(
+        classes.sidebar,
+        minimalMode && classes.minimalMode,
+        landscapeMode && classes.landscapeMode,
+        fullscreenMode && classes.fullscreenMode,
+        fullscreenMode && menuOpened && classes.fullscreenModeOpened
+      )}
+    >
+      <Stack gap="xs">
+        <Group className={classes.topRow}>
+          <Group gap="xs" align="center">
+            <Image src="/logo.svg" alt="Skola Logo" maw="1.5rem" />
+            <Title order={5}>Skola</Title>
+          </Group>
+          {fullscreenMode ? (
+            <ActionIcon
+              onClick={() => setMenuOpened(false)}
+              style={{ alignSelf: "end" }}
+            >
+              <IconChevronRight />
+            </ActionIcon>
+          ) : null}
+        </Group>
+        <InteractiveNavLink label="Home" path="/home" icon={<IconHome />} />
+        <InteractiveNavLink label="Today" path="/today" icon={<IconBolt />} />
+        <InteractiveNavLink
+          label="Statistics"
+          path="/stats"
+          icon={<IconChartBar />}
+        />
 
-              <InteractiveNavLink
-                label="Manage Cards"
-                path="/cards"
-                icon={<IconCards />}
-              />
-              <InteractiveNavLink
-                label="Settings"
-                path="/settings"
-                icon={<IconSettings />}
-              />
-            </Stack>
-          </Navbar.Section>
-        </Navbar>
-      </MediaQuery>
-    </MediaQuery>
+        <InteractiveNavLink
+          label="Manage Cards"
+          path="/cards"
+          icon={<IconCards />}
+        />
+        <InteractiveNavLink
+          label="Settings"
+          path="/settings"
+          icon={<IconSettings />}
+        />
+      </Stack>
+    </Box>
   );
 }
 

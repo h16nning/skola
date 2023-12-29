@@ -8,7 +8,7 @@ export type Settings<T extends keyof SettingsValues> = {
 
 export interface SettingsValues {
   language: "en" | "de" | "es" | "sv";
-  colorSchemePreference: "light" | "dark" | "system";
+  colorSchemePreference: "light" | "dark" | "auto";
   name?: string;
   developerMode: boolean;
   showSubAndSuperScriptOptionInEditor: boolean;
@@ -21,7 +21,7 @@ export interface SettingsValues {
 
 export const defaultSettings: SettingsValues = {
   language: "en",
-  colorSchemePreference: "system",
+  colorSchemePreference: "auto",
   developerMode: false,
   showSubAndSuperScriptOptionInEditor: true,
   showStrikethroughOptionInEditor: true,

@@ -1,0 +1,8 @@
+.dangerZone {
+  background: none;
+  width: 100%;
+  border-color: light-dark(
+    var(--mantine-color-red-7),
+    var(--mantine-color-red-5)
+  );
+}

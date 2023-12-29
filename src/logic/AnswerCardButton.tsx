@@ -24,7 +24,7 @@ export default function AnswerCardButton({
       fullWidth
       miw="0"
     >
-      <Stack spacing="0" align="center">
+      <Stack gap="0" align="center">
         <Text fz="xs" fw={400} lh="1">
           {timeInfo}
         </Text>
