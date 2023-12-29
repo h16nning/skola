@@ -1,0 +1,13 @@
+.cardBox {
+  min-width: 300px;
+  width: 400px;
+  max-width: 100%;
+  height: 100%;
+  padding: var(--mantine-spacing-sm);
+  border: 1px solid;
+  border-radius: var(--mantine-radius-md);
+  border-color: light-dark(
+    var(--mantine-color-gray-3),
+    var(--mantine-color-dark-5)
+  );
+}

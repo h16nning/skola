@@ -1,21 +1,20 @@
 {
   "name": "super-anki",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.6",
-    "@mantine/carousel": "^6.0.0",
-    "@mantine/core": "^6.0.0",
-    "@mantine/dates": "^6.0.0",
-    "@mantine/dropzone": "^6.0.0",
-    "@mantine/form": "^6.0.0",
-    "@mantine/hooks": "^6.0.0",
-    "@mantine/modals": "^6.0.0",
-    "@mantine/notifications": "^6.0.0",
-    "@mantine/nprogress": "^6.0.0",
-    "@mantine/prism": "^6.0.0",
-    "@mantine/spotlight": "^6.0.0",
-    "@mantine/tiptap": "^6.0.0",
+    "@mantine/carousel": "^7.3.2",
+    "@mantine/core": "^7.3.2",
+    "@mantine/dates": "^7.3.2",
+    "@mantine/dropzone": "^7.3.2",
+    "@mantine/form": "^7.3.2",
+    "@mantine/hooks": "^7.3.2",
+    "@mantine/modals": "^7.3.2",
+    "@mantine/notifications": "^7.3.2",
+    "@mantine/nprogress": "^7.3.2",
+    "@mantine/spotlight": "^7.3.2",
+    "@mantine/tiptap": "^7.3.2",
     "@tabler/icons-react": "^2.7.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
@@ -34,8 +33,6 @@
     "@tiptap/starter-kit": "^2.0.0-beta.220",
     "@types/jest": "^29.4.0",
     "@types/node": "^18.14.4",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
     "@types/uuid": "^9.0.1",
     "dayjs": "^1.11.7",
     "dexie": "^3.2.3",
@@ -48,17 +45,15 @@
     "react-dom": "^18.2.0",
     "react-i18next": "^14.0.0",
     "react-router-dom": "^6.8.2",
-    "react-scripts": "^5.0.1",
     "react-timer-hook": "^3.0.5",
-    "typescript": "^4.9.5",
     "uuid": "^9.0.0",
+    "vite-tsconfig-paths": "^4.2.3",
     "web-vitals": "^3.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "eslintConfig": {
     "extends": [
@@ -79,6 +74,16 @@
     ]
   },
   "devDependencies": {
-    "prettier": "2.8.4"
+    "@types/react": "^18.2.46",
+    "@types/react-dom": "^18.2.18",
+    "@vitejs/plugin-react": "^4.2.1",
+    "postcss": "^8.4.32",
+    "postcss-cli": "^11.0.0",
+    "postcss-preset-mantine": "^1.12.2",
+    "postcss-simple-vars": "^7.0.1",
+    "prettier": "2.8.4",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10",
+    "vite-plugin-checker": "^0.6.2"
   }
 }

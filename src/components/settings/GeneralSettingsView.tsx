@@ -5,10 +5,10 @@ import LanguageSelect from "./LanguageSelect";
 import { useTranslation } from "react-i18next";
 
 export default function GeneralSettingsView() {
-  const [t, i18n] = useTranslation();
+  const [t] = useTranslation();
   return (
     <>
-      <Stack spacing="xl" align="start">
+      <Stack gap="xl" align="start">
         <SettingsInput
           label={t("settings.general.name")}
           description={t("settings.general.name-description")}

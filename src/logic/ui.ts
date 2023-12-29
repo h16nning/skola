@@ -2,39 +2,6 @@ import { MantineColor, MantineTheme } from "@mantine/core";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-export function swap(
-  theme: MantineTheme,
-  color: MantineColor,
-  light: number,
-  dark: number,
-  opacity?: number
-) {
-  const c =
-    theme.colorScheme === "light"
-      ? (theme.colors[color === "primary" ? "forest" : color] ??
-          theme.colors.pink)[light]
-      : (theme.colors[color === "primary" ? "forest" : color] ??
-          theme.colors.pink)[dark];
-  return opacity ? theme.fn.rgba(c, opacity) : c;
-}
-
-export function swapMono(
-  theme: MantineTheme,
-  light: number,
-  dark?: number,
-  opacity?: number
-) {
-  const c =
-    theme.colorScheme === "light"
-      ? theme.colors.gray[light]
-      : theme.colors.dark[dark ?? light];
-  return opacity ? theme.fn.rgba(c, opacity) : c;
-}
-
-export function swapLight(theme: MantineTheme) {
-  return swap(theme, "gray", 5, 7);
-}
-
 export function useScrollResetOnLocationChange() {
   const location = useLocation();
   useEffect(() => {

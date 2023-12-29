@@ -17,7 +17,7 @@ export default function EditorOptionsMenu({}: EditorOptionsMenuProps) {
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Item
-          icon={<IconSettings />}
+          leftSection={<IconSettings />}
           onClick={() => navigate("/settings/editing")}
         >
           Edit Options

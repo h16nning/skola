@@ -1,0 +1,19 @@
+.trophyIcon {
+  color: var(--mantine-color-white);
+
+  background: linear-gradient(
+    to bottom right,
+    var(--mantine-primary-color-2),
+    var(--mantine-primary-color-9) 80%
+  );
+
+  &:hover {
+    transition: all 200ms ease;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transition: all 200ms ease;
+    transform: scale(0.95);
+  }
+}

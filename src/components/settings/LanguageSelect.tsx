@@ -13,9 +13,9 @@ export default function LanguageSelect() {
       defaultValue={language}
       label={t("settings.general.language")}
       description={t("settings.general.language-description")}
-      onChange={(value: SettingsValues["language"]) => {
-        setSetting("language", value);
-        i18n.changeLanguage(value);
+      onChange={(value) => {
+        setSetting("language", (value as SettingsValues["language"]) || "en");
+        i18n.changeLanguage(value || "en");
       }}
       data={[
         { value: "de", label: "Deutsch" },

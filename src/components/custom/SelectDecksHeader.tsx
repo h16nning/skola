@@ -1,6 +1,6 @@
+import common from "../../style/CommonStyles.module.css";
 import React from "react";
 import { Select, Stack, Text } from "@mantine/core";
-import { swapLight } from "../../logic/ui";
 import { Deck } from "../../logic/deck";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -19,19 +19,14 @@ export default function SelectDecksHeader({
   const location = useLocation();
 
   return (
-    <Stack spacing="0.25rem">
-      <Text
-        sx={(theme) => ({
-          color: swapLight(theme),
-          fontSize: theme.fontSizes.sm,
-        })}
-      >
+    <Stack gap="0.25rem">
+      <Text fz="sm" c="dimmed">
         {label}
       </Text>
       <Select
         placeholder="Pick one"
         searchable
-        nothingFound="No decks Found"
+        nothingFoundMessage="No decks Found"
         data={(disableAll ? [] : [{ value: "", label: "All" }]).concat(
           decks?.map((deck) => ({
             value: deck.id,

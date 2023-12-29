@@ -1,9 +1,17 @@
-import { Box, Center, Input, SegmentedControl } from "@mantine/core";
+import {
+  Box,
+  Center,
+  Input,
+  MantineColorScheme,
+  SegmentedControl,
+  useMantineColorScheme,
+} from "@mantine/core";
 import { IconMoon, IconSun, IconSunMoon } from "@tabler/icons-react";
-import { setSetting, useSetting } from "../../logic/Settings";
+import { SettingsValues, setSetting, useSetting } from "../../logic/Settings";
 
 export default function SegmentedToggle() {
   const [colorSchemePreference] = useSetting("colorSchemePreference");
+  const { colorScheme, setColorScheme } = useMantineColorScheme();
 
   return (
     <Input.Wrapper
@@ -13,9 +21,13 @@ export default function SegmentedToggle() {
       <SegmentedControl
         mt="xs"
         value={colorSchemePreference}
-        onChange={(value: "light" | "dark" | "system") =>
-          setSetting("colorSchemePreference", value)
-        }
+        onChange={(value) => {
+          setSetting(
+            "colorSchemePreference",
+            (value as SettingsValues["colorSchemePreference"]) || "light"
+          );
+          setColorScheme((value as MantineColorScheme) || "auto");
+        }}
         data={[
           {
             value: "light",
@@ -40,7 +52,7 @@ export default function SegmentedToggle() {
             ),
           },
           {
-            value: "system",
+            value: "auto",
             label: (
               <Center>
                 <IconSunMoon size={16} />

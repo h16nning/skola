@@ -1,15 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { setSetting, SettingsValues, useSetting } from "../../logic/Settings";
-import { SettingStatus, StatusIndicator } from "./SettingStatus";
+import { Checkbox, Group, Switch, TextInput } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
-import {
-  Checkbox,
-  Group,
-  Select,
-  SelectItem,
-  Switch,
-  TextInput,
-} from "@mantine/core";
+import React, { useEffect, useState } from "react";
+import { SettingsValues, setSetting, useSetting } from "../../logic/Settings";
+import { SettingStatus, StatusIndicator } from "./SettingStatus";
 
 interface SettingsInputProps {
   label: string | React.ReactNode;
@@ -67,7 +60,7 @@ export default function SettingsInput({
       );
     case "switch":
       return (
-        <Group align="start" noWrap spacing="xs" position="apart">
+        <Group align="start" wrap="nowrap" gap="xs" justify="space-between">
           <Switch
             checked={value as boolean | undefined}
             label={label}
@@ -77,13 +70,13 @@ export default function SettingsInput({
               setTouched(true);
               setValue(event.currentTarget.checked);
             }}
-          ></Switch>
+          />
           <StatusIndicator status={status} />
         </Group>
       );
     case "checkbox":
       return (
-        <Group align="start" noWrap spacing="xs" position="apart">
+        <Group align="start" wrap="nowrap" gap="xs" justify="space-between">
           <Checkbox
             checked={value as boolean | undefined}
             label={label}

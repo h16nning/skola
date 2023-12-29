@@ -1,0 +1,19 @@
+.stat {
+  padding: 0.75rem;
+  border-radius: var(--mantine-radius-sm);
+}
+
+.statIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.statValue {
+  font-weight: 700;
+  font-size: var(--mantine-font-size-md);
+}
+
+.statName {
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 400;
+}

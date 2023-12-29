@@ -45,7 +45,7 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
           onChange={(e) => setNameValue(e.currentTarget.value)}
         />
         {status ? <Text>{status}</Text> : <></>}
-        <Group position="right">
+        <Group justify="flex-end">
           <Button
             variant="default"
             onClick={() => {

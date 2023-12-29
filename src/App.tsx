@@ -1,21 +1,20 @@
-import {
-  AppShell,
-  ColorSchemeProvider,
-  MantineProvider,
-  useMantineTheme,
-} from "@mantine/core";
-
-import { getBaseTheme } from "./style/StyleProvider";
-import Main from "./components/Main";
+import "@mantine/core/styles.css";
+import { AppShell, AppShellNavbar, MantineProvider } from "@mantine/core";
+import Main from "./components/Main/Main";
 import React, { useEffect, useState } from "react";
 import Sidebar from "./components/sidebar/Sidebar";
 import { Notifications } from "@mantine/notifications";
-import { useColorScheme, useLocalStorage } from "@mantine/hooks";
+import { useLocalStorage } from "@mantine/hooks";
 import { useSetting } from "./logic/Settings";
 import WelcomeView from "./components/WelcomeView";
-import { useDynamicPageTheme } from "./logic/ui";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
+import { presetTheme } from "./style/StyleProvider";
+import HomeView from "./components/HomeView";
+import SettingsView from "./components/settings/SettingsView";
+import DeckView from "./components/deck/DeckView";
+import FinishedLearningView from "./components/learning/FinishedLearningView/FinishedLearningView";
+import { stopwatchResult } from "./components/learning/LearnView/LearnViewHeader";
 
 async function persist() {
   return (
@@ -34,17 +33,8 @@ async function isStoragePersisted() {
 }
 
 export default function App() {
-  const theme = useMantineTheme();
   const [colorSchemePreference] = useSetting("colorSchemePreference");
-  const systemColorScheme = useColorScheme();
   const [sidebarMenuOpened, setSidebarMenuOpened] = useState<boolean>(false);
-
-  useDynamicPageTheme(
-    theme,
-    colorSchemePreference === "system"
-      ? systemColorScheme
-      : colorSchemePreference
-  );
 
   const [registered] = useLocalStorage({
     key: "registered",
@@ -68,53 +58,41 @@ export default function App() {
   }, []);
   return (
     <I18nextProvider i18n={i18n}>
-      <ColorSchemeProvider
-        colorScheme={
-          colorSchemePreference === "system"
-            ? systemColorScheme
-            : colorSchemePreference
-        }
-        //not working use setSetting("colorSchemePreference", ...)
-        toggleColorScheme={() => {}}
+      <MantineProvider
+        defaultColorScheme={colorSchemePreference}
+        theme={presetTheme}
       >
-        <MantineProvider
-          theme={getBaseTheme(
-            theme,
-            colorSchemePreference === "system"
-              ? systemColorScheme
-              : colorSchemePreference
-          )}
-          withGlobalStyles
-          withNormalizeCSS
-        >
-          <Notifications
-            transitionDuration={400}
-            containerWidth="20rem"
-            position="bottom-center"
-            autoClose={2000}
-            limit={1}
-          />
-          {registered ? (
-            <AppShell
-              navbarOffsetBreakpoint="sm"
-              fixed
-              navbar={
-                <Sidebar
-                  menuOpened={sidebarMenuOpened}
-                  setMenuOpened={setSidebarMenuOpened}
-                />
-              }
-            >
-              <Main
+        <Notifications
+          transitionDuration={400}
+          containerWidth="20rem"
+          position="bottom-center"
+          autoClose={2000}
+          limit={1}
+        />
+        {registered ? (
+          <AppShell
+            layout="alt"
+            navbar={{
+              width: { sm: "3.5rem", lg: 300 },
+              breakpoint: "xs",
+              collapsed: { mobile: !sidebarMenuOpened },
+            }}
+          >
+            <AppShell.Navbar>
+              <Sidebar
                 menuOpened={sidebarMenuOpened}
                 setMenuOpened={setSidebarMenuOpened}
               />
-            </AppShell>
-          ) : (
-            <WelcomeView />
-          )}
-        </MantineProvider>
-      </ColorSchemeProvider>
+            </AppShell.Navbar>
+            <Main
+              menuOpened={sidebarMenuOpened}
+              setMenuOpened={setSidebarMenuOpened}
+            />
+          </AppShell>
+        ) : (
+          <WelcomeView />
+        )}
+      </MantineProvider>
     </I18nextProvider>
   );
 }

@@ -19,7 +19,7 @@ function SubDeckSection({ deck }: SubDeckSectionProps) {
       <Button
         disabled={!deck || !areSubDecksReady || !subDecks}
         variant="default"
-        leftIcon={<IconPlus />}
+        leftSection={<IconPlus />}
         onClick={() => {
           if (deck) {
             setNewDeckModalOpened(true);
@@ -33,14 +33,7 @@ function SubDeckSection({ deck }: SubDeckSectionProps) {
 
   return (
     <>
-      <Section
-        title={
-          <Group position="apart">
-            <>Sub Decks</>
-            <NewSubDeckButton />
-          </Group>
-        }
-      >
+      <Section title="Subdecks" rightSection={<NewSubDeckButton />}>
         {areSubDecksReady &&
           (subDecks ? (
             <DeckTable deckList={subDecks} isReady={true} />

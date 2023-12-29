@@ -28,9 +28,9 @@ function NewCardsView() {
   }
 
   return (
-    <Stack sx={{ width: "600px" }} key="stack">
-      <Group position="apart">
-        <Group spacing="xs" align="end">
+    <Stack w="600px" key="stack">
+      <Group justify="space-between">
+        <Group gap="xs" align="end">
           <ActionIcon onClick={() => navigate(-1)}>
             <IconChevronLeft />
           </ActionIcon>

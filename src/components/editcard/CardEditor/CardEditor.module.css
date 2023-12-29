@@ -1,0 +1,16 @@
+.content {
+  & .ProseMirror {
+    max-height: 400px;
+    overflow: scroll;
+  }
+  background-color: red;
+}
+
+.toolbar {
+}
+
+.controlsWrapper {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}

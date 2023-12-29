@@ -1,0 +1,7 @@
+.content {
+  & p {
+    font-family: var(--mantine-font-family-headings);
+    font-weight: 600;
+    font-size: var(--mantine-h3-font-size);
+  }
+}

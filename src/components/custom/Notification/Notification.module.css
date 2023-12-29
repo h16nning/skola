@@ -1,0 +1,32 @@
+.root {
+  border: none;
+  background-color: light-dark(
+    var(--mantine-color-gray-9),
+    var(--mantine-color-gray-0)
+  );
+  box-shadow: var(--mantine-shadow-xl);
+  padding: 0.5rem;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.title {
+  color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-gray-9));
+  font-size: 0.85rem;
+}
+
+.description {
+  color: light-dark(var(--mantine-color-gray-4), var(--mantine-color-gray-6));
+  font-size: 0.8rem;
+}
+
+.icon {
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-right: 0.625rem;
+
+  & svg {
+    width: 0.7rem;
+    height: 0.7rem;
+  }
+}

@@ -1,0 +1,11 @@
+.breadcrumb {
+  font-size: var(--mantine-font-size-sm);
+
+  @mixin light {
+    color: var(--mantine-color-gray-6);
+  }
+
+  @mixin dark {
+    color: var(--mantine-color-dark-2);
+  }
+}

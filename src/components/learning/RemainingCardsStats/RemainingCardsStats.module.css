@@ -1,0 +1,16 @@
+.container {
+  border-radius: var(--mantine-radius-sm);
+  border: 1px solid;
+  border-color: light-dark(
+    var(--mantine-color-gray-2),
+    var(--mantine-color-dark-6)
+  );
+  padding: 0.25rem var(--mantine-spacing-xs);
+}
+
+.label {
+  width: 4rem;
+  font-weight: 600;
+  font-size: var(--mantine-font-size-xs);
+  text-align: center;
+}

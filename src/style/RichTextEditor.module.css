@@ -1,0 +1,45 @@
+.root {
+  border: none;
+}
+
+.toolbar {
+  tab-index: -1;
+  border-bottom: none;
+  padding-left: 0;
+  padding-right: 0;
+  background-color: transparent;
+  justify-content: space-between;
+  overflow-x: scroll;
+  overflow-y: visible;
+  /*hiding scrollbars on ios*/
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: "none";
+  }
+  flexwrap: "nowrap";
+}
+
+.content {
+  background-color: transparent;
+  border-color: transparent;
+  & .ProseMirror {
+    border-radius: var(--mantine-radius-sm);
+    border: solid 1px;
+    border-color: light-dark(
+      var(--mantine-color-gray-4),
+      var(--mantine-color-dark-4)
+    );
+  }
+  &.ProseMirror-focused {
+    border-color: light-dark(
+      var(--mantine-primary-color-6),
+      var(--mantine-primary-color-8)
+    );
+  }
+}
+
+.control {
+  border: none !important;
+  background-color: transparent;
+  border-radius: var(--mantine-radius-sm);
+}

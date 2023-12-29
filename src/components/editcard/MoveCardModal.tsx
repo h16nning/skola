@@ -4,7 +4,7 @@ import { Button, Group, Modal, Select, Stack, Text } from "@mantine/core";
 import { getUtils } from "../../logic/CardTypeManager";
 import { useDecks } from "../../logic/deck";
 import { IconArrowsExchange, IconArrowsMove } from "@tabler/icons-react";
-import { successfullyMovedTo } from "../custom/Notification";
+import { successfullyMovedTo } from "../custom/Notification/Notification";
 
 interface MoveCardModalProps {
   card: Card<CardType>;
@@ -31,9 +31,9 @@ export default function MoveCardModal({
         <Select
           searchable
           label="Move To"
-          nothingFound="No Decks Found"
+          nothingFoundMessage="No Decks Found"
           disabled={!areDecksReady}
-          withinPortal
+          //withinPortal
           data={
             decks?.map((deck) => ({
               value: deck.id,
@@ -51,7 +51,7 @@ export default function MoveCardModal({
             Try creating another one.
           </Text>
         )}
-        <Group position="right">
+        <Group justify="flex-end">
           <Button
             onClick={() => {
               const newDeck = decks?.find((deck) => deck.id === newDeckID);
@@ -62,7 +62,7 @@ export default function MoveCardModal({
               } else {
               }
             }}
-            leftIcon={<IconArrowsExchange />}
+            leftSection={<IconArrowsExchange />}
             disabled={!areDecksReady || !newDeckID || newDeckID === card.deck}
           >
             Move Card
