@@ -18,10 +18,13 @@
       "enable-developer-mode": "Enable Developer Mode",
       "enable-developer-mode-description": "This will enable additional options for debugging and creating custom plugins and themes."
     },
-    "appereance": { "title": "Appearance" },
+    "appearance": { "title": "Appearance" },
     "editing": { "title": "Editing" },
     "database": { "title": "Database" },
-    "about": { "title": "About" },
+    "about": {
+      "title": "About",
+      "description": "This program was made by a student from Germany studying medicine. Skola is in early development. You may encounter bugs. If you do, I'd be very pleased if you reported them on the git repository."
+    },
     "developer": { "title": "Developer" }
   }
 }

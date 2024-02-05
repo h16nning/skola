@@ -16,6 +16,7 @@ import EditingSettingsView from "./EditingSettingsView/EditingSettingsView";
 import { useLocation, useNavigate } from "react-router-dom";
 import AboutSettingsView from "./AboutSettingsView";
 import DatabaseSettingsView from "./DatabaseSettingsView/DatabaseSettingsView";
+import { t } from "i18next";
 
 export default function SettingsView() {
   const [value, setValue] = useState("General");
@@ -51,35 +52,35 @@ export default function SettingsView() {
             leftSection={<IconSettings />}
             onClick={() => setValue("general")}
           >
-            General
+            {t("settings.general.title")}
           </Tabs.Tab>
           <Tabs.Tab
             value="appearance"
             leftSection={<IconPalette />}
             onClick={() => setValue("appearance")}
           >
-            Appearance
+            {t("settings.appearance.title")}
           </Tabs.Tab>
           <Tabs.Tab
             value="editing"
             leftSection={<IconPencil />}
             onClick={() => setValue("editing")}
           >
-            Editing
+            {t("settings.editing.title")}
           </Tabs.Tab>
           <Tabs.Tab
             value="database"
             leftSection={<IconDatabase />}
             onClick={() => setValue("database")}
           >
-            Database
+            {t("settings.database.title")}
           </Tabs.Tab>
           <Tabs.Tab
             value="about"
             leftSection={<IconInfoCircle />}
             onClick={() => setValue("about")}
           >
-            About
+            {t("settings.about.title")}
           </Tabs.Tab>
           {developerMode ? (
             <Tabs.Tab
@@ -87,7 +88,7 @@ export default function SettingsView() {
               leftSection={<IconBraces />}
               onClick={() => setValue("developer")}
             >
-              Developer
+              {t("settings.developer.title")}
             </Tabs.Tab>
           ) : null}
         </Tabs.List>{" "}

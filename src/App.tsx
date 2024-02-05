@@ -27,9 +27,9 @@ async function isStoragePersisted() {
   );
 }
 function useRestoreLanguage() {
-  const [language] = useSetting('language');
+  const [language] = useSetting("language");
   useEffect(() => {
-    i18n.changeLanguage(language)
+    i18n.changeLanguage(language);
   }, [language]);
 
   return language;

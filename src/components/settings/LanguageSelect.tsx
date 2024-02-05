@@ -14,13 +14,17 @@ export default function LanguageSelect() {
       label={t("settings.general.language")}
       description={t("settings.general.language-description")}
       onChange={(value) => {
-        setSetting("language", (value as SettingsValues["language"]) || "en");
-        i18n.changeLanguage(value || "en");
+        if (value !== null) {
+          setSetting("language", (value as SettingsValues["language"]) || "en");
+          console.log("Language changed to", value);
+          i18n.changeLanguage(value || "en");
+        }
+        return value;
       }}
       data={[
-        { value: "de", label: "Deutsch" },
+        { value: "de", label: "Deutsch (Incomplete)" },
         { value: "en", label: "English" },
-        { value: "sv", label: "Svenska" },
+        { value: "sv", label: "Svenska (Incomplete)" },
       ]}
     />
   );
