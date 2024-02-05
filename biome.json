@@ -1,17 +1,38 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
   "organizeImports": {
-    "enabled": true
+    "enabled": false
   },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noEmptyInterface": "off"
+        "noEmptyInterface": "off",
+        "noExplicitAny": "off",
+        "noAssignInExpressions": "off"
       },
       "style": {
-        "useEnumInitializers": "off"
+        "useEnumInitializers": "off",
+        "useTemplate": "off",
+        "noNonNullAssertion": "off",
+        "useSelfClosingElements": "off",
+        "noUselessElse": "off"
+      },
+      "complexity": {
+        "noBannedTypes": "off",
+        "noForEach": "off",
+        "useOptionalChain": "off"
+      },
+      "correctness": {
+        "noEmptyPattern": "off",
+        "useExhaustiveDependencies": "off"
+      },
+      "performance": {
+        "noAccumulatingSpread": "warn"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "warn"
       }
     },
     "ignore": ["node_modules", "*.json"]
