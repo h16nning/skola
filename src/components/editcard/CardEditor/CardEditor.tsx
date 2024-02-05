@@ -10,14 +10,10 @@ import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
 import Image from "@tiptap/extension-image";
 
-import {
-  Link,
-  RichTextEditor,
-  RichTextEditorStylesNames,
-} from "@mantine/tiptap";
+import { Link, RichTextEditor } from "@mantine/tiptap";
 import { Color } from "@tiptap/extension-color";
 import { TextStyle } from "@tiptap/extension-text-style";
-import { Box, Styles } from "@mantine/core";
+import { Box } from "@mantine/core";
 import { useSettings } from "../../../logic/Settings";
 import EditorOptionsMenu from "../EditorOptionsMenu";
 import AddImageControl from "../AddImageControl";
@@ -58,8 +54,13 @@ function CardEditor({ editor, controls, className }: CardEditorProps) {
   return (
     <RichTextEditor
       editor={editor}
-      withTypographyStyles={true}
+      withTypographyStyles={false}
       className={className}
+      classNames={{
+        root: classes.root,
+        toolbar: classes.toolbar,
+        content: classes.content,
+      }}
     >
       <RichTextEditor.Toolbar
         className={classes.toolbar}
@@ -111,9 +112,11 @@ function CardEditor({ editor, controls, className }: CardEditorProps) {
           {controls}
         </Box>
 
-        <EditorOptionsMenu />
+        <RichTextEditor.ControlsGroup>
+          <EditorOptionsMenu />
+        </RichTextEditor.ControlsGroup>
       </RichTextEditor.Toolbar>
-      <RichTextEditor.Content className={classes.content} />
+      <RichTextEditor.Content />
     </RichTextEditor>
   );
 }

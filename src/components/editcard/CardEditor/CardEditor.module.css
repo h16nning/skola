@@ -1,16 +1,69 @@
+.root {
+}
+
 .content {
-  & .ProseMirror {
+  & :global(.ProseMirror) {
+    padding: 1rem;
     max-height: 400px;
     overflow: scroll;
+    border: 1px solid var(--mantine-color-default-border);
+    border-radius: var(--mantine-radius-sm);
+    background-color: var(--mantine-color-default);
   }
-  background-color: red;
+
+  & :global(.ProseMirror-focused) {
+    outline: none;
+    border-color: var(--mantine-primary-color-filled);
+  }
+  & p {
+    margin: 0;
+  }
 }
 
 .toolbar {
-}
-
-.controlsWrapper {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  justify-content: space-between;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-sm) 0;
+
+  & :global(.mantine-RichTextEditor-controlsGroup) {
+    border: 1px solid var(--mantine-color-default-border);
+    border-radius: var(--mantine-radius-sm);
+    display: flex;
+    flex-direction: row;
+  }
+
+  & button {
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: var(--mantine-color-default);
+    &:first-of-type {
+      border-top-left-radius: var(--mantine-radius-sm);
+      border-bottom-left-radius: var(--mantine-radius-sm);
+    }
+    &:last-of-type {
+      border-top-right-radius: var(--mantine-radius-sm);
+      border-bottom-right-radius: var(--mantine-radius-sm);
+    }
+    &:hover {
+      background-color: var(--mantine-color-default-hover);
+    }
+    &[data-active] {
+      background-color: var(--mantine-primary-color-filled);
+      color: var(--mantine-color-white);
+    }
+    & svg {
+      width: 1rem;
+      height: 1rem;
+      display: block;
+      margin: auto;
+    }
+  }
+  .controlsWrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--mantine-spacing-sm);
+  }
 }

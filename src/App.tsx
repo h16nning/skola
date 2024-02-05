@@ -1,20 +1,15 @@
+import { AppShell, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
-import { AppShell, AppShellNavbar, MantineProvider } from "@mantine/core";
-import Main from "./components/Main/Main";
-import React, { useEffect, useState } from "react";
-import Sidebar from "./components/sidebar/Sidebar";
-import { Notifications } from "@mantine/notifications";
 import { useLocalStorage } from "@mantine/hooks";
-import { useSetting } from "./logic/Settings";
-import WelcomeView from "./components/WelcomeView";
+import { Notifications } from "@mantine/notifications";
+import { useEffect, useState } from "react";
 import { I18nextProvider } from "react-i18next";
+import Main from "./components/Main/Main";
+import WelcomeView from "./components/WelcomeView";
+import Sidebar from "./components/sidebar/Sidebar";
 import i18n from "./i18n";
-import { presetTheme } from "./style/StyleProvider";
-import HomeView from "./components/HomeView";
-import SettingsView from "./components/settings/SettingsView";
-import DeckView from "./components/deck/DeckView";
-import FinishedLearningView from "./components/learning/FinishedLearningView/FinishedLearningView";
-import { stopwatchResult } from "./components/learning/LearnView/LearnViewHeader";
+import { useSetting } from "./logic/Settings";
+import { cssVariablesResolver, presetTheme } from "./style/StyleProvider";
 
 async function persist() {
   return (
@@ -60,6 +55,7 @@ export default function App() {
     <I18nextProvider i18n={i18n}>
       <MantineProvider
         defaultColorScheme={colorSchemePreference}
+        cssVariablesResolver={cssVariablesResolver}
         theme={presetTheme}
       >
         <Notifications

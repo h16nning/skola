@@ -1,4 +1,4 @@
-.content {
+.front {
   & p {
     font-family: var(--mantine-font-family-headings);
     font-weight: 600;

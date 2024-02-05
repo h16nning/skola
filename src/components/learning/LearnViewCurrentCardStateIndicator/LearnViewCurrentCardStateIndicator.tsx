@@ -33,7 +33,7 @@ function Indicator({
         left: 0,
         height: "1.5rem",
         //FIXME: This is a wrong way of using the colorScheme.
-        color: "red",
+        color: `var(--mantine-color-${color}-strong`,
       }}
     >
       <Icon size={16} />

@@ -106,7 +106,11 @@ function NormalCardEditor({ card, deck, mode }: NormalCardEditorProps) {
         <Text fz="sm" fw={600}>
           Front
         </Text>
-        <CardEditor editor={frontEditor} key="front" className={classes} />
+        <CardEditor
+          editor={frontEditor}
+          key="front"
+          className={classes.front}
+        />
       </Stack>
       <Stack gap={0}>
         <Text fz="sm" fw={600}>

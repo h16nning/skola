@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { Card, CardType } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
 import { getUtils } from "../../logic/CardTypeManager";
+import { Table } from "@mantine/core";
 
 export function CardTableItem({
   card,
@@ -39,17 +40,19 @@ export function CardTableItem({
   }, [card]);
 
   return (
-    <tr
+    <Table.Tr
       className={cx(classes.tr, classes.bodyTr, {
         [classes.selected]: selectedIndex === index,
       })}
       onClick={() => setSelectedIndex(index)}
     >
-      <td className={classes.td}>{preview}</td>
-      <td className={classes.td}>{card.content.type}</td>
+      <Table.Td className={classes.td}>{preview}</Table.Td>
+      <Table.Td className={classes.td}>{card.content.type}</Table.Td>
 
-      <td className={classes.td}>{deck?.name ?? "?"}</td>
-      <td className={classes.td}>{card.creationDate.toLocaleDateString()}</td>
-    </tr>
+      <Table.Td className={classes.td}>{deck?.name ?? "?"}</Table.Td>
+      <Table.Td className={classes.td}>
+        {card.creationDate.toLocaleDateString()}
+      </Table.Td>
+    </Table.Tr>
   );
 }
