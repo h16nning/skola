@@ -14,7 +14,7 @@ function DeckTable({ deckList, isReady }: DeckTableProps) {
     deckList.length !== 0 ? (
       <Stack gap="0" w="100%">
         {deckList.map((deck, index) => (
-          <DeckPreview key={index} deck={deck} i={index} />
+          <DeckPreview key={deck.id} deck={deck} i={index} />
         ))}
       </Stack>
     ) : (

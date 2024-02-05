@@ -1,0 +1,31 @@
+name: Code quality
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Biome
+        uses: biomejs/setup-biome@v2
+        with:
+          version: 1.5.3
+      - name: Run Biome
+        run: biome ci .
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup JS
+        uses: actions/setup-node@v4
+        with:
+          cache: "npm"
+      - name: Install
+        run: npm ci
+      - name: Type check
+        run: npx tsc --noEmit
