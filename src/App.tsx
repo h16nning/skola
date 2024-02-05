@@ -3,9 +3,9 @@ import "@mantine/core/styles.css";
 import { useLocalStorage } from "@mantine/hooks";
 import { Notifications } from "@mantine/notifications";
 import { useEffect, useState } from "react";
+import WelcomeView from "./components/WelcomeView";
 import { I18nextProvider } from "react-i18next";
 import Main from "./components/Main/Main";
-import WelcomeView from "./components/WelcomeView";
 import Sidebar from "./components/sidebar/Sidebar";
 import i18n from "./i18n";
 import { useSetting } from "./logic/Settings";
@@ -26,9 +26,18 @@ async function isStoragePersisted() {
     navigator.storage.persisted()
   );
 }
+function useRestoreLanguage() {
+  const [language] = useSetting('language');
+  useEffect(() => {
+    i18n.changeLanguage(language)
+  }, [language]);
+
+  return language;
+}
 
 export default function App() {
   const [colorSchemePreference] = useSetting("colorSchemePreference");
+  useRestoreLanguage();
   const [sidebarMenuOpened, setSidebarMenuOpened] = useState<boolean>(false);
 
   const [registered] = useLocalStorage({
