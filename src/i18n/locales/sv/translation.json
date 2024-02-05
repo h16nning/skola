@@ -18,7 +18,7 @@
       "enable-developer-mode": "Aktivera utvecklarläge",
       "enable-developer-mode-description": "Visa utvecklarverktyg för att inspektera webbsidor och aktivera utvecklarverktyg i appen."
     },
-    "appereance": { "title": "Utseende" },
+    "appearance": { "title": "Utseende" },
     "editing": { "title": "Redigering" },
     "database": { "title": "Databas" },
     "about": { "title": "Om Skola" },
