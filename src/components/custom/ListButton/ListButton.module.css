@@ -7,7 +7,7 @@
   border-radius: var(--mantine-radius-md);
   background-color: transparent;
 
-  &:nth-child(even) {
+  &:nth-child(odd) {
     background-color: light-dark(
       var(--mantine-color-gray-1),
       var(--mantine-color-dark-6)

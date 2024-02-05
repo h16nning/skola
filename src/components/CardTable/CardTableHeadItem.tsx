@@ -1,7 +1,7 @@
 import classes from "./CardTable.module.css";
 import cx from "clsx";
 import React from "react";
-import { Box } from "@mantine/core";
+import { Box, Table } from "@mantine/core";
 import { IconArrowUp } from "@tabler/icons-react";
 
 interface CardTableHeadItemProps {
@@ -18,7 +18,7 @@ export default function CardTableHeadItem({
   setSort,
 }: CardTableHeadItemProps) {
   return (
-    <Box
+    <Table.Th
       className={classes.th}
       component="th"
       onClick={() => {
@@ -35,6 +35,6 @@ export default function CardTableHeadItem({
         <span>{name}</span>
         {<IconArrowUp size={16} />}
       </Box>
-    </Box>
+    </Table.Th>
   );
 }

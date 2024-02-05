@@ -1,7 +1,7 @@
 import classes from "./Stat.module.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { TablerIconsProps } from "@tabler/icons-react";
-import { Group, Paper, Stack, Text } from "@mantine/core";
+import { Box, Group, Stack, Text, useComputedColorScheme } from "@mantine/core";
 
 export default function Stat({
   name,
@@ -16,9 +16,30 @@ export default function Stat({
   color: string;
   width?: string;
 }) {
+  const scheme = useComputedColorScheme("light");
+
   return (
-    <Paper className={classes.stat} bg={color} miw={width ?? "6rem"}>
-      <Group align="center" gap="xs" c="white">
+    <Box
+      component="div"
+      className={classes.stat}
+      miw={width ?? "6rem"}
+      style={{
+        color: `var(--mantine-color-${color}-${scheme === "light" ? 9 : 2})`,
+      }}
+    >
+      <Box
+        component="div"
+        className={classes.statBackground}
+        style={{
+          backgroundColor: `var(--mantine-color-${color}-${
+            scheme === "light" ? 4 : 7
+          })`,
+          borderColor: `var(--mantine-color-${color}-${
+            scheme === "light" ? 5 : 5
+          })`,
+        }}
+      />
+      <Group align="center" gap="xs">
         <Icon className={classes.statIcon} />
         <Stack gap="0rem" align="start">
           <Text className={classes.statValue}>{value}</Text>
@@ -27,6 +48,6 @@ export default function Stat({
           </Text>
         </Stack>
       </Group>
-    </Paper>
+    </Box>
   );
 }

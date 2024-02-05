@@ -12,6 +12,7 @@ import {
   Text,
   Tabs,
   createTheme,
+  CSSVariablesResolver,
 } from "@mantine/core";
 import { RichTextEditor } from "@mantine/tiptap";
 import actionIcon from "./ActionIcon.module.css";
@@ -98,7 +99,7 @@ export const presetTheme = createTheme({
   },
   primaryColor: "forest",
   defaultGradient: {
-    deg: 150,
+    deg: 45,
     from: "forest.5",
     to: "forest.7",
   },
@@ -145,7 +146,6 @@ export const presetTheme = createTheme({
     Breadcrumbs: Breadcrumbs.extend({
       classNames: breadcrumbs,
     }),
-    RichTextEditor: RichTextEditor.extend({ classNames: richTextEditor }),
     Navbar: AppShell.Navbar.extend({ classNames: navbar }),
     NavLink: NavLink.extend({
       defaultProps: { variant: "light" },
@@ -191,3 +191,38 @@ export const presetTheme = createTheme({
     },
   },
 });
+
+export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
+  return {
+    variables: {},
+    light: {
+      "--mantine-color-red-strong": theme.colors.red[7],
+      "--mantine-color-pink-strong": theme.colors.pink[7],
+      "--mantine-color-grape-strong": theme.colors.grape[7],
+      "--mantine-color-violet-strong": theme.colors.violet[7],
+      "--mantine-color-indigo-strong": theme.colors.indigo[7],
+      "--mantine-color-blue-strong": theme.colors.blue[7],
+      "--mantine-color-cyan-strong": theme.colors.cyan[7],
+      "--mantine-color-teal-strong": theme.colors.teal[7],
+      "--mantine-color-green-strong": theme.colors.green[7],
+      "--mantine-color-lime-strong": theme.colors.lime[7],
+      "--mantine-color-yellow-strong": theme.colors.yellow[7],
+      "--mantine-color-orange-strong": theme.colors.orange[7],
+    },
+
+    dark: {
+      "--mantine-color-red-strong": theme.colors.red[3],
+      "--mantine-color-pink-strong": theme.colors.pink[3],
+      "--mantine-color-grape-strong": theme.colors.grape[3],
+      "--mantine-color-violet-strong": theme.colors.violet[3],
+      "--mantine-color-indigo-strong": theme.colors.indigo[3],
+      "--mantine-color-blue-strong": theme.colors.blue[3],
+      "--mantine-color-cyan-strong": theme.colors.cyan[3],
+      "--mantine-color-teal-strong": theme.colors.teal[3],
+      "--mantine-color-green-strong": theme.colors.green[3],
+      "--mantine-color-lime-strong": theme.colors.lime[3],
+      "--mantine-color-yellow-strong": theme.colors.yellow[3],
+      "--mantine-color-orange-strong": theme.colors.orange[3],
+    },
+  };
+};

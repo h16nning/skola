@@ -42,18 +42,19 @@ function CardTable({
   });
 
   return (
-    <Box component="div" className={classes.tableWrapper}>
+    <Table.ScrollContainer minWidth={500} type="native">
       <Table
+        className={classes.table}
         highlightOnHover
         withRowBorders={false}
         withColumnBorders={false}
         striped
-        className={classes.table}
+        stickyHeader
         ref={ref}
         tabIndex={0}
       >
-        <thead>
-          <tr className={classes.tr}>
+        <Table.Thead>
+          <Table.Tr className={classes.tr}>
             <CardTableHeadItem
               name={"Name"}
               id="front"
@@ -78,10 +79,10 @@ function CardTable({
               sort={sort}
               setSort={setSort}
             />
-          </tr>
-        </thead>
+          </Table.Tr>
+        </Table.Thead>
         {cardSet.length > 0 ? (
-          <tbody>
+          <Table.Tbody>
             {cardSet.map((card, index) => (
               <CardTableItem
                 card={card}
@@ -93,14 +94,14 @@ function CardTable({
                 setSelectedCard={setSelectedCard}
               />
             ))}
-          </tbody>
+          </Table.Tbody>
         ) : (
-          <Text fz="sm" color="dimmed">
+          <Text fz="sm" c="dimmed">
             No cards found
           </Text>
         )}
       </Table>
-    </Box>
+    </Table.ScrollContainer>
   );
 }
 

@@ -46,10 +46,10 @@ function HeroDeckSection({
           </Text>
         ) : cards.length === 0 ? (
           <Stack gap="0" align="center">
-            <Text fz="sm" fw={500}>
+            <Text fz="md" fw={500}>
               It is looking empty here!
             </Text>
-            <Text fz="sm" color="dimmed">
+            <Text fz="sm" c="dimmed">
               Start by creating some cards!
             </Text>
           </Stack>

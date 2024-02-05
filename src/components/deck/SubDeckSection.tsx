@@ -38,7 +38,7 @@ function SubDeckSection({ deck }: SubDeckSectionProps) {
           (subDecks ? (
             <DeckTable deckList={subDecks} isReady={true} />
           ) : (
-            <Text c="gray">Failed to load sub decks.</Text>
+            <Text c="dimmed">Failed to load sub decks.</Text>
           ))}
       </Section>
       <NewDeckModal

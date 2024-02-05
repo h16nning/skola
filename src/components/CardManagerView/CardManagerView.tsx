@@ -43,7 +43,7 @@ function CardManagerView() {
         <SelectDecksHeader label="Showing cards in" decks={decks} />
       </Group>
       <TextInput
-        leftSection={<IconSearch />}
+        leftSection={<IconSearch size={16} />}
         defaultValue={filter}
         placeholder="Filter cards"
         maw="20rem"
