@@ -1,5 +1,4 @@
 import classes from "./CardEditor.module.css";
-import cx from "clsx";
 import React from "react";
 import { Editor, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -9,7 +8,6 @@ import TextAlign from "@tiptap/extension-text-align";
 import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
 import Image from "@tiptap/extension-image";
-
 import { Link, RichTextEditor } from "@mantine/tiptap";
 import { Color } from "@tiptap/extension-color";
 import { TextStyle } from "@tiptap/extension-text-style";

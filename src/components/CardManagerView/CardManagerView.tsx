@@ -53,21 +53,19 @@ function CardManagerView() {
         gap="md"
         grow
         align="start"
-        style={{ overflow: "hidden", height: "100%" }}
+        style={{ overflowY: "scroll", height: "100%" }}
       >
-        <Stack miw="300px" w="400px" maw="100%" h="100%">
-          {cards && (
-            <CardTable
-              cardSet={cards ?? []}
-              selectedIndex={selectedIndex}
-              setSelectedIndex={setSelectedIndex}
-              selectedCard={selectedCard}
-              setSelectedCard={setSelectedCard}
-              sort={sort}
-              setSort={setSort}
-            />
-          )}
-        </Stack>
+        {cards && (
+          <CardTable
+            cardSet={cards ?? []}
+            selectedIndex={selectedIndex}
+            setSelectedIndex={setSelectedIndex}
+            selectedCard={selectedCard}
+            setSelectedCard={setSelectedCard}
+            sort={sort}
+            setSort={setSort}
+          />
+        )}
         <Stack className={classes.cardBox}>
           <EditCardView card={selectedCard} />
         </Stack>

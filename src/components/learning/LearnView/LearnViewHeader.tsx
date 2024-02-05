@@ -59,7 +59,13 @@ function LearnViewHeader({ currentCard, controller }: LearnViewHeaderProps) {
           <IconX />
         </ActionIcon>
         <Stopwatch />
-        <Progress size="md" value={debouncedProgress} radius="md" w="100%" />
+        <Progress
+          size="md"
+          value={debouncedProgress}
+          transitionDuration={200}
+          radius="md"
+          w="100%"
+        />
         <Group w="10%" justify="flex-end">
           <CardMenu card={currentCard} onDelete={controller.nextCard} />
         </Group>
