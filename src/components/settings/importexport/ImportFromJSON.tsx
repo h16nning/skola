@@ -89,10 +89,10 @@ async function parseFile(fileText: string | null): Promise<ExtractedData> {
   }
   const jsonObject = JSON.parse(fileText);
   const warnMessages: string[] = [];
-  if (jsonObject["__type__"] !== "Deck") {
+  if (jsonObject.__type__ !== "Deck") {
     throw new Error("At the moment only decks can be imported from JSON");
   }
-  const noteModels = jsonObject["note_models"];
+  const noteModels = jsonObject.note_models;
   if (!noteModels || noteModels.length === 0) {
     throw new Error("No note models found");
   } else if (noteModels.length > 1) {
@@ -101,17 +101,17 @@ async function parseFile(fileText: string | null): Promise<ExtractedData> {
     );
   }
   const firstNoteModel = noteModels[0];
-  const cards = jsonObject["notes"].map((note: any) => {
+  const cards = jsonObject.notes.map((note: any) => {
     return {
-      fields: note["fields"],
+      fields: note.fields,
     };
   });
   return {
-    description: jsonObject["desc"],
-    name: jsonObject["name"],
-    fields: firstNoteModel["flds"].map((field: any) => ({
-      label: field["name"],
-      value: field["ord"].toString(),
+    description: jsonObject.desc,
+    name: jsonObject.name,
+    fields: firstNoteModel.flds.map((field: any) => ({
+      label: field.name,
+      value: field.ord.toString(),
     })),
     cards,
     warnMessages,
