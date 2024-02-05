@@ -76,6 +76,9 @@ function DeckView() {
           />
         </Group>
 
+        {deck && deck.description && (
+          <div dangerouslySetInnerHTML={{ __html: deck.description }} />
+        )}
         <Stack gap="xs" align="end">
           <Button
             leftSection={<IconPlus />}

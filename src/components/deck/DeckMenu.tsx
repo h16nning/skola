@@ -17,7 +17,7 @@ import RenameCardModal from "../editcard/RenameCardModal";
 import DebugDeckModal from "./DebugDeckModal";
 import { Card, CardsStats, CardType } from "../../logic/card";
 import { useSetting } from "../../logic/Settings";
-import ImportCardsModal from "../settings/importexport/ImportCardsModal";
+import ImportModal from "../settings/importexport/ImportModal";
 
 interface DeckMenuProps {
   deck?: Deck;
@@ -141,7 +141,7 @@ function DeckMenu({
             opened={debugModalOpened}
             setOpened={setDebugModalOpened}
           />
-          <ImportCardsModal
+          <ImportModal
             deck={deck}
             opened={importModalOpened}
             setOpened={setImportModalOpened}

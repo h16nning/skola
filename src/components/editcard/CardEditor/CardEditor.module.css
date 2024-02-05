@@ -18,6 +18,9 @@
   & p {
     margin: 0;
   }
+  & img {
+    max-width: 100%;
+  }
 }
 
 .toolbar {
@@ -26,6 +29,8 @@
   justify-content: space-between;
   gap: var(--mantine-spacing-sm);
   padding: var(--mantine-spacing-sm) 0;
+  width: 100%;
+  overflow: scroll;
 
   & :global(.mantine-RichTextEditor-controlsGroup) {
     border: 1px solid var(--mantine-color-default-border);

@@ -2,6 +2,35 @@
   padding: 0.25rem 0.75rem;
   user-select: none;
 }
+.root {
+  position: relative;
+}
+.list {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 32px;
+    width: 3rem;
+    @mixin light {
+      background: linear-gradient(
+        to left,
+        var(--mantine-color-white),
+        transparent
+      );
+    }
+    @mixin dark {
+      background: linear-gradient(
+        to left,
+        var(--mantine-color-dark-7),
+        transparent
+      );
+    }
+  }
+}
 
 .tabSection {
   svg {

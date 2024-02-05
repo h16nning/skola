@@ -12,11 +12,13 @@ export interface Deck {
   subDecks: string[];
   superDecks?: string[];
   cards: Array<string>;
+  description?: string;
 }
 
 export async function newDeck(
   name: string,
-  superDeck?: Deck
+  superDeck?: Deck,
+  description?: string
 ): Promise<IndexableType> {
   const uuid = uuidv4();
 
@@ -43,6 +45,7 @@ export async function newDeck(
     cards: [],
     subDecks: [],
     superDecks: superDecks,
+    description: description,
   });
   return uuid;
 }

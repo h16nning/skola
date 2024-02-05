@@ -42,7 +42,11 @@ function CardTable({
   });
 
   return (
-    <Table.ScrollContainer minWidth={500} type="native">
+    <Table.ScrollContainer
+      minWidth="500px"
+      type="native"
+      className={classes.tableScrollContainer}
+    >
       <Table
         className={classes.table}
         highlightOnHover

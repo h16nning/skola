@@ -5,21 +5,21 @@ import { Settings, SettingsValues } from "./Settings";
 import { SharedValue } from "./sharedvalue";
 
 export class Database extends Dexie {
-    decks!: Table<Deck>;
-    cards!: Table<Card<CardType>>;
-    sharedvalues!: Table<SharedValue>;
-    settings!: Table<Settings<keyof SettingsValues>>;
+  decks!: Table<Deck>;
+  cards!: Table<Card<CardType>>;
+  sharedvalues!: Table<SharedValue>;
+  settings!: Table<Settings<keyof SettingsValues>>;
 
-    constructor() {
-        super("database");
-        this.version(2).stores({
-            cards: "++id, deck, content.front, history",
-            decks: "++id, name, subDecks, *superDecks, cards",
-            sharedvalues: "++id",
-            settings: "++key",
-        });
-        this.open();
-    }
+  constructor() {
+    super("database");
+    this.version(2).stores({
+      cards: "++id, deck, content.front, history",
+      decks: "++id, name, subDecks, *superDecks, cards",
+      sharedvalues: "++id",
+      settings: "++key",
+    });
+    this.open();
+  }
 }
 
 export const db = new Database();
