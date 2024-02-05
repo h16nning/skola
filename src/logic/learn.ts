@@ -207,8 +207,11 @@ export function useLearning(
   //This useEffect is used to filter the cards given in using cardSet and spreading them to the learningQueue and the newCards / learnedCards reservoir
   useEffect(() => {
     if (cardSet && cardSet[0] && repetitionList.length === 0) {
-
-      setNewCards(cardSet.filter((card) => getStateOf(card) === "new").sort((a, b) => a.creationDate.getTime() - b.creationDate.getTime()));
+      setNewCards(
+        cardSet
+          .filter((card) => getStateOf(card) === "new")
+          .sort((a, b) => a.creationDate.getTime() - b.creationDate.getTime())
+      );
 
       if (options?.learnAll) {
         setLearnedCards(

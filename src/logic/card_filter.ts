@@ -32,7 +32,9 @@ export default async function selectCards(
     console.log(filter);
     comparableFilteredCards = comparableFilteredCards.filter((card) =>
       // @ts-ignore
-      card.preview.toLowerCase().includes(filter.toLowerCase())
+      card.preview
+        .toLowerCase()
+        .includes(filter.toLowerCase())
     );
   }
   if (sort[0] === "front") {

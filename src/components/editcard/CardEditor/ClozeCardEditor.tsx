@@ -118,7 +118,7 @@ export default function ClozeCardEditor({
 
   useHotkeys([["mod+Enter", () => {}]]);
   //fix sometime
-  let editor = useCardEditor("", Gap);
+  const editor = useCardEditor("", Gap);
 
   return (
     <CardEditor
