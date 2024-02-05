@@ -33,7 +33,7 @@ export async function newDeck(
     if (unmodifiedParent) {
       await db.decks.update(superDeck.id, {
         ...unmodifiedParent,
-        subDecks: [...unmodifiedParent?.subDecks, uuid],
+        subDecks: [...(unmodifiedParent?.subDecks || {}), uuid],
       });
     } else {
       throw Error("Super deck not found");
