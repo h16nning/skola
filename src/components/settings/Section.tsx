@@ -2,7 +2,7 @@ import { Group, Stack, Title } from "@mantine/core";
 import React, { ReactNode } from "react";
 
 type SectionProps = {
-  title: String | ReactNode;
+  title: string | ReactNode;
   children: ReactNode;
   rightSection?: ReactNode;
 };
