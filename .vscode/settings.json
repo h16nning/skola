@@ -7,5 +7,14 @@
     "**/*.module.css", // Add support for CSS modules
 
     "node_modules/@mantine/core/styles.css"
-  ]
+  ],
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome-nightly"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome-nightly"
+  },
+  "editor.codeActionsOnSave": {
+    "quickfix.biome": "explicit"
+  }
 }
