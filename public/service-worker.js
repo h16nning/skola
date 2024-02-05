@@ -18,11 +18,7 @@ const CACHE = "skola-cache-v0.0.1";
 const RUNTIME = "runtime";
 
 // A list of local resources we always want to be cached.
-const PRECACHE_URLS = [
-  "index.html",
-  "/",
-  "../"
-];
+const PRECACHE_URLS = ["index.html", "/", "../"];
 
 // The install handler takes care of precaching the resources we always need.
 
@@ -72,7 +68,7 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   // Skip cross-origin requests, like those for Google Analytics.
 
-// eslint-disable-next-line no-restricted-globals
+  // eslint-disable-next-line no-restricted-globals
   if (event.request.url.startsWith(self.location.origin)) {
     event.respondWith(
       caches.match(event.request).then((cachedResponse) => {

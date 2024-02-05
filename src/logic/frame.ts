@@ -6,8 +6,8 @@ import { useLiveQuery } from "dexie-react-hooks";
  * Frame serves a shared container for cards with common content.
  */
 export interface Frame {
-    id: string;
-    cards: string[];
+  id: string;
+  cards: string[];
 }
 
 /**

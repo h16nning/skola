@@ -194,7 +194,7 @@ export async function deleteDeck(deck: Deck, calledRecursively?: boolean) {
 export function useDeckFromUrl(): [
   Deck | undefined,
   boolean,
-  string | undefined
+  string | undefined,
 ] {
   const location = useLocation();
   const [id, setID] = useState<string | undefined>(undefined);
