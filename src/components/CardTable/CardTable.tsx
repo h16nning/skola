@@ -90,7 +90,7 @@ function CardTable({
             {cardSet.map((card, index) => (
               <CardTableItem
                 card={card}
-                key={index}
+                key={card.id}
                 index={index}
                 selectedIndex={selectedIndex}
                 setSelectedIndex={setSelectedIndex}
