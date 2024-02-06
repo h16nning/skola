@@ -22,6 +22,11 @@ export default function GeneralSettingsView() {
           settingsKey="developerMode"
           inputType={"switch"}
         />
+        <SettingsInput
+          label={"Zen Mode"}
+          settingsKey="useZenMode"
+          inputType={"switch"}
+        />
       </Stack>
     </>
   );
