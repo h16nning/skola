@@ -17,10 +17,14 @@ import LearnViewFooter from "./LearnViewFooter";
 import LearnViewHeader, { stopwatchResult } from "./LearnViewHeader";
 import LearnViewCurrentCardStateIndicator from "../LearnViewCurrentCardStateIndicator/LearnViewCurrentCardStateIndicator";
 import { useLearning } from "../../../logic/learn";
-import { useDebouncedValue } from "@mantine/hooks";
+import { useDebouncedValue, useFullscreen } from "@mantine/hooks";
 import { useNavigate } from "react-router-dom";
+import { useSetting } from "../../../logic/Settings";
 
 function LearnView() {
+  const { toggle, fullscreen } = useFullscreen();
+  const [useZenMode] = useSetting("useZenMode");
+
   const navigate = useNavigate();
   const [deck, isReady, params] = useDeckFromUrl();
   const [cardSet, setCardSet] = useState<Card<CardType>[] | null>(null);
@@ -32,6 +36,9 @@ function LearnView() {
   >(undefined);
 
   useEffect(() => {
+    if (useZenMode && !fullscreen) {
+      toggle();
+    }
     getCardsOf(deck).then((cards) => setCardSet(cards ?? null));
   }, [deck]);
 
@@ -65,6 +72,9 @@ function LearnView() {
   useEffect(() => {
     if (controller.learningIsFinished) {
       stopwatchResult.pause();
+      if (fullscreen) {
+        toggle();
+      }
     }
   }, [controller.learningIsFinished]);
 

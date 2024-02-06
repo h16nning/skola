@@ -17,6 +17,7 @@ export interface SettingsValues {
   showListOptionInEditor: boolean;
   showCodeOptionInEditor: boolean;
   showLinkOptionInEditor: boolean;
+  useZenMode: boolean;
 }
 
 export const defaultSettings: SettingsValues = {
@@ -29,6 +30,7 @@ export const defaultSettings: SettingsValues = {
   showListOptionInEditor: true,
   showCodeOptionInEditor: true,
   showLinkOptionInEditor: true,
+  useZenMode: false,
 };
 
 export function useSetting<T extends keyof SettingsValues>(
