@@ -1,33 +1,26 @@
 .stat {
   padding: 0.75rem;
   border-radius: var(--mantine-radius-sm);
-  position: relative;
-}
-
-.statBackground {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border: 1px solid;
-  border-radius: var(--mantine-radius-sm);
-  opacity: light-dark(0.2, 0.2);
-  z-index: 0;
+  width: 100%;
+  max-width: 7rem;
 }
 
 .statIcon {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1rem;
+  height: 1rem;
+  min-width: 1rem;
+  min-height: 1rem;
+  stroke-width: 1.7;
   opacity: initial;
 }
 
 .statValue {
   font-weight: 700;
   font-size: var(--mantine-font-size-md);
+
 }
 
 .statName {
-  font-size: var(--mantine-font-size-xs);
-  font-weight: 400;
+  font-weight: 500;
+  font-size: var(--mantine-font-size-sm);
 }

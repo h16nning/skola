@@ -52,7 +52,7 @@ function FinishedLearningView({
         <Text style={{ textAlign: "center" }}>
           You learned all cards for today of this deck.
         </Text>
-        <Group>
+        <Group wrap="nowrap">
           <Stat
             name="Duration"
             value={

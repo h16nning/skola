@@ -1,6 +1,7 @@
 {
   "home": {
-    "welcome-back": "Welcome back, {{name}}!"
+    "welcome": "Welcome!",
+    "welcome-user": "Welcome back, {{name}}!"
   },
   "deck": {
     "new-deck-button": "New Deck",

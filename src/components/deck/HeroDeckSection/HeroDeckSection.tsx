@@ -70,8 +70,8 @@ function HeroDeckSection({
             </Button>
           </Stack>
         ) : (
-          <Stack gap="md" align="center">
-            <Group>
+          <Stack gap="md" align="center" w="100%">
+            <Group wrap="nowrap" w="100%" justify="center">
               <Stat
                 value={stats.newCards ?? 0}
                 name={t("deck.new-cards-label")}

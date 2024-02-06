@@ -1,5 +1,8 @@
 {
-  "home": { "welcome-back": "Wilkommen zurück, {{name}}!" },
+  "home": {
+    "welcome": "Willkomen!",
+    "welcome-user": "Willkommen zurück, {{name}}!"
+  },
   "deck": {
     "new-deck-button": "Neues Deck",
     "review-cards-label": "Wiederholen",

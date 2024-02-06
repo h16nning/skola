@@ -1,6 +1,7 @@
 {
   "home": {
-    "welcome-back": "Välkommen tillbaka, {{name}}!"
+    "welcome": "Välkommen",
+    "welcome-user": "Välkommen tillbaka, {{name}}!"
   },
   "deck": {
     "new-deck": "Ny bunt",
