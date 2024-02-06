@@ -36,9 +36,13 @@ function LearnView() {
   >(undefined);
 
   useEffect(() => {
-    if (useZenMode && !fullscreen) {
+    toggle();
+    return () => {
       toggle();
-    }
+    };
+  }, []);
+
+  useEffect(() => {
     getCardsOf(deck).then((cards) => setCardSet(cards ?? null));
   }, [deck]);
 
@@ -72,9 +76,6 @@ function LearnView() {
   useEffect(() => {
     if (controller.learningIsFinished) {
       stopwatchResult.pause();
-      if (fullscreen) {
-        toggle();
-      }
     }
   }, [controller.learningIsFinished]);
 

@@ -38,7 +38,11 @@ export default function HomeView({
               <IconMenu2 />
             </ActionIcon>
           )}
-          <Title order={3}>{t("home.welcome-back", { name: userName })}</Title>
+          <Title order={3}>
+            {t(userName ? "home.welcome-user" : "home.welcome", {
+              name: userName,
+            })}
+          </Title>
         </Group>
 
         <Stack gap="sm" align="flex-end" w="100%">

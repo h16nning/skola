@@ -22,32 +22,18 @@ export default function Stat({
     <Box
       component="div"
       className={classes.stat}
-      miw={width ?? "6rem"}
       style={{
         color: `var(--mantine-color-${color}-${scheme === "light" ? 9 : 2})`,
+        backgroundColor: `var(--mantine-color-${color}-light)`,
       }}
     >
-      <Box
-        component="div"
-        className={classes.statBackground}
-        style={{
-          backgroundColor: `var(--mantine-color-${color}-${
-            scheme === "light" ? 4 : 7
-          })`,
-          borderColor: `var(--mantine-color-${color}-${
-            scheme === "light" ? 5 : 5
-          })`,
-        }}
-      />
-      <Group align="center" gap="xs">
-        <Icon className={classes.statIcon} />
-        <Stack gap="0rem" align="start">
-          <Text className={classes.statValue}>{value}</Text>
-          <Text className={classes.statName} opacity="0.7">
-            {name}
-          </Text>
-        </Stack>
-      </Group>
+      <Stack gap="0" w="100%" align="center">
+        <Text className={classes.statValue}>{value}</Text>
+        <Group align="center" gap="4px" wrap="nowrap" opacity={0.8}>
+          <Icon className={classes.statIcon} />
+          <Text className={classes.statName}>{name}</Text>
+        </Group>
+      </Stack>
     </Box>
   );
 }
