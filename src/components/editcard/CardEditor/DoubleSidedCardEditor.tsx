@@ -1,4 +1,4 @@
-import classes from "./DoublieSidedCardEditor.module.css";
+import classes from "./DoubleSidedCardEditor.module.css";
 import React, { useCallback } from "react";
 import { Stack, Text, useMantineTheme } from "@mantine/core";
 import CardEditor, { useCardEditor } from "./CardEditor";
