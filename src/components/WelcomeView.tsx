@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import {
+  Alert,
   Anchor,
   Button,
   Card,
@@ -30,15 +31,10 @@ export default function WelcomeView() {
             An open-source and free flash card learning app in your browser.
           </Text>
         </Stack>
-        <Card withBorder>
-          <Group gap="md" align="center" wrap="nowrap">
-            <IconInfoCircle />
-            <Text fz="sm">
-              Please note that this app is still in early development. You may
-              encounter bugs and missing features.
-            </Text>
-          </Group>
-        </Card>
+        <Alert color="gray" icon={<IconInfoCircle />}>
+          Please note that this app is still in early development. You may
+          encounter bugs and missing features.
+        </Alert>
         <Stack gap="xs">
           <Title order={3}>About the project</Title>
           <Text fz="sm">

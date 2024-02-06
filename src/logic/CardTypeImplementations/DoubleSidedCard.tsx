@@ -6,6 +6,7 @@ import { CardTypeManager, EditMode } from "../CardTypeManager";
 import {
   createSharedValue,
   getSharedValue,
+  registerReferencesToSharedValue,
   setSharedValue,
   useSharedValue,
 } from "../sharedvalue";
@@ -99,5 +100,9 @@ export async function createDoubleSidedCardPair(params: {
     frontReferenceId: referenceId2,
     backReferenceId: referenceId1,
   });
+  await Promise.all([
+    registerReferencesToSharedValue(referenceId1, [card1.id, card2.id]),
+    registerReferencesToSharedValue(referenceId2, [card1.id, card2.id]),
+  ]);
   return [card1, card2];
 }
