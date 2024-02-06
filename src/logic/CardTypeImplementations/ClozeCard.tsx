@@ -1,13 +1,16 @@
+import React from "react";
+import { Text } from "@mantine/core";
 import { Card, CardType, createCardSkeleton, updateCard } from "../card";
 import { Deck } from "../deck";
-import ClozeCardEditor from "../../components/editcard/CardEditor/ClozeCardEditor";
-import React from "react";
 import { CardTypeManager, EditMode } from "../CardTypeManager";
 import {
   createSharedValue,
   getSharedValue,
   setSharedValue,
+  useSharedValue,
 } from "../sharedvalue";
+import ClozeCardEditor from "../../components/editcard/CardEditor/ClozeCardEditor";
+import classes from "./ClozeCard.module.css";
 
 export type ClozeContent = {
   occlusionNumber: number;
@@ -48,15 +51,39 @@ export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
   },
 
   displayQuestion(card: Card<CardType.Cloze>) {
-    return "Cloze Card Occluded";
+    return <ClozeCardComponent occluded={true} card={card} />;
   },
   displayAnswer(card: Card<CardType.Cloze>) {
-    return "Cloze Card Answer";
+    return <ClozeCardComponent occluded={false} card={card} />;
   },
   editor(card: Card<CardType.Cloze> | null, deck: Deck, mode: EditMode) {
     return <ClozeCardEditor card={card} deck={deck} mode={mode} />;
   },
 };
+
+function ClozeCardComponent({
+  occluded,
+  card,
+}: { occluded: boolean; card: Card<CardType.Cloze> }) {
+  const sharedValue = useSharedValue(card.content.textReferenceId);
+  let finalText = sharedValue?.value ?? "";
+  if (occluded) {
+    finalText = finalText.replace(
+      new RegExp(`{{c${card.content.occlusionNumber}::((?!{{|}}).)*}}`, "g"),
+      `<span class="cloze-field"/>`
+    );
+  }
+  //Use replacer function to strip all cloze tags from {{cn::Text}} to Text regardless of occlusion number using replacer function
+  finalText = finalText.replace(/\{\{c\d::((?!\{\{|}}).)*\}\}/g, (match) =>
+    match.slice(6, -2)
+  );
+  return (
+    <Text
+      dangerouslySetInnerHTML={{ __html: finalText }}
+      className={classes.clozeCard}
+    ></Text>
+  );
+}
 
 export async function createClozeCardSet(params: {
   text: string;

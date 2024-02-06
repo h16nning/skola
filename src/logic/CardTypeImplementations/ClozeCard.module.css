@@ -1,0 +1,10 @@
+.clozeCard :global(.cloze-field) {
+    display: inline-block;
+    width: 4rem;
+    height: calc(var(--mantine-line-height-sm) * var(--mantine-font-size-md));
+    border-top-right-radius: var(--mantine-radius-sm);
+    border-top-left-radius: var(--mantine-radius-sm);
+    background-color: var(--mantine-primary-color-light);
+    border-bottom: solid 2px var(--mantine-primary-color-filled);
+
+}
