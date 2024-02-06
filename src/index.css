@@ -25,7 +25,7 @@ body,
   height: 100%;
 }
 
-button .tabler-icon, input .tabler-icon: {
+button .tabler-icon, input .tabler-icon {
   stroke-width: 1.5px;
   width: 1.2rem;
 }

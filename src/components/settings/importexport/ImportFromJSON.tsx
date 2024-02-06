@@ -1,8 +1,8 @@
-import { Button, FileInput, Select, Stack, Text } from "@mantine/core";
+import { Button, Alert, Select, Stack, Text } from "@mantine/core";
 import React, { useState } from "react";
 import { ImportFromSourceProps, ImportStatus } from "./ImportModal";
 import FileImport from "./FileImport";
-import { IconChevronRight } from "@tabler/icons-react";
+import { IconChevronRight, IconInfoCircle } from "@tabler/icons-react";
 import ImportButton from "./ImportButton";
 import { Deck, getDeck, newDeck } from "../../../logic/deck";
 import { newCard } from "../../../logic/card";
@@ -26,11 +26,11 @@ export default function ImportFromJSON({
     <Stack align="start">
       {step === "selectFile" || !file ? (
         <>
-          <Text fz="sm">
-            By this you can import decks from JSON such as those exportable
-            using CrowdAnki. Please note, that there is only basic options and
-            no media support.
-          </Text>
+          <Alert color="gray" icon={<IconInfoCircle />}>
+            Here you can import decks from JSON such as those exportable using
+            CrowdAnki. Please note, that there is only basic options and no
+            media support.
+          </Alert>
 
           <FileImport
             file={file}

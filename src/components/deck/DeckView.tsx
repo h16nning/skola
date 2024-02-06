@@ -24,7 +24,7 @@ function DeckView() {
 
   useScrollResetOnLocationChange();
 
-  useDocumentTitle(deck?.name ? deck?.name : "Super Anki");
+  useDocumentTitle(deck?.name ? deck?.name : "Skola");
   if (isDeckReady && !deck) {
     return <MissingObject />;
   }
