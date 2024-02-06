@@ -12,13 +12,14 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
   const navigate = useNavigate();
 
   const [nameValue, setNameValue] = useState<string>("");
+  const [descriptionValue, setDescriptionValue] = useState<string>("");
   const [addingDeck, setAddingDeck] = useState<boolean>(false);
   const [status, setStatus] = useState<string | null>(null);
 
   async function tryAddDeck() {
     setAddingDeck(true);
     try {
-      const id = await newDeck(nameValue, superDeck);
+      const id = await newDeck(nameValue, superDeck, descriptionValue);
       setNameValue("");
       setOpened(false);
       navigate("/deck/" + id);
@@ -27,6 +28,7 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
     }
     setAddingDeck(false);
     setNameValue("");
+    setDescriptionValue("");
   }
 
   return (
@@ -43,6 +45,13 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
           label="Name"
           value={nameValue}
           onChange={(e) => setNameValue(e.currentTarget.value)}
+        />
+        <TextInput
+          placeholder="Optional"
+          data-autofocus
+          label="Description"
+          value={descriptionValue}
+          onChange={(e) => setDescriptionValue(e.currentTarget.value)}
         />
         {status ? <Text>{status}</Text> : <></>}
         <Group justify="flex-end">
