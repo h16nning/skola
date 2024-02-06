@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ActionIcon, Button, Group, Stack, Title } from "@mantine/core";
+import { ActionIcon, Button, Group, Stack, Title, Text } from "@mantine/core";
 import SubDeckSection from "./SubDeckSection";
 import { IconChevronLeft, IconPlus } from "@tabler/icons-react";
 import DeckMenu from "./DeckMenu";
@@ -77,7 +77,11 @@ function DeckView() {
         </Group>
 
         {deck && deck.description && (
-          <div dangerouslySetInnerHTML={{ __html: deck.description }} />
+          <Text
+            fz="sm"
+            c="dimmed"
+            dangerouslySetInnerHTML={{ __html: deck.description }}
+          ></Text>
         )}
         <Stack gap="xs" align="end">
           <Button

@@ -73,7 +73,6 @@ function ClozeCardComponent({
       `<span class="cloze-field"/>`
     );
   }
-  //Use replacer function to strip all cloze tags from {{cn::Text}} to Text regardless of occlusion number using replacer function
   finalText = finalText.replace(/\{\{c\d::((?!\{\{|}}).)*\}\}/g, (match) =>
     match.slice(6, -2)
   );
@@ -81,7 +80,7 @@ function ClozeCardComponent({
     <Text
       dangerouslySetInnerHTML={{ __html: finalText }}
       className={classes.clozeCard}
-    ></Text>
+    />
   );
 }
 
