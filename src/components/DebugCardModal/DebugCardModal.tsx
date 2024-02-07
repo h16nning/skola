@@ -1,5 +1,5 @@
 import classes from "./DebugCardModal.module.css";
-import React from "react";
+import React, { Fragment } from "react";
 import {
   Anchor,
   Button,
@@ -79,7 +79,7 @@ function DebugCardModal({ opened, setOpened, card }: DebugCardModalProps) {
                   <th>History</th>
                 </thead>
                 {card.history.map((repetition) => (
-                  <>
+                  <Fragment key={repetition.date.toISOString()}>
                     <tr>
                       <th>Date: </th>
                       <td>
@@ -96,7 +96,7 @@ function DebugCardModal({ opened, setOpened, card }: DebugCardModalProps) {
                     <tr>
                       <Space h="xs" />
                     </tr>
-                  </>
+                  </Fragment>
                 ))}
               </tbody>
             </table>
