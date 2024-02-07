@@ -1,28 +1,41 @@
 {
-  "home": {
-    "welcome": "Välkommen",
-    "welcome-user": "Välkommen tillbaka, {{name}}!"
-  },
   "deck": {
-    "new-deck": "Ny bunt",
-    "review-cards-label": "Repetera",
+    "review-cards-label_one": "",
+    "review-cards-label_other": "",
+    "new-cards-label_one": "",
+    "new-cards-label_other": "",
+    "learning-cards-label_one": "",
+    "learning-cards-label_other": "",
     "new-cards-label": "Nya",
-    "learning-cards-label": "Plugga"
+    "learning-cards-label": "Plugga",
+    "review-cards-label": "Repetera",
+    "new-deck-button": ""
   },
   "settings": {
+    "about": {
+      "description": "",
+      "title": "Om Skola"
+    },
     "general": {
-      "title": "General",
       "name": "Namn",
       "name-description": "This name will be used to customize the user experience.",
+      "enable-developer-mode": "Aktivera utvecklarläge",
+      "enable-developer-mode-description": "Visa utvecklarverktyg för att inspektera webbsidor och aktivera utvecklarverktyg i appen.",
       "language": "Språk",
       "language-description": "Språk som används i gränssnittet.",
-      "enable-developer-mode": "Aktivera utvecklarläge",
-      "enable-developer-mode-description": "Visa utvecklarverktyg för att inspektera webbsidor och aktivera utvecklarverktyg i appen."
+      "title": "General"
     },
-    "appearance": { "title": "Utseende" },
-    "editing": { "title": "Redigering" },
-    "database": { "title": "Databas" },
-    "about": { "title": "Om Skola" },
-    "developer": { "title": "Utvecklare" }
+    "appearance": {
+      "title": "Utseende"
+    },
+    "editing": {
+      "title": "Redigering"
+    },
+    "database": {
+      "title": "Databas"
+    },
+    "developer": {
+      "title": "Utvecklare"
+    }
   }
 }

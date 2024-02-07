@@ -30,21 +30,21 @@ export default function DeckPreview({ deck, i }: DeckPreviewProps) {
           <Group gap="xs" wrap="nowrap">
             {stats.dueCards && stats.dueCards > 0 ? (
               <Badge variant="dot" color="blue">
-                {stats.dueCards + " " + t("deck.review-cards-label")}
+                {t("deck.review-cards-label", { count: stats.dueCards })}
               </Badge>
             ) : (
               <></>
             )}
             {stats.newCards && stats.newCards > 0 ? (
               <Badge variant="dot" color="grape">
-                {stats.newCards + " " + t("deck.new-cards-label")}
+                {t("deck.new-cards-label", { count: stats.newCards })}
               </Badge>
             ) : (
               <></>
             )}
             {stats.learningCards && stats.learningCards > 0 ? (
               <Badge variant="dot" color="orange">
-                {stats.learningCards + " " + t("deck.learning-cards-label")}
+                {t("deck.learning-cards-label", { count: stats.learningCards })}
               </Badge>
             ) : (
               <></>
