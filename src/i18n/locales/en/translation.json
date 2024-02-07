@@ -1,31 +1,41 @@
 {
-  "home": {
-    "welcome": "Welcome!",
-    "welcome-user": "Welcome back, {{name}}!"
-  },
   "deck": {
-    "new-deck-button": "New Deck",
-    "review-cards-label": "Review",
-    "new-cards-label": "New",
-    "learning-cards-label": "Learning"
+    "review-cards-label_one": "1 Review",
+    "review-cards-label_other": "{{ count }} Review",
+    "new-cards-label_one": "1 New",
+    "new-cards-label_other": "{{ count }} New",
+    "learning-cards-label_one": "{{ count }} Learning",
+    "learning-cards-label_other": "{{ count }} Learning",
+    "new-cards-label": "{{ count }} New",
+    "learning-cards-label": "{{ count }} Learning",
+    "review-cards-label": "{{ count }} Review",
+    "new-deck-button": "New Deck"
   },
   "settings": {
+    "about": {
+      "description": "This program was made by a student from Germany studying medicine. Skola is in early development. You may encounter bugs. If you do, I'd be very pleased if you reported them on the git repository.",
+      "title": "About"
+    },
     "general": {
-      "title": "General",
       "name": "Name",
       "name-description": "This name will be used to customize the user experience.",
+      "enable-developer-mode": "Enable Developer Mode",
+      "enable-developer-mode-description": "This will enable additional options for debugging and creating custom plugins and themes.",
       "language": "Language",
       "language-description": "Set the language for the user interface.",
-      "enable-developer-mode": "Enable Developer Mode",
-      "enable-developer-mode-description": "This will enable additional options for debugging and creating custom plugins and themes."
+      "title": "General"
     },
-    "appearance": { "title": "Appearance" },
-    "editing": { "title": "Editing" },
-    "database": { "title": "Database" },
-    "about": {
-      "title": "About",
-      "description": "This program was made by a student from Germany studying medicine. Skola is in early development. You may encounter bugs. If you do, I'd be very pleased if you reported them on the git repository."
+    "appearance": {
+      "title": "Appearance"
     },
-    "developer": { "title": "Developer" }
+    "editing": {
+      "title": "Editing"
+    },
+    "database": {
+      "title": "Database"
+    },
+    "developer": {
+      "title": "Developer"
+    }
   }
 }
