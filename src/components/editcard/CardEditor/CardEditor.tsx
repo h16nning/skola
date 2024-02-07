@@ -1,6 +1,6 @@
 import classes from "./CardEditor.module.css";
 import React from "react";
-import { Editor, EditorEvents, useEditor } from "@tiptap/react";
+import { Editor, EditorOptions, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
 import Underline from "@tiptap/extension-underline";
@@ -24,7 +24,7 @@ interface CardEditorProps {
 
 export function useCardEditor(props: {
   content: string;
-  onUpdate?: (props: EditorEvents["update"]) => void;
+  onUpdate?: EditorOptions["onUpdate"];
   extensions?: any[];
 }) {
   return useEditor(
@@ -45,7 +45,7 @@ export function useCardEditor(props: {
         ...(props.extensions ?? []),
       ],
       content: props.content,
-      onUpdate: props.onUpdate,
+      onUpdate: props.onUpdate || (() => {}), // tiptap default
     },
     [props.content]
   );
