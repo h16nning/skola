@@ -90,9 +90,9 @@ function NormalCardEditor({ card, deck, mode }: NormalCardEditorProps) {
     ],
   ]);
 
-  const frontEditor = useCardEditor(card?.content.front ?? "");
+  const frontEditor = useCardEditor({ content: card?.content.front ?? "" });
 
-  const backEditor = useCardEditor(card?.content.back ?? "");
+  const backEditor = useCardEditor({ content: card?.content.back ?? "" });
 
   const clear = useCallback(() => {
     frontEditor?.commands.setContent("");

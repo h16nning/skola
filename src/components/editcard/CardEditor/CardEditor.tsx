@@ -1,6 +1,6 @@
 import classes from "./CardEditor.module.css";
 import React from "react";
-import { Editor, useEditor } from "@tiptap/react";
+import { Editor, EditorEvents, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
 import Underline from "@tiptap/extension-underline";
@@ -22,7 +22,11 @@ interface CardEditorProps {
   controls?: React.ReactNode;
 }
 
-export function useCardEditor(content: string, ...extensions: any[]) {
+export function useCardEditor(props: {
+  content: string;
+  onUpdate?: (props: EditorEvents["update"]) => void;
+  extensions?: any[];
+}) {
   return useEditor(
     {
       extensions: [
@@ -38,11 +42,12 @@ export function useCardEditor(content: string, ...extensions: any[]) {
         Image.configure({
           allowBase64: true,
         }),
-        ...(extensions ?? []),
+        ...(props.extensions ?? []),
       ],
-      content: content,
+      content: props.content,
+      onUpdate: props.onUpdate,
     },
-    [content]
+    [props.content]
   );
 }
 
@@ -107,7 +112,9 @@ function CardEditor({ editor, controls, className }: CardEditorProps) {
               <RichTextEditor.Unlink tabIndex={-1} />
             </RichTextEditor.ControlsGroup>
           )}
-          {controls}
+          <RichTextEditor.ControlsGroup>
+            {controls}
+          </RichTextEditor.ControlsGroup>
         </Box>
 
         <RichTextEditor.ControlsGroup>
