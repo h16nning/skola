@@ -28,7 +28,7 @@ function NewCardsView() {
   }
 
   return (
-    <Stack w="600px" key="stack">
+    <Stack w="100%" maw="600px" key="stack">
       <Group justify="space-between">
         <Group gap="xs" align="end">
           <ActionIcon onClick={() => navigate(-1)}>
