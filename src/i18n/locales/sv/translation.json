@@ -1,8 +1,14 @@
 {
   "deck": {
-    "review-cards-label": "Repetera",
+    "review-cards-label_one": "",
+    "review-cards-label_other": "",
+    "new-cards-label_one": "",
+    "new-cards-label_other": "",
+    "learning-cards-label_one": "",
+    "learning-cards-label_other": "",
     "new-cards-label": "Nya",
     "learning-cards-label": "Plugga",
+    "review-cards-label": "Repetera",
     "new-deck-button": ""
   },
   "settings": {
