@@ -1,8 +1,14 @@
 {
   "deck": {
-    "review-cards-label": "Wiederholen",
+    "review-cards-label_one": "",
+    "review-cards-label_other": "",
+    "new-cards-label_one": "",
+    "new-cards-label_other": "",
+    "learning-cards-label_one": "",
+    "learning-cards-label_other": "",
     "new-cards-label": "Neu",
     "learning-cards-label": "Lernen",
+    "review-cards-label": "Wiederholen",
     "new-deck-button": "Neues Deck"
   },
   "settings": {
