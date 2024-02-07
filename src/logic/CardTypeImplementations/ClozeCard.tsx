@@ -42,10 +42,10 @@ export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
     return getSharedValue(card.content.textReferenceId)
       .then(
         (sharedValue) =>
-          "[" +
-            card.content.occlusionNumber +
-            "] " +
-            sharedValue?.value.replace(/<[^>]*>/g, "") ?? "error"
+          `[${card.content.occlusionNumber}]${sharedValue?.value.replace(
+            /<[^>]*>/g,
+            ""
+          )}`
       )
       .catch(() => "error");
   },
