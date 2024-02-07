@@ -8,6 +8,12 @@
 .list {
   flex-wrap: nowrap;
   overflow-x: auto;
+
+  scrollbar-width: 0; /* Firefox */
+  &::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+  }
+  
   &:after {
     content: "";
     position: absolute;

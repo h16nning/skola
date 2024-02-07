@@ -34,7 +34,7 @@ export default function SettingsView() {
   const [developerMode] = useSetting("developerMode");
 
   return (
-    <Stack gap="xl" w="600px">
+    <Stack gap="xl" w="100%" maw="600px">
       <Group>
         <ActionIcon onClick={() => navigate(-1)}>
           <IconChevronLeft />
