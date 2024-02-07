@@ -77,7 +77,7 @@ export default function ClozeCardEditor({
   const editor = useCardEditor({
     content: useSharedValue(card?.content.textReferenceId ?? "")?.value ?? "",
     extensions: [Gap],
-    onUpdate: ({ editor }: EditorEvents["update"]) => {
+    onUpdate: ({ editor }) => {
       if (editor?.getHTML().valueOf() !== editorContent.valueOf()) {
         setEditorContent(editor?.getHTML() ?? "");
       }
