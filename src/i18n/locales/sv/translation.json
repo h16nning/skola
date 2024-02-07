@@ -1,4 +1,8 @@
 {
+  "home": {
+    "welcome": "Welcome!",
+    "welcome-user": "Welcome back, {{name}}!"
+  },
   "deck": {
     "review-cards-label_one": "",
     "review-cards-label_other": "",

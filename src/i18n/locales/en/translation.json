@@ -1,14 +1,18 @@
 {
+  "home": {
+    "welcome": "Welcome!",
+    "welcome-user": "Welcome back, {{name}}!"
+  },
   "deck": {
     "review-cards-label_one": "1 Review",
     "review-cards-label_other": "{{ count }} Review",
     "new-cards-label_one": "1 New",
     "new-cards-label_other": "{{ count }} New",
-    "learning-cards-label_one": "{{ count }} Learning",
+    "learning-cards-label_one": "1 Learning",
     "learning-cards-label_other": "{{ count }} Learning",
-    "new-cards-label": "{{ count }} New",
-    "learning-cards-label": "{{ count }} Learning",
-    "review-cards-label": "{{ count }} Review",
+    "new-cards-label": "New",
+    "learning-cards-label": "Learning",
+    "review-cards-label": "Review",
     "new-deck-button": "New Deck"
   },
   "settings": {

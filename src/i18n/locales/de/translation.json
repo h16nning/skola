@@ -1,11 +1,15 @@
 {
+  "home": {
+    "welcome": "Willkomen!",
+    "welcome-user": "Willkommen zurück, {{name}}!"
+  },
   "deck": {
-    "review-cards-label_one": "",
-    "review-cards-label_other": "",
-    "new-cards-label_one": "",
-    "new-cards-label_other": "",
-    "learning-cards-label_one": "",
-    "learning-cards-label_other": "",
+    "review-cards-label_one": "1 Wiederholen",
+    "review-cards-label_other": "{{count}} Wiederholen",
+    "new-cards-label_one": "1 Neu",
+    "new-cards-label_other": "{{count}} Neue",
+    "learning-cards-label_one": "1 Lernen",
+    "learning-cards-label_other": "{{count}} Lernen",
     "new-cards-label": "Neu",
     "learning-cards-label": "Lernen",
     "review-cards-label": "Wiederholen",
