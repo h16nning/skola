@@ -14,7 +14,7 @@ This is an enthusiast's project currently only being worked on part-time by a si
 - Add flash cards to these decks
 - Cards have rich text content (html)
 - Cards can be renamed and deleted
-- Currently their is only card type ("Normal"). It has a front and a back side.
+- Card types: normal, double sided and cloze
 - Learning algorithm using spaced repetition (SM2)
 - A deck will show when cards in it need to be learned
 - Settings view
@@ -23,7 +23,8 @@ This is an enthusiast's project currently only being worked on part-time by a si
 
 #### What doesn't work (yet)?
 - Moving decks / cards
-- Other card types (at least cloze)
+- Image occlusion
+- Statistics
 
 #### Goals:
 - open source and free
