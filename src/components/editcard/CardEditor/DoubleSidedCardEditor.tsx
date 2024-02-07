@@ -76,13 +76,13 @@ function DoubleSidedCardEditor({
     ["mod+Enter", () => finish(mode, clear, deck, card, editor1, editor2)],
   ]);
 
-  const editor1 = useCardEditor(
-    useSharedValue(card?.content.frontReferenceId ?? "")?.value ?? ""
-  );
+  const editor1 = useCardEditor({
+    content: useSharedValue(card?.content.frontReferenceId ?? "")?.value ?? "",
+  });
 
-  const editor2 = useCardEditor(
-    useSharedValue(card?.content.backReferenceId ?? "")?.value ?? ""
-  );
+  const editor2 = useCardEditor({
+    content: useSharedValue(card?.content.backReferenceId ?? "")?.value ?? "",
+  });
 
   const clear = useCallback(() => {
     editor1?.commands.setContent("");

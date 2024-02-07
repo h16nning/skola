@@ -9,8 +9,8 @@ import classes from "./ClozeCardEditor.module.css";
 
 import { Button, Stack, useMantineTheme } from "@mantine/core";
 import { Mark } from "@tiptap/core";
-import { Editor, mergeAttributes } from "@tiptap/react";
-import { useCallback, useState } from "react";
+import { Editor, EditorEvents, mergeAttributes } from "@tiptap/react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import CardEditorFooter from "../CardEditorFooter";
 import {
   addFailed,
@@ -74,10 +74,29 @@ export default function ClozeCardEditor({
 }: ClozeCardEditorProps) {
   useHotkeys([["mod+Enter", () => {}]]);
   //fix sometime
-  const editor = useCardEditor(
-    useSharedValue(card?.content.textReferenceId ?? "")?.value ?? "",
-    Gap
+  const editor = useCardEditor({
+    content: useSharedValue(card?.content.textReferenceId ?? "")?.value ?? "",
+    extensions: [Gap],
+    onUpdate: ({ editor }: EditorEvents["update"]) => {
+      if (editor?.getHTML().valueOf() !== editorContent.valueOf()) {
+        setEditorContent(editor?.getHTML() ?? "");
+      }
+    },
+  });
+
+  const [editorContent, setEditorContent] = useState<string>(
+    editor?.getHTML() ?? ""
   );
+
+  const smallestAvailableOcclusionNumber = useMemo(() => {
+    const occlusionNumberSet = getOcclusionNumberSet(editorContent);
+    console.log(occlusionNumberSet);
+    for (let i = 1; i < 100; i++) {
+      if (!occlusionNumberSet.includes(i)) {
+        return i;
+      }
+    }
+  }, [editorContent]);
 
   const clear = useCallback(() => {
     editor?.commands.setContent("");
@@ -90,12 +109,20 @@ export default function ClozeCardEditor({
         editor={editor}
         className={classes}
         controls={
-          //not used right now, use ui control or remove later
           <RichTextEditor.Control
             tabIndex={-1}
             onClick={() => {
-              editor?.commands.toggleMark("gap", { group: Math.random() });
-              console.log(editor?.getHTML());
+              if (editor?.state.selection.from !== editor?.state.selection.to) {
+                const occludedText = `{{c${smallestAvailableOcclusionNumber}::${window.getSelection()}}}`;
+                editor?.commands.insertContent(occludedText);
+              } else {
+                editor?.commands.insertContent(
+                  `{{c${smallestAvailableOcclusionNumber}::}}`
+                );
+                editor?.commands.setTextSelection(
+                  editor?.state.selection.to - 2
+                );
+              }
             }}
           >
             <IconBracketsContain />
@@ -103,7 +130,7 @@ export default function ClozeCardEditor({
         }
       />
       <CardEditorFooter
-        finish={() => finish(mode, clear, deck, card, editor)}
+        finish={() => finish(mode, clear, deck, card, editorContent)}
         mode={mode}
       />
     </Stack>
@@ -115,7 +142,7 @@ function finish(
   clear: Function,
   deck: Deck,
   card: Card<CardType.Cloze> | null,
-  editor: Editor | null
+  editorContent: string
 ) {
   if (mode === "edit") {
     //ISSUE newly introduced cards through edit are not recognized
@@ -123,7 +150,7 @@ function finish(
       if (card) {
         ClozeCardUtils.update(
           {
-            text: editor?.getHTML() ?? "",
+            text: editorContent,
           },
           card
         );
@@ -133,12 +160,10 @@ function finish(
       saveFailed();
     }
   } else {
-    const occlusionNumberSet: number[] = getOcclusionNumberSet(
-      editor?.getHTML() ?? ""
-    );
+    const occlusionNumberSet: number[] = getOcclusionNumberSet(editorContent);
     try {
       createClozeCardSet({
-        text: editor?.getHTML() ?? "",
+        text: editorContent,
         occlusionNumberSet,
       }).then((cards) => newCards(cards, deck));
       clear();
@@ -150,12 +175,15 @@ function finish(
 }
 
 function getOcclusionNumberSet(text: string) {
-  const regex = /\{\{c\d::((?!\{\{|}}).)*\}\}/g;
+  const regex = /\{\{c(\d+)::((?!\{\{|}}).)*\}\}/g;
   const matches = text.match(regex);
-  const cardDigits = new Set<number>();
+  const cardNumbers = new Set<number>();
   matches?.forEach((match) => {
-    const digit = parseInt(match[3]);
-    cardDigits.add(digit);
+    const numberMatch = match.match(/c(\d+)::/);
+    if (numberMatch && numberMatch[1]) {
+      const number = parseInt(numberMatch[1]);
+      cardNumbers.add(number);
+    }
   });
-  return Array.from(cardDigits);
+  return Array.from(cardNumbers);
 }
