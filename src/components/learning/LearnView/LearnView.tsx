@@ -1,14 +1,8 @@
 import classes from "./LearnView.module.css";
 import React, { useCallback, useEffect, useState } from "react";
-import { Box, Center, Flex, Modal, Overlay } from "@mantine/core";
+import { Box, Center, Flex, Modal } from "@mantine/core";
 import { useDeckFromUrl } from "../../../logic/deck";
-import {
-  Card,
-  CardState,
-  CardType,
-  getCardsOf,
-  getStateOf,
-} from "../../../logic/card";
+import { getCardsOf } from "../../../logic/card";
 import MissingObject from "../../custom/MissingObject";
 import { getUtils } from "../../../logic/CardTypeManager";
 import { generalFail } from "../../custom/Notification/Notification";
@@ -20,51 +14,45 @@ import { useLearning } from "../../../logic/learn";
 import { useDebouncedValue, useFullscreen } from "@mantine/hooks";
 import { useNavigate } from "react-router-dom";
 import { useSetting } from "../../../logic/Settings";
+import { Rating } from "fsrs.js";
+import DebugCardTable from "../../DebugCardModal/DebugCardTable";
 
 function LearnView() {
   const { toggle, fullscreen } = useFullscreen();
-  const [useZenMode] = useSetting("useZenMode");
+  const [zenMode] = useSetting("useZenMode");
 
   const navigate = useNavigate();
   const [deck, isReady, params] = useDeckFromUrl();
-  const [cardSet, setCardSet] = useState<Card<CardType>[] | null>(null);
 
-  const controller = useLearning(cardSet, { learnAll: params === "all" });
+  const controller = useLearning(
+    {
+      querier: () => getCardsOf(deck),
+      dependencies: [deck],
+    },
+    { learnAll: params === "all", newToReviewRatio: 0.5 }
+  );
 
-  const [currentCardState, setCurrentCardState] = useState<
-    CardState | undefined
-  >(undefined);
-
+  //ZEN MODE
   useEffect(() => {
-    toggle();
-    return () => {
+    if (zenMode) {
       toggle();
+    }
+    return () => {
+      if (zenMode) {
+        toggle();
+      }
     };
   }, []);
 
-  useEffect(() => {
-    getCardsOf(deck).then((cards) => setCardSet(cards ?? null));
-  }, [deck]);
-
-  useEffect(() => {
-    if (controller.currentCard) {
-      setCurrentCardState(getStateOf(controller.currentCard));
-    } else {
-      setCurrentCardState(undefined);
-    }
-  }, [controller.currentCard]);
-
   const [showingAnswer, setShowingAnswer] = useState<boolean>(false);
-  const [debouncedLearningIsFinished] = useDebouncedValue(
-    controller.learningIsFinished,
-    1000
-  );
+  const [debouncedFinish] = useDebouncedValue(controller.isFinished, 1000);
 
   const answerButtonPressed = useCallback(
-    async (quality: number) => {
+    async (rating: Rating) => {
       try {
-        await controller.answerCard(quality);
+        await controller.answerCard(rating);
         setShowingAnswer(false);
+        controller.nextCard();
       } catch (error) {
         generalFail();
         console.log(error);
@@ -74,10 +62,10 @@ function LearnView() {
   );
 
   useEffect(() => {
-    if (controller.learningIsFinished) {
-      stopwatchResult.pause();
+    if (controller.isFinished) {
+      //stopwatchResult.pause();
     }
-  }, [controller.learningIsFinished]);
+  }, [controller.isFinished]);
 
   if (isReady && !deck) {
     return <MissingObject />;
@@ -92,7 +80,7 @@ function LearnView() {
       <Center>
         <Box component="div" className={classes.cardContainer}>
           <LearnViewCurrentCardStateIndicator
-            currentCardState={currentCardState}
+            currentCardModel={controller.currentCard?.model}
           />
           {!showingAnswer &&
             controller.currentCard &&
@@ -105,6 +93,7 @@ function LearnView() {
               controller.currentCard
             )}
         </Box>
+        <DebugCardTable card={controller.currentCard ?? undefined} />
       </Center>
       <LearnViewFooter
         controller={controller}
@@ -113,7 +102,7 @@ function LearnView() {
         setShowingAnswer={setShowingAnswer}
       />
       <Modal
-        opened={controller.learningIsFinished}
+        opened={controller.isFinished}
         onClose={() => navigate("/home")}
         fullScreen
         closeOnClickOutside={false}
@@ -122,7 +111,7 @@ function LearnView() {
         transitionProps={{ transition: "fade" }}
       >
         <FinishedLearningView
-          repetitionList={controller.repetitionList}
+          ratingsList={controller.ratingsList}
           time={stopwatchResult}
         />
       </Modal>

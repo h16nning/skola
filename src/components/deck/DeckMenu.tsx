@@ -15,7 +15,7 @@ import DangerousConfirmModal from "../custom/DangerousConfirmModal";
 import { useNavigate } from "react-router-dom";
 import RenameCardModal from "../editcard/RenameCardModal";
 import DebugDeckModal from "./DebugDeckModal";
-import { Card, CardsStats, CardType } from "../../logic/card";
+import { Card, CardType } from "../../logic/card";
 import { useSetting } from "../../logic/Settings";
 import ImportModal from "../settings/importexport/ImportModal";
 
@@ -24,7 +24,6 @@ interface DeckMenuProps {
   isDeckReady: boolean;
   cards?: Card<CardType>[];
   areCardsReady: boolean;
-  stats: CardsStats;
   setDeckOptionsOpened: Function;
 }
 
@@ -34,7 +33,6 @@ function DeckMenu({
   setDeckOptionsOpened,
   cards,
   areCardsReady,
-  stats,
 }: DeckMenuProps) {
   const navigate = useNavigate();
 
@@ -137,7 +135,6 @@ function DeckMenu({
           <DebugDeckModal
             deck={deck}
             cards={cards}
-            stats={stats}
             opened={debugModalOpened}
             setOpened={setDebugModalOpened}
           />

@@ -1,15 +1,18 @@
 import classes from "./LearnViewCurrentCardStateIndicator.module.css";
-import React from "react";
-import { CardState } from "../../../logic/card";
+import React, { useCallback } from "react";
 import { Group, Text, useMantineTheme } from "@mantine/core";
+import { Card as Model } from "fsrs.js";
 import {
+  IconBook,
+  IconCircleArrowUpRight,
   IconInfoCircle,
   IconSparkles,
   TablerIconsProps,
 } from "@tabler/icons-react";
+import { State } from "fsrs.js";
 
 interface LearnViewCurrentCardStateIndicatorProps {
-  currentCardState: CardState | undefined;
+  currentCardModel: Model | undefined;
 }
 
 function Indicator({
@@ -45,21 +48,36 @@ function Indicator({
 }
 
 export default function LearnViewCurrentCardStateIndicator({
-  currentCardState,
+  currentCardModel,
 }: LearnViewCurrentCardStateIndicatorProps) {
-  if (currentCardState === undefined) {
+  if (currentCardModel === undefined) {
     return null;
   }
-  return {
-    new: <Indicator color="grape" icon={IconSparkles} text="New card" />,
-    learned: (
-      <Indicator
-        color="blue"
-        icon={IconInfoCircle}
-        text="You already know this card"
-      />
-    ),
-    learning: null,
-    due: null,
-  }[currentCardState];
+  const indicator = useCallback(() => {
+    if (currentCardModel.state === State.New) {
+      return <Indicator color="grape" icon={IconSparkles} text="New card" />;
+    } else if (
+      currentCardModel.state === State.Learning ||
+      currentCardModel.state === State.Relearning
+    ) {
+      return (
+        <Indicator
+          color="orange"
+          icon={IconCircleArrowUpRight}
+          text="Learn card"
+        />
+      );
+    } else if (
+      currentCardModel.state === State.Review &&
+      currentCardModel.due <= new Date(Date.now())
+    ) {
+      return <Indicator color="blue" icon={IconBook} text="Review card" />;
+    } else {
+      return (
+        <Indicator color="gray" icon={IconInfoCircle} text="Already learned" />
+      );
+    }
+  }, [currentCardModel]);
+
+  return indicator();
 }
