@@ -120,6 +120,15 @@ export function useLearning(
         nextCard();
       }
     }
+    if (
+      timeCriticalCards.length +
+        newCards.length +
+        toReviewCards.length +
+        learnedCards.length >
+      0
+    ) {
+      setIsFinished(false);
+    }
   }, [
     providedCards,
     currentCard,
@@ -131,6 +140,7 @@ export function useLearning(
 
   //Tries to set currentCard to the next card
   const nextCard = useCallback(() => {
+    if (isFinished) return;
     //If there are time critical cards that are due, set the first one as currentCard
     if (
       timeCriticalCards.length > 0 &&
@@ -167,14 +177,7 @@ export function useLearning(
     } else {
       setIsFinished(true);
     }
-  }, [
-    timeCriticalCards,
-    newCards,
-    toReviewCards,
-    learnedCards,
-    options,
-    setCurrentCard,
-  ]);
+  }, [timeCriticalCards, newCards, toReviewCards, learnedCards, options]);
 
   //Providing information about how all 4 ratings would affect the current card
   //Shown on buttons
@@ -190,7 +193,6 @@ export function useLearning(
   const answer = useCallback(
     (rating: Rating) => {
       if (currentCard && currentCardRepeatInfo) {
-        console.log(currentCardRepeatInfo[rating]);
         updateCardModel(currentCard, currentCardRepeatInfo[rating].card);
         if (currentCardRepeatInfo[rating].card.scheduled_days === 0) {
           setTimeCriticalCards((tcCards) =>
@@ -199,8 +201,8 @@ export function useLearning(
               { ...currentCard, model: currentCardRepeatInfo[rating].card },
             ].sort((a, b) => a.model.due.getTime() - b.model.due.getTime())
           );
-          setRatingsList((rList) => [...rList, rating]);
         }
+        setRatingsList((rList) => [...rList, rating]);
       } else {
         throw new Error("Card or cardModelInfo is missing");
       }
@@ -225,17 +227,17 @@ export function useLearning(
   };
 }
 
-//POSSIBLY NOT ACCURATE | NOT REVIEWED AGAIN AFTER #33
-export function useRepetitionAccuracy(ratingsList: number[]): number | null {
-  const [accuracy, setAccuracy] = useState<number | null>(null);
-
-  useEffect(() => {
+export function useRepetitionAccuracy(ratingsList: number[]): number {
+  return useMemo(() => {
     if (ratingsList.length !== 0) {
       let sum = 0;
-      ratingsList.forEach((rating) => (sum += rating / Rating.Good));
-      setAccuracy(Math.round((sum / ratingsList.length) * 1000) / 10);
+      ratingsList.forEach((rating) => {
+        return (sum += (rating - 1) / 2);
+      });
+      return Math.round((sum / ratingsList.length) * 1000) / 10;
+    } else {
+      console.log("No ratings available");
+      return NaN;
     }
   }, [ratingsList]);
-
-  return accuracy;
 }

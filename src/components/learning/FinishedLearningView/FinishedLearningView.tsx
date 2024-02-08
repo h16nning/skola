@@ -1,5 +1,4 @@
 import classes from "./FinishedLearningView.module.css";
-import React, { useEffect } from "react";
 import {
   Button,
   Center,

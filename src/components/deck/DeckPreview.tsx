@@ -30,7 +30,7 @@ export default function DeckPreview({ deck, i }: DeckPreviewProps) {
           <Group gap="xs" wrap="nowrap">
             {states.review > 0 ? (
               <Badge variant="dot" color="blue">
-                {t("deck.review-cards-label", { count: -1 })}
+                {t("deck.review-cards-label", { count: states.review })}
               </Badge>
             ) : (
               <></>

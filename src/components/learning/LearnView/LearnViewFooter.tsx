@@ -17,20 +17,26 @@ function LearnViewFooter({
   showingAnswer,
   setShowingAnswer,
 }: LearnViewFooterProps) {
-  useHotkeys([
-    ["1", () => answer(Rating.Again)],
-    ["2", () => answer(Rating.Hard)],
-    ["3", () => answer(Rating.Good)],
-    ["4", () => answer(Rating.Easy)],
-    [
-      "Space",
-      () => (!showingAnswer ? setShowingAnswer(true) : answer(Rating.Good)),
-    ],
-    [
-      "Enter",
-      () => (!showingAnswer ? setShowingAnswer(true) : answer(Rating.Good)),
-    ],
-  ]);
+  useHotkeys(
+    !controller.isFinished
+      ? [
+          ["1", () => answer(Rating.Again)],
+          ["2", () => answer(Rating.Hard)],
+          ["3", () => answer(Rating.Good)],
+          ["4", () => answer(Rating.Easy)],
+          [
+            "Space",
+            () =>
+              !showingAnswer ? setShowingAnswer(true) : answer(Rating.Good),
+          ],
+          [
+            "Enter",
+            () =>
+              !showingAnswer ? setShowingAnswer(true) : answer(Rating.Good),
+          ],
+        ]
+      : []
+  );
 
   return (
     <Group className={classes.footerContainer} justify="center">
