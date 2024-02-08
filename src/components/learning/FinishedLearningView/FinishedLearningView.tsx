@@ -23,25 +23,22 @@ import Stat from "../../custom/Stat/Stat";
 import { useRepetitionAccuracy } from "../../../logic/learn";
 
 interface FinishedLearningViewProps {
-  repetitionList: number[];
+  ratingsList: number[];
   time: StopwatchResult;
 }
 
 function FinishedLearningView({
-  repetitionList,
+  ratingsList,
   time,
 }: FinishedLearningViewProps) {
   const navigate = useNavigate();
   const [name] = useSetting("name");
 
-  const accuracy = useRepetitionAccuracy(repetitionList);
+  const accuracy = useRepetitionAccuracy(ratingsList);
 
   useHotkeys([["Space", () => navigate("/home")]]);
   useHotkeys([["Enter", () => navigate("/home")]]);
 
-  useEffect(() => {
-    console.log(classes.tropyIcon);
-  }, []);
   return (
     <Center>
       <Stack gap="xl" align="center" pt="xl">
@@ -71,7 +68,7 @@ function FinishedLearningView({
           />
           <Stat
             name="Repetitions"
-            value={repetitionList.length}
+            value={ratingsList.length}
             icon={IconTallymarks}
             color="blue"
             width="7rem"

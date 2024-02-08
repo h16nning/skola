@@ -3,7 +3,7 @@ import React from "react";
 import { Deck } from "../../logic/deck";
 import { useNavigate } from "react-router-dom";
 import ListButton from "../custom/ListButton/ListButton";
-import { useCardsOf, useStatsOf } from "../../logic/card";
+import { useCardsOf, useSimplifiedStatesOf } from "../../logic/card";
 import { useTranslation } from "react-i18next";
 
 type DeckPreviewProps = {
@@ -15,7 +15,7 @@ export default function DeckPreview({ deck, i }: DeckPreviewProps) {
   const navigate = useNavigate();
   const [t] = useTranslation();
   const [cards] = useCardsOf(deck);
-  const stats = useStatsOf(cards);
+  const states = useSimplifiedStatesOf(cards);
 
   return (
     <ListButton
@@ -28,23 +28,25 @@ export default function DeckPreview({ deck, i }: DeckPreviewProps) {
         <Group justify="space-between" w="100%" wrap="nowrap">
           <Text>{deck.name}</Text>
           <Group gap="xs" wrap="nowrap">
-            {stats.dueCards && stats.dueCards > 0 ? (
+            {states.review > 0 ? (
               <Badge variant="dot" color="blue">
-                {t("deck.review-cards-label", { count: stats.dueCards })}
+                {t("deck.review-cards-label", { count: -1 })}
               </Badge>
             ) : (
               <></>
             )}
-            {stats.newCards && stats.newCards > 0 ? (
+            {states.new > 0 ? (
               <Badge variant="dot" color="grape">
-                {t("deck.new-cards-label", { count: stats.newCards })}
+                {t("deck.new-cards-label", { count: states.new })}
               </Badge>
             ) : (
               <></>
             )}
-            {stats.learningCards && stats.learningCards > 0 ? (
+            {states.learning > 0 ? (
               <Badge variant="dot" color="orange">
-                {t("deck.learning-cards-label", { count: stats.learningCards })}
+                {t("deck.learning-cards-label", {
+                  count: states.learning,
+                })}
               </Badge>
             ) : (
               <></>

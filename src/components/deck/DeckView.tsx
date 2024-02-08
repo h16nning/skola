@@ -8,7 +8,7 @@ import { useDeckFromUrl, useSuperDecks } from "../../logic/deck";
 import DeckOptionsModal from "./DeckOptionsModal";
 import MissingObject from "../custom/MissingObject";
 import SuperDecksBreadcrumbs from "../SuperDecksBreadcrumbs/SuperDecksBreadcrumbs";
-import { useCardsOf, useStatsOf } from "../../logic/card";
+import { useCardsOf } from "../../logic/card";
 import HeroDeckSection from "./HeroDeckSection/HeroDeckSection";
 import { useDocumentTitle } from "@mantine/hooks";
 import { useScrollResetOnLocationChange } from "../../logic/ui";
@@ -20,7 +20,6 @@ function DeckView() {
   const [deck, isDeckReady] = useDeckFromUrl();
   const [superDecks] = useSuperDecks(deck);
   const [cards, areCardsReady] = useCardsOf(deck);
-  const stats = useStatsOf(cards);
 
   useScrollResetOnLocationChange();
 
@@ -71,7 +70,6 @@ function DeckView() {
             isDeckReady={isDeckReady}
             cards={cards}
             areCardsReady={areCardsReady}
-            stats={stats}
             setDeckOptionsOpened={setDeckOptionsOpened}
           />
         </Group>
@@ -96,7 +94,6 @@ function DeckView() {
             isDeckReady={isDeckReady}
             cards={cards}
             areCardsReady={areCardsReady}
-            stats={stats}
           />
         </Stack>
 
