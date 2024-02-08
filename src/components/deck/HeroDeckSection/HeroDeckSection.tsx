@@ -26,11 +26,12 @@ function HeroDeckSection({ deck, cards, areCardsReady }: HeroDeckSectionProps) {
   const navigate = useNavigate();
   const [t] = useTranslation();
 
+  const states = useSimplifiedStatesOf(cards);
+
   function isDone() {
-    return false; //FIXME 33
+    return states.new + states.learning + states.review === 0;
   }
 
-  const states = useSimplifiedStatesOf(cards);
   return (
     <Paper className={classes.container}>
       {areCardsReady &&
