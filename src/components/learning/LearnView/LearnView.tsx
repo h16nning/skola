@@ -10,7 +10,7 @@ import FinishedLearningView from "../FinishedLearningView/FinishedLearningView";
 import LearnViewFooter from "./LearnViewFooter";
 import LearnViewHeader, { stopwatchResult } from "./LearnViewHeader";
 import LearnViewCurrentCardStateIndicator from "../LearnViewCurrentCardStateIndicator/LearnViewCurrentCardStateIndicator";
-import { useLearning } from "../../../logic/learn";
+import { CardSorts, useLearning } from "../../../logic/learn";
 import { useDebouncedValue, useFullscreen } from "@mantine/hooks";
 import { useNavigate } from "react-router-dom";
 import { useSetting } from "../../../logic/Settings";
@@ -29,7 +29,11 @@ function LearnView() {
       querier: () => getCardsOf(deck),
       dependencies: [deck],
     },
-    { learnAll: params === "all", newToReviewRatio: 0.5 }
+    {
+      learnAll: params === "all",
+      newToReviewRatio: 0.5,
+      sort: CardSorts.bySortField(1),
+    }
   );
 
   //ZEN MODE

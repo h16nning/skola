@@ -13,6 +13,12 @@ export interface Deck {
   superDecks?: string[];
   cards: Array<string>;
   description?: string;
+  options: DeckOptions;
+}
+
+export interface DeckOptions {
+  newToReviewRatio: number;
+  dailyNewCards: number;
 }
 
 export async function newDeck(
@@ -46,6 +52,10 @@ export async function newDeck(
     subDecks: [],
     superDecks: superDecks,
     description: description,
+    options: {
+      newToReviewRatio: 0.5,
+      dailyNewCards: 25,
+    },
   });
   return uuid;
 }
