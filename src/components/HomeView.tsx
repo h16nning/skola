@@ -39,9 +39,9 @@ export default function HomeView({
             </ActionIcon>
           )}
           <Title order={3}>
-            {t(userName ? "home.welcome-user" : "home.welcome", {
-              name: userName,
-            })}
+            {userName
+              ? t("home.welcome-user", { name: userName })
+              : t("home.welcome")}
           </Title>
         </Group>
 
