@@ -1,8 +1,4 @@
 {
-  "home": {
-    "welcome": "Welcome!",
-    "welcome-user": "Welcome back, {{name}}!"
-  },
   "deck": {
     "review-cards-label_one": "1 Review",
     "review-cards-label_other": "{{ count }} Review",
@@ -14,6 +10,10 @@
     "learning-cards-label": "Learning",
     "review-cards-label": "Review",
     "new-deck-button": "New Deck"
+  },
+  "home": {
+    "welcome-user": "Welcome back, {{name}}!",
+    "welcome": "Welcome!"
   },
   "settings": {
     "about": {
