@@ -1,8 +1,4 @@
 {
-  "home": {
-    "welcome": "Willkomen!",
-    "welcome-user": "Willkommen zurück, {{name}}!"
-  },
   "deck": {
     "review-cards-label_one": "1 Wiederholen",
     "review-cards-label_other": "{{count}} Wiederholen",
@@ -14,6 +10,10 @@
     "learning-cards-label": "Lernen",
     "review-cards-label": "Wiederholen",
     "new-deck-button": "Neues Deck"
+  },
+  "home": {
+    "welcome-user": "Willkommen zurück, {{name}}!",
+    "welcome": "Willkomen!"
   },
   "settings": {
     "about": {

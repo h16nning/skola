@@ -1,8 +1,4 @@
 {
-  "home": {
-    "welcome": "Welcome!",
-    "welcome-user": "Welcome back, {{name}}!"
-  },
   "deck": {
     "review-cards-label_one": "",
     "review-cards-label_other": "",
@@ -14,6 +10,10 @@
     "learning-cards-label": "Plugga",
     "review-cards-label": "Repetera",
     "new-deck-button": ""
+  },
+  "home": {
+    "welcome-user": "Welcome back, {{name}}!",
+    "welcome": "Welcome!"
   },
   "settings": {
     "about": {
