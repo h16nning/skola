@@ -49,7 +49,7 @@ function LearnView() {
   }, []);
 
   const [showingAnswer, setShowingAnswer] = useState<boolean>(false);
-  const [debouncedFinish] = useDebouncedValue(controller.isFinished, 1000);
+  const [debouncedFinish] = useDebouncedValue(controller.isFinished, 50);
 
   const answerButtonPressed = useCallback(
     async (rating: Rating) => {
@@ -105,8 +105,9 @@ function LearnView() {
         showingAnswer={showingAnswer}
         setShowingAnswer={setShowingAnswer}
       />
+
       <Modal
-        opened={controller.isFinished}
+        opened={debouncedFinish}
         onClose={() => navigate("/home")}
         fullScreen
         closeOnClickOutside={false}
