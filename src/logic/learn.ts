@@ -41,6 +41,8 @@ export type LearnController = {
 
   ratingsList: Rating[];
   isFinished: boolean;
+
+  options: LearnOptions;
 };
 
 export function useLearning(
@@ -136,6 +138,7 @@ export function useLearning(
     newCards,
     toReviewCards,
     learnedCards,
+    options,
   ]);
 
   //Tries to set currentCard to the next card
@@ -224,6 +227,8 @@ export function useLearning(
 
     ratingsList: ratingsList,
     isFinished: isFinished,
+
+    options: options,
   };
 }
 

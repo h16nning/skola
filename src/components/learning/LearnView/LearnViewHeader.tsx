@@ -35,7 +35,8 @@ function LearnViewHeader({ currentCard, controller }: LearnViewHeaderProps) {
         (controller.ratingsList.length +
           controller.newCardsNumber * 2 +
           controller.toReviewCardsNumber +
-          controller.timeCriticalCardsNumber)) *
+          controller.timeCriticalCardsNumber +
+          (controller.options.learnAll ? controller.learnedCardsNumber : 0))) *
       100,
     [
       controller.isFinished,
@@ -43,6 +44,7 @@ function LearnViewHeader({ currentCard, controller }: LearnViewHeaderProps) {
       controller.newCardsNumber,
       controller.toReviewCardsNumber,
       controller.timeCriticalCardsNumber,
+      controller.learnedCardsNumber,
       //FIXME
     ]
   );
