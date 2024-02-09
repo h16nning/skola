@@ -41,5 +41,13 @@
     "developer": {
       "title": "Developer"
     }
+  },
+  "learning": {
+    "finished-button-home": "Go Home",
+    "finished-button-to-deck": "Back to the deck",
+    "finished-repetions-count": "Repetitions",
+    "finished-accuracy-ratio": "Accuracy",
+    "finished-duration": "Duration",
+    "finished-congratulations": "You learned all cards for today of this deck."
   }
 }
