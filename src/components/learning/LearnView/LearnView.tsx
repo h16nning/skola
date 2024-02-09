@@ -15,7 +15,6 @@ import { useDebouncedValue, useFullscreen } from "@mantine/hooks";
 import { useNavigate } from "react-router-dom";
 import { useSetting } from "../../../logic/Settings";
 import { Rating } from "fsrs.js";
-import DebugCardTable from "../../DebugCardModal/DebugCardTable";
 
 function LearnView() {
   const { toggle, fullscreen } = useFullscreen();
@@ -67,7 +66,9 @@ function LearnView() {
 
   useEffect(() => {
     if (controller.isFinished) {
-      //stopwatchResult.pause();
+      stopwatchResult.pause();
+    } else {
+      stopwatchResult.start();
     }
   }, [controller.isFinished]);
 
@@ -97,7 +98,6 @@ function LearnView() {
               controller.currentCard
             )}
         </Box>
-        <DebugCardTable card={controller.currentCard ?? undefined} />
       </Center>
       <LearnViewFooter
         controller={controller}
