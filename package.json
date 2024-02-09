@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@mantine/carousel": "^7.5.1",
+    "@mantine/charts": "^7.5.1",
     "@mantine/core": "^7.5.1",
     "@mantine/dates": "^7.5.1",
     "@mantine/dropzone": "^7.5.1",
@@ -76,6 +77,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.5.3",
+    "@types/lodash": "^4.14.202",
     "@types/react": "^18.2.46",
     "@types/react-dom": "^18.2.18",
     "@vitejs/plugin-react": "^4.2.1",

@@ -3,10 +3,9 @@ import { v4 as uuidv4 } from "uuid";
 import { Deck } from "./deck";
 import { db } from "./db";
 import { useLiveQuery } from "dexie-react-hooks";
-import { newRepetition, Repetition } from "./Repetition";
 import { useMemo } from "react";
 import { Table } from "dexie";
-import { Card as Model, State } from "fsrs.js";
+import { Card as Model, ReviewLog, State } from "fsrs.js";
 import { scheduler } from "./CardScheduler";
 
 export enum CardType {
@@ -19,7 +18,7 @@ export enum CardType {
 
 export interface CardSkeleton {
   id: string;
-  history: Repetition[];
+  history: ReviewLog[];
   model: Model;
   deck: string;
   creationDate: Date;
@@ -71,8 +70,15 @@ export async function updateCard(
   return db.cards.update(id, changes);
 }
 
-export async function updateCardModel(card: Card<CardType>, model: Model) {
-  return db.cards.update(card.id, { model: model });
+export async function updateCardModel(
+  card: Card<CardType>,
+  model: Model,
+  log: ReviewLog
+) {
+  return db.cards.update(card.id, {
+    model: model,
+    history: [...card.history, log],
+  });
 }
 
 export async function moveCard(card: Card<CardType>, newDeck: Deck) {

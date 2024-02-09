@@ -2,6 +2,7 @@ import classes from "./DebugCard.module.css";
 import { Fragment } from "react";
 import { Card, CardType } from "../../logic/card";
 import { Anchor, Space, Text } from "@mantine/core";
+import { Rating, State } from "fsrs.js";
 
 export default function DebugCardTable({
   card,
@@ -35,9 +36,8 @@ export default function DebugCardTable({
         <tr>
           <th>Due:</th>
           <td>
-            {card.model.due.toLocaleTimeString() +
-              " " +
-              card.model.due.toDateString()}
+            {card.model.due.toLocaleDateString()},
+            {card.model.due.toLocaleTimeString()}
           </td>
         </tr>
         <tr>
@@ -70,27 +70,45 @@ export default function DebugCardTable({
         </tr>
         <tr>
           <th>Last Review:</th>
-          <td>{card.model.last_review.toDateString()}</td>
+          <td>
+            {card.model.last_review.toLocaleDateString()},
+            {card.model.last_review.toLocaleTimeString()}
+          </td>
         </tr>
       </tbody>
       <tbody>
         <thead>
           <th>History</th>
         </thead>
-        {card.history.map((repetition) => (
-          <Fragment key={repetition.date.toISOString()}>
+        {card.history.length}
+        {card.history.map((log) => (
+          <Fragment key={log.review.toISOString()}>
             <tr>
               <th>Date: </th>
               <td>
-                {(typeof repetition.date === "number"
-                  ? new Date(repetition.date)
-                  : repetition.date
-                ).toLocaleString()}
+                {log.review.toLocaleDateString()},
+                {log.review.toLocaleTimeString()}
               </td>
             </tr>
             <tr>
               <th>Result: </th>
-              <td>{repetition.result}</td>
+              <td>
+                {Rating[log.rating]} ({log.rating})
+              </td>
+            </tr>
+            <tr>
+              <th>State: </th>
+              <td>
+                {State[log.state]} ({log.state})
+              </td>
+            </tr>
+            <tr>
+              <th>Elapsed Days: </th>
+              <td>{log.elapsed_days}</td>
+            </tr>
+            <tr>
+              <th>Scheduled Days: </th>
+              <td>{log.scheduled_days}</td>
             </tr>
             <tr>
               <Space h="xs" />

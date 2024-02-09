@@ -3,6 +3,7 @@ import { ActionIcon, Menu } from "@mantine/core";
 import {
   IconAdjustmentsHorizontal,
   IconArrowsExchange,
+  IconChartBar,
   IconCode,
   IconDots,
   IconTrash,
@@ -16,6 +17,8 @@ import {
   successfullyDeleted,
 } from "../custom/Notification/Notification";
 import MoveCardModal from "./MoveCardModal";
+import { IconGraphOff } from "@tabler/icons-react";
+import CardStatisticsModal from "../statistics/CardStatisticsModal";
 
 interface CardMenuProps {
   card: Card<CardType> | undefined;
@@ -26,6 +29,9 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
   const [developerMode] = useSetting("developerMode");
 
   const [debugModalOpened, setDebugModalOpened] = useState<boolean>(false);
+  const [statisticsModalOpened, setStatisticsModalOpened] =
+    useState<boolean>(false);
+
   const [moveModalOpened, setMoveModalOpened] = useState<boolean>(false);
   const [deleteModalOpened, setDeleteModalOpened] = useState<boolean>(false);
   async function tryDeleteCard() {
@@ -69,6 +75,12 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
             Options
           </Menu.Item>
           <Menu.Item
+            leftSection={<IconChartBar size={16} />}
+            onClick={() => setStatisticsModalOpened(true)}
+          >
+            Statistics
+          </Menu.Item>
+          <Menu.Item
             leftSection={<IconArrowsExchange size={16} />}
             onClick={() => setMoveModalOpened(true)}
           >
@@ -83,6 +95,11 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>
+      <CardStatisticsModal
+        opened={statisticsModalOpened}
+        setOpened={setStatisticsModalOpened}
+        card={card}
+      />
       <DebugCardModal
         opened={debugModalOpened}
         setOpened={setDebugModalOpened}
