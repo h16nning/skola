@@ -35,7 +35,6 @@ function HeroDeckSection({ deck, cards, areCardsReady }: HeroDeckSectionProps) {
   }
 
   function startLearning() {
-    console.log("start learning");
     navigate("/learn/" + deck?.id + (isDone() ? "/all" : ""));
   }
 

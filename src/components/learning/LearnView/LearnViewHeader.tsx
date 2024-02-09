@@ -71,7 +71,7 @@ function LearnViewHeader({ currentCard, controller }: LearnViewHeaderProps) {
 
         <Group justify="flex-end" wrap="nowrap">
           <RemainingCardsIndicator controller={controller} />
-          <CardMenu card={currentCard} onDelete={controller.nextCard} />
+          <CardMenu card={currentCard} onDelete={controller.requestNextCard} />
         </Group>
       </Group>
       <Progress

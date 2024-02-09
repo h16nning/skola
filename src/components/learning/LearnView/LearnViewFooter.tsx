@@ -8,15 +8,8 @@ import { Rating } from "fsrs.js";
 interface LearnViewFooterProps {
   controller: LearnController;
   answer: Function;
-  showingAnswer: boolean;
-  setShowingAnswer: Function;
 }
-function LearnViewFooter({
-  controller,
-  answer,
-  showingAnswer,
-  setShowingAnswer,
-}: LearnViewFooterProps) {
+function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
   useHotkeys(
     !controller.isFinished
       ? [
@@ -27,12 +20,16 @@ function LearnViewFooter({
           [
             "Space",
             () =>
-              !showingAnswer ? setShowingAnswer(true) : answer(Rating.Good),
+              !controller.showingAnswer
+                ? controller.showAnswer()
+                : answer(Rating.Good),
           ],
           [
             "Enter",
             () =>
-              !showingAnswer ? setShowingAnswer(true) : answer(Rating.Good),
+              !controller.showingAnswer
+                ? controller.showAnswer()
+                : answer(Rating.Good),
           ],
         ]
       : []
@@ -40,7 +37,7 @@ function LearnViewFooter({
 
   return (
     <Group className={classes.footerContainer} justify="center">
-      {showingAnswer ? (
+      {controller.showingAnswer ? (
         <Group gap="xs" wrap="nowrap" justify="center" w="100%" maw="25rem">
           <AnswerCardButton
             label="Again"
@@ -92,7 +89,7 @@ function LearnViewFooter({
           />
         </Group>
       ) : (
-        <Button onClick={() => setShowingAnswer(true)} h="2.5rem">
+        <Button onClick={controller.showAnswer} h="2.5rem">
           Show Answer
         </Button>
       )}
