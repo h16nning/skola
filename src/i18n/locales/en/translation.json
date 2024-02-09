@@ -9,11 +9,13 @@
     "new-cards-label": "New",
     "learning-cards-label": "Learning",
     "review-cards-label": "Review",
-    "new-deck-button": "New Deck"
+    "new-deck-button": "New Deck",
+    "settings": "Settings"
   },
   "home": {
     "welcome-user": "Welcome back, {{name}}!",
-    "welcome": "Welcome!"
+    "welcome": "Welcome!",
+    "title": "Home"
   },
   "settings": {
     "about": {
@@ -29,6 +31,7 @@
       "language-description": "Set the language for the user interface.",
       "title": "General"
     },
+    "page-title": "Settings",
     "appearance": {
       "title": "Appearance"
     },

@@ -1,16 +1,17 @@
-import { AppShell, MantineProvider } from "@mantine/core";
+import { AppShell, Burger, Group, MantineProvider, Title } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
-import { useLocalStorage } from "@mantine/hooks";
+import { useDisclosure, useLocalStorage } from "@mantine/hooks";
 import { Notifications } from "@mantine/notifications";
 import { useEffect, useState } from "react";
 import WelcomeView from "./components/WelcomeView";
-import { I18nextProvider } from "react-i18next";
+import { I18nextProvider, useTranslation } from "react-i18next";
 import Main from "./components/Main/Main";
 import Sidebar from "./components/sidebar/Sidebar";
 import i18n from "./i18n";
 import { useSetting } from "./logic/Settings";
 import { cssVariablesResolver, presetTheme } from "./style/StyleProvider";
+import Header from "./components/Header/Header";
 
 async function persist() {
   return (
@@ -39,7 +40,7 @@ function useRestoreLanguage() {
 export default function App() {
   const [colorSchemePreference] = useSetting("colorSchemePreference");
   useRestoreLanguage();
-  const [sidebarMenuOpened, setSidebarMenuOpened] = useState<boolean>(false);
+  const [sidebarMenuOpened, sidebarhandlers] = useDisclosure(false);
 
   const [registered] = useLocalStorage({
     key: "registered",
@@ -83,17 +84,20 @@ export default function App() {
               breakpoint: "xs",
               collapsed: { mobile: !sidebarMenuOpened },
             }}
+            header={{ height: 60 }}
           >
+            <Header
+              menuOpened={sidebarMenuOpened}
+              menuHandlers={sidebarhandlers}
+            />
             <AppShell.Navbar>
               <Sidebar
                 menuOpened={sidebarMenuOpened}
-                setMenuOpened={setSidebarMenuOpened}
+                menuHandlers={sidebarhandlers}
               />
             </AppShell.Navbar>
-            <Main
-              menuOpened={sidebarMenuOpened}
-              setMenuOpened={setSidebarMenuOpened}
-            />
+
+            <Main />
           </AppShell>
         ) : (
           <WelcomeView />
