@@ -14,6 +14,7 @@ import { Card, CardType, useSimplifiedStatesOf } from "../../../logic/card";
 import Stat from "../../custom/Stat/Stat";
 import { useTranslation } from "react-i18next";
 import { State } from "fsrs.js";
+import { useHotkeys } from "@mantine/hooks";
 
 interface HeroDeckSectionProps {
   deck?: Deck;
@@ -25,11 +26,17 @@ interface HeroDeckSectionProps {
 function HeroDeckSection({ deck, cards, areCardsReady }: HeroDeckSectionProps) {
   const navigate = useNavigate();
   const [t] = useTranslation();
+  useHotkeys([["Space", startLearning]]);
 
   const states = useSimplifiedStatesOf(cards);
 
   function isDone() {
     return states.new + states.learning + states.review === 0;
+  }
+
+  function startLearning() {
+    console.log("start learning");
+    navigate("/learn/" + deck?.id + (isDone() ? "/all" : ""));
   }
 
   return (
@@ -56,11 +63,7 @@ function HeroDeckSection({ deck, cards, areCardsReady }: HeroDeckSectionProps) {
             <Text fz="sm">
               Return back tomorrow or choose to practice anyway.
             </Text>
-            <Button
-              variant="subtle"
-              w="50%"
-              onClick={() => navigate("/learn/" + deck?.id + "/all")}
-            >
+            <Button variant="subtle" w="50%" onClick={startLearning}>
               Practice anyway
             </Button>
           </Stack>
@@ -92,7 +95,7 @@ function HeroDeckSection({ deck, cards, areCardsReady }: HeroDeckSectionProps) {
               }
               leftSection={<IconBolt />}
               w="50%"
-              onClick={() => navigate("/learn/" + deck?.id)}
+              onClick={startLearning}
             >
               Learn
             </Button>

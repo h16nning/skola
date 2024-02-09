@@ -33,7 +33,10 @@ function SubDeckSection({ deck }: SubDeckSectionProps) {
 
   return (
     <>
-      <Section title="Subdecks" rightSection={<NewSubDeckButton />}>
+      <Section
+        title="Subdecks (to be moved)"
+        rightSection={<NewSubDeckButton />}
+      >
         {areSubDecksReady &&
           (subDecks ? (
             <DeckTable deckList={subDecks} isReady={true} />

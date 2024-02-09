@@ -209,6 +209,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       "--mantine-color-yellow-strong": theme.colors.yellow[7],
       "--mantine-color-orange-strong": theme.colors.orange[7],
       "--mantine-color-gray-strong": theme.colors.gray[6],
+      "--mantine-color-light-border": theme.colors.gray[3],
     },
 
     dark: {
@@ -225,6 +226,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       "--mantine-color-yellow-strong": theme.colors.yellow[3],
       "--mantine-color-orange-strong": theme.colors.orange[3],
       "--mantine-color-gray-strong": theme.colors.gray[5],
+      "--mantine-color-light-border": theme.colors.dark[5],
     },
   };
 };

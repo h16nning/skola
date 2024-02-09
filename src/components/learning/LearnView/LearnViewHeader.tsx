@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from "react";
+import classes from "./LearnView.module.css";
 import { ActionIcon, Group, Progress, Stack, Text } from "@mantine/core";
 import CardMenu from "../../editcard/CardMenu";
 import { useNavigate } from "react-router-dom";
@@ -50,34 +51,37 @@ function LearnViewHeader({ currentCard, controller }: LearnViewHeaderProps) {
   );
   const [debouncedProgress] = useDebouncedValue(progress, 100);
   return (
-    <div>
-      <Stack gap={0}>
-        <Group justify="space-between" pb="md" wrap="nowrap">
-          <Group>
-            <ActionIcon
-              onClick={() => navigate("/home")}
-              variant="subtle"
-              color="gray"
-            >
-              <IconX />
-            </ActionIcon>
-            <Stopwatch />
-          </Group>
-
-          <Group justify="flex-end" wrap="nowrap">
-            <RemainingCardsIndicator controller={controller} />
-            <CardMenu card={currentCard} onDelete={controller.nextCard} />
-          </Group>
+    <Stack className={classes.headerContainer} gap={0}>
+      <Group
+        justify="space-between"
+        pb="md"
+        wrap="nowrap"
+        className={classes.headerGroup}
+      >
+        <Group>
+          <ActionIcon
+            onClick={() => navigate("/home")}
+            variant="subtle"
+            color="gray"
+          >
+            <IconX />
+          </ActionIcon>
+          <Stopwatch />
         </Group>
-        <Progress
-          size="sm"
-          value={progress}
-          transitionDuration={200}
-          radius="md"
-          w="100%"
-        />
-      </Stack>
-    </div>
+
+        <Group justify="flex-end" wrap="nowrap">
+          <RemainingCardsIndicator controller={controller} />
+          <CardMenu card={currentCard} onDelete={controller.nextCard} />
+        </Group>
+      </Group>
+      <Progress
+        size="xs"
+        value={progress}
+        transitionDuration={200}
+        radius={0}
+        w="100%"
+      />
+    </Stack>
   );
 }
 

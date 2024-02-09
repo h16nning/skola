@@ -6,6 +6,7 @@
       var(--mantine-color-dark-6)
     );
     padding: 0.25rem var(--mantine-spacing-xs);
+    height: 1.5rem;
   }
   
   .label {

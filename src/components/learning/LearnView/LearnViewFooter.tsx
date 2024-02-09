@@ -1,6 +1,6 @@
 import { Button, Group } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
-import AnswerCardButton from "../../../logic/AnswerCardButton";
+import AnswerCardButton from "./AnswerCardButton";
 import { LearnController } from "../../../logic/learn";
 import classes from "./LearnView.module.css";
 import { Rating } from "fsrs.js";
@@ -48,7 +48,7 @@ function LearnViewFooter({
               (controller.currentCardRepeatInfo &&
                 controller.currentCardRepeatInfo[
                   Rating.Again
-                ]?.card.due.toDateString()) ??
+                ]?.card.due.toLocaleDateString()) ??
               ""
             }
             color="red"
@@ -60,7 +60,7 @@ function LearnViewFooter({
               (controller.currentCardRepeatInfo &&
                 controller.currentCardRepeatInfo[
                   Rating.Hard
-                ]?.card.due.toDateString()) ??
+                ]?.card.due.toLocaleDateString()) ??
               ""
             }
             color="yellow"
@@ -72,7 +72,7 @@ function LearnViewFooter({
               (controller.currentCardRepeatInfo &&
                 controller.currentCardRepeatInfo[
                   Rating.Good
-                ]?.card.due.toDateString()) ??
+                ]?.card.due.toLocaleDateString()) ??
               ""
             }
             color="green"
@@ -84,10 +84,10 @@ function LearnViewFooter({
               (controller.currentCardRepeatInfo &&
                 controller.currentCardRepeatInfo[
                   Rating.Easy
-                ]?.card.due.toDateString()) ??
+                ]?.card.due.toLocaleDateString()) ??
               ""
             }
-            color="blue"
+            color="cyan"
             action={() => answer(Rating.Easy)}
           />
         </Group>
