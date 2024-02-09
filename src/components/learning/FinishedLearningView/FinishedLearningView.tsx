@@ -20,17 +20,21 @@ import { useHotkeys } from "@mantine/hooks";
 import { useSetting } from "../../../logic/Settings";
 import Stat from "../../custom/Stat/Stat";
 import { useRepetitionAccuracy } from "../../../logic/learn";
+import { useTranslation } from "react-i18next";
 
 interface FinishedLearningViewProps {
   ratingsList: number[];
   time: StopwatchResult;
+  deckId: string | undefined;
 }
 
 function FinishedLearningView({
   ratingsList,
   time,
+  deckId,
 }: FinishedLearningViewProps) {
   const navigate = useNavigate();
+  const [t] = useTranslation();
   const [name] = useSetting("name");
 
   const accuracy = useRepetitionAccuracy(ratingsList);
@@ -46,11 +50,11 @@ function FinishedLearningView({
         </ThemeIcon>
         <Title>Congratulations{name && ", " + name}!</Title>
         <Text style={{ textAlign: "center" }}>
-          You learned all cards for today of this deck.
+          {t("learning.finished-congratulations")}
         </Text>
         <Group wrap="nowrap">
           <Stat
-            name="Duration"
+            name={t("learning.finished-duration")}
             value={
               time ? time.minutes + "m " + time.seconds + "s" : "not available"
             }
@@ -59,27 +63,36 @@ function FinishedLearningView({
             width="7rem"
           />
           <Stat
-            name="Accuracy"
+            name={t("learning.finished-accuracy-ratio")}
             value={accuracy ? accuracy + "%" : "not available"}
             icon={IconTrophy}
             color="green"
             width="7rem"
           />
           <Stat
-            name="Repetitions"
+            name={t("learning.finished-repetions-count")}
             value={ratingsList.length}
             icon={IconTallymarks}
             color="blue"
             width="7rem"
           />
         </Group>
-        <Button
-          onClick={() => navigate("/home")}
-          leftSection={<IconHome />}
-          size="md"
-        >
-          Go Home
-        </Button>
+        <Group>
+          <Button
+            onClick={() => navigate(`/deck/${deckId}`)}
+            size="md"
+            variant="subtle"
+          >
+            {t("learning.finished-button-to-deck")}
+          </Button>
+          <Button
+            onClick={() => navigate("/home")}
+            leftSection={<IconHome />}
+            size="md"
+          >
+            {t("learning.finished-button-home")}
+          </Button>
+        </Group>
       </Stack>
     </Center>
   );
