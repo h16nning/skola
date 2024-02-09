@@ -1,9 +1,9 @@
-import { Card, CardType, updateCardModel, useCardsWith } from "./card";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { Rating, State, SchedulingInfo } from "fsrs.js";
 import { Table } from "dexie";
-import { scheduler } from "./CardScheduler";
+import { Rating, SchedulingInfo, State } from "fsrs.js";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { updateGlobalScheduler, useGlobalScheduler } from "./CardScheduler";
 import { getUtils } from "./CardTypeManager";
+import { Card, CardType, updateCardModel, useCardsWith } from "./card";
 
 export type LearnOptions = {
   learnAll: boolean;
@@ -57,6 +57,8 @@ export function useLearning(
     cardQuerier.querier,
     cardQuerier.dependencies
   );
+
+  const scheduler = useGlobalScheduler();
 
   //Time critical cards are cards that are due today / should be done within this learning session (5-10 min interval). timeCriticalCards should be sorted by due date
   const [timeCriticalCards, setTimeCriticalCards] = useState<Card<CardType>[]>(
@@ -177,6 +179,7 @@ export function useLearning(
       //If there are no cards left finish the learning session
     } else {
       setIsFinished(true);
+      updateGlobalScheduler();
     }
   }, [timeCriticalCards, newCards, toReviewCards, learnedCards, options]);
 

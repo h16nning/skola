@@ -67,12 +67,13 @@ function ClozeCardComponent({
 }: { occluded: boolean; card: Card<CardType.Cloze> }) {
   const sharedValue = useSharedValue(card.content.textReferenceId);
   let finalText = sharedValue?.value ?? "";
-  if (occluded) {
-    finalText = finalText.replace(
-      new RegExp(`{{c${card.content.occlusionNumber}::((?!{{|}}).)*}}`, "g"),
-      `<span class="cloze-field"/>`
-    );
-  }
+  finalText = finalText.replace(
+    new RegExp(`{{c${card.content.occlusionNumber}::((?!{{|}}).)*}}`, "g"),
+    (match) =>
+      `<span class="cloze-field"><span class="cloze-content ${
+        occluded && "occluded"
+      }">${match}</span></span>`
+  );
   finalText = finalText.replace(/\{\{c\d::((?!\{\{|}}).)*\}\}/g, (match) =>
     match.slice(6, -2)
   );
