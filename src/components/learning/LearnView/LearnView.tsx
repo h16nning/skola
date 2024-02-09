@@ -112,6 +112,7 @@ function LearnView() {
           <FinishedLearningView
             ratingsList={controller.ratingsList}
             time={stopwatchResult}
+            deckId={deck?.id}
           />
         </Modal>
       </Flex>
