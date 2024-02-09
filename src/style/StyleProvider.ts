@@ -13,6 +13,7 @@ import {
   Tabs,
   createTheme,
   CSSVariablesResolver,
+  Title,
 } from "@mantine/core";
 import { RichTextEditor } from "@mantine/tiptap";
 import actionIcon from "./ActionIcon.module.css";
@@ -111,6 +112,11 @@ export const presetTheme = createTheme({
       classNames: badge,
     }),
     Text: Text.extend({
+      styles: () => ({
+        root: { userSelect: "none" },
+      }),
+    }),
+    Title: Title.extend({
       styles: () => ({
         root: { userSelect: "none" },
       }),

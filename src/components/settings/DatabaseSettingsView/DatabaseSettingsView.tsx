@@ -4,6 +4,7 @@ import { Button, Card, Text, Stack, Title } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 import DangerousConfirmModal from "../../custom/DangerousConfirmModal";
 import { db } from "../../../logic/db";
+import { useNavigate } from "react-router-dom";
 
 async function showEstimatedQuota(setUsageQuota: Function) {
   if (navigator.storage && navigator.storage.estimate) {
@@ -18,6 +19,7 @@ async function showEstimatedQuota(setUsageQuota: Function) {
 }
 
 export default function DatabaseSettingsView() {
+  const navigate = useNavigate();
   const [deleteAllDataModalOpened, setDeleteAllDataModalOpened] =
     useState<boolean>(false);
   const [usageQuota, setUsageQuota] = useState<
@@ -54,7 +56,11 @@ export default function DatabaseSettingsView() {
         </Card>
       </Stack>
       <DangerousConfirmModal
-        dangerousAction={() => db.delete()}
+        dangerousAction={() => {
+          db.delete();
+          navigate("/home");
+          window.location.reload();
+        }}
         dangerousDependencies={[]}
         dangerousTitle="Delete all Data"
         dangerousDescription="This will delete all of your data including your cards, decks and settings. There is absolutely no way to recover. Are you sure you want to continue?"
