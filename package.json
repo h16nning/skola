@@ -38,6 +38,7 @@
     "dexie-react-hooks": "^1.1.1",
     "embla-carousel-react": "^7.0.9",
     "firebase": "^9.18.0",
+    "fsrs.js": "^1.2.2",
     "html-to-text": "^9.0.4",
     "i18next": "^23.7.11",
     "react": "^18.2.0",
