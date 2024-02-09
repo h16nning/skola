@@ -10,6 +10,7 @@ import { IconChevronLeft, IconSearch } from "@tabler/icons-react";
 import SelectDecksHeader from "../custom/SelectDecksHeader";
 import { useDebouncedState } from "@mantine/hooks";
 import selectCards from "../../logic/card_filter";
+import CardHistory from "../statistics/CardHistory";
 
 function CardManagerView() {
   const navigate = useNavigate();

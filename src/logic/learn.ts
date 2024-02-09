@@ -201,7 +201,11 @@ export function useLearning(
   const answer = useCallback(
     (rating: Rating) => {
       if (currentCard && currentCardRepeatInfo) {
-        updateCardModel(currentCard, currentCardRepeatInfo[rating].card);
+        updateCardModel(
+          currentCard,
+          currentCardRepeatInfo[rating].card,
+          currentCardRepeatInfo[rating].review_log
+        );
         if (currentCardRepeatInfo[rating].card.scheduled_days === 0) {
           setTimeCriticalCards((tcCards) =>
             [
