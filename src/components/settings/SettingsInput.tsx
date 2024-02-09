@@ -1,4 +1,4 @@
-import { Checkbox, Group, Switch, TextInput } from "@mantine/core";
+import { Checkbox, Group, NumberInput, Switch, TextInput } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import React, { useEffect, useState } from "react";
 import { SettingsValues, setSetting, useSetting } from "../../logic/Settings";
@@ -85,9 +85,22 @@ export default function SettingsInput({
               setTouched(true);
               setValue(event.currentTarget.checked);
             }}
-          ></Checkbox>
+          />
           <StatusIndicator status={status} />
         </Group>
+      );
+    case "number":
+      return (
+        <NumberInput
+          value={value as number}
+          label={label}
+          description={description}
+          onChange={(e) => {
+            setTouched(true);
+            setValue(e);
+          }}
+          rightSection={<StatusIndicator status={status} />}
+        />
       );
   }
   return <>Input type not found</>;

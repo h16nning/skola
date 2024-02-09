@@ -2,6 +2,7 @@ import { ActionIcon, Group, Stack, Tabs } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import CColorSchemeToggle from "./ColorSchemeToggle";
 import {
+  IconBolt,
   IconBraces,
   IconChevronLeft,
   IconDatabase,
@@ -17,6 +18,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import AboutSettingsView from "./AboutSettingsView";
 import DatabaseSettingsView from "./DatabaseSettingsView/DatabaseSettingsView";
 import { t } from "i18next";
+import LearnSettingsView from "./LearnSettingsView";
 
 export default function SettingsView() {
   const [value, setValue] = useState("General");
@@ -69,6 +71,13 @@ export default function SettingsView() {
             {t("settings.editing.title")}
           </Tabs.Tab>
           <Tabs.Tab
+            value="learn"
+            leftSection={<IconBolt />}
+            onClick={() => setValue("learn")}
+          >
+            {t("settings.learn.title")}
+          </Tabs.Tab>
+          <Tabs.Tab
             value="database"
             leftSection={<IconDatabase />}
             onClick={() => setValue("database")}
@@ -100,6 +109,9 @@ export default function SettingsView() {
         </Tabs.Panel>
         <Tabs.Panel value="editing">
           <EditingSettingsView />
+        </Tabs.Panel>
+        <Tabs.Panel value="learn">
+          <LearnSettingsView />
         </Tabs.Panel>
         <Tabs.Panel value="database">
           <DatabaseSettingsView />

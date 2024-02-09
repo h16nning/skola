@@ -7,10 +7,13 @@ export type Settings<T extends keyof SettingsValues> = {
 };
 
 export interface SettingsValues {
-  language: "en" | "de" | "es" | "sv";
-  colorSchemePreference: "light" | "dark" | "auto";
   name?: string;
+  language: "en" | "de" | "es" | "sv";
+  useZenMode: boolean;
   developerMode: boolean;
+
+  colorSchemePreference: "light" | "dark" | "auto";
+
   useBubbleMenu: boolean;
   useToolbar: boolean;
   showSubAndSuperScriptOptionInEditor: boolean;
@@ -19,13 +22,19 @@ export interface SettingsValues {
   showListOptionInEditor: boolean;
   showCodeOptionInEditor: boolean;
   showLinkOptionInEditor: boolean;
-  useZenMode: boolean;
+
+  globalScheduler_maximumInterval: number;
+  globalScheduler_requestRetention: number;
+  globalScheduler_w: number[];
 }
 
 export const defaultSettings: SettingsValues = {
   language: "en",
-  colorSchemePreference: "auto",
+  useZenMode: false,
   developerMode: false,
+
+  colorSchemePreference: "auto",
+
   useBubbleMenu: true,
   useToolbar: false,
   showSubAndSuperScriptOptionInEditor: true,
@@ -34,7 +43,13 @@ export const defaultSettings: SettingsValues = {
   showListOptionInEditor: true,
   showCodeOptionInEditor: true,
   showLinkOptionInEditor: true,
-  useZenMode: false,
+
+  globalScheduler_maximumInterval: 36500,
+  globalScheduler_requestRetention: 0.9,
+  globalScheduler_w: [
+    0.4, 0.6, 2.4, 5.8, 4.93, 0.94, 0.86, 0.01, 1.49, 0.14, 0.94, 2.18, 0.05,
+    0.34, 1.26, 0.29, 2.61,
+  ],
 };
 
 export function useSetting<T extends keyof SettingsValues>(

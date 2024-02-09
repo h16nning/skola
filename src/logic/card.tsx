@@ -6,7 +6,6 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { useMemo } from "react";
 import { Table } from "dexie";
 import { Card as Model, ReviewLog, State } from "fsrs.js";
-import { scheduler } from "./CardScheduler";
 
 export enum CardType {
   Normal = "normal",
