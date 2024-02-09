@@ -1,9 +1,6 @@
 .container {
   border: 1px solid;
-  border-color: light-dark(
-    var(--mantine-color-gray-2),
-    var(--mantine-color-dark-5)
-  );
+  border-color: var(--mantine-color-light-border);
   box-shadow: var(--mantine-shadow-xs);
   display: flex;
   align-items: center;

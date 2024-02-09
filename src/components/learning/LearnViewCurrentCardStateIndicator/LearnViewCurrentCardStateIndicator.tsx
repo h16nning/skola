@@ -1,6 +1,6 @@
 import classes from "./LearnViewCurrentCardStateIndicator.module.css";
 import React, { useCallback } from "react";
-import { Group, Text, useMantineTheme } from "@mantine/core";
+import { Group, Text } from "@mantine/core";
 import { Card as Model } from "fsrs.js";
 import {
   IconBook,
@@ -24,18 +24,12 @@ function Indicator({
   icon: React.FC<TablerIconsProps>;
   text: string;
 }) {
-  const theme = useMantineTheme();
   return (
     <Group
       className={classes.indicator}
       gap="0.25rem"
       align="center"
       style={{
-        position: "absolute",
-        top: "-3rem",
-        left: 0,
-        height: "1.5rem",
-        //FIXME: This is a wrong way of using the colorScheme.
         color: `var(--mantine-color-${color}-strong`,
       }}
     >

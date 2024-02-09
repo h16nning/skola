@@ -52,7 +52,7 @@ export const NormalCardUtils: CardTypeManager<CardType.Normal> = {
 
   displayAnswer(card: Card<CardType.Normal>) {
     return (
-      <Stack gap="xl">
+      <Stack gap="lg">
         {NormalCardUtils.displayQuestion(card)}
         <Divider className={common.lightBorderColor} />
         <div dangerouslySetInnerHTML={{ __html: card.content.back }}></div>

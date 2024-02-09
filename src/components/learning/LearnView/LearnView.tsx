@@ -1,20 +1,20 @@
-import classes from "./LearnView.module.css";
-import React, { useCallback, useEffect, useState } from "react";
-import { Box, Center, Flex, Modal } from "@mantine/core";
-import { useDeckFromUrl } from "../../../logic/deck";
-import { getCardsOf } from "../../../logic/card";
-import MissingObject from "../../custom/MissingObject";
+import { Center, Flex, Modal, Paper } from "@mantine/core";
+import { useDebouncedValue, useFullscreen } from "@mantine/hooks";
+import { Rating } from "fsrs.js";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getUtils } from "../../../logic/CardTypeManager";
+import { useSetting } from "../../../logic/Settings";
+import { getCardsOf } from "../../../logic/card";
+import { useDeckFromUrl } from "../../../logic/deck";
+import { CardSorts, useLearning } from "../../../logic/learn";
+import MissingObject from "../../custom/MissingObject";
 import { generalFail } from "../../custom/Notification/Notification";
 import FinishedLearningView from "../FinishedLearningView/FinishedLearningView";
+import LearnViewCurrentCardStateIndicator from "../LearnViewCurrentCardStateIndicator/LearnViewCurrentCardStateIndicator";
+import classes from "./LearnView.module.css";
 import LearnViewFooter from "./LearnViewFooter";
 import LearnViewHeader, { stopwatchResult } from "./LearnViewHeader";
-import LearnViewCurrentCardStateIndicator from "../LearnViewCurrentCardStateIndicator/LearnViewCurrentCardStateIndicator";
-import { CardSorts, useLearning } from "../../../logic/learn";
-import { useDebouncedValue, useFullscreen } from "@mantine/hooks";
-import { useNavigate } from "react-router-dom";
-import { useSetting } from "../../../logic/Settings";
-import { Rating } from "fsrs.js";
 
 function LearnView() {
   const { toggle, fullscreen } = useFullscreen();
@@ -77,50 +77,52 @@ function LearnView() {
   }
 
   return (
-    <Flex direction="column" justify="space-between" h="100%" w="100%">
-      <LearnViewHeader
-        currentCard={controller.currentCard ?? undefined}
-        controller={controller}
-      />
-      <Center>
-        <Box component="div" className={classes.cardContainer}>
-          <LearnViewCurrentCardStateIndicator
-            currentCardModel={controller.currentCard?.model}
-          />
-          {!showingAnswer &&
-            controller.currentCard &&
-            getUtils(controller.currentCard).displayQuestion(
-              controller.currentCard
-            )}
-          {showingAnswer &&
-            controller.currentCard &&
-            getUtils(controller.currentCard).displayAnswer(
-              controller.currentCard
-            )}
-        </Box>
-      </Center>
-      <LearnViewFooter
-        controller={controller}
-        answer={answerButtonPressed}
-        showingAnswer={showingAnswer}
-        setShowingAnswer={setShowingAnswer}
-      />
-
-      <Modal
-        opened={debouncedFinish}
-        onClose={() => navigate("/home")}
-        fullScreen
-        closeOnClickOutside={false}
-        closeOnEscape={false}
-        withCloseButton={false}
-        transitionProps={{ transition: "fade" }}
-      >
-        <FinishedLearningView
-          ratingsList={controller.ratingsList}
-          time={stopwatchResult}
+    <div className={classes.learnView}>
+      <Flex direction="column" justify="space-between" h="100%" w="100%">
+        <LearnViewHeader
+          currentCard={controller.currentCard ?? undefined}
+          controller={controller}
         />
-      </Modal>
-    </Flex>
+        <Center className={classes.cardContainer}>
+          <Paper className={classes.card}>
+            <LearnViewCurrentCardStateIndicator
+              currentCardModel={controller.currentCard?.model}
+            />
+            {!showingAnswer &&
+              controller.currentCard &&
+              getUtils(controller.currentCard).displayQuestion(
+                controller.currentCard
+              )}
+            {showingAnswer &&
+              controller.currentCard &&
+              getUtils(controller.currentCard).displayAnswer(
+                controller.currentCard
+              )}
+          </Paper>
+        </Center>
+        <LearnViewFooter
+          controller={controller}
+          answer={answerButtonPressed}
+          showingAnswer={showingAnswer}
+          setShowingAnswer={setShowingAnswer}
+        />
+
+        <Modal
+          opened={debouncedFinish}
+          onClose={() => navigate("/home")}
+          fullScreen
+          closeOnClickOutside={false}
+          closeOnEscape={false}
+          withCloseButton={false}
+          transitionProps={{ transition: "fade" }}
+        >
+          <FinishedLearningView
+            ratingsList={controller.ratingsList}
+            time={stopwatchResult}
+          />
+        </Modal>
+      </Flex>
+    </div>
   );
 }
 

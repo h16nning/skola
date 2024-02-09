@@ -28,7 +28,7 @@ export default function AnswerCardButton({
         <Text fz="xs" fw={400} lh="1">
           {timeInfo}
         </Text>
-        <Text fz="sm" lh="1.25">
+        <Text fz="sm" fw={600} lh="1.25">
           {label}
         </Text>
       </Stack>

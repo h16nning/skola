@@ -1,7 +1,33 @@
+.learnView {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+  @mixin larger-than $mantine-breakpoint-xs {
+    padding-left: 3.5rem;
+  }
+  @mixin larger-than $mantine-breakpoint-lg {
+    padding-left: 18.75rem;
+  }
+}
+
 .cardContainer {
+  padding: var(--mantine-spacing-lg);
+}
+.card {
   width: 100%;
   max-width: 600px;
   position: relative;
+
+  padding: var(--mantine-spacing-md);
+  border: solid 1px var(--mantine-color-light-border);
+  box-shadow: var(--mantine-shadow-xs);
+
+  transition-property: height;
+  transition-duration: 0.2s;
+
   & p:first-of-type {
     margin-top: 0;
   }
@@ -11,11 +37,20 @@
   & img {
     max-width: 100%;
   }
+
 }
 
 .footerContainer {
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
   padding: var(--mantine-spacing-md);
-  margin-bottom: -var(--mantine-spacing-md);
-  margin-left: -var(--mantine-spacing-md);
-  margin-right: -var(--mantine-spacing-md);
+  border-top: solid 1px var(--mantine-color-light-border);
+}
+
+.headerContainer {
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+  padding: 0;
+
+  .headerGroup {
+    padding: var(--mantine-spacing-md);
+  }
 }
