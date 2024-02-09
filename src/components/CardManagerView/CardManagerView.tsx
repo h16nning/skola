@@ -1,6 +1,6 @@
 import classes from "./CardManagerView.module.css";
 import React, { useState } from "react";
-import { ActionIcon, Group, Stack, TextInput } from "@mantine/core";
+import { ActionIcon, Group, Stack, TextInput, Title } from "@mantine/core";
 import { Card, CardType, useCardsWith } from "../../logic/card";
 import { useLocation, useNavigate } from "react-router-dom";
 import CardTable from "../CardTable/CardTable";
@@ -10,7 +10,7 @@ import { IconChevronLeft, IconSearch } from "@tabler/icons-react";
 import SelectDecksHeader from "../custom/SelectDecksHeader";
 import { useDebouncedState } from "@mantine/hooks";
 import selectCards from "../../logic/card_filter";
-import CardHistory from "../statistics/CardHistory";
+import { AppHeaderContent } from "../Header/Header";
 
 function CardManagerView() {
   const navigate = useNavigate();
@@ -33,14 +33,10 @@ function CardManagerView() {
 
   return (
     <Stack style={{ overflow: "hidden", width: "100%", height: "100%" }}>
+      <AppHeaderContent>
+        <Title order={3}>Manage Cards</Title>
+      </AppHeaderContent>
       <Group align="end" gap="xs">
-        <ActionIcon
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
-          <IconChevronLeft />
-        </ActionIcon>
         <SelectDecksHeader label="Showing cards in" decks={decks} />
       </Group>
       <TextInput

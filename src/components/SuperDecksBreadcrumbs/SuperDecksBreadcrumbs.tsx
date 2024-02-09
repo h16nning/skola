@@ -1,18 +1,27 @@
 import classes from "./SuperDecksBreadcrumbs.module.css";
 import React from "react";
-import { Anchor, Box, Breadcrumbs } from "@mantine/core";
+import { Anchor, Box, Breadcrumbs, Group, Title } from "@mantine/core";
 import { Deck } from "../../logic/deck";
 import { useNavigate } from "react-router-dom";
 import { useViewportSize } from "@mantine/hooks";
+import { useTranslation } from "react-i18next";
+import { IconHome, IconCardsFilled } from "@tabler/icons-react";
 
 interface SuperDecksBreadcrumbsProps {
   superDecks: Deck[] | undefined;
 }
 function SuperDecksBreadcrumbs({ superDecks }: SuperDecksBreadcrumbsProps) {
   const navigate = useNavigate();
+  const [t] = useTranslation();
   const { width } = useViewportSize();
+
   return (
-    <Box component="div" className={classes.wrapper} w={width / 3}>
+    <Box
+      component="div"
+      className={classes.wrapper}
+      w={width / 3}
+      style={{ flexGrow: 2 }}
+    >
       <Breadcrumbs className={classes.breadcrumbs}>
         <Anchor
           key={0}
@@ -21,16 +30,24 @@ function SuperDecksBreadcrumbs({ superDecks }: SuperDecksBreadcrumbsProps) {
           lh="1.5"
           onClick={() => navigate("/home")}
         >
-          Home
+          <Group wrap="nowrap">
+            <IconHome size="1em" /> {t("home.title")}
+          </Group>
         </Anchor>
-        {superDecks?.map((s) => (
+        {superDecks?.map((s, idx) => (
           <Anchor
             key={s.id}
             component="button"
             type="button"
+            style={{
+              fontWeight: idx === superDecks.length - 1 ? "bold" : "normal",
+              color: idx === superDecks.length - 1 ? "red" : "blue",
+            }}
             onClick={() => navigate("/deck/" + s.id)}
           >
-            {s.name}
+            <Group wrap="nowrap">
+              <IconCardsFilled size="1rem" /> {s.name}
+            </Group>
           </Anchor>
         ))}
       </Breadcrumbs>
