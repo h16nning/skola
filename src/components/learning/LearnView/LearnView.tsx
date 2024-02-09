@@ -47,15 +47,13 @@ function LearnView() {
     };
   }, []);
 
-  const [showingAnswer, setShowingAnswer] = useState<boolean>(false);
   const [debouncedFinish] = useDebouncedValue(controller.isFinished, 50);
 
   const answerButtonPressed = useCallback(
     async (rating: Rating) => {
       try {
         await controller.answerCard(rating);
-        setShowingAnswer(false);
-        controller.nextCard();
+        controller.requestNextCard();
       } catch (error) {
         generalFail();
         console.log(error);
@@ -88,24 +86,19 @@ function LearnView() {
             <LearnViewCurrentCardStateIndicator
               currentCardModel={controller.currentCard?.model}
             />
-            {!showingAnswer &&
+            {!controller.showingAnswer &&
               controller.currentCard &&
               getUtils(controller.currentCard).displayQuestion(
                 controller.currentCard
               )}
-            {showingAnswer &&
+            {controller.showingAnswer &&
               controller.currentCard &&
               getUtils(controller.currentCard).displayAnswer(
                 controller.currentCard
               )}
           </Paper>
         </Center>
-        <LearnViewFooter
-          controller={controller}
-          answer={answerButtonPressed}
-          showingAnswer={showingAnswer}
-          setShowingAnswer={setShowingAnswer}
-        />
+        <LearnViewFooter controller={controller} answer={answerButtonPressed} />
 
         <Modal
           opened={debouncedFinish}

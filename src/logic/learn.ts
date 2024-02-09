@@ -36,8 +36,11 @@ export type LearnController = {
   currentCard: Card<CardType> | null;
   currentCardRepeatInfo: Record<number, SchedulingInfo> | null;
 
+  showingAnswer: boolean;
+  showAnswer: () => void;
+
   answerCard: (rating: Rating) => void;
-  nextCard: () => void;
+  requestNextCard: () => void;
 
   ratingsList: Rating[];
   isFinished: boolean;
@@ -69,6 +72,10 @@ export function useLearning(
 
   //Currently shown card
   const [currentCard, setCurrentCard] = useState<Card<CardType> | null>(null);
+
+  const [showingAnswer, setShowingAnswer] = useState<boolean>(false);
+  //Used so that nextCard isn't called immediately but only after state has been updated
+  const [requestedNextCard, setRequestedNextCard] = useState<boolean>(false);
 
   //Determines if FinishedLearningView is shown
   const [isFinished, setIsFinished] = useState<boolean>(false);
@@ -122,15 +129,6 @@ export function useLearning(
         nextCard();
       }
     }
-    if (
-      timeCriticalCards.length +
-        newCards.length +
-        toReviewCards.length +
-        learnedCards.length >
-      0
-    ) {
-      setIsFinished(false);
-    }
   }, [
     providedCards,
     currentCard,
@@ -182,6 +180,13 @@ export function useLearning(
     }
   }, [timeCriticalCards, newCards, toReviewCards, learnedCards, options]);
 
+  useEffect(() => {
+    if (requestedNextCard) {
+      nextCard();
+      setRequestedNextCard(false);
+    }
+  }, [requestedNextCard, nextCard]);
+
   //Providing information about how all 4 ratings would affect the current card
   //Shown on buttons
   const currentCardRepeatInfo = useMemo(() => {
@@ -209,6 +214,7 @@ export function useLearning(
       } else {
         throw new Error("Card or cardModelInfo is missing");
       }
+      setShowingAnswer(false);
     },
     [currentCard, currentCardRepeatInfo, timeCriticalCards, ratingsList]
   );
@@ -222,8 +228,11 @@ export function useLearning(
     currentCard: currentCard,
     currentCardRepeatInfo: currentCardRepeatInfo,
 
+    showingAnswer: showingAnswer,
+    showAnswer: setShowingAnswer.bind(null, true),
+
     answerCard: answer,
-    nextCard: nextCard,
+    requestNextCard: setRequestedNextCard.bind(null, true),
 
     ratingsList: ratingsList,
     isFinished: isFinished,
@@ -241,7 +250,6 @@ export function useRepetitionAccuracy(ratingsList: number[]): number {
       });
       return Math.round((sum / ratingsList.length) * 1000) / 10;
     } else {
-      console.log("No ratings available");
       return NaN;
     }
   }, [ratingsList]);
