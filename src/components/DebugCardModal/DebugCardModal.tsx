@@ -10,6 +10,7 @@ import {
   Space,
 } from "@mantine/core";
 import { Card, CardType } from "../../logic/card";
+import DebugCardTable from "./DebugCardTable";
 
 interface DebugCardModalProps {
   opened: boolean;
@@ -27,84 +28,7 @@ function DebugCardModal({ opened, setOpened, card }: DebugCardModalProps) {
         title="Debug"
       >
         <Stack justify="space-between">
-          {card ? (
-            <table className={classes.table}>
-              <tbody>
-                <tr>
-                  <th>Card Type:</th>
-                  <td>{card.content.type}</td>
-                </tr>
-                <tr>
-                  <th>ID:</th>
-                  <td>{card.id}</td>
-                </tr>
-                <tr>
-                  <th>Content:</th>
-                  <td>{JSON.stringify(card.content)}</td>
-                </tr>
-                <tr>
-                  <th>Decks:</th>
-                  <td>
-                    <Anchor href={"/deck/" + card.deck}>{card.deck}</Anchor>,{" "}
-                  </td>
-                </tr>
-                <tr>
-                  <th>DueDate:</th>
-                  <td>{card.dueDate?.toLocaleString()}</td>
-                </tr>
-              </tbody>
-              <tbody>
-                <thead>
-                  <th>Model</th>
-                </thead>
-                <tr>
-                  <th>Interval:</th>
-                  <td>{card.model.interval}</td>
-                </tr>
-                <tr>
-                  <th>Learned:</th>
-                  <td>{card.model.learned ? "true" : "false"}</td>
-                </tr>
-                <tr>
-                  <th>Repetitions:</th>
-                  <td>{card.model.repetitions}</td>
-                </tr>
-                <tr>
-                  <th>Ease Factor:</th>
-                  <td>{card.model.easeFactor}</td>
-                </tr>
-              </tbody>
-              <tbody>
-                <thead>
-                  <th>History</th>
-                </thead>
-                {card.history.map((repetition) => (
-                  <Fragment key={repetition.date.toISOString()}>
-                    <tr>
-                      <th>Date: </th>
-                      <td>
-                        {(typeof repetition.date === "number"
-                          ? new Date(repetition.date)
-                          : repetition.date
-                        ).toLocaleString()}
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Result: </th>
-                      <td>{repetition.result}</td>
-                    </tr>
-                    <tr>
-                      <Space h="xs" />
-                    </tr>
-                  </Fragment>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <Text color="dimmed" fz="sm">
-              This card could not be found.
-            </Text>
-          )}
+          <DebugCardTable card={card} />
           <Group justify="right">
             <Button onClick={() => setOpened(false)}>Close</Button>
           </Group>

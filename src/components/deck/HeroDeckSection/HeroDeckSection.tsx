@@ -1,6 +1,6 @@
 import classes from "./HeroDeckSection.module.css";
 
-import React from "react";
+import React, { useState } from "react";
 import { Button, Group, Paper, Stack, Text, Title } from "@mantine/core";
 import { Deck } from "../../../logic/deck";
 import {
@@ -10,31 +10,26 @@ import {
   IconSparkles,
 } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardsStats, CardType } from "../../../logic/card";
+import { Card, CardType, useSimplifiedStatesOf } from "../../../logic/card";
 import Stat from "../../custom/Stat/Stat";
 import { useTranslation } from "react-i18next";
+import { State } from "fsrs.js";
 
 interface HeroDeckSectionProps {
   deck?: Deck;
   cards?: Card<CardType>[];
-  stats: CardsStats;
   isDeckReady: boolean;
   areCardsReady: boolean;
 }
 
-function HeroDeckSection({
-  deck,
-  cards,
-  areCardsReady,
-  stats,
-}: HeroDeckSectionProps) {
+function HeroDeckSection({ deck, cards, areCardsReady }: HeroDeckSectionProps) {
   const navigate = useNavigate();
   const [t] = useTranslation();
 
+  const states = useSimplifiedStatesOf(cards);
+
   function isDone() {
-    return (
-      stats.newCards === 0 && stats.learningCards === 0 && stats.dueCards === 0
-    );
+    return states.new + states.learning + states.review === 0;
   }
 
   return (
@@ -73,19 +68,19 @@ function HeroDeckSection({
           <Stack gap="md" align="center" w="100%">
             <Group wrap="nowrap" w="100%" justify="center">
               <Stat
-                value={stats.newCards ?? 0}
+                value={states.new}
                 name={t("deck.new-cards-label")}
                 color="grape"
                 icon={IconSparkles}
               />
               <Stat
-                value={stats.learningCards ?? 0}
+                value={states.learning}
                 name={t("deck.learning-cards-label")}
                 color="orange"
                 icon={IconCircleArrowUpRight}
               />
               <Stat
-                value={stats.dueCards ?? 0}
+                value={states.review}
                 name={t("deck.review-cards-label")}
                 color="blue"
                 icon={IconBook}
@@ -93,10 +88,7 @@ function HeroDeckSection({
             </Group>
             <Button
               disabled={
-                !deck ||
-                (stats.newCards === 0 &&
-                  stats.learningCards === 0 &&
-                  stats.dueCards === 0)
+                !deck || states.new + states.learning + states.review === 0
               }
               leftSection={<IconBolt />}
               w="50%"

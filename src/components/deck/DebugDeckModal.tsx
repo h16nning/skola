@@ -1,14 +1,14 @@
 import React from "react";
 import { Anchor, Button, Group, Modal, Stack, Text } from "@mantine/core";
 import { Deck } from "../../logic/deck";
-import { Card, CardsStats, CardType } from "../../logic/card";
+import { Card, CardType, useStatesOf } from "../../logic/card";
+import { State } from "fsrs.js";
 
 interface DebugDeckModalProps {
   opened: boolean;
   setOpened: Function;
   deck?: Deck;
   cards: Card<CardType>[];
-  stats: CardsStats;
 }
 
 function DebugDeckModal({
@@ -16,8 +16,8 @@ function DebugDeckModal({
   setOpened,
   deck,
   cards,
-  stats,
 }: DebugDeckModalProps) {
+  const states = useStatesOf(cards);
   return (
     <Modal
       opened={opened}
@@ -62,16 +62,20 @@ function DebugDeckModal({
               {cards.length}
             </Text>
             <Text fz="xs">
-              <b>New Cards: </b>
-              {stats.newCards}
+              <b>New: </b>
+              {states[State.New]}
             </Text>
             <Text fz="xs">
-              <b>Learning Cards: </b>
-              {stats.learningCards}
+              <b>Learning: </b>
+              {states[State.Learning]}
             </Text>
             <Text fz="xs">
-              <b>Due Cards: </b>
-              {stats.dueCards}
+              <b>Review: </b>
+              {states[State.Review]}
+            </Text>
+            <Text fz="xs">
+              <b>Relearning: </b>
+              {states[State.Relearning]}
             </Text>
           </Stack>
         ) : (

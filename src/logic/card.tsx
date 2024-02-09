@@ -4,9 +4,10 @@ import { Deck } from "./deck";
 import { db } from "./db";
 import { useLiveQuery } from "dexie-react-hooks";
 import { newRepetition, Repetition } from "./Repetition";
-import { ReviewModel, sm2 } from "./SpacedRepetition";
 import { useMemo } from "react";
 import { Table } from "dexie";
+import { Card as Model, State } from "fsrs.js";
+import { scheduler } from "./CardScheduler";
 
 export enum CardType {
   Normal = "normal",
@@ -19,9 +20,8 @@ export enum CardType {
 export interface CardSkeleton {
   id: string;
   history: Repetition[];
-  model: ReviewModel;
+  model: Model;
   deck: string;
-  dueDate: Date | null;
   creationDate: Date;
   frame?: string | undefined;
 }
@@ -36,8 +36,7 @@ export function createCardSkeleton(): CardSkeleton {
     id: id,
     history: [],
     deck: "",
-    dueDate: null,
-    model: { repetitions: 0, easeFactor: 2.5, interval: 0, learned: false },
+    model: new Model(),
     creationDate: new Date(Date.now()),
   };
 }
@@ -72,6 +71,10 @@ export async function updateCard(
   return db.cards.update(id, changes);
 }
 
+export async function updateCardModel(card: Card<CardType>, model: Model) {
+  return db.cards.update(card.id, { model: model });
+}
+
 export async function moveCard(card: Card<CardType>, newDeck: Deck) {
   //Remove card from old deck
   const oldDeck = await db.decks.get(card.deck);
@@ -98,27 +101,6 @@ export async function deleteCard(card: Card<CardType>) {
       }
     });
   });
-}
-
-export async function answerCard(
-  potentiallyOldCard: Card<CardType>,
-  quality: number,
-  learned: boolean
-) {
-  //The card object passed does not have to represent the current version stored in the database due to the implementation in LearnView. Therefore, the card is loaded from the database.
-  //TODO check this new implementation could mean that the card is actually loaded twice see pullCardFrom() in useLearning
-  const card = await getCard(potentiallyOldCard.id);
-  if (card) {
-    card.model.learned = learned;
-    const newModel = sm2(quality, card.model);
-    const dueDate = new Date();
-    dueDate.setDate(dueDate.getDate() + newModel.interval);
-    await updateCard(card.id, {
-      model: newModel,
-      history: [...card.history, newRepetition(quality)],
-      dueDate: dueDate,
-    });
-  }
 }
 
 export function useCards() {
@@ -180,66 +162,47 @@ export async function getCard(id: string) {
   return db.cards.get(id);
 }
 
-export type CardState = "due" | "learned" | "new" | "learning";
-
-/**
- * Returns the state of a card. It can be "due", "learned", "new" or "learning". See {@link CardState} for more information.
- * @param card The card to get the state of.
- */
-export function getStateOf(card: Card<CardType>): CardState {
-  if (card.history.length === 0) {
-    return "new";
-  } else {
-    if (card.model.interval !== 0) {
-      if (!card.dueDate || card.dueDate?.getTime() <= Date.now()) {
-        return "due";
-      } else {
-        return "learned";
-      }
-    } else {
-      return "learning";
-    }
-  }
-}
-
-/**
- * Returns the number of cards in each state. See {@link CardsStats} for more information.
- * @param cards The cards to get the stats of.
- */
-export function useStatsOf(cards?: Card<CardType>[]): CardsStats {
+export function useStatesOf(cards?: Card<CardType>[]): Record<State, number> {
   return useMemo(() => {
-    let dueCounter = 0;
-    let learnedCounter = 0;
-    let newCounter = 0;
-    let learningCounter = 0;
-
-    cards?.forEach((card) => {
-      if (card.history.length === 0) {
-        newCounter++;
-      } else {
-        if (card.model.interval !== 0) {
-          if (!card.dueDate || card.dueDate?.getTime() <= Date.now()) {
-            dueCounter++;
-          } else {
-            learnedCounter++;
-          }
-        } else {
-          learningCounter++;
-        }
-      }
-    });
-    return {
-      dueCards: dueCounter,
-      learnedCards: learnedCounter,
-      newCards: newCounter,
-      learningCards: learningCounter,
+    const states = {
+      [State.New]: 0,
+      [State.Learning]: 0,
+      [State.Review]: 0,
+      [State.Relearning]: 0,
     };
+    cards?.forEach((card) => {
+      states[card.model.state]++;
+    });
+    return states;
   }, [cards]);
 }
 
-export type CardsStats = {
-  dueCards: number | null;
-  learnedCards: number | null;
-  newCards: number | null;
-  learningCards: number | null;
-};
+export type ThreeTypeState = "new" | "learning" | "review";
+
+export function useSimplifiedStatesOf(
+  cards?: Card<CardType>[]
+): Record<ThreeTypeState, number> {
+  return useMemo(() => {
+    const states = {
+      new: 0,
+      learning: 0,
+      review: 0,
+    };
+    cards?.forEach((card) => {
+      if (card.model.state === State.New) {
+        states.new++;
+      } else if (
+        card.model.state === State.Learning ||
+        card.model.state === State.Relearning
+      ) {
+        states.learning++;
+      } else if (
+        card.model.state === State.Review &&
+        card.model.due <= new Date(Date.now())
+      ) {
+        states.review++;
+      }
+    });
+    return states;
+  }, [cards]);
+}
