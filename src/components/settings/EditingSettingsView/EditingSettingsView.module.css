@@ -1,5 +1,5 @@
 .container {
-  & .mantine-Checkbox-label svg {
+  & :global(.mantine-Checkbox-label) svg {
     height: 1rem;
     margin-right: 0.4375rem;
   }
