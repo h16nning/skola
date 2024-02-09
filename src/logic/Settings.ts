@@ -11,6 +11,8 @@ export interface SettingsValues {
   colorSchemePreference: "light" | "dark" | "auto";
   name?: string;
   developerMode: boolean;
+  useBubbleMenu: boolean;
+  useToolbar: boolean;
   showSubAndSuperScriptOptionInEditor: boolean;
   showStrikethroughOptionInEditor: boolean;
   showHighlightOptionInEditor: boolean;
@@ -24,6 +26,8 @@ export const defaultSettings: SettingsValues = {
   language: "en",
   colorSchemePreference: "auto",
   developerMode: false,
+  useBubbleMenu: true,
+  useToolbar: false,
   showSubAndSuperScriptOptionInEditor: true,
   showStrikethroughOptionInEditor: true,
   showHighlightOptionInEditor: true,
