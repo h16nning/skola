@@ -12,6 +12,7 @@ import { useCardsOf } from "../../logic/card";
 import HeroDeckSection from "./HeroDeckSection/HeroDeckSection";
 import { useDocumentTitle, useHotkeys } from "@mantine/hooks";
 import { useScrollResetOnLocationChange } from "../../logic/ui";
+import NotebookView from "../notebook/NotebookView";
 
 function DeckView() {
   const navigate = useNavigate();
@@ -81,21 +82,12 @@ function DeckView() {
             dangerouslySetInnerHTML={{ __html: deck.description }}
           ></Text>
         )}
-        <Stack gap="xs" align="end">
-          <Button
-            leftSection={<IconPlus />}
-            variant="default"
-            onClick={() => navigate("/new/" + deck?.id)}
-          >
-            Add Cards
-          </Button>
-          <HeroDeckSection
-            deck={deck}
-            isDeckReady={isDeckReady}
-            cards={cards}
-            areCardsReady={areCardsReady}
-          />
-        </Stack>
+        <HeroDeckSection
+          deck={deck}
+          isDeckReady={isDeckReady}
+          cards={cards}
+          areCardsReady={areCardsReady}
+        />
 
         <SubDeckSection deck={deck} />
         {deck ? (
@@ -107,6 +99,7 @@ function DeckView() {
         ) : (
           ""
         )}
+        <NotebookView />
       </Stack>
     </>
   );

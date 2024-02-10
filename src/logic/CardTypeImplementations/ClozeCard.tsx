@@ -56,6 +56,9 @@ export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
   displayAnswer(card: Card<CardType.Cloze>) {
     return <ClozeCardComponent occluded={false} card={card} />;
   },
+  displayInNotebook(card: Card<CardType.Cloze>) {
+    return <ClozeCardComponent occluded={false} card={card} />;
+  },
   editor(card: Card<CardType.Cloze> | null, deck: Deck, mode: EditMode) {
     return <ClozeCardEditor card={card} deck={deck} mode={mode} />;
   },

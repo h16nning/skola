@@ -34,6 +34,10 @@ export const UndefinedCardUtils: CardTypeManager<CardType.Undefined> = {
     return "Undefined Card Answer";
   },
 
+  displayInNotebook() {
+    return "Undefined Card Notebook";
+  },
+
   editor() {
     return <span>Undefined Card Editor</span>;
   },

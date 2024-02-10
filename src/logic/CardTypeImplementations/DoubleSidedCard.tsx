@@ -79,6 +79,32 @@ export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
     );
   },
 
+  displayInNotebook(card: Card<CardType.DoubleSided>) {
+    function FrontComponent() {
+      const front = useSharedValue(card.content.frontReferenceId);
+      return (
+        <Title
+          order={3}
+          dangerouslySetInnerHTML={{ __html: front?.value ?? "&#8203;" }}
+        ></Title>
+      );
+    }
+    function BackComponent() {
+      const back = useSharedValue(card.content.backReferenceId);
+      return (
+        <span
+          dangerouslySetInnerHTML={{ __html: back?.value ?? "&#8203;" }}
+        ></span>
+      );
+    }
+    return (
+      <Stack gap="sm">
+        <FrontComponent />
+        <BackComponent />
+      </Stack>
+    );
+  },
+
   editor(card: Card<CardType.DoubleSided> | null, deck: Deck, mode: EditMode) {
     return <DoubleSidedCardEditor card={card} deck={deck} mode={mode} />;
   },
