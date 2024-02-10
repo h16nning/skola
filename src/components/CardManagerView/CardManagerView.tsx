@@ -2,15 +2,21 @@ import classes from "./CardManagerView.module.css";
 import React, { useState } from "react";
 import { ActionIcon, Group, Stack, TextInput, Title } from "@mantine/core";
 import { Card, CardType, useCardsWith } from "../../logic/card";
-import { useLocation, useNavigate } from "react-router-dom";
-import CardTable from "../CardTable/CardTable";
-import EditCardView from "../editcard/EditCardView";
-import { useDecks } from "../../logic/deck";
+import { ActionIcon, Group, Stack, TextInput } from "@mantine/core";
+import { useDebouncedState } from "@mantine/hooks";
 import { IconChevronLeft, IconSearch } from "@tabler/icons-react";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Card, CardType, useCardsWith } from "../../logic/card";
+import selectCards from "../../logic/card_filter";
+import { useDecks } from "../../logic/deck";
+import CardTable from "../CardTable/CardTable";
 import SelectDecksHeader from "../custom/SelectDecksHeader";
 import { useDebouncedState } from "@mantine/hooks";
 import selectCards from "../../logic/card_filter";
 import { AppHeaderContent } from "../Header/Header";
+import EditCardView from "../editcard/EditCardView";
+import classes from "./CardManagerView.module.css";
 
 function CardManagerView() {
   const navigate = useNavigate();
