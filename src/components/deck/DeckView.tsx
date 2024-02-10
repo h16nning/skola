@@ -10,7 +10,7 @@ import MissingObject from "../custom/MissingObject";
 import SuperDecksBreadcrumbs from "../SuperDecksBreadcrumbs/SuperDecksBreadcrumbs";
 import { useCardsOf } from "../../logic/card";
 import HeroDeckSection from "./HeroDeckSection/HeroDeckSection";
-import { useDocumentTitle } from "@mantine/hooks";
+import { useDocumentTitle, useHotkeys } from "@mantine/hooks";
 import { useScrollResetOnLocationChange } from "../../logic/ui";
 
 function DeckView() {

@@ -18,6 +18,7 @@ import DebugDeckModal from "./DebugDeckModal";
 import { Card, CardType } from "../../logic/card";
 import { useSetting } from "../../logic/Settings";
 import ImportModal from "../settings/importexport/ImportModal";
+import { useHotkeys } from "@mantine/hooks";
 
 interface DeckMenuProps {
   deck?: Deck;
@@ -59,6 +60,8 @@ function DeckMenu({
       console.error("Failed to delete deck: " + error);
     }
   }, [deck, navigate]);
+
+  useHotkeys([["mod+Backspace", () => setDeleteModalOpened(true)]]);
 
   return (
     <>

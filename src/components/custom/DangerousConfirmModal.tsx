@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useRef } from "react";
 import ModalProps from "./ModalProps";
 import { Button, Group, Modal, Stack, Text } from "@mantine/core";
 
@@ -30,6 +30,7 @@ function DangerousConfirmModal({
             Cancel
           </Button>
           <Button
+            data-autofocus
             color="red"
             onClick={() => {
               dangerousAction(...dangerousDependencies);
