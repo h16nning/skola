@@ -4,30 +4,28 @@ import {
   Badge,
   Breadcrumbs,
   Button,
+  CSSVariablesResolver,
   Menu,
   Modal,
   NavLink,
   Popover,
   Select,
-  Text,
   Tabs,
-  createTheme,
-  CSSVariablesResolver,
+  Text,
   Title,
+  Tooltip,
+  createTheme,
 } from "@mantine/core";
-import { RichTextEditor } from "@mantine/tiptap";
 import actionIcon from "./ActionIcon.module.css";
 import appShell from "./AppShell.module.css";
 import badge from "./Badge.module.css";
 import breadcrumbs from "./Breadcrumbs.module.css";
 import button from "./Button.module.css";
-import input from "./Input.module.css";
-import modal from "./Modal.module.css";
 import menu from "./Menu.module.css";
-import navbar from "./Navbar.module.css";
+import modal from "./Modal.module.css";
 import navLink from "./NavLink.module.css";
+import navbar from "./Navbar.module.css";
 import popover from "./Popover.module.css";
-import richTextEditor from "./RichTextEditor.module.css";
 import select from "./Select.module.css";
 import tabs from "./Tabs.module.css";
 
@@ -171,13 +169,13 @@ export const presetTheme = createTheme({
         pt: "sm",
       },
     }),
-    Tooltip: {
+    Tooltip: Tooltip.extend({
       styles: () => ({
         tooltip: {
           userSelect: "none",
         },
       }),
-    },
+    }),
     InputWrapper: {
       styles: () => ({
         label: {

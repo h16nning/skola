@@ -14,7 +14,6 @@ export function useGlobalScheduler() {
     scheduler.p.request_retention = requestRetention;
     scheduler.p.w = w;
   }, [maximumInterval, requestRetention, w]);
-  console.log(scheduler);
   return scheduler;
 }
 

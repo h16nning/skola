@@ -39,9 +39,11 @@ function FinishedLearningView({
 
   const accuracy = useRepetitionAccuracy(ratingsList);
 
-  useHotkeys([["Space", () => navigate("/home")]]);
-  useHotkeys([["Enter", () => navigate("/home")]]);
-  useHotkeys([["d", () => navigate(`/deck/${deckId}`)]]);
+  useHotkeys([
+    ["Space", () => navigate("/home")],
+    ["Enter", () => navigate("/home")],
+    ["d", () => navigate(`/deck/${deckId}`)],
+  ]);
 
   return (
     <Center>
