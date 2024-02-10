@@ -1,4 +1,5 @@
 import Dexie, { Table } from "dexie";
+import "dexie-export-import";
 import { Deck } from "./deck";
 import { Card, CardType } from "./card";
 import { Settings, SettingsValues } from "./Settings";

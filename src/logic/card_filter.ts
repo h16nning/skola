@@ -1,5 +1,5 @@
 import { Collection, IndexableType, Table } from "dexie";
-import { Card, CardType } from "./card";
+import { Card, CardType, getCardsOf } from "./card";
 import { getUtils } from "./CardTypeManager";
 import { getDeck } from "./deck";
 
@@ -12,21 +12,25 @@ export default async function selectCards(
 ): Promise<Card<CardType>[] | undefined> {
   let filteredCards:
     | Table<Card<CardType>>
-    | Collection<Card<CardType>, IndexableType> = cards;
+    | Collection<Card<CardType>, IndexableType>
+    | Card<CardType>[] = cards;
   if (deckGiven) {
     const deckId = location.pathname.split("/")[2];
-    filteredCards = filteredCards.where("deck").equals(deckId);
+    filteredCards =
+      (await getDeck(deckId).then((deck) => getCardsOf(deck))) ?? [];
   }
-  let comparableFilteredCards = await filteredCards.toArray().then(
-    async (cardsArray) =>
-      await Promise.all(
-        cardsArray.map(async (card) => {
-          return {
-            ...card,
-            preview: await getUtils(card).displayPreview(card),
-          };
-        })
-      )
+
+  const cardsArray: Card<CardType>[] = Array.isArray(filteredCards)
+    ? filteredCards
+    : await filteredCards.toArray();
+
+  let comparableFilteredCards = await Promise.all(
+    cardsArray.map(async (card) => {
+      return {
+        ...card,
+        preview: await getUtils(card).displayPreview(card),
+      };
+    })
   );
   if (filter.length > 0) {
     console.log(filter);

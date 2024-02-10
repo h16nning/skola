@@ -12,21 +12,6 @@ import i18n from "./i18n";
 import { useSetting } from "./logic/Settings";
 import { cssVariablesResolver, presetTheme } from "./style/StyleProvider";
 
-async function persist() {
-  return (
-    (await navigator.storage) &&
-    navigator.storage.persist &&
-    navigator.storage.persist()
-  );
-}
-
-async function isStoragePersisted() {
-  return (
-    (await navigator.storage) &&
-    navigator.storage.persisted &&
-    navigator.storage.persisted()
-  );
-}
 function useRestoreLanguage() {
   const [language] = useSetting("language");
   useEffect(() => {
@@ -46,21 +31,6 @@ export default function App() {
     defaultValue: false,
   });
 
-  useEffect(() => {
-    isStoragePersisted().then(async (isPersisted) => {
-      if (isPersisted) {
-        console.log(":) Storage is successfully persisted.");
-      } else {
-        console.log(":( Storage is not persisted.");
-        console.log("Trying to persist..:");
-        if (await persist()) {
-          console.log(":) We successfully turned the storage to be persisted.");
-        } else {
-          console.log(":( Failed to make storage persisted");
-        }
-      }
-    });
-  }, []);
   return (
     <I18nextProvider i18n={i18n}>
       <MantineProvider

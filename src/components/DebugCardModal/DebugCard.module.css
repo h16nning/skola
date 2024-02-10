@@ -8,10 +8,7 @@
   & thead {
     font-family: var(--mantine-font-family-headings);
     font-size: var(--mantine-font-size-sm);
-    & th {
-      padding: 0;
-      padding-top: var(--mantine-spacing-md);
-    }
+
   }
 }
 
