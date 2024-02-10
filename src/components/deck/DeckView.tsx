@@ -1,30 +1,18 @@
-import React, { useState } from "react";
-import {
-  ActionIcon,
-  Button,
-  Group,
-  Stack,
-  Title,
-  Center,
-  useMantineTheme,
-  Space,
-  Text,
-} from "@mantine/core";
-import SubDeckSection from "./SubDeckSection";
-import { IconPlus } from "@tabler/icons-react";
-import DeckMenu from "./DeckMenu";
+import { Group, Stack, Title, useMantineTheme } from "@mantine/core";
+import { useDocumentTitle } from "@mantine/hooks";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDeckFromUrl, useSuperDecks } from "../../logic/deck";
-import DeckOptionsModal from "./DeckOptionsModal";
-import MissingObject from "../custom/MissingObject";
-import SuperDecksBreadcrumbs from "../SuperDecksBreadcrumbs/SuperDecksBreadcrumbs";
 import { useCardsOf } from "../../logic/card";
-import HeroDeckSection from "./HeroDeckSection/HeroDeckSection";
-import { useDocumentTitle, useHotkeys } from "@mantine/hooks";
+import { useDeckFromUrl, useSuperDecks } from "../../logic/deck";
 import { useScrollResetOnLocationChange } from "../../logic/ui";
-import NotebookView from "../notebook/NotebookView";
 import { AppHeaderContent } from "../Header/Header";
-import { IconChevronLeft } from "@tabler/icons-react";
+import SuperDecksBreadcrumbs from "../SuperDecksBreadcrumbs/SuperDecksBreadcrumbs";
+import MissingObject from "../custom/MissingObject";
+import NotebookView from "../notebook/NotebookView";
+import DeckMenu from "./DeckMenu";
+import DeckOptionsModal from "./DeckOptionsModal";
+import HeroDeckSection from "./HeroDeckSection/HeroDeckSection";
+import SubDeckSection from "./SubDeckSection";
 
 function DeckView() {
   const navigate = useNavigate();
@@ -55,23 +43,10 @@ function DeckView() {
           />
         </Group>
       </AppHeaderContent>
-      <Stack gap="xs" align="end" w="100%" maw="600px">
-        <Group justify="space-between" w="100%">
-          <Title
-            order={3}
-            lineClamp={1}
-            c="var(--mantine-primary-color-filled)"
-          >
-            {deck?.name}
-          </Title>
-          <Button
-            leftSection={<IconPlus />}
-            variant="default"
-            onClick={() => navigate("/new/" + deck?.id)}
-          >
-            Add Cards
-          </Button>
-        </Group>
+      <Stack gap="xl" align="start" w="100%" maw="600px" pt="lg">
+        <Title order={3} lineClamp={1}>
+          {deck?.name}
+        </Title>
         <HeroDeckSection
           deck={deck}
           isDeckReady={isDeckReady}

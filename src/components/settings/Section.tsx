@@ -12,7 +12,7 @@ export default function Section({
   rightSection,
 }: SectionProps) {
   return (
-    <Stack gap="sm">
+    <Stack gap="sm" w="100%">
       <Group justify="space-between">
         <Title order={4}>{title}</Title>
         {rightSection}

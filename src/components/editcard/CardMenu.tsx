@@ -55,7 +55,7 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
     <>
       <Menu position="bottom-end">
         <Menu.Target>
-          <ActionIcon>
+          <ActionIcon variant="subtle" color="gray">
             <IconDots />
           </ActionIcon>
         </Menu.Target>
