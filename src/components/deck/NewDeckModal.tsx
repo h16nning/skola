@@ -3,6 +3,7 @@ import { Button, Group, Modal, Stack, Text, TextInput } from "@mantine/core";
 import ModalProps from "../custom/ModalProps";
 import { Deck, newDeck } from "../../logic/deck";
 import { useNavigate } from "react-router-dom";
+import { getHotkeyHandler, useHotkeys } from "@mantine/hooks";
 
 interface NewDeckModalProps extends ModalProps {
   superDeck?: Deck;
@@ -17,6 +18,7 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
   const [status, setStatus] = useState<string | null>(null);
 
   async function tryAddDeck() {
+    if (!isInputValid()) return;
     setAddingDeck(true);
     try {
       const id = await newDeck(nameValue, superDeck, descriptionValue);
@@ -30,6 +32,8 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
     setNameValue("");
     setDescriptionValue("");
   }
+
+  useHotkeys([["mod+Enter", () => tryAddDeck()]]);
 
   return (
     <Modal
@@ -45,6 +49,7 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
           label="Name"
           value={nameValue}
           onChange={(e) => setNameValue(e.currentTarget.value)}
+          onKeyDown={getHotkeyHandler([["mod+Enter", () => tryAddDeck()]])}
         />
         <TextInput
           placeholder="Optional"
@@ -52,6 +57,7 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
           label="Description"
           value={descriptionValue}
           onChange={(e) => setDescriptionValue(e.currentTarget.value)}
+          onKeyDown={getHotkeyHandler([["mod+Enter", () => tryAddDeck()]])}
         />
         {status ? <Text>{status}</Text> : <></>}
         <Group justify="flex-end">

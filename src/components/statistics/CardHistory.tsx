@@ -19,8 +19,6 @@ export default function CardHistory({ card }: CardHistoryProps) {
     return [];
   }, [card]);
 
-  console.log(card?.model.due.getTime());
-
   return (
     <AreaChart
       h={300}
