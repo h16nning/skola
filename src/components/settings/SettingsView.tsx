@@ -1,10 +1,9 @@
-import { ActionIcon, Group, Stack, Tabs } from "@mantine/core";
+import { Center, Stack, Tabs, Title } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import CColorSchemeToggle from "./ColorSchemeToggle";
 import {
   IconBolt,
   IconBraces,
-  IconChevronLeft,
   IconDatabase,
   IconInfoCircle,
   IconPalette,
@@ -14,16 +13,16 @@ import {
 import GeneralSettingsView from "./GeneralSettingsView";
 import { useSetting } from "../../logic/Settings";
 import EditingSettingsView from "./EditingSettingsView/EditingSettingsView";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import AboutSettingsView from "./AboutSettingsView";
 import DatabaseSettingsView from "./DatabaseSettingsView/DatabaseSettingsView";
 import { t } from "i18next";
 import LearnSettingsView from "./LearnSettingsView";
+import { AppHeaderContent } from "../Header/Header";
 
 export default function SettingsView() {
   const [value, setValue] = useState("General");
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (location.pathname === "/settings") {
@@ -37,11 +36,11 @@ export default function SettingsView() {
 
   return (
     <Stack gap="xl" w="100%" maw="600px">
-      <Group>
-        <ActionIcon onClick={() => navigate(-1)}>
-          <IconChevronLeft />
-        </ActionIcon>
-      </Group>
+      <AppHeaderContent>
+        <Center>
+          <Title order={3}>{t("settings.page-title")}</Title>
+        </Center>
+      </AppHeaderContent>
       <Tabs
         orientation="horizontal"
         defaultValue="General"

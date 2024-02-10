@@ -25,10 +25,14 @@ import { useMediaQuery } from "@mantine/hooks";
 
 function Sidebar({
   menuOpened,
-  setMenuOpened,
+  menuHandlers,
 }: {
   menuOpened: boolean;
-  setMenuOpened: Function;
+  menuHandlers: {
+    readonly open: () => void;
+    readonly close: () => void;
+    readonly toggle: () => void;
+  };
 }) {
   const location = useLocation();
   const navigate = useNavigate();
@@ -76,14 +80,14 @@ function Sidebar({
             leftSection={icon}
             onClick={() => {
               navigate(path);
-              fullscreenMode && setMenuOpened(false);
+              fullscreenMode && menuHandlers.close();
             }}
             active={location.pathname.startsWith(path)}
           />
         </Tooltip>
       );
     },
-    [location.pathname, navigate, setMenuOpened, fullscreenMode]
+    [location.pathname, navigate, menuHandlers, fullscreenMode]
   );
 
   const fullScreen = {
@@ -114,7 +118,7 @@ function Sidebar({
           </Group>
           {fullscreenMode ? (
             <ActionIcon
-              onClick={() => setMenuOpened(false)}
+              onClick={() => menuHandlers.close()}
               style={{ alignSelf: "end" }}
             >
               <IconChevronRight />

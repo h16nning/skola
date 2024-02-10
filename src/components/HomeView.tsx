@@ -1,30 +1,24 @@
 import {
   ActionIcon,
   Button,
+  Center,
   Group,
   Stack,
   Title,
   useMantineTheme,
 } from "@mantine/core";
-import { IconMenu2, IconPlus } from "@tabler/icons-react";
+import { IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 import NewDeckModal from "./deck/NewDeckModal";
 import DeckTable from "./deck/DeckTable";
 import { useTopLevelDecks } from "../logic/deck";
 import { useSetting } from "../logic/Settings";
-import { useHotkeys, useMediaQuery } from "@mantine/hooks";
+import { useHotkeys } from "@mantine/hooks";
 import { useTranslation } from "react-i18next";
+import { AppHeaderContent } from "./Header/Header";
 
-export default function HomeView({
-  setMenuOpened,
-}: {
-  menuOpened: boolean;
-  setMenuOpened: Function;
-}) {
-  const theme = useMantineTheme();
+export default function HomeView({}: {}) {
   const [t] = useTranslation();
-  const hasSmallScreen = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`);
-
   const [newDeckModalOpened, setNewDeckModalOpened] = useState(false);
   const [decks, isReady] = useTopLevelDecks();
   const [userName] = useSetting("name");
@@ -33,31 +27,25 @@ export default function HomeView({
 
   return (
     <>
-      <Stack gap="3rem" pt="lg" w="600px">
-        <Group>
-          {hasSmallScreen && (
-            <ActionIcon onClick={() => setMenuOpened(true)}>
-              <IconMenu2 />
-            </ActionIcon>
-          )}
+      <AppHeaderContent>
+        <Center>
           <Title order={3}>
             {userName
               ? t("home.welcome-user", { name: userName })
               : t("home.welcome")}
           </Title>
-        </Group>
+        </Center>
+      </AppHeaderContent>
 
-        <Stack gap="sm" align="flex-end" w="100%">
-          <Button
-            onClick={() => setNewDeckModalOpened(true)}
-            leftSection={<IconPlus />}
-            variant="default"
-            style={{ alignSelf: "align-end" }}
-          >
-            {t("deck.new-deck-button")}
-          </Button>
-          <DeckTable deckList={decks} isReady={isReady} />
-        </Stack>
+      <Stack gap="4rem" w="600px" maw="100%" align="flex-end">
+        <Button
+          onClick={() => setNewDeckModalOpened(true)}
+          leftSection={<IconPlus />}
+          variant="default"
+        >
+          {t("deck.new-deck-button")}
+        </Button>
+        <DeckTable deckList={decks} isReady={isReady} />
       </Stack>
       <NewDeckModal
         opened={newDeckModalOpened}
