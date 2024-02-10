@@ -71,6 +71,7 @@ function DeckMenu({
         <Menu.Target>
           <ActionIcon
             variant="subtle"
+            color="gray"
             aria-label={t("deck.settings")}
             disabled={(isDeckReady && !deck) || (areCardsReady && !cards)}
           >

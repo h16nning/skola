@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import classes from "./LearnView.module.css";
-import { ActionIcon, Group, Progress, Stack, Text } from "@mantine/core";
+import { ActionIcon, Box, Group, Progress, Stack, Text } from "@mantine/core";
 import CardMenu from "../../editcard/CardMenu";
 import { useNavigate } from "react-router-dom";
 import { StopwatchResult, useStopwatch } from "react-timer-hook";
@@ -51,14 +51,9 @@ function LearnViewHeader({ currentCard, controller }: LearnViewHeaderProps) {
   );
   const [debouncedProgress] = useDebouncedValue(progress, 100);
   return (
-    <Stack className={classes.headerContainer} gap={0}>
-      <Group
-        justify="space-between"
-        pb="md"
-        wrap="nowrap"
-        className={classes.headerGroup}
-      >
-        <Group>
+    <>
+      <Group justify="space-between" wrap="nowrap">
+        <Group wrap="nowrap" gap="xs">
           <ActionIcon
             onClick={() => navigate("/home")}
             variant="subtle"
@@ -69,19 +64,20 @@ function LearnViewHeader({ currentCard, controller }: LearnViewHeaderProps) {
           <Stopwatch />
         </Group>
 
-        <Group justify="flex-end" wrap="nowrap">
+        <Group justify="flex-end" wrap="nowrap" gap="xs">
           <RemainingCardsIndicator controller={controller} />
           <CardMenu card={currentCard} onDelete={controller.requestNextCard} />
         </Group>
       </Group>
       <Progress
+        className={classes.progressBar}
         size="xs"
         value={progress}
         transitionDuration={200}
         radius={0}
         w="100%"
       />
-    </Stack>
+    </>
   );
 }
 

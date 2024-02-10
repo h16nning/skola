@@ -46,11 +46,10 @@
   border-top: solid 1px var(--mantine-color-light-border);
 }
 
-.headerContainer {
-  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
-  padding: 0;
 
-  .headerGroup {
-    padding: var(--mantine-spacing-md);
-  }
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }

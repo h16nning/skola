@@ -15,6 +15,7 @@ import LearnViewCurrentCardStateIndicator from "../LearnViewCurrentCardStateIndi
 import classes from "./LearnView.module.css";
 import LearnViewFooter from "./LearnViewFooter";
 import LearnViewHeader, { stopwatchResult } from "./LearnViewHeader";
+import { AppHeaderContent } from "../../Header/Header";
 
 function LearnView() {
   const { toggle, fullscreen } = useFullscreen();
@@ -76,11 +77,14 @@ function LearnView() {
 
   return (
     <div className={classes.learnView}>
-      <Flex direction="column" justify="space-between" h="100%" w="100%">
+      <AppHeaderContent>
         <LearnViewHeader
           currentCard={controller.currentCard ?? undefined}
           controller={controller}
         />
+      </AppHeaderContent>
+      <Flex direction="column" justify="space-between" h="100%" w="100%">
+        <div></div>
         <Center className={classes.cardContainer}>
           <Paper className={classes.card}>
             <LearnViewCurrentCardStateIndicator

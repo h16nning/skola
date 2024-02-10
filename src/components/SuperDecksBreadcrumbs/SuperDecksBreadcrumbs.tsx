@@ -30,7 +30,7 @@ function SuperDecksBreadcrumbs({ superDecks }: SuperDecksBreadcrumbsProps) {
           lh="1.5"
           onClick={() => navigate("/home")}
         >
-          <Group wrap="nowrap">
+          <Group wrap="nowrap" gap="xs">
             <IconHome size="1em" /> {t("home.title")}
           </Group>
         </Anchor>
@@ -45,7 +45,7 @@ function SuperDecksBreadcrumbs({ superDecks }: SuperDecksBreadcrumbsProps) {
             }}
             onClick={() => navigate("/deck/" + s.id)}
           >
-            <Group wrap="nowrap">
+            <Group wrap="nowrap" gap="xs">
               <IconCardsFilled size="1rem" /> {s.name}
             </Group>
           </Anchor>

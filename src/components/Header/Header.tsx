@@ -1,8 +1,8 @@
-import classes from "./Header.module.css";
-import React, { PropsWithChildren } from "react";
-import { ActionIcon, AppShell, Burger, Group, Title } from "@mantine/core";
-import { IconMenu2 } from "@tabler/icons-react";
+import { AppShell, Burger, Group } from "@mantine/core";
+import { PropsWithChildren } from "react";
 import { createPortal } from "react-dom";
+import classes from "./Header.module.css";
+import { useWindowScroll } from "@mantine/hooks";
 
 interface HeaderProps {
   menuOpened: boolean;
@@ -27,10 +27,13 @@ export const AppHeaderContent = ({ children }: PropsWithChildren) => {
 };
 
 export default function Header({ menuOpened, menuHandlers }: HeaderProps) {
-  console.log("Header");
+  const [scroll] = useWindowScroll();
   return (
-    <AppShell.Header withBorder={false}>
-      <Group h="100%" px="md" p="lg" justify="flex-start">
+    <AppShell.Header
+      withBorder={false}
+      className={classes.header + " " + (scroll.y > 20 && classes.scrolled)}
+    >
+      <Group h="100%" px="md" p="sm" justify="flex-start" wrap="nowrap">
         <Burger
           opened={menuOpened}
           onClick={menuHandlers.toggle}

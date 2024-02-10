@@ -1,21 +1,13 @@
-import {
-  ActionIcon,
-  Button,
-  Center,
-  Group,
-  Stack,
-  Title,
-  useMantineTheme,
-} from "@mantine/core";
+import { Button, Center, Stack, Title } from "@mantine/core";
+import { useHotkeys } from "@mantine/hooks";
 import { IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
-import NewDeckModal from "./deck/NewDeckModal";
-import DeckTable from "./deck/DeckTable";
-import { useTopLevelDecks } from "../logic/deck";
-import { useSetting } from "../logic/Settings";
-import { useHotkeys } from "@mantine/hooks";
 import { useTranslation } from "react-i18next";
+import { useSetting } from "../logic/Settings";
+import { useTopLevelDecks } from "../logic/deck";
 import { AppHeaderContent } from "./Header/Header";
+import DeckTable from "./deck/DeckTable";
+import NewDeckModal from "./deck/NewDeckModal";
 
 export default function HomeView({}: {}) {
   const [t] = useTranslation();
@@ -37,7 +29,7 @@ export default function HomeView({}: {}) {
         </Center>
       </AppHeaderContent>
 
-      <Stack gap="4rem" w="600px" maw="100%" align="flex-end">
+      <Stack gap="xs" w="600px" maw="100%" align="flex-end" pt="xl">
         <Button
           onClick={() => setNewDeckModalOpened(true)}
           leftSection={<IconPlus />}
