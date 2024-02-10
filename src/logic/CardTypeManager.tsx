@@ -13,6 +13,8 @@ export interface CardTypeManager<T extends CardType> {
 
   displayPreview: (card: Card<T>) => string | Promise<string>;
 
+  displayInNotebook: (card: Card<T>) => ReactNode;
+
   displayQuestion(card: Card<T>): ReactNode;
 
   displayAnswer(card: Card<T>): ReactNode;

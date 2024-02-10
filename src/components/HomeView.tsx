@@ -12,7 +12,7 @@ import NewDeckModal from "./deck/NewDeckModal";
 import DeckTable from "./deck/DeckTable";
 import { useTopLevelDecks } from "../logic/deck";
 import { useSetting } from "../logic/Settings";
-import { useMediaQuery } from "@mantine/hooks";
+import { useHotkeys, useMediaQuery } from "@mantine/hooks";
 import { useTranslation } from "react-i18next";
 
 export default function HomeView({
@@ -28,6 +28,8 @@ export default function HomeView({
   const [newDeckModalOpened, setNewDeckModalOpened] = useState(false);
   const [decks, isReady] = useTopLevelDecks();
   const [userName] = useSetting("name");
+
+  useHotkeys([["n", () => setNewDeckModalOpened(true)]]);
 
   return (
     <>

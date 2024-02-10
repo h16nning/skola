@@ -60,6 +60,18 @@ export const NormalCardUtils: CardTypeManager<CardType.Normal> = {
     );
   },
 
+  displayInNotebook(card: Card<CardType.Normal>) {
+    return (
+      <Stack gap="sm">
+        <Title
+          order={4}
+          dangerouslySetInnerHTML={{ __html: card.content.front }}
+        />
+        <div dangerouslySetInnerHTML={{ __html: card.content.back }}></div>
+      </Stack>
+    );
+  },
+
   editor(card: Card<CardType.Normal> | null, deck: Deck, mode: EditMode) {
     return <NormalCardEditor card={card} deck={deck} mode={mode} />;
   },
