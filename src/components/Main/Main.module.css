@@ -3,11 +3,4 @@
   height: 100%;
   align-items: flex-start;
   padding: var(--mantine-spacing-md);
-  padding-left: var(--mantine-spacing-md);
-  @mixin larger-than $mantine-breakpoint-xs {
-    padding-left: calc(var(--mantine-spacing-md) + 3.5rem);
-  }
-  @mixin larger-than $mantine-breakpoint-lg {
-    padding-left: calc(var(--mantine-spacing-md) + 18.75rem);
-  }
 }

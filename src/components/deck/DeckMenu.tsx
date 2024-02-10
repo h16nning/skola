@@ -19,6 +19,7 @@ import { Card, CardType } from "../../logic/card";
 import { useSetting } from "../../logic/Settings";
 import ImportModal from "../settings/importexport/ImportModal";
 import { useHotkeys } from "@mantine/hooks";
+import { useTranslation } from "react-i18next";
 
 interface DeckMenuProps {
   deck?: Deck;
@@ -36,6 +37,7 @@ function DeckMenu({
   areCardsReady,
 }: DeckMenuProps) {
   const navigate = useNavigate();
+  const [t] = useTranslation();
 
   const [developerMode] = useSetting("developerMode");
 
@@ -68,6 +70,8 @@ function DeckMenu({
       <Menu position="bottom-end">
         <Menu.Target>
           <ActionIcon
+            variant="subtle"
+            aria-label={t("deck.settings")}
             disabled={(isDeckReady && !deck) || (areCardsReady && !cards)}
           >
             <IconDots />
