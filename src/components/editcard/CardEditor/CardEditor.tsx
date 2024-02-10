@@ -1,6 +1,12 @@
 import classes from "./CardEditor.module.css";
 import React from "react";
-import { BubbleMenu, Editor, EditorOptions, useEditor } from "@tiptap/react";
+import {
+  BubbleMenu,
+  Editor,
+  EditorOptions,
+  Extension,
+  useEditor,
+} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
 import Underline from "@tiptap/extension-underline";
@@ -13,6 +19,8 @@ import { Color } from "@tiptap/extension-color";
 import { TextStyle } from "@tiptap/extension-text-style";
 import { CardEditorControls } from "./CardEditorControls";
 import { useSettings } from "../../../logic/Settings";
+import { Box } from "@mantine/core";
+import { CustomHardBreak } from "./tiptap/CustomHardBreak";
 
 interface CardEditorProps {
   editor: Editor | null;
@@ -24,11 +32,26 @@ export function useCardEditor(props: {
   content: string;
   onUpdate?: EditorOptions["onUpdate"];
   extensions?: any[];
+  finish?: Function;
 }) {
   return useEditor(
     {
       extensions: [
-        StarterKit,
+        Extension.create({
+          name: "addcard",
+          addKeyboardShortcuts() {
+            return {
+              "Mod-Enter": () => {
+                props.finish && props.finish();
+                return false;
+              },
+            };
+          },
+        }),
+        StarterKit.configure({
+          hardBreak: false,
+        }),
+        CustomHardBreak,
         Underline,
         Link,
         Superscript,
@@ -66,9 +89,11 @@ function CardEditor({ editor, controls, className }: CardEditorProps) {
       {areSettingsReady && (
         <>
           {editor && settings.useToolbar && (
-            <RichTextEditor.Toolbar className={classes.toolbar}>
-              <CardEditorControls controls={controls} editor={editor} />
-            </RichTextEditor.Toolbar>
+            <div tabIndex={-1}>
+              <RichTextEditor.Toolbar className={classes.toolbar}>
+                <CardEditorControls controls={controls} editor={editor} />
+              </RichTextEditor.Toolbar>
+            </div>
           )}
           {editor && settings.useBubbleMenu && (
             <BubbleMenu editor={editor}>

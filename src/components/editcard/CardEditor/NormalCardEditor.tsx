@@ -1,5 +1,5 @@
 import classes from "./NormalCardEditor.module.css";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Stack, Text, useMantineTheme } from "@mantine/core";
 import CardEditor, { useCardEditor } from "./CardEditor";
 import { EditMode } from "../../../logic/CardTypeManager";
@@ -22,7 +22,7 @@ interface NormalCardEditorProps {
   mode: EditMode;
 }
 
-async function finish(
+async function finishCard(
   mode: EditMode,
   clear: Function,
   deck: Deck,
@@ -35,7 +35,6 @@ async function finish(
     if (mode === "edit") {
       //SAVE
       try {
-        console.log(cardInstance.id);
         const numberOfUpdatedRecords = await updateCard(
           cardInstance.id,
           cardInstance
@@ -81,24 +80,30 @@ function createCardInstance(
 }
 
 function NormalCardEditor({ card, deck, mode }: NormalCardEditorProps) {
-  const theme = useMantineTheme();
+  const [requestedFinish, setRequestedFinish] = React.useState(false);
 
-  useHotkeys([
-    [
-      "mod+Enter",
-      () => finish(mode, clear, deck, card, frontEditor, backEditor),
-    ],
-  ]);
+  const frontEditor = useCardEditor({
+    content: card?.content.front ?? "",
+    finish: () => setRequestedFinish(true),
+  });
 
-  const frontEditor = useCardEditor({ content: card?.content.front ?? "" });
-
-  const backEditor = useCardEditor({ content: card?.content.back ?? "" });
+  const backEditor = useCardEditor({
+    content: card?.content.back ?? "",
+    finish: () => setRequestedFinish(true),
+  });
 
   const clear = useCallback(() => {
     frontEditor?.commands.setContent("");
     backEditor?.commands.setContent("");
     frontEditor?.commands.focus();
   }, [frontEditor, backEditor]);
+
+  useEffect(() => {
+    if (requestedFinish) {
+      finishCard(mode, clear, deck, card, frontEditor, backEditor);
+      setRequestedFinish(false);
+    }
+  }, [requestedFinish, mode, clear, deck, card, frontEditor, backEditor]);
 
   return (
     <Stack gap="2rem">
@@ -118,10 +123,7 @@ function NormalCardEditor({ card, deck, mode }: NormalCardEditorProps) {
         </Text>
         <CardEditor editor={backEditor} key="back" />
       </Stack>
-      <CardEditorFooter
-        finish={() => finish(mode, clear, deck, card, frontEditor, backEditor)}
-        mode={mode}
-      />
+      <CardEditorFooter finish={() => setRequestedFinish(true)} mode={mode} />
     </Stack>
   );
 }

@@ -17,8 +17,8 @@ export function CardEditorControls({
 }: CardEditorControlsProps) {
   const [settings] = useSettings();
   return (
-    <Box className={classes.controlsWrapper}>
-      <RichTextEditor.ControlsGroup>
+    <Box className={classes.controlsWrapper} tabIndex={-1}>
+      <RichTextEditor.ControlsGroup tabIndex={-1}>
         <RichTextEditor.Bold tabIndex={-1} />
         <RichTextEditor.Italic tabIndex={-1} />
         <RichTextEditor.Underline tabIndex={-1} />
@@ -41,7 +41,7 @@ export function CardEditorControls({
         <RichTextEditor.ClearFormatting tabIndex={-1} />
       </RichTextEditor.ControlsGroup>
 
-      <RichTextEditor.ControlsGroup>
+      <RichTextEditor.ControlsGroup tabIndex={-1}>
         {settings.showListOptionInEditor && (
           <>
             <RichTextEditor.BulletList tabIndex={-1} />
@@ -53,14 +53,16 @@ export function CardEditorControls({
       </RichTextEditor.ControlsGroup>
 
       {settings.showLinkOptionInEditor && (
-        <RichTextEditor.ControlsGroup>
+        <RichTextEditor.ControlsGroup tabIndex={-1}>
           <RichTextEditor.Link tabIndex={-1} />
           <RichTextEditor.Unlink tabIndex={-1} />
         </RichTextEditor.ControlsGroup>
       )}
-      <RichTextEditor.ControlsGroup>{controls}</RichTextEditor.ControlsGroup>
+      <RichTextEditor.ControlsGroup tabIndex={-1}>
+        {controls}
+      </RichTextEditor.ControlsGroup>
 
-      <RichTextEditor.ControlsGroup>
+      <RichTextEditor.ControlsGroup tabIndex={-1}>
         <EditorOptionsMenu />
       </RichTextEditor.ControlsGroup>
     </Box>
