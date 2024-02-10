@@ -36,6 +36,7 @@
     "@types/uuid": "^9.0.1",
     "dayjs": "^1.11.7",
     "dexie": "^3.2.3",
+    "dexie-export-import": "^4.1.1",
     "dexie-react-hooks": "^1.1.1",
     "embla-carousel-react": "^7.0.9",
     "firebase": "^9.18.0",

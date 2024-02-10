@@ -20,8 +20,9 @@ export default function SettingsInput({
   const [status, setStatus] = useState(SettingStatus.NONE);
   const [setting] = useSetting(settingsKey);
 
-  const [value, setValue] =
-    useState<SettingsValues[typeof settingsKey]>(setting);
+  const [value, setValue] = useState<SettingsValues[typeof settingsKey]>(
+    setting !== undefined ? setting : ""
+  );
   const [touched, setTouched] = useState(false);
 
   const [debounced] = useDebouncedValue<SettingsValues[typeof settingsKey]>(
@@ -33,7 +34,7 @@ export default function SettingsInput({
       setStatus(SettingStatus.LOADING);
     }
   }, [touched, value]);
-  useEffect(() => setValue(setting), [setting]);
+  useEffect(() => setValue(setting !== undefined ? setting : ""), [setting]);
 
   useEffect(() => {
     if (touched) {
