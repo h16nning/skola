@@ -66,6 +66,7 @@ self.addEventListener("activate", (event) => {
 
 // eslint-disable-next-line no-restricted-globals
 self.addEventListener("fetch", (event) => {
+  console.log("service-worker: fetch", event.request.url);
   // Skip cross-origin requests, like those for Google Analytics.
 
   // eslint-disable-next-line no-restricted-globals
