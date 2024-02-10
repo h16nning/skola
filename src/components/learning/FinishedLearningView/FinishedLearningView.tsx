@@ -1,4 +1,3 @@
-import classes from "./FinishedLearningView.module.css";
 import {
   Button,
   Center,
@@ -8,19 +7,20 @@ import {
   ThemeIcon,
   Title,
 } from "@mantine/core";
+import { useHotkeys } from "@mantine/hooks";
 import {
   IconClockHour9,
   IconHome,
   IconTallymarks,
   IconTrophy,
 } from "@tabler/icons-react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { StopwatchResult } from "react-timer-hook";
-import { useHotkeys } from "@mantine/hooks";
 import { useSetting } from "../../../logic/Settings";
-import Stat from "../../custom/Stat/Stat";
 import { useRepetitionAccuracy } from "../../../logic/learn";
-import { useTranslation } from "react-i18next";
+import Stat from "../../custom/Stat/Stat";
+import classes from "./FinishedLearningView.module.css";
 
 interface FinishedLearningViewProps {
   ratingsList: number[];
@@ -41,6 +41,7 @@ function FinishedLearningView({
 
   useHotkeys([["Space", () => navigate("/home")]]);
   useHotkeys([["Enter", () => navigate("/home")]]);
+  useHotkeys([["d", () => navigate(`/deck/${deckId}`)]]);
 
   return (
     <Center>
@@ -48,9 +49,13 @@ function FinishedLearningView({
         <ThemeIcon size="6rem" radius="60%" className={classes.trophyIcon}>
           <IconTrophy stroke={0.75} size={50} />
         </ThemeIcon>
-        <Title>Congratulations{name && ", " + name}!</Title>
+        <Title>
+          {name
+            ? t("learning.finished-congrats-name", { name: name })
+            : t("learning.finished-congrats")}
+        </Title>
         <Text style={{ textAlign: "center" }}>
-          {t("learning.finished-congratulations")}
+          {t("learning.finished-info")}
         </Text>
         <Group wrap="nowrap">
           <Stat
@@ -60,31 +65,21 @@ function FinishedLearningView({
             }
             icon={IconClockHour9}
             color="orange"
-            width="7rem"
           />
           <Stat
             name={t("learning.finished-accuracy-ratio")}
             value={accuracy ? accuracy + "%" : "not available"}
             icon={IconTrophy}
             color="green"
-            width="7rem"
           />
           <Stat
             name={t("learning.finished-repetions-count")}
             value={ratingsList.length}
             icon={IconTallymarks}
             color="blue"
-            width="7rem"
           />
         </Group>
-        <Group>
-          <Button
-            onClick={() => navigate(`/deck/${deckId}`)}
-            size="md"
-            variant="subtle"
-          >
-            {t("learning.finished-button-to-deck")}
-          </Button>
+        <Stack gap="sm">
           <Button
             onClick={() => navigate("/home")}
             leftSection={<IconHome />}
@@ -92,7 +87,14 @@ function FinishedLearningView({
           >
             {t("learning.finished-button-home")}
           </Button>
-        </Group>
+          <Button
+            onClick={() => navigate(`/deck/${deckId}`)}
+            size="md"
+            variant="subtle"
+          >
+            {t("learning.finished-button-to-deck")}
+          </Button>
+        </Stack>
       </Stack>
     </Center>
   );

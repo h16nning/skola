@@ -9,7 +9,7 @@
     "new-cards-label": "Neu",
     "learning-cards-label": "Lernen",
     "review-cards-label": "Wiederholen",
-    "new-deck-button": "Neues Deck"
+    "new-deck-button": "Neuer Stapel"
   },
   "home": {
     "welcome-user": "Willkommen zurück, {{name}}!",
@@ -44,5 +44,15 @@
     "developer": {
       "title": "Entwickler"
     }
+  },
+  "learning": {
+    "finished-congrats": "Herzlichen Glückwunsch!",
+    "finished-congrats-name": "Herzlichen Glückwunsch, {{name}}!",
+    "finished-button-home": "Zum Start",
+    "finished-button-to-deck": "Zurück zum Stapel",
+    "finished-repetions-count": "Wiederholt",
+    "finished-accuracy-ratio": "Genauigkeit",
+    "finished-duration": "Dauer",
+    "finished-info": "Du hast alle Karten in diesem Stapel für heute gelernt!"
   }
 }
