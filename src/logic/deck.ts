@@ -4,7 +4,7 @@ import { db } from "./db";
 import { IndexableType } from "dexie";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export interface Deck {
   id: string;
@@ -209,18 +209,12 @@ export function useDeckFromUrl(): [
   boolean,
   string | undefined,
 ] {
-  const location = useLocation();
-  const [id, setID] = useState<string | undefined>(undefined);
-  const [params, setParams] = useState<string | undefined>(undefined);
-
-  useEffect(() => {
-    setID(location.pathname.split("/")[2]);
-    setParams(location.pathname.split("/")[3]);
-  }, [location]);
+  const deckId = useParams().deckId;
+  const params = useParams().params;
 
   return useLiveQuery(
-    () => db.decks.get(id ?? "").then((deck) => [deck, true, params]),
-    [id],
+    () => db.decks.get(deckId || "").then((deck) => [deck, true, params]),
+    [deckId],
     [undefined, false, undefined]
   );
 }
