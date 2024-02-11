@@ -1,5 +1,5 @@
 import { Center, Stack, Tabs, Title } from "@mantine/core";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import CColorSchemeToggle from "./ColorSchemeToggle";
 import {
   IconBolt,
@@ -13,26 +13,17 @@ import {
 import GeneralSettingsView from "./GeneralSettingsView";
 import { useSetting } from "../../logic/Settings";
 import EditingSettingsView from "./EditingSettingsView/EditingSettingsView";
-import { useLocation } from "react-router-dom";
 import AboutSettingsView from "./AboutSettingsView";
 import DatabaseSettingsView from "./DatabaseSettingsView/DatabaseSettingsView";
 import { t } from "i18next";
 import LearnSettingsView from "./LearnSettingsView";
 import { AppHeaderContent } from "../Header/Header";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function SettingsView() {
-  const [value, setValue] = useState("General");
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.pathname === "/settings") {
-      setValue("general");
-    } else {
-      setValue(location.pathname.split("/")[2]);
-    }
-  }, [location]);
-
   const [developerMode] = useSetting("developerMode");
+  const navigate = useNavigate();
+  const { section } = useParams();
 
   return (
     <Stack gap="xl" w="100%" maw="600px">
@@ -43,63 +34,36 @@ export default function SettingsView() {
       </AppHeaderContent>
       <Tabs
         orientation="horizontal"
-        defaultValue="General"
         variant="pills"
-        value={value}
+        value={section}
+        defaultValue={"general"}
+        onChange={(value) => navigate(`/settings/${value}`)}
       >
         <Tabs.List>
-          <Tabs.Tab
-            value="general"
-            leftSection={<IconSettings />}
-            onClick={() => setValue("general")}
-          >
+          <Tabs.Tab value="general" leftSection={<IconSettings />}>
             {t("settings.general.title")}
           </Tabs.Tab>
-          <Tabs.Tab
-            value="appearance"
-            leftSection={<IconPalette />}
-            onClick={() => setValue("appearance")}
-          >
+          <Tabs.Tab value="appearance" leftSection={<IconPalette />}>
             {t("settings.appearance.title")}
           </Tabs.Tab>
-          <Tabs.Tab
-            value="editing"
-            leftSection={<IconPencil />}
-            onClick={() => setValue("editing")}
-          >
+          <Tabs.Tab value="editing" leftSection={<IconPencil />}>
             {t("settings.editing.title")}
           </Tabs.Tab>
-          <Tabs.Tab
-            value="learn"
-            leftSection={<IconBolt />}
-            onClick={() => setValue("learn")}
-          >
+          <Tabs.Tab value="learn" leftSection={<IconBolt />}>
             {t("settings.learn.title")}
           </Tabs.Tab>
-          <Tabs.Tab
-            value="database"
-            leftSection={<IconDatabase />}
-            onClick={() => setValue("database")}
-          >
+          <Tabs.Tab value="database" leftSection={<IconDatabase />}>
             {t("settings.database.title")}
           </Tabs.Tab>
-          <Tabs.Tab
-            value="about"
-            leftSection={<IconInfoCircle />}
-            onClick={() => setValue("about")}
-          >
+          <Tabs.Tab value="about" leftSection={<IconInfoCircle />}>
             {t("settings.about.title")}
           </Tabs.Tab>
           {developerMode ? (
-            <Tabs.Tab
-              value="developer"
-              leftSection={<IconBraces />}
-              onClick={() => setValue("developer")}
-            >
+            <Tabs.Tab value="developer" leftSection={<IconBraces />}>
               {t("settings.developer.title")}
             </Tabs.Tab>
           ) : null}
-        </Tabs.List>{" "}
+        </Tabs.List>
         <Tabs.Panel value="general">
           <GeneralSettingsView />
         </Tabs.Panel>
