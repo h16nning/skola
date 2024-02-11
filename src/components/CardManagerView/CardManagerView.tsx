@@ -1,4 +1,4 @@
-import { Group, Stack, TextInput, Title } from "@mantine/core";
+import { Group, Space, Stack, TextInput, Title } from "@mantine/core";
 import { useDebouncedState } from "@mantine/hooks";
 import { IconSearch } from "@tabler/icons-react";
 import { useState } from "react";
@@ -10,6 +10,7 @@ import CardTable from "../CardTable/CardTable";
 import { AppHeaderContent } from "../Header/Header";
 import SelectDecksHeader from "../custom/SelectDecksHeader";
 import classes from "./CardManagerView.module.css";
+import EditorOptionsMenu from "../editcard/EditorOptionsMenu";
 
 const ALL_DECK_ID = "all";
 function CardManagerView() {
@@ -35,7 +36,13 @@ function CardManagerView() {
   return (
     <Stack style={{ overflow: "hidden", width: "100%", height: "100%" }}>
       <AppHeaderContent>
-        <Title order={3}>Manage Cards</Title>
+        <AppHeaderContent>
+          <Group justify="space-between" gap="xs" wrap="nowrap">
+            <Space />
+            <Title order={3}>Manage Cards</Title>
+            <EditorOptionsMenu />
+          </Group>
+        </AppHeaderContent>
       </AppHeaderContent>
       <Group align="end" gap="xs">
         <SelectDecksHeader label="Showing cards in" decks={decks} />

@@ -92,13 +92,13 @@ function DoubleSidedCardEditor({
     <Stack gap="2rem">
       <Stack gap={0}>
         <Text fz="sm" fw={600}>
-          Field 1
+          Front
         </Text>
         <CardEditor editor={editor1} key="front" className={classes} />
       </Stack>
       <Stack gap={0}>
         <Text fz="sm" fw={600}>
-          Field 2
+          Back
         </Text>
         <CardEditor editor={editor2} key="back" />
       </Stack>

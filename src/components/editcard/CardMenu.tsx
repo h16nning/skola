@@ -23,10 +23,11 @@ import { useNavigate } from "react-router-dom";
 
 interface CardMenuProps {
   card: Card<CardType> | undefined;
+  withEdit?: boolean;
   onDelete?: Function;
 }
 
-function CardMenu({ card, onDelete }: CardMenuProps) {
+function CardMenu({ card, onDelete, withEdit = true }: CardMenuProps) {
   const [developerMode] = useSetting("developerMode");
   const navigate = useNavigate();
 
@@ -88,12 +89,14 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
           >
             Move Card
           </Menu.Item>
-          <Menu.Item
-            leftSection={<IconEdit size={16} />}
-            onClick={() => navigate(`/cards/${card.deck}/${card.id}`)}
-          >
-            Edit Card
-          </Menu.Item>
+          {withEdit && (
+            <Menu.Item
+              leftSection={<IconEdit size={16} />}
+              onClick={() => navigate(`/cards/${card.deck}/${card.id}`)}
+            >
+              Edit Card
+            </Menu.Item>
+          )}
           <Menu.Item
             color="red"
             leftSection={<IconTrash size={16} />}
