@@ -19,7 +19,7 @@ import {
 } from "../custom/Notification/Notification";
 import CardStatisticsModal from "../statistics/CardStatisticsModal";
 import MoveCardModal from "./MoveCardModal";
-import { useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface CardMenuProps {
   card: Card<CardType> | undefined;

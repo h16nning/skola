@@ -1,11 +1,11 @@
 import classes from "./SuperDecksBreadcrumbs.module.css";
 import React from "react";
-import { Anchor, Box, Breadcrumbs, Group, Title } from "@mantine/core";
+import { Anchor, Box, Breadcrumbs, Group } from "@mantine/core";
 import { Deck } from "../../logic/deck";
 import { useNavigate } from "react-router-dom";
 import { useViewportSize } from "@mantine/hooks";
 import { useTranslation } from "react-i18next";
-import { IconHome, IconCardsFilled, IconCards } from "@tabler/icons-react";
+import { IconHome, IconCards } from "@tabler/icons-react";
 
 interface SuperDecksBreadcrumbsProps {
   superDecks: Deck[] | undefined;

@@ -3,7 +3,6 @@ import {
   Alert,
   Anchor,
   Button,
-  Card,
   Center,
   Group,
   Image,
@@ -15,7 +14,7 @@ import { IconInfoCircle } from "@tabler/icons-react";
 import { useLocalStorage } from "@mantine/hooks";
 
 export default function WelcomeView() {
-  const [registered, setRegistered] = useLocalStorage({
+  const [_, setRegistered] = useLocalStorage({
     key: "registered",
     defaultValue: false,
   });

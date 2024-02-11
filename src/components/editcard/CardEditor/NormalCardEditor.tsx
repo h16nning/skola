@@ -1,6 +1,6 @@
 import classes from "./NormalCardEditor.module.css";
 import React, { useCallback, useEffect } from "react";
-import { Stack, Text, useMantineTheme } from "@mantine/core";
+import { Stack, Text } from "@mantine/core";
 import CardEditor, { useCardEditor } from "./CardEditor";
 import { EditMode } from "../../../logic/CardTypeManager";
 import { Card, CardType, newCard, updateCard } from "../../../logic/card";
@@ -12,7 +12,6 @@ import {
   successfullyAdded,
   successfullySaved,
 } from "../../custom/Notification/Notification";
-import { useHotkeys } from "@mantine/hooks";
 import { Editor } from "@tiptap/react";
 import { NormalCardUtils } from "../../../logic/CardTypeImplementations/NormalCard";
 

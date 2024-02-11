@@ -1,7 +1,6 @@
-import { Group, Stack, Title, useMantineTheme } from "@mantine/core";
+import { Group, Stack, Title } from "@mantine/core";
 import { useDocumentTitle } from "@mantine/hooks";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useCardsOf } from "../../logic/card";
 import { useDeckFromUrl, useSuperDecks } from "../../logic/deck";
 import { useScrollResetOnLocationChange } from "../../logic/ui";
@@ -15,8 +14,6 @@ import HeroDeckSection from "./HeroDeckSection/HeroDeckSection";
 import SubDeckSection from "./SubDeckSection";
 
 function DeckView() {
-  const navigate = useNavigate();
-  const theme = useMantineTheme();
   const [deckOptionsOpened, setDeckOptionsOpened] = useState(false);
 
   const [deck, isDeckReady] = useDeckFromUrl();
