@@ -1,5 +1,6 @@
 {
   "deck": {
+    "settings": "",
     "review-cards-label_one": "1 Wiederholen",
     "review-cards-label_other": "{{count}} Wiederholen",
     "new-cards-label_one": "1 Neu",
@@ -9,11 +10,30 @@
     "new-cards-label": "Neu",
     "learning-cards-label": "Lernen",
     "review-cards-label": "Wiederholen",
-    "new-deck-button": "Neuer Stapel"
+    "subdeck": {
+      "new": "",
+      "load-fail": ""
+    },
+    "new-deck-button": "Neuer Stapel",
+    "notebook": {
+      "title": ""
+    },
+    "add-cards": ""
   },
   "home": {
     "welcome-user": "Willkommen zurück, {{name}}!",
-    "welcome": "Willkomen!"
+    "welcome": "Willkomen!",
+    "title": ""
+  },
+  "learning": {
+    "finished-congrats-name": "Herzlichen Glückwunsch, {{name}}!",
+    "finished-congrats": "Herzlichen Glückwunsch!",
+    "finished-info": "Du hast alle Karten in diesem Stapel für heute gelernt!",
+    "finished-duration": "Dauer",
+    "finished-accuracy-ratio": "Genauigkeit",
+    "finished-repetions-count": "Wiederholt",
+    "finished-button-home": "Zum Start",
+    "finished-button-to-deck": "Zurück zum Stapel"
   },
   "settings": {
     "about": {
@@ -29,6 +49,11 @@
       "language-description": "Ändere die Sprache der Benutzeroberfläche.",
       "title": "Allgemein"
     },
+    "learn": {
+      "requestRetention": "",
+      "maximumInterval": "",
+      "title": "Lernen"
+    },
     "page-title": "",
     "appearance": {
       "title": "Erscheinungsbild"
@@ -36,24 +61,12 @@
     "editing": {
       "title": "Bearbeitung"
     },
-    "learn": {
-      "title": "Lernen"
-    },
     "database": {
       "title": "Datenbank"
     },
     "developer": {
-      "title": "Entwickler"
+      "title": "Entwickler",
+      "description": ""
     }
-  },
-  "learning": {
-    "finished-congrats": "Herzlichen Glückwunsch!",
-    "finished-congrats-name": "Herzlichen Glückwunsch, {{name}}!",
-    "finished-button-home": "Zum Start",
-    "finished-button-to-deck": "Zurück zum Stapel",
-    "finished-repetions-count": "Wiederholt",
-    "finished-accuracy-ratio": "Genauigkeit",
-    "finished-duration": "Dauer",
-    "finished-info": "Du hast alle Karten in diesem Stapel für heute gelernt!"
   }
 }

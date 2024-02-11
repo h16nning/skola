@@ -5,6 +5,7 @@ import { IconPlus } from "@tabler/icons-react";
 import DeckTable from "./DeckTable";
 import { Deck, useSubDecks } from "../../logic/deck";
 import NewDeckModal from "./NewDeckModal";
+import { useTranslation } from "react-i18next";
 
 interface SubDeckSectionProps {
   deck?: Deck;
@@ -13,7 +14,7 @@ interface SubDeckSectionProps {
 function SubDeckSection({ deck }: SubDeckSectionProps) {
   const [subDecks, areSubDecksReady] = useSubDecks(deck);
   const [newDeckModalOpened, setNewDeckModalOpened] = useState(false);
-
+  const [t] = useTranslation();
   function NewSubDeckButton() {
     return (
       <Button
@@ -26,7 +27,7 @@ function SubDeckSection({ deck }: SubDeckSectionProps) {
           }
         }}
       >
-        New Sub Deck
+        {t("deck.subdeck.new")}
       </Button>
     );
   }
@@ -41,7 +42,7 @@ function SubDeckSection({ deck }: SubDeckSectionProps) {
           (subDecks ? (
             <DeckTable deckList={subDecks} isReady={true} />
           ) : (
-            <Text c="dimmed">Failed to load sub decks.</Text>
+            <Text c="dimmed">{t("deck.subdeck.load-fail")}</Text>
           ))}
       </Section>
       <NewDeckModal
