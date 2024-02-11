@@ -11,8 +11,6 @@ import {
   Popover,
   Select,
   Tabs,
-  Text,
-  Title,
   Tooltip,
   createTheme,
 } from "@mantine/core";
@@ -108,16 +106,6 @@ export const presetTheme = createTheme({
     }),
     Badge: Badge.extend({
       classNames: badge,
-    }),
-    Text: Text.extend({
-      styles: () => ({
-        root: { userSelect: "none" },
-      }),
-    }),
-    Title: Title.extend({
-      styles: () => ({
-        root: { userSelect: "none" },
-      }),
     }),
     Button: Button.extend({
       classNames: button,
