@@ -1,20 +1,20 @@
-import React, { useMemo } from "react";
-import { Card, CardType } from "../../logic/card";
+import React, { useEffect, useMemo, useState } from "react";
+import { Card, CardType, getCard } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
 import { Group, Stack, Text } from "@mantine/core";
 import CardMenu from "./CardMenu";
 import { getUtils } from "../../logic/CardTypeManager";
+import { useLoaderData } from "react-router-dom";
 
-interface EditCardsProps {
-  card?: Card<CardType>;
-}
-function EditCardView({ card }: EditCardsProps) {
-  if (card === undefined) {
+function EditCardView() {
+  const card = useLoaderData() as Card<CardType> | undefined;
+  if (!card) {
     return <NoCardView />;
   }
   return <CardView card={card} />;
 }
-function NoCardView() {
+
+export function NoCardView() {
   return (
     <Text fz="sm" color="dimmed">
       No card selected
