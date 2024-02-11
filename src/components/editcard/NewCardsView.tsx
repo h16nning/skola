@@ -43,7 +43,12 @@ function NewCardsView() {
           <ActionIcon onClick={() => navigate(-1)}>
             <IconChevronLeft />
           </ActionIcon>
-          <SelectDecksHeader label="Adding cards to" decks={decks} disableAll />
+          <SelectDecksHeader
+            label="Adding cards to"
+            decks={decks}
+            disableAll
+            onSelect={(deckId) => navigate(`/new/${deckId}`)}
+          />
         </Group>
 
         <Select
