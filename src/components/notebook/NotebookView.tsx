@@ -28,7 +28,7 @@ export default function NotebookView() {
     >
       <Stack gap="sm">
         {cards?.map((c) => (
-          <NotebookCard card={c} />
+          <NotebookCard card={c} key={c.id} />
         ))}
       </Stack>
     </Section>
