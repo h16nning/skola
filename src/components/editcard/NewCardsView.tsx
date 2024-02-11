@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { ActionIcon, Group, Select, Space, Stack } from "@mantine/core";
+import { ActionIcon, Group, Select, Space, Stack, Title } from "@mantine/core";
 import { IconChevronLeft } from "@tabler/icons-react";
 import { useDeckFromUrl, useDecks } from "../../logic/deck";
 import MissingObject from "../custom/MissingObject";
@@ -7,6 +7,8 @@ import { CardType } from "../../logic/card";
 import { useNavigate } from "react-router-dom";
 import { getUtilsOfType } from "../../logic/CardTypeManager";
 import SelectDecksHeader from "../custom/SelectDecksHeader";
+import { AppHeaderContent } from "../Header/Header";
+import EditorOptionsMenu from "./EditorOptionsMenu";
 
 function NewCardsView() {
   const navigate = useNavigate();
@@ -29,6 +31,13 @@ function NewCardsView() {
 
   return (
     <Stack w="100%" maw="600px" key="stack">
+      <AppHeaderContent>
+        <Group justify="space-between" gap="xs" wrap="nowrap">
+          <Space />
+          <Title order={3}>Add card</Title>
+          <EditorOptionsMenu />
+        </Group>
+      </AppHeaderContent>
       <Group justify="space-between">
         <Group gap="xs" align="end">
           <ActionIcon onClick={() => navigate(-1)}>
