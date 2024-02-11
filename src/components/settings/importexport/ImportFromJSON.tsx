@@ -44,7 +44,7 @@ export default function ImportFromJSON({
               let ed: ExtractedData | null = null;
               try {
                 ed = await parseFile(fileText);
-              } catch (e) {
+              } catch {
                 setImportStatus("error");
                 return;
               } finally {

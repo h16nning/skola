@@ -3,7 +3,7 @@ import { Card, CardType, createCardSkeleton } from "../card";
 import React from "react";
 
 export const UndefinedCardUtils: CardTypeManager<CardType.Undefined> = {
-  update(params: {}, existingCard: Card<CardType.Undefined>) {
+  update(_, existingCard: Card<CardType.Undefined>) {
     return {
       ...existingCard,
       content: {

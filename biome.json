@@ -26,7 +26,8 @@
       },
       "correctness": {
         "noEmptyPattern": "off",
-        "useExhaustiveDependencies": "off"
+        "useExhaustiveDependencies": "off",
+        "noUnusedVariables": "error"
       },
       "performance": {
         "noAccumulatingSpread": "warn"

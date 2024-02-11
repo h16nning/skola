@@ -24,7 +24,7 @@ export default function ImportButton({
         setImportStatus("importing");
         try {
           await importFunction();
-        } catch (e) {
+        } catch {
           setImportStatus("error");
           return;
         } finally {
