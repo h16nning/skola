@@ -38,19 +38,23 @@ const router = createBrowserRouter([
         element: <HomeView />,
       },
       {
-        path: "/settings/*",
+        path: "/settings/:section?",
         element: <SettingsView />,
       },
       {
-        path: "/deck/*",
+        path: "/deck/:deckId",
         element: <DeckView />,
       },
       {
-        path: "/new/*",
+        path: "/deck/:deckId/:params",
+        element: <DeckView />,
+      },
+      {
+        path: "/new/:deckId?",
         element: <NewCardsView />,
       },
       {
-        path: "/learn/*",
+        path: "/learn/:deckId",
         element: <LearnView />,
       },
       {

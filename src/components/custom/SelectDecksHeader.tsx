@@ -1,22 +1,22 @@
 import React from "react";
 import { Select, Stack, Text } from "@mantine/core";
 import { Deck } from "../../logic/deck";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 interface SelectDecksHeaderProps {
   label: string;
   disableAll?: boolean;
   decks?: Deck[];
+  onSelect: (deckId: string | null) => void;
 }
 
 export default function SelectDecksHeader({
   decks,
   label,
   disableAll,
+  onSelect,
 }: SelectDecksHeaderProps) {
-  const navigate = useNavigate();
-  const location = useLocation();
-
+  const deckId = useParams().deckId || "";
   return (
     <Stack gap="0.25rem">
       <Text fz="sm" c="dimmed">
@@ -32,11 +32,8 @@ export default function SelectDecksHeader({
             label: deck.name,
           })) ?? []
         )}
-        value={location.pathname.split("/")[2] ?? ""}
-        onChange={(value) => {
-          const pathname = location.pathname.split("/")[1];
-          return navigate(`/${pathname}${value !== "" ? "/" + value : ""}`);
-        }}
+        value={deckId}
+        onChange={(value) => onSelect(value)}
       />
     </Stack>
   );

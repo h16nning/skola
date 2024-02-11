@@ -1,4 +1,4 @@
-import { Group, Space, Stack, TextInput, Title } from "@mantine/core";
+import { Space, Group, Stack, TextInput, Title } from "@mantine/core";
 import { useDebouncedState } from "@mantine/hooks";
 import { IconSearch } from "@tabler/icons-react";
 import { useState } from "react";
@@ -21,7 +21,6 @@ function CardManagerView() {
 
   const location = useLocation();
 
-  const deckGiven = !!deckId;
   const [decks] = useDecks();
 
   const [filter, setFilter] = useDebouncedState<string>("", 250);
@@ -29,8 +28,8 @@ function CardManagerView() {
   const [sort, setSort] = useState<[string, boolean]>(["front", true]);
 
   const [cards] = useCardsWith(
-    (cards) => selectCards(cards, deckGiven, filter, sort, location),
-    [deckGiven, location, filter, sort]
+    (cards) => selectCards(cards, deckId, filter, sort),
+    [deckId, location, filter, sort]
   );
 
   return (
@@ -45,7 +44,11 @@ function CardManagerView() {
         </AppHeaderContent>
       </AppHeaderContent>
       <Group align="end" gap="xs">
-        <SelectDecksHeader label="Showing cards in" decks={decks} />
+        <SelectDecksHeader
+          label="Showing cards in"
+          decks={decks}
+          onSelect={(deckId) => navigate(`/cards/${deckId}`)}
+        />
       </Group>
       <TextInput
         leftSection={<IconSearch size={16} />}

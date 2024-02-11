@@ -5,17 +5,15 @@ import { getDeck } from "./deck";
 
 export default async function selectCards(
   cards: Table<Card<CardType>>,
-  deckGiven: boolean,
+  deckId: string | undefined,
   filter: string,
-  sort: [string, boolean],
-  location: any
+  sort: [string, boolean]
 ): Promise<Card<CardType>[] | undefined> {
   let filteredCards:
     | Table<Card<CardType>>
     | Collection<Card<CardType>, IndexableType>
     | Card<CardType>[] = cards;
-  if (deckGiven) {
-    const deckId = location.pathname.split("/")[2];
+  if (deckId) {
     filteredCards =
       (await getDeck(deckId).then((deck) => getCardsOf(deck))) ?? [];
   }
