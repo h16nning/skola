@@ -2,21 +2,25 @@ import { Group, Stack, TextInput, Title } from "@mantine/core";
 import { useDebouncedState } from "@mantine/hooks";
 import { IconSearch } from "@tabler/icons-react";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Card, CardType, useCardsWith } from "../../logic/card";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useCardsWith } from "../../logic/card";
 import selectCards from "../../logic/card_filter";
 import { useDecks } from "../../logic/deck";
 import CardTable from "../CardTable/CardTable";
 import { AppHeaderContent } from "../Header/Header";
 import SelectDecksHeader from "../custom/SelectDecksHeader";
-import EditCardView from "../editcard/EditCardView";
 import classes from "./CardManagerView.module.css";
 
+const ALL_DECK_ID = "all";
 function CardManagerView() {
   const navigate = useNavigate();
+  const cardId = useParams().cardId;
+  let deckId = useParams().deckId;
+  if (deckId === ALL_DECK_ID) deckId = undefined;
+
   const location = useLocation();
 
-  const deckGiven = typeof location.pathname.split("/")[2] === "string";
+  const deckGiven = !!deckId;
   const [decks] = useDecks();
 
   const [filter, setFilter] = useDebouncedState<string>("", 250);
@@ -27,9 +31,6 @@ function CardManagerView() {
     (cards) => selectCards(cards, deckGiven, filter, sort, location),
     [deckGiven, location, filter, sort]
   );
-
-  const [selectedIndex, setSelectedIndex] = useState<number>();
-  const [selectedCard, setSelectedCard] = useState<Card<CardType>>();
 
   return (
     <Stack style={{ overflow: "hidden", width: "100%", height: "100%" }}>
@@ -55,16 +56,22 @@ function CardManagerView() {
         {cards && (
           <CardTable
             cardSet={cards ?? []}
-            selectedIndex={selectedIndex}
-            setSelectedIndex={setSelectedIndex}
-            selectedCard={selectedCard}
-            setSelectedCard={setSelectedCard}
+            selectedIndex={cards.findIndex((card) => cardId === card?.id)}
+            setSelectedIndex={(idx) => {
+              navigate(`/cards/${deckId || ALL_DECK_ID}/${cards[idx].id}`);
+            }}
+            selectedCard={cards.find((card) => cardId === card?.id)}
+            setSelectedCard={(card) => {
+              // avoid navigating to the same card
+              if (cardId !== card?.id)
+                navigate(`/cards/${deckId || ALL_DECK_ID}/${card.id}`);
+            }}
             sort={sort}
             setSort={setSort}
           />
         )}
         <Stack className={classes.cardBox}>
-          <EditCardView card={selectedCard} />
+          <Outlet />
         </Stack>
       </Group>
     </Stack>

@@ -5,17 +5,88 @@ import App from "./App";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
+import TodayView from "./components/TodayView";
+import StatsView from "./components/StatsView";
+import EditCardView, { NoCardView } from "./components/editcard/EditCardView";
+import CardManagerView from "./components/CardManagerView/CardManagerView";
+import LearnView from "./components/learning/LearnView/LearnView";
+import NewCardsView from "./components/editcard/NewCardsView";
+import DeckView from "./components/deck/DeckView";
+import SettingsView from "./components/settings/SettingsView";
+import HomeView from "./components/HomeView";
+import { getCard } from "./logic/card";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        index: true,
+        element: <Navigate to="/home" replace={true} />,
+      },
+      {
+        path: "/home",
+        element: <HomeView />,
+      },
+      {
+        path: "/settings/*",
+        element: <SettingsView />,
+      },
+      {
+        path: "/deck/*",
+        element: <DeckView />,
+      },
+      {
+        path: "/new/*",
+        element: <NewCardsView />,
+      },
+      {
+        path: "/learn/*",
+        element: <LearnView />,
+      },
+      {
+        path: "/cards/:deckId?",
+        element: <CardManagerView />,
+        children: [
+          {
+            index: true,
+            element: <NoCardView />,
+          },
+          {
+            path: ":cardId",
+            element: <EditCardView />,
+            loader: async ({ params }) => {
+              const { cardId } = params;
+              if (!cardId) throw new Response("Not Found", { status: 404 });
+              return await getCard(cardId);
+            },
+          },
+        ],
+      },
+      {
+        path: "/today",
+        element: <TodayView />,
+      },
+      {
+        path: "/stats",
+        element: <StatsView />,
+      },
+    ],
+  },
+]);
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
