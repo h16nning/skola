@@ -32,10 +32,15 @@ function CardView({ card }: { card: Card<CardType> }) {
   return (
     <Stack style={{ height: "100%", overflowY: "scroll" }}>
       <Group justify="space-between" wrap="nowrap">
-        <Text fz="xs" fw={600}>
-          Edit Card
-        </Text>
-        <CardMenu card={card} />
+        <Group>
+          <Text fz="xs" fw={600}>
+            Edit Card{" "}
+            <Text c="dimmed" span fz="xs" fw={600}>
+              ({card.content.type})
+            </Text>
+          </Text>
+        </Group>
+        <CardMenu card={card} withEdit={false} />
       </Group>
       {CardEditor}
     </Stack>
