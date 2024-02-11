@@ -1,8 +1,13 @@
-import classes from "./RemainingCardsIndicator.module.css";
-import React, { ReactNode } from "react";
-import { LearnController } from "../../../logic/learn";
 import { Group, Text, ThemeIcon } from "@mantine/core";
-import { Icon, IconBook, IconClock, IconSparkles } from "@tabler/icons-react";
+import {
+  IconBook,
+  IconCircleArrowUpRight,
+  IconInfoCircle,
+  IconSparkles,
+} from "@tabler/icons-react";
+import { ReactNode } from "react";
+import { LearnController } from "../../../logic/learn";
+import classes from "./RemainingCardsIndicator.module.css";
 interface RemainingCardsIndicatorProps {
   controller: LearnController;
 }
@@ -20,7 +25,7 @@ export default function RemainingCardsIndicator({
       <TinyStat
         value={controller.timeCriticalCardsNumber}
         color="orange"
-        icon={<IconClock />}
+        icon={<IconCircleArrowUpRight />}
       />
       <TinyStat
         value={controller.toReviewCardsNumber}
@@ -30,7 +35,7 @@ export default function RemainingCardsIndicator({
       <TinyStat
         value={controller.learnedCardsNumber}
         color="gray"
-        icon={<IconBook />}
+        icon={<IconInfoCircle />}
       />
     </Group>
   );
@@ -51,7 +56,7 @@ export function TinyStat({
     >
       <ThemeIcon
         style={{ color: `var(--mantine-color-${color}-strong` }}
-        variant="white"
+        variant="transparent"
         size={20}
       >
         {icon}

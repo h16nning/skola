@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { ActionIcon, Menu } from "@mantine/core";
 import {
   IconAdjustmentsHorizontal,
@@ -8,17 +7,17 @@ import {
   IconDots,
   IconTrash,
 } from "@tabler/icons-react";
-import DangerousConfirmModal from "../custom/DangerousConfirmModal";
+import { useState } from "react";
+import { useSetting } from "../../logic/Settings";
 import { Card, CardType, deleteCard } from "../../logic/card";
 import DebugCardModal from "../DebugCardModal/DebugCardModal";
-import { useSetting } from "../../logic/Settings";
+import DangerousConfirmModal from "../custom/DangerousConfirmModal";
 import {
   deleteFailed,
   successfullyDeleted,
 } from "../custom/Notification/Notification";
-import MoveCardModal from "./MoveCardModal";
-import { IconGraphOff } from "@tabler/icons-react";
 import CardStatisticsModal from "../statistics/CardStatisticsModal";
+import MoveCardModal from "./MoveCardModal";
 
 interface CardMenuProps {
   card: Card<CardType> | undefined;

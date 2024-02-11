@@ -62,7 +62,7 @@ export const NormalCardUtils: CardTypeManager<CardType.Normal> = {
 
   displayInNotebook(card: Card<CardType.Normal>) {
     return (
-      <Stack gap="sm">
+      <Stack gap="xs">
         <Title
           order={4}
           dangerouslySetInnerHTML={{ __html: card.content.front }}
