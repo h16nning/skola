@@ -119,8 +119,7 @@ export default function SettingsView() {
           <AboutSettingsView />
         </Tabs.Panel>
         <Tabs.Panel value="Developer">
-          This is the developer tab. It will contain extra settings for
-          developers.
+          {t("settings.developer.description")}
         </Tabs.Panel>
       </Tabs>
     </Stack>
