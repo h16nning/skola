@@ -7,10 +7,10 @@ import { Deck } from "../../../logic/deck";
 import CardEditor, { useCardEditor } from "./CardEditor";
 import classes from "./ClozeCardEditor.module.css";
 
-import { Button, Stack, useMantineTheme } from "@mantine/core";
+import { Stack } from "@mantine/core";
 import { Mark } from "@tiptap/core";
-import { Editor, EditorEvents, mergeAttributes } from "@tiptap/react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { mergeAttributes } from "@tiptap/react";
+import { useCallback, useMemo, useState } from "react";
 import CardEditorFooter from "../CardEditorFooter";
 import {
   addFailed,

@@ -1,6 +1,6 @@
 import classes from "./HeroDeckSection.module.css";
 
-import React, { useState } from "react";
+import React from "react";
 import { Button, Group, Paper, Stack, Text, Title } from "@mantine/core";
 import { Deck } from "../../../logic/deck";
 import {
@@ -13,7 +13,6 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardType, useSimplifiedStatesOf } from "../../../logic/card";
 import Stat from "../../custom/Stat/Stat";
 import { useTranslation } from "react-i18next";
-import { State } from "fsrs.js";
 import { useHotkeys } from "@mantine/hooks";
 
 interface HeroDeckSectionProps {

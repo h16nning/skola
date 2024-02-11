@@ -1,10 +1,8 @@
-import { Button, Card, Modal, Stack, Tabs, TextInput } from "@mantine/core";
+import { Modal, Tabs } from "@mantine/core";
 import React, { useState } from "react";
 import ModalProps from "../../custom/ModalProps";
 import { Deck } from "../../../logic/deck";
-import { newCard } from "../../../logic/card";
-import { NormalCardUtils } from "../../../logic/CardTypeImplementations/NormalCard";
-import FileImport from "./FileImport";
+
 import { IconJson, IconTxt } from "@tabler/icons-react";
 import ImportFromPlainText from "./ImportFromPlainText";
 import ImportFromJSON from "./ImportFromJSON";

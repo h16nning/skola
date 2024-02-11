@@ -90,15 +90,6 @@ function Sidebar({
     [location.pathname, navigate, menuHandlers, fullscreenMode]
   );
 
-  const fullScreen = {
-    transform: menuOpened
-      ? "none"
-      : `translateX(-100${landscapeMode ? "vw" : "vh"})`,
-    visible: menuOpened ? "visible" : "hidden",
-    boxShadow: theme.shadows.xl,
-    transition: "transform 200ms ease-in-out",
-  };
-
   return (
     <Box
       p="0.5rem"

@@ -7,8 +7,6 @@ export default function LearnSettingsView() {
   const [t] = useTranslation();
 
   const [w] = useSetting("globalScheduler_w");
-  const [maximumInterval] = useSetting("globalScheduler_maximumInterval");
-  const [requestRetention] = useSetting("globalScheduler_requestRetention");
   return (
     <Stack gap="xl" align="start">
       <SettingsInput

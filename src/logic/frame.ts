@@ -1,6 +1,6 @@
-import { v4 as uuidv4 } from "uuid";
-import { db } from "./db";
-import { useLiveQuery } from "dexie-react-hooks";
+// import { v4 as uuidv4 } from "uuid";
+// import { db } from "./db";
+// import { useLiveQuery } from "dexie-react-hooks";
 
 /**
  * Frame serves a shared container for cards with common content.
