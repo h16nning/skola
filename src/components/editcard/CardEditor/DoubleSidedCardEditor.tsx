@@ -47,7 +47,7 @@ async function finish(
         );
       }
       successfullySaved();
-    } catch (error) {
+    } catch {
       saveFailed();
     }
   } else {
@@ -59,7 +59,7 @@ async function finish(
       }).then((cards) => newCards(cards, deck));
       clear && clear();
       successfullyAdded();
-    } catch (error) {
+    } catch {
       addFailed();
     }
   }
