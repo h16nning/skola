@@ -1,5 +1,5 @@
 import classes from "./Stat.module.css";
-import React, { useEffect } from "react";
+import React from "react";
 import { TablerIconsProps } from "@tabler/icons-react";
 import { Box, Group, Stack, Text, useComputedColorScheme } from "@mantine/core";
 

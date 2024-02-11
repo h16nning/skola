@@ -56,6 +56,7 @@
     "start": "vite",
     "build": "vite build",
     "serve": "vite preview",
+    "lint:type": "tsc --noEmit",
     "extract": "i18next --config i18next-parser.config.mjs 'src/**/*.{ts,tsx}'"
   },
   "eslintConfig": {

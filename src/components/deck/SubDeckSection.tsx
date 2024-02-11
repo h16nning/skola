@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Section from "../settings/Section";
-import { Button, Group, Text } from "@mantine/core";
+import { Button, Text } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import DeckTable from "./DeckTable";
 import { Deck, useSubDecks } from "../../logic/deck";

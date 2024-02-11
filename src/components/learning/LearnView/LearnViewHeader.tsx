@@ -1,5 +1,4 @@
 import { ActionIcon, Group, Progress } from "@mantine/core";
-import { useDebouncedValue } from "@mantine/hooks";
 import { IconX } from "@tabler/icons-react";
 import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
@@ -54,7 +53,6 @@ function LearnViewHeader({
       //FIXME
     ]
   );
-  const [debouncedProgress] = useDebouncedValue(progress, 100);
   return (
     <>
       <Group justify="space-between" wrap="nowrap">

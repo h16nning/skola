@@ -1,7 +1,7 @@
 import { Center, Flex, Modal, Paper } from "@mantine/core";
 import { useDebouncedValue, useFullscreen } from "@mantine/hooks";
 import { Rating } from "fsrs.js";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUtils } from "../../../logic/CardTypeManager";
 import { useSetting } from "../../../logic/Settings";
@@ -18,7 +18,7 @@ import LearnViewHeader, { stopwatchResult } from "./LearnViewHeader";
 import { AppHeaderContent } from "../../Header/Header";
 
 function LearnView() {
-  const { toggle, fullscreen } = useFullscreen();
+  const { toggle } = useFullscreen();
   const [zenMode] = useSetting("useZenMode");
 
   const navigate = useNavigate();
