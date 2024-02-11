@@ -95,7 +95,7 @@ function CardEditor({ editor, controls, className }: CardEditorProps) {
             </div>
           )}
           {editor && settings.useBubbleMenu && (
-            <BubbleMenu editor={editor}>
+            <BubbleMenu editor={editor} tippyOptions={{ maxWidth: "none" }}>
               <CardEditorControls controls={controls} editor={editor} />
             </BubbleMenu>
           )}

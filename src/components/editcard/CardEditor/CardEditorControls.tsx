@@ -1,7 +1,6 @@
 import classes from "./CardEditor.module.css";
 import { RichTextEditor } from "@mantine/tiptap";
 import AddImageControl from "../AddImageControl";
-import EditorOptionsMenu from "../EditorOptionsMenu";
 import { Box } from "@mantine/core";
 import { useSettings } from "../../../logic/Settings";
 import { Editor } from "@tiptap/react";
@@ -60,10 +59,6 @@ export function CardEditorControls({
       )}
       <RichTextEditor.ControlsGroup tabIndex={-1}>
         {controls}
-      </RichTextEditor.ControlsGroup>
-
-      <RichTextEditor.ControlsGroup tabIndex={-1}>
-        <EditorOptionsMenu />
       </RichTextEditor.ControlsGroup>
     </Box>
   );
