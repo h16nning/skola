@@ -1,15 +1,15 @@
-import React, { useEffect, useMemo } from "react";
-import classes from "./LearnView.module.css";
-import { ActionIcon, Box, Group, Progress, Stack, Text } from "@mantine/core";
-import CardMenu from "../../editcard/CardMenu";
+import { ActionIcon, Group, Progress } from "@mantine/core";
+import { useDebouncedValue } from "@mantine/hooks";
+import { IconX } from "@tabler/icons-react";
+import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { StopwatchResult, useStopwatch } from "react-timer-hook";
 import { Card, CardType } from "../../../logic/card";
-import { IconX } from "@tabler/icons-react";
 import { LearnController } from "../../../logic/learn";
-import { getCounterString } from "../../../logic/timeUtils";
-import { useDebouncedValue } from "@mantine/hooks";
+import CardMenu from "../../editcard/CardMenu";
 import RemainingCardsIndicator from "../RemainingCardsIndicator/RemainingCardsIndicator";
+import classes from "./LearnView.module.css";
+import { Deck } from "../../../logic/deck";
 
 export let stopwatchResult: StopwatchResult;
 
@@ -20,15 +20,20 @@ function Stopwatch() {
     stopwatchResult = stopwatch;
   }, [stopwatch]);
 
-  return <Text ff="monospace">{getCounterString(stopwatch)}</Text>;
+  return <></>;
 }
 
 interface LearnViewHeaderProps {
   currentCard: Card<CardType> | undefined;
   controller: LearnController;
+  deck?: Deck;
 }
 
-function LearnViewHeader({ currentCard, controller }: LearnViewHeaderProps) {
+function LearnViewHeader({
+  currentCard,
+  controller,
+  deck,
+}: LearnViewHeaderProps) {
   const navigate = useNavigate();
   const progress = useMemo(
     () =>
@@ -55,7 +60,7 @@ function LearnViewHeader({ currentCard, controller }: LearnViewHeaderProps) {
       <Group justify="space-between" wrap="nowrap">
         <Group wrap="nowrap" gap="xs">
           <ActionIcon
-            onClick={() => navigate("/home")}
+            onClick={() => navigate("/deck/" + deck?.id)}
             variant="subtle"
             color="gray"
           >

@@ -1,5 +1,12 @@
-import classes from "./CardEditor.module.css";
-import React from "react";
+import { Link, RichTextEditor } from "@mantine/tiptap";
+import { Color } from "@tiptap/extension-color";
+import Highlight from "@tiptap/extension-highlight";
+import Image from "@tiptap/extension-image";
+import SubScript from "@tiptap/extension-subscript";
+import Superscript from "@tiptap/extension-superscript";
+import TextAlign from "@tiptap/extension-text-align";
+import { TextStyle } from "@tiptap/extension-text-style";
+import Underline from "@tiptap/extension-underline";
 import {
   BubbleMenu,
   Editor,
@@ -8,18 +15,10 @@ import {
   useEditor,
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Highlight from "@tiptap/extension-highlight";
-import Underline from "@tiptap/extension-underline";
-import TextAlign from "@tiptap/extension-text-align";
-import Superscript from "@tiptap/extension-superscript";
-import SubScript from "@tiptap/extension-subscript";
-import Image from "@tiptap/extension-image";
-import { Link, RichTextEditor } from "@mantine/tiptap";
-import { Color } from "@tiptap/extension-color";
-import { TextStyle } from "@tiptap/extension-text-style";
-import { CardEditorControls } from "./CardEditorControls";
+import React from "react";
 import { useSettings } from "../../../logic/Settings";
-import { Box } from "@mantine/core";
+import classes from "./CardEditor.module.css";
+import { CardEditorControls } from "./CardEditorControls";
 import { CustomHardBreak } from "./tiptap/CustomHardBreak";
 
 interface CardEditorProps {

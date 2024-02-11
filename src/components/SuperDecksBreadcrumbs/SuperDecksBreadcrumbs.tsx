@@ -5,7 +5,7 @@ import { Deck } from "../../logic/deck";
 import { useNavigate } from "react-router-dom";
 import { useViewportSize } from "@mantine/hooks";
 import { useTranslation } from "react-i18next";
-import { IconHome, IconCardsFilled } from "@tabler/icons-react";
+import { IconHome, IconCardsFilled, IconCards } from "@tabler/icons-react";
 
 interface SuperDecksBreadcrumbsProps {
   superDecks: Deck[] | undefined;
@@ -46,7 +46,7 @@ function SuperDecksBreadcrumbs({ superDecks }: SuperDecksBreadcrumbsProps) {
             onClick={() => navigate("/deck/" + s.id)}
           >
             <Group wrap="nowrap" gap="xs">
-              <IconCardsFilled size="1rem" /> {s.name}
+              <IconCards size="1rem" /> {s.name}
             </Group>
           </Anchor>
         ))}

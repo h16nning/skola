@@ -81,6 +81,7 @@ function LearnView() {
         <LearnViewHeader
           currentCard={controller.currentCard ?? undefined}
           controller={controller}
+          deck={deck}
         />
       </AppHeaderContent>
       <Flex direction="column" justify="space-between" h="100%" w="100%">
