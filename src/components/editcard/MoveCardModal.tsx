@@ -3,7 +3,7 @@ import { Card, CardType, moveCard } from "../../logic/card";
 import { Button, Group, Modal, Select, Stack, Text } from "@mantine/core";
 import { getUtils } from "../../logic/CardTypeManager";
 import { useDecks } from "../../logic/deck";
-import { IconArrowsExchange, IconArrowsMove } from "@tabler/icons-react";
+import { IconArrowsExchange } from "@tabler/icons-react";
 import { successfullyMovedTo } from "../custom/Notification/Notification";
 
 interface MoveCardModalProps {

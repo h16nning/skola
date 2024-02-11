@@ -1,4 +1,4 @@
-import { MantineColor, MantineTheme } from "@mantine/core";
+import { MantineTheme } from "@mantine/core";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 

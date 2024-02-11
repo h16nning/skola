@@ -1,7 +1,7 @@
 import classes from "./CardTable.module.css";
 import React from "react";
 import { Card, CardType } from "../../logic/card";
-import { Box, Table, Text } from "@mantine/core";
+import { Table, Text } from "@mantine/core";
 import { useEventListener } from "@mantine/hooks";
 import CardTableHeadItem from "./CardTableHeadItem";
 import { CardTableItem } from "./CardTableItem";

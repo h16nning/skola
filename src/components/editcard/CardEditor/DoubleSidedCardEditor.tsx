@@ -1,6 +1,6 @@
 import classes from "./DoubleSidedCardEditor.module.css";
 import React, { useCallback } from "react";
-import { Stack, Text, useMantineTheme } from "@mantine/core";
+import { Stack, Text } from "@mantine/core";
 import CardEditor, { useCardEditor } from "./CardEditor";
 import { EditMode } from "../../../logic/CardTypeManager";
 import { Card, CardType, newCards } from "../../../logic/card";
@@ -70,8 +70,6 @@ function DoubleSidedCardEditor({
   deck,
   mode,
 }: DoubleSidedCardEditorProps) {
-  const theme = useMantineTheme();
-
   useHotkeys([
     ["mod+Enter", () => finish(mode, clear, deck, card, editor1, editor2)],
   ]);

@@ -1,14 +1,5 @@
-import classes from "./DebugCardModal.module.css";
-import React, { Fragment } from "react";
-import {
-  Anchor,
-  Button,
-  Group,
-  Modal,
-  Stack,
-  Text,
-  Space,
-} from "@mantine/core";
+import React from "react";
+import { Button, Group, Modal, Stack, Text } from "@mantine/core";
 import { Card, CardType } from "../../logic/card";
 import DebugCardTable from "./DebugCardTable";
 

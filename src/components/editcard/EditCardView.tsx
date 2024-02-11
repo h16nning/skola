@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Card, CardType, getCard } from "../../logic/card";
+import React, { useMemo } from "react";
+import { Card, CardType } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
 import { Group, Stack, Text } from "@mantine/core";
 import CardMenu from "./CardMenu";

@@ -1,4 +1,4 @@
-import { Button, Card, Stack, TextInput } from "@mantine/core";
+import { Stack, TextInput } from "@mantine/core";
 import React, { useState } from "react";
 import FileImport from "./FileImport";
 import { ImportFromSourceProps } from "./ImportModal";
@@ -34,7 +34,7 @@ export default function ImportFromPlainText({
   setImportStatus,
   deck,
 }: ImportFromPlainTextProps) {
-  const [cardSeparator, setCardSeparator] = useState<string>("\n");
+  const [cardSeparator, _] = useState<string>("\n");
   const [questionAnswerSeperator, setQuestionAnswerSeperator] =
     useState<string>("\t");
   return (

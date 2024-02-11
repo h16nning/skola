@@ -1,6 +1,5 @@
-import { CardTypeManager, EditMode } from "../CardTypeManager";
+import { CardTypeManager } from "../CardTypeManager";
 import { Card, CardType, createCardSkeleton } from "../card";
-import { Deck } from "../deck";
 import React from "react";
 
 export const UndefinedCardUtils: CardTypeManager<CardType.Undefined> = {
