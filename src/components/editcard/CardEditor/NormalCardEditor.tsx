@@ -43,7 +43,7 @@ async function finishCard(
           return;
         }
         successfullySaved();
-      } catch (error) {
+      } catch {
         saveFailed();
       }
     } else {
@@ -52,7 +52,7 @@ async function finishCard(
         await newCard(cardInstance, deck);
         clear && clear();
         successfullyAdded();
-      } catch (error) {
+      } catch {
         addFailed();
       }
     }
