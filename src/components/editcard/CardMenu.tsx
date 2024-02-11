@@ -5,6 +5,7 @@ import {
   IconChartBar,
   IconCode,
   IconDots,
+  IconEdit,
   IconTrash,
 } from "@tabler/icons-react";
 import { useState } from "react";
@@ -18,6 +19,7 @@ import {
 } from "../custom/Notification/Notification";
 import CardStatisticsModal from "../statistics/CardStatisticsModal";
 import MoveCardModal from "./MoveCardModal";
+import { useNavigate, useNavigation } from "react-router-dom";
 
 interface CardMenuProps {
   card: Card<CardType> | undefined;
@@ -26,6 +28,7 @@ interface CardMenuProps {
 
 function CardMenu({ card, onDelete }: CardMenuProps) {
   const [developerMode] = useSetting("developerMode");
+  const navigate = useNavigate();
 
   const [debugModalOpened, setDebugModalOpened] = useState<boolean>(false);
   const [statisticsModalOpened, setStatisticsModalOpened] =
@@ -49,7 +52,7 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
       console.log(error);
     }
   }
-
+  if (!card) return null;
   return (
     <>
       <Menu position="bottom-end">
@@ -84,6 +87,12 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
             onClick={() => setMoveModalOpened(true)}
           >
             Move Card
+          </Menu.Item>
+          <Menu.Item
+            leftSection={<IconEdit size={16} />}
+            onClick={() => navigate(`/cards/${card.deck}/${card.id}`)}
+          >
+            Edit Card
           </Menu.Item>
           <Menu.Item
             color="red"

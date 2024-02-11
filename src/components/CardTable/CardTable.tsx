@@ -9,9 +9,9 @@ import { CardTableItem } from "./CardTableItem";
 interface CardTableProps {
   cardSet: Card<CardType>[];
   selectedIndex: number | undefined;
-  setSelectedIndex: Function;
+  setSelectedIndex: (index: number) => void;
   selectedCard: Card<CardType> | undefined;
-  setSelectedCard: Function;
+  setSelectedCard: (card: Card<CardType>) => void;
   sort: [string, boolean];
   setSort: (sort: [string, boolean]) => void;
 }
