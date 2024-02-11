@@ -1,5 +1,6 @@
 {
   "deck": {
+    "settings": "Settings",
     "review-cards-label_one": "1 Review",
     "review-cards-label_other": "{{ count }} Review",
     "new-cards-label_one": "1 New",
@@ -9,13 +10,30 @@
     "new-cards-label": "New",
     "learning-cards-label": "Learning",
     "review-cards-label": "Review",
+    "subdeck": {
+      "new": "New Subdeck",
+      "load-fail": "Failed to load sub decks."
+    },
     "new-deck-button": "New Deck",
-    "settings": "Settings"
+    "notebook": {
+      "title": "Notebook View"
+    },
+    "add-cards": "Add Cards"
   },
   "home": {
     "welcome-user": "Welcome back, {{name}}!",
     "welcome": "Welcome!",
     "title": "Home"
+  },
+  "learning": {
+    "finished-congrats-name": "Congratulations, {{name}}!",
+    "finished-congrats": "Congratulations!",
+    "finished-info": "You learned all cards for today in this deck.",
+    "finished-duration": "Duration",
+    "finished-accuracy-ratio": "Accuracy",
+    "finished-repetions-count": "Repetitions",
+    "finished-button-home": "Go Home",
+    "finished-button-to-deck": "Back to the deck"
   },
   "settings": {
     "about": {
@@ -31,6 +49,11 @@
       "language-description": "Set the language for the user interface.",
       "title": "General"
     },
+    "learn": {
+      "requestRetention": "Request retention",
+      "maximumInterval": "Maxium interval",
+      "title": "Learning"
+    },
     "page-title": "Settings",
     "appearance": {
       "title": "Appearance"
@@ -42,20 +65,8 @@
       "title": "Database"
     },
     "developer": {
-      "title": "Developer"
-    },
-    "learn": {
-      "title": "Learning"
+      "title": "Developer",
+      "description": "This is the developer tab. It will contain extra settings for developers."
     }
-  },
-  "learning": {
-    "finished-congrats": "Congratulations!",
-    "finished-congrats-name": "Congratulations, {{name}}!",
-    "finished-button-home": "Go Home",
-    "finished-button-to-deck": "Back to the deck",
-    "finished-repetions-count": "Repetitions",
-    "finished-accuracy-ratio": "Accuracy",
-    "finished-duration": "Duration",
-    "finished-info": "You learned all cards for today in this deck."
   }
 }
