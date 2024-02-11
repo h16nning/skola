@@ -11,7 +11,7 @@ import { SettingsValues, setSetting, useSetting } from "../../logic/Settings";
 
 export default function SegmentedToggle() {
   const [colorSchemePreference] = useSetting("colorSchemePreference");
-  const { colorScheme, setColorScheme } = useMantineColorScheme();
+  const { setColorScheme } = useMantineColorScheme();
 
   return (
     <Input.Wrapper

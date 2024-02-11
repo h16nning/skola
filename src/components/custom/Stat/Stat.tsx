@@ -8,13 +8,11 @@ export default function Stat({
   value,
   icon: Icon,
   color,
-  width,
 }: {
   value: number | string;
   icon: React.FC<TablerIconsProps>;
   name: string;
   color: string;
-  width?: string;
 }) {
   const scheme = useComputedColorScheme("light");
 

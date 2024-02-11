@@ -120,7 +120,7 @@ async function determineSubDecks(
     } else {
       return [undefined, true];
     }
-  } catch (error) {
+  } catch {
     return [undefined, true];
   }
 }
@@ -152,7 +152,7 @@ async function determineSuperDecks(
     } else {
       return [undefined, true];
     }
-  } catch (error) {
+  } catch {
     return [undefined, true];
   }
 }

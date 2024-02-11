@@ -122,7 +122,7 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
       )}
 
       <DangerousConfirmModal
-        dangerousAction={(card: Card<CardType>) => tryDeleteCard()}
+        dangerousAction={() => tryDeleteCard()}
         dangerousDependencies={[card]}
         dangerousTitle={"Delete Card"}
         dangerousDescription={
