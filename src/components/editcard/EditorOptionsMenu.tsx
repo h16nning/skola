@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu } from "@mantine/core";
+import { ActionIcon, Menu } from "@mantine/core";
 import { IconDots, IconSettings } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,9 @@ export default function EditorOptionsMenu({}: EditorOptionsMenuProps) {
   return (
     <Menu>
       <Menu.Target>
-        <IconDots />
+        <ActionIcon variant="subtle" color="gray">
+          <IconDots />
+        </ActionIcon>
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Item
