@@ -54,7 +54,7 @@ const router = createBrowserRouter([
         element: <NewCardsView />,
       },
       {
-        path: "/learn/:deckId",
+        path: "/learn/:deckId/:params?",
         element: <LearnView />,
       },
       {
