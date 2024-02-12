@@ -23,7 +23,7 @@
   "home": {
     "welcome-user": "Willkommen zurück, {{name}}!",
     "welcome": "Willkomen!",
-    "title": ""
+    "title": "Startseite"
   },
   "learning": {
     "finished-congrats-name": "Herzlichen Glückwunsch, {{name}}!",
@@ -47,19 +47,38 @@
       "enable-developer-mode-description": "Dies aktiviert erweiterte Optionen zum Debuggen und Entwickeln von Erweiterungen und Themes.",
       "language": "Sprache",
       "language-description": "Ändere die Sprache der Benutzeroberfläche.",
-      "title": "Allgemein"
+      "title": "Allgemein",
+      "enable-zen-mode": "Zen Modus",
+      "enable-zen-mode-description": "Zen Modus aktiviert automatisch den Vollbildmodus während des Lernens."
     },
     "learn": {
       "requestRetention": "",
       "maximumInterval": "",
       "title": "Lernen"
     },
-    "page-title": "",
+    "title": "Einstellungen",
     "appearance": {
-      "title": "Erscheinungsbild"
+      "title": "Erscheinungsbild",
+      "color-scheme": "Erscheinungsbild",
+      "color-scheme-description": "Wähle ein immer helles oder dunkles Erscheinungsbild oder benutze deine Systemeinstellungen.",
+      "color-scheme-light": "Hell",
+      "color-scheme-dark": "Dunkel",
+      "color-scheme-auto": "System"
     },
     "editing": {
-      "title": "Bearbeitung"
+      "title": "Bearbeitung",
+      "individual-options": "Einzelne Optionen",
+      "show-strikethrough-option": "Option zum Durchstreichen",
+      "show-highlight-option": "Option zum Text markieren",
+      "show-list-option": "Optionen für Listen",
+      "markdown-hint": "Du kannst auch Tastaturkurzbefehle und einfache Markdown-Syntax benutzen, um Text zu formatieren.",
+      "show-code-option": "Option für Code",
+      "show-options-for-subscript-and-superscript": "Optionen für hoch- und tiefgestellten Text",
+      "use-bubble-menu": "Inline-Menü verwenden",
+      "show-link-option": "Optionen für Links",
+      "use-toolbar": "Werkzeugleiste anzeigen",
+      "use-toolbar-description": "Immer eine Werkzeugleiste mit Bearbeitungsoptionen über dem Bearbeitungsfeld anzeigen",
+      "editor-options": "Bearbeitungsfeld"
     },
     "database": {
       "title": "Datenbank"
@@ -67,6 +86,16 @@
     "developer": {
       "title": "Entwickler",
       "description": ""
-    }
+    },
+    "editing-use-bubble-menu-description": "Formatierungsoptionen nur anzeigen, wenn Text ausgewählt wird"
+  },
+  "manage-cards": {
+    "title": "Karten verwalten"
+  },
+  "statistics": {
+    "title": "Statistik"
+  },
+  "today": {
+    "title": "Heute"
   }
 }

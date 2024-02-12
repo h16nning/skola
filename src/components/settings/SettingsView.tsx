@@ -1,6 +1,4 @@
 import { Center, Stack, Tabs, Title } from "@mantine/core";
-import React from "react";
-import CColorSchemeToggle from "./ColorSchemeToggle";
 import {
   IconBolt,
   IconBraces,
@@ -10,15 +8,16 @@ import {
   IconPencil,
   IconSettings,
 } from "@tabler/icons-react";
-import GeneralSettingsView from "./GeneralSettingsView";
-import { useSetting } from "../../logic/Settings";
-import EditingSettingsView from "./EditingSettingsView/EditingSettingsView";
-import AboutSettingsView from "./AboutSettingsView";
-import DatabaseSettingsView from "./DatabaseSettingsView/DatabaseSettingsView";
 import { t } from "i18next";
-import LearnSettingsView from "./LearnSettingsView";
-import { AppHeaderContent } from "../Header/Header";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSetting } from "../../logic/Settings";
+import { AppHeaderContent } from "../Header/Header";
+import AboutSettingsView from "./AboutSettingsView";
+import AppearanceSettingsView from "./AppearanceSettingsView";
+import DatabaseSettingsView from "./DatabaseSettingsView/DatabaseSettingsView";
+import EditingSettingsView from "./EditingSettingsView/EditingSettingsView";
+import GeneralSettingsView from "./GeneralSettingsView";
+import LearnSettingsView from "./LearnSettingsView";
 
 export default function SettingsView() {
   const [developerMode] = useSetting("developerMode");
@@ -29,7 +28,7 @@ export default function SettingsView() {
     <Stack gap="xl" w="100%" maw="600px">
       <AppHeaderContent>
         <Center>
-          <Title order={3}>{t("settings.page-title")}</Title>
+          <Title order={3}>{t("settings.title")}</Title>
         </Center>
       </AppHeaderContent>
       <Tabs
@@ -68,7 +67,7 @@ export default function SettingsView() {
           <GeneralSettingsView />
         </Tabs.Panel>
         <Tabs.Panel value="appearance">
-          <CColorSchemeToggle />
+          <AppearanceSettingsView />
         </Tabs.Panel>
         <Tabs.Panel value="editing">
           <EditingSettingsView />

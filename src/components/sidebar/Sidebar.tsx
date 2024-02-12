@@ -22,6 +22,7 @@ import {
 } from "@tabler/icons-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mantine/hooks";
+import { t } from "i18next";
 
 function Sidebar({
   menuOpened,
@@ -116,21 +117,29 @@ function Sidebar({
             </ActionIcon>
           ) : null}
         </Group>
-        <InteractiveNavLink label="Home" path="/home" icon={<IconHome />} />
-        <InteractiveNavLink label="Today" path="/today" icon={<IconBolt />} />
         <InteractiveNavLink
-          label="Statistics"
+          label={t("home.title")}
+          path="/home"
+          icon={<IconHome />}
+        />
+        <InteractiveNavLink
+          label={t("today.title")}
+          path="/today"
+          icon={<IconBolt />}
+        />
+        <InteractiveNavLink
+          label={t("statistics.title")}
           path="/stats"
           icon={<IconChartBar />}
         />
 
         <InteractiveNavLink
-          label="Manage Cards"
+          label={t("manage-cards.title")}
           path="/cards"
           icon={<IconCards />}
         />
         <InteractiveNavLink
-          label="Settings"
+          label={t("settings.title")}
           path="/settings"
           icon={<IconSettings />}
         />

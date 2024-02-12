@@ -21,7 +21,8 @@ export default function GeneralSettingsView() {
         inputType={"switch"}
       />
       <SettingsInput
-        label={"Zen Mode"}
+        label={t("settings.general.enable-zen-mode")}
+        description={t("settings.general.enable-zen-mode-description")}
         settingsKey="useZenMode"
         inputType={"switch"}
       />
