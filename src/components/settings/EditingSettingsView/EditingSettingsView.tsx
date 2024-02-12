@@ -15,42 +15,40 @@ import {
   IconSuperscript,
 } from "@tabler/icons-react";
 import Section from "../Section";
+import { t } from "i18next";
 
 interface EditingSettingsViewProps {}
 
 export default function EditingSettingsView({}: EditingSettingsViewProps) {
   return (
     <Stack className={classes.container} gap="xl">
-      <Section title="Editor">
+      <Section title={t("settings.editing.editor-options")}>
         <SettingsInput
-          label="Use toolbar"
-          description={
-            "Always show a toolbar with formatting options above the editor"
-          }
+          label={t("settings.editing.use-toolbar")}
+          description={t("settings.editing.use-toolbar-description")}
           settingsKey="useToolbar"
           inputType={"checkbox"}
         />
         <SettingsInput
-          label="Use inline menu"
-          description={"Only show formatting options when text is selected"}
+          label={t("settings.editing.use-bubble-menu")}
+          description={t("settings.editing-use-bubble-menu-description")}
           settingsKey="useBubbleMenu"
           inputType={"checkbox"}
         />
         <Alert color="gray" icon={<IconInfoCircle />}>
-          You can also use keyboard shortcuts and basic markdown syntax to
-          format text.
+          {t("settings.editing.markdown-hint")}
         </Alert>
       </Section>
-      <Section title="Individual options">
+      <Section title={t("settings.editing.individual-options")}>
         <SettingsInput
           label={<IconStrikethrough />}
-          description={"Show strikethrough option"}
+          description={t("settings.editing.show-strikethrough-option")}
           settingsKey="showStrikethroughOptionInEditor"
           inputType={"checkbox"}
         />
         <SettingsInput
           label={<IconHighlight />}
-          description={"Show highlight option"}
+          description={t("settings.editing.show-highlight-option")}
           settingsKey="showHighlightOptionInEditor"
           inputType={"checkbox"}
         />
@@ -60,13 +58,13 @@ export default function EditingSettingsView({}: EditingSettingsViewProps) {
               <IconList /> <IconListNumbers />
             </>
           }
-          description={"Show options for lists"}
+          description={t("settings.editing.show-list-option")}
           settingsKey="showListOptionInEditor"
           inputType={"checkbox"}
         />
         <SettingsInput
           label={<IconCode />}
-          description={"Show code option"}
+          description={t("settings.editing.show-code-option")}
           settingsKey="showCodeOptionInEditor"
           inputType={"checkbox"}
         />
@@ -77,7 +75,9 @@ export default function EditingSettingsView({}: EditingSettingsViewProps) {
               <IconSuperscript />
             </>
           }
-          description={"Show options for subscript and superscript"}
+          description={t(
+            "settings.editing.show-options-for-subscript-and-superscript"
+          )}
           settingsKey="showSubAndSuperScriptOptionInEditor"
           inputType={"checkbox"}
         />
@@ -88,7 +88,7 @@ export default function EditingSettingsView({}: EditingSettingsViewProps) {
               <IconLinkOff />
             </>
           }
-          description={"Show options for links"}
+          description={t("settings.editing.show-link-option")}
           settingsKey="showLinkOptionInEditor"
           inputType={"checkbox"}
         />

@@ -23,7 +23,7 @@
   "home": {
     "welcome-user": "Welcome back, {{name}}!",
     "welcome": "Welcome!",
-    "title": ""
+    "title": "Hem"
   },
   "learning": {
     "finished-congrats-name": "",
@@ -56,10 +56,16 @@
     },
     "page-title": "",
     "appearance": {
-      "title": "Utseende"
+      "title": "Utseende",
+      "color-scheme-description": "Välj mellan alltid ljust eller mörkt tema eller använd färgtemat för ditt system.",
+      "color-scheme": "Färgschema"
     },
     "editing": {
-      "title": "Redigering"
+      "title": "Redigering",
+      "individual-options": "",
+      "show-list-option": "",
+      "markdown-hint": "Du kan också använda kortkommandon och grundläggande markdown-syntax för att formatera text.",
+      "show-options-for-subscript-and-superscript": ""
     },
     "database": {
       "title": "Databas"
@@ -67,6 +73,16 @@
     "developer": {
       "title": "Utvecklare",
       "description": ""
-    }
+    },
+    "title": "Inställningar"
+  },
+  "statistics": {
+    "title": "Statistik"
+  },
+  "manage-cards": {
+    "title": "Hantera kort"
+  },
+  "today": {
+    "title": "Idag"
   }
 }

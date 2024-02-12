@@ -11,6 +11,7 @@ import { AppHeaderContent } from "../Header/Header";
 import SelectDecksHeader from "../custom/SelectDecksHeader";
 import classes from "./CardManagerView.module.css";
 import EditorOptionsMenu from "../editcard/EditorOptionsMenu";
+import { t } from "i18next";
 
 const ALL_DECK_ID = "all";
 function CardManagerView() {
@@ -38,7 +39,7 @@ function CardManagerView() {
         <AppHeaderContent>
           <Group justify="space-between" gap="xs" wrap="nowrap">
             <Space />
-            <Title order={3}>Manage Cards</Title>
+            <Title order={3}>{t("manage-cards.title")}</Title>
             <EditorOptionsMenu />
           </Group>
         </AppHeaderContent>
