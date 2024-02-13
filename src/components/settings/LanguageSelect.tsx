@@ -18,7 +18,9 @@ export default function LanguageSelect() {
           setSetting("language", (value as SettingsValues["language"]) || "en");
           console.log("Language changed to", value);
           i18n.changeLanguage(value || "en");
+          window.location.reload();
         }
+
         return value;
       }}
       data={[

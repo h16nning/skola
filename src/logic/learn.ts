@@ -2,7 +2,6 @@ import { Table } from "dexie";
 import { Rating, SchedulingInfo, State } from "fsrs.js";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { updateGlobalScheduler, useGlobalScheduler } from "./CardScheduler";
-import { getUtils } from "./CardTypeManager";
 import { Card, CardType, updateCardModel, useCardsWith } from "./card";
 
 export type LearnOptions = {
@@ -16,15 +15,6 @@ export type CardQuerier = {
     cards: Table<Card<CardType>>
   ) => Promise<Card<CardType>[] | undefined>;
   dependencies: any[];
-};
-
-export const CardSorts = {
-  byCreationDate:
-    (sortOrder: 1 | -1) => (a: Card<CardType>, b: Card<CardType>) =>
-      (a.creationDate.getTime() - b.creationDate.getTime()) * sortOrder,
-  bySortField: (sortOrder: 1 | -1) => (a: Card<CardType>, b: Card<CardType>) =>
-    (getUtils(a).displayPreview(a) > getUtils(b).displayPreview(b) ? 1 : -1) *
-    sortOrder,
 };
 
 export type LearnController = {

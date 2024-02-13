@@ -7,7 +7,8 @@ import { getUtils } from "../../../logic/CardTypeManager";
 import { useSetting } from "../../../logic/Settings";
 import { getCardsOf } from "../../../logic/card";
 import { useDeckFromUrl } from "../../../logic/deck";
-import { CardSorts, useLearning } from "../../../logic/learn";
+import { useLearning } from "../../../logic/learn";
+import { CardSorts } from "../../../logic/CardSorting";
 import MissingObject from "../../custom/MissingObject";
 import { generalFail } from "../../custom/Notification/Notification";
 import FinishedLearningView from "../FinishedLearningView/FinishedLearningView";
@@ -65,9 +66,9 @@ function LearnView() {
 
   useEffect(() => {
     if (controller.isFinished) {
-      stopwatchResult.pause();
+      stopwatchResult && stopwatchResult.pause();
     } else {
-      stopwatchResult.start();
+      stopwatchResult && stopwatchResult.start();
     }
   }, [controller.isFinished]);
 
