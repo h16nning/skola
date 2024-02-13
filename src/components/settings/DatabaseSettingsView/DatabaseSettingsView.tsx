@@ -5,42 +5,22 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 import { exportDB, importInto } from "dexie-export-import";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../../logic/db";
 import DangerousConfirmModal from "../../custom/DangerousConfirmModal";
 import classes from "./DatabaseSettingsView.module.css";
-
-async function showEstimatedQuota(setUsageQuota: Function) {
-  if (navigator.storage && navigator.storage.estimate) {
-    const estimation = await navigator.storage.estimate();
-    if (estimation.usage === undefined || estimation.quota === undefined)
-      return;
-    setUsageQuota([
-      estimation.usage / 1_000_000_000,
-      estimation.quota / 1_000_000_000,
-    ]);
-  }
-}
+import StorageSection from "./StorageSection";
 
 export default function DatabaseSettingsView() {
   const navigate = useNavigate();
   const [deleteAllDataModalOpened, setDeleteAllDataModalOpened] =
     useState<boolean>(false);
-  const [usageQuota, setUsageQuota] = useState<
-    [number | undefined, number | undefined]
-  >([undefined, undefined]);
-
-  useEffect(() => {
-    showEstimatedQuota(setUsageQuota);
-  }, []);
 
   return (
     <>
       <Stack gap="xl" align="start">
-        <Text>
-          {usageQuota[0]}/{usageQuota[1]} bytes used
-        </Text>
+        <StorageSection />
         <Button
           leftSection={<IconDatabaseExport />}
           onClick={async () => {

@@ -8,6 +8,7 @@ import {
   Menu,
   Modal,
   NavLink,
+  Paper,
   Popover,
   Select,
   Tabs,
@@ -116,6 +117,14 @@ export const presetTheme = createTheme({
         variant: "default",
       },
       classNames: actionIcon,
+    }),
+    Paper: Paper.extend({
+      defaultProps: {
+        withBorder: true,
+        p: "md",
+        shadow: "xs",
+        radius: "md",
+      },
     }),
     Modal: Modal.extend({
       defaultProps: {
