@@ -3,6 +3,9 @@
   font-weight: 600;
 }
 
+.close:active {
+  transform: scale(0.9);
+}
 .overlay {
   @mixin light {
     background: linear-gradient(

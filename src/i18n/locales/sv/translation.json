@@ -84,5 +84,8 @@
   },
   "today": {
     "title": "Idag"
+  },
+  "rename-deck": {
+    "title": ""
   }
 }
