@@ -5,6 +5,7 @@ import { Table, Text } from "@mantine/core";
 import { useEventListener } from "@mantine/hooks";
 import CardTableHeadItem from "./CardTableHeadItem";
 import { CardTableItem } from "./CardTableItem";
+import { SortField } from "../../logic/card_filter";
 
 interface CardTableProps {
   cardSet: Card<CardType>[];
@@ -12,8 +13,8 @@ interface CardTableProps {
   setSelectedIndex: (index: number) => void;
   selectedCard: Card<CardType> | undefined;
   setSelectedCard: (card: Card<CardType>) => void;
-  sort: [string, boolean];
-  setSort: (sort: [string, boolean]) => void;
+  sort: [SortField, boolean];
+  setSort: (sort: [SortField, boolean]) => void;
 }
 
 function CardTable({
