@@ -31,7 +31,7 @@ export default function Header({ menuOpened, menuHandlers }: HeaderProps) {
   return (
     <AppShell.Header
       withBorder={false}
-      className={classes.header + " " + (scroll.y > 20 && classes.scrolled)}
+      className={classes.header + " " + (scroll.y > 5 && classes.scrolled)}
     >
       <Group h="100%" pl="md" pr="sm" p="sm" justify="flex-start" wrap="nowrap">
         <Burger

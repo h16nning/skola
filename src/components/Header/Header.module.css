@@ -1,7 +1,10 @@
 .header {
-  box-shadow: var(--mantine-shadow-xs);
+  backdrop-filter: blur(4rem);
+  border-bottom: solid 1px;
+  border-color: light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-6));
 }
 
 .header.scrolled {
-  box-shadow: var(--mantine-shadow-xs);
+  transition: all 0.3s;
+  box-shadow: 0 -1rem 2rem 1rem rgba(0, 0, 0, 0.04), 0 -0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.07);
 }
