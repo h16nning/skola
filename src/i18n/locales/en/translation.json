@@ -81,7 +81,8 @@
       "editor-options": "Editor"
     },
     "database": {
-      "title": "Database"
+      "title": "Database",
+      "storage-used": "used"
     },
     "developer": {
       "title": "Developer",

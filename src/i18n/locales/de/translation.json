@@ -81,7 +81,8 @@
       "editor-options": "Bearbeitungsfeld"
     },
     "database": {
-      "title": "Datenbank"
+      "title": "Datenbank",
+      "storage-used": "benutzt"
     },
     "developer": {
       "title": "Entwickler",

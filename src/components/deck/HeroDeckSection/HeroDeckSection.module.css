@@ -1,7 +1,4 @@
 .container {
-  border: 1px solid;
-  border-color: var(--mantine-color-light-border);
-  box-shadow: var(--mantine-shadow-xs);
   display: flex;
   align-items: center;
   justify-content: center;
