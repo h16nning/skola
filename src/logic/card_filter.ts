@@ -3,11 +3,13 @@ import { Card, CardType, getCardsOf } from "./card";
 import { getUtils } from "./CardTypeManager";
 import { getDeck } from "./deck";
 
+export type SortField = "front" | "creation_date" | "deck" | "type";
+
 export default async function selectCards(
   cards: Table<Card<CardType>>,
   deckId: string | undefined,
   filter: string,
-  sort: [string, boolean]
+  sort: [SortField, boolean]
 ): Promise<Card<CardType>[] | undefined> {
   let filteredCards:
     | Table<Card<CardType>>
