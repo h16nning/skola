@@ -139,7 +139,7 @@ export function useSuperDecks(deck?: Deck): [Deck[] | undefined, boolean] {
   return result;
 }
 
-async function determineSuperDecks(
+export async function determineSuperDecks(
   deck: Deck | undefined
 ): Promise<[Deck[] | undefined, boolean]> {
   if (!deck) {
