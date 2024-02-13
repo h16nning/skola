@@ -1,6 +1,6 @@
 import classes from "./Sidebar.module.css";
 import cx from "clsx";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import {
   ActionIcon,
   Group,
@@ -17,17 +17,60 @@ import {
   IconBolt,
   IconCards,
   IconChartBar,
-  IconChevronRight,
   IconHome,
   IconPlus,
   IconSettings,
+  IconX,
 } from "@tabler/icons-react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mantine/hooks";
 import { t } from "i18next";
 import DeckTree from "./DeckTree";
 import { useTopLevelDecks } from "../../logic/deck";
 import NewDeckModal from "../deck/NewDeckModal";
+
+const InteractiveNavLink = ({
+  label,
+  path,
+  icon,
+  minimalMode,
+  fullscreenMode,
+  closeMenu,
+}: {
+  label: string;
+  path: string;
+  icon: JSX.Element;
+  minimalMode: boolean;
+  fullscreenMode: boolean;
+  closeMenu: () => void;
+}) => {
+  const navigate = useNavigate();
+  return (
+    <Tooltip
+      label={label}
+      disabled={!minimalMode || fullscreenMode}
+      position="right"
+      keepMounted={false}
+    >
+      <NavLink
+        classNames={{
+          root: classes.sidebarItem,
+          body: classes.sidebarItemBody,
+          label: classes.sidebarItemLabel,
+          section: classes.sidebarItemIcon,
+        }}
+        variant="subtle"
+        label={label}
+        leftSection={icon}
+        onClick={() => {
+          navigate(path);
+          fullscreenMode && closeMenu();
+        }}
+        active={location.pathname.startsWith(path)}
+      />
+    </Tooltip>
+  );
+};
 
 function Sidebar({
   menuOpened,
@@ -41,15 +84,13 @@ function Sidebar({
   };
 }) {
   const [newDeckModalOpened, setNewDeckModalOpened] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
   const theme = useMantineTheme();
 
-  const fullscreenMode = useMediaQuery(
+  const fullscreenMode = !!useMediaQuery(
     "(max-width: " + theme.breakpoints.xs + ")"
   );
   const isXsLayout = useMediaQuery("(min-width: " + theme.breakpoints.sm + ")");
-  const minimalMode = useMediaQuery(
+  const minimalMode = !!useMediaQuery(
     "(max-width: " +
       theme.breakpoints.lg +
       ") and (min-width: " +
@@ -59,45 +100,6 @@ function Sidebar({
 
   const landscapeMode = useMediaQuery("(orientation: landscape)");
   const [decks, isReady] = useTopLevelDecks();
-
-  const InteractiveNavLink = useCallback(
-    ({
-      label,
-      path,
-      icon,
-    }: {
-      label: string;
-      path: string;
-      icon: JSX.Element;
-    }) => {
-      return (
-        <Tooltip
-          label={label}
-          disabled={!minimalMode || !fullscreenMode}
-          position="right"
-          keepMounted={false}
-        >
-          <NavLink
-            classNames={{
-              root: classes.sidebarItem,
-              body: classes.sidebarItemBody,
-              label: classes.sidebarItemLabel,
-              section: classes.sidebarItemIcon,
-            }}
-            variant="subtle"
-            label={label}
-            leftSection={icon}
-            onClick={() => {
-              navigate(path);
-              fullscreenMode && menuHandlers.close();
-            }}
-            active={location.pathname.startsWith(path)}
-          />
-        </Tooltip>
-      );
-    },
-    [location.pathname, navigate, menuHandlers, fullscreenMode]
-  );
 
   return (
     <Box
@@ -118,10 +120,11 @@ function Sidebar({
           </Group>
           {fullscreenMode ? (
             <ActionIcon
-              onClick={() => menuHandlers.close()}
+              onClick={menuHandlers.close}
               style={{ alignSelf: "end" }}
+              variant="subtle"
             >
-              <IconChevronRight />
+              <IconX />
             </ActionIcon>
           ) : null}
         </Group>
@@ -129,30 +132,45 @@ function Sidebar({
           label={t("home.title")}
           path="/home"
           icon={<IconHome />}
+          minimalMode={minimalMode}
+          fullscreenMode={fullscreenMode}
+          closeMenu={menuHandlers.close}
         />
         <InteractiveNavLink
           label={t("today.title")}
           path="/today"
           icon={<IconBolt />}
+          minimalMode={minimalMode}
+          fullscreenMode={fullscreenMode}
+          closeMenu={menuHandlers.close}
         />
         <InteractiveNavLink
           label={t("statistics.title")}
           path="/stats"
           icon={<IconChartBar />}
+          minimalMode={minimalMode}
+          fullscreenMode={fullscreenMode}
+          closeMenu={menuHandlers.close}
         />
 
         <InteractiveNavLink
           label={t("manage-cards.title")}
           path="/cards"
           icon={<IconCards />}
+          minimalMode={minimalMode}
+          fullscreenMode={fullscreenMode}
+          closeMenu={menuHandlers.close}
         />
         <InteractiveNavLink
           label={t("settings.title")}
           path="/settings"
           icon={<IconSettings />}
+          minimalMode={minimalMode}
+          fullscreenMode={fullscreenMode}
+          closeMenu={menuHandlers.close}
         />
       </Stack>
-      {isXsLayout && (
+      {isXsLayout && !minimalMode && (
         <>
           <Text c="dimmed" p="xs" pt="md" fz="sm">
             Decks
