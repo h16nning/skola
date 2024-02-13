@@ -1,6 +1,6 @@
 import classes from "./Sidebar.module.css";
 import cx from "clsx";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import {
   ActionIcon,
   Group,
@@ -11,6 +11,7 @@ import {
   Image,
   useMantineTheme,
   Box,
+  Text,
 } from "@mantine/core";
 import {
   IconBolt,
@@ -18,11 +19,15 @@ import {
   IconChartBar,
   IconChevronRight,
   IconHome,
+  IconPlus,
   IconSettings,
 } from "@tabler/icons-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mantine/hooks";
 import { t } from "i18next";
+import DeckTree from "./DeckTree";
+import { useTopLevelDecks } from "../../logic/deck";
+import NewDeckModal from "../deck/NewDeckModal";
 
 function Sidebar({
   menuOpened,
@@ -35,6 +40,7 @@ function Sidebar({
     readonly toggle: () => void;
   };
 }) {
+  const [newDeckModalOpened, setNewDeckModalOpened] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const theme = useMantineTheme();
@@ -42,6 +48,7 @@ function Sidebar({
   const fullscreenMode = useMediaQuery(
     "(max-width: " + theme.breakpoints.xs + ")"
   );
+  const isXsLayout = useMediaQuery("(min-width: " + theme.breakpoints.sm + ")");
   const minimalMode = useMediaQuery(
     "(max-width: " +
       theme.breakpoints.lg +
@@ -51,6 +58,7 @@ function Sidebar({
   );
 
   const landscapeMode = useMediaQuery("(orientation: landscape)");
+  const [decks, isReady] = useTopLevelDecks();
 
   const InteractiveNavLink = useCallback(
     ({
@@ -144,6 +152,28 @@ function Sidebar({
           icon={<IconSettings />}
         />
       </Stack>
+      {isXsLayout && (
+        <>
+          <Text c="dimmed" p="xs" pt="md" fz="sm">
+            Decks
+          </Text>
+          {isReady &&
+            decks?.map((deck) => <DeckTree deck={deck} key={deck.id} />)}
+          <NavLink
+            label={
+              <Text c="dimmed" fz="xs">
+                Add deck
+              </Text>
+            }
+            onClick={() => setNewDeckModalOpened(true)}
+            leftSection={<IconPlus size={"1rem"} color={"gray"} />}
+          />
+          <NewDeckModal
+            opened={newDeckModalOpened}
+            setOpened={setNewDeckModalOpened}
+          />
+        </>
+      )}
     </Box>
   );
 }
