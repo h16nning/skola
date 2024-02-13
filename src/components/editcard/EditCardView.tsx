@@ -16,7 +16,7 @@ function EditCardView() {
 
 export function NoCardView() {
   return (
-    <Text fz="sm" color="dimmed">
+    <Text fz="sm" c="dimmed">
       No card selected
     </Text>
   );
