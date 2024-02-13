@@ -38,7 +38,7 @@ function HeroDeckSection({ deck, cards, areCardsReady }: HeroDeckSectionProps) {
   }
 
   return (
-    <Paper className={classes.container}>
+    <Paper className={classes.container} withBorder shadow="xs">
       {areCardsReady &&
         (!cards ? (
           <Text c="red" fw={700}>
