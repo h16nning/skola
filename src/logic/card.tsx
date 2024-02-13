@@ -21,6 +21,7 @@ export interface CardSkeleton {
   model: Model;
   deck: string;
   creationDate: Date;
+  customOrder?: number;
   frame?: string | undefined;
 }
 
