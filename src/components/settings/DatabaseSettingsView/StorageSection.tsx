@@ -41,7 +41,7 @@ export default function StorageSection() {
   }, []);
 
   return (
-    <Paper w="100%">
+    <Paper w="100%" withBorder shadow="xs" p="sm" radius="sm">
       {storageInfo.usage !== undefined && storageInfo.quota !== undefined && (
         <Group justify="space-between">
           <RingProgress

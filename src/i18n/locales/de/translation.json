@@ -98,5 +98,13 @@
   },
   "today": {
     "title": "Heute"
+  },
+  "rename-deck": {
+    "title": "„{{deckName}}“ umbenennen",
+    "new-name": "Neuer Name",
+    "rename-button": "Umbenennen"
+  },
+  "global": {
+    "cancel": "Abbrechen"
   }
 }
