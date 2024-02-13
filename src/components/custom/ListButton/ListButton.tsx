@@ -6,23 +6,15 @@ import { IconChevronRight } from "@tabler/icons-react";
 interface ListButtonProps {
   children: JSX.Element;
   i: number;
-  onClick?: Function;
-  onContextMenu?: Function;
+  onClick?: () => void;
+  onContextMenu?: () => void;
 }
 
 function ListButton({ children, onClick, onContextMenu }: ListButtonProps) {
   return (
     <UnstyledButton
-      onClick={() => {
-        if (onClick) {
-          onClick();
-        }
-      }}
-      onContextMenu={() => {
-        if (onContextMenu) {
-          onContextMenu();
-        }
-      }}
+      onClick={onClick}
+      onContextMenu={onContextMenu}
       component="button"
       className={classes.listButton}
     >
