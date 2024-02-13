@@ -3,6 +3,7 @@ import classes from "./App.module.css";
 
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
+import "@mantine/spotlight/styles.css";
 import { useDisclosure, useLocalStorage } from "@mantine/hooks";
 import { Notifications } from "@mantine/notifications";
 import { useEffect } from "react";
