@@ -1,8 +1,7 @@
-import React from "react";
-import { Anchor, Button, Group, Modal, Stack, Text } from "@mantine/core";
-import { Deck } from "../../logic/deck";
-import { Card, CardType, useStatesOf } from "../../logic/card";
+import { Anchor, Modal, Stack, Text } from "@mantine/core";
 import { State } from "fsrs.js";
+import { Card, CardType, useStatesOf } from "../../logic/card";
+import { Deck } from "../../logic/deck";
 
 interface DebugDeckModalProps {
   opened: boolean;
@@ -19,12 +18,7 @@ function DebugDeckModal({
 }: DebugDeckModalProps) {
   const states = useStatesOf(cards);
   return (
-    <Modal
-      opened={opened}
-      onClose={() => setOpened(false)}
-      withCloseButton={false}
-      title="Debug"
-    >
+    <Modal opened={opened} onClose={() => setOpened(false)} title="Debug">
       <Stack justify="space-between">
         {deck ? (
           <Stack gap="xs">
@@ -81,9 +75,6 @@ function DebugDeckModal({
         ) : (
           <Text fz="xs">No deck</Text>
         )}
-        <Group justify="flex-end">
-          <Button onClick={() => setOpened(false)}>Close</Button>
-        </Group>
       </Stack>
     </Modal>
   );
