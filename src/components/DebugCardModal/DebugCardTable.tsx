@@ -20,6 +20,10 @@ export default function DebugCardTable({
             <td>{card.id}</td>
           </tr>
           <tr>
+            <th>Custom Order:</th>
+            <td>{card.customOrder}</td>
+          </tr>
+          <tr>
             <th>Content:</th>
             <td>{JSON.stringify(card.content)}</td>
           </tr>

@@ -7,17 +7,17 @@ export type CardSortFunction = (
 
 export const CardSorts: Record<any, CardSortFunction> = {
   byCreationDate:
+    (sortOrder: 1 | -1) => (a: Card<CardType>, b: Card<CardType>) =>
+      (a.creationDate.getTime() - b.creationDate.getTime()) * sortOrder,
+  bySortField: (sortOrder: 1 | -1) => (a: Card<CardType>, b: Card<CardType>) =>
+    (getUtils(a).displayPreview(a) as string).localeCompare(
+      getUtils(b).displayPreview(b) as string
+    ) * sortOrder,
+  byCustomOrder:
     (sortOrder: 1 | -1) => (a: Card<CardType>, b: Card<CardType>) => {
-      try {
-        return (
-          (a.creationDate.getTime() - b.creationDate.getTime()) * sortOrder
-        );
-      } catch (e) {
-        console.log(e);
+      if (a.customOrder === undefined || b.customOrder === undefined) {
         return 0;
       }
+      return (a.customOrder - b.customOrder) * Math.abs(sortOrder);
     },
-  bySortField: (sortOrder: 1 | -1) => (a: Card<CardType>, b: Card<CardType>) =>
-    (getUtils(a).displayPreview(a) > getUtils(b).displayPreview(b) ? 1 : -1) *
-    sortOrder,
 };

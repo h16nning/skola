@@ -9,3 +9,10 @@
         padding-inline-start: 1.25rem;
     }
 }
+
+.cardWrapper {
+    margin-bottom: var(--mantine-spacing-xs);
+    &.dragging {
+        box-shadow: var(--mantine-shadow-md);
+    }
+}
