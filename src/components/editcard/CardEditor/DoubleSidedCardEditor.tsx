@@ -1,5 +1,5 @@
 import classes from "./DoubleSidedCardEditor.module.css";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Stack, Text } from "@mantine/core";
 import CardEditor, { useCardEditor } from "./CardEditor";
 import { EditMode } from "../../../logic/CardTypeManager";
@@ -19,6 +19,7 @@ import {
   createDoubleSidedCardPair,
 } from "../../../logic/CardTypeImplementations/DoubleSidedCard";
 import { useSharedValue } from "../../../logic/sharedvalue";
+import { useTranslation } from "react-i18next";
 
 interface DoubleSidedCardEditorProps {
   card: Card<CardType.DoubleSided> | null;
@@ -28,7 +29,7 @@ interface DoubleSidedCardEditorProps {
 
 async function finish(
   mode: EditMode,
-  clear: Function,
+  clear: () => void,
   deck: Deck,
   card: Card<CardType.DoubleSided> | null,
   frontEditor: Editor | null,
@@ -70,16 +71,19 @@ function DoubleSidedCardEditor({
   deck,
   mode,
 }: DoubleSidedCardEditorProps) {
-  useHotkeys([
-    ["mod+Enter", () => finish(mode, clear, deck, card, editor1, editor2)],
-  ]);
+  const [t] = useTranslation();
+  const [requestedFinish, setRequestedFinish] = useState(false);
+
+  useHotkeys([["mod+Enter", () => setRequestedFinish(true)]]);
 
   const editor1 = useCardEditor({
     content: useSharedValue(card?.content.frontReferenceId ?? "")?.value ?? "",
+    finish: () => setRequestedFinish(true),
   });
 
   const editor2 = useCardEditor({
     content: useSharedValue(card?.content.backReferenceId ?? "")?.value ?? "",
+    finish: () => setRequestedFinish(true),
   });
 
   const clear = useCallback(() => {
@@ -88,17 +92,24 @@ function DoubleSidedCardEditor({
     editor1?.commands.focus();
   }, [editor1, editor2]);
 
+  useEffect(() => {
+    if (requestedFinish) {
+      finish(mode, clear, deck, card, editor1, editor2);
+      setRequestedFinish(false);
+    }
+  }, [requestedFinish, mode, clear, deck, card, editor1, editor2]);
+
   return (
     <Stack gap="2rem">
       <Stack gap={0}>
         <Text fz="sm" fw={600}>
-          Front
+          {t("cards.editor.double_sided.front")}
         </Text>
         <CardEditor editor={editor1} key="front" className={classes} />
       </Stack>
       <Stack gap={0}>
         <Text fz="sm" fw={600}>
-          Back
+          {t("cards.editor.double_sided.back")}
         </Text>
         <CardEditor editor={editor2} key="back" />
       </Stack>
