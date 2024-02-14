@@ -1,111 +1,119 @@
 {
+  "cards": {
+    "editor": {
+      "double_sided": {
+        "back": "",
+        "front": ""
+      }
+    }
+  },
   "deck": {
-    "settings": "",
-    "review-cards-label_one": "1 Wiederholen",
-    "review-cards-label_other": "{{count}} Wiederholen",
-    "new-cards-label_one": "1 Neu",
-    "new-cards-label_other": "{{count}} Neue",
+    "add-cards": "Karten hinzufügen",
+    "learning-cards-label": "Lernen",
     "learning-cards-label_one": "1 Lernen",
     "learning-cards-label_other": "{{count}} Lernen",
     "new-cards-label": "Neu",
-    "learning-cards-label": "Lernen",
-    "review-cards-label": "Wiederholen",
+    "new-cards-label_one": "1 Neu",
+    "new-cards-label_other": "{{count}} Neue",
     "new-deck-button": "Neuer Stapel",
-    "subdeck": {
-      "title": "Unterstapel",
-      "add-subdeck-button": "Hinzufügen",
-      "load-fail": "Fehler beim Laden der Unterstapel"
-    },
     "notebook": {
       "title": "Notizbuch"
     },
-    "add-cards": "Karten hinzufügen"
+    "review-cards-label": "Wiederholen",
+    "review-cards-label_one": "1 Wiederholen",
+    "review-cards-label_other": "{{count}} Wiederholen",
+    "settings": "",
+    "subdeck": {
+      "add-subdeck-button": "Hinzufügen",
+      "load-fail": "Fehler beim Laden der Unterstapel",
+      "title": "Unterstapel"
+    }
+  },
+  "global": {
+    "cancel": "Abbrechen"
   },
   "home": {
-    "welcome-user": "Willkommen zurück, {{name}}!",
+    "title": "Startseite",
     "welcome": "Willkomen!",
-    "title": "Startseite"
+    "welcome-user": "Willkommen zurück, {{name}}!"
   },
   "learning": {
-    "finished-congrats-name": "Herzlichen Glückwunsch, {{name}}!",
-    "finished-congrats": "Herzlichen Glückwunsch!",
-    "finished-info": "Du hast alle Karten in diesem Stapel für heute gelernt!",
-    "finished-duration": "Dauer",
     "finished-accuracy-ratio": "Genauigkeit",
-    "finished-repetions-count": "Wiederholt",
     "finished-button-home": "Zum Start",
-    "finished-button-to-deck": "Zurück zum Stapel"
+    "finished-button-to-deck": "Zurück zum Stapel",
+    "finished-congrats": "Herzlichen Glückwunsch!",
+    "finished-congrats-name": "Herzlichen Glückwunsch, {{name}}!",
+    "finished-duration": "Dauer",
+    "finished-info": "Du hast alle Karten in diesem Stapel für heute gelernt!",
+    "finished-repetions-count": "Wiederholt"
+  },
+  "manage-cards": {
+    "title": "Karten verwalten"
+  },
+  "rename-deck": {
+    "new-name": "Neuer Name",
+    "rename-button": "Umbenennen",
+    "title": "„{{deckName}}“ umbenennen"
   },
   "settings": {
     "about": {
       "description": "Skola wird von einem Medizinstudenten aus Deutschland entwickelt. Es befindet sich in der frühen Entwicklung. Daher ist es möglich, dass du vielen Bugs begegnest. Wenn dir solche auffallen, würde ich mich sehr freuen, wenn du diese im Git-Repository meldest.",
       "title": "Über"
     },
-    "general": {
-      "name": "Name",
-      "name-description": "Dein Name wird zur Anpassung der Benutzeroberfläche genutzt.",
-      "enable-developer-mode": "Entwicklermodus aktivieren",
-      "enable-developer-mode-description": "Dies aktiviert erweiterte Optionen zum Debuggen und Entwickeln von Erweiterungen und Themes.",
-      "language": "Sprache",
-      "language-description": "Ändere die Sprache der Benutzeroberfläche.",
-      "title": "Allgemein",
-      "enable-zen-mode": "Zen Modus",
-      "enable-zen-mode-description": "Zen Modus aktiviert automatisch den Vollbildmodus während des Lernens."
-    },
-    "learn": {
-      "requestRetention": "",
-      "maximumInterval": "",
-      "title": "Lernen"
-    },
-    "title": "Einstellungen",
     "appearance": {
-      "title": "Erscheinungsbild",
       "color-scheme": "Erscheinungsbild",
+      "color-scheme-auto": "System",
+      "color-scheme-dark": "Dunkel",
       "color-scheme-description": "Wähle ein immer helles oder dunkles Erscheinungsbild oder benutze deine Systemeinstellungen.",
       "color-scheme-light": "Hell",
-      "color-scheme-dark": "Dunkel",
-      "color-scheme-auto": "System"
-    },
-    "editing": {
-      "title": "Bearbeitung",
-      "individual-options": "Einzelne Optionen",
-      "show-strikethrough-option": "Option zum Durchstreichen",
-      "show-highlight-option": "Option zum Text markieren",
-      "show-list-option": "Optionen für Listen",
-      "markdown-hint": "Du kannst auch Tastaturkurzbefehle und einfache Markdown-Syntax benutzen, um Text zu formatieren.",
-      "show-code-option": "Option für Code",
-      "show-options-for-subscript-and-superscript": "Optionen für hoch- und tiefgestellten Text",
-      "use-bubble-menu": "Inline-Menü verwenden",
-      "show-link-option": "Optionen für Links",
-      "use-toolbar": "Werkzeugleiste anzeigen",
-      "use-toolbar-description": "Immer eine Werkzeugleiste mit Bearbeitungsoptionen über dem Bearbeitungsfeld anzeigen",
-      "editor-options": "Bearbeitungsfeld"
+      "title": "Erscheinungsbild"
     },
     "database": {
-      "title": "Datenbank",
-      "storage-used": "benutzt"
+      "storage-used": "benutzt",
+      "title": "Datenbank"
     },
     "developer": {
-      "title": "Entwickler",
-      "description": ""
+      "description": "",
+      "title": "Entwickler"
     },
-    "editing-use-bubble-menu-description": "Formatierungsoptionen nur anzeigen, wenn Text ausgewählt wird"
-  },
-  "manage-cards": {
-    "title": "Karten verwalten"
+    "editing": {
+      "editor-options": "Bearbeitungsfeld",
+      "individual-options": "Einzelne Optionen",
+      "markdown-hint": "Du kannst auch Tastaturkurzbefehle und einfache Markdown-Syntax benutzen, um Text zu formatieren.",
+      "show-code-option": "Option für Code",
+      "show-highlight-option": "Option zum Text markieren",
+      "show-link-option": "Optionen für Links",
+      "show-list-option": "Optionen für Listen",
+      "show-options-for-subscript-and-superscript": "Optionen für hoch- und tiefgestellten Text",
+      "show-strikethrough-option": "Option zum Durchstreichen",
+      "title": "Bearbeitung",
+      "use-bubble-menu": "Inline-Menü verwenden",
+      "use-toolbar": "Werkzeugleiste anzeigen",
+      "use-toolbar-description": "Immer eine Werkzeugleiste mit Bearbeitungsoptionen über dem Bearbeitungsfeld anzeigen"
+    },
+    "editing-use-bubble-menu-description": "Formatierungsoptionen nur anzeigen, wenn Text ausgewählt wird",
+    "general": {
+      "enable-developer-mode": "Entwicklermodus aktivieren",
+      "enable-developer-mode-description": "Dies aktiviert erweiterte Optionen zum Debuggen und Entwickeln von Erweiterungen und Themes.",
+      "enable-zen-mode": "Zen Modus",
+      "enable-zen-mode-description": "Zen Modus aktiviert automatisch den Vollbildmodus während des Lernens.",
+      "language": "Sprache",
+      "language-description": "Ändere die Sprache der Benutzeroberfläche.",
+      "name": "Name",
+      "name-description": "Dein Name wird zur Anpassung der Benutzeroberfläche genutzt.",
+      "title": "Allgemein"
+    },
+    "learn": {
+      "maximumInterval": "",
+      "requestRetention": "",
+      "title": "Lernen"
+    },
+    "title": "Einstellungen"
   },
   "statistics": {
     "title": "Statistik"
   },
   "today": {
     "title": "Heute"
-  },
-  "rename-deck": {
-    "title": "„{{deckName}}“ umbenennen",
-    "new-name": "Neuer Name",
-    "rename-button": "Umbenennen"
-  },
-  "global": {
-    "cancel": "Abbrechen"
   }
 }
