@@ -1,14 +1,20 @@
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
-import { Button, Group, Menu, Stack } from "@mantine/core";
+import {
+  Button,
+  Combobox,
+  Group,
+  InputBase,
+  Stack,
+  Text,
+  useCombobox,
+} from "@mantine/core";
 import { useListState } from "@mantine/hooks";
 import {
-  IconArrowsSort,
   IconCalendar,
   IconMenuOrder,
   IconPlus,
-  IconSortAscending,
-  IconSortDescending,
   IconTextCaption,
+  TablerIconsProps,
 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -42,11 +48,7 @@ export default function NotebookView() {
 
   const [cards] = useCardsOf(deck);
 
-  const [sortFunction, setSortFunction] = useState<CardSortFunction>(
-    () => CardSorts.byCreationDate
-  );
-
-  const [sortOrder, setSortOrder] = useState<1 | -1>(1);
+  const [sortOrder] = useState<1 | -1>(1);
   const [sortedCards, setSortedCards] = useState<Card<CardType>[]>(cards ?? []);
 
   //only for custom sort
@@ -60,78 +62,18 @@ export default function NotebookView() {
     }
   }, [sortedCards]);
 
+  const [sortOption, setSortOption] = useState<SortOption>(sortOptions[0]);
+
   useEffect(() => {
-    sortCards(cards ?? [], sortFunction, sortOrder, setSortedCards);
-  }, [cards, sortFunction, sortOrder]);
+    setUseCustomSort(sortOption.value === "custom_order");
+    sortCards(cards ?? [], sortOption.sortFunction, sortOrder, setSortedCards);
+  }, [cards, sortOption, sortOrder]);
 
   return (
     <Stack gap="sm">
       <Group gap="xs" justify="flex-end">
         {/*FIX ME SHOULD PROBABLY USE SELECT*/}
-        <Menu>
-          <Menu.Target>
-            <Button variant="default" leftSection={<IconArrowsSort />}>
-              Sort
-            </Button>
-          </Menu.Target>
-          <Menu.Dropdown>
-            <Menu.Item
-              leftSection={<IconMenuOrder />}
-              className={useCustomSort ? "active" : ""}
-              onClick={() => {
-                setSortedCards([]);
-                setUseCustomSort(true);
-                setSortFunction(() => CardSorts.byCustomOrder);
-                setCustomOrderTouched(false);
-              }}
-            >
-              Custom
-            </Menu.Item>
-            <Menu.Item
-              leftSection={<IconTextCaption />}
-              className={
-                sortFunction.name === CardSorts.bySortField.name ? "active" : ""
-              }
-              onClick={() => {
-                setUseCustomSort(false);
-                setSortFunction(() => CardSorts.bySortField);
-              }}
-            >
-              By Sort Field
-            </Menu.Item>
-            <Menu.Item
-              leftSection={<IconCalendar />}
-              className={
-                sortFunction.name === CardSorts.byCreationDate.name
-                  ? "active"
-                  : ""
-              }
-              onClick={() => {
-                setUseCustomSort(false);
-                setSortFunction(() => CardSorts.byCreationDate);
-              }}
-            >
-              By Creation Date
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item
-              leftSection={<IconSortAscending />}
-              className={sortOrder === -1 ? "active" : ""}
-              onClick={() => setSortOrder(-1)}
-              disabled={useCustomSort}
-            >
-              Ascending
-            </Menu.Item>
-            <Menu.Item
-              leftSection={<IconSortDescending />}
-              className={sortOrder === 1 ? "active" : ""}
-              onClick={() => setSortOrder(1)}
-              disabled={useCustomSort}
-            >
-              Descending
-            </Menu.Item>
-          </Menu.Dropdown>
-        </Menu>
+        <SortComboBox sortOption={sortOption} setSortOption={setSortOption} />
         <Button
           leftSection={<IconPlus />}
           variant="default"
@@ -179,5 +121,96 @@ export default function NotebookView() {
         </Stack>
       )}
     </Stack>
+  );
+}
+
+interface SortOption {
+  value: string;
+  icon: React.FC<TablerIconsProps>;
+  label: string;
+  sortFunction: CardSortFunction;
+}
+
+const sortOptions: SortOption[] = [
+  {
+    value: "custom_order",
+    icon: IconMenuOrder,
+    label: "Custom",
+    sortFunction: CardSorts.byCustomOrder,
+  },
+  {
+    value: "sort_field",
+    icon: IconTextCaption,
+    label: "By Sort Field",
+    sortFunction: CardSorts.bySortField,
+  },
+  {
+    value: "creation_date",
+    icon: IconCalendar,
+    label: "By Creation Date",
+    sortFunction: CardSorts.byCreationDate,
+  },
+];
+
+function SortComboBox({
+  sortOption,
+  setSortOption,
+}: { sortOption: SortOption; setSortOption: Function }) {
+  const combobox = useCombobox({});
+
+  const options = sortOptions.map((s) => (
+    <Combobox.Option
+      value={s.value}
+      key={s.value}
+      active={sortOption.value === s.value}
+      onClick={() => {
+        setSortOption(s);
+        combobox.closeDropdown();
+      }}
+      style={{
+        backgroundColor:
+          sortOption.value === s.value
+            ? "var(--mantine-primary-color-filled)"
+            : "",
+        color:
+          sortOption.value === s.value
+            ? "var(--mantine-primary-color-contrast)"
+            : "",
+      }}
+    >
+      <Group gap="xs" wrap="nowrap" w="100%">
+        <s.icon width="1.2rem" strokeWidth="1.5px" />
+        <Text fz="sm" fw={500} style={{ whiteSpace: "nowrap" }}>
+          {s.label}
+        </Text>
+      </Group>
+    </Combobox.Option>
+  ));
+
+  return (
+    <Combobox
+      store={combobox}
+      resetSelectionOnOptionHover
+      withinPortal={false}
+      width={200}
+      transitionProps={{ duration: 200, transition: "fade" }}
+    >
+      <Combobox.Target targetType="button">
+        <InputBase
+          component="button"
+          type="button"
+          pointer
+          rightSection={<Combobox.Chevron />}
+          rightSectionPointerEvents="none"
+          onClick={() => combobox.toggleDropdown()}
+        >
+          {sortOption.label}
+        </InputBase>
+      </Combobox.Target>
+
+      <Combobox.Dropdown>
+        <Combobox.Options>{options}</Combobox.Options>
+      </Combobox.Dropdown>
+    </Combobox>
   );
 }
