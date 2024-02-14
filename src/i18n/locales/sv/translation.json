@@ -1,91 +1,119 @@
 {
+  "cards": {
+    "editor": {
+      "double_sided": {
+        "back": "",
+        "front": ""
+      }
+    }
+  },
   "deck": {
-    "settings": "",
-    "review-cards-label_one": "",
-    "review-cards-label_other": "",
-    "new-cards-label_one": "",
-    "new-cards-label_other": "",
+    "add-cards": "Lägg till kort",
+    "learning-cards-label": "Plugga",
     "learning-cards-label_one": "",
     "learning-cards-label_other": "",
     "new-cards-label": "Nya",
-    "learning-cards-label": "Plugga",
-    "review-cards-label": "Repetera",
-    "subdeck": {
-      "new": "",
-      "load-fail": ""
-    },
+    "new-cards-label_one": "",
+    "new-cards-label_other": "",
     "new-deck-button": "",
     "notebook": {
       "title": "Anteckningsbok"
     },
-    "add-cards": "Lägg till kort"
+    "review-cards-label": "Repetera",
+    "review-cards-label_one": "",
+    "review-cards-label_other": "",
+    "settings": "",
+    "subdeck": {
+      "add-subdeck-button": "",
+      "load-fail": "",
+      "title": ""
+    }
+  },
+  "global": {
+    "cancel": ""
   },
   "home": {
-    "welcome-user": "Welcome back, {{name}}!",
+    "title": "Hem",
     "welcome": "Welcome!",
-    "title": "Hem"
+    "welcome-user": "Welcome back, {{name}}!"
   },
   "learning": {
-    "finished-congrats-name": "",
-    "finished-congrats": "",
-    "finished-info": "",
-    "finished-duration": "",
     "finished-accuracy-ratio": "",
-    "finished-repetions-count": "",
     "finished-button-home": "",
-    "finished-button-to-deck": ""
+    "finished-button-to-deck": "",
+    "finished-congrats": "",
+    "finished-congrats-name": "",
+    "finished-duration": "",
+    "finished-info": "",
+    "finished-repetions-count": ""
+  },
+  "manage-cards": {
+    "title": "Hantera kort"
+  },
+  "rename-deck": {
+    "new-name": "",
+    "rename-button": "",
+    "title": ""
   },
   "settings": {
     "about": {
       "description": "",
       "title": "Om Skola"
     },
-    "general": {
-      "name": "Namn",
-      "name-description": "This name will be used to customize the user experience.",
-      "enable-developer-mode": "Aktivera utvecklarläge",
-      "enable-developer-mode-description": "Visa utvecklarverktyg för att inspektera webbsidor och aktivera utvecklarverktyg i appen.",
-      "language": "Språk",
-      "language-description": "Språk som används i gränssnittet.",
-      "title": "General"
-    },
-    "learn": {
-      "requestRetention": "",
-      "maximumInterval": "",
-      "title": ""
-    },
-    "page-title": "",
     "appearance": {
-      "title": "Utseende",
+      "color-scheme": "Färgschema",
+      "color-scheme-auto": "",
+      "color-scheme-dark": "",
       "color-scheme-description": "Välj mellan alltid ljust eller mörkt tema eller använd färgtemat för ditt system.",
-      "color-scheme": "Färgschema"
-    },
-    "editing": {
-      "title": "Redigering",
-      "individual-options": "",
-      "show-list-option": "",
-      "markdown-hint": "Du kan också använda kortkommandon och grundläggande markdown-syntax för att formatera text.",
-      "show-options-for-subscript-and-superscript": ""
+      "color-scheme-light": "",
+      "title": "Utseende"
     },
     "database": {
+      "storage-used": "",
       "title": "Databas"
     },
     "developer": {
-      "title": "Utvecklare",
-      "description": ""
+      "description": "",
+      "title": "Utvecklare"
+    },
+    "editing": {
+      "editor-options": "",
+      "individual-options": "",
+      "markdown-hint": "Du kan också använda kortkommandon och grundläggande markdown-syntax för att formatera text.",
+      "show-code-option": "",
+      "show-highlight-option": "",
+      "show-link-option": "",
+      "show-list-option": "",
+      "show-options-for-subscript-and-superscript": "",
+      "show-strikethrough-option": "",
+      "title": "Redigering",
+      "use-bubble-menu": "",
+      "use-toolbar": "",
+      "use-toolbar-description": ""
+    },
+    "editing-use-bubble-menu-description": "",
+    "general": {
+      "enable-developer-mode": "Aktivera utvecklarläge",
+      "enable-developer-mode-description": "Visa utvecklarverktyg för att inspektera webbsidor och aktivera utvecklarverktyg i appen.",
+      "enable-zen-mode": "",
+      "enable-zen-mode-description": "",
+      "language": "Språk",
+      "language-description": "Språk som används i gränssnittet.",
+      "name": "Namn",
+      "name-description": "This name will be used to customize the user experience.",
+      "title": "General"
+    },
+    "learn": {
+      "maximumInterval": "",
+      "requestRetention": "",
+      "title": ""
     },
     "title": "Inställningar"
   },
   "statistics": {
     "title": "Statistik"
   },
-  "manage-cards": {
-    "title": "Hantera kort"
-  },
   "today": {
     "title": "Idag"
-  },
-  "rename-deck": {
-    "title": ""
   }
 }
