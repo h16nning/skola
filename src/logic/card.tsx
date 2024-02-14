@@ -109,35 +109,13 @@ export async function deleteCard(card: Card<CardType>) {
   });
 }
 
-export function useCards() {
-  return useLiveQuery(() => db.cards.orderBy("content.front").toArray());
-}
-
-export function useCardsOf(
-  deck: Deck | undefined
-): [Card<CardType>[] | undefined, boolean] {
-  return useLiveQuery(
-    () => getCardsOf(deck).then((cards) => [cards, deck !== undefined]),
-    [deck],
-    [undefined, false]
-  );
-}
-
-export function useCardsWith(
-  querier: (
-    cards: Table<Card<CardType>>
-  ) => Promise<Card<CardType>[] | undefined>,
-  dependencies: any[]
-): [Card<CardType>[] | undefined, boolean] {
-  return useLiveQuery(
-    () => querier(db.cards).then((cards) => [cards, cards !== undefined]),
-    dependencies,
-    [undefined, false]
-  );
+export async function getCard(id: string) {
+  return db.cards.get(id);
 }
 
 export async function getCardsOf(
-  deck?: Deck
+  deck?: Deck,
+  excludeSubDecks?: boolean
 ): Promise<Card<CardType>[] | undefined> {
   if (!deck) return undefined;
   let cards: Card<CardType>[] = await db.cards
@@ -145,6 +123,9 @@ export async function getCardsOf(
     .anyOf(deck.cards)
     .filter((c) => isCard(c))
     .toArray();
+  if (excludeSubDecks) {
+    return cards;
+  }
   await Promise.all(
     deck.subDecks.map((subDeckID) =>
       db.decks
@@ -164,10 +145,37 @@ export async function getCardsOf(
   return cards;
 }
 
-export async function getCard(id: string) {
-  return db.cards.get(id);
+export function useCards() {
+  return useLiveQuery(() => db.cards.orderBy("content.front").toArray());
 }
 
+export function useCardsOf(
+  deck: Deck | undefined,
+  excludeSubDecks?: boolean
+): [Card<CardType>[] | undefined, boolean] {
+  return useLiveQuery(
+    () =>
+      getCardsOf(deck, excludeSubDecks).then((cards) => [
+        cards,
+        deck !== undefined,
+      ]),
+    [deck, excludeSubDecks],
+    [undefined, false]
+  );
+}
+
+export function useCardsWith(
+  querier: (
+    cards: Table<Card<CardType>>
+  ) => Promise<Card<CardType>[] | undefined>,
+  dependencies: any[]
+): [Card<CardType>[] | undefined, boolean] {
+  return useLiveQuery(
+    () => querier(db.cards).then((cards) => [cards, cards !== undefined]),
+    dependencies,
+    [undefined, false]
+  );
+}
 export function useStatesOf(cards?: Card<CardType>[]): Record<State, number> {
   return useMemo(() => {
     const states = {

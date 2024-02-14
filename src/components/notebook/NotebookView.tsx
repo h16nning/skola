@@ -1,9 +1,13 @@
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import {
+  Box,
   Button,
+  Checkbox,
   Combobox,
+  Divider,
   Group,
   InputBase,
+  Menu,
   Stack,
   Text,
   useCombobox,
@@ -46,7 +50,9 @@ export default function NotebookView() {
   const [t] = useTranslation();
   const [deck] = useDeckFromUrl();
 
-  const [cards] = useCardsOf(deck);
+  const [excludeSubDecks, setExcludeSubDecks] = useState(false);
+
+  const [cards] = useCardsOf(deck, excludeSubDecks);
 
   const [sortOrder] = useState<1 | -1>(1);
   const [sortedCards, setSortedCards] = useState<Card<CardType>[]>(cards ?? []);
@@ -72,8 +78,12 @@ export default function NotebookView() {
   return (
     <Stack gap="sm">
       <Group gap="xs" justify="flex-end">
-        {/*FIX ME SHOULD PROBABLY USE SELECT*/}
-        <SortComboBox sortOption={sortOption} setSortOption={setSortOption} />
+        <SortComboBox
+          sortOption={sortOption}
+          setSortOption={setSortOption}
+          excludeSubDecks={excludeSubDecks}
+          setExcludeSubDecks={setExcludeSubDecks}
+        />
         <Button
           leftSection={<IconPlus />}
           variant="default"
@@ -155,7 +165,14 @@ const sortOptions: SortOption[] = [
 function SortComboBox({
   sortOption,
   setSortOption,
-}: { sortOption: SortOption; setSortOption: Function }) {
+  excludeSubDecks,
+  setExcludeSubDecks,
+}: {
+  sortOption: SortOption;
+  setSortOption: Function;
+  excludeSubDecks: boolean;
+  setExcludeSubDecks: (value: boolean) => void;
+}) {
   const combobox = useCombobox({});
 
   const options = sortOptions.map((s) => (
@@ -209,6 +226,16 @@ function SortComboBox({
       </Combobox.Target>
 
       <Combobox.Dropdown>
+        {
+          <Box p="xs" pt=".375rem">
+            <Checkbox
+              label="Exclude subdecks"
+              checked={excludeSubDecks}
+              onChange={(e) => setExcludeSubDecks(e.currentTarget.checked)}
+            />
+          </Box>
+        }
+        <Divider mb="xs" />
         <Combobox.Options>{options}</Combobox.Options>
       </Combobox.Dropdown>
     </Combobox>
