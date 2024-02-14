@@ -1,11 +1,20 @@
 .breadcrumb {
   font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-text);
+  padding: 0.25rem 0.5rem 0.25rem 0.35rem;
+  border-radius: var(--mantine-radius-sm);
+  line-height: 1.5;
 
-  @mixin light {
-    color: var(--mantine-color-gray-6);
+  &:hover {
+    background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-6));
+    text-decoration: none;
   }
+  &:active {
+    transform: scale(0.97);
+  }
+}
 
-  @mixin dark {
-    color: var(--mantine-color-dark-2);
-  }
+
+.separator {
+  margin: 0rem 0.25rem;
 }

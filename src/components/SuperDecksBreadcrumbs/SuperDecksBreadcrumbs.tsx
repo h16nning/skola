@@ -27,7 +27,6 @@ function SuperDecksBreadcrumbs({ superDecks }: SuperDecksBreadcrumbsProps) {
           key={0}
           component="button"
           type="button"
-          lh="1.5"
           onClick={() => navigate("/home")}
         >
           <Group wrap="nowrap" gap="xs">
