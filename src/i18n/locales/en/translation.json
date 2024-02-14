@@ -110,6 +110,10 @@
     },
     "title": "Settings"
   },
+  "sidebar": {
+    "decks-add": "Add deck",
+    "decks-title": "Decks"
+  },
   "statistics": {
     "title": "Statistics"
   },
