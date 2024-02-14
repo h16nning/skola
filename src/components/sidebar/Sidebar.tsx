@@ -173,14 +173,14 @@ function Sidebar({
       {isXsLayout && !minimalMode && (
         <>
           <Text c="dimmed" p="xs" pt="md" fz="sm">
-            Decks
+            {t("sidebar.decks-title")}
           </Text>
           {isReady &&
             decks?.map((deck) => <DeckTree deck={deck} key={deck.id} />)}
           <NavLink
             label={
               <Text c="dimmed" fz="xs">
-                Add deck
+                {t("sidebar.decks-add")}
               </Text>
             }
             onClick={() => setNewDeckModalOpened(true)}
