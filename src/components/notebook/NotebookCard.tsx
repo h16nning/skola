@@ -4,7 +4,7 @@ import { Card, CardType, updateCard } from "../../logic/card";
 import { getUtils } from "../../logic/CardTypeManager";
 import CardMenu from "../editcard/CardMenu";
 import { Draggable } from "@hello-pangea/dnd";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 
 interface NotebookCardProps {
   index: number;
@@ -12,11 +12,7 @@ interface NotebookCardProps {
   useCustomSort: boolean;
 }
 
-export default function NotebookCard({
-  card,
-  index,
-  useCustomSort,
-}: NotebookCardProps) {
+function NotebookCard({ card, index, useCustomSort }: NotebookCardProps) {
   useEffect(() => {
     if (useCustomSort) {
       updateCard(card.id, { customOrder: index });
@@ -44,6 +40,7 @@ export default function NotebookCard({
     <InnerCard card={card} />
   );
 }
+export default memo(NotebookCard);
 
 function InnerCard({ card }: { card: Card<CardType> }) {
   return (
