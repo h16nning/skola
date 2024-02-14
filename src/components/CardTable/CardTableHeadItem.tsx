@@ -3,13 +3,13 @@ import cx from "clsx";
 import React from "react";
 import { Box, Table } from "@mantine/core";
 import { IconArrowUp } from "@tabler/icons-react";
-import { SortField } from "../../logic/card_filter";
+import { SortOption } from "../../logic/card_filter";
 
 interface CardTableHeadItemProps {
   name: string;
-  id: SortField;
-  sort: [SortField, boolean];
-  setSort: (sort: [SortField, boolean]) => void;
+  id: SortOption;
+  sort: [SortOption, boolean];
+  setSort: (sort: [SortOption, boolean]) => void;
 }
 
 export default function CardTableHeadItem({

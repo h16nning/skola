@@ -13,11 +13,27 @@ import {
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { CardSortFunction, CardSorts } from "../../logic/CardSorting";
+import {
+  CardSortFunction,
+  CardSorts,
+  getCardsWithComparablePreview,
+} from "../../logic/CardSorting";
 import { Card, CardType, useCardsOf } from "../../logic/card";
 import { useDeckFromUrl } from "../../logic/deck";
-import Section from "../settings/Section";
 import NotebookCard from "./NotebookCard";
+
+async function sortCards(
+  cards: Card<CardType>[],
+  sortFunction: CardSortFunction,
+  sortOrder: 1 | -1,
+  setSortedCards: (cards: Card<CardType>[]) => void
+) {
+  let preparedCards = cards;
+  if (sortFunction.name === CardSorts.bySortField.name) {
+    preparedCards = await getCardsWithComparablePreview(preparedCards);
+  }
+  setSortedCards(preparedCards?.sort(sortFunction(sortOrder)));
+}
 
 export default function NotebookView() {
   const navigate = useNavigate();
@@ -45,91 +61,85 @@ export default function NotebookView() {
   }, [sortedCards]);
 
   useEffect(() => {
-    setSortedCards(cards?.sort(sortFunction(sortOrder)) ?? []);
+    sortCards(cards ?? [], sortFunction, sortOrder, setSortedCards);
   }, [cards, sortFunction, sortOrder]);
 
   return (
-    <Section
-      title={t("deck.notebook.title")}
-      rightSection={
-        <Group gap="xs">
-          {/*FIX MESHOULD PROBABLY USE SELECT*/}
-          <Menu>
-            <Menu.Target>
-              <Button variant="default" leftSection={<IconArrowsSort />}>
-                Sort
-              </Button>
-            </Menu.Target>
-            <Menu.Dropdown>
-              <Menu.Item
-                leftSection={<IconMenuOrder />}
-                className={useCustomSort ? "active" : ""}
-                onClick={() => {
-                  setSortedCards([]);
-                  setUseCustomSort(true);
-                  setSortFunction(() => CardSorts.byCustomOrder);
-                  setCustomOrderTouched(false);
-                }}
-              >
-                Custom
-              </Menu.Item>
-              <Menu.Item
-                leftSection={<IconTextCaption />}
-                className={
-                  sortFunction.name === CardSorts.bySortField.name
-                    ? "active"
-                    : ""
-                }
-                onClick={() => {
-                  setUseCustomSort(false);
-                  setSortFunction(() => CardSorts.bySortField);
-                }}
-              >
-                By Sort Field
-              </Menu.Item>
-              <Menu.Item
-                leftSection={<IconCalendar />}
-                className={
-                  sortFunction.name === CardSorts.byCreationDate.name
-                    ? "active"
-                    : ""
-                }
-                onClick={() => {
-                  setUseCustomSort(false);
-                  setSortFunction(() => CardSorts.byCreationDate);
-                }}
-              >
-                By Creation Date
-              </Menu.Item>
-              <Menu.Divider />
-              <Menu.Item
-                leftSection={<IconSortAscending />}
-                className={sortOrder === -1 ? "active" : ""}
-                onClick={() => setSortOrder(-1)}
-                disabled={useCustomSort}
-              >
-                Ascending
-              </Menu.Item>
-              <Menu.Item
-                leftSection={<IconSortDescending />}
-                className={sortOrder === 1 ? "active" : ""}
-                onClick={() => setSortOrder(1)}
-                disabled={useCustomSort}
-              >
-                Descending
-              </Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
-          <Button
-            leftSection={<IconPlus />}
-            variant="default"
-            onClick={() => navigate("/new/" + deck?.id)}
-          >
-            {t("deck.add-cards")}
-          </Button>
-        </Group>
-      }
-    >
+    <Stack gap="sm">
+      <Group gap="xs" justify="flex-end">
+        {/*FIX ME SHOULD PROBABLY USE SELECT*/}
+        <Menu>
+          <Menu.Target>
+            <Button variant="default" leftSection={<IconArrowsSort />}>
+              Sort
+            </Button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item
+              leftSection={<IconMenuOrder />}
+              className={useCustomSort ? "active" : ""}
+              onClick={() => {
+                setSortedCards([]);
+                setUseCustomSort(true);
+                setSortFunction(() => CardSorts.byCustomOrder);
+                setCustomOrderTouched(false);
+              }}
+            >
+              Custom
+            </Menu.Item>
+            <Menu.Item
+              leftSection={<IconTextCaption />}
+              className={
+                sortFunction.name === CardSorts.bySortField.name ? "active" : ""
+              }
+              onClick={() => {
+                setUseCustomSort(false);
+                setSortFunction(() => CardSorts.bySortField);
+              }}
+            >
+              By Sort Field
+            </Menu.Item>
+            <Menu.Item
+              leftSection={<IconCalendar />}
+              className={
+                sortFunction.name === CardSorts.byCreationDate.name
+                  ? "active"
+                  : ""
+              }
+              onClick={() => {
+                setUseCustomSort(false);
+                setSortFunction(() => CardSorts.byCreationDate);
+              }}
+            >
+              By Creation Date
+            </Menu.Item>
+            <Menu.Divider />
+            <Menu.Item
+              leftSection={<IconSortAscending />}
+              className={sortOrder === -1 ? "active" : ""}
+              onClick={() => setSortOrder(-1)}
+              disabled={useCustomSort}
+            >
+              Ascending
+            </Menu.Item>
+            <Menu.Item
+              leftSection={<IconSortDescending />}
+              className={sortOrder === 1 ? "active" : ""}
+              onClick={() => setSortOrder(1)}
+              disabled={useCustomSort}
+            >
+              Descending
+            </Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+        <Button
+          leftSection={<IconPlus />}
+          variant="default"
+          onClick={() => navigate("/new/" + deck?.id)}
+        >
+          {t("deck.add-cards")}
+        </Button>
+      </Group>
       {useCustomSort ? (
         <DragDropContext
           onDragEnd={({ destination, source }) => {
@@ -168,6 +178,6 @@ export default function NotebookView() {
           ))}
         </Stack>
       )}
-    </Section>
+    </Stack>
   );
 }

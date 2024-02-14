@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import Section from "../settings/Section";
-import { Button, Text } from "@mantine/core";
+import { Button, Group, Stack, Text } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
-import DeckTable from "./DeckTable";
-import { Deck, useSubDecks } from "../../logic/deck";
-import NewDeckModal from "./NewDeckModal";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Deck, useSubDecks } from "../../logic/deck";
+import DeckTable from "./DeckTable";
+import NewDeckModal from "./NewDeckModal";
 
 interface SubDeckSectionProps {
   deck?: Deck;
@@ -34,17 +33,17 @@ function SubDeckSection({ deck }: SubDeckSectionProps) {
 
   return (
     <>
-      <Section
-        title={t("deck.subdeck.title")}
-        rightSection={<NewSubDeckButton />}
-      >
+      <Stack gap="sm">
+        <Group justify="flex-end">
+          <NewSubDeckButton />
+        </Group>
         {areSubDecksReady &&
           (subDecks ? (
             <DeckTable deckList={subDecks} isReady={true} />
           ) : (
             <Text c="dimmed">{t("deck.subdeck.load-fail")}</Text>
           ))}
-      </Section>
+      </Stack>
       <NewDeckModal
         opened={newDeckModalOpened}
         setOpened={setNewDeckModalOpened}
