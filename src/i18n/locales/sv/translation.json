@@ -18,7 +18,7 @@
     "notebook": {
       "title": "Anteckningsbok"
     },
-    "add-cards": ""
+    "add-cards": "Lägg till kort"
   },
   "home": {
     "welcome-user": "Welcome back, {{name}}!",

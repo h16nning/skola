@@ -11,7 +11,8 @@
     "learning-cards-label": "Learning",
     "review-cards-label": "Review",
     "subdeck": {
-      "new": "New Subdeck",
+      "title": "Subdecks",
+      "add-subdeck-button": "Add",
       "load-fail": "Failed to load sub decks."
     },
     "new-deck-button": "New Deck",
