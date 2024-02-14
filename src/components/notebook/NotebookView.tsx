@@ -7,7 +7,6 @@ import {
   Divider,
   Group,
   InputBase,
-  Menu,
   Stack,
   Text,
   useCombobox,
