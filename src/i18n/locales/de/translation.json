@@ -10,15 +10,16 @@
     "new-cards-label": "Neu",
     "learning-cards-label": "Lernen",
     "review-cards-label": "Wiederholen",
-    "subdeck": {
-      "new": "",
-      "load-fail": ""
-    },
     "new-deck-button": "Neuer Stapel",
+    "subdeck": {
+      "title": "Unterstapel",
+      "add-subdeck-button": "Hinzufügen",
+      "load-fail": "Fehler beim Laden der Unterstapel"
+    },
     "notebook": {
       "title": "Notizbuch"
     },
-    "add-cards": ""
+    "add-cards": "Karten hinzufügen"
   },
   "home": {
     "welcome-user": "Willkommen zurück, {{name}}!",

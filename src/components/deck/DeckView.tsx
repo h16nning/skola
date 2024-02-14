@@ -1,4 +1,4 @@
-import { Group, Stack, Title } from "@mantine/core";
+import { Group, Stack, Tabs, Title } from "@mantine/core";
 import { useDocumentTitle } from "@mantine/hooks";
 import { useState } from "react";
 import { useCardsOf } from "../../logic/card";
@@ -12,6 +12,7 @@ import DeckMenu from "./DeckMenu";
 import DeckOptionsModal from "./DeckOptionsModal";
 import HeroDeckSection from "./HeroDeckSection/HeroDeckSection";
 import SubDeckSection from "./SubDeckSection";
+import { t } from "i18next";
 
 function DeckView() {
   const [deckOptionsOpened, setDeckOptionsOpened] = useState(false);
@@ -51,7 +52,18 @@ function DeckView() {
           areCardsReady={areCardsReady}
         />
 
-        <SubDeckSection deck={deck} />
+        <Tabs defaultValue={"subdecks"} w="100%" variant="outline">
+          <Tabs.List>
+            <Tabs.Tab value="subdecks">{t("deck.subdeck.title")}</Tabs.Tab>
+            <Tabs.Tab value="notebook">{t("deck.notebook.title")}</Tabs.Tab>
+          </Tabs.List>
+          <Tabs.Panel value="subdecks">
+            <SubDeckSection deck={deck} />
+          </Tabs.Panel>
+          <Tabs.Panel value="notebook">
+            <NotebookView />
+          </Tabs.Panel>
+        </Tabs>
         {deck ? (
           <DeckOptionsModal
             deck={deck}
@@ -61,7 +73,6 @@ function DeckView() {
         ) : (
           ""
         )}
-        <NotebookView />
       </Stack>
     </>
   );

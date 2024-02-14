@@ -27,7 +27,7 @@ function SubDeckSection({ deck }: SubDeckSectionProps) {
           }
         }}
       >
-        {t("deck.subdeck.new")}
+        {t("deck.subdeck.add-subdeck-button")}
       </Button>
     );
   }
@@ -35,7 +35,7 @@ function SubDeckSection({ deck }: SubDeckSectionProps) {
   return (
     <>
       <Section
-        title="Subdecks (to be moved)"
+        title={t("deck.subdeck.title")}
         rightSection={<NewSubDeckButton />}
       >
         {areSubDecksReady &&
