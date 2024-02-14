@@ -194,11 +194,19 @@ export function useLearning(
   const answer = useCallback(
     (rating: Rating) => {
       if (currentCard && currentCardRepeatInfo) {
-        updateCardModel(
-          currentCard,
-          currentCardRepeatInfo[rating].card,
-          currentCardRepeatInfo[rating].review_log
-        );
+        //Don't update the card if it is already learned and not due for a review
+        if (
+          !(
+            currentCard.model.state === State.Review &&
+            currentCard.model.due.getTime() >= Date.now()
+          )
+        ) {
+          updateCardModel(
+            currentCard,
+            currentCardRepeatInfo[rating].card,
+            currentCardRepeatInfo[rating].review_log
+          );
+        }
         if (currentCardRepeatInfo[rating].card.scheduled_days === 0) {
           setTimeCriticalCards((tcCards) =>
             [

@@ -4,7 +4,7 @@ import { IconSearch } from "@tabler/icons-react";
 import { useState } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useCardsWith } from "../../logic/card";
-import selectCards, { SortField } from "../../logic/card_filter";
+import selectCards, { SortOption } from "../../logic/card_filter";
 import { useDecks } from "../../logic/deck";
 import CardTable from "../CardTable/CardTable";
 import { AppHeaderContent } from "../Header/Header";
@@ -26,7 +26,7 @@ function CardManagerView() {
 
   const [filter, setFilter] = useDebouncedState<string>("", 250);
 
-  const [sort, setSort] = useState<[SortField, boolean]>(["front", true]);
+  const [sort, setSort] = useState<[SortOption, boolean]>(["sort_field", true]);
 
   const [cards] = useCardsWith(
     (cards) => selectCards(cards, deckId, filter, sort),

@@ -13,9 +13,11 @@ function DeckTable({ deckList, isReady }: DeckTableProps) {
   return isReady && deckList ? (
     deckList.length !== 0 ? (
       <Stack gap="0" w="100%">
-        {deckList.map((deck, index) => (
-          <DeckPreview key={deck.id} deck={deck} i={index} />
-        ))}
+        {deckList
+          .sort((a: Deck, b: Deck) => a.name.localeCompare(b.name))
+          .map((deck, index) => (
+            <DeckPreview key={deck.id} deck={deck} i={index} />
+          ))}
       </Stack>
     ) : (
       <Text fz="sm" c="dimmed" pt="lg" ta="center">
