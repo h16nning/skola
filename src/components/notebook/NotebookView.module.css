@@ -12,6 +12,12 @@
 
 .cardWrapper {
     margin-bottom: var(--mantine-spacing-xs);
+    background: transparent;
+
+    &:hover {
+        box-shadow: var(--mantine-shadow-xs);
+    }
+
     &.dragging {
         box-shadow: var(--mantine-shadow-md);
     }

@@ -60,7 +60,7 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
           onKeyDown={getHotkeyHandler([["mod+Enter", () => tryAddDeck()]])}
         />
         {status ? <Text>{status}</Text> : <></>}
-        <Group justify="flex-end">
+        <Group justify="flex-end" gap="sm">
           <Button
             variant="default"
             onClick={() => {
@@ -84,7 +84,7 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
   );
 
   function isInputValid(): boolean {
-    return nameValue !== "";
+    return nameValue.trim() !== "";
   }
 }
 
