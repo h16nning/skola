@@ -10,7 +10,7 @@ import classes from "./ClozeCardEditor.module.css";
 import { Stack } from "@mantine/core";
 import { Mark } from "@tiptap/core";
 import { mergeAttributes } from "@tiptap/react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import CardEditorFooter from "../CardEditorFooter";
 import {
   addFailed,
@@ -72,7 +72,10 @@ export default function ClozeCardEditor({
   deck,
   mode,
 }: ClozeCardEditorProps) {
-  useHotkeys([["mod+Enter", () => {}]]);
+  const [requestedFinish, setRequestedFinish] = useState(false);
+
+  useHotkeys([["mod+Enter", () => setRequestedFinish(true)]]);
+
   //fix sometime
   const editor = useCardEditor({
     content: useSharedValue(card?.content.textReferenceId ?? "")?.value ?? "",
@@ -81,6 +84,9 @@ export default function ClozeCardEditor({
       if (editor?.getHTML().valueOf() !== editorContent.valueOf()) {
         setEditorContent(editor?.getHTML() ?? "");
       }
+    },
+    finish: () => {
+      setRequestedFinish(true);
     },
   });
 
@@ -102,6 +108,13 @@ export default function ClozeCardEditor({
     editor?.commands.setContent("");
     editor?.commands.focus();
   }, [editor]);
+
+  useEffect(() => {
+    if (requestedFinish) {
+      finish(mode, clear, deck, card, editorContent);
+      setRequestedFinish(false);
+    }
+  }, [requestedFinish, mode, clear, deck, card, editorContent]);
 
   return (
     <Stack gap="2rem">
@@ -129,10 +142,7 @@ export default function ClozeCardEditor({
           </RichTextEditor.Control>
         }
       />
-      <CardEditorFooter
-        finish={() => finish(mode, clear, deck, card, editorContent)}
-        mode={mode}
-      />
+      <CardEditorFooter finish={() => setRequestedFinish(true)} mode={mode} />
     </Stack>
   );
 }

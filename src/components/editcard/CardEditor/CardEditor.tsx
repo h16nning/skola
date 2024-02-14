@@ -31,7 +31,7 @@ export function useCardEditor(props: {
   content: string;
   onUpdate?: EditorOptions["onUpdate"];
   extensions?: any[];
-  finish?: Function;
+  finish?: () => void;
 }) {
   return useEditor(
     {
