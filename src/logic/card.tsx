@@ -145,10 +145,6 @@ export async function getCardsOf(
   return cards;
 }
 
-export function useCards() {
-  return useLiveQuery(() => db.cards.orderBy("content.front").toArray());
-}
-
 export function useCardsOf(
   deck: Deck | undefined,
   excludeSubDecks?: boolean

@@ -33,7 +33,7 @@ function LearnView() {
     {
       learnAll: params === "all",
       newToReviewRatio: 0.5,
-      sort: CardSorts.bySortField(1),
+      sort: CardSorts.byCreationDate(1),
     }
   );
 
