@@ -1,6 +1,6 @@
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Table } from "dexie";
 import { Rating, SchedulingInfo, State } from "fsrs.js";
-import { useCallback, useEffect, useMemo, useState } from "react";
 import { updateGlobalScheduler, useGlobalScheduler } from "./CardScheduler";
 import { Card, CardType, updateCardModel, useCardsWith } from "./card";
 
