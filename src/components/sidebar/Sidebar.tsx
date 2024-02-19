@@ -1,21 +1,16 @@
-import classes from "./Sidebar.module.css";
-import cx from "clsx";
-import React, { useEffect, useState } from "react";
 import {
   ActionIcon,
+  Box,
   Group,
+  Image,
   NavLink,
   Stack,
+  Text,
   Title,
   Tooltip,
-  Image,
   useMantineTheme,
-  Box,
-  Text,
-  rem,
-  Button,
-  Kbd,
 } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import {
   IconBolt,
   IconCards,
@@ -24,25 +19,17 @@ import {
   IconPlus,
   IconSettings,
   IconX,
-  IconSearch,
-  IconSquare,
 } from "@tabler/icons-react";
-import { useNavigate } from "react-router-dom";
-import { useDebouncedState, useMediaQuery } from "@mantine/hooks";
+import cx from "clsx";
 import { t } from "i18next";
-import DeckTree from "./DeckTree";
-import {
-  determineSuperDecks,
-  getDeck,
-  useDecks,
-  useTopLevelDecks,
-} from "../../logic/deck";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useTopLevelDecks } from "../../logic/deck";
 import NewDeckModal from "../deck/NewDeckModal";
+import DeckTree from "./DeckTree";
+import classes from "./Sidebar.module.css";
 
-import { Spotlight, spotlight } from "@mantine/spotlight";
-import { Card, CardType, useCardsWith } from "../../logic/card";
-import selectCards from "../../logic/card_filter";
-import { getUtils } from "../../logic/CardTypeManager";
+import SpotlightCard from "./Spotlight";
 
 const InteractiveNavLink = ({
   label,
@@ -86,132 +73,6 @@ const InteractiveNavLink = ({
     </Tooltip>
   );
 };
-
-interface CardWithPreview extends Card<CardType> {
-  computedPreview: string;
-  breadcrumb: string[];
-}
-
-const useSearchCard = (filter: string) => {
-  const [filteredCards, setFilteredCards] = useState<CardWithPreview[]>([]);
-  const [cards] = useCardsWith(
-    (cards) => selectCards(cards, undefined, filter, ["sort_field", true]),
-    [location, filter]
-  );
-  useEffect(() => {
-    async function filterCards(cards: Card<CardType>[]) {
-      const previews = cards?.map(async (card) => {
-        return await getUtils(card).displayPreview(card);
-      });
-      const decksPromises = cards?.map(async (card) => {
-        const deck = await getDeck(card.deck);
-        const superDecks = await determineSuperDecks(deck);
-        return [
-          ...(superDecks[0] || []).map((sd) => sd.name),
-          deck?.name || "Empty",
-        ];
-      });
-      const cp = await Promise.all(previews);
-      const decks = await Promise.all(decksPromises);
-      setFilteredCards(
-        cards.map((card, i) => ({
-          ...card,
-          computedPreview: cp[i],
-          breadcrumb: decks[i],
-        }))
-      );
-    }
-    filterCards(cards || []);
-  }, [cards]);
-
-  return filteredCards;
-};
-
-function SpotlightCard({}) {
-  const [filter, setFilter] = useDebouncedState("", 250);
-  const navigate = useNavigate();
-  const filteredCards = useSearchCard(filter);
-  const [filteredDecks] = useDecks();
-  const newActions = [
-    {
-      group: "Decks",
-      actions: [
-        ...(filteredDecks || []).map((deck) => {
-          return {
-            id: deck.id,
-            label: deck.name,
-            description: deck.description,
-            onClick: () => navigate(`/deck/${deck.id}`),
-            leftSection: (
-              <IconCards
-                style={{ width: rem(24), height: rem(24) }}
-                stroke={1.5}
-              />
-            ),
-          };
-        }),
-      ],
-    },
-    {
-      group: "Cards",
-      actions: [
-        ...filteredCards.map((card) => {
-          return {
-            id: card.id,
-            label: card.computedPreview,
-            description: card.breadcrumb.join(" > "),
-            onClick: () => navigate(`/deck/${card.deck}`),
-            leftSection: (
-              <IconSquare
-                style={{ width: rem(24), height: rem(24) }}
-                stroke={1.5}
-              />
-            ),
-          };
-        }),
-      ],
-    },
-  ];
-
-  return (
-    <>
-      <Group justify="space-between">
-        <Button
-          onClick={spotlight.open}
-          leftSection={<IconSearch size={14} />}
-          variant="default"
-          w="100%"
-          c="dimmed"
-          rightSection={
-            <>
-              <Kbd c="dimmed">⌘</Kbd> + <Kbd c="dimmed">K</Kbd>
-            </>
-          }
-        >
-          Search
-        </Button>
-      </Group>
-      <Spotlight
-        actions={newActions}
-        closeOnClickOutside
-        nothingFound="Nothing found..."
-        highlightQuery
-        onQueryChange={setFilter}
-        limit={10}
-        scrollable={true}
-        searchProps={{
-          leftSection: (
-            <IconSearch
-              style={{ width: rem(20), height: rem(20) }}
-              stroke={1.5}
-            />
-          ),
-          placeholder: "Search...",
-        }}
-      />
-    </>
-  );
-}
 
 function Sidebar({
   menuOpened,
