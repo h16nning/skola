@@ -1,15 +1,20 @@
-import React from "react";
 import { Text } from "@mantine/core";
-import { Card, CardType, createCardSkeleton, updateCard } from "../card";
-import { Deck } from "../deck";
+import ClozeCardEditor from "../../components/editcard/CardEditor/ClozeCardEditor";
 import { CardTypeManager, EditMode } from "../CardTypeManager";
 import {
+  Card,
+  CardType,
+  createCardSkeleton,
+  toPreviewString,
+  updateCard,
+} from "../card";
+import { Deck } from "../deck";
+import {
   createSharedValue,
-  getSharedValue,
+  registerReferencesToSharedValue,
   setSharedValue,
   useSharedValue,
 } from "../sharedvalue";
-import ClozeCardEditor from "../../components/editcard/CardEditor/ClozeCardEditor";
 import classes from "./ClozeCard.module.css";
 
 export type ClozeContent = {
@@ -20,28 +25,26 @@ export type ClozeContent = {
 export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
   update(params: { text: string }, existingCard: Card<CardType.Cloze>) {
     setSharedValue(existingCard.content.textReferenceId, params.text);
-    updateCard(existingCard.id, existingCard);
-    return existingCard;
+    updateCard(existingCard.id, {
+      preview: toPreviewString(params.text),
+    });
+    return { preview: toPreviewString(params.text), ...existingCard };
   },
 
   create(params: {
     occlusionNumber: number;
     textReferenceId: string;
+    text: string;
   }): Card<CardType.Cloze> {
     return {
       ...createCardSkeleton(),
+      preview: toPreviewString(params.text),
       content: {
         type: CardType.Cloze,
         occlusionNumber: params.occlusionNumber,
         textReferenceId: params.textReferenceId,
       },
     };
-  },
-
-  displayPreview(card: Card<CardType.Cloze>) {
-    return getSharedValue(card.content.textReferenceId)
-      .then((sharedValue) => `${sharedValue?.value.replace(/<[^>]*>/g, "")}`)
-      .catch(() => "error");
   },
 
   displayQuestion(card: Card<CardType.Cloze>) {
@@ -87,10 +90,16 @@ export async function createClozeCardSet(params: {
   occlusionNumberSet: number[];
 }): Promise<Card<CardType.Cloze>[]> {
   const textReferenceId = await createSharedValue(params.text);
-  return params.occlusionNumberSet.map((occlusionNumber) =>
+  const createdCards = params.occlusionNumberSet.map((occlusionNumber) =>
     ClozeCardUtils.create({
       occlusionNumber: occlusionNumber,
       textReferenceId: textReferenceId,
+      text: params.text,
     })
   );
+  await registerReferencesToSharedValue(
+    textReferenceId,
+    createdCards.map((card) => card.id)
+  );
+  return createdCards;
 }

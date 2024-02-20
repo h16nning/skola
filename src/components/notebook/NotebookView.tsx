@@ -22,11 +22,7 @@ import {
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import {
-  CardSortFunction,
-  CardSorts,
-  getCardsWithComparablePreview,
-} from "../../logic/CardSorting";
+import { CardSortFunction, CardSorts } from "../../logic/CardSorting";
 import { Card, CardType, useCardsOf } from "../../logic/card";
 import { useDeckFromUrl } from "../../logic/deck";
 import NotebookCard from "./NotebookCard";
@@ -37,11 +33,7 @@ async function sortCards(
   sortOrder: 1 | -1,
   setSortedCards: (cards: Card<CardType>[]) => void
 ) {
-  let preparedCards = cards;
-  if (sortFunction.name === CardSorts.bySortField.name) {
-    preparedCards = await getCardsWithComparablePreview(preparedCards);
-  }
-  setSortedCards(preparedCards?.sort(sortFunction(sortOrder)));
+  setSortedCards(cards.sort(sortFunction(sortOrder)));
 }
 
 export default function NotebookView() {

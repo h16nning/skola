@@ -1,10 +1,9 @@
-import classes from "./CardTable.module.css";
+import { Table } from "@mantine/core";
 import cx from "clsx";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Card, CardType } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
-import { getUtils } from "../../logic/CardTypeManager";
-import { Table } from "@mantine/core";
+import classes from "./CardTable.module.css";
 
 export function CardTableItem({
   card,
@@ -28,7 +27,7 @@ export function CardTableItem({
     }
   }, [selectedIndex, setSelectedCard, index, card]);
 
-  const [preview, setPreview] = React.useState<string | undefined>(undefined);
+  /*const [preview, setPreview] = React.useState<string | undefined>(undefined);
 
   useEffect(() => {
     const preview = getUtils(card).displayPreview(card);
@@ -37,7 +36,7 @@ export function CardTableItem({
     } else {
       setPreview(preview);
     }
-  }, [card]);
+  }, [card]);*/
 
   return (
     <Table.Tr
@@ -46,7 +45,7 @@ export function CardTableItem({
       })}
       onClick={() => setSelectedIndex(index)}
     >
-      <Table.Td className={classes.td}>{preview}</Table.Td>
+      <Table.Td className={classes.td}>{card.preview}</Table.Td>
       <Table.Td className={classes.td}>{card.content.type}</Table.Td>
 
       <Table.Td className={classes.td}>{deck?.name ?? "?"}</Table.Td>

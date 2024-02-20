@@ -18,7 +18,11 @@ import {
   DoubleSidedCardUtils,
   createDoubleSidedCardPair,
 } from "../../../logic/CardTypeImplementations/DoubleSidedCard";
-import { useSharedValue } from "../../../logic/sharedvalue";
+import {
+  getCardsReferencingSharedValue,
+  getSharedValue,
+  useSharedValue,
+} from "../../../logic/sharedvalue";
 import { useTranslation } from "react-i18next";
 
 interface DoubleSidedCardEditorProps {
@@ -46,6 +50,24 @@ async function finish(
           },
           card
         );
+        const cardsReferencingSameSharedValue = await getSharedValue(
+          card.content.frontReferenceId
+        ).then((sv) => sv && getCardsReferencingSharedValue(sv));
+        cardsReferencingSameSharedValue !== undefined &&
+          (await Promise.all(
+            cardsReferencingSameSharedValue.map(
+              (c) =>
+                c !== undefined &&
+                c.id !== card.id &&
+                DoubleSidedCardUtils.update(
+                  {
+                    front: frontEditor?.getHTML() ?? "",
+                    back: backEditor?.getHTML() ?? "",
+                  },
+                  card as Card<CardType.DoubleSided>
+                )
+            )
+          ));
       }
       successfullySaved();
     } catch {

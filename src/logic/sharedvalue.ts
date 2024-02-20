@@ -57,3 +57,9 @@ export function useSharedValue(sharedValueId: string) {
 export function setSharedValue(sharedValueId: string, value: string) {
   return db.sharedvalues.update(sharedValueId, { value });
 }
+
+export function getCardsReferencingSharedValue(sharedValue: SharedValue) {
+  return Promise.all(
+    sharedValue.referencedBy.map((cardId) => db.cards.get(cardId))
+  );
+}
