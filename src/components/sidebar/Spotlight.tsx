@@ -1,5 +1,5 @@
 import { Group, Kbd, UnstyledButton, rem } from "@mantine/core";
-import { useDebouncedState } from "@mantine/hooks";
+import { useDebouncedState, useOs } from "@mantine/hooks";
 import { Spotlight, spotlight } from "@mantine/spotlight";
 import { IconCards, IconSearch, IconSquare } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
@@ -52,10 +52,11 @@ const useSearchCard = (filter: string) => {
 
 export default function SpotlightCard({}) {
   const [filter, setFilter] = useDebouncedState("", 250);
+  const os = useOs();
   const navigate = useNavigate();
   const filteredCards = useSearchCard(filter);
   const [filteredDecks] = useDecks();
-  const newActions = [
+  const possibleActions = [
     {
       group: "Decks",
       actions: [
@@ -112,7 +113,7 @@ export default function SpotlightCard({}) {
           </span>
           <span className={classes.spotlightButtonSection}>
             <Kbd c="dimmed" size="xs">
-              ⌘
+              {os === "macos" ? "⌘" : "Ctrl"}
             </Kbd>{" "}
             +{" "}
             <Kbd c="dimmed" size="xs">
@@ -122,7 +123,7 @@ export default function SpotlightCard({}) {
         </UnstyledButton>
       </Group>
       <Spotlight
-        actions={newActions}
+        actions={possibleActions}
         closeOnClickOutside
         nothingFound="Nothing found..."
         highlightQuery
