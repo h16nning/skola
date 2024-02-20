@@ -11,8 +11,6 @@ export interface CardTypeManager<T extends CardType> {
 
   update: (params: any, existingCard: Card<T>) => Card<T>;
 
-  displayPreview: (card: Card<T>) => string | Promise<string>;
-
   displayInNotebook: (card: Card<T>) => ReactNode;
 
   displayQuestion(card: Card<T>): ReactNode;

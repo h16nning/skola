@@ -1,22 +1,27 @@
+import { Divider, Stack, Title } from "@mantine/core";
+import DoubleSidedCardEditor from "../../components/editcard/CardEditor/DoubleSidedCardEditor";
 import common from "../../style/CommonStyles.module.css";
-import { Card, CardType, createCardSkeleton, updateCard } from "../card";
-import { Deck } from "../deck";
-import React from "react";
 import { CardTypeManager, EditMode } from "../CardTypeManager";
 import {
+  Card,
+  CardType,
+  createCardSkeleton,
+  toPreviewString,
+  updateCard,
+} from "../card";
+import { Deck } from "../deck";
+import {
   createSharedValue,
-  getSharedValue,
   registerReferencesToSharedValue,
   setSharedValue,
   useSharedValue,
 } from "../sharedvalue";
-import DoubleSidedCardEditor from "../../components/editcard/CardEditor/DoubleSidedCardEditor";
-import { Divider, Stack, Title } from "@mantine/core";
 
 export type DoubleSidedContent = {
   frontReferenceId: string;
   backReferenceId: string;
 };
+
 export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
   update(
     params: { front: string; back: string },
@@ -24,27 +29,26 @@ export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
   ) {
     setSharedValue(existingCard.content.frontReferenceId, params.front);
     setSharedValue(existingCard.content.backReferenceId, params.back);
-    updateCard(existingCard.id, existingCard);
-    return existingCard;
+    updateCard(existingCard.id, {
+      preview: toPreviewString(params.front),
+    });
+    return { preview: toPreviewString(params.front), ...existingCard };
   },
 
   create(params: {
     frontReferenceId: string;
     backReferenceId: string;
+    front: string;
   }): Card<CardType.DoubleSided> {
     return {
       ...createCardSkeleton(),
+      preview: toPreviewString(params.front),
       content: {
         type: CardType.DoubleSided,
         frontReferenceId: params.frontReferenceId ?? "error",
         backReferenceId: params.backReferenceId ?? "error",
       },
     };
-  },
-  displayPreview(card: Card<CardType.DoubleSided>) {
-    return getSharedValue(card.content.frontReferenceId)
-      .then((front) => front?.value.replace(/<[^>]*>/g, "") ?? "error")
-      .catch(() => "error");
   },
 
   displayQuestion(card: Card<CardType.DoubleSided>) {
@@ -121,10 +125,12 @@ export async function createDoubleSidedCardPair(params: {
   const card1 = DoubleSidedCardUtils.create({
     frontReferenceId: referenceId1,
     backReferenceId: referenceId2,
+    front: params.value1,
   });
   const card2 = DoubleSidedCardUtils.create({
     frontReferenceId: referenceId2,
     backReferenceId: referenceId1,
+    front: params.value2,
   });
   await Promise.all([
     registerReferencesToSharedValue(referenceId1, [card1.id, card2.id]),

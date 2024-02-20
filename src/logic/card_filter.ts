@@ -1,9 +1,5 @@
 import { Collection, IndexableType, Table } from "dexie";
-import {
-  CardSorts,
-  getCardsWithComparableDeckName,
-  getCardsWithComparablePreview,
-} from "./CardSorting";
+import { CardSorts, getCardsWithComparableDeckName } from "./CardSorting";
 import { Card, CardType, getCardsOf } from "./card";
 import { getDeck } from "./deck";
 
@@ -28,41 +24,34 @@ export default async function selectCards(
       (await getDeck(deckId).then((deck) => getCardsOf(deck))) ?? [];
   }
 
-  const cardsArray: Card<CardType>[] = Array.isArray(filteredCards)
+  let cardsArray: Card<CardType>[] = Array.isArray(filteredCards)
     ? filteredCards
     : await filteredCards.toArray();
 
-  let comparableFilteredCards = await getCardsWithComparablePreview(cardsArray);
-
   if (filter.length > 0) {
-    console.log(filter);
-    comparableFilteredCards = comparableFilteredCards.filter((card) =>
-      // @ts-ignore
-      card.preview
-        .toLowerCase()
-        .includes(filter.toLowerCase())
-    );
+    cardsArray = cardsArray.filter((card) => {
+      if (card.preview === undefined) {
+        console.warn(
+          "card.preview is undefined. Most likely due to old db date."
+        );
+        return true;
+      }
+      return card.preview?.toLowerCase().includes(filter.toLowerCase());
+    });
   }
   if (sort[0] === "sort_field") {
-    return comparableFilteredCards.sort(
-      CardSorts.bySortField(sortToNumber(sort[1]))
-    );
+    return cardsArray.sort(CardSorts.bySortField(sortToNumber(sort[1])));
   } else if (sort[0] === "creation_date") {
-    return comparableFilteredCards.sort(
-      CardSorts.byCreationDate(sortToNumber(sort[1]))
-    );
+    return cardsArray.sort(CardSorts.byCreationDate(sortToNumber(sort[1])));
   } else if (sort[0] === "type") {
-    return comparableFilteredCards.sort(
-      CardSorts.byCardType(sortToNumber(sort[1]))
-    );
+    return cardsArray.sort(CardSorts.byCardType(sortToNumber(sort[1])));
   } else if (sort[0] === "deck") {
-    const comparableDeckFilteredCards = await getCardsWithComparableDeckName(
-      comparableFilteredCards
-    );
-    return comparableDeckFilteredCards.sort(
+    const comparableFilteredCards =
+      await getCardsWithComparableDeckName(cardsArray);
+    return comparableFilteredCards.sort(
       CardSorts.byDeckName(sortToNumber(sort[1]))
     );
   } else {
-    return comparableFilteredCards;
+    return cardsArray;
   }
 }

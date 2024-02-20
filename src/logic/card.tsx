@@ -22,7 +22,7 @@ export interface CardSkeleton {
   deck: string;
   creationDate: Date;
   customOrder?: number;
-  frame?: string | undefined;
+  preview?: string;
 }
 
 export interface Card<T extends CardType> extends CardSkeleton {
@@ -34,8 +34,9 @@ export function createCardSkeleton(): CardSkeleton {
   return {
     id: id,
     history: [],
-    deck: "",
+    deck: "[preview not set]",
     model: new Model(),
+    preview: "",
     creationDate: new Date(Date.now()),
   };
 }
@@ -215,4 +216,8 @@ export function useSimplifiedStatesOf(
     });
     return states;
   }, [cards]);
+}
+
+export function toPreviewString(text: string): string {
+  return text.replace(/<[^>]*>/g, "").slice(0, 100);
 }

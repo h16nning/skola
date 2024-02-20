@@ -22,7 +22,11 @@ import {
   ClozeCardUtils,
   createClozeCardSet,
 } from "../../../logic/CardTypeImplementations/ClozeCard";
-import { useSharedValue } from "../../../logic/sharedvalue";
+import {
+  getCardsReferencingSharedValue,
+  getSharedValue,
+  useSharedValue,
+} from "../../../logic/sharedvalue";
 
 //not used right now, use ui control or remove later
 const Gap = Mark.create({
@@ -52,7 +56,6 @@ const Gap = Mark.create({
     );
 
     elem.addEventListener("click", () => {
-      console.log(HTMLAttributes.group);
       elem.classList.toggle("clicked");
     });
 
@@ -96,7 +99,6 @@ export default function ClozeCardEditor({
 
   const smallestAvailableOcclusionNumber = useMemo(() => {
     const occlusionNumberSet = getOcclusionNumberSet(editorContent);
-    console.log(occlusionNumberSet);
     for (let i = 1; i < 100; i++) {
       if (!occlusionNumberSet.includes(i)) {
         return i;
@@ -147,7 +149,7 @@ export default function ClozeCardEditor({
   );
 }
 
-function finish(
+async function finish(
   mode: EditMode,
   clear: Function,
   deck: Deck,
@@ -164,6 +166,22 @@ function finish(
           },
           card
         );
+        const cardsReferencingSameSharedValue = await getSharedValue(
+          card.content.textReferenceId
+        ).then((sv) => sv && getCardsReferencingSharedValue(sv));
+        cardsReferencingSameSharedValue !== undefined &&
+          (await Promise.all(
+            cardsReferencingSameSharedValue.map(
+              (card) =>
+                card !== undefined &&
+                ClozeCardUtils.update(
+                  {
+                    text: editorContent,
+                  },
+                  card as Card<CardType.Cloze>
+                )
+            )
+          ));
       }
       successfullySaved();
     } catch {

@@ -1,15 +1,15 @@
-import common from "../../style/CommonStyles.module.css";
-import { Card, CardType, createCardSkeleton } from "../card";
 import { Divider, Stack, Title } from "@mantine/core";
-import { Deck } from "../deck";
 import NormalCardEditor from "../../components/editcard/CardEditor/NormalCardEditor";
-import React from "react";
+import common from "../../style/CommonStyles.module.css";
 import { CardTypeManager, EditMode } from "../CardTypeManager";
+import { Card, CardType, createCardSkeleton, toPreviewString } from "../card";
+import { Deck } from "../deck";
 
 export type NormalContent = {
   front: string;
   back: string;
 };
+
 export const NormalCardUtils: CardTypeManager<CardType.Normal> = {
   update(
     params: { front: string; back: string },
@@ -17,6 +17,7 @@ export const NormalCardUtils: CardTypeManager<CardType.Normal> = {
   ) {
     return {
       ...existingCard,
+      preview: toPreviewString(params.front),
       content: {
         type: existingCard.content.type,
         front: params.front,
@@ -28,16 +29,13 @@ export const NormalCardUtils: CardTypeManager<CardType.Normal> = {
   create(params: { front: string; back: string }): Card<CardType.Normal> {
     return {
       ...createCardSkeleton(),
+      preview: toPreviewString(params.front),
       content: {
         type: CardType.Normal,
         front: params.front ?? "error",
         back: params.back ?? "error",
       },
     };
-  },
-
-  displayPreview(card: Card<CardType.Normal>) {
-    return card.content.front.replace(/<[^>]*>/g, "");
   },
 
   displayQuestion(card: Card<CardType.Normal>) {

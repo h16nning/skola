@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { Card, CardType, moveCard } from "../../logic/card";
 import { Button, Group, Modal, Select, Stack, Text } from "@mantine/core";
-import { getUtils } from "../../logic/CardTypeManager";
-import { useDecks } from "../../logic/deck";
 import { IconArrowsExchange } from "@tabler/icons-react";
+import { useState } from "react";
+import { Card, CardType, moveCard } from "../../logic/card";
+import { useDecks } from "../../logic/deck";
 import { successfullyMovedTo } from "../custom/Notification/Notification";
 
 interface MoveCardModalProps {
@@ -23,7 +22,7 @@ export default function MoveCardModal({
   const [newDeckID, setNewDeckID] = useState<string | null>(null);
   return (
     <Modal
-      title={`Move “${getUtils(card).displayPreview(card)}“ `}
+      title={"Move " + card.preview}
       opened={opened}
       onClose={() => setOpened(false)}
     >
