@@ -1,18 +1,16 @@
-import classes from "./Sidebar.module.css";
-import cx from "clsx";
-import React, { useState } from "react";
 import {
   ActionIcon,
+  Box,
   Group,
+  Image,
   NavLink,
   Stack,
+  Text,
   Title,
   Tooltip,
-  Image,
   useMantineTheme,
-  Box,
-  Text,
 } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import {
   IconBolt,
   IconCards,
@@ -22,12 +20,16 @@ import {
   IconSettings,
   IconX,
 } from "@tabler/icons-react";
-import { useNavigate } from "react-router-dom";
-import { useMediaQuery } from "@mantine/hooks";
+import cx from "clsx";
 import { t } from "i18next";
-import DeckTree from "./DeckTree";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTopLevelDecks } from "../../logic/deck";
 import NewDeckModal from "../deck/NewDeckModal";
+import DeckTree from "./DeckTree";
+import classes from "./Sidebar.module.css";
+
+import SpotlightCard from "./Spotlight";
 
 const InteractiveNavLink = ({
   label,
@@ -128,6 +130,8 @@ function Sidebar({
             </ActionIcon>
           ) : null}
         </Group>
+        <SpotlightCard minimalMode={minimalMode} />
+
         <InteractiveNavLink
           label={t("home.title")}
           path="/home"
