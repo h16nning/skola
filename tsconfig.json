@@ -15,7 +15,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "noUnusedLocals": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "types": ["./vite-env.d.ts"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

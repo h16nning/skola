@@ -10,5 +10,8 @@ export default defineConfig({
   css: {
     modules: {},
   },
+  define: {
+    ENABLE_FIREBASE: process.env.ENABLE_FIREBASE || true,
+  },
   plugins: [react(), viteTsconfigPaths(), Checker({ typescript: true })],
 });
