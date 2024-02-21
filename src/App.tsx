@@ -3,6 +3,7 @@ import classes from "./App.module.css";
 
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
+import "@mantine/spotlight/styles.css";
 import { useDisclosure, useLocalStorage } from "@mantine/hooks";
 import { Notifications } from "@mantine/notifications";
 import { useEffect } from "react";
@@ -52,7 +53,7 @@ export default function App() {
           <AppShell
             layout="alt"
             navbar={{
-              width: { sm: "3.5rem", lg: 300 },
+              width: { xs: "3.5rem", lg: 300 },
               breakpoint: "xs",
               collapsed: { mobile: !sidebarMenuOpened },
             }}
