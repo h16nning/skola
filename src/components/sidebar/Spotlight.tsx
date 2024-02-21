@@ -2,16 +2,14 @@ import { Group, Kbd, UnstyledButton, rem } from "@mantine/core";
 import { useDebouncedState, useOs } from "@mantine/hooks";
 import { Spotlight, spotlight } from "@mantine/spotlight";
 import { IconCards, IconSearch, IconSquare } from "@tabler/icons-react";
+import cx from "clsx";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUtils } from "../../logic/CardTypeManager";
 import { Card, CardType, useCardsWith } from "../../logic/card";
 import selectCards from "../../logic/card_filter";
 import { determineSuperDecks, getDeck, useDecks } from "../../logic/deck";
 import classes from "./Spotlight.module.css";
-import cx from "clsx";
 interface CardWithPreview extends Card<CardType> {
-  computedPreview: string;
   breadcrumb: string[];
 }
 
@@ -23,9 +21,6 @@ const useSearchCard = (filter: string) => {
   );
   useEffect(() => {
     async function filterCards(cards: Card<CardType>[]) {
-      const previews = cards?.map(async (card) => {
-        return await getUtils(card).displayPreview(card);
-      });
       const decksPromises = cards?.map(async (card) => {
         const deck = await getDeck(card.deck);
         const superDecks = await determineSuperDecks(deck);
@@ -34,12 +29,10 @@ const useSearchCard = (filter: string) => {
           deck?.name || "Empty",
         ];
       });
-      const cp = await Promise.all(previews);
       const decks = await Promise.all(decksPromises);
       setFilteredCards(
         cards.map((card, i) => ({
           ...card,
-          computedPreview: cp[i],
           breadcrumb: decks[i],
         }))
       );
@@ -84,7 +77,7 @@ export default function SpotlightCard({
         ...filteredCards.map((card) => {
           return {
             id: card.id,
-            label: card.computedPreview,
+            label: card.preview,
             description: card.breadcrumb.join(" > "),
             onClick: () => navigate(`/deck/${card.deck}`),
             leftSection: (
