@@ -16,6 +16,13 @@
     "new-cards-label_one": "",
     "new-cards-label_other": "",
     "new-deck-button": "",
+    "new-deck-modal": {
+      "description": "Beskrivning",
+      "name": "Namn",
+      "name-placeholder": "till exempel \"Spanska\", \"Anatomi\" eller \"Historik\"",
+      "new-subdeck": "Skapa nytt underdäck i {{superDeck}}",
+      "submit": "Skapa"
+    },
     "notebook": {
       "title": "Anteckningsbok"
     },
@@ -31,6 +38,10 @@
   },
   "global": {
     "cancel": ""
+  },
+  "hero-deck-section": {
+    "error": "",
+    "no-cards-title": ""
   },
   "home": {
     "title": "Hem",

@@ -42,27 +42,27 @@ function HeroDeckSection({ deck, cards, areCardsReady }: HeroDeckSectionProps) {
       {areCardsReady &&
         (!cards ? (
           <Text c="red" fw={700}>
-            We have issues loading these cards. Please try again later.
+            {t("hero-deck-section.error")}
           </Text>
         ) : cards.length === 0 ? (
           <Stack gap="0" align="center">
             <Text fz="md" fw={500}>
-              It is looking empty here!
+              {t("hero-deck-section.no-cards-title")}
             </Text>
             <Text fz="sm" c="dimmed">
-              Start by creating some cards!
+              {t("hero-deck-section.no-cards-subtitle")}
             </Text>
           </Stack>
         ) : isDone() ? (
           <Stack gap="md" align="center">
             <Title order={3}>
-              Congratulations! This deck is done for today!
+              {t("hero-deck-section.all-cards-done-title")}
             </Title>
             <Text fz="sm">
-              Return back tomorrow or choose to practice anyway.
+              {t("hero-deck-section.all-cards-done-subtitle")}
             </Text>
             <Button variant="subtle" w="50%" onClick={startLearning}>
-              Practice anyway
+              {t("hero-deck-section.all-cards-done-learn-anyway")}
             </Button>
           </Stack>
         ) : (
@@ -95,7 +95,7 @@ function HeroDeckSection({ deck, cards, areCardsReady }: HeroDeckSectionProps) {
               w="50%"
               onClick={startLearning}
             >
-              Learn
+              {t("hero-deck-section.learn")}
             </Button>
           </Stack>
         ))}

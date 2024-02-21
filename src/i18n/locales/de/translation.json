@@ -16,6 +16,15 @@
     "new-cards-label_one": "1 Neu",
     "new-cards-label_other": "{{count}} Neue",
     "new-deck-button": "Neuer Stapel",
+    "new-deck-modal": {
+      "description": "Beschreibung",
+      "description-placeholder": "Optional",
+      "name": "Name",
+      "name-placeholder": "zum Beispiel „Spanisch“, „Anatomie“ oder „Geschichte“",
+      "new-deck": "Neuen Stapel erstellen",
+      "new-subdeck": "Neuen Unterstapel in {{superDeck}} erstellen",
+      "submit": "Erstellen"
+    },
     "notebook": {
       "title": "Notizbuch"
     },
@@ -31,6 +40,15 @@
   },
   "global": {
     "cancel": "Abbrechen"
+  },
+  "hero-deck-section": {
+    "all-cards-done-learn-anyway": "Trotzdem lernen",
+    "all-cards-done-subtitle": "Komme morgen zurück oder lerne trotzdem.",
+    "all-cards-done-title": "Glückwunsch! \nDieser Stapel ist für heute erledigt!",
+    "error": "Die Karten konnten nicht geladen werden.",
+    "learn": "Lernen",
+    "no-cards-subtitle": "Beginne damit, einige Karten zu erstellen!",
+    "no-cards-title": "Hier sieht es leer aus!"
   },
   "home": {
     "title": "Startseite",
