@@ -4,6 +4,7 @@ import ModalProps from "../custom/ModalProps";
 import { Deck, newDeck } from "../../logic/deck";
 import { useNavigate } from "react-router-dom";
 import { getHotkeyHandler, useHotkeys } from "@mantine/hooks";
+import { t } from "i18next";
 
 interface NewDeckModalProps extends ModalProps {
   superDeck?: Deck;
@@ -40,21 +41,25 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
       opened={opened}
       onClose={() => setOpened(false)}
       withCloseButton={false}
-      title={"Create New Deck" + (superDeck ? " in " + superDeck?.name : "")}
+      title={
+        superDeck
+          ? t("deck.new-deck-modal.new-subdeck", { superDeck: superDeck.name })
+          : t("deck.new-deck-modal.new-deck")
+      }
     >
       <Stack justify="space-between">
         <TextInput
-          placeholder="for example 'Spanish', 'Anatomy' or 'History'"
+          placeholder={t("deck.new-deck-modal.name-placeholder")}
           data-autofocus
-          label="Name"
+          label={t("deck.new-deck-modal.name")}
           value={nameValue}
           onChange={(e) => setNameValue(e.currentTarget.value)}
           onKeyDown={getHotkeyHandler([["mod+Enter", () => tryAddDeck()]])}
         />
         <TextInput
-          placeholder="Optional"
+          placeholder={t("deck.new-deck-modal.description-placeholder")}
           data-autofocus
-          label="Description"
+          label={t("deck.new-deck-modal.description")}
           value={descriptionValue}
           onChange={(e) => setDescriptionValue(e.currentTarget.value)}
           onKeyDown={getHotkeyHandler([["mod+Enter", () => tryAddDeck()]])}
@@ -67,7 +72,7 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
               setOpened(false);
             }}
           >
-            Cancel
+            {t("global.cancel")}
           </Button>
           <Button
             disabled={!isInputValid()}
@@ -76,7 +81,7 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
               void tryAddDeck();
             }}
           >
-            Add
+            {t("deck.new-deck-modal.submit")}
           </Button>
         </Group>
       </Stack>
