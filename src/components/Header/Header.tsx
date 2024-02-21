@@ -37,7 +37,7 @@ export default function Header({ menuOpened, menuHandlers }: HeaderProps) {
         <Burger
           opened={menuOpened}
           onClick={menuHandlers.toggle}
-          hiddenFrom="sm"
+          hiddenFrom="xs"
           size="sm"
         />
         <AppHeaderOutlet />
