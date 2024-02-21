@@ -26,7 +26,11 @@ export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
   update(params: { text: string }, existingCard: Card<CardType.Cloze>) {
     setSharedValue(existingCard.content.textReferenceId, params.text);
     updateCard(existingCard.id, {
-      preview: toPreviewString(params.text),
+      preview: toPreviewString(
+        params.text.replace(/\{\{c\d::((?!\{\{|}}).)*\}\}/g, (match) =>
+          match.slice(6, -2)
+        )
+      ),
     });
     return { preview: toPreviewString(params.text), ...existingCard };
   },
@@ -38,7 +42,11 @@ export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
   }): Card<CardType.Cloze> {
     return {
       ...createCardSkeleton(),
-      preview: toPreviewString(params.text),
+      preview: toPreviewString(
+        params.text.replace(/\{\{c\d::((?!\{\{|}}).)*\}\}/g, (match) =>
+          match.slice(6, -2)
+        )
+      ),
       content: {
         type: CardType.Cloze,
         occlusionNumber: params.occlusionNumber,

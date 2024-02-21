@@ -8,16 +8,7 @@ import CardEditor, { useCardEditor } from "./CardEditor";
 import classes from "./ClozeCardEditor.module.css";
 
 import { Stack } from "@mantine/core";
-import { Mark } from "@tiptap/core";
-import { mergeAttributes } from "@tiptap/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import CardEditorFooter from "../CardEditorFooter";
-import {
-  addFailed,
-  saveFailed,
-  successfullyAdded,
-  successfullySaved,
-} from "../../custom/Notification/Notification";
 import {
   ClozeCardUtils,
   createClozeCardSet,
@@ -27,42 +18,13 @@ import {
   getSharedValue,
   useSharedValue,
 } from "../../../logic/sharedvalue";
-
-//not used right now, use ui control or remove later
-const Gap = Mark.create({
-  name: "gap",
-  inline: true,
-  exitable: true,
-  group: "inline",
-  selectable: true,
-  defaultTag: "span",
-  addAttributes() {
-    return {
-      group: 0,
-    };
-  },
-  parseHTML() {
-    return [{ tag: "span.gap" }];
-  },
-  renderHTML({ HTMLAttributes }) {
-    const elem = document.createElement("span");
-    const content = document.createElement("div");
-    content.innerHTML = "Test: " + HTMLAttributes.group;
-    content.className = "inline-menu";
-    elem.appendChild(content);
-
-    Object.entries(mergeAttributes(HTMLAttributes, { class: "gap" })).forEach(
-      ([attr, val]) => elem.setAttribute(attr, val)
-    );
-
-    elem.addEventListener("click", () => {
-      elem.classList.toggle("clicked");
-    });
-
-    return elem;
-    //return ['span', mergeAttributes(HTMLAttributes, {class: 'gap'}), 0];
-  },
-});
+import {
+  addFailed,
+  saveFailed,
+  successfullyAdded,
+  successfullySaved,
+} from "../../custom/Notification/Notification";
+import CardEditorFooter from "../CardEditorFooter";
 
 interface ClozeCardEditorProps {
   card: Card<CardType.Cloze> | null;
@@ -82,7 +44,6 @@ export default function ClozeCardEditor({
   //fix sometime
   const editor = useCardEditor({
     content: useSharedValue(card?.content.textReferenceId ?? "")?.value ?? "",
-    extensions: [Gap],
     onUpdate: ({ editor }) => {
       if (editor?.getHTML().valueOf() !== editorContent.valueOf()) {
         setEditorContent(editor?.getHTML() ?? "");
@@ -99,11 +60,12 @@ export default function ClozeCardEditor({
 
   const smallestAvailableOcclusionNumber = useMemo(() => {
     const occlusionNumberSet = getOcclusionNumberSet(editorContent);
-    for (let i = 1; i < 100; i++) {
+    for (let i = 1; i < 10; i++) {
       if (!occlusionNumberSet.includes(i)) {
         return i;
       }
     }
+    return 9;
   }, [editorContent]);
 
   const clear = useCallback(() => {
