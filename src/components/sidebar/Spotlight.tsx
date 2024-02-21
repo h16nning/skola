@@ -9,7 +9,7 @@ import { Card, CardType, useCardsWith } from "../../logic/card";
 import selectCards from "../../logic/card_filter";
 import { determineSuperDecks, getDeck, useDecks } from "../../logic/deck";
 import classes from "./Spotlight.module.css";
-
+import cx from "clsx";
 interface CardWithPreview extends Card<CardType> {
   computedPreview: string;
   breadcrumb: string[];
@@ -50,7 +50,9 @@ const useSearchCard = (filter: string) => {
   return filteredCards;
 };
 
-export default function SpotlightCard({}) {
+export default function SpotlightCard({
+  minimalMode,
+}: { minimalMode: boolean }) {
   const [filter, setFilter] = useDebouncedState("", 250);
   const os = useOs();
   const navigate = useNavigate();
@@ -102,24 +104,33 @@ export default function SpotlightCard({}) {
       <Group justify="space-between">
         <UnstyledButton
           onClick={spotlight.open}
-          className={classes.spotlightButton}
+          className={cx({
+            [classes.spotlightButton]: true,
+            [classes.minimalMode]: minimalMode,
+          })}
           variant="default"
           w="100%"
           c="dimmed"
         >
-          <span className={classes.spotlightButtonSection}>
-            <IconSearch size={14} />
-            Search
-          </span>
-          <span className={classes.spotlightButtonSection}>
-            <Kbd c="dimmed" size="xs">
-              {os === "macos" ? "⌘" : "Ctrl"}
-            </Kbd>{" "}
-            +{" "}
-            <Kbd c="dimmed" size="xs">
-              K
-            </Kbd>
-          </span>
+          {minimalMode ? (
+            <IconSearch size={14} className={classes.spotlightButtonIcon} />
+          ) : (
+            <>
+              <span className={classes.spotlightButtonSection}>
+                <IconSearch size={14} className={classes.spotlightButtonIcon} />
+                Search
+              </span>
+              <span className={classes.spotlightButtonSection}>
+                <Kbd c="dimmed" size="xs">
+                  {os === "macos" ? "⌘" : "Ctrl"}
+                </Kbd>{" "}
+                +{" "}
+                <Kbd c="dimmed" size="xs">
+                  K
+                </Kbd>
+              </span>
+            </>
+          )}
         </UnstyledButton>
       </Group>
       <Spotlight

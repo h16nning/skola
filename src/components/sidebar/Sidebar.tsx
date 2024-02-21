@@ -130,7 +130,7 @@ function Sidebar({
             </ActionIcon>
           ) : null}
         </Group>
-        <SpotlightCard />
+        <SpotlightCard minimalMode={minimalMode} />
 
         <InteractiveNavLink
           label={t("home.title")}

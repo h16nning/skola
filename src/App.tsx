@@ -53,7 +53,7 @@ export default function App() {
           <AppShell
             layout="alt"
             navbar={{
-              width: { sm: "3.5rem", lg: 300 },
+              width: { xs: "3.5rem", lg: 300 },
               breakpoint: "xs",
               collapsed: { mobile: !sidebarMenuOpened },
             }}
