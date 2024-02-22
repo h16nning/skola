@@ -1,7 +1,31 @@
 {
+  "cards": {
+    "editor": {
+      "double_sided": {
+        "back": "",
+        "front": ""
+      }
+    }
+  },
   "deck": {
-    "learning-cards-label": "Learn",
+    "add-cards": "Add Cards",
+    "learning-cards-label": "Learning",
+    "learning-cards-label_one": "1 Learning",
+    "learning-cards-label_other": "{{ count }} Learning",
+    "menu": {
+      "debug": "Debug",
+      "delete": "Delete",
+      "import-cards": "Import Cards",
+      "label": "Menu",
+      "manage-cards": "Manage Cards",
+      "move": "Move",
+      "options": "Options",
+      "rename": "Rename"
+    },
     "new-cards-label": "New",
+    "new-cards-label_one": "1 New",
+    "new-cards-label_other": "{{ count }} New",
+    "new-deck-button": "New Deck",
     "new-deck-modal": {
       "description": "Description",
       "description-placeholder": "Optional",
@@ -11,7 +35,18 @@
       "new-subdeck": "Create New Subdeck in {{superDeck}}",
       "submit": "Create"
     },
-    "review-cards-label": "Review"
+    "notebook": {
+      "title": "Notebook"
+    },
+    "review-cards-label": "Review",
+    "review-cards-label_one": "1 Review",
+    "review-cards-label_other": "{{ count }} Review",
+    "settings": "Settings",
+    "subdeck": {
+      "add-subdeck-button": "Add",
+      "load-fail": "Failed to load sub decks.",
+      "title": "Subdecks"
+    }
   },
   "global": {
     "cancel": "Cancel"
@@ -24,5 +59,72 @@
     "learn": "Learn",
     "no-cards-subtitle": "Start by creating some cards!",
     "no-cards-title": "It is looking empty here!"
+  },
+  "settings": {
+    "about": {
+      "description": "This program was made by a student from Germany studying medicine. Skola is in early development. You may encounter bugs. If you do, I'd be very pleased if you reported them on the git repository.",
+      "title": "About"
+    },
+    "appearance": {
+      "color-scheme": "Color Scheme",
+      "color-scheme-auto": "System",
+      "color-scheme-dark": "Dark",
+      "color-scheme-description": "Choose between always light or dark theme or use the color theme of your system.",
+      "color-scheme-light": "Light",
+      "title": "Appearance"
+    },
+    "database": {
+      "storage-used": "used",
+      "title": "Database"
+    },
+    "developer": {
+      "description": "This is the developer tab. It will contain extra settings for developers.",
+      "title": "Developer"
+    },
+    "editing": {
+      "editor-options": "Editor",
+      "individual-options": "Individual options",
+      "markdown-hint": "You can also use keyboard shortcuts and basic markdown syntax to format text.",
+      "show-code-option": "Show code option",
+      "show-highlight-option": "Show highlight option",
+      "show-link-option": "Show options for links",
+      "show-list-option": "Show options for lists",
+      "show-options-for-subscript-and-superscript": "Show options for subscript and superscript",
+      "show-strikethrough-option": "Show strikethrough option",
+      "title": "Editing",
+      "use-bubble-menu": "Use inline menu",
+      "use-toolbar": "Use toolbar",
+      "use-toolbar-description": "Always show a toolbar with formatting options above the editor"
+    },
+    "editing-use-bubble-menu-description": "Only show formatting options when text is selected",
+    "general": {
+      "enable-developer-mode": "Enable Developer Mode",
+      "enable-developer-mode-description": "This will enable additional options for debugging and creating custom plugins and themes.",
+      "enable-zen-mode": "Zen Mode",
+      "enable-zen-mode-description": "Zen Mode automatically activates full screen mode during learning sessions.",
+      "language": "Language",
+      "language-description": "Set the language for the user interface.",
+      "name": "Name",
+      "name-description": "This name will be used to customize the user experience.",
+      "show-shortcut-hints": "Show Shortcuts",
+      "show-shortcut-hints-description": "Possible keyboard shortcuts will appear in menus etc.",
+      "title": "General"
+    },
+    "learn": {
+      "maximumInterval": "Maxium interval",
+      "requestRetention": "Request retention",
+      "title": "Learning"
+    },
+    "title": "Settings"
+  },
+  "sidebar": {
+    "decks-add": "Add deck",
+    "decks-title": "Decks"
+  },
+  "statistics": {
+    "title": "Statistics"
+  },
+  "today": {
+    "title": "Today"
   }
 }

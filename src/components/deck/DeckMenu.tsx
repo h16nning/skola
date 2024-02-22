@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from "react";
-import { ActionIcon, Menu } from "@mantine/core";
+import { ActionIcon, Group, Kbd, Menu } from "@mantine/core";
+import { useHotkeys } from "@mantine/hooks";
 import {
   IconAdjustmentsHorizontal,
   IconArrowsExchange,
@@ -10,16 +10,16 @@ import {
   IconFileImport,
   IconTrash,
 } from "@tabler/icons-react";
+import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { useSetting, useShowShortcutHints } from "../../logic/Settings";
+import { Card, CardType } from "../../logic/card";
 import { Deck, deleteDeck } from "../../logic/deck";
 import DangerousConfirmModal from "../custom/DangerousConfirmModal";
-import { useNavigate } from "react-router-dom";
 import RenameCardModal from "../editcard/RenameCardModal";
-import DebugDeckModal from "./DebugDeckModal";
-import { Card, CardType } from "../../logic/card";
-import { useSetting } from "../../logic/Settings";
 import ImportModal from "../settings/importexport/ImportModal";
-import { useHotkeys } from "@mantine/hooks";
-import { useTranslation } from "react-i18next";
+import DebugDeckModal from "./DebugDeckModal";
 
 interface DeckMenuProps {
   deck?: Deck;
@@ -63,7 +63,22 @@ function DeckMenu({
     }
   }, [deck, navigate]);
 
-  useHotkeys([["mod+Backspace", () => setDeleteModalOpened(true)]]);
+  const manageCards = useCallback(() => {
+    if (deck) {
+      navigate("/cards/" + deck.id);
+    }
+  }, [deck, navigate]);
+
+  const showShortcutHints = useShowShortcutHints();
+  useHotkeys([
+    ["r", () => setRenameModalOpened(true)],
+    ["m", () => {}],
+    ["b", manageCards],
+    ["i", () => setImportModalOpened(true)],
+    ["o", () => setDeckOptionsOpened(true)],
+    ["shift+d", () => setDebugModalOpened(true)],
+    ["Backspace", () => setDeleteModalOpened(true)],
+  ]);
 
   return (
     <>
@@ -72,54 +87,70 @@ function DeckMenu({
           <ActionIcon
             variant="subtle"
             color="gray"
-            aria-label={t("deck.settings")}
+            aria-label={t("deck.menu.label")}
             disabled={(isDeckReady && !deck) || (areCardsReady && !cards)}
           >
             <IconDots />
           </ActionIcon>
         </Menu.Target>
         <Menu.Dropdown>
-          {developerMode ? (
-            <Menu.Item
-              leftSection={<IconCode size={16} />}
-              onClick={() => setDebugModalOpened(true)}
-            >
-              Debug
-            </Menu.Item>
-          ) : null}
+          <Menu.Item
+            leftSection={<IconCursorText size={16} />}
+            rightSection={showShortcutHints && <Kbd>r</Kbd>}
+            onClick={() => setRenameModalOpened(true)}
+          >
+            {t("deck.menu.rename")}
+          </Menu.Item>
+          <Menu.Item
+            leftSection={<IconArrowsExchange size={16} />}
+            rightSection={showShortcutHints && <Kbd>m</Kbd>}
+            disabled
+          >
+            {t("deck.menu.move")}
+          </Menu.Item>
           <Menu.Item
             leftSection={<IconCards size={16} />}
-            onClick={() => navigate("/cards/" + deck?.id)}
+            rightSection={showShortcutHints && <Kbd>b</Kbd>}
+            onClick={manageCards}
           >
-            Manage Cards
+            {t("deck.menu.manage-cards")}
           </Menu.Item>
           <Menu.Item
             leftSection={<IconFileImport size={16} />}
+            rightSection={showShortcutHints && <Kbd>i</Kbd>}
             onClick={() => setImportModalOpened(true)}
           >
-            Import Cards
+            {t("deck.menu.import-cards")}
           </Menu.Item>
           <Menu.Item
-            onClick={() => setDeckOptionsOpened(true)}
             leftSection={<IconAdjustmentsHorizontal size={16} />}
+            rightSection={showShortcutHints && <Kbd>o</Kbd>}
+            onClick={() => setDeckOptionsOpened(true)}
           >
-            Options
+            {t("deck.menu.options")}
           </Menu.Item>
-          <Menu.Item leftSection={<IconArrowsExchange size={16} />} disabled>
-            Move Deck
-          </Menu.Item>
-          <Menu.Item
-            leftSection={<IconCursorText size={16} />}
-            onClick={() => setRenameModalOpened(true)}
-          >
-            Rename
-          </Menu.Item>
+          {developerMode ? (
+            <Menu.Item
+              leftSection={<IconCode size={16} />}
+              rightSection={
+                showShortcutHints && (
+                  <Group align="center" gap="0.25rem">
+                    <Kbd>shift</Kbd>+<Kbd>d</Kbd>
+                  </Group>
+                )
+              }
+              onClick={() => setDebugModalOpened(true)}
+            >
+              {t("deck.menu.debug")}
+            </Menu.Item>
+          ) : null}
           <Menu.Item
             color="red"
             leftSection={<IconTrash size={16} />}
+            rightSection={showShortcutHints && <Kbd>←</Kbd>}
             onClick={() => setDeleteModalOpened(true)}
           >
-            Delete
+            {t("deck.menu.delete")}
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>

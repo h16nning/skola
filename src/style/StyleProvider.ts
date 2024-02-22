@@ -12,6 +12,7 @@ import {
   Select,
   Tabs,
   Tooltip,
+  Kbd,
   createTheme,
 } from "@mantine/core";
 import actionIcon from "./ActionIcon.module.css";
@@ -116,6 +117,11 @@ export const presetTheme = createTheme({
         variant: "default",
       },
       classNames: actionIcon,
+    }),
+    Kbd: Kbd.extend({
+      defaultProps: {
+        size: "xs",
+      },
     }),
     Modal: Modal.extend({
       defaultProps: {

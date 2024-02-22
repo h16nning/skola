@@ -12,6 +12,16 @@
     "learning-cards-label": "Lernen",
     "learning-cards-label_one": "1 Lernen",
     "learning-cards-label_other": "{{count}} Lernen",
+    "menu": {
+      "debug": "Debug",
+      "delete": "Löschen",
+      "import-cards": "Karten importieren",
+      "label": "Menu",
+      "manage-cards": "Karten verwalten",
+      "move": "Bewegen",
+      "options": "Optionen",
+      "rename": "Umbenennen"
+    },
     "new-cards-label": "Neu",
     "new-cards-label_one": "1 Neu",
     "new-cards-label_other": "{{count}} Neue",
@@ -31,7 +41,7 @@
     "review-cards-label": "Wiederholen",
     "review-cards-label_one": "1 Wiederholen",
     "review-cards-label_other": "{{count}} Wiederholen",
-    "settings": "",
+    "settings": "Einstellungen",
     "subdeck": {
       "add-subdeck-button": "Hinzufügen",
       "load-fail": "Fehler beim Laden der Unterstapel",
@@ -119,6 +129,8 @@
       "language-description": "Ändere die Sprache der Benutzeroberfläche.",
       "name": "Name",
       "name-description": "Dein Name wird zur Anpassung der Benutzeroberfläche genutzt.",
+      "show-shortcut-hints": "Tastenkurzbefehle anzeigen",
+      "show-shortcut-hints-description": "In Menüs usw. werden mögliche Tastaturkurzbefehle angezeigt.",
       "title": "Allgemein"
     },
     "learn": {

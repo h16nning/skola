@@ -12,6 +12,15 @@
     "learning-cards-label": "Plugga",
     "learning-cards-label_one": "",
     "learning-cards-label_other": "",
+    "menu": {
+      "debug": "Debug",
+      "delete": "Radera",
+      "import-cards": "Importera kort",
+      "manage-cards": "Hantera kort",
+      "move": "Flytta",
+      "options": "",
+      "rename": "Döp om"
+    },
     "new-cards-label": "Nya",
     "new-cards-label_one": "",
     "new-cards-label_other": "",
@@ -112,6 +121,7 @@
       "language-description": "Språk som används i gränssnittet.",
       "name": "Namn",
       "name-description": "This name will be used to customize the user experience.",
+      "show-shortcut-hints-description": "Möjliga kortkommandon kommer att visas i menyer etc.",
       "title": "General"
     },
     "learn": {
