@@ -6,14 +6,16 @@
   line-height: 1.5;
 
   &:hover {
-    background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-6));
+    background-color: light-dark(
+      var(--mantine-color-gray-1),
+      var(--mantine-color-dark-6)
+    );
     text-decoration: none;
   }
   &:active {
     transform: scale(0.97);
   }
 }
-
 
 .separator {
   margin: 0rem 0.25rem;
