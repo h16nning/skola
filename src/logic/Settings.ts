@@ -1,5 +1,6 @@
-import { db } from "./db";
 import { useLiveQuery } from "dexie-react-hooks";
+import { useEffect, useState } from "react";
+import { db } from "./db";
 
 export type Settings<T extends keyof SettingsValues> = {
   key: T;
@@ -11,6 +12,7 @@ export interface SettingsValues {
   language: "en" | "de" | "es" | "sv";
   useZenMode: boolean;
   developerMode: boolean;
+  showShortcutHints: boolean;
 
   colorSchemePreference: "light" | "dark" | "auto";
 
@@ -32,6 +34,7 @@ export const defaultSettings: SettingsValues = {
   language: "en",
   useZenMode: false,
   developerMode: false,
+  showShortcutHints: true,
 
   colorSchemePreference: "auto",
 
@@ -90,4 +93,17 @@ export async function setSetting<T extends keyof SettingsValues>(
   newValue: SettingsValues[T]
 ) {
   return db.settings.put({ key: key, value: newValue }, key);
+}
+
+export function useShowShortcutHints() {
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useEffect(() => {
+    const listener = () => setIsTouchDevice(true);
+    document.addEventListener("touchstart", listener);
+
+    return () => document.removeEventListener("touchstart", listener);
+  }, []);
+
+  return !isTouchDevice && useSetting("showShortcutHints")[0];
 }

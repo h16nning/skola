@@ -9,6 +9,7 @@ import { Card, CardType, useCardsWith } from "../../logic/card";
 import selectCards from "../../logic/card_filter";
 import { determineSuperDecks, getDeck, useDecks } from "../../logic/deck";
 import classes from "./Spotlight.module.css";
+import { useShowShortcutHints } from "../../logic/Settings";
 interface CardWithPreview extends Card<CardType> {
   breadcrumb: string[];
 }
@@ -48,6 +49,7 @@ export default function SpotlightCard({
 }: { minimalMode: boolean }) {
   const [filter, setFilter] = useDebouncedState("", 250);
   const os = useOs();
+  const showShortcutHints = useShowShortcutHints();
   const navigate = useNavigate();
   const filteredCards = useSearchCard(filter);
   const [filteredDecks] = useDecks();
@@ -113,15 +115,17 @@ export default function SpotlightCard({
                 <IconSearch size={14} className={classes.spotlightButtonIcon} />
                 Search
               </span>
-              <span className={classes.spotlightButtonSection}>
-                <Kbd c="dimmed" size="xs">
-                  {os === "macos" ? "⌘" : "Ctrl"}
-                </Kbd>{" "}
-                +{" "}
-                <Kbd c="dimmed" size="xs">
-                  K
-                </Kbd>
-              </span>
+              {showShortcutHints && (
+                <span className={classes.spotlightButtonSection}>
+                  <Kbd c="dimmed" size="xs">
+                    {os === "macos" ? "⌘" : "Ctrl"}
+                  </Kbd>{" "}
+                  +{" "}
+                  <Kbd c="dimmed" size="xs">
+                    K
+                  </Kbd>
+                </span>
+              )}
             </>
           )}
         </UnstyledButton>
