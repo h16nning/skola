@@ -1,5 +1,8 @@
+@import "font.css";
+
 body {
   margin: 0;
+
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -11,11 +14,6 @@ body {
   height: 100%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
 html,
 body,
 #root,
@@ -25,7 +23,8 @@ body,
   height: 100%;
 }
 
-button .tabler-icon, input .tabler-icon {
+button .tabler-icon,
+input .tabler-icon {
   stroke-width: 1.5px;
   width: 1.2rem;
 }
