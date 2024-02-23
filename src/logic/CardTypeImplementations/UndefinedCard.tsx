@@ -38,4 +38,8 @@ export const UndefinedCardUtils: CardTypeManager<CardType.Undefined> = {
   editor() {
     return <span>Undefined Card Editor</span>;
   },
+
+  delete() {
+    console.warn("tried to delete card of type undefined. Not possible.");
+  },
 };

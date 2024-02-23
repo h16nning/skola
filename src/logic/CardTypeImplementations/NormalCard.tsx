@@ -2,7 +2,13 @@ import { Divider, Stack, Title } from "@mantine/core";
 import NormalCardEditor from "../../components/editcard/CardEditor/NormalCardEditor";
 import common from "../../style/CommonStyles.module.css";
 import { CardTypeManager, EditMode } from "../CardTypeManager";
-import { Card, CardType, createCardSkeleton, toPreviewString } from "../card";
+import {
+  Card,
+  CardType,
+  createCardSkeleton,
+  deleteCard,
+  toPreviewString,
+} from "../card";
 import { Deck } from "../deck";
 
 export type NormalContent = {
@@ -72,5 +78,9 @@ export const NormalCardUtils: CardTypeManager<CardType.Normal> = {
 
   editor(card: Card<CardType.Normal> | null, deck: Deck, mode: EditMode) {
     return <NormalCardEditor card={card} deck={deck} mode={mode} />;
+  },
+
+  async delete(card: Card<CardType.Normal>) {
+    deleteCard(card);
   },
 };
