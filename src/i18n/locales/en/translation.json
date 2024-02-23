@@ -76,6 +76,19 @@
     "welcome": "Welcome!",
     "welcome-user": "Welcome back, {{name}}!"
   },
+  "learning": {
+    "finished-accuracy-ratio": "Accuracy",
+    "finished-button-home": "Go Home",
+    "finished-button-to-deck": "Back to Deck",
+    "finished-congrats": "Congratulations!",
+    "finished-congrats-name": "Congratulations, {{name}}!",
+    "finished-duration": "Time",
+    "finished-info": "You have finished all cards of this deck for today.",
+    "finished-repetions-count": "Repetitions"
+  },
+  "manage-cards": {
+    "title": "Manage Cards"
+  },
   "rename-deck": {
     "new-name": "New Name",
     "rename-button": "Rename",
