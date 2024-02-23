@@ -1,4 +1,14 @@
 {
+  "card": {
+    "menu": {
+      "debug": "Debug",
+      "delete": "Löschen",
+      "edit": "Bearbeiten",
+      "move": "Bewegen",
+      "options": "Optionen",
+      "statistics": "Statistiken"
+    }
+  },
   "cards": {
     "editor": {
       "double_sided": {
@@ -63,7 +73,7 @@
   },
   "home": {
     "title": "Startseite",
-    "welcome": "Willkomen!",
+    "welcome": "Willkommen!",
     "welcome-user": "Willkommen zurück, {{name}}!"
   },
   "learning": {

@@ -1,4 +1,14 @@
 {
+  "card": {
+    "menu": {
+      "debug": "Debug",
+      "delete": "Delete",
+      "edit": "Edit",
+      "move": "Move",
+      "options": "Options",
+      "statistics": "Statistics"
+    }
+  },
   "cards": {
     "editor": {
       "double_sided": {
@@ -60,6 +70,16 @@
     "learn": "Learn",
     "no-cards-subtitle": "Start by creating some cards!",
     "no-cards-title": "It is looking empty here!"
+  },
+  "home": {
+    "title": "Home",
+    "welcome": "Welcome!",
+    "welcome-user": "Welcome back, {{name}}!"
+  },
+  "rename-deck": {
+    "new-name": "New Name",
+    "rename-button": "Rename",
+    "title": "Rename \"{{deckName}}\""
   },
   "settings": {
     "about": {

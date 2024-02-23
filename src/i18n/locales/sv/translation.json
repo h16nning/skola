@@ -1,4 +1,11 @@
 {
+  "card": {
+    "menu": {
+      "debug": "Debug",
+      "edit": "Redigera",
+      "move": "Flytta"
+    }
+  },
   "cards": {
     "editor": {
       "double_sided": {
