@@ -10,6 +10,7 @@ import {
   toPreviewString,
   updateCard,
 } from "../card";
+import { db } from "../db";
 import { Deck } from "../deck";
 import {
   createSharedValue,
@@ -18,7 +19,6 @@ import {
   setSharedValue,
   useSharedValue,
 } from "../sharedvalue";
-import { db } from "../db";
 
 export type DoubleSidedContent = {
   frontReferenceId: string;
@@ -68,7 +68,7 @@ export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
     return <FrontComponent />;
   },
 
-  displayAnswer(card: Card<CardType.DoubleSided>) {
+  displayAnswer(card: Card<CardType.DoubleSided>, place: "learn" | "notebook") {
     function BackComponent() {
       const back = useSharedValue(card.content.backReferenceId);
       return (
@@ -78,35 +78,9 @@ export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
       );
     }
     return (
-      <Stack gap="xl">
+      <Stack gap={place === "notebook" ? "sm" : "lg"} w="100%">
         {DoubleSidedCardUtils.displayQuestion(card)}
-        <Divider className={common.lightBorder} />
-        <BackComponent />
-      </Stack>
-    );
-  },
-
-  displayInNotebook(card: Card<CardType.DoubleSided>) {
-    function FrontComponent() {
-      const front = useSharedValue(card.content.frontReferenceId);
-      return (
-        <Title
-          order={3}
-          dangerouslySetInnerHTML={{ __html: front?.value ?? "&#8203;" }}
-        ></Title>
-      );
-    }
-    function BackComponent() {
-      const back = useSharedValue(card.content.backReferenceId);
-      return (
-        <span
-          dangerouslySetInnerHTML={{ __html: back?.value ?? "&#8203;" }}
-        ></span>
-      );
-    }
-    return (
-      <Stack gap="sm">
-        <FrontComponent />
+        <Divider className={common.lightBorderColor} />
         <BackComponent />
       </Stack>
     );

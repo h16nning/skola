@@ -38,6 +38,7 @@ export default function NotebookView() {
   const [deck] = useDeckFromUrl();
 
   const [excludeSubDecks, setExcludeSubDecks] = useState(false);
+  const [showAnswer, setShowAnswer] = useState(false);
 
   const [cards] = useCardsOf(deck, excludeSubDecks);
 
@@ -69,6 +70,8 @@ export default function NotebookView() {
         <NotebookMenu
           excludeSubDecks={excludeSubDecks}
           setExcludeSubDecks={setExcludeSubDecks}
+          showAnswer={showAnswer}
+          setShowAnswer={setShowAnswer}
         />
       </Group>
       {useCustomSort ? (
@@ -90,6 +93,7 @@ export default function NotebookView() {
                     card={card}
                     index={index}
                     useCustomSort={true}
+                    showAnswer={showAnswer}
                   />
                 ))}
                 {provided.placeholder}
@@ -105,6 +109,7 @@ export default function NotebookView() {
               card={card}
               index={index}
               useCustomSort={false}
+              showAnswer={showAnswer}
             />
           ))}
         </Stack>
@@ -210,9 +215,13 @@ function SortComboBox({
 function NotebookMenu({
   excludeSubDecks,
   setExcludeSubDecks,
+  showAnswer,
+  setShowAnswer,
 }: {
   excludeSubDecks: boolean;
   setExcludeSubDecks: (value: boolean) => void;
+  showAnswer: boolean;
+  setShowAnswer: (value: boolean) => void;
 }) {
   return (
     <Menu closeOnItemClick={false}>
@@ -237,8 +246,13 @@ function NotebookMenu({
 
         <Menu.Item
           leftSection={<IconEye />}
-          rightSection={<Switch checked={false} onClick={() => {}} />}
-          onClick={() => {}}
+          rightSection={
+            <Switch
+              checked={showAnswer}
+              onClick={() => setShowAnswer(!showAnswer)}
+            />
+          }
+          onClick={() => setShowAnswer(!showAnswer)}
         >
           Show Answer
         </Menu.Item>
