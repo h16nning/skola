@@ -19,19 +19,6 @@
     </head>
     <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>
-        <script>if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-                    // Registration was successful
-                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }, function(err) {
-                    // registration failed :(
-                    console.log('ServiceWorker registration failed: ', err);
-                }).catch(function(err) {
-                    console.log(err);
-                });
-            });
-        }</script>
         <div id="root"></div>
         <script type="module" src="/src/index.tsx"></script>
     </body>

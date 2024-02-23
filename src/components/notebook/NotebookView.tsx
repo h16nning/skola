@@ -1,7 +1,6 @@
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import {
   Box,
-  Button,
   Checkbox,
   Combobox,
   Divider,
@@ -15,13 +14,10 @@ import { useListState } from "@mantine/hooks";
 import {
   IconCalendar,
   IconMenuOrder,
-  IconPlus,
   IconTextCaption,
   TablerIconsProps,
 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import { CardSortFunction, CardSorts } from "../../logic/CardSorting";
 import { Card, CardType, useCardsOf } from "../../logic/card";
 import { useDeckFromUrl } from "../../logic/deck";
@@ -37,8 +33,6 @@ async function sortCards(
 }
 
 export default function NotebookView() {
-  const navigate = useNavigate();
-  const [t] = useTranslation();
   const [deck] = useDeckFromUrl();
 
   const [excludeSubDecks, setExcludeSubDecks] = useState(false);
@@ -75,13 +69,6 @@ export default function NotebookView() {
           excludeSubDecks={excludeSubDecks}
           setExcludeSubDecks={setExcludeSubDecks}
         />
-        <Button
-          leftSection={<IconPlus />}
-          variant="default"
-          onClick={() => navigate("/new/" + deck?.id)}
-        >
-          {t("deck.add-cards")}
-        </Button>
       </Group>
       {useCustomSort ? (
         <DragDropContext

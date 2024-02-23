@@ -9,6 +9,7 @@
   },
   "deck": {
     "add-cards": "Add Cards",
+    "add-cards-tooltip": "Add Cards to this Deck",
     "learning-cards-label": "Learning",
     "learning-cards-label_one": "1 Learning",
     "learning-cards-label_other": "{{ count }} Learning",
