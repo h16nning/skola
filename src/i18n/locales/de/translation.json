@@ -1,5 +1,9 @@
 {
   "card": {
+    "delete-modal": {
+      "description": "Du bist dabei, diese Karte zu löschen. \nDas kann nicht rückgängig gemacht werden. \nMöchtest du fortfahren?",
+      "title": "Karte löschen"
+    },
     "menu": {
       "debug": "Debug",
       "delete": "Löschen",

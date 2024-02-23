@@ -1,5 +1,9 @@
 {
   "card": {
+    "delete-modal": {
+      "description": "You are about to delete this card. This cannot be undone. Do you wish to continue?",
+      "title": "Delete Card"
+    },
     "menu": {
       "debug": "Debug",
       "delete": "Delete",

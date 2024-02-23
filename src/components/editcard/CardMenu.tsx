@@ -1,4 +1,4 @@
-import { ActionIcon, Menu } from "@mantine/core";
+import { ActionIcon, Group, Kbd, Menu } from "@mantine/core";
 import {
   IconAdjustmentsHorizontal,
   IconArrowsExchange,
@@ -8,10 +8,11 @@ import {
   IconEdit,
   IconTrash,
 } from "@tabler/icons-react";
+import { t } from "i18next";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUtils } from "../../logic/CardTypeManager";
-import { useSetting } from "../../logic/Settings";
+import { useSetting, useShowShortcutHints } from "../../logic/Settings";
 import { Card, CardType } from "../../logic/card";
 import DebugCardModal from "../DebugCardModal/DebugCardModal";
 import DangerousConfirmModal from "../custom/DangerousConfirmModal";
@@ -21,7 +22,7 @@ import {
 } from "../custom/Notification/Notification";
 import CardStatisticsModal from "../statistics/CardStatisticsModal";
 import MoveCardModal from "./MoveCardModal";
-import { t } from "i18next";
+import { useHotkeys } from "@mantine/hooks";
 
 interface CardMenuProps {
   card: Card<CardType> | undefined;
@@ -55,6 +56,16 @@ function CardMenu({ card, onDelete, withEdit = true }: CardMenuProps) {
       console.log(error);
     }
   }
+  const showShortcutHints = useShowShortcutHints();
+  useHotkeys([
+    ["e", () => navigate(`/cards/${card?.deck}/${card?.id}`)],
+    ["m", () => setMoveModalOpened(true)],
+    ["s", () => setStatisticsModalOpened(true)],
+    ["o", () => {}],
+    ["shift+d", () => setDebugModalOpened(true)],
+    ["Backspace", () => setDeleteModalOpened(true)],
+  ]);
+
   if (!card) return null;
   return (
     <>
@@ -68,6 +79,7 @@ function CardMenu({ card, onDelete, withEdit = true }: CardMenuProps) {
           {withEdit && (
             <Menu.Item
               leftSection={<IconEdit size={16} />}
+              rightSection={showShortcutHints && <Kbd>e</Kbd>}
               onClick={() => navigate(`/cards/${card.deck}/${card.id}`)}
             >
               {t("card.menu.edit")}
@@ -75,18 +87,21 @@ function CardMenu({ card, onDelete, withEdit = true }: CardMenuProps) {
           )}
           <Menu.Item
             leftSection={<IconArrowsExchange size={16} />}
+            rightSection={showShortcutHints && <Kbd>m</Kbd>}
             onClick={() => setMoveModalOpened(true)}
           >
             {t("card.menu.move")}
           </Menu.Item>
           <Menu.Item
             leftSection={<IconChartBar size={16} />}
+            rightSection={showShortcutHints && <Kbd>s</Kbd>}
             onClick={() => setStatisticsModalOpened(true)}
           >
             {t("card.menu.statistics")}
           </Menu.Item>
           <Menu.Item
             leftSection={<IconAdjustmentsHorizontal size={16} />}
+            rightSection={showShortcutHints && <Kbd>o</Kbd>}
             disabled
           >
             {t("card.menu.options")}
@@ -94,6 +109,13 @@ function CardMenu({ card, onDelete, withEdit = true }: CardMenuProps) {
           {developerMode ? (
             <Menu.Item
               leftSection={<IconCode size={16} />}
+              rightSection={
+                showShortcutHints && (
+                  <Group align="center" gap="0.25rem">
+                    <Kbd>shift</Kbd>+<Kbd>d</Kbd>
+                  </Group>
+                )
+              }
               onClick={() => setDebugModalOpened(true)}
             >
               {t("card.menu.debug")}
@@ -102,6 +124,7 @@ function CardMenu({ card, onDelete, withEdit = true }: CardMenuProps) {
           <Menu.Item
             color="red"
             leftSection={<IconTrash size={16} />}
+            rightSection={showShortcutHints && <Kbd>←</Kbd>}
             onClick={() => setDeleteModalOpened(true)}
           >
             {t("card.menu.delete")}
@@ -129,10 +152,8 @@ function CardMenu({ card, onDelete, withEdit = true }: CardMenuProps) {
       <DangerousConfirmModal
         dangerousAction={() => tryDeleteCard()}
         dangerousDependencies={[card]}
-        dangerousTitle={"Delete Card"}
-        dangerousDescription={
-          "You are about to delete this card. This cannot be undone. Do you wish to continue?"
-        }
+        dangerousTitle={t("card.delete-modal.title")}
+        dangerousDescription={t("card.delete-modal.description")}
         opened={deleteModalOpened}
         setOpened={setDeleteModalOpened}
       />
