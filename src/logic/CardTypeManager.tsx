@@ -11,11 +11,9 @@ export interface CardTypeManager<T extends CardType> {
 
   update: (params: any, existingCard: Card<T>) => Card<T>;
 
-  displayInNotebook: (card: Card<T>) => ReactNode;
+  displayQuestion(card: Card<T>, place?: "learn" | "notebook"): ReactNode;
 
-  displayQuestion(card: Card<T>): ReactNode;
-
-  displayAnswer(card: Card<T>): ReactNode;
+  displayAnswer(card: Card<T>, place?: "learn" | "notebook"): ReactNode;
 
   editor(card: Card<CardType> | null, deck: Deck, mode: EditMode): JSX.Element;
 

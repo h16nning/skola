@@ -10,9 +10,15 @@ interface NotebookCardProps {
   index: number;
   card: Card<CardType>;
   useCustomSort: boolean;
+  showAnswer: boolean;
 }
 
-function NotebookCard({ card, index, useCustomSort }: NotebookCardProps) {
+function NotebookCard({
+  card,
+  index,
+  useCustomSort,
+  showAnswer,
+}: NotebookCardProps) {
   useEffect(() => {
     if (useCustomSort) {
       updateCard(card.id, { customOrder: index });
@@ -32,21 +38,28 @@ function NotebookCard({ card, index, useCustomSort }: NotebookCardProps) {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          <InnerCard card={card} />
+          <InnerCard card={card} showAnswer={showAnswer} />
         </div>
       )}
     </Draggable>
   ) : (
-    <InnerCard card={card} />
+    <InnerCard card={card} showAnswer={showAnswer} />
   );
 }
 export default memo(NotebookCard);
 
-function InnerCard({ card }: { card: Card<CardType> }) {
+function InnerCard({
+  card,
+  showAnswer,
+}: { card: Card<CardType>; showAnswer: boolean }) {
   return (
-    <Paper p="xs" className={classes.card}>
-      <Group align="top" justify="space-between">
-        {getUtils(card).displayInNotebook(card)}
+    <Paper p="md" className={classes.card}>
+      <Group align="top" justify="space-between" wrap="nowrap">
+        <Group align="center" w="100%">
+          {showAnswer
+            ? getUtils(card).displayAnswer(card)
+            : getUtils(card).displayQuestion(card)}
+        </Group>
         <CardMenu card={card} />
       </Group>
     </Paper>

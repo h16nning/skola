@@ -54,23 +54,11 @@ export const NormalCardUtils: CardTypeManager<CardType.Normal> = {
     );
   },
 
-  displayAnswer(card: Card<CardType.Normal>) {
+  displayAnswer(card: Card<CardType.Normal>, place: "learn" | "notebook") {
     return (
-      <Stack gap="lg">
+      <Stack gap={place === "notebook" ? "sm" : "lg"} w="100%">
         {NormalCardUtils.displayQuestion(card)}
         <Divider className={common.lightBorderColor} />
-        <div dangerouslySetInnerHTML={{ __html: card.content.back }}></div>
-      </Stack>
-    );
-  },
-
-  displayInNotebook(card: Card<CardType.Normal>) {
-    return (
-      <Stack gap="xs">
-        <Title
-          order={4}
-          dangerouslySetInnerHTML={{ __html: card.content.front }}
-        />
         <div dangerouslySetInnerHTML={{ __html: card.content.back }}></div>
       </Stack>
     );
