@@ -18,6 +18,8 @@ export interface CardTypeManager<T extends CardType> {
   displayAnswer(card: Card<T>): ReactNode;
 
   editor(card: Card<CardType> | null, deck: Deck, mode: EditMode): JSX.Element;
+
+  delete: (card: Card<T>) => void;
 }
 
 export type EditMode = "edit" | "new";

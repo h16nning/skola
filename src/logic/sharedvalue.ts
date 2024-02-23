@@ -40,6 +40,28 @@ export async function registerReferencesToSharedValue(
   }
 }
 
+/**
+ * This function removes the reference to the card from the shared value. If the shared value is not referenced by any other card, it will be deleted.
+ * @param sharedValueId
+ * @param cardId
+ */
+export async function removeReferenceToSharedValue(
+  sharedValueId: string,
+  cardId: string
+) {
+  const sharedValue = await db.sharedvalues.get(sharedValueId);
+  if (sharedValue) {
+    sharedValue.referencedBy = sharedValue.referencedBy.filter(
+      (id) => id !== cardId
+    );
+    if (sharedValue.referencedBy.length === 0) {
+      await db.sharedvalues.delete(sharedValueId);
+    } else {
+      await db.sharedvalues.update(sharedValueId, sharedValue);
+    }
+  }
+}
+
 export async function getSharedValue(id: string) {
   return db.sharedvalues.get(id);
 }

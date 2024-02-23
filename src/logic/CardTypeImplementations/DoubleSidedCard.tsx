@@ -6,6 +6,7 @@ import {
   Card,
   CardType,
   createCardSkeleton,
+  deleteCard,
   toPreviewString,
   updateCard,
 } from "../card";
@@ -13,9 +14,11 @@ import { Deck } from "../deck";
 import {
   createSharedValue,
   registerReferencesToSharedValue,
+  removeReferenceToSharedValue,
   setSharedValue,
   useSharedValue,
 } from "../sharedvalue";
+import { db } from "../db";
 
 export type DoubleSidedContent = {
   frontReferenceId: string;
@@ -111,6 +114,16 @@ export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
 
   editor(card: Card<CardType.DoubleSided> | null, deck: Deck, mode: EditMode) {
     return <DoubleSidedCardEditor card={card} deck={deck} mode={mode} />;
+  },
+
+  async delete(card: Card<CardType.DoubleSided>) {
+    db.transaction("rw", db.decks, db.cards, db.sharedvalues, async () => {
+      await Promise.all([
+        removeReferenceToSharedValue(card.content.frontReferenceId, card.id),
+        removeReferenceToSharedValue(card.content.backReferenceId, card.id),
+      ]);
+      await deleteCard(card);
+    });
   },
 };
 

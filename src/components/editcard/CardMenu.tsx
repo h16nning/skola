@@ -9,8 +9,10 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getUtils } from "../../logic/CardTypeManager";
 import { useSetting } from "../../logic/Settings";
-import { Card, CardType, deleteCard } from "../../logic/card";
+import { Card, CardType } from "../../logic/card";
 import DebugCardModal from "../DebugCardModal/DebugCardModal";
 import DangerousConfirmModal from "../custom/DangerousConfirmModal";
 import {
@@ -19,7 +21,6 @@ import {
 } from "../custom/Notification/Notification";
 import CardStatisticsModal from "../statistics/CardStatisticsModal";
 import MoveCardModal from "./MoveCardModal";
-import { useNavigate } from "react-router-dom";
 
 interface CardMenuProps {
   card: Card<CardType> | undefined;
@@ -42,7 +43,7 @@ function CardMenu({ card, onDelete, withEdit = true }: CardMenuProps) {
       return;
     }
     try {
-      await deleteCard(card);
+      await getUtils(card).delete(card);
       if (onDelete) {
         onDelete();
       }

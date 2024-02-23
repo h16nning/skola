@@ -5,17 +5,21 @@ import {
   Card,
   CardType,
   createCardSkeleton,
+  deleteCard,
   toPreviewString,
   updateCard,
 } from "../card";
 import { Deck } from "../deck";
 import {
   createSharedValue,
+  getSharedValue,
   registerReferencesToSharedValue,
+  removeReferenceToSharedValue,
   setSharedValue,
   useSharedValue,
 } from "../sharedvalue";
 import classes from "./ClozeCard.module.css";
+import { db } from "../db";
 
 export type ClozeContent = {
   occlusionNumber: number;
@@ -66,6 +70,28 @@ export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
   },
   editor(card: Card<CardType.Cloze> | null, deck: Deck, mode: EditMode) {
     return <ClozeCardEditor card={card} deck={deck} mode={mode} />;
+  },
+
+  async delete(card: Card<CardType.Cloze>) {
+    db.transaction("rw", db.decks, db.cards, db.sharedvalues, async () => {
+      const sharedValueText = await getSharedValue(
+        card.content.textReferenceId
+      ).then((value) => value?.value);
+      if (sharedValueText !== undefined) {
+        await setSharedValue(
+          card.content.textReferenceId,
+          sharedValueText.replace(
+            new RegExp(
+              `{{c${card.content.occlusionNumber}::((?!{{|}}).)*}}`,
+              "g"
+            ),
+            (match) => match.slice(6, -2)
+          )
+        );
+      }
+      await removeReferenceToSharedValue(card.content.textReferenceId, card.id);
+      await deleteCard(card);
+    });
   },
 };
 
