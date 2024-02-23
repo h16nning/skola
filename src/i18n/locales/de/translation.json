@@ -9,6 +9,7 @@
   },
   "deck": {
     "add-cards": "Karten hinzufügen",
+    "add-cards-tooltip": "Füge diesem Stapel Karten hinzu",
     "learning-cards-label": "Lernen",
     "learning-cards-label_one": "1 Lernen",
     "learning-cards-label_other": "{{count}} Lernen",

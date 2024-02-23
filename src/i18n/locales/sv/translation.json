@@ -9,6 +9,7 @@
   },
   "deck": {
     "add-cards": "Lägg till kort",
+    "add-cards-tooltip": "Lägg till kort till denna kortlek",
     "learning-cards-label": "Plugga",
     "learning-cards-label_one": "",
     "learning-cards-label_other": "",

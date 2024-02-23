@@ -27,6 +27,7 @@ import navbar from "./Navbar.module.css";
 import popover from "./Popover.module.css";
 import select from "./Select.module.css";
 import tabs from "./Tabs.module.css";
+import tooltip from "./Tooltip.module.css";
 
 const headingStyle = {
   fontFamily: "Noto Serif Lao",
@@ -165,11 +166,11 @@ export const presetTheme = createTheme({
       },
     }),
     Tooltip: Tooltip.extend({
-      styles: () => ({
-        tooltip: {
-          userSelect: "none",
-        },
-      }),
+      classNames: tooltip,
+      defaultProps: {
+        openDelay: 500,
+        closeDelay: 0,
+      },
     }),
     InputWrapper: {
       styles: () => ({
