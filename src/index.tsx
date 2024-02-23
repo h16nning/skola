@@ -94,6 +94,12 @@ root.render(
   </React.StrictMode>
 );
 
+navigator.serviceWorker.getRegistrations().then((registrations) => {
+  for (const registration of registrations) {
+    registration.unregister();
+  }
+});
+
 async function persist() {
   return (
     (await navigator.storage) &&

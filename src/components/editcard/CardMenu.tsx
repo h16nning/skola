@@ -21,6 +21,7 @@ import {
 } from "../custom/Notification/Notification";
 import CardStatisticsModal from "../statistics/CardStatisticsModal";
 import MoveCardModal from "./MoveCardModal";
+import { t } from "i18next";
 
 interface CardMenuProps {
   card: Card<CardType> | undefined;
@@ -64,46 +65,46 @@ function CardMenu({ card, onDelete, withEdit = true }: CardMenuProps) {
           </ActionIcon>
         </Menu.Target>
         <Menu.Dropdown>
-          {developerMode ? (
-            <Menu.Item
-              leftSection={<IconCode size={16} />}
-              onClick={() => setDebugModalOpened(true)}
-            >
-              Debug
-            </Menu.Item>
-          ) : null}
-          <Menu.Item
-            leftSection={<IconAdjustmentsHorizontal size={16} />}
-            disabled
-          >
-            Options
-          </Menu.Item>
-          <Menu.Item
-            leftSection={<IconChartBar size={16} />}
-            onClick={() => setStatisticsModalOpened(true)}
-          >
-            Statistics
-          </Menu.Item>
-          <Menu.Item
-            leftSection={<IconArrowsExchange size={16} />}
-            onClick={() => setMoveModalOpened(true)}
-          >
-            Move Card
-          </Menu.Item>
           {withEdit && (
             <Menu.Item
               leftSection={<IconEdit size={16} />}
               onClick={() => navigate(`/cards/${card.deck}/${card.id}`)}
             >
-              Edit Card
+              {t("card.menu.edit")}
             </Menu.Item>
           )}
+          <Menu.Item
+            leftSection={<IconArrowsExchange size={16} />}
+            onClick={() => setMoveModalOpened(true)}
+          >
+            {t("card.menu.move")}
+          </Menu.Item>
+          <Menu.Item
+            leftSection={<IconChartBar size={16} />}
+            onClick={() => setStatisticsModalOpened(true)}
+          >
+            {t("card.menu.statistics")}
+          </Menu.Item>
+          <Menu.Item
+            leftSection={<IconAdjustmentsHorizontal size={16} />}
+            disabled
+          >
+            {t("card.menu.options")}
+          </Menu.Item>
+          {developerMode ? (
+            <Menu.Item
+              leftSection={<IconCode size={16} />}
+              onClick={() => setDebugModalOpened(true)}
+            >
+              {t("card.menu.debug")}
+            </Menu.Item>
+          ) : null}
           <Menu.Item
             color="red"
             leftSection={<IconTrash size={16} />}
             onClick={() => setDeleteModalOpened(true)}
           >
-            Delete
+            {t("card.menu.delete")}
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>
