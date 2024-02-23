@@ -1,18 +1,20 @@
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import {
-  Box,
-  Checkbox,
+  ActionIcon,
   Combobox,
-  Divider,
   Group,
   InputBase,
+  Menu,
   Stack,
+  Switch,
   Text,
   useCombobox,
 } from "@mantine/core";
 import { useListState } from "@mantine/hooks";
 import {
   IconCalendar,
+  IconDots,
+  IconEye,
   IconMenuOrder,
   IconTextCaption,
   TablerIconsProps,
@@ -63,9 +65,8 @@ export default function NotebookView() {
   return (
     <Stack gap="sm">
       <Group gap="xs" justify="flex-end">
-        <SortComboBox
-          sortOption={sortOption}
-          setSortOption={setSortOption}
+        <SortComboBox sortOption={sortOption} setSortOption={setSortOption} />
+        <NotebookMenu
           excludeSubDecks={excludeSubDecks}
           setExcludeSubDecks={setExcludeSubDecks}
         />
@@ -143,13 +144,9 @@ const sortOptions: SortOption[] = [
 function SortComboBox({
   sortOption,
   setSortOption,
-  excludeSubDecks,
-  setExcludeSubDecks,
 }: {
   sortOption: SortOption;
   setSortOption: Function;
-  excludeSubDecks: boolean;
-  setExcludeSubDecks: (value: boolean) => void;
 }) {
   const combobox = useCombobox({});
 
@@ -204,18 +201,48 @@ function SortComboBox({
       </Combobox.Target>
 
       <Combobox.Dropdown>
-        {
-          <Box p="xs" pt=".375rem">
-            <Checkbox
-              label="Exclude subdecks"
-              checked={excludeSubDecks}
-              onChange={(e) => setExcludeSubDecks(e.currentTarget.checked)}
-            />
-          </Box>
-        }
-        <Divider mb="xs" />
         <Combobox.Options>{options}</Combobox.Options>
       </Combobox.Dropdown>
     </Combobox>
+  );
+}
+
+function NotebookMenu({
+  excludeSubDecks,
+  setExcludeSubDecks,
+}: {
+  excludeSubDecks: boolean;
+  setExcludeSubDecks: (value: boolean) => void;
+}) {
+  return (
+    <Menu closeOnItemClick={false}>
+      <Menu.Target>
+        <ActionIcon variant="default" aria-label="Notebook menu">
+          <IconDots />
+        </ActionIcon>
+      </Menu.Target>
+      <Menu.Dropdown>
+        <Menu.Item
+          leftSection={<IconTextCaption />}
+          rightSection={
+            <Switch
+              checked={excludeSubDecks}
+              onClick={() => setExcludeSubDecks(!excludeSubDecks)}
+            />
+          }
+          onClick={() => setExcludeSubDecks(!excludeSubDecks)}
+        >
+          Exclude subdecks
+        </Menu.Item>
+
+        <Menu.Item
+          leftSection={<IconEye />}
+          rightSection={<Switch checked={false} onClick={() => {}} />}
+          onClick={() => {}}
+        >
+          Show Answer
+        </Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
   );
 }

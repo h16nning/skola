@@ -47,12 +47,14 @@ const useSearchCard = (filter: string) => {
 export default function SpotlightCard({
   minimalMode,
 }: { minimalMode: boolean }) {
-  const [filter, setFilter] = useDebouncedState("", 250);
+  const navigate = useNavigate();
   const os = useOs();
   const showShortcutHints = useShowShortcutHints();
-  const navigate = useNavigate();
-  const filteredCards = useSearchCard(filter);
+
+  const [filter, setFilter] = useDebouncedState("", 250);
   const [filteredDecks] = useDecks();
+  const filteredCards = useSearchCard(filter);
+
   const possibleActions = [
     {
       group: "Decks",
