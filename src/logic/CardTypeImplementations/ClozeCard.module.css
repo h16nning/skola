@@ -5,11 +5,15 @@
     background-color: var(--mantine-primary-color-light);
     border-bottom: solid 2px var(--mantine-primary-color-filled);
 
-    :global(.cloze-content) {
-    }
+    
 
     :global(.cloze-content.occluded) {
         visibility: hidden;
     }
 
+}
+
+.clozeCard :global(.cloze-field.inactive) {
+    background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
+    border-bottom: solid 2px light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-3));
 }

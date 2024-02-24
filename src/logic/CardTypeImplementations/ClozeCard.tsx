@@ -104,10 +104,15 @@ function ClozeCardComponent({
     (match) =>
       `<span class="cloze-field"><span class="cloze-content ${
         occluded && "occluded"
-      }">${match}</span></span>`
+      }">${match.slice(6, -2)}</span></span>`
   );
-  finalText = finalText.replace(/\{\{c\d::((?!\{\{|}}).)*\}\}/g, (match) =>
-    match.slice(6, -2)
+  finalText = finalText.replace(
+    /\{\{c\d::((?!\{\{|}}).)*\}\}/g,
+    (match) =>
+      `<span class="cloze-field inactive"><span class="cloze-content">${match.slice(
+        6,
+        -2
+      )}</span></span>`
   );
   return (
     <Text
