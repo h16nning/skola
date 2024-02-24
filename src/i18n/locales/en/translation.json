@@ -93,6 +93,13 @@
   "manage-cards": {
     "title": "Manage Cards"
   },
+  "notebook": {
+    "options": {
+      "exclude-subdecks": "Exclude subdecks",
+      "menu": "Notebook menu",
+      "show-answer": "Show Answer"
+    }
+  },
   "rename-deck": {
     "new-name": "New Name",
     "rename-button": "Rename",

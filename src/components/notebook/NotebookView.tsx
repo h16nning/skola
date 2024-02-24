@@ -24,6 +24,7 @@ import { CardSortFunction, CardSorts } from "../../logic/CardSorting";
 import { Card, CardType, useCardsOf } from "../../logic/card";
 import { useDeckFromUrl } from "../../logic/deck";
 import NotebookCard from "./NotebookCard";
+import { useTranslation } from "react-i18next";
 
 async function sortCards(
   cards: Card<CardType>[],
@@ -223,10 +224,11 @@ function NotebookMenu({
   showAnswer: boolean;
   setShowAnswer: (value: boolean) => void;
 }) {
+  const [t] = useTranslation();
   return (
     <Menu closeOnItemClick={false}>
       <Menu.Target>
-        <ActionIcon variant="default" aria-label="Notebook menu">
+        <ActionIcon variant="default" aria-label={t("notebook.options.menu")}>
           <IconDots />
         </ActionIcon>
       </Menu.Target>
@@ -246,7 +248,7 @@ function NotebookMenu({
             setExcludeSubDecks(!excludeSubDecks);
           }}
         >
-          Exclude subdecks
+          {t("notebook.options.exclude-subdecks")}
         </Menu.Item>
 
         <Menu.Item
@@ -264,7 +266,7 @@ function NotebookMenu({
             setShowAnswer(!showAnswer);
           }}
         >
-          Show Answer
+          {t("notebook.options.show-answer")}
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>
