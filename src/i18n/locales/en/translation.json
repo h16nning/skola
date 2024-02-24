@@ -97,7 +97,7 @@
     "options": {
       "exclude-subdecks": "Exclude subdecks",
       "menu": "Notebook menu",
-      "show-answer": "Show Answer"
+      "show-answer": "Show Answers"
     }
   },
   "rename-deck": {

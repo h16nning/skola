@@ -93,6 +93,12 @@
   "manage-cards": {
     "title": "Karten verwalten"
   },
+  "notebook": {
+    "options": {
+      "exclude-subdecks": "Unterstapel ausschließen",
+      "show-answer": "Antworten anzeigen"
+    }
+  },
   "rename-deck": {
     "new-name": "Neuer Name",
     "rename-button": "Umbenennen",
