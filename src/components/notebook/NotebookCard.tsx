@@ -48,20 +48,19 @@ function NotebookCard({
 }
 export default memo(NotebookCard);
 
-function InnerCard({
-  card,
-  showAnswer,
-}: { card: Card<CardType>; showAnswer: boolean }) {
-  return (
-    <Paper p="md" className={classes.card}>
-      <Group align="top" justify="space-between" wrap="nowrap">
-        <Group align="center" w="100%">
-          {showAnswer
-            ? getUtils(card).displayAnswer(card)
-            : getUtils(card).displayQuestion(card)}
+const InnerCard = memo(
+  ({ card, showAnswer }: { card: Card<CardType>; showAnswer: boolean }) => {
+    return (
+      <Paper p="md" className={classes.card}>
+        <Group align="top" justify="space-between" wrap="nowrap">
+          <Group align="center" w="100%">
+            {showAnswer
+              ? getUtils(card).displayAnswer(card)
+              : getUtils(card).displayQuestion(card)}
+          </Group>
+          <CardMenu card={card} />
         </Group>
-        <CardMenu card={card} />
-      </Group>
-    </Paper>
-  );
-}
+      </Paper>
+    );
+  }
+);
