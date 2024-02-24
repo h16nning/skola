@@ -94,6 +94,7 @@
     "title": "Karten verwalten"
   },
   "notebook": {
+    "individual-show-answer-toggle-tooltip": "Klicke, um die Antwort anzuzeigen",
     "options": {
       "exclude-subdecks": "Unterstapel ausschließen",
       "show-answer": "Antworten anzeigen"
