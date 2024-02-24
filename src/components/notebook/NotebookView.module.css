@@ -13,6 +13,7 @@
 .cardWrapper {
     margin-bottom: var(--mantine-spacing-xs);
     background: transparent;
+    border-radius: var(--mantine-radius-sm);
 
     &:hover {
         box-shadow: var(--mantine-shadow-xs);
