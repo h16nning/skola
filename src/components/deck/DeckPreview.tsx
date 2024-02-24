@@ -29,21 +29,21 @@ export default function DeckPreview({ deck, i }: DeckPreviewProps) {
           <Text>{deck.name}</Text>
           <Group gap="xs" wrap="nowrap">
             {states.review > 0 ? (
-              <Badge variant="dot" color="blue">
+              <Badge variant="light" color="blue">
                 {t("deck.review-cards-label", { count: states.review })}
               </Badge>
             ) : (
               <></>
             )}
             {states.new > 0 ? (
-              <Badge variant="dot" color="grape">
+              <Badge variant="light" color="grape">
                 {t("deck.new-cards-label", { count: states.new })}
               </Badge>
             ) : (
               <></>
             )}
             {states.learning > 0 ? (
-              <Badge variant="dot" color="orange">
+              <Badge variant="light" color="orange">
                 {t("deck.learning-cards-label", {
                   count: states.learning,
                 })}
