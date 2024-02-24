@@ -94,6 +94,7 @@
     "title": "Manage Cards"
   },
   "notebook": {
+    "individual-show-answer-toggle-tooltip": "Click to Show Answer",
     "options": {
       "exclude-subdecks": "Exclude subdecks",
       "menu": "Notebook menu",

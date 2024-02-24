@@ -1,10 +1,11 @@
 import classes from "./NotebookView.module.css";
-import { Group, Paper } from "@mantine/core";
+import { Group, Paper, Tooltip } from "@mantine/core";
 import { Card, CardType, updateCard } from "../../logic/card";
 import { getUtils } from "../../logic/CardTypeManager";
 import CardMenu from "../editcard/CardMenu";
 import { Draggable } from "@hello-pangea/dnd";
-import { memo, useEffect } from "react";
+import { memo, useEffect, useState } from "react";
+import { t } from "i18next";
 
 interface NotebookCardProps {
   index: number;
@@ -50,17 +51,30 @@ export default memo(NotebookCard);
 
 const InnerCard = memo(
   ({ card, showAnswer }: { card: Card<CardType>; showAnswer: boolean }) => {
+    const [individualShowAnswer, setIndividualShowAnswer] = useState(false);
+
     return (
-      <Paper p="md" className={classes.card}>
-        <Group align="top" justify="space-between" wrap="nowrap">
-          <Group align="center" w="100%">
-            {showAnswer
-              ? getUtils(card).displayAnswer(card)
-              : getUtils(card).displayQuestion(card)}
+      <Tooltip
+        label={t("notebook.individual-show-answer-toggle-tooltip")}
+        openDelay={1000}
+        offset={-10}
+        disabled={showAnswer}
+      >
+        <Paper
+          p="md"
+          className={classes.card}
+          onClick={() => setIndividualShowAnswer(!individualShowAnswer)}
+        >
+          <Group align="top" justify="space-between" wrap="nowrap">
+            <Group align="center" w="100%">
+              {showAnswer || individualShowAnswer
+                ? getUtils(card).displayAnswer(card)
+                : getUtils(card).displayQuestion(card)}
+            </Group>
+            <CardMenu card={card} />
           </Group>
-          <CardMenu card={card} />
-        </Group>
-      </Paper>
+        </Paper>
+      </Tooltip>
     );
   }
 );
