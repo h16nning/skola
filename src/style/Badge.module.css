@@ -1,7 +1,13 @@
 .root {
-  background: transparent;
+  border: solid 0.0625rem lighten(var(--badge-color), 70%);
+  @media (prefers-color-scheme: dark) {
+    border-color: darken(var(--badge-color), 60%);
+  }
 }
-
 .label {
   text-transform: none;
+  color: darken(var(--badge-color), 30%);
+  @media (prefers-color-scheme: dark) {
+    color: lighten(var(--badge-color), 30%);
+  }
 }
