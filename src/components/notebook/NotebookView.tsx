@@ -236,10 +236,15 @@ function NotebookMenu({
           rightSection={
             <Switch
               checked={excludeSubDecks}
-              onClick={() => setExcludeSubDecks(!excludeSubDecks)}
+              onChange={(event) => {
+                setExcludeSubDecks(event.currentTarget.checked);
+              }}
             />
           }
-          onClick={() => setExcludeSubDecks(!excludeSubDecks)}
+          onClick={(event) => {
+            event.preventDefault();
+            setExcludeSubDecks(!excludeSubDecks);
+          }}
         >
           Exclude subdecks
         </Menu.Item>
@@ -249,10 +254,15 @@ function NotebookMenu({
           rightSection={
             <Switch
               checked={showAnswer}
-              onClick={() => setShowAnswer(!showAnswer)}
+              onChange={(event) => {
+                setShowAnswer(event.currentTarget.checked);
+              }}
             />
           }
-          onClick={() => setShowAnswer(!showAnswer)}
+          onClick={(event) => {
+            event.preventDefault();
+            setShowAnswer(!showAnswer);
+          }}
         >
           Show Answer
         </Menu.Item>
