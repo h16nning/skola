@@ -5,24 +5,38 @@ import { IconCards, IconSearch, IconSquare } from "@tabler/icons-react";
 import cx from "clsx";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardType, useCardsWith } from "../../logic/card";
-import selectCards from "../../logic/card_filter";
-import { determineSuperDecks, getDeck, useDecks } from "../../logic/deck";
-import classes from "./Spotlight.module.css";
+import { NoteSorts } from "../../logic/NoteSorting";
 import { useShowShortcutHints } from "../../logic/Settings";
-interface CardWithPreview extends Card<CardType> {
+import { getUtils } from "../../logic/TypeManager";
+import { CardType } from "../../logic/card";
+import { determineSuperDecks, getDeck, useDecks } from "../../logic/deck";
+import { Note, useNotesWith } from "../../logic/note";
+import classes from "./Spotlight.module.css";
+interface NoteWithPreview extends Note<CardType> {
   breadcrumb: string[];
 }
 
-const useSearchCard = (filter: string) => {
-  const [filteredCards, setFilteredCards] = useState<CardWithPreview[]>([]);
-  const [cards] = useCardsWith(
-    (cards) => selectCards(cards, undefined, filter, ["sort_field", true]),
-    [location, filter]
+const useSearchNote = (filter: string) => {
+  const [filteredNotes, setFilteredNotes] = useState<NoteWithPreview[]>([]);
+  const [notes] = useNotesWith(
+    (n) =>
+      n
+        .toArray()
+        .then((m) =>
+          m
+            .filter((note) =>
+              getUtils(note)
+                .getSortFieldFromNote(note)
+                .toLowerCase()
+                .includes(filter.toLowerCase())
+            )
+            .sort(NoteSorts.bySortField(1))
+        ),
+    [filter]
   );
   useEffect(() => {
-    async function filterCards(cards: Card<CardType>[]) {
-      const decksPromises = cards?.map(async (card) => {
+    async function filterNotes(notes: Note<CardType>[]) {
+      const decksPromises = notes?.map(async (card) => {
         const deck = await getDeck(card.deck);
         const superDecks = await determineSuperDecks(deck);
         return [
@@ -31,17 +45,17 @@ const useSearchCard = (filter: string) => {
         ];
       });
       const decks = await Promise.all(decksPromises);
-      setFilteredCards(
-        cards.map((card, i) => ({
-          ...card,
+      setFilteredNotes(
+        notes.map((note, i) => ({
+          ...note,
           breadcrumb: decks[i],
         }))
       );
     }
-    filterCards(cards || []);
-  }, [cards]);
+    filterNotes(notes || []);
+  }, [notes]);
 
-  return filteredCards;
+  return filteredNotes;
 };
 
 export default function SpotlightCard({
@@ -53,7 +67,7 @@ export default function SpotlightCard({
 
   const [filter, setFilter] = useDebouncedState("", 250);
   const [filteredDecks] = useDecks();
-  const filteredCards = useSearchCard(filter);
+  const filteredNotes = useSearchNote(filter);
 
   const possibleActions = [
     {
@@ -76,14 +90,14 @@ export default function SpotlightCard({
       ],
     },
     {
-      group: "Cards",
+      group: "Notes",
       actions: [
-        ...filteredCards.map((card) => {
+        ...filteredNotes.map((note) => {
           return {
-            id: card.id,
-            label: card.preview,
-            description: card.breadcrumb.join(" > "),
-            onClick: () => navigate(`/deck/${card.deck}`),
+            id: note.id,
+            label: getUtils(note).getSortFieldFromNote(note),
+            description: note.breadcrumb.join(" > "),
+            onClick: () => navigate(`/deck/${note.deck}`),
             leftSection: (
               <IconSquare
                 style={{ width: rem(24), height: rem(24) }}
