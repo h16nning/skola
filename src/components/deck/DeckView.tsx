@@ -1,4 +1,13 @@
-import { Button, Group, Kbd, Stack, Tabs, Title, Tooltip } from "@mantine/core";
+import {
+  Badge,
+  Button,
+  Group,
+  Kbd,
+  Stack,
+  Tabs,
+  Title,
+  Tooltip,
+} from "@mantine/core";
 import { useDocumentTitle, useHotkeys } from "@mantine/hooks";
 import { useState } from "react";
 import { useCardsOf } from "../../logic/card";
@@ -78,8 +87,30 @@ function DeckView() {
 
         <Tabs defaultValue={"notebook"} w="100%" variant="outline">
           <Tabs.List>
-            <Tabs.Tab value="notebook">{t("deck.notebook.title")}</Tabs.Tab>
-            <Tabs.Tab value="subdecks">{t("deck.subdeck.title")}</Tabs.Tab>
+            <Tabs.Tab value="notebook">
+              {t("deck.notebook.title")}
+              <Badge
+                size="xs"
+                circle
+                ml={"sm"}
+                variant="light"
+                color={cards?.length ? undefined : "gray"}
+              >
+                {areCardsReady ? cards?.length : "-"}
+              </Badge>
+            </Tabs.Tab>
+            <Tabs.Tab value="subdecks">
+              {t("deck.subdeck.title")}
+              <Badge
+                size="xs"
+                circle
+                ml={"sm"}
+                variant="light"
+                color={deck?.subDecks.length ? undefined : "gray"}
+              >
+                {deck?.subDecks.length}
+              </Badge>
+            </Tabs.Tab>
           </Tabs.List>
           <Tabs.Panel value="notebook">
             <NotebookView />
