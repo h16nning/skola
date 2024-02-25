@@ -7,7 +7,7 @@ import {
   DoubleSidedCardUtils,
   createDoubleSidedCardPair,
 } from "../../../logic/CardTypeImplementations/DoubleSidedCard";
-import { EditMode } from "../../../logic/CardTypeManager";
+import { EditMode } from "../../../logic/TypeManager";
 import { Card, CardType, newCards } from "../../../logic/card";
 import { Deck } from "../../../logic/deck";
 import {
@@ -78,7 +78,7 @@ async function finish(
     //NEW
     try {
       createDoubleSidedCardPair({
-        deckId: deck.id,
+        deck: deck,
         value1: frontEditor?.getHTML() ?? "",
         value2: backEditor?.getHTML() ?? "",
       }).then((cards) => newCards(cards, deck));

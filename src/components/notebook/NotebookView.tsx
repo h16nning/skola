@@ -20,19 +20,20 @@ import {
   TablerIconsProps,
 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
-import { CardSortFunction, CardSorts } from "../../logic/CardSorting";
-import { Card, CardType, useCardsOf } from "../../logic/card";
-import { useDeckFromUrl } from "../../logic/deck";
-import NotebookCard from "./NotebookCard";
 import { useTranslation } from "react-i18next";
+import { NoteSortFunction, NoteSorts } from "../../logic/NoteSorting";
+import { CardType } from "../../logic/card";
+import { useDeckFromUrl } from "../../logic/deck";
+import { Note, useNotesOf } from "../../logic/note";
+import NotebookCard from "./NotebookCard";
 
-async function sortCards(
-  cards: Card<CardType>[],
-  sortFunction: CardSortFunction,
+async function sortNotes(
+  notes: Note<CardType>[],
+  sortFunction: NoteSortFunction,
   sortOrder: 1 | -1,
-  setSortedCards: (cards: Card<CardType>[]) => void
+  setSortedCards: (cards: Note<CardType>[]) => void
 ) {
-  setSortedCards(cards.sort(sortFunction(sortOrder)));
+  setSortedCards(notes.sort(sortFunction(sortOrder)));
 }
 
 export default function NotebookView() {
@@ -41,28 +42,28 @@ export default function NotebookView() {
   const [excludeSubDecks, setExcludeSubDecks] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
 
-  const [cards] = useCardsOf(deck, excludeSubDecks);
+  const [notes] = useNotesOf(deck, excludeSubDecks);
 
   const [sortOrder] = useState<1 | -1>(1);
-  const [sortedCards, setSortedCards] = useState<Card<CardType>[]>(cards ?? []);
+  const [sortedNotes, setSortedNotes] = useState<Note<CardType>[]>(notes ?? []);
 
   //only for custom sort
   const [useCustomSort, setUseCustomSort] = useState(false);
   const [customOrderTouched, setCustomOrderTouched] = useState(false);
-  const [state, handlers] = useListState(sortedCards ?? []);
+  const [state, handlers] = useListState(sortedNotes ?? []);
 
   useEffect(() => {
     if (useCustomSort && !customOrderTouched) {
-      handlers.setState(sortedCards ?? []);
+      handlers.setState(sortedNotes ?? []);
     }
-  }, [sortedCards]);
+  }, [sortedNotes]);
 
   const [sortOption, setSortOption] = useState<SortOption>(sortOptions[0]);
 
   useEffect(() => {
     setUseCustomSort(sortOption.value === "custom_order");
-    sortCards(cards ?? [], sortOption.sortFunction, sortOrder, setSortedCards);
-  }, [cards, sortOption, sortOrder]);
+    sortNotes(notes ?? [], sortOption.sortFunction, sortOrder, setSortedNotes);
+  }, [notes, sortOption, sortOrder]);
 
   return (
     <Stack gap="sm">
@@ -91,7 +92,7 @@ export default function NotebookView() {
                 {state.map((card, index) => (
                   <NotebookCard
                     key={card.id}
-                    card={card}
+                    note={card}
                     index={index}
                     useCustomSort={true}
                     showAnswer={showAnswer}
@@ -104,10 +105,10 @@ export default function NotebookView() {
         </DragDropContext>
       ) : (
         <Stack gap="xs">
-          {sortedCards.map((card, index) => (
+          {sortedNotes.map((note, index) => (
             <NotebookCard
-              key={card.id}
-              card={card}
+              key={note.id}
+              note={note}
               index={index}
               useCustomSort={false}
               showAnswer={showAnswer}
@@ -123,7 +124,7 @@ interface SortOption {
   value: string;
   icon: React.FC<TablerIconsProps>;
   label: string;
-  sortFunction: CardSortFunction;
+  sortFunction: NoteSortFunction;
 }
 
 const sortOptions: SortOption[] = [
@@ -131,19 +132,19 @@ const sortOptions: SortOption[] = [
     value: "custom_order",
     icon: IconMenuOrder,
     label: "Custom",
-    sortFunction: CardSorts.byCustomOrder,
+    sortFunction: NoteSorts.byCustomOrder,
   },
   {
     value: "sort_field",
     icon: IconTextCaption,
     label: "By Sort Field",
-    sortFunction: CardSorts.bySortField,
+    sortFunction: NoteSorts.bySortField,
   },
   {
     value: "creation_date",
     icon: IconCalendar,
     label: "By Creation Date",
-    sortFunction: CardSorts.byCreationDate,
+    sortFunction: NoteSorts.byCreationDate,
   },
 ];
 

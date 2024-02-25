@@ -1,9 +1,7 @@
 import { Alert, Button, Select, Stack, Text } from "@mantine/core";
 import { IconChevronRight, IconInfoCircle } from "@tabler/icons-react";
 import { useState } from "react";
-import { createNormalCard } from "../../../logic/CardTypeImplementations/NormalCard";
-import { newCard } from "../../../logic/card";
-import { Deck, getDeck, newDeck } from "../../../logic/deck";
+import { Deck } from "../../../logic/deck";
 import FileImport from "./FileImport";
 import ImportButton from "./ImportButton";
 import { ImportFromSourceProps, ImportStatus } from "./ImportModal";
@@ -122,7 +120,7 @@ function ImportOptions({
   extractedData,
   importStatus,
   setImportStatus,
-  deck,
+  //deck,
 }: {
   extractedData: ExtractedData | null;
   importStatus: ImportStatus;
@@ -153,16 +151,7 @@ function ImportOptions({
         onChange={(value) => setBackField(value)}
       ></Select>
       <ImportButton
-        importFunction={async () => {
-          await importFunction(
-            frontField!,
-            backField!,
-            extractedData.name,
-            extractedData.description,
-            extractedData.cards,
-            deck
-          );
-        }}
+        importFunction={async () => console.log("not supported right now")}
         importStatus={importStatus}
         setImportStatus={setImportStatus}
         disabled={!frontField || !backField}
@@ -170,7 +159,7 @@ function ImportOptions({
     </Stack>
   );
 }
-
+/*
 async function importFunction(
   frontField: string,
   backField: string,
@@ -196,4 +185,4 @@ async function importFunction(
     throw new Error("Failed to get the created deck");
   }
   return Promise.all(newCards.map((card) => newCard(card, createdDeck)));
-}
+}*/

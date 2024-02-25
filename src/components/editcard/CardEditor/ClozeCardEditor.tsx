@@ -1,7 +1,7 @@
 import { useHotkeys } from "@mantine/hooks";
 import { RichTextEditor } from "@mantine/tiptap";
 import { IconBracketsContain } from "@tabler/icons-react";
-import { EditMode } from "../../../logic/CardTypeManager";
+import { EditMode } from "../../../logic/TypeManager";
 import { Card, CardType, newCards } from "../../../logic/card";
 import { Deck } from "../../../logic/deck";
 import CardEditor, { useCardEditor } from "./CardEditor";
@@ -158,7 +158,7 @@ async function finish(
     const occlusionNumberSet: number[] = getOcclusionNumberSet(editorContent);
     try {
       createClozeCardSet({
-        deckId: deck.id,
+        deck: deck,
         text: editorContent,
         occlusionNumberSet,
       }).then((cards) => newCards(cards, deck));

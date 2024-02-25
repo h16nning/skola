@@ -1,6 +1,6 @@
 import { Text } from "@mantine/core";
 import ClozeCardEditor from "../../components/editcard/CardEditor/ClozeCardEditor";
-import { CardTypeManager, EditMode } from "../CardTypeManager";
+import { TypeManager, EditMode } from "../TypeManager";
 import {
   Card,
   CardType,
@@ -13,12 +13,13 @@ import { db } from "../db";
 import { Deck } from "../deck";
 import {
   ClozeNoteContent,
+  Note,
   NoteContent,
   getNote,
   newNote,
   registerReferencesToNote,
   removeReferenceToNote,
-  updateNote,
+  updateNoteContent,
 } from "../note";
 import classes from "./ClozeCard.module.css";
 
@@ -26,9 +27,9 @@ export type ClozeContent = {
   occlusionNumber: number;
 };
 
-export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
+export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
   updateCard(params: { text: string }, existingCard: Card<CardType.Cloze>) {
-    updateNote(existingCard.note, {
+    updateNoteContent(existingCard.note, {
       type: CardType.Cloze,
       text: params.text,
     });
@@ -77,6 +78,18 @@ export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
     );
   },
 
+  displayNote(note: Note<CardType.Cloze>) {
+    return <ClozeCardComponent occluded={false} content={note.content} />;
+  },
+
+  getSortFieldFromNote(note) {
+    return toPreviewString(
+      note.content.text.replace(/\{\{c\d::((?!\{\{|}}).)*\}\}/g, (match) =>
+        match.slice(6, -2)
+      )
+    );
+  },
+
   editor(card: Card<CardType.Cloze> | null, deck: Deck, mode: EditMode) {
     return <ClozeCardEditor card={card} deck={deck} mode={mode} />;
   },
@@ -87,7 +100,7 @@ export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
         n !== undefined ? (n.content as ClozeNoteContent).text : undefined
       );
       if (noteText !== undefined) {
-        await updateNote(card.note, {
+        await updateNoteContent(card.note, {
           type: CardType.Cloze,
           text: noteText.replace(
             new RegExp(
@@ -110,17 +123,19 @@ function ClozeCardComponent({
   content,
 }: {
   occluded: boolean;
-  card: Card<CardType.Cloze>;
+  card?: Card<CardType.Cloze>;
   content?: NoteContent<CardType.Cloze>;
 }) {
   let finalText = content?.text ?? "";
-  finalText = finalText.replace(
-    new RegExp(`{{c${card.content.occlusionNumber}::((?!{{|}}).)*}}`, "g"),
-    (match) =>
-      `<span class="cloze-field"><span class="cloze-content ${
-        occluded && "occluded"
-      }">${match.slice(6, -2)}</span></span>`
-  );
+  if (card) {
+    finalText = finalText.replace(
+      new RegExp(`{{c${card.content.occlusionNumber}::((?!{{|}}).)*}}`, "g"),
+      (match) =>
+        `<span class="cloze-field"><span class="cloze-content ${
+          occluded && "occluded"
+        }">${match.slice(6, -2)}</span></span>`
+    );
+  }
   finalText = finalText.replace(
     /\{\{c\d::((?!\{\{|}}).)*\}\}/g,
     (match) =>
@@ -138,11 +153,11 @@ function ClozeCardComponent({
 }
 
 export async function createClozeCardSet(params: {
-  deckId: string;
+  deck: Deck;
   text: string;
   occlusionNumberSet: number[];
 }): Promise<Card<CardType.Cloze>[]> {
-  const noteId = await newNote(params.deckId, {
+  const noteId = await newNote(params.deck, {
     type: CardType.Cloze,
     text: params.text,
   });

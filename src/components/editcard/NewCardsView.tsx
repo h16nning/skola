@@ -5,7 +5,7 @@ import { useDeckFromUrl, useDecks } from "../../logic/deck";
 import MissingObject from "../custom/MissingObject";
 import { CardType } from "../../logic/card";
 import { useNavigate } from "react-router-dom";
-import { getUtilsOfType } from "../../logic/CardTypeManager";
+import { getUtilsOfType } from "../../logic/TypeManager";
 import SelectDecksHeader from "../custom/SelectDecksHeader";
 import { AppHeaderContent } from "../Header/Header";
 import EditorOptionsMenu from "./EditorOptionsMenu";

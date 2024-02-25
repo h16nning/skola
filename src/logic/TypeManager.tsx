@@ -5,9 +5,9 @@ import { NormalCardUtils } from "./CardTypeImplementations/NormalCard";
 import { ClozeCardUtils } from "./CardTypeImplementations/ClozeCard";
 import { DoubleSidedCardUtils } from "./CardTypeImplementations/DoubleSidedCard";
 import { UndefinedCardUtils } from "./CardTypeImplementations/UndefinedCard";
-import { NoteContent } from "./note";
+import { Note, NoteContent } from "./note";
 
-export interface CardTypeManager<T extends CardType> {
+export interface TypeManager<T extends CardType> {
   createCard: (params: any) => Card<T>;
 
   updateCard: (params: any, existingCard: Card<T>) => Card<T>;
@@ -24,6 +24,10 @@ export interface CardTypeManager<T extends CardType> {
     place?: "learn" | "notebook"
   ): ReactNode;
 
+  displayNote(note: Note<T>): ReactNode;
+
+  getSortFieldFromNote(note: Note<T>): string;
+
   editor(card: Card<CardType> | null, deck: Deck, mode: EditMode): JSX.Element;
 
   deleteCard: (card: Card<T>) => void;
@@ -31,11 +35,13 @@ export interface CardTypeManager<T extends CardType> {
 
 export type EditMode = "edit" | "new";
 
-export function getUtils(card: Card<CardType>): CardTypeManager<CardType> {
-  return getUtilsOfType(card.content ? card.content.type : CardType.Undefined);
+export function getUtils(
+  a: Card<CardType> | Note<CardType>
+): TypeManager<CardType> {
+  return getUtilsOfType(a.content ? a.content.type : CardType.Undefined);
 }
 
-export function getUtilsOfType(cardType: CardType): CardTypeManager<CardType> {
+export function getUtilsOfType(cardType: CardType): TypeManager<CardType> {
   switch (cardType) {
     case CardType.Normal:
       // @ts-ignore
