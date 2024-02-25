@@ -24,3 +24,16 @@ export function useDynamicPageTheme(
     }
   }, [theme, colorScheme]);
 }
+
+export function useEventListener(
+  event: string,
+  callback: EventListener,
+  dependencies: any[] = []
+) {
+  useEffect(() => {
+    window.addEventListener(event, callback);
+    return () => {
+      window.removeEventListener(event, callback);
+    };
+  }, [event, ...dependencies]);
+}
