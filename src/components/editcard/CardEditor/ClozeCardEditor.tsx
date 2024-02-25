@@ -136,7 +136,7 @@ async function finish(
             cardsReferencingSameSharedValue.map(
               (card) =>
                 card !== undefined &&
-                ClozeCardUtils.update(
+                ClozeCardUtils.updateCard(
                   {
                     text: editorContent,
                   },
