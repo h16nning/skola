@@ -13,55 +13,65 @@ import {
 import { db } from "../db";
 import { Deck } from "../deck";
 import {
-  createSharedValue,
-  registerReferencesToSharedValue,
-  removeReferenceToSharedValue,
-  setSharedValue,
-  useSharedValue,
-} from "../sharedvalue";
+  DoubleSidedNoteContent,
+  newNote,
+  registerReferencesToNote,
+  removeReferenceToNote,
+  updateNote,
+  useNote,
+} from "../note";
 
 export type DoubleSidedContent = {
-  frontReferenceId: string;
-  backReferenceId: string;
+  frontIsField1: boolean;
 };
 
 export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
-  update(
+  updateCard(
     params: { front: string; back: string },
     existingCard: Card<CardType.DoubleSided>
   ) {
-    setSharedValue(existingCard.content.frontReferenceId, params.front);
-    setSharedValue(existingCard.content.backReferenceId, params.back);
+    updateNote(existingCard.note, {
+      type: CardType.DoubleSided,
+      field1: existingCard.content.frontIsField1 ? params.front : params.back,
+      field2: existingCard.content.frontIsField1 ? params.back : params.front,
+    });
+    console.log(existingCard.id);
     updateCard(existingCard.id, {
       preview: toPreviewString(params.front),
     });
     return { preview: toPreviewString(params.front), ...existingCard };
   },
 
-  create(params: {
-    frontReferenceId: string;
-    backReferenceId: string;
+  createCard(params: {
+    noteId: string;
+    frontIsField1: boolean;
     front: string;
   }): Card<CardType.DoubleSided> {
     return {
       ...createCardSkeleton(),
+      note: params.noteId,
       preview: toPreviewString(params.front),
       content: {
         type: CardType.DoubleSided,
-        frontReferenceId: params.frontReferenceId ?? "error",
-        backReferenceId: params.backReferenceId ?? "error",
+        frontIsField1: params.frontIsField1,
       },
     };
   },
 
   displayQuestion(card: Card<CardType.DoubleSided>) {
     function FrontComponent() {
-      const front = useSharedValue(card.content.frontReferenceId);
+      const noteContent =
+        (useNote(card.note)?.content as DoubleSidedNoteContent) ?? {};
       return (
         <Title
           order={3}
           fw={600}
-          dangerouslySetInnerHTML={{ __html: front?.value ?? "&#8203;" }}
+          dangerouslySetInnerHTML={{
+            __html:
+              (card.content.frontIsField1
+                ? noteContent.field1
+                : noteContent.field2) ?? "error",
+          }}
         ></Title>
       );
     }
@@ -70,10 +80,16 @@ export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
 
   displayAnswer(card: Card<CardType.DoubleSided>, place: "learn" | "notebook") {
     function BackComponent() {
-      const back = useSharedValue(card.content.backReferenceId);
+      const noteContent =
+        (useNote(card.note)?.content as DoubleSidedNoteContent) ?? {};
       return (
         <span
-          dangerouslySetInnerHTML={{ __html: back?.value ?? "&#8203;" }}
+          dangerouslySetInnerHTML={{
+            __html:
+              (card.content.frontIsField1
+                ? noteContent.field2
+                : noteContent.field1) ?? "error",
+          }}
         ></span>
       );
     }
@@ -90,12 +106,9 @@ export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
     return <DoubleSidedCardEditor card={card} deck={deck} mode={mode} />;
   },
 
-  async delete(card: Card<CardType.DoubleSided>) {
-    db.transaction("rw", db.decks, db.cards, db.sharedvalues, async () => {
-      await Promise.all([
-        removeReferenceToSharedValue(card.content.frontReferenceId, card.id),
-        removeReferenceToSharedValue(card.content.backReferenceId, card.id),
-      ]);
+  async deleteCard(card: Card<CardType.DoubleSided>) {
+    db.transaction("rw", db.decks, db.cards, db.notes, async () => {
+      await removeReferenceToNote(card.note, card.id);
       await deleteCard(card);
     });
   },
@@ -104,24 +117,23 @@ export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
 export async function createDoubleSidedCardPair(params: {
   value1: string;
   value2: string;
-}): Promise<[Card<CardType.DoubleSided>, Card<CardType.DoubleSided>]> {
-  const [referenceId1, referenceId2] = await Promise.all([
-    createSharedValue(params.value1),
-    createSharedValue(params.value2),
-  ]);
-  const card1 = DoubleSidedCardUtils.create({
-    frontReferenceId: referenceId1,
-    backReferenceId: referenceId2,
+}) {
+  const noteId = await newNote({
+    type: CardType.DoubleSided,
+    field1: params.value1,
+    field2: params.value2,
+  });
+  const card1 = DoubleSidedCardUtils.createCard({
+    noteId: noteId,
+    frontIsField1: true,
     front: params.value1,
   });
-  const card2 = DoubleSidedCardUtils.create({
-    frontReferenceId: referenceId2,
-    backReferenceId: referenceId1,
+  const card2 = DoubleSidedCardUtils.createCard({
+    noteId: noteId,
+    frontIsField1: false,
     front: params.value2,
   });
-  await Promise.all([
-    registerReferencesToSharedValue(referenceId1, [card1.id, card2.id]),
-    registerReferencesToSharedValue(referenceId2, [card1.id, card2.id]),
-  ]);
+  await registerReferencesToNote(noteId, [card1.id, card2.id]);
+  console.log(card1, card2);
   return [card1, card2];
 }
