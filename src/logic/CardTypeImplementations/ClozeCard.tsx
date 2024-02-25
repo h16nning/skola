@@ -27,7 +27,7 @@ export type ClozeContent = {
 };
 
 export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
-  update(params: { text: string }, existingCard: Card<CardType.Cloze>) {
+  updateCard(params: { text: string }, existingCard: Card<CardType.Cloze>) {
     setSharedValue(existingCard.content.textReferenceId, params.text);
     updateCard(existingCard.id, {
       preview: toPreviewString(
@@ -39,7 +39,7 @@ export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
     return { preview: toPreviewString(params.text), ...existingCard };
   },
 
-  create(params: {
+  createCard(params: {
     occlusionNumber: number;
     textReferenceId: string;
     text: string;
@@ -70,7 +70,7 @@ export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
     return <ClozeCardEditor card={card} deck={deck} mode={mode} />;
   },
 
-  async delete(card: Card<CardType.Cloze>) {
+  async deleteCard(card: Card<CardType.Cloze>) {
     db.transaction("rw", db.decks, db.cards, db.sharedvalues, async () => {
       const sharedValueText = await getSharedValue(
         card.content.textReferenceId

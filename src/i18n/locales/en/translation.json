@@ -16,8 +16,8 @@
   "cards": {
     "editor": {
       "double_sided": {
-        "back": "",
-        "front": ""
+        "back": "Back",
+        "front": "Front"
       }
     }
   },

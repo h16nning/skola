@@ -45,7 +45,7 @@ function CardMenu({ card, onDelete, withEdit = true }: CardMenuProps) {
       return;
     }
     try {
-      await getUtils(card).delete(card);
+      await getUtils(card).deleteCard(card);
       if (onDelete) {
         onDelete();
       }

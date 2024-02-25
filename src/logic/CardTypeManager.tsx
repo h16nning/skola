@@ -7,9 +7,9 @@ import { DoubleSidedCardUtils } from "./CardTypeImplementations/DoubleSidedCard"
 import { UndefinedCardUtils } from "./CardTypeImplementations/UndefinedCard";
 
 export interface CardTypeManager<T extends CardType> {
-  create: (params: any) => Card<T>;
+  createCard: (params: any) => Card<T>;
 
-  update: (params: any, existingCard: Card<T>) => Card<T>;
+  updateCard: (params: any, existingCard: Card<T>) => Card<T>;
 
   displayQuestion(card: Card<T>, place?: "learn" | "notebook"): ReactNode;
 
@@ -17,7 +17,7 @@ export interface CardTypeManager<T extends CardType> {
 
   editor(card: Card<CardType> | null, deck: Deck, mode: EditMode): JSX.Element;
 
-  delete: (card: Card<T>) => void;
+  deleteCard: (card: Card<T>) => void;
 }
 
 export type EditMode = "edit" | "new";

@@ -27,6 +27,7 @@ export interface CardSkeleton {
 
 export interface Card<T extends CardType> extends CardSkeleton {
   content: Content<T>;
+  note: string;
 }
 
 export function createCardSkeleton(): CardSkeleton {

@@ -1,29 +1,30 @@
-import classes from "./DoubleSidedCardEditor.module.css";
-import React, { useCallback, useEffect, useState } from "react";
 import { Stack, Text } from "@mantine/core";
-import CardEditor, { useCardEditor } from "./CardEditor";
+import { useHotkeys } from "@mantine/hooks";
+import { Editor } from "@tiptap/react";
+import { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import {
+  DoubleSidedCardUtils,
+  createDoubleSidedCardPair,
+} from "../../../logic/CardTypeImplementations/DoubleSidedCard";
 import { EditMode } from "../../../logic/CardTypeManager";
 import { Card, CardType, newCards } from "../../../logic/card";
 import { Deck } from "../../../logic/deck";
-import CardEditorFooter from "../CardEditorFooter";
+import {
+  DoubleSidedNoteContent,
+  getCardsReferencingNote,
+  getNote,
+  useNote,
+} from "../../../logic/note";
 import {
   addFailed,
   saveFailed,
   successfullyAdded,
   successfullySaved,
 } from "../../custom/Notification/Notification";
-import { useHotkeys } from "@mantine/hooks";
-import { Editor } from "@tiptap/react";
-import {
-  DoubleSidedCardUtils,
-  createDoubleSidedCardPair,
-} from "../../../logic/CardTypeImplementations/DoubleSidedCard";
-import {
-  getCardsReferencingSharedValue,
-  getSharedValue,
-  useSharedValue,
-} from "../../../logic/sharedvalue";
-import { useTranslation } from "react-i18next";
+import CardEditorFooter from "../CardEditorFooter";
+import CardEditor, { useCardEditor } from "./CardEditor";
+import classes from "./DoubleSidedCardEditor.module.css";
 
 interface DoubleSidedCardEditorProps {
   card: Card<CardType.DoubleSided> | null;
@@ -43,28 +44,28 @@ async function finish(
     //SAVE
     try {
       if (card) {
-        DoubleSidedCardUtils.update(
+        DoubleSidedCardUtils.updateCard(
           {
             front: frontEditor?.getHTML() ?? "",
             back: backEditor?.getHTML() ?? "",
           },
           card
         );
-        const cardsReferencingSameSharedValue = await getSharedValue(
-          card.content.frontReferenceId
-        ).then((sv) => sv && getCardsReferencingSharedValue(sv));
-        cardsReferencingSameSharedValue !== undefined &&
+        const cardsReferencingNote = await getNote(card.note).then(
+          (n) => n && getCardsReferencingNote(n)
+        );
+        cardsReferencingNote !== undefined &&
           (await Promise.all(
-            cardsReferencingSameSharedValue.map(
+            cardsReferencingNote.map(
               (c) =>
                 c !== undefined &&
                 c.id !== card.id &&
-                DoubleSidedCardUtils.update(
+                DoubleSidedCardUtils.updateCard(
                   {
-                    front: frontEditor?.getHTML() ?? "",
-                    back: backEditor?.getHTML() ?? "",
+                    front: backEditor?.getHTML() ?? "",
+                    back: frontEditor?.getHTML() ?? "",
                   },
-                  card as Card<CardType.DoubleSided>
+                  c as Card<CardType.DoubleSided>
                 )
             )
           ));
@@ -98,13 +99,20 @@ function DoubleSidedCardEditor({
 
   useHotkeys([["mod+Enter", () => setRequestedFinish(true)]]);
 
+  const noteContent = card
+    ? (useNote(card?.note)?.content as DoubleSidedNoteContent) ?? {}
+    : { field1: "[error]", field2: "[error]" };
   const editor1 = useCardEditor({
-    content: useSharedValue(card?.content.frontReferenceId ?? "")?.value ?? "",
+    content: card?.content.frontIsField1
+      ? noteContent.field1
+      : noteContent.field2,
     finish: () => setRequestedFinish(true),
   });
 
   const editor2 = useCardEditor({
-    content: useSharedValue(card?.content.backReferenceId ?? "")?.value ?? "",
+    content: card?.content.frontIsField1
+      ? noteContent.field2
+      : noteContent.field1,
     finish: () => setRequestedFinish(true),
   });
 

@@ -9,57 +9,56 @@ import {
   deleteCard,
   toPreviewString,
 } from "../card";
+import { NormalNoteContent, newNote, updateNote, useNote } from "../note";
 import { Deck } from "../deck";
 
-export type NormalContent = {
-  front: string;
-  back: string;
-};
+export type NormalContent = {};
 
 export const NormalCardUtils: CardTypeManager<CardType.Normal> = {
-  update(
+  updateCard(
     params: { front: string; back: string },
     existingCard: Card<CardType.Normal>
   ) {
+    updateNote(existingCard.note, {
+      type: CardType.Normal,
+      front: params.front,
+      back: params.back,
+    });
     return {
       ...existingCard,
       preview: toPreviewString(params.front),
-      content: {
-        type: existingCard.content.type,
-        front: params.front,
-        back: params.back,
-      },
     };
   },
 
-  create(params: { front: string; back: string }): Card<CardType.Normal> {
+  createCard(params: { noteId: string; front: string }): Card<CardType.Normal> {
     return {
       ...createCardSkeleton(),
       preview: toPreviewString(params.front),
-      content: {
-        type: CardType.Normal,
-        front: params.front ?? "error",
-        back: params.back ?? "error",
-      },
+      note: params.noteId,
+      content: { type: CardType.Normal },
     };
   },
 
   displayQuestion(card: Card<CardType.Normal>) {
+    const noteContent =
+      (useNote(card.note)?.content as NormalNoteContent) ?? {};
     return (
       <Title
         order={3}
         fw={600}
-        dangerouslySetInnerHTML={{ __html: card.content.front }}
+        dangerouslySetInnerHTML={{ __html: noteContent.front }}
       ></Title>
     );
   },
 
   displayAnswer(card: Card<CardType.Normal>, place: "learn" | "notebook") {
+    const noteContent =
+      (useNote(card.note)?.content as NormalNoteContent) ?? {};
     return (
       <Stack gap={place === "notebook" ? "sm" : "lg"} w="100%">
         {NormalCardUtils.displayQuestion(card)}
         <Divider className={common.lightBorderColor} />
-        <div dangerouslySetInnerHTML={{ __html: card.content.back }}></div>
+        <div dangerouslySetInnerHTML={{ __html: noteContent.back }}></div>
       </Stack>
     );
   },
@@ -68,7 +67,16 @@ export const NormalCardUtils: CardTypeManager<CardType.Normal> = {
     return <NormalCardEditor card={card} deck={deck} mode={mode} />;
   },
 
-  async delete(card: Card<CardType.Normal>) {
+  async deleteCard(card: Card<CardType.Normal>) {
     deleteCard(card);
   },
 };
+
+export async function createNormalCard(front: string, back: string) {
+  const noteId = await newNote({
+    type: CardType.Normal,
+    front: front,
+    back: back,
+  });
+  return NormalCardUtils.createCard({ noteId: noteId, front });
+}

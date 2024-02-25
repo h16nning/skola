@@ -3,7 +3,7 @@ import { Card, CardType, createCardSkeleton } from "../card";
 import React from "react";
 
 export const UndefinedCardUtils: CardTypeManager<CardType.Undefined> = {
-  update(_, existingCard: Card<CardType.Undefined>) {
+  updateCard(_, existingCard: Card<CardType.Undefined>) {
     return {
       ...existingCard,
       content: {
@@ -13,10 +13,11 @@ export const UndefinedCardUtils: CardTypeManager<CardType.Undefined> = {
     };
   },
 
-  create(): Card<CardType.Undefined> {
+  createCard(): Card<CardType.Undefined> {
     return {
       ...createCardSkeleton(),
       preview: "[Undefined Card]",
+      note: "-1",
       content: {
         type: CardType.Undefined,
       },
@@ -35,7 +36,7 @@ export const UndefinedCardUtils: CardTypeManager<CardType.Undefined> = {
     return <span>Undefined Card Editor</span>;
   },
 
-  delete() {
+  deleteCard() {
     console.warn("tried to delete card of type undefined. Not possible.");
   },
 };
