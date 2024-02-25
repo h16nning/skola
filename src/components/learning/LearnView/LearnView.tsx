@@ -17,6 +17,7 @@ import classes from "./LearnView.module.css";
 import LearnViewFooter from "./LearnViewFooter";
 import LearnViewHeader, { stopwatchResult } from "./LearnViewHeader";
 import { AppHeaderContent } from "../../Header/Header";
+import { useNote } from "../../../logic/note";
 
 function LearnView() {
   const { toggle } = useFullscreen();
@@ -36,6 +37,8 @@ function LearnView() {
       sort: CardSorts.byCreationDate(1),
     }
   );
+
+  const cardContent = useNote(controller.currentCard?.note ?? "")?.content;
 
   //ZEN MODE
   useEffect(() => {
@@ -95,12 +98,14 @@ function LearnView() {
             {!controller.showingAnswer &&
               controller.currentCard &&
               getUtils(controller.currentCard).displayQuestion(
-                controller.currentCard
+                controller.currentCard,
+                cardContent
               )}
             {controller.showingAnswer &&
               controller.currentCard &&
               getUtils(controller.currentCard).displayAnswer(
-                controller.currentCard
+                controller.currentCard,
+                cardContent
               )}
           </Paper>
         </Center>

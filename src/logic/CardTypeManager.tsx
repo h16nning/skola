@@ -5,15 +5,24 @@ import { NormalCardUtils } from "./CardTypeImplementations/NormalCard";
 import { ClozeCardUtils } from "./CardTypeImplementations/ClozeCard";
 import { DoubleSidedCardUtils } from "./CardTypeImplementations/DoubleSidedCard";
 import { UndefinedCardUtils } from "./CardTypeImplementations/UndefinedCard";
+import { NoteContent } from "./note";
 
 export interface CardTypeManager<T extends CardType> {
   createCard: (params: any) => Card<T>;
 
   updateCard: (params: any, existingCard: Card<T>) => Card<T>;
 
-  displayQuestion(card: Card<T>, place?: "learn" | "notebook"): ReactNode;
+  displayQuestion(
+    card: Card<T>,
+    content?: NoteContent<T>,
+    place?: "learn" | "notebook"
+  ): ReactNode;
 
-  displayAnswer(card: Card<T>, place?: "learn" | "notebook"): ReactNode;
+  displayAnswer(
+    card: Card<T>,
+    content?: NoteContent<T>,
+    place?: "learn" | "notebook"
+  ): ReactNode;
 
   editor(card: Card<CardType> | null, deck: Deck, mode: EditMode): JSX.Element;
 

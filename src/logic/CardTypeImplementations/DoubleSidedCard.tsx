@@ -13,12 +13,11 @@ import {
 import { db } from "../db";
 import { Deck } from "../deck";
 import {
-  DoubleSidedNoteContent,
+  NoteContent,
   newNote,
   registerReferencesToNote,
   removeReferenceToNote,
   updateNote,
-  useNote,
 } from "../note";
 
 export type DoubleSidedContent = {
@@ -58,10 +57,11 @@ export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
     };
   },
 
-  displayQuestion(card: Card<CardType.DoubleSided>) {
+  displayQuestion(
+    card: Card<CardType.DoubleSided>,
+    content?: NoteContent<CardType.DoubleSided>
+  ) {
     function FrontComponent() {
-      const noteContent =
-        (useNote(card.note)?.content as DoubleSidedNoteContent) ?? {};
       return (
         <Title
           order={3}
@@ -69,8 +69,8 @@ export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
           dangerouslySetInnerHTML={{
             __html:
               (card.content.frontIsField1
-                ? noteContent.field1
-                : noteContent.field2) ?? "error",
+                ? content?.field1
+                : content?.field2) ?? "error",
           }}
         ></Title>
       );
@@ -78,24 +78,26 @@ export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
     return <FrontComponent />;
   },
 
-  displayAnswer(card: Card<CardType.DoubleSided>, place: "learn" | "notebook") {
+  displayAnswer(
+    card: Card<CardType.DoubleSided>,
+    content?: NoteContent<CardType.DoubleSided>,
+    place?: "learn" | "notebook"
+  ) {
     function BackComponent() {
-      const noteContent =
-        (useNote(card.note)?.content as DoubleSidedNoteContent) ?? {};
       return (
         <span
           dangerouslySetInnerHTML={{
             __html:
               (card.content.frontIsField1
-                ? noteContent.field2
-                : noteContent.field1) ?? "error",
+                ? content?.field2
+                : content?.field1) ?? "error",
           }}
         ></span>
       );
     }
     return (
       <Stack gap={place === "notebook" ? "sm" : "lg"} w="100%">
-        {DoubleSidedCardUtils.displayQuestion(card)}
+        {DoubleSidedCardUtils.displayQuestion(card, content)}
         <Divider className={common.lightBorderColor} />
         <BackComponent />
       </Stack>
