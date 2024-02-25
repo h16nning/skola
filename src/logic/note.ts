@@ -3,6 +3,7 @@ import { CardType } from "./card";
 import { db } from "./db";
 import { v4 as uuidv4 } from "uuid";
 import { Deck } from "./deck";
+import { Table } from "dexie";
 
 export interface NoteSkeleton {
   id: string;
@@ -75,11 +76,28 @@ export async function getNote(noteId: string) {
   return db.notes.get(noteId);
 }
 
+export async function useNotes() {
+  return db.notes.toArray();
+}
+
 export function useNote(noteId: string) {
   return useLiveQuery(() => db.notes.get(noteId), [noteId], undefined);
 }
 
-export function updateNote<T extends CardType>(
+export function useNotesWith(
+  querier: (
+    notes: Table<Note<CardType>>
+  ) => Promise<Note<CardType>[] | undefined>,
+  dependencies: any[]
+): [Note<CardType>[] | undefined, boolean] {
+  return useLiveQuery(
+    () => querier(db.notes).then((notes) => [notes, notes !== undefined]),
+    dependencies,
+    [undefined, false]
+  );
+}
+
+export function updateNote(
   noteId: string,
   changes: {
     [keyPath: string]: any;
