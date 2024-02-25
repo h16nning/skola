@@ -1,7 +1,6 @@
 import {
   ActionIcon,
   AppShell,
-  Badge,
   Breadcrumbs,
   Button,
   CSSVariablesResolver,
@@ -17,7 +16,6 @@ import {
 } from "@mantine/core";
 import actionIcon from "./ActionIcon.module.css";
 import appShell from "./AppShell.module.css";
-import badge from "./Badge.module.css";
 import breadcrumbs from "./Breadcrumbs.module.css";
 import button from "./Button.module.css";
 import menu from "./Menu.module.css";
@@ -105,9 +103,6 @@ export const presetTheme = createTheme({
   components: {
     AppShell: AppShell.extend({
       classNames: appShell,
-    }),
-    Badge: Badge.extend({
-      classNames: badge,
     }),
     Button: Button.extend({
       classNames: button,
