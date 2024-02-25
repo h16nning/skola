@@ -1,11 +1,11 @@
 import { Stack, TextInput } from "@mantine/core";
-import React, { useState } from "react";
-import FileImport from "./FileImport";
-import { ImportFromSourceProps } from "./ImportModal";
-import { Deck } from "../../../logic/deck";
-import { NormalCardUtils } from "../../../logic/CardTypeImplementations/NormalCard";
+import { useState } from "react";
+import { createNormalCard } from "../../../logic/CardTypeImplementations/NormalCard";
 import { newCard } from "../../../logic/card";
+import { Deck } from "../../../logic/deck";
+import FileImport from "./FileImport";
 import ImportButton from "./ImportButton";
+import { ImportFromSourceProps } from "./ImportModal";
 
 interface ImportFromPlainTextProps extends ImportFromSourceProps {}
 
@@ -18,10 +18,16 @@ async function importCards(
   if (!fileText || !deck) {
     return;
   }
-  const cards = fileText.split(cardSeparator).map((line) => {
-    const [question, answer] = line.split(questionAnswerSeperator);
-    return NormalCardUtils.create({ front: question, back: answer });
+  const questionAnswerPairs = fileText.split(cardSeparator).map((line) => {
+    return line.split(questionAnswerSeperator);
   });
+
+  const cards = await Promise.all(
+    questionAnswerPairs.map(async (pair) => {
+      return createNormalCard(deck.id, pair[0], pair[1]);
+    })
+  );
+
   return Promise.all(cards.map((card) => newCard(card, deck)));
 }
 

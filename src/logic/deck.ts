@@ -1,10 +1,9 @@
-import { Card, CardType } from "./card";
-import { v4 as uuidv4 } from "uuid";
-import { db } from "./db";
-import { IndexableType } from "dexie";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
+import { Card, CardType } from "./card";
+import { db } from "./db";
 
 export interface Deck {
   id: string;
@@ -25,7 +24,7 @@ export async function newDeck(
   name: string,
   superDeck?: Deck,
   description?: string
-): Promise<IndexableType> {
+): Promise<string> {
   const uuid = uuidv4();
 
   let superDecks: string[] | undefined = undefined;

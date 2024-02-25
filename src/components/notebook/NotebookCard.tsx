@@ -6,6 +6,7 @@ import CardMenu from "../editcard/CardMenu";
 import { Draggable } from "@hello-pangea/dnd";
 import { memo, useEffect, useState } from "react";
 import { t } from "i18next";
+import { useNote } from "../../logic/note";
 
 interface NotebookCardProps {
   index: number;
@@ -53,6 +54,8 @@ const InnerCard = memo(
   ({ card, showAnswer }: { card: Card<CardType>; showAnswer: boolean }) => {
     const [individualShowAnswer, setIndividualShowAnswer] = useState(false);
 
+    const noteContent = useNote(card.note)?.content;
+
     return (
       <Tooltip
         label={t("notebook.individual-show-answer-toggle-tooltip")}
@@ -68,8 +71,8 @@ const InnerCard = memo(
           <Group align="top" justify="space-between" wrap="nowrap">
             <Group align="center" w="100%">
               {showAnswer || individualShowAnswer
-                ? getUtils(card).displayAnswer(card)
-                : getUtils(card).displayQuestion(card)}
+                ? getUtils(card).displayAnswer(card, noteContent)
+                : getUtils(card).displayQuestion(card, noteContent)}
             </Group>
             <CardMenu card={card} />
           </Group>

@@ -75,8 +75,12 @@ export const NormalCardUtils: CardTypeManager<CardType.Normal> = {
   },
 };
 
-export async function createNormalCard(front: string, back: string) {
-  const noteId = await newNote({
+export async function createNormalCard(
+  deckId: string,
+  front: string,
+  back: string
+) {
+  const noteId = await newNote(deckId, {
     type: CardType.Normal,
     front: front,
     back: back,
