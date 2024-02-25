@@ -97,6 +97,7 @@ export async function setSetting<T extends keyof SettingsValues>(
 
 export function useShowShortcutHints() {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [showShortcutHints] = useSetting("showShortcutHints");
 
   useEffect(() => {
     const listener = () => setIsTouchDevice(true);
@@ -105,5 +106,5 @@ export function useShowShortcutHints() {
     return () => document.removeEventListener("touchstart", listener);
   }, []);
 
-  return !isTouchDevice && useSetting("showShortcutHints")[0];
+  return !isTouchDevice && showShortcutHints;
 }
