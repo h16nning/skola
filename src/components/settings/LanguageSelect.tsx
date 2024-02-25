@@ -1,5 +1,9 @@
 import React from "react";
-import { SettingsValues, setSetting, useSetting } from "../../logic/Settings";
+import {
+  SupportedLanguages,
+  setSetting,
+  useSetting,
+} from "../../logic/Settings";
 import { Select } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 
@@ -15,18 +19,17 @@ export default function LanguageSelect() {
       description={t("settings.general.language-description")}
       onChange={(value) => {
         if (value !== null) {
-          setSetting("language", (value as SettingsValues["language"]) || "en");
-          console.log("Language changed to", value);
-          i18n.changeLanguage(value || "en");
+          setSetting("language", value as SupportedLanguages);
+          i18n.changeLanguage(value);
           window.location.reload();
         }
 
         return value;
       }}
       data={[
-        { value: "de", label: "Deutsch (Incomplete)" },
-        { value: "en", label: "English" },
-        { value: "sv", label: "Svenska (Incomplete)" },
+        { value: SupportedLanguages.German, label: "Deutsch (Incomplete)" },
+        { value: SupportedLanguages.English, label: "English" },
+        { value: SupportedLanguages.Swedish, label: "Svenska (Incomplete)" },
       ]}
     />
   );
