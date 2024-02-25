@@ -9,26 +9,29 @@ import {
   toPreviewString,
   updateCard,
 } from "../card";
+import { db } from "../db";
 import { Deck } from "../deck";
 import {
-  createSharedValue,
-  getSharedValue,
-  registerReferencesToSharedValue,
-  removeReferenceToSharedValue,
-  setSharedValue,
-  useSharedValue,
-} from "../sharedvalue";
+  ClozeNoteContent,
+  NoteContent,
+  getNote,
+  newNote,
+  registerReferencesToNote,
+  removeReferenceToNote,
+  updateNote,
+} from "../note";
 import classes from "./ClozeCard.module.css";
-import { db } from "../db";
 
 export type ClozeContent = {
   occlusionNumber: number;
-  textReferenceId: string;
 };
 
 export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
   updateCard(params: { text: string }, existingCard: Card<CardType.Cloze>) {
-    setSharedValue(existingCard.content.textReferenceId, params.text);
+    updateNote(existingCard.note, {
+      type: CardType.Cloze,
+      text: params.text,
+    });
     updateCard(existingCard.id, {
       preview: toPreviewString(
         params.text.replace(/\{\{c\d::((?!\{\{|}}).)*\}\}/g, (match) =>
@@ -41,11 +44,12 @@ export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
 
   createCard(params: {
     occlusionNumber: number;
-    textReferenceId: string;
+    noteId: string;
     text: string;
   }): Card<CardType.Cloze> {
     return {
       ...createCardSkeleton(),
+      note: params.noteId,
       preview: toPreviewString(
         params.text.replace(/\{\{c\d::((?!\{\{|}}).)*\}\}/g, (match) =>
           match.slice(6, -2)
@@ -54,16 +58,23 @@ export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
       content: {
         type: CardType.Cloze,
         occlusionNumber: params.occlusionNumber,
-        textReferenceId: params.textReferenceId,
       },
     };
   },
 
-  displayQuestion(card: Card<CardType.Cloze>) {
-    return <ClozeCardComponent occluded={true} card={card} />;
+  displayQuestion(
+    card: Card<CardType.Cloze>,
+    content?: NoteContent<CardType.Cloze>
+  ) {
+    return <ClozeCardComponent occluded={true} card={card} content={content} />;
   },
-  displayAnswer(card: Card<CardType.Cloze>) {
-    return <ClozeCardComponent occluded={false} card={card} />;
+  displayAnswer(
+    card: Card<CardType.Cloze>,
+    content?: NoteContent<CardType.Cloze>
+  ) {
+    return (
+      <ClozeCardComponent occluded={false} card={card} content={content} />
+    );
   },
 
   editor(card: Card<CardType.Cloze> | null, deck: Deck, mode: EditMode) {
@@ -71,23 +82,23 @@ export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
   },
 
   async deleteCard(card: Card<CardType.Cloze>) {
-    db.transaction("rw", db.decks, db.cards, db.sharedvalues, async () => {
-      const sharedValueText = await getSharedValue(
-        card.content.textReferenceId
-      ).then((value) => value?.value);
-      if (sharedValueText !== undefined) {
-        await setSharedValue(
-          card.content.textReferenceId,
-          sharedValueText.replace(
+    db.transaction("rw", db.decks, db.cards, db.notes, async () => {
+      const noteText = await getNote(card.note).then((n) =>
+        n !== undefined ? (n.content as ClozeNoteContent).text : undefined
+      );
+      if (noteText !== undefined) {
+        await updateNote(card.note, {
+          type: CardType.Cloze,
+          text: noteText.replace(
             new RegExp(
               `{{c${card.content.occlusionNumber}::((?!{{|}}).)*}}`,
               "g"
             ),
             (match) => match.slice(6, -2)
-          )
-        );
+          ),
+        });
       }
-      await removeReferenceToSharedValue(card.content.textReferenceId, card.id);
+      await removeReferenceToNote(card.note, card.id);
       await deleteCard(card);
     });
   },
@@ -96,9 +107,13 @@ export const ClozeCardUtils: CardTypeManager<CardType.Cloze> = {
 function ClozeCardComponent({
   occluded,
   card,
-}: { occluded: boolean; card: Card<CardType.Cloze> }) {
-  const sharedValue = useSharedValue(card.content.textReferenceId);
-  let finalText = sharedValue?.value ?? "";
+  content,
+}: {
+  occluded: boolean;
+  card: Card<CardType.Cloze>;
+  content?: NoteContent<CardType.Cloze>;
+}) {
+  let finalText = content?.text ?? "";
   finalText = finalText.replace(
     new RegExp(`{{c${card.content.occlusionNumber}::((?!{{|}}).)*}}`, "g"),
     (match) =>
@@ -123,19 +138,23 @@ function ClozeCardComponent({
 }
 
 export async function createClozeCardSet(params: {
+  deckId: string;
   text: string;
   occlusionNumberSet: number[];
 }): Promise<Card<CardType.Cloze>[]> {
-  const textReferenceId = await createSharedValue(params.text);
+  const noteId = await newNote(params.deckId, {
+    type: CardType.Cloze,
+    text: params.text,
+  });
   const createdCards = params.occlusionNumberSet.map((occlusionNumber) =>
-    ClozeCardUtils.create({
+    ClozeCardUtils.createCard({
       occlusionNumber: occlusionNumber,
-      textReferenceId: textReferenceId,
+      noteId: noteId,
       text: params.text,
     })
   );
-  await registerReferencesToSharedValue(
-    textReferenceId,
+  await registerReferencesToNote(
+    noteId,
     createdCards.map((card) => card.id)
   );
   return createdCards;

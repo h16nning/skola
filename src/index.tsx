@@ -117,15 +117,16 @@ async function isStoragePersisted() {
 }
 
 isStoragePersisted().then(async (isPersisted) => {
-  if (isPersisted) {
-    console.log(":) Storage is successfully persisted.");
-  } else {
-    console.log(":( Storage is not persisted.");
-    console.log("Trying to persist..:");
+  if (!isPersisted) {
+    console.warn("Storage is not persistant. Trying to make it persistant...");
     if (await persist()) {
-      console.log(":) We successfully turned the storage to be persisted.");
+      console.log("Successfully made storage persisted");
     } else {
-      console.log(":( Failed to make storage persisted");
+      console.warn("Failed to make storage persisted");
+      navigator.userAgent.includes("Safari") &&
+        console.info(
+          "You are using Safari, storage may be cleared after 7 days of inactivity: https://webkit.org/blog/10218/full-third-party-cookie-blocking-and-more/"
+        );
     }
   }
 });
