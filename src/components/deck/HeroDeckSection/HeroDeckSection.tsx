@@ -7,6 +7,7 @@ import {
   IconBolt,
   IconBook,
   IconCircleArrowUpRight,
+  IconFile,
   IconSparkles,
 } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
@@ -46,6 +47,7 @@ function HeroDeckSection({ deck, cards, areCardsReady }: HeroDeckSectionProps) {
           </Text>
         ) : cards.length === 0 ? (
           <Stack gap="0" align="center">
+            <IconFile size={60} strokeWidth={1.5} color="lightgray" />
             <Text fz="md" fw={500}>
               {t("hero-deck-section.no-cards-title")}
             </Text>
