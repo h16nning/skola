@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export interface NoteSkeleton {
   id: string;
+  deck: string;
   referencedBy: string[];
   customOrder?: number;
 }
@@ -13,16 +14,20 @@ export interface Note<T extends CardType> extends NoteSkeleton {
   content: NoteContent<T>;
 }
 
-export function createNoteSkeleton(): NoteSkeleton {
+export function createNoteSkeleton(deck: string): NoteSkeleton {
   return {
+    deck: deck,
     id: uuidv4(),
     referencedBy: [],
   };
 }
 
-export async function newNote<T extends CardType>(content: NoteContent<T>) {
+export async function newNote<T extends CardType>(
+  deck: string,
+  content: NoteContent<T>
+) {
   const note = {
-    ...createNoteSkeleton(),
+    ...createNoteSkeleton(deck),
     content,
   };
   await db.notes.add(note, note.id);
