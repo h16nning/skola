@@ -8,9 +8,15 @@ export type Settings<T extends keyof SettingsValues> = {
   value: SettingsValues[T];
 };
 
+export enum SupportedLanguages {
+  English = "en",
+  German = "de",
+  Swedish = "sv",
+}
+
 export interface SettingsValues {
   name?: string;
-  language: "en" | "de" | "es" | "sv";
+  language: SupportedLanguages;
   useZenMode: boolean;
   developerMode: boolean;
   showShortcutHints: boolean;
@@ -32,7 +38,7 @@ export interface SettingsValues {
 }
 
 export const defaultSettings: SettingsValues = {
-  language: "en",
+  language: SupportedLanguages.English,
   useZenMode: false,
   developerMode: false,
   showShortcutHints: true,
