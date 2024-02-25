@@ -16,7 +16,7 @@
     "@mantine/nprogress": "^7.5.1",
     "@mantine/spotlight": "^7.5.1",
     "@mantine/tiptap": "^7.5.1",
-    "@tabler/icons-react": "^2.7.0",
+    "@tabler/icons-react": "^2.47.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
@@ -32,14 +32,10 @@
     "@tiptap/extension-underline": "^2.2.2",
     "@tiptap/react": "^2.2.2",
     "@tiptap/starter-kit": "^2.2.2",
-    "@types/jest": "^29.4.0",
-    "@types/node": "^18.14.4",
-    "@types/uuid": "^9.0.1",
     "dayjs": "^1.11.7",
     "dexie": "^3.2.3",
     "dexie-export-import": "^4.1.1",
-    "dexie-react-hooks": "^1.1.1",
-    "embla-carousel-react": "^7.0.9",
+    "dexie-react-hooks": "^1.1.7",
     "firebase": "^9.18.0",
     "fsrs.js": "^1.2.2",
     "html-to-text": "^9.0.4",
@@ -50,7 +46,6 @@
     "react-router-dom": "^6.8.2",
     "react-timer-hook": "^3.0.5",
     "uuid": "^9.0.0",
-    "vite-tsconfig-paths": "^4.2.3",
     "web-vitals": "^3.1.1"
   },
   "scripts": {
@@ -80,9 +75,12 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.5.3",
+    "@types/jest": "^29.4.0",
     "@types/lodash": "^4.14.202",
+    "@types/node": "^18.14.4",
     "@types/react": "^18.2.46",
     "@types/react-dom": "^18.2.18",
+    "@types/uuid": "^9.0.1",
     "@vitejs/plugin-react": "^4.2.1",
     "i18next-parser": "^8.12.0",
     "postcss": "^8.4.32",
@@ -91,6 +89,7 @@
     "postcss-simple-vars": "^7.0.1",
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
-    "vite-plugin-checker": "^0.6.2"
+    "vite-plugin-checker": "^0.6.2",
+    "vite-tsconfig-paths": "^4.2.3"
   }
 }
