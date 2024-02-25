@@ -33,7 +33,12 @@ async function finishCard(
   frontEditor: Editor | null,
   backEditor: Editor | null
 ) {
-  const cardInstance = await createCardInstance(card, frontEditor, backEditor);
+  const cardInstance = await createCardInstance(
+    deck,
+    card,
+    frontEditor,
+    backEditor
+  );
   if (cardInstance !== null) {
     if (mode === "edit") {
       //SAVE
@@ -64,6 +69,7 @@ async function finishCard(
 }
 
 async function createCardInstance(
+  deck: Deck,
   card: Card<CardType.Normal> | null,
   frontEditor: Editor | null,
   backEditor: Editor | null
@@ -77,6 +83,7 @@ async function createCardInstance(
         card
       )
     : await createNormalCard(
+        deck.id,
         frontEditor?.getHTML() ?? "",
         backEditor?.getHTML() ?? ""
       );

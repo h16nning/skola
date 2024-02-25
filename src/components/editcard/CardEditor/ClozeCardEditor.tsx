@@ -14,10 +14,11 @@ import {
   createClozeCardSet,
 } from "../../../logic/CardTypeImplementations/ClozeCard";
 import {
-  getCardsReferencingSharedValue,
-  getSharedValue,
-  useSharedValue,
-} from "../../../logic/sharedvalue";
+  ClozeNoteContent,
+  getCardsReferencingNote,
+  getNote,
+  useNote,
+} from "../../../logic/note";
 import {
   addFailed,
   saveFailed,
@@ -41,9 +42,13 @@ export default function ClozeCardEditor({
 
   useHotkeys([["mod+Enter", () => setRequestedFinish(true)]]);
 
+  const noteContent = card
+    ? (useNote(card?.note)?.content as ClozeNoteContent) ?? {}
+    : { type: CardType.Cloze, text: "" };
+
   //fix sometime
   const editor = useCardEditor({
-    content: useSharedValue(card?.content.textReferenceId ?? "")?.value ?? "",
+    content: noteContent.text,
     onUpdate: ({ editor }) => {
       if (editor?.getHTML().valueOf() !== editorContent.valueOf()) {
         setEditorContent(editor?.getHTML() ?? "");
@@ -122,25 +127,25 @@ async function finish(
     //ISSUE newly introduced cards through edit are not recognized
     try {
       if (card) {
-        ClozeCardUtils.update(
+        ClozeCardUtils.updateCard(
           {
             text: editorContent,
           },
           card
         );
-        const cardsReferencingSameSharedValue = await getSharedValue(
-          card.content.textReferenceId
-        ).then((sv) => sv && getCardsReferencingSharedValue(sv));
-        cardsReferencingSameSharedValue !== undefined &&
+        const cardsReferencingSameNote = await getNote(card.note).then(
+          (n) => n && getCardsReferencingNote(n)
+        );
+        cardsReferencingSameNote !== undefined &&
           (await Promise.all(
-            cardsReferencingSameSharedValue.map(
-              (card) =>
-                card !== undefined &&
+            cardsReferencingSameNote.map(
+              (c) =>
+                c !== undefined &&
                 ClozeCardUtils.updateCard(
                   {
                     text: editorContent,
                   },
-                  card as Card<CardType.Cloze>
+                  c as Card<CardType.Cloze>
                 )
             )
           ));
@@ -153,6 +158,7 @@ async function finish(
     const occlusionNumberSet: number[] = getOcclusionNumberSet(editorContent);
     try {
       createClozeCardSet({
+        deckId: deck.id,
         text: editorContent,
         occlusionNumberSet,
       }).then((cards) => newCards(cards, deck));

@@ -78,6 +78,7 @@ async function finish(
     //NEW
     try {
       createDoubleSidedCardPair({
+        deckId: deck.id,
         value1: frontEditor?.getHTML() ?? "",
         value2: backEditor?.getHTML() ?? "",
       }).then((cards) => newCards(cards, deck));
@@ -101,7 +102,8 @@ function DoubleSidedCardEditor({
 
   const noteContent = card
     ? (useNote(card?.note)?.content as DoubleSidedNoteContent) ?? {}
-    : { field1: "[error]", field2: "[error]" };
+    : { type: CardType.DoubleSided, field1: "", field2: "" };
+
   const editor1 = useCardEditor({
     content: card?.content.frontIsField1
       ? noteContent.field1

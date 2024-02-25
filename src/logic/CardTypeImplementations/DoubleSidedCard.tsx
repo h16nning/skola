@@ -34,7 +34,6 @@ export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
       field1: existingCard.content.frontIsField1 ? params.front : params.back,
       field2: existingCard.content.frontIsField1 ? params.back : params.front,
     });
-    console.log(existingCard.id);
     updateCard(existingCard.id, {
       preview: toPreviewString(params.front),
     });
@@ -117,10 +116,11 @@ export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
 };
 
 export async function createDoubleSidedCardPair(params: {
+  deckId: string;
   value1: string;
   value2: string;
 }) {
-  const noteId = await newNote({
+  const noteId = await newNote(params.deckId, {
     type: CardType.DoubleSided,
     field1: params.value1,
     field2: params.value2,

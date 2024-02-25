@@ -1,12 +1,12 @@
-import { Button, Alert, Select, Stack, Text } from "@mantine/core";
-import React, { useState } from "react";
-import { ImportFromSourceProps, ImportStatus } from "./ImportModal";
-import FileImport from "./FileImport";
+import { Alert, Button, Select, Stack, Text } from "@mantine/core";
 import { IconChevronRight, IconInfoCircle } from "@tabler/icons-react";
-import ImportButton from "./ImportButton";
-import { Deck, getDeck, newDeck } from "../../../logic/deck";
+import { useState } from "react";
+import { createNormalCard } from "../../../logic/CardTypeImplementations/NormalCard";
 import { newCard } from "../../../logic/card";
-import { NormalCardUtils } from "../../../logic/CardTypeImplementations/NormalCard";
+import { Deck, getDeck, newDeck } from "../../../logic/deck";
+import FileImport from "./FileImport";
+import ImportButton from "./ImportButton";
+import { ImportFromSourceProps, ImportStatus } from "./ImportModal";
 
 interface ImportFromJSONProps extends ImportFromSourceProps {}
 export default function ImportFromJSON({
@@ -182,12 +182,15 @@ async function importFunction(
   const frontFieldIndex = parseInt(frontField);
   const backFieldIndex = parseInt(backField);
   const newDeckId = await newDeck(deckName, superDeck, description);
-  const newCards = cards.map((card) => {
-    return NormalCardUtils.create({
-      front: card.fields[frontFieldIndex],
-      back: card.fields[backFieldIndex],
-    });
-  });
+  const newCards = await Promise.all(
+    cards.map(async (card) => {
+      return createNormalCard(
+        newDeckId,
+        card.fields[frontFieldIndex],
+        card.fields[backFieldIndex]
+      );
+    })
+  );
   const createdDeck = await getDeck(newDeckId.toString());
   if (!createdDeck) {
     throw new Error("Failed to get the created deck");
