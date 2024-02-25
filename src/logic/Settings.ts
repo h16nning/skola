@@ -1,6 +1,7 @@
 import { useLiveQuery } from "dexie-react-hooks";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { db } from "./db";
+import { useEventListener } from "./ui";
 
 export type Settings<T extends keyof SettingsValues> = {
   key: T;
@@ -97,13 +98,7 @@ export async function setSetting<T extends keyof SettingsValues>(
 
 export function useShowShortcutHints() {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
-
-  useEffect(() => {
-    const listener = () => setIsTouchDevice(true);
-    document.addEventListener("touchstart", listener);
-
-    return () => document.removeEventListener("touchstart", listener);
-  }, []);
-
-  return !isTouchDevice && useSetting("showShortcutHints")[0];
+  const [showShortcutHints] = useSetting("showShortcutHints");
+  useEventListener("touchstart", () => setIsTouchDevice(true), []);
+  return !isTouchDevice && showShortcutHints;
 }
