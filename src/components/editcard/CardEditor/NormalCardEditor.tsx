@@ -2,7 +2,7 @@ import classes from "./NormalCardEditor.module.css";
 import React, { useCallback, useEffect } from "react";
 import { Stack, Text } from "@mantine/core";
 import CardEditor, { useCardEditor } from "./CardEditor";
-import { EditMode } from "../../../logic/CardTypeManager";
+import { EditMode } from "../../../logic/TypeManager";
 import { Card, CardType, newCard, updateCard } from "../../../logic/card";
 import { Deck } from "../../../logic/deck";
 import CardEditorFooter from "../CardEditorFooter";
@@ -83,7 +83,7 @@ async function createCardInstance(
         card
       )
     : await createNormalCard(
-        deck.id,
+        deck,
         frontEditor?.getHTML() ?? "",
         backEditor?.getHTML() ?? ""
       );
@@ -94,7 +94,7 @@ function NormalCardEditor({ card, deck, mode }: NormalCardEditorProps) {
 
   const noteContent = card
     ? (useNote(card?.note)?.content as NormalNoteContent) ?? {}
-    : { front: "[error]", back: "[error]" };
+    : { front: "", back: "" };
 
   const frontEditor = useCardEditor({
     content: noteContent.front,

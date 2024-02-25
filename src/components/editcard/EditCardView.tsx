@@ -3,7 +3,7 @@ import { Card, CardType } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
 import { Group, Stack, Text } from "@mantine/core";
 import CardMenu from "./CardMenu";
-import { getUtils } from "../../logic/CardTypeManager";
+import { getUtils } from "../../logic/TypeManager";
 import { useLoaderData } from "react-router-dom";
 
 function EditCardView() {

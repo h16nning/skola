@@ -2,11 +2,13 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { CardType } from "./card";
 import { db } from "./db";
 import { v4 as uuidv4 } from "uuid";
+import { Deck } from "./deck";
 
 export interface NoteSkeleton {
   id: string;
   deck: string;
   referencedBy: string[];
+  creationDate: Date;
   customOrder?: number;
 }
 
@@ -17,20 +19,24 @@ export interface Note<T extends CardType> extends NoteSkeleton {
 export function createNoteSkeleton(deck: string): NoteSkeleton {
   return {
     deck: deck,
+    creationDate: new Date(Date.now()),
     id: uuidv4(),
     referencedBy: [],
   };
 }
 
 export async function newNote<T extends CardType>(
-  deck: string,
+  deck: Deck,
   content: NoteContent<T>
 ) {
   const note = {
-    ...createNoteSkeleton(deck),
+    ...createNoteSkeleton(deck.id),
     content,
   };
-  await db.notes.add(note, note.id);
+  await db.transaction("rw", db.decks, db.notes, () => {
+    db.notes.add(note, note.id);
+    db.decks.update(deck.id, { notes: deck.notes.concat(note.id) });
+  });
   return note.id;
 }
 
@@ -75,6 +81,15 @@ export function useNote(noteId: string) {
 
 export function updateNote<T extends CardType>(
   noteId: string,
+  changes: {
+    [keyPath: string]: any;
+  }
+) {
+  return db.notes.update(noteId, changes);
+}
+
+export function updateNoteContent<T extends CardType>(
+  noteId: string,
   content: NoteContent<T>
 ) {
   return db.notes.update(noteId, { content });
@@ -82,6 +97,53 @@ export function updateNote<T extends CardType>(
 
 export function getCardsReferencingNote(note: Note<any>) {
   return Promise.all(note.referencedBy.map((cardId) => db.cards.get(cardId)));
+}
+
+export async function getNotesOf(
+  deck?: Deck,
+  excludeSubDecks?: boolean
+): Promise<Note<CardType>[] | undefined> {
+  if (!deck) return undefined;
+  let notes: Note<CardType>[] = await db.notes
+    .where("id")
+    .anyOf(deck.notes)
+    .filter((n) => n !== undefined)
+    .toArray();
+  if (excludeSubDecks) {
+    return notes;
+  }
+  await Promise.all(
+    deck.subDecks.map((subDeckID) =>
+      db.decks
+        .get(subDeckID)
+        .then((subDeck) => {
+          if (subDeck) {
+            return getNotesOf(subDeck);
+          }
+        })
+        .then((c) => {
+          if (c) {
+            notes = notes.concat(c);
+          }
+        })
+    )
+  );
+  return notes;
+}
+
+export function useNotesOf(
+  deck: Deck | undefined,
+  excludeSubDecks?: boolean
+): [Note<CardType>[] | undefined, boolean] {
+  return useLiveQuery(
+    () =>
+      getNotesOf(deck, excludeSubDecks).then((notes) => [
+        notes,
+        deck !== undefined,
+      ]),
+    [deck, excludeSubDecks],
+    [undefined, false]
+  );
 }
 
 export type NoteContent<T extends CardType> = {

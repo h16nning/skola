@@ -11,7 +11,7 @@ import {
 import { t } from "i18next";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUtils } from "../../logic/CardTypeManager";
+import { getUtils } from "../../logic/TypeManager";
 import { useSetting, useShowShortcutHints } from "../../logic/Settings";
 import { Card, CardType } from "../../logic/card";
 import DebugCardModal from "../DebugCardModal/DebugCardModal";

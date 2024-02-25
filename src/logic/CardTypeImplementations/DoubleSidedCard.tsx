@@ -1,7 +1,7 @@
 import { Divider, Stack, Title } from "@mantine/core";
 import DoubleSidedCardEditor from "../../components/editcard/CardEditor/DoubleSidedCardEditor";
 import common from "../../style/CommonStyles.module.css";
-import { CardTypeManager, EditMode } from "../CardTypeManager";
+import { TypeManager, EditMode } from "../TypeManager";
 import {
   Card,
   CardType,
@@ -13,23 +13,24 @@ import {
 import { db } from "../db";
 import { Deck } from "../deck";
 import {
+  Note,
   NoteContent,
   newNote,
   registerReferencesToNote,
   removeReferenceToNote,
-  updateNote,
+  updateNoteContent,
 } from "../note";
 
 export type DoubleSidedContent = {
   frontIsField1: boolean;
 };
 
-export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
+export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
   updateCard(
     params: { front: string; back: string },
     existingCard: Card<CardType.DoubleSided>
   ) {
-    updateNote(existingCard.note, {
+    updateNoteContent(existingCard.note, {
       type: CardType.DoubleSided,
       field1: existingCard.content.frontIsField1 ? params.front : params.back,
       field2: existingCard.content.frontIsField1 ? params.back : params.front,
@@ -103,6 +104,26 @@ export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
     );
   },
 
+  displayNote(note: Note<CardType.DoubleSided>) {
+    return (
+      <Stack gap="sm">
+        <Title
+          order={3}
+          fw={600}
+          dangerouslySetInnerHTML={{ __html: note.content.field1 ?? "" }}
+        ></Title>
+        <Divider className={common.lightBorderColor} />
+        <div
+          dangerouslySetInnerHTML={{ __html: note.content.field2 ?? "" }}
+        ></div>
+      </Stack>
+    );
+  },
+
+  getSortFieldFromNote(note) {
+    return toPreviewString(note.content.field1);
+  },
+
   editor(card: Card<CardType.DoubleSided> | null, deck: Deck, mode: EditMode) {
     return <DoubleSidedCardEditor card={card} deck={deck} mode={mode} />;
   },
@@ -116,11 +137,11 @@ export const DoubleSidedCardUtils: CardTypeManager<CardType.DoubleSided> = {
 };
 
 export async function createDoubleSidedCardPair(params: {
-  deckId: string;
+  deck: Deck;
   value1: string;
   value2: string;
 }) {
-  const noteId = await newNote(params.deckId, {
+  const noteId = await newNote(params.deck, {
     type: CardType.DoubleSided,
     field1: params.value1,
     field2: params.value2,
