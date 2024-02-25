@@ -50,6 +50,7 @@
       "new-subdeck": "Create New Subdeck in {{superDeck}}",
       "submit": "Create"
     },
+    "no-decks-found": "There are no deck here. Click the button above to create one!",
     "notebook": {
       "title": "Notebook"
     },
@@ -76,6 +77,8 @@
     "no-cards-title": "It is looking empty here!"
   },
   "home": {
+    "create-deck": "Create a deck",
+    "no-decks-found": "You have not created any decks yet.",
     "title": "Home",
     "welcome": "Welcome!",
     "welcome-user": "Welcome back, {{name}}!"
@@ -91,6 +94,9 @@
     "finished-repetions-count": "Repetitions"
   },
   "manage-cards": {
+    "table": {
+      "no-cards-found": "No cards found"
+    },
     "title": "Manage Cards"
   },
   "notebook": {
