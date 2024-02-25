@@ -1,34 +1,33 @@
-import classes from "./NotebookView.module.css";
-import { Group, Paper, Tooltip } from "@mantine/core";
-import { Card, CardType, updateCard } from "../../logic/card";
-import { getUtils } from "../../logic/CardTypeManager";
-import CardMenu from "../editcard/CardMenu";
 import { Draggable } from "@hello-pangea/dnd";
-import { memo, useEffect, useState } from "react";
+import { Group, Paper, Tooltip } from "@mantine/core";
 import { t } from "i18next";
-import { useNote } from "../../logic/note";
+import { memo, useEffect, useState } from "react";
+import { getUtils } from "../../logic/TypeManager";
+import { CardType } from "../../logic/card";
+import { Note, updateNote } from "../../logic/note";
+import classes from "./NotebookView.module.css";
 
 interface NotebookCardProps {
   index: number;
-  card: Card<CardType>;
+  note: Note<CardType>;
   useCustomSort: boolean;
   showAnswer: boolean;
 }
 
 function NotebookCard({
-  card,
+  note,
   index,
   useCustomSort,
   showAnswer,
 }: NotebookCardProps) {
   useEffect(() => {
     if (useCustomSort) {
-      updateCard(card.id, { customOrder: index });
+      updateNote(note.id, { customOrder: index });
     }
   }, [index]);
 
   return useCustomSort ? (
-    <Draggable key={card.id} index={index} draggableId={card.id}>
+    <Draggable key={note.id} index={index} draggableId={note.id}>
       {(provided, snapshot) => (
         <div
           className={
@@ -40,21 +39,19 @@ function NotebookCard({
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          <InnerCard card={card} showAnswer={showAnswer} />
+          <InnerCard note={note} showAnswer={showAnswer} />
         </div>
       )}
     </Draggable>
   ) : (
-    <InnerCard card={card} showAnswer={showAnswer} />
+    <InnerCard note={note} showAnswer={showAnswer} />
   );
 }
 export default memo(NotebookCard);
 
 const InnerCard = memo(
-  ({ card, showAnswer }: { card: Card<CardType>; showAnswer: boolean }) => {
+  ({ note, showAnswer }: { note: Note<CardType>; showAnswer: boolean }) => {
     const [individualShowAnswer, setIndividualShowAnswer] = useState(false);
-
-    const noteContent = useNote(card.note)?.content;
 
     return (
       <Tooltip
@@ -71,10 +68,10 @@ const InnerCard = memo(
           <Group align="top" justify="space-between" wrap="nowrap">
             <Group align="center" w="100%">
               {showAnswer || individualShowAnswer
-                ? getUtils(card).displayAnswer(card, noteContent)
-                : getUtils(card).displayQuestion(card, noteContent)}
+                ? getUtils(note).displayNote(note)
+                : getUtils(note).displayNote(note)}
             </Group>
-            <CardMenu card={card} />
+            IMPLEMENT NOTE MENU HERRE
           </Group>
         </Paper>
       </Tooltip>

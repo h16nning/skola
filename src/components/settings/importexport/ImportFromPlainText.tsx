@@ -24,7 +24,7 @@ async function importCards(
 
   const cards = await Promise.all(
     questionAnswerPairs.map(async (pair) => {
-      return createNormalCard(deck.id, pair[0], pair[1]);
+      return createNormalCard(deck, pair[0], pair[1]);
     })
   );
 

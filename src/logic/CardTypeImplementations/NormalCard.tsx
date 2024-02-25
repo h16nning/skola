@@ -1,7 +1,7 @@
 import { Divider, Stack, Title } from "@mantine/core";
 import NormalCardEditor from "../../components/editcard/CardEditor/NormalCardEditor";
 import common from "../../style/CommonStyles.module.css";
-import { CardTypeManager, EditMode } from "../CardTypeManager";
+import { TypeManager, EditMode } from "../TypeManager";
 import {
   Card,
   CardType,
@@ -10,16 +10,16 @@ import {
   toPreviewString,
 } from "../card";
 import { Deck } from "../deck";
-import { NoteContent, newNote, updateNote } from "../note";
+import { Note, NoteContent, newNote, updateNoteContent } from "../note";
 
 export type NormalContent = {};
 
-export const NormalCardUtils: CardTypeManager<CardType.Normal> = {
+export const NormalCardUtils: TypeManager<CardType.Normal> = {
   updateCard(
     params: { front: string; back: string },
     existingCard: Card<CardType.Normal>
   ) {
-    updateNote(existingCard.note, {
+    updateNoteContent(existingCard.note, {
       type: CardType.Normal,
       front: params.front,
       back: params.back,
@@ -66,6 +66,26 @@ export const NormalCardUtils: CardTypeManager<CardType.Normal> = {
     );
   },
 
+  displayNote(note: Note<CardType.Normal>) {
+    return (
+      <Stack gap="sm">
+        <Title
+          order={3}
+          fw={600}
+          dangerouslySetInnerHTML={{ __html: note.content?.front ?? "" }}
+        ></Title>
+        <Divider className={common.lightBorderColor} />
+        <div
+          dangerouslySetInnerHTML={{ __html: note.content?.back ?? "" }}
+        ></div>
+      </Stack>
+    );
+  },
+
+  getSortFieldFromNote(note: Note<CardType.Normal>) {
+    return toPreviewString(note.content?.front);
+  },
+
   editor(card: Card<CardType.Normal> | null, deck: Deck, mode: EditMode) {
     return <NormalCardEditor card={card} deck={deck} mode={mode} />;
   },
@@ -76,11 +96,11 @@ export const NormalCardUtils: CardTypeManager<CardType.Normal> = {
 };
 
 export async function createNormalCard(
-  deckId: string,
+  deck: Deck,
   front: string,
   back: string
 ) {
-  const noteId = await newNote(deckId, {
+  const noteId = await newNote(deck, {
     type: CardType.Normal,
     front: front,
     back: back,

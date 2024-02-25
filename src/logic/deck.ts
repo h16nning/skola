@@ -11,6 +11,7 @@ export interface Deck {
   subDecks: string[];
   superDecks?: string[];
   cards: Array<string>;
+  notes: Array<string>;
   description?: string;
   options: DeckOptions;
 }
@@ -48,6 +49,7 @@ export async function newDeck(
     name: name,
     id: uuid,
     cards: [],
+    notes: [],
     subDecks: [],
     superDecks: superDecks,
     description: description,
@@ -169,12 +171,12 @@ export async function renameDeck(id: string, newName: string) {
 }
 
 export async function deleteDeck(deck: Deck, calledRecursively?: boolean) {
-  await db.transaction("rw", db.decks, db.cards, () => {
+  await db.transaction("rw", db.decks, db.cards, db.notes, async () => {
     if (!deck) {
       return;
     }
 
-    Promise.all(
+    await Promise.all(
       deck.subDecks.map((subDeckID) =>
         getDeck(subDeckID).then(
           (subDeck) => subDeck && deleteDeck(subDeck, true)
@@ -197,8 +199,8 @@ export async function deleteDeck(deck: Deck, calledRecursively?: boolean) {
       );
     }
 
-    Promise.all(deck.cards.map((cardID) => db.cards.delete(cardID)));
-
+    await Promise.all(deck.cards.map((cardID) => db.cards.delete(cardID)));
+    await Promise.all(deck.notes.map((noteID) => db.notes.delete(noteID)));
     db.decks.delete(deck.id);
   });
 }

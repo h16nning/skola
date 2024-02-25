@@ -1,8 +1,8 @@
-import { CardTypeManager } from "../CardTypeManager";
+import { TypeManager } from "../TypeManager";
 import { Card, CardType, createCardSkeleton } from "../card";
 import React from "react";
 
-export const UndefinedCardUtils: CardTypeManager<CardType.Undefined> = {
+export const UndefinedCardUtils: TypeManager<CardType.Undefined> = {
   updateCard(_, existingCard: Card<CardType.Undefined>) {
     return {
       ...existingCard,
@@ -30,6 +30,14 @@ export const UndefinedCardUtils: CardTypeManager<CardType.Undefined> = {
 
   displayAnswer() {
     return "[Undefined Card] Answer";
+  },
+
+  displayNote() {
+    return <span>[Undefined Card] Note</span>;
+  },
+
+  getSortFieldFromNote() {
+    return "[Undefined Card] Sort Field";
   },
 
   editor() {
