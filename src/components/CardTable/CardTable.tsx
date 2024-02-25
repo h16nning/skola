@@ -1,11 +1,13 @@
 import classes from "./CardTable.module.css";
 import React from "react";
 import { Card, CardType } from "../../logic/card";
-import { Table, Text } from "@mantine/core";
+import { Stack, Table, Text } from "@mantine/core";
 import { useEventListener } from "@mantine/hooks";
 import CardTableHeadItem from "./CardTableHeadItem";
 import { CardTableItem } from "./CardTableItem";
 import { SortOption } from "../../logic/card_filter";
+import { useTranslation } from "react-i18next";
+import { IconCards } from "@tabler/icons-react";
 
 interface CardTableProps {
   cardSet: Card<CardType>[];
@@ -26,6 +28,7 @@ function CardTable({
   sort,
   setSort,
 }: CardTableProps) {
+  const [t] = useTranslation();
   const ref = useEventListener("keydown", (event) => {
     if (event.key === "ArrowDown") {
       setSelectedIndex(
@@ -86,26 +89,28 @@ function CardTable({
             />
           </Table.Tr>
         </Table.Thead>
-        {cardSet.length > 0 ? (
-          <Table.Tbody>
-            {cardSet.map((card, index) => (
-              <CardTableItem
-                card={card}
-                key={card.id}
-                index={index}
-                selectedIndex={selectedIndex}
-                setSelectedIndex={setSelectedIndex}
-                selectedCard={selectedCard}
-                setSelectedCard={setSelectedCard}
-              />
-            ))}
-          </Table.Tbody>
-        ) : (
-          <Text fz="sm" c="dimmed">
-            No cards found
-          </Text>
-        )}
+        <Table.Tbody>
+          {cardSet.map((card, index) => (
+            <CardTableItem
+              card={card}
+              key={card.id}
+              index={index}
+              selectedIndex={selectedIndex}
+              setSelectedIndex={setSelectedIndex}
+              selectedCard={selectedCard}
+              setSelectedCard={setSelectedCard}
+            />
+          ))}
+        </Table.Tbody>
       </Table>
+      {cardSet.length === 0 && (
+        <Stack align="center" p="xl">
+          <IconCards size={36} strokeWidth={1.5} color="lightgray" />
+          <Text fz="sm" c="dimmed">
+            {t("manage-cards.table.no-cards-found")}
+          </Text>
+        </Stack>
+      )}
     </Table.ScrollContainer>
   );
 }
