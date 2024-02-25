@@ -9,8 +9,8 @@ import {
   deleteCard,
   toPreviewString,
 } from "../card";
-import { NormalNoteContent, newNote, updateNote, useNote } from "../note";
 import { Deck } from "../deck";
+import { NoteContent, newNote, updateNote } from "../note";
 
 export type NormalContent = {};
 
@@ -39,26 +39,29 @@ export const NormalCardUtils: CardTypeManager<CardType.Normal> = {
     };
   },
 
-  displayQuestion(card: Card<CardType.Normal>) {
-    const noteContent =
-      (useNote(card.note)?.content as NormalNoteContent) ?? {};
+  displayQuestion(
+    _: Card<CardType.Normal>,
+    content?: NoteContent<CardType.Normal>
+  ) {
     return (
       <Title
         order={3}
         fw={600}
-        dangerouslySetInnerHTML={{ __html: noteContent.front }}
+        dangerouslySetInnerHTML={{ __html: content?.front ?? "" }}
       ></Title>
     );
   },
 
-  displayAnswer(card: Card<CardType.Normal>, place: "learn" | "notebook") {
-    const noteContent =
-      (useNote(card.note)?.content as NormalNoteContent) ?? {};
+  displayAnswer(
+    card: Card<CardType.Normal>,
+    content?: NoteContent<CardType.Normal>,
+    place?: "learn" | "notebook"
+  ) {
     return (
       <Stack gap={place === "notebook" ? "sm" : "lg"} w="100%">
-        {NormalCardUtils.displayQuestion(card)}
+        {NormalCardUtils.displayQuestion(card, content)}
         <Divider className={common.lightBorderColor} />
-        <div dangerouslySetInnerHTML={{ __html: noteContent.back }}></div>
+        <div dangerouslySetInnerHTML={{ __html: content?.back ?? "" }}></div>
       </Stack>
     );
   },
