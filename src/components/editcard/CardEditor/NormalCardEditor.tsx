@@ -13,7 +13,11 @@ import {
   successfullySaved,
 } from "../../custom/Notification/Notification";
 import { Editor } from "@tiptap/react";
-import { NormalCardUtils } from "../../../logic/CardTypeImplementations/NormalCard";
+import {
+  NormalCardUtils,
+  createNormalCard,
+} from "../../../logic/CardTypeImplementations/NormalCard";
+import { NormalNoteContent, useNote } from "../../../logic/note";
 
 interface NormalCardEditorProps {
   card: Card<CardType.Normal> | null;
@@ -29,7 +33,7 @@ async function finishCard(
   frontEditor: Editor | null,
   backEditor: Editor | null
 ) {
-  const cardInstance = createCardInstance(card, frontEditor, backEditor);
+  const cardInstance = await createCardInstance(card, frontEditor, backEditor);
   if (cardInstance !== null) {
     if (mode === "edit") {
       //SAVE
@@ -59,35 +63,39 @@ async function finishCard(
   }
 }
 
-function createCardInstance(
+async function createCardInstance(
   card: Card<CardType.Normal> | null,
   frontEditor: Editor | null,
   backEditor: Editor | null
 ) {
   return card
-    ? NormalCardUtils.update(
+    ? NormalCardUtils.updateCard(
         {
           front: frontEditor?.getHTML() ?? "",
           back: backEditor?.getHTML() ?? "",
         },
         card
       )
-    : NormalCardUtils.create({
-        front: frontEditor?.getHTML() ?? "",
-        back: backEditor?.getHTML() ?? "",
-      });
+    : await createNormalCard(
+        frontEditor?.getHTML() ?? "",
+        backEditor?.getHTML() ?? ""
+      );
 }
 
 function NormalCardEditor({ card, deck, mode }: NormalCardEditorProps) {
   const [requestedFinish, setRequestedFinish] = React.useState(false);
 
+  const noteContent = card
+    ? (useNote(card?.note)?.content as NormalNoteContent) ?? {}
+    : { front: "[error]", back: "[error]" };
+
   const frontEditor = useCardEditor({
-    content: card?.content.front ?? "",
+    content: noteContent.front,
     finish: () => setRequestedFinish(true),
   });
 
   const backEditor = useCardEditor({
-    content: card?.content.back ?? "",
+    content: noteContent.back,
     finish: () => setRequestedFinish(true),
   });
 
