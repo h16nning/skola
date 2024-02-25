@@ -3,7 +3,7 @@ import { useDebouncedValue, useFullscreen } from "@mantine/hooks";
 import { Rating } from "fsrs.js";
 import { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUtils } from "../../../logic/CardTypeManager";
+import { getUtils } from "../../../logic/TypeManager";
 import { useSetting } from "../../../logic/Settings";
 import { getCardsOf } from "../../../logic/card";
 import { useDeckFromUrl } from "../../../logic/deck";
