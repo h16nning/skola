@@ -3,6 +3,7 @@ import { Text, Stack } from "@mantine/core";
 import DeckPreview from "./DeckPreview";
 import { Deck } from "../../logic/deck";
 import LazySkeleton from "../custom/LazySkeleton";
+import { useTranslation } from "react-i18next";
 
 interface DeckTableProps {
   deckList?: Deck[];
@@ -10,6 +11,7 @@ interface DeckTableProps {
 }
 
 function DeckTable({ deckList, isReady }: DeckTableProps) {
+  const [t] = useTranslation();
   return isReady && deckList ? (
     deckList.length !== 0 ? (
       <Stack gap="0" w="100%">
@@ -21,8 +23,7 @@ function DeckTable({ deckList, isReady }: DeckTableProps) {
       </Stack>
     ) : (
       <Text fz="sm" c="dimmed" pt="lg" ta="center">
-        You have not created any decks yet. Click the button above to create
-        one!
+        {t("deck.no-decks-found")}
       </Text>
     )
   ) : (

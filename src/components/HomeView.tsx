@@ -1,6 +1,6 @@
-import { Button, Center, Stack, Title } from "@mantine/core";
+import { Button, Center, Stack, Text, Title } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
-import { IconPlus } from "@tabler/icons-react";
+import { IconFolder, IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSetting } from "../logic/Settings";
@@ -29,16 +29,32 @@ export default function HomeView({}: {}) {
         </Center>
       </AppHeaderContent>
 
-      <Stack gap="xs" w="600px" maw="100%" align="flex-end" pt="xl">
-        <Button
-          onClick={() => setNewDeckModalOpened(true)}
-          leftSection={<IconPlus />}
-          variant="default"
-        >
-          {t("deck.new-deck-button")}
-        </Button>
-        <DeckTable deckList={decks} isReady={isReady} />
-      </Stack>
+      {isReady && decks?.length === 0 ? (
+        <Stack align="center" p="xl">
+          <IconFolder size={80} strokeWidth={1.5} color="lightgray" />
+          <Text fz="md" c="dimmed">
+            {t("home.no-decks-found")}
+          </Text>
+          <Button
+            onClick={() => setNewDeckModalOpened(true)}
+            leftSection={<IconPlus />}
+            variant="primary"
+          >
+            {t("home.create-deck")}
+          </Button>
+        </Stack>
+      ) : (
+        <Stack gap="xs" w="600px" maw="100%" align="flex-end" pt="xl">
+          <Button
+            onClick={() => setNewDeckModalOpened(true)}
+            leftSection={<IconPlus />}
+            variant="default"
+          >
+            {t("deck.new-deck-button")}
+          </Button>
+          <DeckTable deckList={decks} isReady={isReady} />
+        </Stack>
+      )}
       <NewDeckModal
         opened={newDeckModalOpened}
         setOpened={setNewDeckModalOpened}
