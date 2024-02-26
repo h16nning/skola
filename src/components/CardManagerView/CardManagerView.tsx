@@ -1,22 +1,24 @@
-import { Space, Group, Stack, TextInput, Title } from "@mantine/core";
+import { Group, Space, Stack, TextInput, Title } from "@mantine/core";
 import { useDebouncedState } from "@mantine/hooks";
 import { IconSearch } from "@tabler/icons-react";
+import { t } from "i18next";
 import { useState } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
-import { useCardsWith } from "../../logic/card";
-import selectCards, { SortOption } from "../../logic/card_filter";
+import { NoteSortFunction, NoteSorts } from "../../logic/NoteSorting";
+import { getUtils } from "../../logic/TypeManager";
 import { useDecks } from "../../logic/deck";
-import CardTable from "../CardTable/CardTable";
+import { useNotesWith } from "../../logic/note";
+import NoteTable from "../CardTable/NoteTable";
 import { AppHeaderContent } from "../Header/Header";
 import SelectDecksHeader from "../custom/SelectDecksHeader";
-import classes from "./CardManagerView.module.css";
 import EditorOptionsMenu from "../editcard/EditorOptionsMenu";
-import { t } from "i18next";
+import classes from "./CardManagerView.module.css";
 
 const ALL_DECK_ID = "all";
+
 function CardManagerView() {
   const navigate = useNavigate();
-  const cardId = useParams().cardId;
+  const noteId = useParams().noteId;
   let deckId = useParams().deckId;
   if (deckId === ALL_DECK_ID) deckId = undefined;
 
@@ -26,11 +28,26 @@ function CardManagerView() {
 
   const [filter, setFilter] = useDebouncedState<string>("", 250);
 
-  const [sort, setSort] = useState<[SortOption, boolean]>(["sort_field", true]);
+  const [sort, setSort] = useState<[NoteSortFunction, boolean]>([
+    NoteSorts.bySortField,
+    true,
+  ]);
 
-  const [cards] = useCardsWith(
-    (cards) => selectCards(cards, deckId, filter, sort),
-    [deckId, location, filter, sort]
+  const [notes] = useNotesWith(
+    (n) =>
+      n
+        .toArray()
+        .then((m) =>
+          m
+            .filter((note) =>
+              getUtils(note)
+                .getSortFieldFromNoteContent(note.content)
+                .toLowerCase()
+                .includes(filter.toLowerCase())
+            )
+            .sort(sort[0](sort[1] ? 1 : -1))
+        ),
+    [location, filter, location, sort]
   );
 
   return (
@@ -46,15 +63,15 @@ function CardManagerView() {
       </AppHeaderContent>
       <Group align="end" gap="xs">
         <SelectDecksHeader
-          label="Showing cards in"
+          label="Showing Notes in"
           decks={decks}
-          onSelect={(deckId) => navigate(`/cards/${deckId}`)}
+          onSelect={(deckId) => navigate(`/notes/${deckId}`)}
         />
       </Group>
       <TextInput
         leftSection={<IconSearch size={16} />}
         defaultValue={filter}
-        placeholder="Filter cards"
+        placeholder="Filter Notes"
         maw="20rem"
         onChange={(event) => setFilter(event.currentTarget.value)}
       />
@@ -64,17 +81,17 @@ function CardManagerView() {
         align="start"
         style={{ overflowY: "scroll", height: "100%" }}
       >
-        {cards && (
-          <CardTable
-            cardSet={cards ?? []}
-            selectedIndex={cards.findIndex((card) => cardId === card?.id)}
+        {notes && (
+          <NoteTable
+            noteSet={notes ?? []}
+            selectedIndex={notes.findIndex((note) => noteId === note?.id)}
             setSelectedIndex={(idx) => {
-              navigate(`/cards/${deckId || ALL_DECK_ID}/${cards[idx].id}`);
+              navigate(`/notes/${deckId || ALL_DECK_ID}/${notes[idx].id}`);
             }}
-            selectedCard={cards.find((card) => cardId === card?.id)}
-            setSelectedCard={(card) => {
+            selectedNote={notes.find((card) => noteId === card?.id)}
+            setSelectedNote={(card) => {
               // avoid navigating to the same card
-              if (cardId !== card?.id)
+              if (noteId !== card?.id)
                 navigate(`/cards/${deckId || ALL_DECK_ID}/${card.id}`);
             }}
             sort={sort}

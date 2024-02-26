@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { Card, CardType } from "./card";
 import { db } from "./db";
+import { Note } from "./note";
 
 export interface Deck {
   id: string;
@@ -61,10 +62,12 @@ export async function newDeck(
   return uuid;
 }
 
-export function useDeckOf(card: Card<CardType>): [Deck | undefined, boolean] {
+export function useDeckOf(
+  a: Card<CardType> | Note<CardType>
+): [Deck | undefined, boolean] {
   return useLiveQuery(
-    () => db.decks.get(card.deck).then((deck) => [deck, true]),
-    [card],
+    () => db.decks.get(a.deck).then((deck) => [deck, true]),
+    [a],
     [undefined, false]
   );
 }

@@ -45,13 +45,15 @@ export function createCardSkeleton(): CardSkeleton {
 function isCard(card: Card<CardType> | undefined): card is Card<CardType> {
   return !!card;
 }
+
 export async function newCard(card: Card<CardType>, deck: Deck) {
   card.deck = deck.id;
   deck.cards.push(card.id);
-  return db.transaction("rw", db.decks, db.cards, () => {
+  await db.transaction("rw", db.decks, db.cards, () => {
     db.cards.add(card, card.id);
     db.decks.update(deck.id, { cards: deck.cards });
   });
+  return card.id;
 }
 
 export async function newCards(cards: Card<CardType>[], deck: Deck) {

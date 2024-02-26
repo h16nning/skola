@@ -1,48 +1,48 @@
-import React, { useMemo } from "react";
-import { Card, CardType } from "../../logic/card";
-import { useDeckOf } from "../../logic/deck";
 import { Group, Stack, Text } from "@mantine/core";
-import CardMenu from "./CardMenu";
-import { getUtils } from "../../logic/TypeManager";
+import { useMemo } from "react";
 import { useLoaderData } from "react-router-dom";
+import { CardType } from "../../logic/card";
+import { useDeckOf } from "../../logic/deck";
+import { Note } from "../../logic/note";
+import { getUtils } from "../../logic/TypeManager";
 
 function EditCardView() {
-  const card = useLoaderData() as Card<CardType> | undefined;
-  if (!card) {
-    return <NoCardView />;
+  const note = useLoaderData() as Note<CardType> | undefined;
+  if (!note) {
+    return <NoNoteView />;
   }
-  return <CardView card={card} />;
+  return <NoteView note={note} />;
 }
 
-export function NoCardView() {
+export function NoNoteView() {
   return (
     <Text fz="sm" c="dimmed">
-      No card selected
+      No note selected
     </Text>
   );
 }
 
-function CardView({ card }: { card: Card<CardType> }) {
-  const [deck] = useDeckOf(card);
+function NoteView({ note }: { note: Note<CardType> }) {
+  const [deck] = useDeckOf(note);
 
-  const CardEditor = useMemo(() => {
-    return deck ? getUtils(card).editor(card, deck, "edit") : null;
-  }, [card, deck]);
+  const NoteEditor = useMemo(() => {
+    return deck ? getUtils(note).editor(note, deck, "edit") : null;
+  }, [note, deck]);
 
   return (
     <Stack style={{ height: "100%", overflowY: "scroll" }}>
       <Group justify="space-between" wrap="nowrap">
         <Group>
           <Text fz="xs" fw={600}>
-            Edit Card{" "}
+            Edit Note{" "}
             <Text c="dimmed" span fz="xs" fw={600}>
-              ({card.content.type})
+              ({note.content.type})
             </Text>
           </Text>
         </Group>
-        <CardMenu card={card} withEdit={false} />
+        // ADD NOTE MENU
       </Group>
-      {CardEditor}
+      {NoteEditor}
     </Stack>
   );
 }

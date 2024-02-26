@@ -1,7 +1,7 @@
 import { Stack, TextInput } from "@mantine/core";
 import { useState } from "react";
-import { createNormalCard } from "../../../logic/CardTypeImplementations/NormalCard";
-import { newCard } from "../../../logic/card";
+import { getUtilsOfType } from "../../../logic/TypeManager";
+import { CardType, newCard } from "../../../logic/card";
 import { Deck } from "../../../logic/deck";
 import FileImport from "./FileImport";
 import ImportButton from "./ImportButton";
@@ -24,7 +24,13 @@ async function importCards(
 
   const cards = await Promise.all(
     questionAnswerPairs.map(async (pair) => {
-      return createNormalCard(deck, pair[0], pair[1]);
+      return getUtilsOfType(CardType.Normal).createNote(
+        {
+          front: pair[0],
+          back: pair[1],
+        },
+        deck
+      );
     })
   );
 

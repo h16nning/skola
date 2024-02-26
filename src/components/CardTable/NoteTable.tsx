@@ -1,46 +1,43 @@
-import classes from "./CardTable.module.css";
-import React from "react";
-import { Card, CardType } from "../../logic/card";
-import { Stack, Table, Text } from "@mantine/core";
+import { Table, Text } from "@mantine/core";
 import { useEventListener } from "@mantine/hooks";
+import { NoteSortFunction, NoteSorts } from "../../logic/NoteSorting";
+import { CardType } from "../../logic/card";
+import { Note } from "../../logic/note";
+import classes from "./CardTable.module.css";
 import CardTableHeadItem from "./CardTableHeadItem";
-import { CardTableItem } from "./CardTableItem";
-import { SortOption } from "../../logic/card_filter";
-import { useTranslation } from "react-i18next";
-import { IconCards } from "@tabler/icons-react";
+import { NoteTableItem } from "./NoteTableItem";
 
 interface CardTableProps {
-  cardSet: Card<CardType>[];
+  noteSet: Note<CardType>[];
   selectedIndex: number | undefined;
   setSelectedIndex: (index: number) => void;
-  selectedCard: Card<CardType> | undefined;
-  setSelectedCard: (card: Card<CardType>) => void;
-  sort: [SortOption, boolean];
-  setSort: (sort: [SortOption, boolean]) => void;
+  selectedNote: Note<CardType> | undefined;
+  setSelectedNote: (card: Note<CardType>) => void;
+  sort: [NoteSortFunction, boolean];
+  setSort: (sort: [NoteSortFunction, boolean]) => void;
 }
 
-function CardTable({
-  cardSet,
+function NoteTable({
+  noteSet,
   selectedIndex,
   setSelectedIndex,
-  selectedCard,
-  setSelectedCard,
+  selectedNote,
+  setSelectedNote,
   sort,
   setSort,
 }: CardTableProps) {
-  const [t] = useTranslation();
   const ref = useEventListener("keydown", (event) => {
     if (event.key === "ArrowDown") {
       setSelectedIndex(
         selectedIndex !== undefined
-          ? Math.min(selectedIndex + 1, cardSet.length - 1)
+          ? Math.min(selectedIndex + 1, noteSet.length - 1)
           : 0
       );
     } else if (event.key === "ArrowUp") {
       setSelectedIndex(
         selectedIndex !== undefined
           ? Math.max(selectedIndex - 1, 0)
-          : cardSet.length - 1
+          : noteSet.length - 1
       );
     }
   });
@@ -65,54 +62,52 @@ function CardTable({
           <Table.Tr className={classes.tr}>
             <CardTableHeadItem
               name={"Name"}
-              id="sort_field"
+              sortFunction={NoteSorts.bySortField}
               sort={sort}
               setSort={setSort}
             />
             <CardTableHeadItem
               name={"Type"}
-              id="type"
+              sortFunction={NoteSorts.byType}
               sort={sort}
               setSort={setSort}
             />
             <CardTableHeadItem
               name={"Deck"}
-              id="deck"
+              sortFunction={NoteSorts.byDeckName}
               sort={sort}
               setSort={setSort}
             />
             <CardTableHeadItem
               name={"Creation Date"}
-              id="creation_date"
+              sortFunction={NoteSorts.byCreationDate}
               sort={sort}
               setSort={setSort}
             />
           </Table.Tr>
         </Table.Thead>
-        <Table.Tbody>
-          {cardSet.map((card, index) => (
-            <CardTableItem
-              card={card}
-              key={card.id}
-              index={index}
-              selectedIndex={selectedIndex}
-              setSelectedIndex={setSelectedIndex}
-              selectedCard={selectedCard}
-              setSelectedCard={setSelectedCard}
-            />
-          ))}
-        </Table.Tbody>
-      </Table>
-      {cardSet.length === 0 && (
-        <Stack align="center" p="xl">
-          <IconCards size={36} strokeWidth={1.5} color="lightgray" />
+        {noteSet.length > 0 ? (
+          <Table.Tbody>
+            {noteSet.map((note, index) => (
+              <NoteTableItem
+                note={note}
+                key={note.id}
+                index={index}
+                selectedIndex={selectedIndex}
+                setSelectedIndex={setSelectedIndex}
+                selectedNote={selectedNote}
+                setSelectedNote={setSelectedNote}
+              />
+            ))}
+          </Table.Tbody>
+        ) : (
           <Text fz="sm" c="dimmed">
-            {t("manage-cards.table.no-cards-found")}
+            No cards found
           </Text>
-        </Stack>
-      )}
+        )}
+      </Table>
     </Table.ScrollContainer>
   );
 }
 
-export default CardTable;
+export default NoteTable;

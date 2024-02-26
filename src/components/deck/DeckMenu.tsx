@@ -65,7 +65,7 @@ function DeckMenu({
 
   const manageCards = useCallback(() => {
     if (deck) {
-      navigate("/cards/" + deck.id);
+      navigate("/notes/" + deck.id);
     }
   }, [deck, navigate]);
 

@@ -7,10 +7,18 @@ import {
   CardType,
   createCardSkeleton,
   deleteCard,
+  newCard,
   toPreviewString,
 } from "../card";
 import { Deck } from "../deck";
-import { Note, NoteContent, newNote, updateNoteContent } from "../note";
+import {
+  Note,
+  NoteContent,
+  newNote,
+  registerReferenceToNote,
+  updateNoteContent,
+} from "../note";
+import { db } from "../db";
 
 export type NormalContent = {};
 
@@ -37,6 +45,52 @@ export const NormalCardUtils: TypeManager<CardType.Normal> = {
       note: params.noteId,
       content: { type: CardType.Normal },
     };
+  },
+
+  async createNote(params: { front: string; back: string }, deck: Deck) {
+    return await db.transaction(
+      "rw",
+      db.notes,
+      db.decks,
+      db.cards,
+      async () => {
+        const noteId = await newNote(deck, {
+          type: CardType.Normal,
+          front: params.front,
+          back: params.back,
+        });
+        const cardId = await newCard(
+          {
+            ...createCardSkeleton(),
+            preview: toPreviewString(params.front),
+            note: noteId,
+            content: { type: CardType.Normal },
+          },
+          deck
+        );
+        await registerReferenceToNote(noteId, cardId);
+      }
+    );
+  },
+
+  async updateNote(
+    params: { front: string; back: string },
+    existingNote: Note<CardType.Normal>
+  ) {
+    return await db.transaction("rw", db.notes, db.cards, async () => {
+      await updateNoteContent(existingNote.id, {
+        type: CardType.Normal,
+        front: params.front,
+        back: params.back,
+      });
+      await Promise.all([
+        existingNote.referencedBy.map((cardId) => {
+          return db.cards.update(cardId, {
+            preview: toPreviewString(params.front),
+          });
+        }),
+      ]);
+    });
   },
 
   displayQuestion(
@@ -82,28 +136,15 @@ export const NormalCardUtils: TypeManager<CardType.Normal> = {
     );
   },
 
-  getSortFieldFromNote(note: Note<CardType.Normal>) {
-    return toPreviewString(note.content?.front);
+  getSortFieldFromNoteContent(content?: NoteContent<CardType.Normal>) {
+    return toPreviewString(content?.front ?? "[error]");
   },
 
-  editor(card: Card<CardType.Normal> | null, deck: Deck, mode: EditMode) {
-    return <NormalCardEditor card={card} deck={deck} mode={mode} />;
+  editor(note: Note<CardType.Normal> | null, deck: Deck, mode: EditMode) {
+    return <NormalCardEditor note={note} deck={deck} mode={mode} />;
   },
 
   async deleteCard(card: Card<CardType.Normal>) {
     deleteCard(card);
   },
 };
-
-export async function createNormalCard(
-  deck: Deck,
-  front: string,
-  back: string
-) {
-  const noteId = await newNote(deck, {
-    type: CardType.Normal,
-    front: front,
-    back: back,
-  });
-  return NormalCardUtils.createCard({ noteId: noteId, front });
-}
