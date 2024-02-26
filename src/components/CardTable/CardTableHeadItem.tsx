@@ -1,20 +1,19 @@
-import classes from "./CardTable.module.css";
-import cx from "clsx";
-import React from "react";
 import { Box, Table } from "@mantine/core";
 import { IconArrowUp } from "@tabler/icons-react";
-import { SortOption } from "../../logic/card_filter";
+import cx from "clsx";
+import { NoteSortFunction } from "../../logic/NoteSorting";
+import classes from "./CardTable.module.css";
 
 interface CardTableHeadItemProps {
   name: string;
-  id: SortOption;
-  sort: [SortOption, boolean];
-  setSort: (sort: [SortOption, boolean]) => void;
+  sortFunction: NoteSortFunction;
+  sort: [NoteSortFunction, boolean];
+  setSort: (sort: [NoteSortFunction, boolean]) => void;
 }
 
 export default function CardTableHeadItem({
   name,
-  id,
+  sortFunction,
   sort,
   setSort,
 }: CardTableHeadItemProps) {
@@ -23,13 +22,14 @@ export default function CardTableHeadItem({
       className={classes.th}
       component="th"
       onClick={() => {
-        setSort([id, sort[0] === id ? !sort[1] : true]);
+        setSort([sortFunction, sort[0] === sortFunction ? !sort[1] : true]);
       }}
     >
       <Box
         className={cx(classes.thInnerWrapper, {
-          [classes.thInnerWrapperActive]: sort[0] === id,
-          [classes.thInnerWrapperActiveDesc]: sort[0] === id && !sort[1],
+          [classes.thInnerWrapperActive]: sort[0] === sortFunction,
+          [classes.thInnerWrapperActiveDesc]:
+            sort[0] === sortFunction && !sort[1],
         })}
         component="div"
       >

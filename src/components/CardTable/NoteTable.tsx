@@ -1,28 +1,28 @@
-import classes from "./CardTable.module.css";
-import React from "react";
-import { Card, CardType } from "../../logic/card";
 import { Table, Text } from "@mantine/core";
 import { useEventListener } from "@mantine/hooks";
+import { NoteSortFunction, NoteSorts } from "../../logic/NoteSorting";
+import { CardType } from "../../logic/card";
+import { Note } from "../../logic/note";
+import classes from "./CardTable.module.css";
 import CardTableHeadItem from "./CardTableHeadItem";
-import { CardTableItem } from "./CardTableItem";
-import { SortOption } from "../../logic/card_filter";
+import { NoteTableItem } from "./NoteTableItem";
 
 interface CardTableProps {
-  cardSet: Card<CardType>[];
+  noteSet: Note<CardType>[];
   selectedIndex: number | undefined;
   setSelectedIndex: (index: number) => void;
-  selectedCard: Card<CardType> | undefined;
-  setSelectedCard: (card: Card<CardType>) => void;
-  sort: [SortOption, boolean];
-  setSort: (sort: [SortOption, boolean]) => void;
+  selectedNote: Note<CardType> | undefined;
+  setSelectedNote: (card: Note<CardType>) => void;
+  sort: [NoteSortFunction, boolean];
+  setSort: (sort: [NoteSortFunction, boolean]) => void;
 }
 
-function CardTable({
-  cardSet,
+function NoteTable({
+  noteSet,
   selectedIndex,
   setSelectedIndex,
-  selectedCard,
-  setSelectedCard,
+  selectedNote,
+  setSelectedNote,
   sort,
   setSort,
 }: CardTableProps) {
@@ -30,14 +30,14 @@ function CardTable({
     if (event.key === "ArrowDown") {
       setSelectedIndex(
         selectedIndex !== undefined
-          ? Math.min(selectedIndex + 1, cardSet.length - 1)
+          ? Math.min(selectedIndex + 1, noteSet.length - 1)
           : 0
       );
     } else if (event.key === "ArrowUp") {
       setSelectedIndex(
         selectedIndex !== undefined
           ? Math.max(selectedIndex - 1, 0)
-          : cardSet.length - 1
+          : noteSet.length - 1
       );
     }
   });
@@ -62,41 +62,41 @@ function CardTable({
           <Table.Tr className={classes.tr}>
             <CardTableHeadItem
               name={"Name"}
-              id="sort_field"
+              sortFunction={NoteSorts.bySortField}
               sort={sort}
               setSort={setSort}
             />
             <CardTableHeadItem
               name={"Type"}
-              id="type"
+              sortFunction={NoteSorts.byType}
               sort={sort}
               setSort={setSort}
             />
             <CardTableHeadItem
               name={"Deck"}
-              id="deck"
+              sortFunction={NoteSorts.byDeckName}
               sort={sort}
               setSort={setSort}
             />
             <CardTableHeadItem
               name={"Creation Date"}
-              id="creation_date"
+              sortFunction={NoteSorts.byCreationDate}
               sort={sort}
               setSort={setSort}
             />
           </Table.Tr>
         </Table.Thead>
-        {cardSet.length > 0 ? (
+        {noteSet.length > 0 ? (
           <Table.Tbody>
-            {cardSet.map((card, index) => (
-              <CardTableItem
-                card={card}
-                key={card.id}
+            {noteSet.map((note, index) => (
+              <NoteTableItem
+                note={note}
+                key={note.id}
                 index={index}
                 selectedIndex={selectedIndex}
                 setSelectedIndex={setSelectedIndex}
-                selectedCard={selectedCard}
-                setSelectedCard={setSelectedCard}
+                selectedNote={selectedNote}
+                setSelectedNote={setSelectedNote}
               />
             ))}
           </Table.Tbody>
@@ -110,4 +110,4 @@ function CardTable({
   );
 }
 
-export default CardTable;
+export default NoteTable;

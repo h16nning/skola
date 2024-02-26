@@ -18,16 +18,16 @@ import StarterKit from "@tiptap/starter-kit";
 import React from "react";
 import { useSettings } from "../../../logic/Settings";
 import classes from "./CardEditor.module.css";
-import { CardEditorControls } from "./CardEditorControls";
+import { NoteEditorControls } from "./CardEditorControls";
 import { CustomHardBreak } from "./tiptap/CustomHardBreak";
 
-interface CardEditorProps {
+interface NoteEditorProps {
   editor: Editor | null;
   className?: string;
   controls?: React.ReactNode;
 }
 
-export function useCardEditor(props: {
+export function useNoteEditor(props: {
   content: string;
   onUpdate?: EditorOptions["onUpdate"];
   extensions?: any[];
@@ -71,7 +71,7 @@ export function useCardEditor(props: {
   );
 }
 
-function CardEditor({ editor, controls, className }: CardEditorProps) {
+function NoteEditor({ editor, controls, className }: NoteEditorProps) {
   const [settings, areSettingsReady] = useSettings();
 
   return (
@@ -90,13 +90,13 @@ function CardEditor({ editor, controls, className }: CardEditorProps) {
           {editor && settings.useToolbar && (
             <div tabIndex={-1}>
               <RichTextEditor.Toolbar className={classes.toolbar}>
-                <CardEditorControls controls={controls} editor={editor} />
+                <NoteEditorControls controls={controls} editor={editor} />
               </RichTextEditor.Toolbar>
             </div>
           )}
           {editor && settings.useBubbleMenu && (
             <BubbleMenu editor={editor} tippyOptions={{ maxWidth: "none" }}>
-              <CardEditorControls controls={controls} editor={editor} />
+              <NoteEditorControls controls={controls} editor={editor} />
             </BubbleMenu>
           )}
         </>
@@ -107,4 +107,4 @@ function CardEditor({ editor, controls, className }: CardEditorProps) {
   );
 }
 
-export default CardEditor;
+export default NoteEditor;

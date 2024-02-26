@@ -159,7 +159,7 @@ function Sidebar({
 
         <InteractiveNavLink
           label={t("manage-cards.title")}
-          path="/cards"
+          path="/notes"
           icon={<IconCards />}
           minimalMode={minimalMode}
           fullscreenMode={fullscreenMode}
