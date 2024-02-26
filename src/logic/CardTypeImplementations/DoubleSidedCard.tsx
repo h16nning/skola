@@ -7,6 +7,7 @@ import {
   CardType,
   createCardSkeleton,
   deleteCard,
+  newCard,
   toPreviewString,
   updateCard,
 } from "../card";
@@ -26,6 +27,7 @@ export type DoubleSidedContent = {
 };
 
 export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
+  //DEPRECATED
   updateCard(
     params: { front: string; back: string },
     existingCard: Card<CardType.DoubleSided>
@@ -41,6 +43,7 @@ export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
     return { preview: toPreviewString(params.front), ...existingCard };
   },
 
+  //DEPRECATED
   createCard(params: {
     noteId: string;
     frontIsField1: boolean;
@@ -55,6 +58,61 @@ export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
         frontIsField1: params.frontIsField1,
       },
     };
+  },
+
+  async createNote(params: { field1: string; field2: string }, deck: Deck) {
+    function createDoubleSidedCard(
+      noteId: string,
+      frontIsField1: boolean,
+      front: string
+    ) {
+      return {
+        ...createCardSkeleton(),
+        note: noteId,
+        preview: toPreviewString(front),
+        content: {
+          type: CardType.DoubleSided,
+          frontIsField1: frontIsField1,
+        },
+      };
+    }
+    return db.transaction("rw", db.notes, db.decks, db.cards, async () => {
+      const noteId = await newNote(deck, {
+        type: CardType.DoubleSided,
+        field1: params.field1,
+        field2: params.field2,
+      });
+      const card1Id = await newCard(
+        createDoubleSidedCard(noteId, true, params.field1),
+        deck
+      );
+      const card2Id = await newCard(
+        createDoubleSidedCard(noteId, false, params.field2),
+        deck
+      );
+      await registerReferencesToNote(noteId, [card1Id, card2Id]);
+    });
+  },
+
+  async updateNote(
+    params: { field1: string; field2: string },
+    existingNote: Note<CardType.DoubleSided>
+  ) {
+    return db.transaction("rw", db.notes, db.cards, async () => {
+      await updateNoteContent(existingNote.id, {
+        type: CardType.DoubleSided,
+        field1: params.field1,
+        field2: params.field2,
+      });
+      // Will this be needed? Preview may be removed from the card itself.
+      Promise.all(
+        existingNote.referencedBy.map((cardId) => {
+          return db.cards.update(cardId, {
+            preview: toPreviewString(params.field1),
+          });
+        })
+      );
+    });
   },
 
   displayQuestion(
@@ -120,14 +178,15 @@ export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
     );
   },
 
-  getSortFieldFromNote(note) {
-    return toPreviewString(note.content.field1);
+  getSortFieldFromNoteContent(content) {
+    return toPreviewString(content.field1);
   },
 
-  editor(card: Card<CardType.DoubleSided> | null, deck: Deck, mode: EditMode) {
-    return <DoubleSidedCardEditor card={card} deck={deck} mode={mode} />;
+  editor(note: Note<CardType.DoubleSided> | null, deck: Deck, mode: EditMode) {
+    return <DoubleSidedCardEditor note={note} deck={deck} mode={mode} />;
   },
 
+  //DEPRECATED
   async deleteCard(card: Card<CardType.DoubleSided>) {
     db.transaction("rw", db.decks, db.cards, db.notes, async () => {
       await removeReferenceToNote(card.note, card.id);
@@ -135,28 +194,3 @@ export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
     });
   },
 };
-
-export async function createDoubleSidedCardPair(params: {
-  deck: Deck;
-  value1: string;
-  value2: string;
-}) {
-  const noteId = await newNote(params.deck, {
-    type: CardType.DoubleSided,
-    field1: params.value1,
-    field2: params.value2,
-  });
-  const card1 = DoubleSidedCardUtils.createCard({
-    noteId: noteId,
-    frontIsField1: true,
-    front: params.value1,
-  });
-  const card2 = DoubleSidedCardUtils.createCard({
-    noteId: noteId,
-    frontIsField1: false,
-    front: params.value2,
-  });
-  await registerReferencesToNote(noteId, [card1.id, card2.id]);
-  console.log(card1, card2);
-  return [card1, card2];
-}

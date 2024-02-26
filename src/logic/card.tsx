@@ -46,6 +46,11 @@ function isCard(card: Card<CardType> | undefined): card is Card<CardType> {
   return !!card;
 }
 
+/**
+ * This function creates a new card in the database.
+ *
+ * **Side effects:** It also updates the deck to include the new card.
+ */
 export async function newCard(card: Card<CardType>, deck: Deck) {
   card.deck = deck.id;
   deck.cards.push(card.id);
