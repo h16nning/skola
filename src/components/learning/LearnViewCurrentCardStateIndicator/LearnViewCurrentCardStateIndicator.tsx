@@ -44,10 +44,10 @@ function Indicator({
 export default function LearnViewCurrentCardStateIndicator({
   currentCardModel,
 }: LearnViewCurrentCardStateIndicatorProps) {
-  if (currentCardModel === undefined) {
-    return null;
-  }
   const indicator = useCallback(() => {
+    if (currentCardModel === undefined) {
+      return;
+    }
     if (currentCardModel.state === State.New) {
       return <Indicator color="grape" icon={IconSparkles} text="New card" />;
     } else if (
@@ -72,6 +72,10 @@ export default function LearnViewCurrentCardStateIndicator({
       );
     }
   }, [currentCardModel]);
+
+  if (currentCardModel === undefined) {
+    return null;
+  }
 
   return indicator();
 }

@@ -27,6 +27,7 @@
       "correctness": {
         "noEmptyPattern": "off",
         "useExhaustiveDependencies": "off",
+        "useHookAtTopLevel": "error",
         "noUnusedVariables": "error"
       },
       "performance": {
