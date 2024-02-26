@@ -26,6 +26,11 @@ export function createNoteSkeleton(deck: string): NoteSkeleton {
   };
 }
 
+/**
+ * This function creates a new note in the database.
+ *
+ * **Side effects:** It also updates the deck to include the new note.
+ */
 export async function newNote<T extends CardType>(
   deck: Deck,
   content: NoteContent<T>

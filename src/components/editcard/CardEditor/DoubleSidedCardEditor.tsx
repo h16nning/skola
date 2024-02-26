@@ -3,19 +3,11 @@ import { useHotkeys } from "@mantine/hooks";
 import { Editor } from "@tiptap/react";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  DoubleSidedCardUtils,
-  createDoubleSidedCardPair,
-} from "../../../logic/CardTypeImplementations/DoubleSidedCard";
+import { DoubleSidedCardUtils } from "../../../logic/CardTypeImplementations/DoubleSidedCard";
 import { EditMode } from "../../../logic/TypeManager";
-import { Card, CardType, newCards } from "../../../logic/card";
+import { CardType } from "../../../logic/card";
 import { Deck } from "../../../logic/deck";
-import {
-  DoubleSidedNoteContent,
-  getCardsReferencingNote,
-  getNote,
-  useNote,
-} from "../../../logic/note";
+import { Note } from "../../../logic/note";
 import {
   addFailed,
   saveFailed,
@@ -23,75 +15,17 @@ import {
   successfullySaved,
 } from "../../custom/Notification/Notification";
 import CardEditorFooter from "../CardEditorFooter";
-import NoteEditor, { useNoteEditor } from "./NoteEditor";
 import classes from "./DoubleSidedCardEditor.module.css";
+import NoteEditor, { useNoteEditor } from "./NoteEditor";
 
 interface DoubleSidedCardEditorProps {
-  card: Card<CardType.DoubleSided> | null;
+  note: Note<CardType.DoubleSided> | null;
   deck: Deck;
   mode: EditMode;
 }
 
-async function finish(
-  mode: EditMode,
-  clear: () => void,
-  deck: Deck,
-  card: Card<CardType.DoubleSided> | null,
-  frontEditor: Editor | null,
-  backEditor: Editor | null
-) {
-  if (mode === "edit") {
-    //SAVE
-    try {
-      if (card) {
-        DoubleSidedCardUtils.updateCard(
-          {
-            front: frontEditor?.getHTML() ?? "",
-            back: backEditor?.getHTML() ?? "",
-          },
-          card
-        );
-        const cardsReferencingNote = await getNote(card.note).then(
-          (n) => n && getCardsReferencingNote(n)
-        );
-        cardsReferencingNote !== undefined &&
-          (await Promise.all(
-            cardsReferencingNote.map(
-              (c) =>
-                c !== undefined &&
-                c.id !== card.id &&
-                DoubleSidedCardUtils.updateCard(
-                  {
-                    front: backEditor?.getHTML() ?? "",
-                    back: frontEditor?.getHTML() ?? "",
-                  },
-                  c as Card<CardType.DoubleSided>
-                )
-            )
-          ));
-      }
-      successfullySaved();
-    } catch {
-      saveFailed();
-    }
-  } else {
-    //NEW
-    try {
-      createDoubleSidedCardPair({
-        deck: deck,
-        value1: frontEditor?.getHTML() ?? "",
-        value2: backEditor?.getHTML() ?? "",
-      }).then((cards) => newCards(cards, deck));
-      clear && clear();
-      successfullyAdded();
-    } catch {
-      addFailed();
-    }
-  }
-}
-
 function DoubleSidedCardEditor({
-  card,
+  note,
   deck,
   mode,
 }: DoubleSidedCardEditorProps) {
@@ -100,21 +34,19 @@ function DoubleSidedCardEditor({
 
   useHotkeys([["mod+Enter", () => setRequestedFinish(true)]]);
 
-  const noteContent = card
-    ? (useNote(card?.note)?.content as DoubleSidedNoteContent) ?? {}
-    : { type: CardType.DoubleSided, field1: "", field2: "" };
+  const noteContent = note?.content ?? {
+    type: CardType.DoubleSided,
+    field1: "",
+    field2: "",
+  };
 
   const editor1 = useNoteEditor({
-    content: card?.content.frontIsField1
-      ? noteContent.field1
-      : noteContent.field2,
+    content: noteContent.field1,
     finish: () => setRequestedFinish(true),
   });
 
   const editor2 = useNoteEditor({
-    content: card?.content.frontIsField1
-      ? noteContent.field2
-      : noteContent.field1,
+    content: noteContent.field2,
     finish: () => setRequestedFinish(true),
   });
 
@@ -126,10 +58,10 @@ function DoubleSidedCardEditor({
 
   useEffect(() => {
     if (requestedFinish) {
-      finish(mode, clear, deck, card, editor1, editor2);
+      finish(mode, clear, deck, note, editor1, editor2);
       setRequestedFinish(false);
     }
-  }, [requestedFinish, mode, clear, deck, card, editor1, editor2]);
+  }, [requestedFinish, mode, clear, deck, note, editor1, editor2]);
 
   return (
     <Stack gap="2rem">
@@ -146,11 +78,52 @@ function DoubleSidedCardEditor({
         <NoteEditor editor={editor2} key="back" />
       </Stack>
       <CardEditorFooter
-        finish={() => finish(mode, clear, deck, card, editor1, editor2)}
+        finish={() => finish(mode, clear, deck, note, editor1, editor2)}
         mode={mode}
       />
     </Stack>
   );
+}
+
+async function finish(
+  mode: EditMode,
+  clear: () => void,
+  deck: Deck,
+  note: Note<CardType.DoubleSided> | null,
+  editor1: Editor | null,
+  editor2: Editor | null
+) {
+  if (mode === "edit") {
+    //SAVE
+    try {
+      if (!note) throw new Error("Note is null");
+      await DoubleSidedCardUtils.updateNote(
+        {
+          field1: editor1?.getHTML() ?? "",
+          field2: editor2?.getHTML() ?? "",
+        },
+        note
+      );
+      successfullySaved();
+    } catch {
+      saveFailed();
+    }
+  } else {
+    //NEW
+    try {
+      await DoubleSidedCardUtils.createNote(
+        {
+          field1: editor1?.getHTML() ?? "",
+          field2: editor2?.getHTML() ?? "",
+        },
+        deck
+      );
+      clear && clear();
+      successfullyAdded();
+    } catch {
+      addFailed();
+    }
+  }
 }
 
 export default DoubleSidedCardEditor;

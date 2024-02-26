@@ -48,41 +48,36 @@ export const NormalCardUtils: TypeManager<CardType.Normal> = {
   },
 
   async createNote(params: { front: string; back: string }, deck: Deck) {
-    return await db.transaction(
-      "rw",
-      db.notes,
-      db.decks,
-      db.cards,
-      async () => {
-        const noteId = await newNote(deck, {
-          type: CardType.Normal,
-          front: params.front,
-          back: params.back,
-        });
-        const cardId = await newCard(
-          {
-            ...createCardSkeleton(),
-            preview: toPreviewString(params.front),
-            note: noteId,
-            content: { type: CardType.Normal },
-          },
-          deck
-        );
-        await registerReferenceToNote(noteId, cardId);
-      }
-    );
+    return db.transaction("rw", db.notes, db.decks, db.cards, async () => {
+      const noteId = await newNote(deck, {
+        type: CardType.Normal,
+        front: params.front,
+        back: params.back,
+      });
+      const cardId = await newCard(
+        {
+          ...createCardSkeleton(),
+          preview: toPreviewString(params.front),
+          note: noteId,
+          content: { type: CardType.Normal },
+        },
+        deck
+      );
+      await registerReferenceToNote(noteId, cardId);
+    });
   },
 
   async updateNote(
     params: { front: string; back: string },
     existingNote: Note<CardType.Normal>
   ) {
-    return await db.transaction("rw", db.notes, db.cards, async () => {
+    return db.transaction("rw", db.notes, db.cards, async () => {
       await updateNoteContent(existingNote.id, {
         type: CardType.Normal,
         front: params.front,
         back: params.back,
       });
+      // Will this be needed? Preview may be removed from the card itself.
       await Promise.all([
         existingNote.referencedBy.map((cardId) => {
           return db.cards.update(cardId, {
