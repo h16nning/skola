@@ -1,7 +1,8 @@
 import { Stack, Text } from "@mantine/core";
 import { Editor } from "@tiptap/react";
 import React, { useCallback, useEffect } from "react";
-import { EditMode, getUtilsOfType } from "../../../logic/TypeManager";
+import { NormalCardUtils } from "../../../logic/CardTypeImplementations/NormalCard";
+import { EditMode } from "../../../logic/TypeManager";
 import { CardType } from "../../../logic/card";
 import { Deck } from "../../../logic/deck";
 import { Note } from "../../../logic/note";
@@ -24,7 +25,11 @@ interface NormalCardEditorProps {
 function NormalCardEditor({ note, deck, mode }: NormalCardEditorProps) {
   const [requestedFinish, setRequestedFinish] = React.useState(false);
 
-  const noteContent = note?.content ?? { front: "", back: "" };
+  const noteContent = note?.content ?? {
+    type: CardType.Normal,
+    front: "",
+    back: "",
+  };
 
   const frontEditor = useNoteEditor({
     content: noteContent.front,
@@ -86,7 +91,7 @@ async function finish(
       if (note === null) {
         throw new Error("Note is null");
       }
-      await getUtilsOfType(CardType.Normal).updateNote(
+      await NormalCardUtils.updateNote(
         {
           front: frontEditor?.getHTML() ?? "",
           back: backEditor?.getHTML() ?? "",
@@ -100,7 +105,7 @@ async function finish(
   } else {
     //NEW
     try {
-      await getUtilsOfType(CardType.Normal).createNote(
+      await NormalCardUtils.createNote(
         {
           front: frontEditor?.getHTML() ?? "",
           back: backEditor?.getHTML() ?? "",
