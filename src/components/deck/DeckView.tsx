@@ -36,11 +36,11 @@ function DeckView() {
   useScrollResetOnLocationChange();
 
   useDocumentTitle(deck?.name ? deck?.name : "Skola");
+  useHotkeys([["n", () => navigate("/new/" + deck?.id)]]);
+
   if (isDeckReady && !deck) {
     return <MissingObject />;
   }
-
-  useHotkeys([["n", () => navigate("/new/" + deck?.id)]]);
 
   return (
     <>
