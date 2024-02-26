@@ -4,7 +4,7 @@ import { IconBracketsContain } from "@tabler/icons-react";
 import { EditMode } from "../../../logic/TypeManager";
 import { Card, CardType, newCards } from "../../../logic/card";
 import { Deck } from "../../../logic/deck";
-import CardEditor, { useCardEditor } from "./CardEditor";
+import NoteEditor, { useNoteEditor } from "./NoteEditor";
 import classes from "./ClozeCardEditor.module.css";
 
 import { Stack } from "@mantine/core";
@@ -47,7 +47,7 @@ export default function ClozeCardEditor({
     : { type: CardType.Cloze, text: "" };
 
   //fix sometime
-  const editor = useCardEditor({
+  const editor = useNoteEditor({
     content: noteContent.text,
     onUpdate: ({ editor }) => {
       if (editor?.getHTML().valueOf() !== editorContent.valueOf()) {
@@ -87,7 +87,7 @@ export default function ClozeCardEditor({
 
   return (
     <Stack gap="2rem">
-      <CardEditor
+      <NoteEditor
         editor={editor}
         className={classes}
         controls={

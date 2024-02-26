@@ -26,7 +26,7 @@ const useSearchNote = (filter: string) => {
           m
             .filter((note) =>
               getUtils(note)
-                .getSortFieldFromNote(note)
+                .getSortFieldFromNoteContent(note.content)
                 .toLowerCase()
                 .includes(filter.toLowerCase())
             )
@@ -95,7 +95,7 @@ export default function SpotlightCard({
         ...filteredNotes.map((note) => {
           return {
             id: note.id,
-            label: getUtils(note).getSortFieldFromNote(note),
+            label: getUtils(note).getSortFieldFromNoteContent(note.content),
             description: note.breadcrumb.join(" > "),
             onClick: () => navigate(`/deck/${note.deck}`),
             leftSection: (

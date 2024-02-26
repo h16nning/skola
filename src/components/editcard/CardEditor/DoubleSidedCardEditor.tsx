@@ -23,7 +23,7 @@ import {
   successfullySaved,
 } from "../../custom/Notification/Notification";
 import CardEditorFooter from "../CardEditorFooter";
-import CardEditor, { useCardEditor } from "./CardEditor";
+import NoteEditor, { useNoteEditor } from "./NoteEditor";
 import classes from "./DoubleSidedCardEditor.module.css";
 
 interface DoubleSidedCardEditorProps {
@@ -104,14 +104,14 @@ function DoubleSidedCardEditor({
     ? (useNote(card?.note)?.content as DoubleSidedNoteContent) ?? {}
     : { type: CardType.DoubleSided, field1: "", field2: "" };
 
-  const editor1 = useCardEditor({
+  const editor1 = useNoteEditor({
     content: card?.content.frontIsField1
       ? noteContent.field1
       : noteContent.field2,
     finish: () => setRequestedFinish(true),
   });
 
-  const editor2 = useCardEditor({
+  const editor2 = useNoteEditor({
     content: card?.content.frontIsField1
       ? noteContent.field2
       : noteContent.field1,
@@ -137,13 +137,13 @@ function DoubleSidedCardEditor({
         <Text fz="sm" fw={600}>
           {t("cards.editor.double_sided.front")}
         </Text>
-        <CardEditor editor={editor1} key="front" className={classes} />
+        <NoteEditor editor={editor1} key="front" className={classes} />
       </Stack>
       <Stack gap={0}>
         <Text fz="sm" fw={600}>
           {t("cards.editor.double_sided.back")}
         </Text>
-        <CardEditor editor={editor2} key="back" />
+        <NoteEditor editor={editor2} key="back" />
       </Stack>
       <CardEditorFooter
         finish={() => finish(mode, clear, deck, card, editor1, editor2)}

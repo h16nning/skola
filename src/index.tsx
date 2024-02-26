@@ -1,25 +1,25 @@
+import { getAnalytics } from "firebase/analytics";
+import { initializeApp } from "firebase/app";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import reportWebVitals from "./reportWebVitals";
 import {
   Navigate,
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
-import TodayView from "./components/TodayView";
-import StatsView from "./components/StatsView";
-import EditCardView, { NoCardView } from "./components/editcard/EditCardView";
+import App from "./App";
 import CardManagerView from "./components/CardManagerView/CardManagerView";
-import LearnView from "./components/learning/LearnView/LearnView";
-import NewCardsView from "./components/editcard/NewCardsView";
-import DeckView from "./components/deck/DeckView";
-import SettingsView from "./components/settings/SettingsView";
 import HomeView from "./components/HomeView";
-import { getCard } from "./logic/card";
+import StatsView from "./components/StatsView";
+import TodayView from "./components/TodayView";
+import DeckView from "./components/deck/DeckView";
+import EditCardView, { NoNoteView } from "./components/editcard/EditCardView";
+import NewCardsView from "./components/editcard/NewCardsView";
+import LearnView from "./components/learning/LearnView/LearnView";
+import SettingsView from "./components/settings/SettingsView";
+import "./index.css";
+import { getNote } from "./logic/note";
+import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -58,20 +58,20 @@ const router = createBrowserRouter([
         element: <LearnView />,
       },
       {
-        path: "/cards/:deckId?",
+        path: "/notes/:deckId?",
         element: <CardManagerView />,
         children: [
           {
             index: true,
-            element: <NoCardView />,
+            element: <NoNoteView />,
           },
           {
-            path: ":cardId",
+            path: ":noteId",
             element: <EditCardView />,
             loader: async ({ params }) => {
-              const { cardId } = params;
-              if (!cardId) throw new Response("Not Found", { status: 404 });
-              return await getCard(cardId);
+              const { noteId } = params;
+              if (!noteId) throw new Response("Not Found", { status: 404 });
+              return await getNote(noteId);
             },
           },
         ],

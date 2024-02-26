@@ -1,31 +1,33 @@
 import { Table } from "@mantine/core";
 import cx from "clsx";
 import { useEffect } from "react";
-import { Card, CardType } from "../../logic/card";
+import { CardType } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
+import { Note } from "../../logic/note";
 import classes from "./CardTable.module.css";
+import { getUtils } from "../../logic/TypeManager";
 
-export function CardTableItem({
-  card,
+export function NoteTableItem({
+  note,
   index,
   selectedIndex,
   setSelectedIndex,
-  setSelectedCard,
+  setSelectedNote,
 }: {
-  card: Card<CardType>;
+  note: Note<CardType>;
   index: number;
   selectedIndex: number | undefined;
   setSelectedIndex: Function;
-  selectedCard: Card<CardType> | undefined;
-  setSelectedCard: Function;
+  selectedNote: Note<CardType> | undefined;
+  setSelectedNote: Function;
 }) {
-  const [deck] = useDeckOf(card);
+  const [deck] = useDeckOf(note);
 
   useEffect(() => {
     if (selectedIndex === index) {
-      setSelectedCard(card);
+      setSelectedNote(note);
     }
-  }, [selectedIndex, setSelectedCard, index, card]);
+  }, [selectedIndex, setSelectedNote, index, note]);
 
   /*const [preview, setPreview] = React.useState<string | undefined>(undefined);
 
@@ -45,12 +47,14 @@ export function CardTableItem({
       })}
       onClick={() => setSelectedIndex(index)}
     >
-      <Table.Td className={classes.td}>{card.preview}</Table.Td>
-      <Table.Td className={classes.td}>{card.content.type}</Table.Td>
+      <Table.Td className={classes.td}>
+        {getUtils(note).getSortFieldFromNoteContent(note.content)}
+      </Table.Td>
+      <Table.Td className={classes.td}>{note.content.type}</Table.Td>
 
       <Table.Td className={classes.td}>{deck?.name ?? "?"}</Table.Td>
       <Table.Td className={classes.td}>
-        {card.creationDate.toLocaleDateString()}
+        {note.creationDate.toLocaleDateString()}
       </Table.Td>
     </Table.Tr>
   );

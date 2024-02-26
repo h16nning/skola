@@ -112,6 +112,22 @@ export function updateNoteContent<T extends CardType>(
 ) {
   return db.notes.update(noteId, { content });
 }
+/**
+ * This function deletes a note from the database.
+ *
+ * **Side effects:** It also deletes all cards that reference the note and updates the deck to remove the note and the cards that reference it.
+ */
+export function deleteNote<T extends CardType>(note: Note<T>) {
+  return db.transaction("rw", db.notes, db.cards, db.decks, async () => {
+    await db.notes.delete(note.id);
+    await db.cards.bulkDelete(note.referencedBy);
+    const deck = await db.decks.get(note.deck);
+    await db.decks.update(note.deck, {
+      notes: deck?.notes.filter((n) => n !== note.id),
+      cards: deck?.cards.filter((c) => !note.referencedBy.includes(c)),
+    });
+  });
+}
 
 export function getCardsReferencingNote(note: Note<any>) {
   return Promise.all(note.referencedBy.map((cardId) => db.cards.get(cardId)));

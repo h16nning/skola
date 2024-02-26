@@ -8,9 +8,18 @@ import { UndefinedCardUtils } from "./CardTypeImplementations/UndefinedCard";
 import { Note, NoteContent } from "./note";
 
 export interface TypeManager<T extends CardType> {
+  //DEPREECATED
   createCard: (params: any) => Card<T>;
 
+  //DEPREECATED
   updateCard: (params: any, existingCard: Card<T>) => Card<T>;
+
+  //DEPRECEATED
+  deleteCard: (card: Card<T>) => void;
+
+  createNote: (params: any, deck: Deck) => Promise<any>;
+
+  updateNote: (params: any, existingNote: Note<T>) => Promise<any>;
 
   displayQuestion(
     card: Card<T>,
@@ -26,11 +35,9 @@ export interface TypeManager<T extends CardType> {
 
   displayNote(note: Note<T>): ReactNode;
 
-  getSortFieldFromNote(note: Note<T>): string;
+  getSortFieldFromNoteContent(content: NoteContent<T>): string;
 
-  editor(card: Card<CardType> | null, deck: Deck, mode: EditMode): JSX.Element;
-
-  deleteCard: (card: Card<T>) => void;
+  editor(note: Note<CardType> | null, deck: Deck, mode: EditMode): JSX.Element;
 }
 
 export type EditMode = "edit" | "new";
