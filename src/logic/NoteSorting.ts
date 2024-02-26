@@ -13,8 +13,9 @@ export const NoteSorts: Record<any, NoteSortFunction> = {
     (sortOrder: 1 | -1) => (a: Note<CardType>, b: Note<CardType>) => {
       return (
         getUtils(a)
-          .getSortFieldFromNote(a)
-          .localeCompare(getUtils(b).getSortFieldFromNote(b)) * sortOrder
+          .getSortFieldFromNoteContent(a.content)
+          .localeCompare(getUtils(b).getSortFieldFromNoteContent(b.content)) *
+        sortOrder
       );
     },
   byCustomOrder:

@@ -5,15 +5,15 @@ import { Box } from "@mantine/core";
 import { useSettings } from "../../../logic/Settings";
 import { Editor } from "@tiptap/react";
 
-export interface CardEditorControlsProps {
+export interface NoteEditorControlsProps {
   editor: Editor | null;
   controls?: React.ReactNode;
 }
 
-export function CardEditorControls({
+export function NoteEditorControls({
   editor,
   controls,
-}: CardEditorControlsProps) {
+}: NoteEditorControlsProps) {
   const [settings] = useSettings();
   return (
     <Box className={classes.controlsWrapper} tabIndex={-1}>
