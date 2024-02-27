@@ -1,6 +1,6 @@
 import { Text } from "@mantine/core";
 import ClozeCardEditor from "../../components/editcard/CardEditor/ClozeCardEditor";
-import { TypeManager, EditMode } from "../TypeManager";
+import { EditMode, TypeManager } from "../TypeManager";
 import {
   Card,
   CardType,
@@ -8,7 +8,6 @@ import {
   deleteCard,
   newCard,
   toPreviewString,
-  updateCard,
 } from "../card";
 import { db } from "../db";
 import { Deck } from "../deck";
@@ -18,8 +17,6 @@ import {
   NoteContent,
   getNote,
   newNote,
-  registerReferencesToNote,
-  removeReferenceToNote,
   updateNoteContent,
 } from "../note";
 import classes from "./ClozeCard.module.css";
@@ -36,16 +33,11 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
     function createClozeCard(
       noteId: string,
       occlusionNumber: number,
-      text: string
+      _text: string
     ) {
       return {
         ...createCardSkeleton(),
         note: noteId,
-        preview: toPreviewString(
-          text.replace(/\{\{c\d::((?!\{\{|}}).)*\}\}/g, (match) =>
-            match.slice(6, -2)
-          )
-        ),
         content: {
           type: CardType.Cloze,
           occlusionNumber: occlusionNumber,
@@ -58,7 +50,7 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
         type: CardType.Cloze,
         text: params.text,
       });
-      const createdCardIds = await Promise.all(
+      await Promise.all(
         params.occlusionNumberSet.map(async (occlusionNumber) => {
           return await newCard(
             createClozeCard(noteId, occlusionNumber, params.text),
@@ -66,7 +58,6 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
           );
         })
       );
-      await registerReferencesToNote(noteId, createdCardIds);
       return noteId;
     });
   },
@@ -80,18 +71,7 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
         type: CardType.Cloze,
         text: params.text,
       });
-      // Not really needed, preview may be removed from the card itself. But here we might want to update occlusion numbers or delete cards if they are removed from the note.
-      await Promise.all(
-        existingNote.referencedBy.map((cardId) =>
-          updateCard(cardId, {
-            preview: toPreviewString(
-              params.text.replace(/\{\{c\d::((?!\{\{|}}).)*\}\}/g, (match) =>
-                match.slice(6, -2)
-              )
-            ),
-          })
-        )
-      );
+      //might want to update occlusion numbers or delete cards if they are removed from the note?
     });
   },
 
@@ -126,6 +106,7 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
     return <ClozeCardEditor note={note} deck={deck} mode={mode} />;
   },
 
+  //DEPRECATED
   async deleteCard(card: Card<CardType.Cloze>) {
     db.transaction("rw", db.decks, db.cards, db.notes, async () => {
       const noteText = await getNote(card.note).then((n) =>
@@ -143,7 +124,6 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
           ),
         });
       }
-      await removeReferenceToNote(card.note, card.id);
       await deleteCard(card);
     });
   },

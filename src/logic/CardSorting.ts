@@ -1,20 +1,22 @@
 import { Card, CardType } from "./card";
 import { getDeck } from "./deck";
 
+//MIGHT BE DEPRECATED?
+
 export type CardSortFunction = (sortOrder: 1 | -1) => (...args: any) => number;
 
 export const CardSorts: Record<any, CardSortFunction> = {
   byCreationDate:
     (sortOrder: 1 | -1) => (a: Card<CardType>, b: Card<CardType>) =>
       (a.creationDate.getTime() - b.creationDate.getTime()) * sortOrder,
-  bySortField:
+  /*bySortField:
     (sortOrder: 1 | -1) => (a: Card<CardType>, b: Card<CardType>) => {
       if (a.preview === undefined || b.preview === undefined) {
         console.warn("card.preview is undefined. Most likely to old db date.");
         return 0;
       }
       return a.preview.localeCompare(b.preview) * sortOrder;
-    },
+    },*/
   byCustomOrder:
     (sortOrder: 1 | -1) => (a: Card<CardType>, b: Card<CardType>) => {
       if (a.customOrder === undefined || b.customOrder === undefined) {

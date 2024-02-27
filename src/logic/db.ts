@@ -13,8 +13,8 @@ export class Database extends Dexie {
 
   constructor() {
     super("database");
-    this.version(7).stores({
-      cards: "++id",
+    this.version(8).stores({
+      cards: "++id, note",
       decks: "++id",
       notes: "++id",
       settings: "++key",
