@@ -77,7 +77,7 @@ export const NormalCardUtils: TypeManager<CardType.Normal> = {
 
   displayNote(note: Note<CardType.Normal>) {
     return (
-      <Stack gap="sm">
+      <Stack gap="sm" w="100%">
         <Title
           order={3}
           fw={600}
