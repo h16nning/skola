@@ -1,7 +1,7 @@
 import { Divider, Stack, Title } from "@mantine/core";
 import DoubleSidedCardEditor from "../../components/editcard/CardEditor/DoubleSidedCardEditor";
 import common from "../../style/CommonStyles.module.css";
-import { TypeManager, EditMode } from "../TypeManager";
+import { EditMode, TypeManager } from "../TypeManager";
 import {
   Card,
   CardType,
@@ -9,7 +9,6 @@ import {
   deleteCard,
   newCard,
   toPreviewString,
-  updateCard,
 } from "../card";
 import { db } from "../db";
 import { Deck } from "../deck";
@@ -27,39 +26,6 @@ export type DoubleSidedContent = {
 };
 
 export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
-  //DEPRECATED
-  updateCard(
-    params: { front: string; back: string },
-    existingCard: Card<CardType.DoubleSided>
-  ) {
-    updateNoteContent(existingCard.note, {
-      type: CardType.DoubleSided,
-      field1: existingCard.content.frontIsField1 ? params.front : params.back,
-      field2: existingCard.content.frontIsField1 ? params.back : params.front,
-    });
-    updateCard(existingCard.id, {
-      preview: toPreviewString(params.front),
-    });
-    return { preview: toPreviewString(params.front), ...existingCard };
-  },
-
-  //DEPRECATED
-  createCard(params: {
-    noteId: string;
-    frontIsField1: boolean;
-    front: string;
-  }): Card<CardType.DoubleSided> {
-    return {
-      ...createCardSkeleton(),
-      note: params.noteId,
-      preview: toPreviewString(params.front),
-      content: {
-        type: CardType.DoubleSided,
-        frontIsField1: params.frontIsField1,
-      },
-    };
-  },
-
   async createNote(params: { field1: string; field2: string }, deck: Deck) {
     function createDoubleSidedCard(
       noteId: string,
