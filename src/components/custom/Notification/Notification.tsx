@@ -43,9 +43,11 @@ export function successfullyMovedTo(deckName: string) {
   });
 }
 
-export function successfullyDeleted(type: "card" | "deck") {
+export function successfullyDeleted(type: "card" | "deck" | "note") {
   return notifications.show({
-    title: { card: "Card Deleted", deck: "Deck Deleted" }[type],
+    title: { card: "Card Deleted", deck: "Deck Deleted", note: "Note Deleted" }[
+      type
+    ],
     message: "This object has been deleted!",
     autoClose: 1000,
     color: "teal",
@@ -79,9 +81,11 @@ export function addFailed() {
   });
 }
 
-export function deleteFailed(type: "card" | "deck") {
+export function deleteFailed(type: "card" | "deck" | "note") {
   return notifications.show({
-    title: { card: "Card", deck: "Deck" }[type] + " Could Not Be Deleted",
+    title:
+      { card: "Card", deck: "Deck", note: "Note" }[type] +
+      " Could Not Be Deleted",
     message: "There was an error deleting this object. Please try again later!",
     autoClose: 1500,
     color: "red",

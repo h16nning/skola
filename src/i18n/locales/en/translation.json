@@ -100,6 +100,17 @@
     },
     "title": "Manage Cards"
   },
+  "note": {
+    "delete-modal": {
+      "description": "You are about to delete this note. This cannot be undone.",
+      "title": "Delete Note"
+    },
+    "menu": {
+      "delete": "Delete",
+      "edit": "Edit",
+      "move": "Move"
+    }
+  },
   "notebook": {
     "individual-show-answer-toggle-tooltip": "Click to Show Answer",
     "options": {
