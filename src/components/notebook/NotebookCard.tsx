@@ -6,6 +6,7 @@ import { getUtils } from "../../logic/TypeManager";
 import { CardType } from "../../logic/card";
 import { Note, updateNote } from "../../logic/note";
 import classes from "./NotebookView.module.css";
+import NoteMenu from "../editcard/NoteMenu";
 
 interface NotebookCardProps {
   index: number;
@@ -71,7 +72,7 @@ const InnerCard = memo(
                 ? getUtils(note).displayNote(note)
                 : getUtils(note).displayNote(note)}
             </Group>
-            IMPLEMENT NOTE MENU HERRE
+            <NoteMenu note={note} withShortcuts={false} />
           </Group>
         </Paper>
       </Tooltip>

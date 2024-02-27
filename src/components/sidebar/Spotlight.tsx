@@ -36,8 +36,8 @@ const useSearchNote = (filter: string) => {
   );
   useEffect(() => {
     async function filterNotes(notes: Note<CardType>[]) {
-      const decksPromises = notes?.map(async (card) => {
-        const deck = await getDeck(card.deck);
+      const decksPromises = notes?.map(async (note) => {
+        const deck = await getDeck(note.deck);
         const superDecks = await determineSuperDecks(deck);
         return [
           ...(superDecks[0] || []).map((sd) => sd.name),

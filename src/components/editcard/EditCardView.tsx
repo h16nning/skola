@@ -5,6 +5,7 @@ import { CardType } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
 import { Note } from "../../logic/note";
 import { getUtils } from "../../logic/TypeManager";
+import NoteMenu from "./NoteMenu";
 
 function EditCardView() {
   const note = useLoaderData() as Note<CardType> | undefined;
@@ -40,7 +41,7 @@ function NoteView({ note }: { note: Note<CardType> }) {
             </Text>
           </Text>
         </Group>
-        // ADD NOTE MENU
+        <NoteMenu note={note} withEdit={false} />
       </Group>
       {NoteEditor}
     </Stack>
