@@ -68,9 +68,7 @@ const InnerCard = memo(
         >
           <Group align="top" justify="space-between" wrap="nowrap">
             <Group align="center" w="100%">
-              {showAnswer || individualShowAnswer
-                ? getUtils(note).displayNote(note)
-                : getUtils(note).displayNote(note)}
+              {getUtils(note).displayNote(note)}
             </Group>
             <NoteMenu note={note} withShortcuts={false} />
           </Group>

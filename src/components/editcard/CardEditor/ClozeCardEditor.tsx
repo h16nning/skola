@@ -18,6 +18,7 @@ import {
   successfullySaved,
 } from "../../custom/Notification/Notification";
 import CardEditorFooter from "../CardEditorFooter";
+import { Editor } from "@tiptap/react";
 
 interface ClozeCardEditorProps {
   note: Note<CardType.Cloze> | null;
@@ -39,29 +40,20 @@ export default function ClozeCardEditor({
   //fix sometime
   const editor = useNoteEditor({
     content: noteContent.text,
-    onUpdate: ({ editor }) => {
-      if (editor?.getHTML().valueOf() !== editorContent.valueOf()) {
-        setEditorContent(editor?.getHTML() ?? "");
-      }
-    },
     finish: () => {
       setRequestedFinish(true);
     },
   });
 
-  const [editorContent, setEditorContent] = useState<string>(
-    editor?.getHTML() ?? ""
-  );
-
   const smallestAvailableOcclusionNumber = useMemo(() => {
-    const occlusionNumberSet = getOcclusionNumberSet(editorContent);
+    const occlusionNumberSet = getOcclusionNumberSet(editor?.getHTML() ?? "");
     for (let i = 1; i < 10; i++) {
       if (!occlusionNumberSet.includes(i)) {
         return i;
       }
     }
     return 9;
-  }, [editorContent]);
+  }, [editor?.getHTML()]);
 
   const clear = useCallback(() => {
     editor?.commands.setContent("");
@@ -70,10 +62,10 @@ export default function ClozeCardEditor({
 
   useEffect(() => {
     if (requestedFinish) {
-      finish(mode, clear, deck, note, editorContent);
+      finish(mode, clear, deck, note, editor);
       setRequestedFinish(false);
     }
-  }, [requestedFinish, mode, clear, deck, note, editorContent]);
+  }, [requestedFinish, mode, clear, deck, note, editor]);
 
   return (
     <Stack gap="2rem">
@@ -111,7 +103,7 @@ async function finish(
   clear: Function,
   deck: Deck,
   note: Note<CardType.Cloze> | null,
-  editorContent: string
+  editor: Editor | null
 ) {
   if (mode === "edit") {
     //ISSUE newly introduced cards through edit are not recognized
@@ -119,8 +111,8 @@ async function finish(
       if (!note) throw new Error("Note not found");
       await ClozeCardUtils.updateNote(
         {
-          text: editorContent,
-          occlusionNumberSet: getOcclusionNumberSet(editorContent),
+          text: editor?.getHTML() ?? "",
+          occlusionNumberSet: getOcclusionNumberSet(editor?.getHTML() ?? ""),
         },
         note
       );
@@ -129,11 +121,13 @@ async function finish(
       saveFailed();
     }
   } else {
-    const occlusionNumberSet: number[] = getOcclusionNumberSet(editorContent);
+    const occlusionNumberSet: number[] = getOcclusionNumberSet(
+      editor?.getHTML() ?? ""
+    );
     try {
       ClozeCardUtils.createNote(
         {
-          text: editorContent,
+          text: editor?.getHTML() ?? "",
           occlusionNumberSet: occlusionNumberSet,
         },
         deck
