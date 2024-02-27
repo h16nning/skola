@@ -23,30 +23,6 @@ import { db } from "../db";
 export type NormalContent = {};
 
 export const NormalCardUtils: TypeManager<CardType.Normal> = {
-  updateCard(
-    params: { front: string; back: string },
-    existingCard: Card<CardType.Normal>
-  ) {
-    updateNoteContent(existingCard.note, {
-      type: CardType.Normal,
-      front: params.front,
-      back: params.back,
-    });
-    return {
-      ...existingCard,
-      preview: toPreviewString(params.front),
-    };
-  },
-
-  createCard(params: { noteId: string; front: string }): Card<CardType.Normal> {
-    return {
-      ...createCardSkeleton(),
-      preview: toPreviewString(params.front),
-      note: params.noteId,
-      content: { type: CardType.Normal },
-    };
-  },
-
   async createNote(params: { front: string; back: string }, deck: Deck) {
     return db.transaction("rw", db.notes, db.decks, db.cards, async () => {
       const noteId = await newNote(deck, {
