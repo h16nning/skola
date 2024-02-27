@@ -12,14 +12,7 @@ import {
 } from "../card";
 import { db } from "../db";
 import { Deck } from "../deck";
-import {
-  Note,
-  NoteContent,
-  newNote,
-  registerReferencesToNote,
-  removeReferenceToNote,
-  updateNoteContent,
-} from "../note";
+import { Note, NoteContent, newNote, updateNoteContent } from "../note";
 
 export type DoubleSidedContent = {
   frontIsField1: boolean;
@@ -48,15 +41,8 @@ export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
         field1: params.field1,
         field2: params.field2,
       });
-      const card1Id = await newCard(
-        createDoubleSidedCard(noteId, true, params.field1),
-        deck
-      );
-      const card2Id = await newCard(
-        createDoubleSidedCard(noteId, false, params.field2),
-        deck
-      );
-      await registerReferencesToNote(noteId, [card1Id, card2Id]);
+      await newCard(createDoubleSidedCard(noteId, true, params.field1), deck);
+      await newCard(createDoubleSidedCard(noteId, false, params.field2), deck);
     });
   },
 
@@ -70,14 +56,6 @@ export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
         field1: params.field1,
         field2: params.field2,
       });
-      // Will this be needed? Preview may be removed from the card itself.
-      Promise.all(
-        existingNote.referencedBy.map((cardId) => {
-          return db.cards.update(cardId, {
-            preview: toPreviewString(params.field1),
-          });
-        })
-      );
     });
   },
 
@@ -155,7 +133,6 @@ export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
   //DEPRECATED
   async deleteCard(card: Card<CardType.DoubleSided>) {
     db.transaction("rw", db.decks, db.cards, db.notes, async () => {
-      await removeReferenceToNote(card.note, card.id);
       await deleteCard(card);
     });
   },

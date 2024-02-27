@@ -1,7 +1,7 @@
 import { Divider, Stack, Title } from "@mantine/core";
 import NormalCardEditor from "../../components/editcard/CardEditor/NormalCardEditor";
 import common from "../../style/CommonStyles.module.css";
-import { TypeManager, EditMode } from "../TypeManager";
+import { EditMode, TypeManager } from "../TypeManager";
 import {
   Card,
   CardType,
@@ -10,15 +10,9 @@ import {
   newCard,
   toPreviewString,
 } from "../card";
-import { Deck } from "../deck";
-import {
-  Note,
-  NoteContent,
-  newNote,
-  registerReferenceToNote,
-  updateNoteContent,
-} from "../note";
 import { db } from "../db";
+import { Deck } from "../deck";
+import { Note, NoteContent, newNote, updateNoteContent } from "../note";
 
 export type NormalContent = {};
 
@@ -30,16 +24,14 @@ export const NormalCardUtils: TypeManager<CardType.Normal> = {
         front: params.front,
         back: params.back,
       });
-      const cardId = await newCard(
+      await newCard(
         {
           ...createCardSkeleton(),
-          preview: toPreviewString(params.front),
           note: noteId,
           content: { type: CardType.Normal },
         },
         deck
       );
-      await registerReferenceToNote(noteId, cardId);
     });
   },
 
@@ -53,14 +45,6 @@ export const NormalCardUtils: TypeManager<CardType.Normal> = {
         front: params.front,
         back: params.back,
       });
-      // Will this be needed? Preview may be removed from the card itself.
-      await Promise.all([
-        existingNote.referencedBy.map((cardId) => {
-          return db.cards.update(cardId, {
-            preview: toPreviewString(params.front),
-          });
-        }),
-      ]);
     });
   },
 
