@@ -8,12 +8,6 @@ import { UndefinedCardUtils } from "./CardTypeImplementations/UndefinedCard";
 import { Note, NoteContent } from "./note";
 
 export interface TypeManager<T extends CardType> {
-  //DEPREECATED
-  createCard: (params: any) => Card<T>;
-
-  //DEPREECATED
-  updateCard: (params: any, existingCard: Card<T>) => Card<T>;
-
   //DEPRECEATED
   deleteCard: (card: Card<T>) => void;
 

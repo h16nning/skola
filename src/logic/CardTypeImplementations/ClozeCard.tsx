@@ -29,43 +29,6 @@ export type ClozeContent = {
 };
 
 export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
-  //DEPRECATED
-  updateCard(params: { text: string }, existingCard: Card<CardType.Cloze>) {
-    updateNoteContent(existingCard.note, {
-      type: CardType.Cloze,
-      text: params.text,
-    });
-    updateCard(existingCard.id, {
-      preview: toPreviewString(
-        params.text.replace(/\{\{c\d::((?!\{\{|}}).)*\}\}/g, (match) =>
-          match.slice(6, -2)
-        )
-      ),
-    });
-    return { preview: toPreviewString(params.text), ...existingCard };
-  },
-
-  //DEPRECATED
-  createCard(params: {
-    occlusionNumber: number;
-    noteId: string;
-    text: string;
-  }): Card<CardType.Cloze> {
-    return {
-      ...createCardSkeleton(),
-      note: params.noteId,
-      preview: toPreviewString(
-        params.text.replace(/\{\{c\d::((?!\{\{|}}).)*\}\}/g, (match) =>
-          match.slice(6, -2)
-        )
-      ),
-      content: {
-        type: CardType.Cloze,
-        occlusionNumber: params.occlusionNumber,
-      },
-    };
-  },
-
   createNote(
     params: { text: string; occlusionNumberSet: number[] },
     deck: Deck

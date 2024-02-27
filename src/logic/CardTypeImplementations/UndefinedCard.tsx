@@ -1,31 +1,7 @@
 import { TypeManager } from "../TypeManager";
-import { Card, CardType, createCardSkeleton } from "../card";
-import React from "react";
+import { CardType } from "../card";
 
 export const UndefinedCardUtils: TypeManager<CardType.Undefined> = {
-  //DEPRECATED
-  updateCard(_, existingCard: Card<CardType.Undefined>) {
-    return {
-      ...existingCard,
-      content: {
-        preview: "[Undefined Card]",
-        type: existingCard.content.type,
-      },
-    };
-  },
-
-  //DEPRECATED
-  createCard(): Card<CardType.Undefined> {
-    return {
-      ...createCardSkeleton(),
-      preview: "[Undefined Card]",
-      note: "-1",
-      content: {
-        type: CardType.Undefined,
-      },
-    };
-  },
-
   createNote() {
     console.warn("tried to create note of type undefined. Not possible.");
     return Promise.resolve();
