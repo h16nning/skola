@@ -2,23 +2,15 @@ import { useHotkeys } from "@mantine/hooks";
 import { RichTextEditor } from "@mantine/tiptap";
 import { IconBracketsContain } from "@tabler/icons-react";
 import { EditMode } from "../../../logic/TypeManager";
-import { Card, CardType, newCards } from "../../../logic/card";
+import { CardType } from "../../../logic/card";
 import { Deck } from "../../../logic/deck";
-import NoteEditor, { useNoteEditor } from "./NoteEditor";
 import classes from "./ClozeCardEditor.module.css";
+import NoteEditor, { useNoteEditor } from "./NoteEditor";
 
 import { Stack } from "@mantine/core";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  ClozeCardUtils,
-  createClozeCardSet,
-} from "../../../logic/CardTypeImplementations/ClozeCard";
-import {
-  ClozeNoteContent,
-  getCardsReferencingNote,
-  getNote,
-  useNote,
-} from "../../../logic/note";
+import { ClozeCardUtils } from "../../../logic/CardTypeImplementations/ClozeCard";
+import { Note } from "../../../logic/note";
 import {
   addFailed,
   saveFailed,
@@ -28,13 +20,13 @@ import {
 import CardEditorFooter from "../CardEditorFooter";
 
 interface ClozeCardEditorProps {
-  card: Card<CardType.Cloze> | null;
+  note: Note<CardType.Cloze> | null;
   deck: Deck;
   mode: EditMode;
 }
 
 export default function ClozeCardEditor({
-  card,
+  note,
   deck,
   mode,
 }: ClozeCardEditorProps) {
@@ -42,9 +34,7 @@ export default function ClozeCardEditor({
 
   useHotkeys([["mod+Enter", () => setRequestedFinish(true)]]);
 
-  const noteContent = card
-    ? (useNote(card?.note)?.content as ClozeNoteContent) ?? {}
-    : { type: CardType.Cloze, text: "" };
+  const noteContent = note?.content ?? { type: CardType.Cloze, text: "" };
 
   //fix sometime
   const editor = useNoteEditor({
@@ -80,10 +70,10 @@ export default function ClozeCardEditor({
 
   useEffect(() => {
     if (requestedFinish) {
-      finish(mode, clear, deck, card, editorContent);
+      finish(mode, clear, deck, note, editorContent);
       setRequestedFinish(false);
     }
-  }, [requestedFinish, mode, clear, deck, card, editorContent]);
+  }, [requestedFinish, mode, clear, deck, note, editorContent]);
 
   return (
     <Stack gap="2rem">
@@ -120,36 +110,20 @@ async function finish(
   mode: EditMode,
   clear: Function,
   deck: Deck,
-  card: Card<CardType.Cloze> | null,
+  note: Note<CardType.Cloze> | null,
   editorContent: string
 ) {
   if (mode === "edit") {
     //ISSUE newly introduced cards through edit are not recognized
     try {
-      if (card) {
-        ClozeCardUtils.updateCard(
-          {
-            text: editorContent,
-          },
-          card
-        );
-        const cardsReferencingSameNote = await getNote(card.note).then(
-          (n) => n && getCardsReferencingNote(n)
-        );
-        cardsReferencingSameNote !== undefined &&
-          (await Promise.all(
-            cardsReferencingSameNote.map(
-              (c) =>
-                c !== undefined &&
-                ClozeCardUtils.updateCard(
-                  {
-                    text: editorContent,
-                  },
-                  c as Card<CardType.Cloze>
-                )
-            )
-          ));
-      }
+      if (!note) throw new Error("Note not found");
+      await ClozeCardUtils.updateNote(
+        {
+          text: editorContent,
+          occlusionNumberSet: getOcclusionNumberSet(editorContent),
+        },
+        note
+      );
       successfullySaved();
     } catch {
       saveFailed();
@@ -157,11 +131,13 @@ async function finish(
   } else {
     const occlusionNumberSet: number[] = getOcclusionNumberSet(editorContent);
     try {
-      createClozeCardSet({
-        deck: deck,
-        text: editorContent,
-        occlusionNumberSet,
-      }).then((cards) => newCards(cards, deck));
+      ClozeCardUtils.createNote(
+        {
+          text: editorContent,
+          occlusionNumberSet: occlusionNumberSet,
+        },
+        deck
+      );
       clear();
       successfullyAdded();
     } catch {
