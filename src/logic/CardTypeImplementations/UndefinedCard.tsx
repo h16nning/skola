@@ -3,6 +3,7 @@ import { Card, CardType, createCardSkeleton } from "../card";
 import React from "react";
 
 export const UndefinedCardUtils: TypeManager<CardType.Undefined> = {
+  //DEPRECATED
   updateCard(_, existingCard: Card<CardType.Undefined>) {
     return {
       ...existingCard,
@@ -13,6 +14,7 @@ export const UndefinedCardUtils: TypeManager<CardType.Undefined> = {
     };
   },
 
+  //DEPRECATED
   createCard(): Card<CardType.Undefined> {
     return {
       ...createCardSkeleton(),
@@ -22,6 +24,16 @@ export const UndefinedCardUtils: TypeManager<CardType.Undefined> = {
         type: CardType.Undefined,
       },
     };
+  },
+
+  createNote() {
+    console.warn("tried to create note of type undefined. Not possible.");
+    return Promise.resolve();
+  },
+
+  updateNote() {
+    console.warn("tried to update note of type undefined. Not possible.");
+    return Promise.resolve();
   },
 
   displayQuestion() {
@@ -36,7 +48,7 @@ export const UndefinedCardUtils: TypeManager<CardType.Undefined> = {
     return <span>[Undefined Card] Note</span>;
   },
 
-  getSortFieldFromNote() {
+  getSortFieldFromNoteContent() {
     return "[Undefined Card] Sort Field";
   },
 

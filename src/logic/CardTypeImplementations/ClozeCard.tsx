@@ -6,6 +6,7 @@ import {
   CardType,
   createCardSkeleton,
   deleteCard,
+  newCard,
   toPreviewString,
   updateCard,
 } from "../card";
@@ -28,6 +29,7 @@ export type ClozeContent = {
 };
 
 export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
+  //DEPRECATED
   updateCard(params: { text: string }, existingCard: Card<CardType.Cloze>) {
     updateNoteContent(existingCard.note, {
       type: CardType.Cloze,
@@ -43,6 +45,7 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
     return { preview: toPreviewString(params.text), ...existingCard };
   },
 
+  //DEPRECATED
   createCard(params: {
     occlusionNumber: number;
     noteId: string;
@@ -61,6 +64,72 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
         occlusionNumber: params.occlusionNumber,
       },
     };
+  },
+
+  createNote(
+    params: { text: string; occlusionNumberSet: number[] },
+    deck: Deck
+  ): Promise<string | undefined> {
+    function createClozeCard(
+      noteId: string,
+      occlusionNumber: number,
+      text: string
+    ) {
+      return {
+        ...createCardSkeleton(),
+        note: noteId,
+        preview: toPreviewString(
+          text.replace(/\{\{c\d::((?!\{\{|}}).)*\}\}/g, (match) =>
+            match.slice(6, -2)
+          )
+        ),
+        content: {
+          type: CardType.Cloze,
+          occlusionNumber: occlusionNumber,
+        },
+      };
+    }
+
+    return db.transaction("rw", db.notes, db.decks, db.cards, async () => {
+      const noteId = await newNote(deck, {
+        type: CardType.Cloze,
+        text: params.text,
+      });
+      const createdCardIds = await Promise.all(
+        params.occlusionNumberSet.map(async (occlusionNumber) => {
+          return await newCard(
+            createClozeCard(noteId, occlusionNumber, params.text),
+            deck
+          );
+        })
+      );
+      await registerReferencesToNote(noteId, createdCardIds);
+      return noteId;
+    });
+  },
+
+  updateNote(
+    params: { text: string; occclusionNumberSet: number[] },
+    existingNote: Note<CardType.Cloze>
+  ) {
+    return db.transaction("rw", db.notes, db.cards, async () => {
+      await updateNoteContent(existingNote.id, {
+        type: CardType.Cloze,
+        text: params.text,
+      });
+      // Not really needed, preview may be removed from the card itself. But here we might want to update occlusion numbers or delete cards if they are removed from the note.
+      await Promise.all(
+        existingNote.referencedBy.map((cardId) =>
+          updateCard(cardId, {
+            preview: toPreviewString(
+              params.text.replace(/\{\{c\d::((?!\{\{|}}).)*\}\}/g, (match) =>
+                match.slice(6, -2)
+              )
+            ),
+          })
+        )
+      );
+    });
   },
 
   displayQuestion(
@@ -82,16 +151,16 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
     return <ClozeCardComponent occluded={false} content={note.content} />;
   },
 
-  getSortFieldFromNote(note) {
+  getSortFieldFromNoteContent(content) {
     return toPreviewString(
-      note.content.text.replace(/\{\{c\d::((?!\{\{|}}).)*\}\}/g, (match) =>
+      content.text.replace(/\{\{c\d::((?!\{\{|}}).)*\}\}/g, (match) =>
         match.slice(6, -2)
       )
     );
   },
 
-  editor(card: Card<CardType.Cloze> | null, deck: Deck, mode: EditMode) {
-    return <ClozeCardEditor card={card} deck={deck} mode={mode} />;
+  editor(note: Note<CardType.Cloze> | null, deck: Deck, mode: EditMode) {
+    return <ClozeCardEditor note={note} deck={deck} mode={mode} />;
   },
 
   async deleteCard(card: Card<CardType.Cloze>) {
@@ -150,27 +219,4 @@ function ClozeCardComponent({
       className={classes.clozeCard}
     />
   );
-}
-
-export async function createClozeCardSet(params: {
-  deck: Deck;
-  text: string;
-  occlusionNumberSet: number[];
-}): Promise<Card<CardType.Cloze>[]> {
-  const noteId = await newNote(params.deck, {
-    type: CardType.Cloze,
-    text: params.text,
-  });
-  const createdCards = params.occlusionNumberSet.map((occlusionNumber) =>
-    ClozeCardUtils.createCard({
-      occlusionNumber: occlusionNumber,
-      noteId: noteId,
-      text: params.text,
-    })
-  );
-  await registerReferencesToNote(
-    noteId,
-    createdCards.map((card) => card.id)
-  );
-  return createdCards;
 }
