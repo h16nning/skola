@@ -78,6 +78,12 @@
   "manage-cards": {
     "title": "Hantera kort"
   },
+  "note": {
+    "menu": {
+      "edit": "Redigera",
+      "move": "Flytta"
+    }
+  },
   "rename-deck": {
     "new-name": "",
     "rename-button": "",

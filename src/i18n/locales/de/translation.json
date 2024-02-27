@@ -93,6 +93,17 @@
   "manage-cards": {
     "title": "Karten verwalten"
   },
+  "note": {
+    "delete-modal": {
+      "description": "Du bist gerade dabei, diese Notiz zu löschen. Das kann nicht rückgängig gemacht werden.",
+      "title": "Notiz löschen"
+    },
+    "menu": {
+      "delete": "Löschen",
+      "edit": "Bearbeiten",
+      "move": "Bewegen"
+    }
+  },
   "notebook": {
     "individual-show-answer-toggle-tooltip": "Klicke, um die Antwort anzuzeigen",
     "options": {
