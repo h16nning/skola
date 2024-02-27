@@ -8,7 +8,6 @@ import { Table } from "dexie";
 export interface NoteSkeleton {
   id: string;
   deck: string;
-  referencedBy: string[];
   creationDate: Date;
   customOrder?: number;
 }
@@ -22,7 +21,6 @@ export function createNoteSkeleton(deck: string): NoteSkeleton {
     deck: deck,
     creationDate: new Date(Date.now()),
     id: uuidv4(),
-    referencedBy: [],
   };
 }
 
@@ -44,37 +42,6 @@ export async function newNote<T extends CardType>(
     db.decks.update(deck.id, { notes: deck.notes.concat(note.id) });
   });
   return note.id;
-}
-
-export async function registerReferenceToNote(noteId: string, cardId: string) {
-  const note = await db.notes.get(noteId);
-  if (note) {
-    note.referencedBy.push(cardId);
-    await db.notes.update(noteId, note);
-  }
-}
-
-export async function registerReferencesToNote(
-  noteId: string,
-  cardIds: string[]
-) {
-  const note = await db.notes.get(noteId);
-  if (note) {
-    note.referencedBy.push(...cardIds);
-    await db.notes.update(noteId, note);
-  }
-}
-
-export async function removeReferenceToNote(noteId: string, cardId: string) {
-  const note = await db.notes.get(noteId);
-  if (note) {
-    note.referencedBy = note.referencedBy.filter((id) => id !== cardId);
-    if (note.referencedBy.length === 0) {
-      await db.notes.delete(noteId);
-    } else {
-      await db.notes.update(noteId, note);
-    }
-  }
 }
 
 export async function getNote(noteId: string) {
@@ -125,17 +92,20 @@ export function updateNoteContent<T extends CardType>(
 export function deleteNote<T extends CardType>(note: Note<T>) {
   return db.transaction("rw", db.notes, db.cards, db.decks, async () => {
     await db.notes.delete(note.id);
-    await db.cards.bulkDelete(note.referencedBy);
+    const cardCollection = db.cards.where("note").equals(note.id);
+    cardCollection.delete();
     const deck = await db.decks.get(note.deck);
     await db.decks.update(note.deck, {
       notes: deck?.notes.filter((n) => n !== note.id),
-      cards: deck?.cards.filter((c) => !note.referencedBy.includes(c)),
+      cards: deck?.cards.filter((c) =>
+        cardCollection.primaryKeys().then((a) => !a.includes(c))
+      ),
     });
   });
 }
 
 export function getCardsReferencingNote(note: Note<any>) {
-  return Promise.all(note.referencedBy.map((cardId) => db.cards.get(cardId)));
+  return db.cards.where("note").equals(note.id).toArray();
 }
 
 export async function getNotesOf(
