@@ -5,23 +5,31 @@ import {
   IconChartBar,
   IconCode,
   IconDots,
+  IconEdit,
+  IconTrash,
 } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useCallback, useEffect, useState } from "react";
 import { useSetting, useShowShortcutHints } from "../../logic/Settings";
 import { Card, CardType } from "../../logic/card";
-import { Note, getNote } from "../../logic/note";
+import { Note, deleteNote, getNote } from "../../logic/note";
 import DebugCardModal from "../DebugCardModal/DebugCardModal";
 import CardStatisticsModal from "../statistics/CardStatisticsModal";
-import NoteMenu from "./NoteMenu";
+import { useNavigate } from "react-router-dom";
+import DangerousConfirmModal from "../custom/DangerousConfirmModal";
+import {
+  deleteFailed,
+  successfullyDeleted,
+} from "../custom/Notification/Notification";
 
 interface CardMenuProps {
   card: Card<CardType> | undefined;
-  withEdit?: boolean;
   onDelete?: Function;
 }
 
-function CardMenu({ card, onDelete, withEdit = true }: CardMenuProps) {
+function CardMenu({ card, onDelete }: CardMenuProps) {
+  const navigate = useNavigate();
+
   const [developerMode] = useSetting("developerMode");
 
   const [debugModalOpened, setDebugModalOpened] = useState<boolean>(false);
@@ -33,6 +41,8 @@ function CardMenu({ card, onDelete, withEdit = true }: CardMenuProps) {
     ["s", () => setStatisticsModalOpened(true)],
     ["o", () => {}],
     ["shift+d", () => setDebugModalOpened(true)],
+    ["e", () => navigate(`/notes/${note?.deck}/${note?.id}`)],
+    ["Backspace", () => setDeleteModalOpened(true)],
   ]);
 
   const [note, setNote] = useState<Note<CardType> | undefined>();
@@ -46,6 +56,25 @@ function CardMenu({ card, onDelete, withEdit = true }: CardMenuProps) {
     fetchNote();
   }, [card]);
 
+  const [deleteModalOpened, setDeleteModalOpened] = useState<boolean>(false);
+
+  async function tryDeleteNote() {
+    if (!note) {
+      return;
+    }
+    try {
+      await deleteNote(note);
+      if (onDelete) {
+        onDelete();
+      }
+      setDeleteModalOpened(false);
+      successfullyDeleted("note");
+    } catch (error) {
+      deleteFailed("note");
+      console.log(error);
+    }
+  }
+
   if (!card) return null;
   return (
     <>
@@ -56,6 +85,15 @@ function CardMenu({ card, onDelete, withEdit = true }: CardMenuProps) {
           </ActionIcon>
         </Menu.Target>
         <Menu.Dropdown>
+          {note && (
+            <Menu.Item
+              leftSection={<IconEdit size={16} />}
+              rightSection={showShortcutHints && <Kbd>e</Kbd>}
+              onClick={() => navigate(`/notes/${note.deck}/${note.id}`)}
+            >
+              {t("note.menu.edit")}
+            </Menu.Item>
+          )}
           <Menu.Item
             leftSection={<IconChartBar size={16} />}
             rightSection={showShortcutHints && <Kbd>s</Kbd>}
@@ -85,14 +123,14 @@ function CardMenu({ card, onDelete, withEdit = true }: CardMenuProps) {
               {t("card.menu.debug")}
             </Menu.Item>
           )}
-          {
-            <NoteMenu
-              note={note}
-              withEdit={withEdit}
-              withShortcuts={false}
-              onDelete={onDelete}
-            />
-          }
+          <Menu.Item
+            color="red"
+            leftSection={<IconTrash size={16} />}
+            rightSection={showShortcutHints && <Kbd>←</Kbd>}
+            onClick={() => setDeleteModalOpened(true)}
+          >
+            {t("note.menu.delete")}
+          </Menu.Item>
         </Menu.Dropdown>
       </Menu>
       <CardStatisticsModal
@@ -104,6 +142,15 @@ function CardMenu({ card, onDelete, withEdit = true }: CardMenuProps) {
         opened={debugModalOpened}
         setOpened={setDebugModalOpened}
         card={card}
+      />
+
+      <DangerousConfirmModal
+        dangerousAction={() => tryDeleteNote()}
+        dangerousDependencies={[note]}
+        dangerousTitle={t("note.delete-modal.title")}
+        dangerousDescription={t("note.delete-modal.description")}
+        opened={deleteModalOpened}
+        setOpened={setDeleteModalOpened}
       />
     </>
   );
