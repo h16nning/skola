@@ -11,6 +11,8 @@ interface MoveCardModalProps {
   setOpened: Function;
 }
 
+//MAY BE DEPRECATED. Allow moving single cards?
+
 export default function MoveCardModal({
   card,
   opened,
@@ -21,11 +23,7 @@ export default function MoveCardModal({
   );
   const [newDeckID, setNewDeckID] = useState<string | null>(null);
   return (
-    <Modal
-      title={"Move " + card.preview}
-      opened={opened}
-      onClose={() => setOpened(false)}
-    >
+    <Modal title={"Move"} opened={opened} onClose={() => setOpened(false)}>
       <Stack>
         <Select
           searchable

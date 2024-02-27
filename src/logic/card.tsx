@@ -22,7 +22,6 @@ export interface CardSkeleton {
   deck: string;
   creationDate: Date;
   customOrder?: number;
-  preview?: string;
 }
 
 export interface Card<T extends CardType> extends CardSkeleton {
@@ -37,7 +36,6 @@ export function createCardSkeleton(): CardSkeleton {
     history: [],
     deck: "[preview not set]",
     model: new Model(),
-    preview: "",
     creationDate: new Date(Date.now()),
   };
 }
