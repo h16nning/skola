@@ -1,12 +1,11 @@
 import { Draggable } from "@hello-pangea/dnd";
-import { Group, Paper, Tooltip } from "@mantine/core";
-import { t } from "i18next";
+import { Group, Paper } from "@mantine/core";
 import { memo, useEffect, useState } from "react";
 import { getUtils } from "../../logic/TypeManager";
 import { CardType } from "../../logic/card";
 import { Note, updateNote } from "../../logic/note";
-import classes from "./NotebookView.module.css";
 import NoteMenu from "../editcard/NoteMenu";
+import classes from "./NotebookView.module.css";
 
 interface NotebookCardProps {
   index: number;
@@ -52,28 +51,24 @@ export default memo(NotebookCard);
 
 const InnerCard = memo(
   ({ note, showAnswer }: { note: Note<CardType>; showAnswer: boolean }) => {
-    const [individualShowAnswer, setIndividualShowAnswer] = useState(false);
+    const [answerToggled, setAnswerToggled] = useState(false);
 
     return (
-      <Tooltip
-        label={t("notebook.individual-show-answer-toggle-tooltip")}
-        openDelay={1000}
-        offset={-10}
-        disabled={showAnswer}
+      <Paper
+        p="md"
+        className={classes.card}
+        onClick={() => setAnswerToggled(!answerToggled)}
       >
-        <Paper
-          p="md"
-          className={classes.card}
-          onClick={() => setIndividualShowAnswer(!individualShowAnswer)}
-        >
-          <Group align="top" justify="space-between" wrap="nowrap">
-            <Group align="center" w="100%">
-              {getUtils(note).displayNote(note)}
-            </Group>
-            <NoteMenu note={note} withShortcuts={false} />
+        <Group align="top" justify="space-between" wrap="nowrap">
+          <Group align="center" w="100%">
+            {getUtils(note).displayNote(
+              note,
+              showAnswer ? "strict" : answerToggled ? "facultative" : "none"
+            )}
           </Group>
-        </Paper>
-      </Tooltip>
+          <NoteMenu note={note} withShortcuts={false} />
+        </Group>
+      </Paper>
     );
   }
 );

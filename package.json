@@ -42,6 +42,7 @@
     "embla-carousel-react": "^7.0.9",
     "firebase": "^9.18.0",
     "fsrs.js": "^1.2.2",
+    "html-react-parser": "^5.1.8",
     "html-to-text": "^9.0.4",
     "i18next": "^23.7.11",
     "react": "^18.2.0",
