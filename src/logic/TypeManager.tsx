@@ -27,7 +27,16 @@ export interface TypeManager<T extends CardType> {
     place?: "learn" | "notebook"
   ): ReactNode;
 
-  displayNote(note: Note<T>): ReactNode;
+  /**
+   * Displays the contents of a note.
+   *
+   * @param note The note to display
+   * @param showAllAnswers If "strict", the answer(s) is / are always shown. If "facultative", the answer may be shown if there is only one answer. If there are multiple answers, displayNote may ignore this parameter and implement its own logic to individually toggle the answers. If "none", no answer are shown.
+   */
+  displayNote(
+    note: Note<T>,
+    showAllAnswers: "strict" | "facultative" | "none"
+  ): ReactNode;
 
   getSortFieldFromNoteContent(content: NoteContent<T>): string;
 
