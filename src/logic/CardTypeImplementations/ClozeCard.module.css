@@ -1,49 +1,3 @@
-/*DEPRECATED*/
-
-.clozeCard :global(.cloze-field) {
-    vertical-align:baseline;
-    padding: 0 0.25rem;
-    border-radius: var(--mantine-radius-sm);
-    background-color: var(--mantine-primary-color-light);
-    border-bottom: solid 2px var(--mantine-primary-color-filled);
-    opacity: 1;
-
-    :global(.cloze-content.occluded) {
-        opacity: 0;
-    }
-
-}
-
-.clozeCard :global(.cloze-field.inactive) {
-    background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
-    border-bottom: solid 2px light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-3));
-}
-
-
-.clozeCard :global(.cloze-field.interactive) {
-    z-index: 10000;
-    border: none;
-    border-bottom: solid 2px light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-3));
-    cursor: pointer;
-    &:hover {
-        background-color: light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
-    }
-
-    :global(.cloze-content) {
-        opacity: 1;
-        transition: opacity 0.1s;
-    }
-}
-
-.clozeCard :global(.cloze-field.interactive):not(:global(.active)) :global(.cloze-content) {
-    opacity: 0;
-
-}
-
-
-/***/
-
-
 .clozeField {
     vertical-align:baseline;
     padding: 0 0.25rem;
@@ -51,17 +5,31 @@
     background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
     border-bottom: solid 2px light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-3));
 
-    cursor: pointer;
-    &:hover {
+    cursor: text;
+    &.active {
+        background-color: var(--mantine-primary-color-light);
+        border-bottom: solid 2px var(--mantine-primary-color-filled);
+
+        .occludable {
+            transition: none;
+        }
+    }
+
+    &.interactive {
+        cursor: pointer;
+    }
+    &.interactive:hover {
         background-color: light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
     }
 
     .occludable {
-        opacity: 1;
+        opacity: 0;
         transition: opacity 0.1s;
 
-        &.occluded {
-            opacity: 0;
+        &.visible {
+            opacity: 1;
         }
     }
+
+    
 }
