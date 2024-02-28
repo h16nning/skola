@@ -228,7 +228,7 @@ function ClozeField({
   children,
   alwaysVisible,
 }: { children: ReactNode; alwaysVisible?: boolean }) {
-  const [occluded, setOccluded] = useState(false);
+  const [occluded, setOccluded] = useState(true);
 
   return (
     <UnstyledButton
