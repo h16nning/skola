@@ -106,18 +106,25 @@ export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
     );
   },
 
-  displayNote(note: Note<CardType.DoubleSided>) {
+  displayNote(
+    note: Note<CardType.DoubleSided>,
+    showAllAnswers: "strict" | "facultative" | "none"
+  ) {
     return (
-      <Stack gap="sm">
+      <Stack gap="sm" w="100%">
         <Title
           order={3}
           fw={600}
           dangerouslySetInnerHTML={{ __html: note.content.field1 ?? "" }}
-        ></Title>
-        <Divider className={common.lightBorderColor} />
-        <div
-          dangerouslySetInnerHTML={{ __html: note.content.field2 ?? "" }}
-        ></div>
+        />
+        {showAllAnswers !== "none" && (
+          <>
+            <Divider className={common.lightBorderColor} />
+            <div
+              dangerouslySetInnerHTML={{ __html: note.content.field2 ?? "" }}
+            />
+          </>
+        )}
       </Stack>
     );
   },
