@@ -1,6 +1,7 @@
 .card {
     padding: var(--mantine-spacing-sm);
     border: solid 1px var(--mantine-color-light-border);
+    cursor: pointer;
 
     p, div, ul, ol {
         margin: 0;

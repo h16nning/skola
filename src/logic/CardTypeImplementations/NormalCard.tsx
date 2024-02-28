@@ -13,6 +13,7 @@ import {
 import { db } from "../db";
 import { Deck } from "../deck";
 import { Note, NoteContent, newNote, updateNoteContent } from "../note";
+import { useState } from "react";
 
 export type NormalContent = {};
 
@@ -75,18 +76,31 @@ export const NormalCardUtils: TypeManager<CardType.Normal> = {
     );
   },
 
-  displayNote(note: Note<CardType.Normal>) {
+  displayNote(
+    note: Note<CardType.Normal>,
+    showAllAnswers: "strict" | "facultative" | "none"
+  ) {
+    const [individualShowAnswer, setIndividualShowAnswer] = useState(false);
+
     return (
-      <Stack gap="sm" w="100%">
+      <Stack
+        gap="sm"
+        w="100%"
+        onClick={() => setIndividualShowAnswer(!individualShowAnswer)}
+      >
         <Title
           order={3}
           fw={600}
           dangerouslySetInnerHTML={{ __html: note.content?.front ?? "" }}
-        ></Title>
-        <Divider className={common.lightBorderColor} />
-        <div
-          dangerouslySetInnerHTML={{ __html: note.content?.back ?? "" }}
-        ></div>
+        />
+        {showAllAnswers !== "none" && (
+          <>
+            <Divider className={common.lightBorderColor} />
+            <div
+              dangerouslySetInnerHTML={{ __html: note.content?.back ?? "" }}
+            />
+          </>
+        )}
       </Stack>
     );
   },
