@@ -6,7 +6,7 @@ import parse, {
   HTMLReactParserOptions,
   domToReact,
 } from "html-react-parser";
-import { ReactNode, memo, useEffect, useState } from "react";
+import { ReactNode, memo, useState } from "react";
 import ClozeCardEditor from "../../components/editcard/CardEditor/ClozeCardEditor";
 import { EditMode, TypeManager } from "../TypeManager";
 import {
@@ -87,14 +87,14 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
     card: Card<CardType.Cloze>,
     content?: NoteContent<CardType.Cloze>
   ) {
-    return <ClozeCardComponent occluded={true} card={card} content={content} />;
+    return <ClozeComponent content={content} activeCard={card} activeIsVisible={false} allAreVisible={true} />;
   },
   displayAnswer(
     card: Card<CardType.Cloze>,
     content?: NoteContent<CardType.Cloze>
   ) {
     return (
-      <ClozeCardComponent occluded={false} card={card} content={content} />
+      <ClozeComponent content={content} activeCard={card} activeIsVisible={true} allAreVisible={true}/>
     );
   },
 
@@ -102,54 +102,8 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
     note: Note<CardType.Cloze>,
     showAllAnswers: "strict" | "facultative" | "none"
   ) {
-    const [node, setNode] = useState<ReactNode | null>(null);
 
-    useEffect(() => {
-      let tempClozeCounter = 0;
-      let finalText = note.content.text ?? "";
-      finalText = finalText.replace(
-        /\{\{c\d::((?!\{\{|}}).)*\}\}/g,
-        (match) => {
-          tempClozeCounter++;
-          return `<span class="interactive-cloze-field-replace">${match.slice(
-            6,
-            -2
-          )}</span></button>`;
-        }
-      );
-
-      const options: HTMLReactParserOptions = {
-        replace(domNode) {
-          if (
-            domNode instanceof Element &&
-            domNode.attribs.class === "interactive-cloze-field-replace"
-          ) {
-            console.log("domNode");
-            return (
-              <ClozeField alwaysVisible={showAllAnswers === "strict"}>
-                {domToReact(domNode.children as DOMNode[], options)}
-              </ClozeField>
-            );
-          }
-        },
-      };
-      setNode(
-        <Text className={classes.clozeCard}>{parse(finalText, options)}</Text>
-      );
-
-      return () => {
-        for (let i = 0; i < tempClozeCounter; i++) {
-          document
-            .getElementById(`cloze-field-${note.id}-${i + 1}`)
-            ?.removeEventListener("click", function clozeEventListener() {
-              console.log("remove event listener");
-              this.classList.remove("active");
-            });
-        }
-      };
-    }, [note, showAllAnswers]);
-
-    return node;
+    return <ClozeComponent content={note.content} allAreVisible={showAllAnswers === "strict" ? true : undefined} />;
   },
 
   getSortFieldFromNoteContent(content) {
@@ -187,58 +141,80 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
   },
 };
 
-const ClozeCardComponent = memo(
+const ClozeComponent = memo(
   ({
-    occluded,
-    card,
+    activeCard,
+    activeIsVisible,
+    allAreVisible,
     content,
   }: {
-    occluded: boolean;
-    card?: Card<CardType.Cloze>;
+    activeCard?: Card<CardType.Cloze>;
+    activeIsVisible?: boolean,
+    allAreVisible?: boolean,
     content?: NoteContent<CardType.Cloze>;
   }) => {
     let finalText = content?.text ?? "";
-    if (card) {
+    if (activeCard) {
       finalText = finalText.replace(
-        new RegExp(`{{c${card.content.occlusionNumber}::((?!{{|}}).)*}}`, "g"),
+        new RegExp(`{{c${activeCard.content.occlusionNumber}::((?!{{|}}).)*}}`, "g"),
         (match) =>
-          `<span class="cloze-field"><span class="cloze-content ${
-            occluded && "occluded"
-          }">${match.slice(6, -2)}</span></span>`
+         `<span class="interactive-cloze-field-replace active">${match.slice(
+          6,
+          -2
+        )}</span>`
       );
     }
     finalText = finalText.replace(
       /\{\{c\d::((?!\{\{|}}).)*\}\}/g,
-      (match) =>
-        `<span class="cloze-field inactive"><span class="cloze-content">${match.slice(
-          6,
-          -2
-        )}</span></span>`
+      (match) => `<span class="interactive-cloze-field-replace">${match.slice(
+        6,
+        -2
+      )}</span>`
     );
+
+    console.log(finalText);
+    const options: HTMLReactParserOptions = {
+      replace(domNode) {
+        if (
+          domNode instanceof Element &&
+          domNode.attribs.class &&
+          domNode.attribs.class.includes("interactive-cloze-field-replace")
+        ) {
+          const isActive =  domNode.attribs.class.endsWith("active");
+          console.log(isActive);
+          return (
+            <ClozeField active={isActive} controlledIsVisible={isActive ? activeIsVisible : allAreVisible}>
+              {domToReact(domNode.children as DOMNode[], options)}
+            </ClozeField>
+          );
+        }
+      },
+    };
+
     return (
       <Text
-        dangerouslySetInnerHTML={{ __html: finalText }}
         className={classes.clozeCard}
-      />
+      >{parse(finalText, options)}</Text>
     );
   }
 );
 
 function ClozeField({
   children,
-  alwaysVisible,
-}: { children: ReactNode; alwaysVisible?: boolean }) {
-  const [occluded, setOccluded] = useState(true);
+  controlledIsVisible,
+  active
+}: { children: ReactNode; controlledIsVisible?: boolean, active?: boolean }) {
+  const [isVisible, setIsVisible] = useState(false);
 
   return (
     <UnstyledButton
-      className={classes.clozeField}
-      onClick={() => setOccluded(!occluded)}
+      className={cx({[classes.clozeField]: true, [classes.active]: active, [classes.interactive]: controlledIsVisible === undefined})}
+      onClick={() => setIsVisible(!isVisible)}
     >
       <span
         className={cx({
           [classes.occludable]: true,
-          [classes.occluded]: occluded && !alwaysVisible,
+          [classes.visible]: controlledIsVisible === undefined ? isVisible : controlledIsVisible,
         })}
       >
         {children}
