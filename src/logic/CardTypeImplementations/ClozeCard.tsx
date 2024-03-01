@@ -87,14 +87,26 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
     card: Card<CardType.Cloze>,
     content?: NoteContent<CardType.Cloze>
   ) {
-    return <ClozeComponent content={content} activeCard={card} activeIsVisible={false} allAreVisible={true} />;
+    return (
+      <ClozeComponent
+        content={content}
+        activeCard={card}
+        activeIsVisible={false}
+        allAreVisible={true}
+      />
+    );
   },
   displayAnswer(
     card: Card<CardType.Cloze>,
     content?: NoteContent<CardType.Cloze>
   ) {
     return (
-      <ClozeComponent content={content} activeCard={card} activeIsVisible={true} allAreVisible={true}/>
+      <ClozeComponent
+        content={content}
+        activeCard={card}
+        activeIsVisible={true}
+        allAreVisible={true}
+      />
     );
   },
 
@@ -102,8 +114,12 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
     note: Note<CardType.Cloze>,
     showAllAnswers: "strict" | "facultative" | "none"
   ) {
-
-    return <ClozeComponent content={note.content} allAreVisible={showAllAnswers === "strict" ? true : undefined} />;
+    return (
+      <ClozeComponent
+        content={note.content}
+        allAreVisible={showAllAnswers === "strict" ? true : undefined}
+      />
+    );
   },
 
   getSortFieldFromNoteContent(content) {
@@ -149,27 +165,31 @@ const ClozeComponent = memo(
     content,
   }: {
     activeCard?: Card<CardType.Cloze>;
-    activeIsVisible?: boolean,
-    allAreVisible?: boolean,
+    activeIsVisible?: boolean;
+    allAreVisible?: boolean;
     content?: NoteContent<CardType.Cloze>;
   }) => {
     let finalText = content?.text ?? "";
     if (activeCard) {
       finalText = finalText.replace(
-        new RegExp(`{{c${activeCard.content.occlusionNumber}::((?!{{|}}).)*}}`, "g"),
+        new RegExp(
+          `{{c${activeCard.content.occlusionNumber}::((?!{{|}}).)*}}`,
+          "g"
+        ),
         (match) =>
-         `<span class="interactive-cloze-field-replace active">${match.slice(
-          6,
-          -2
-        )}</span>`
+          `<span class="interactive-cloze-field-replace active">${match.slice(
+            6,
+            -2
+          )}</span>`
       );
     }
     finalText = finalText.replace(
       /\{\{c\d::((?!\{\{|}}).)*\}\}/g,
-      (match) => `<span class="interactive-cloze-field-replace">${match.slice(
-        6,
-        -2
-      )}</span>`
+      (match) =>
+        `<span class="interactive-cloze-field-replace">${match.slice(
+          6,
+          -2
+        )}</span>`
     );
 
     console.log(finalText);
@@ -180,10 +200,13 @@ const ClozeComponent = memo(
           domNode.attribs.class &&
           domNode.attribs.class.includes("interactive-cloze-field-replace")
         ) {
-          const isActive =  domNode.attribs.class.endsWith("active");
+          const isActive = domNode.attribs.class.endsWith("active");
           console.log(isActive);
           return (
-            <ClozeField active={isActive} controlledIsVisible={isActive ? activeIsVisible : allAreVisible}>
+            <ClozeField
+              active={isActive}
+              controlledIsVisible={isActive ? activeIsVisible : allAreVisible}
+            >
               {domToReact(domNode.children as DOMNode[], options)}
             </ClozeField>
           );
@@ -192,9 +215,7 @@ const ClozeComponent = memo(
     };
 
     return (
-      <Text
-        className={classes.clozeCard}
-      >{parse(finalText, options)}</Text>
+      <Text className={classes.clozeCard}>{parse(finalText, options)}</Text>
     );
   }
 );
@@ -202,19 +223,24 @@ const ClozeComponent = memo(
 function ClozeField({
   children,
   controlledIsVisible,
-  active
-}: { children: ReactNode; controlledIsVisible?: boolean, active?: boolean }) {
+  active,
+}: { children: ReactNode; controlledIsVisible?: boolean; active?: boolean }) {
   const [isVisible, setIsVisible] = useState(false);
 
   return (
     <UnstyledButton
-      className={cx({[classes.clozeField]: true, [classes.active]: active, [classes.interactive]: controlledIsVisible === undefined})}
+      className={cx({
+        [classes.clozeField]: true,
+        [classes.active]: active,
+        [classes.interactive]: controlledIsVisible === undefined,
+      })}
       onClick={() => setIsVisible(!isVisible)}
     >
       <span
         className={cx({
           [classes.occludable]: true,
-          [classes.visible]: controlledIsVisible === undefined ? isVisible : controlledIsVisible,
+          [classes.visible]:
+            controlledIsVisible === undefined ? isVisible : controlledIsVisible,
         })}
       >
         {children}
