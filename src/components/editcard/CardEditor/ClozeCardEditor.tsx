@@ -24,12 +24,14 @@ interface ClozeCardEditorProps {
   note: Note<CardType.Cloze> | null;
   deck: Deck;
   mode: EditMode;
+  onChanged?: () => void;
 }
 
 export default function ClozeCardEditor({
   note,
   deck,
   mode,
+  onChanged,
 }: ClozeCardEditorProps) {
   const [requestedFinish, setRequestedFinish] = useState(false);
 
@@ -64,6 +66,7 @@ export default function ClozeCardEditor({
     if (requestedFinish) {
       finish(mode, clear, deck, note, editor);
       setRequestedFinish(false);
+      onChanged?.();
     }
   }, [requestedFinish, mode, clear, deck, note, editor]);
 

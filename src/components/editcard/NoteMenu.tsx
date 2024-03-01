@@ -1,5 +1,5 @@
 import { ActionIcon, Kbd, Menu } from "@mantine/core";
-import { useHotkeys } from "@mantine/hooks";
+import { useDisclosure, useHotkeys } from "@mantine/hooks";
 import {
   IconArrowsExchange,
   IconDots,
@@ -8,7 +8,6 @@ import {
 } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useShowShortcutHints } from "../../logic/Settings";
 import { CardType } from "../../logic/card";
 import { Note, deleteNote } from "../../logic/note";
@@ -17,6 +16,7 @@ import {
   deleteFailed,
   successfullyDeleted,
 } from "../custom/Notification/Notification";
+import EditNoteModal from "./EditNoteModal";
 
 interface NoteMenuProps {
   note: Note<CardType> | undefined;
@@ -31,7 +31,7 @@ function NoteMenu({
   withEdit = true,
   withShortcuts = true,
 }: NoteMenuProps) {
-  const navigate = useNavigate();
+  const [editModalOpened, editModal] = useDisclosure(false);
 
   useState<boolean>(false);
 
@@ -58,7 +58,7 @@ function NoteMenu({
   useHotkeys(
     withShortcuts
       ? [
-          ["e", () => navigate(`/notes/${note?.deck}/${note?.id}`)],
+          ["e", editModal.open],
           //["m", () => setMoveModalOpened(true)],
           ["Backspace", () => setDeleteModalOpened(true)],
         ]
@@ -79,7 +79,7 @@ function NoteMenu({
             <Menu.Item
               leftSection={<IconEdit size={16} />}
               rightSection={withShortcuts && showShortcutHints && <Kbd>e</Kbd>}
-              onClick={() => navigate(`/notes/${note.deck}/${note.id}`)}
+              onClick={editModal.open}
             >
               {t("note.menu.edit")}
             </Menu.Item>
@@ -109,6 +109,12 @@ function NoteMenu({
         dangerousDescription={t("note.delete-modal.description")}
         opened={deleteModalOpened}
         setOpened={setDeleteModalOpened}
+      />
+      <EditNoteModal
+        note={note}
+        opened={editModalOpened}
+        setClose={editModal.close}
+        onChanged={editModal.close}
       />
     </>
   );
