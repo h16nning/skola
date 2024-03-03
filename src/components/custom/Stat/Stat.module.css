@@ -1,8 +1,11 @@
 .stat {
   padding: 0.75rem;
   border-radius: var(--mantine-radius-sm);
-  width: 100%;
+  width: 0;
   max-width: 7rem;
+  flex-basis: 0;
+  flex: 1 1 0;
+  overflow: hidden;
 }
 
 .statIcon {
@@ -23,4 +26,5 @@
 .statName {
   font-weight: 500;
   font-size: var(--mantine-font-size-sm);
+  width: 100%;
 }

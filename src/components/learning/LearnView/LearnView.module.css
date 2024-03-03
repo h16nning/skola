@@ -4,6 +4,7 @@
   right: 0;
   left: 0;
   bottom: 0;
+  padding-top: 3.6875rem;
   background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
   @mixin larger-than $mantine-breakpoint-xs {
     padding-left: 3.5rem;
