@@ -1,0 +1,6 @@
+.modal {
+    :global(.mantine-Modal-title) {
+        width: 100%;
+        margin-right: var(--mantine-spacing-xs);
+    }
+}

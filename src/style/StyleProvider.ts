@@ -4,17 +4,19 @@ import {
   Breadcrumbs,
   Button,
   CSSVariablesResolver,
+  Kbd,
   Menu,
   Modal,
   NavLink,
   Popover,
   Select,
   Tabs,
-  Tooltip,
-  Kbd,
-  createTheme,
   ThemeIcon,
+  Tooltip,
+  createTheme,
 } from "@mantine/core";
+import { Spotlight } from "@mantine/spotlight";
+import spotlight from "../components/sidebar/Spotlight.module.css";
 import actionIcon from "./ActionIcon.module.css";
 import appShell from "./AppShell.module.css";
 import breadcrumbs from "./Breadcrumbs.module.css";
@@ -25,11 +27,9 @@ import navLink from "./NavLink.module.css";
 import navbar from "./Navbar.module.css";
 import popover from "./Popover.module.css";
 import select from "./Select.module.css";
-import spotlight from "../components/sidebar/Spotlight.module.css";
 import tabs from "./Tabs.module.css";
 import themeIcon from "./ThemeIcon.module.css";
 import tooltip from "./Tooltip.module.css";
-import { Spotlight } from "@mantine/spotlight";
 
 const headingStyle = {
   fontFamily: "Noto Serif Lao",
