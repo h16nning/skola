@@ -130,8 +130,20 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
     );
   },
 
-  editor(note: Note<CardType.Cloze> | null, deck: Deck, mode: EditMode) {
-    return <ClozeCardEditor note={note} deck={deck} mode={mode} />;
+  editor(
+    note: Note<CardType.Cloze> | null,
+    deck: Deck,
+    mode: EditMode,
+    onChanged?: () => void
+  ) {
+    return (
+      <ClozeCardEditor
+        note={note}
+        deck={deck}
+        mode={mode}
+        onChanged={onChanged}
+      />
+    );
   },
 
   //DEPRECATED
