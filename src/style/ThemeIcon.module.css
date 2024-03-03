@@ -1,0 +1,9 @@
+.root {
+    &[data-variant="white"] {
+        background-color: transparent;
+    }
+
+    svg{
+        stroke-width: 1.5;
+    }
+}

@@ -6,6 +6,7 @@
   flex-basis: 0;
   flex: 1 1 0;
   overflow: hidden;
+  border: solid 0.0625rem;
 }
 
 .statIcon {

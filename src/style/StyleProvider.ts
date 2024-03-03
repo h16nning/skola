@@ -13,6 +13,7 @@ import {
   Tooltip,
   Kbd,
   createTheme,
+  ThemeIcon,
 } from "@mantine/core";
 import actionIcon from "./ActionIcon.module.css";
 import appShell from "./AppShell.module.css";
@@ -24,8 +25,11 @@ import navLink from "./NavLink.module.css";
 import navbar from "./Navbar.module.css";
 import popover from "./Popover.module.css";
 import select from "./Select.module.css";
+import spotlight from "../components/sidebar/Spotlight.module.css";
 import tabs from "./Tabs.module.css";
+import themeIcon from "./ThemeIcon.module.css";
 import tooltip from "./Tooltip.module.css";
+import { Spotlight } from "@mantine/spotlight";
 
 const headingStyle = {
   fontFamily: "Noto Serif Lao",
@@ -152,6 +156,8 @@ export const presetTheme = createTheme({
     Select: Select.extend({
       classNames: select,
     }),
+    Spotlight: Spotlight.extend({
+      classNames: spotlight}),
     Tabs: Tabs.extend({
       classNames: tabs,
     }),
@@ -159,6 +165,9 @@ export const presetTheme = createTheme({
       defaultProps: {
         pt: "sm",
       },
+    }),
+    ThemeIcon: ThemeIcon.extend({
+      classNames: themeIcon,
     }),
     Tooltip: Tooltip.extend({
       classNames: tooltip,

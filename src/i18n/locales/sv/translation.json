@@ -149,6 +149,9 @@
     "decks-add": "",
     "decks-title": ""
   },
+  "spotlight": {
+    "no-results": "Inga resultater"
+  },
   "statistics": {
     "title": "Statistik"
   },

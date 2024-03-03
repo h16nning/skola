@@ -1,4 +1,4 @@
-import { Table, Text } from "@mantine/core";
+import { Stack, Table, Text, ThemeIcon } from "@mantine/core";
 import { useEventListener } from "@mantine/hooks";
 import { NoteSortFunction, NoteSorts } from "../../logic/NoteSorting";
 import { CardType } from "../../logic/card";
@@ -6,6 +6,8 @@ import { Note } from "../../logic/note";
 import classes from "./CardTable.module.css";
 import CardTableHeadItem from "./CardTableHeadItem";
 import { NoteTableItem } from "./NoteTableItem";
+import { IconCards } from "@tabler/icons-react";
+import { t } from "i18next";
 
 interface CardTableProps {
   noteSet: Note<CardType>[];
@@ -86,26 +88,30 @@ function NoteTable({
             />
           </Table.Tr>
         </Table.Thead>
-        {noteSet.length > 0 ? (
-          <Table.Tbody>
-            {noteSet.map((note, index) => (
-              <NoteTableItem
-                note={note}
-                key={note.id}
-                index={index}
-                selectedIndex={selectedIndex}
-                setSelectedIndex={setSelectedIndex}
-                selectedNote={selectedNote}
-                setSelectedNote={setSelectedNote}
-              />
-            ))}
-          </Table.Tbody>
-        ) : (
-          <Text fz="sm" c="dimmed">
-            No cards found
-          </Text>
-        )}
+        <Table.Tbody>
+          {noteSet.map((note, index) => (
+            <NoteTableItem
+              note={note}
+              key={note.id}
+              index={index}
+              selectedIndex={selectedIndex}
+              setSelectedIndex={setSelectedIndex}
+              selectedNote={selectedNote}
+              setSelectedNote={setSelectedNote}
+            />
+          ))}
+        </Table.Tbody>
       </Table>
+      {noteSet.length === 0 && (
+        <Stack align="center" p="xl" gap="xs">
+          <ThemeIcon c="dimmed" variant="white" size="lg">
+            <IconCards size={60} />
+          </ThemeIcon>
+          <Text fz="sm" c="dimmed">
+            {t("manage-cards.table.no-cards-found")}
+          </Text>
+        </Stack>
+      )}
     </Table.ScrollContainer>
   );
 }
