@@ -91,6 +91,9 @@
     "finished-repetions-count": "Wiederholt"
   },
   "manage-cards": {
+    "table": {
+      "no-cards-found": "Keine Karten gefunden"
+    },
     "title": "Karten verwalten"
   },
   "note": {
@@ -176,6 +179,9 @@
   "sidebar": {
     "decks-add": "",
     "decks-title": ""
+  },
+  "spotlight": {
+    "no-results": "Keine Ergenisse"
   },
   "statistics": {
     "title": "Statistik"

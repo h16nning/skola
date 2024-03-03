@@ -1,7 +1,15 @@
 import classes from "./HeroDeckSection.module.css";
 
 import React from "react";
-import { Button, Group, Paper, Stack, Text, Title } from "@mantine/core";
+import {
+  Button,
+  Group,
+  Paper,
+  Stack,
+  Text,
+  ThemeIcon,
+  Title,
+} from "@mantine/core";
 import { Deck } from "../../../logic/deck";
 import {
   IconBolt,
@@ -47,7 +55,9 @@ function HeroDeckSection({ deck, cards, areCardsReady }: HeroDeckSectionProps) {
           </Text>
         ) : cards.length === 0 ? (
           <Stack gap="0" align="center">
-            <IconFile size={60} strokeWidth={1.5} color="lightgray" />
+            <ThemeIcon variant="white" c="dimmed" size="lg" mb="xs">
+              <IconFile size={60} />
+            </ThemeIcon>
             <Text fz="md" fw={500}>
               {t("hero-deck-section.no-cards-title")}
             </Text>

@@ -96,7 +96,7 @@
   },
   "manage-cards": {
     "table": {
-      "no-cards-found": "No cards found"
+      "no-cards-found": "No Cards Found"
     },
     "title": "Manage Cards"
   },
@@ -184,6 +184,9 @@
   "sidebar": {
     "decks-add": "Add deck",
     "decks-title": "Decks"
+  },
+  "spotlight": {
+    "no-results": "No results"
   },
   "statistics": {
     "title": "Statistics"

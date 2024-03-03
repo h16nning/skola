@@ -12,6 +12,7 @@ import { CardType } from "../../logic/card";
 import { determineSuperDecks, getDeck, useDecks } from "../../logic/deck";
 import { Note, useNotesWith } from "../../logic/note";
 import classes from "./Spotlight.module.css";
+import { t } from "i18next";
 interface NoteWithPreview extends Note<CardType> {
   breadcrumb: string[];
 }
@@ -147,9 +148,10 @@ export default function SpotlightCard({
         </UnstyledButton>
       </Group>
       <Spotlight
+        className={classes.spotlight}
         actions={possibleActions}
         closeOnClickOutside
-        nothingFound="Nothing found..."
+        nothingFound={t("spotlight.no-results")}
         highlightQuery
         onQueryChange={setFilter}
         limit={10}

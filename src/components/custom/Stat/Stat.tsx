@@ -23,6 +23,7 @@ export default function Stat({
       style={{
         color: `var(--mantine-color-${color}-${scheme === "light" ? 9 : 2})`,
         backgroundColor: `var(--mantine-color-${color}-light)`,
+        borderColor: `var(--mantine-color-${color}-light)`,
       }}
     >
       <Stack gap="0" w="100%" align="center">
