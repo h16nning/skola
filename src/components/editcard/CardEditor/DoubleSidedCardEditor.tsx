@@ -22,12 +22,14 @@ interface DoubleSidedCardEditorProps {
   note: Note<CardType.DoubleSided> | null;
   deck: Deck;
   mode: EditMode;
+  onChanged?: () => void;
 }
 
 function DoubleSidedCardEditor({
   note,
   deck,
   mode,
+  onChanged,
 }: DoubleSidedCardEditorProps) {
   const [t] = useTranslation();
   const [requestedFinish, setRequestedFinish] = useState(false);
@@ -78,7 +80,10 @@ function DoubleSidedCardEditor({
         <NoteEditor editor={editor2} key="back" />
       </Stack>
       <CardEditorFooter
-        finish={() => finish(mode, clear, deck, note, editor1, editor2)}
+        finish={() => {
+          finish(mode, clear, deck, note, editor1, editor2);
+          onChanged?.();
+        }}
         mode={mode}
       />
     </Stack>

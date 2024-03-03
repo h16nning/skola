@@ -109,8 +109,20 @@ export const NormalCardUtils: TypeManager<CardType.Normal> = {
     return toPreviewString(content?.front ?? "[error]");
   },
 
-  editor(note: Note<CardType.Normal> | null, deck: Deck, mode: EditMode) {
-    return <NormalCardEditor note={note} deck={deck} mode={mode} />;
+  editor(
+    note: Note<CardType.Normal> | null,
+    deck: Deck,
+    mode: EditMode,
+    onChanged?: () => void
+  ) {
+    return (
+      <NormalCardEditor
+        note={note}
+        deck={deck}
+        mode={mode}
+        onChanged={onChanged}
+      />
+    );
   },
 
   async deleteCard(card: Card<CardType.Normal>) {

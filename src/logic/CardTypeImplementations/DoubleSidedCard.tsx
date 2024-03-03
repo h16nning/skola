@@ -133,8 +133,20 @@ export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
     return toPreviewString(content.field1);
   },
 
-  editor(note: Note<CardType.DoubleSided> | null, deck: Deck, mode: EditMode) {
-    return <DoubleSidedCardEditor note={note} deck={deck} mode={mode} />;
+  editor(
+    note: Note<CardType.DoubleSided> | null,
+    deck: Deck,
+    mode: EditMode,
+    onChanged?: () => void
+  ) {
+    return (
+      <DoubleSidedCardEditor
+        note={note}
+        deck={deck}
+        mode={mode}
+        onChanged={onChanged}
+      />
+    );
   },
 
   //DEPRECATED

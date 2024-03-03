@@ -40,7 +40,12 @@ export interface TypeManager<T extends CardType> {
 
   getSortFieldFromNoteContent(content: NoteContent<T>): string;
 
-  editor(note: Note<CardType> | null, deck: Deck, mode: EditMode): JSX.Element;
+  editor(
+    note: Note<CardType> | null,
+    deck: Deck,
+    mode: EditMode,
+    onChanged?: () => void
+  ): JSX.Element;
 }
 
 export type EditMode = "edit" | "new";

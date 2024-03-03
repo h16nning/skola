@@ -20,9 +20,15 @@ interface NormalCardEditorProps {
   note: Note<CardType.Normal> | null;
   deck: Deck;
   mode: EditMode;
+  onChanged?: () => void;
 }
 
-function NormalCardEditor({ note, deck, mode }: NormalCardEditorProps) {
+function NormalCardEditor({
+  note,
+  deck,
+  mode,
+  onChanged,
+}: NormalCardEditorProps) {
   const [requestedFinish, setRequestedFinish] = React.useState(false);
 
   const noteContent = note?.content ?? {
@@ -51,6 +57,7 @@ function NormalCardEditor({ note, deck, mode }: NormalCardEditorProps) {
     if (requestedFinish) {
       finish(mode, clear, deck, note, frontEditor, backEditor);
       setRequestedFinish(false);
+      onChanged?.();
     }
   }, [requestedFinish, mode, clear, deck, note, frontEditor, backEditor]);
 
