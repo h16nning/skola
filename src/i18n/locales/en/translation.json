@@ -66,7 +66,8 @@
     }
   },
   "global": {
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "no-items-title": "It is looking empty here!"
   },
   "hero-deck-section": {
     "all-cards-done-learn-anyway": "Learn anyway",
@@ -74,8 +75,7 @@
     "all-cards-done-title": "Congratulations! This deck is done for today!",
     "error": "Failed to load cards.",
     "learn": "Learn",
-    "no-cards-subtitle": "Start by creating some cards!",
-    "no-cards-title": "It is looking empty here!"
+    "no-cards": "Start by creating some cards!"
   },
   "home": {
     "create-deck": "Create a deck",

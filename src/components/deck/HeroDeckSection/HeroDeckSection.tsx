@@ -1,15 +1,7 @@
 import classes from "./HeroDeckSection.module.css";
 
 import React from "react";
-import {
-  Button,
-  Group,
-  Paper,
-  Stack,
-  Text,
-  ThemeIcon,
-  Title,
-} from "@mantine/core";
+import { Button, Group, Paper, Stack, Text, Title } from "@mantine/core";
 import { Deck } from "../../../logic/deck";
 import {
   IconBolt,
@@ -23,6 +15,7 @@ import { Card, CardType, useSimplifiedStatesOf } from "../../../logic/card";
 import Stat from "../../custom/Stat/Stat";
 import { useTranslation } from "react-i18next";
 import { useHotkeys } from "@mantine/hooks";
+import EmptyNotice from "../../EmptyNotice";
 
 interface HeroDeckSectionProps {
   deck?: Deck;
@@ -54,17 +47,10 @@ function HeroDeckSection({ deck, cards, areCardsReady }: HeroDeckSectionProps) {
             {t("hero-deck-section.error")}
           </Text>
         ) : cards.length === 0 ? (
-          <Stack gap="0" align="center">
-            <ThemeIcon variant="white" c="dimmed" size="lg" mb="xs">
-              <IconFile size={60} />
-            </ThemeIcon>
-            <Text fz="md" fw={500}>
-              {t("hero-deck-section.no-cards-title")}
-            </Text>
-            <Text fz="sm" c="dimmed">
-              {t("hero-deck-section.no-cards-subtitle")}
-            </Text>
-          </Stack>
+          <EmptyNotice
+            icon={IconFile}
+            description={t("hero-deck-section.no-cards")}
+          />
         ) : isDone() ? (
           <Stack gap="md" align="center">
             <Title order={3}>
