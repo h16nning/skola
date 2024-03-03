@@ -1,10 +1,11 @@
-import { Button, Center, Stack, Text, Title } from "@mantine/core";
+import { Button, Center, Stack, Title } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import { IconFolder, IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSetting } from "../logic/Settings";
 import { useTopLevelDecks } from "../logic/deck";
+import EmptyNotice from "./EmptyNotice";
 import { AppHeaderContent } from "./Header/Header";
 import DeckTable from "./deck/DeckTable";
 import NewDeckModal from "./deck/NewDeckModal";
@@ -30,17 +31,18 @@ export default function HomeView({}: {}) {
       </AppHeaderContent>
 
       {isReady && decks?.length === 0 ? (
-        <Stack align="center" p="xl">
-          <IconFolder size={80} strokeWidth={1.5} color="lightgray" />
-          <Text fz="md" c="dimmed">
-            {t("home.no-decks-found")}
-          </Text>
+        <Stack align="center" p="xl" gap="xl">
+          <EmptyNotice
+            icon={IconFolder}
+            description={t("home.no-decks-found")}
+          />
           <Button
             onClick={() => setNewDeckModalOpened(true)}
             leftSection={<IconPlus />}
             variant="primary"
+            autoFocus
           >
-            {t("home.create-deck")}
+            {t("deck.new-deck-button")}
           </Button>
         </Stack>
       ) : (

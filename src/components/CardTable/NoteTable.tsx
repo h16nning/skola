@@ -1,13 +1,14 @@
-import { Stack, Table, Text, ThemeIcon } from "@mantine/core";
+import { Table } from "@mantine/core";
 import { useEventListener } from "@mantine/hooks";
+import { IconCards } from "@tabler/icons-react";
+import { t } from "i18next";
 import { NoteSortFunction, NoteSorts } from "../../logic/NoteSorting";
 import { CardType } from "../../logic/card";
 import { Note } from "../../logic/note";
+import EmptyNotice from "../EmptyNotice";
 import classes from "./CardTable.module.css";
 import CardTableHeadItem from "./CardTableHeadItem";
 import { NoteTableItem } from "./NoteTableItem";
-import { IconCards } from "@tabler/icons-react";
-import { t } from "i18next";
 
 interface CardTableProps {
   noteSet: Note<CardType>[];
@@ -103,14 +104,12 @@ function NoteTable({
         </Table.Tbody>
       </Table>
       {noteSet.length === 0 && (
-        <Stack align="center" p="xl" gap="xs">
-          <ThemeIcon c="dimmed" variant="white" size="lg">
-            <IconCards size={60} />
-          </ThemeIcon>
-          <Text fz="sm" c="dimmed">
-            {t("manage-cards.table.no-cards-found")}
-          </Text>
-        </Stack>
+        <EmptyNotice
+          icon={IconCards}
+          description={t("manage-cards.table.no-cards-found")}
+          hideTitle
+          p="xl"
+        />
       )}
     </Table.ScrollContainer>
   );

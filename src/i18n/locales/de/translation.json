@@ -64,7 +64,8 @@
     }
   },
   "global": {
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "no-items-title": "Hier sieht es leer aus!"
   },
   "hero-deck-section": {
     "all-cards-done-learn-anyway": "Trotzdem lernen",
@@ -72,10 +73,10 @@
     "all-cards-done-title": "Glückwunsch! \nDieser Stapel ist für heute erledigt!",
     "error": "Die Karten konnten nicht geladen werden.",
     "learn": "Lernen",
-    "no-cards-subtitle": "Beginne damit, einige Karten zu erstellen!",
-    "no-cards-title": "Hier sieht es leer aus!"
+    "no-cards": "Beginne damit, einige Karten zu erstellen!"
   },
   "home": {
+    "no-decks-found": "Du hast noch keine Stapel erstellt.",
     "title": "Startseite",
     "welcome": "Willkommen!",
     "welcome-user": "Willkommen zurück, {{name}}!"
