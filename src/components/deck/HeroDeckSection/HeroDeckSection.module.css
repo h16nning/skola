@@ -6,4 +6,14 @@
   text-align: center;
   width: 100%;
   height: 15rem;
+
+  @media (max-width: 24rem) {
+    padding: var(--mantine-spacing-xs);
+
+    .statsGroup {
+      gap: var(--mantine-spacing-xs);
+    }
+  }
+
+  
 }

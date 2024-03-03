@@ -26,7 +26,9 @@ export default function Stat({
       }}
     >
       <Stack gap="0" w="100%" align="center">
-        <Text className={classes.statValue}>{value}</Text>
+        <Text truncate="end" className={classes.statValue}>
+          {value}
+        </Text>
         <Group align="center" gap="4px" wrap="nowrap" opacity={0.8}>
           <Icon className={classes.statIcon} />
           <Text className={classes.statName}>{name}</Text>

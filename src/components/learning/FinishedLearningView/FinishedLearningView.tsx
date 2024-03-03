@@ -59,7 +59,7 @@ function FinishedLearningView({
         <Text style={{ textAlign: "center" }}>
           {t("learning.finished-info")}
         </Text>
-        <Group wrap="nowrap">
+        <Group wrap="nowrap" w="100%" maw="600px">
           <Stat
             name={t("learning.finished-duration")}
             value={

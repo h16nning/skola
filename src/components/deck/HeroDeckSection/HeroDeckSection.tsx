@@ -69,7 +69,12 @@ function HeroDeckSection({ deck, cards, areCardsReady }: HeroDeckSectionProps) {
           </Stack>
         ) : (
           <Stack gap="md" align="center" w="100%">
-            <Group wrap="nowrap" w="100%" justify="center">
+            <Group
+              wrap="nowrap"
+              w="100%"
+              justify="center"
+              className={classes.statsGroup}
+            >
               <Stat
                 value={states.new}
                 name={t("deck.new-cards-label")}
