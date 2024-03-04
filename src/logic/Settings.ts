@@ -32,6 +32,9 @@ export interface SettingsValues {
   showCodeOptionInEditor: boolean;
   showLinkOptionInEditor: boolean;
 
+  learn_newToReviewRatio: number;
+  learn_sort: "creationDate" | "dueDate";
+
   globalScheduler_maximumInterval: number;
   globalScheduler_requestRetention: number;
   globalScheduler_w: number[];
@@ -54,6 +57,8 @@ export const defaultSettings: SettingsValues = {
   showCodeOptionInEditor: true,
   showLinkOptionInEditor: true,
 
+  learn_newToReviewRatio: 0.5,
+  learn_sort: "creationDate",
   globalScheduler_maximumInterval: 36500,
   globalScheduler_requestRetention: 0.9,
   globalScheduler_w: [

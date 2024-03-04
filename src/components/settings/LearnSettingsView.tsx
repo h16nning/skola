@@ -11,12 +11,20 @@ export default function LearnSettingsView() {
     <Stack gap="xl" align="start">
       <SettingsInput
         label={t("settings.learn.requestRetention")}
+        description={t("settings.learn.requestRetentionDescription")}
         settingsKey="globalScheduler_requestRetention"
         inputType="number"
       />
       <SettingsInput
         label={t("settings.learn.maximumInterval")}
+        description={t("settings.learn.maximumIntervalDescription")}
         settingsKey="globalScheduler_maximumInterval"
+        inputType="number"
+      />
+      <SettingsInput
+        label={t("settings.learn.newToReviewRatio")}
+        description={t("settings.learn.newToReviewRatioDescription")}
+        settingsKey="learn_newToReviewRatio"
         inputType="number"
       />
       <Text>{w.map((x) => x + ", ")}</Text>
