@@ -9,7 +9,7 @@
     "node_modules/@mantine/core/styles.css"
   ],
   "[typescript]": {
-    "editor.defaultFormatter": "biomejs.biome-nightly"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "[typescriptreact]": {
     "editor.defaultFormatter": "biomejs.biome"
