@@ -18,19 +18,19 @@ export default function GeneralSettingsView() {
         label={t("settings.general.show-shortcut-hints")}
         description={t("settings.general.show-shortcut-hints-description")}
         settingsKey="showShortcutHints"
-        inputType={"switch"}
+        inputType={"checkbox"}
       />
       <SettingsInput
         label={t("settings.general.enable-zen-mode")}
         description={t("settings.general.enable-zen-mode-description")}
         settingsKey="useZenMode"
-        inputType={"switch"}
+        inputType={"checkbox"}
       />
       <SettingsInput
         label={t("settings.general.enable-developer-mode")}
         description={t("settings.general.enable-developer-mode-description")}
         settingsKey="developerMode"
-        inputType={"switch"}
+        inputType={"checkbox"}
       />
     </Stack>
   );

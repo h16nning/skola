@@ -26,6 +26,7 @@ function LearnView() {
   const navigate = useNavigate();
   const [deck, isReady, params] = useDeckFromUrl();
 
+  const [newToReviewRatio] = useSetting("learn_newToReviewRatio");
   const controller = useLearning(
     {
       querier: () => getCardsOf(deck),
@@ -33,7 +34,7 @@ function LearnView() {
     },
     {
       learnAll: params === "all",
-      newToReviewRatio: 0.5,
+      newToReviewRatio: newToReviewRatio,
       sort: CardSorts.byCreationDate(1),
     }
   );

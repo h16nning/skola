@@ -176,7 +176,11 @@
     },
     "learn": {
       "maximumInterval": "Maxium interval",
-      "requestRetention": "Request retention",
+      "maximumIntervalDescription": "The maximum interval in days between two repetitions of a card",
+      "newToReviewRatio": "New Cards Per Reviews",
+      "newToReviewRatioDescription": "This determines how many new cards will be new cards will be shown per review on average. A value of 0.5 means that reviews and new cards will be ordered in equal amounts.",
+      "requestRetention": "Requested retention",
+      "requestRetentionDescription": "Set which percentage of questions you want to be able to remember in the long-term. Note: High values will lead to more reviews and shorter intervals. Lower percentages will generally reduce the amount of learning. If requested retention is too low, you will forget your cards too often which may result in an increased learning demand. Recommended values lie between 0.70 and 0.95.",
       "title": "Learning"
     },
     "title": "Settings"
