@@ -157,7 +157,8 @@ export const presetTheme = createTheme({
       classNames: select,
     }),
     Spotlight: Spotlight.extend({
-      classNames: spotlight}),
+      classNames: spotlight,
+    }),
     Tabs: Tabs.extend({
       classNames: tabs,
     }),
