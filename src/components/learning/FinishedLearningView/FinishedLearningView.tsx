@@ -14,22 +14,24 @@ import {
   IconTallymarks,
   IconTrophy,
 } from "@tabler/icons-react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { StopwatchResult } from "react-timer-hook";
 import { useSetting } from "../../../logic/Settings";
 import { useRepetitionAccuracy } from "../../../logic/learn";
+import { DeckStatistics, writeStatistics } from "../../../logic/statistics";
 import Stat from "../../custom/Stat/Stat";
 import classes from "./FinishedLearningView.module.css";
 
 interface FinishedLearningViewProps {
-  ratingsList: number[];
   time: StopwatchResult;
   deckId: string | undefined;
+  statistics: DeckStatistics;
 }
 
 function FinishedLearningView({
-  ratingsList,
+  statistics,
   time,
   deckId,
 }: FinishedLearningViewProps) {
@@ -37,13 +39,22 @@ function FinishedLearningView({
   const [t] = useTranslation();
   const [name] = useSetting("name");
 
-  const accuracy = useRepetitionAccuracy(ratingsList);
+  const accuracy = useRepetitionAccuracy(statistics.ratingsList);
+  const [wroteStatistics, setWroteStatistics] = useState<boolean>(false);
 
   useHotkeys([
     ["Space", () => navigate("/home")],
     ["Enter", () => navigate("/home")],
     ["d", () => navigate(`/deck/${deckId}`)],
   ]);
+
+  useEffect(() => {
+    if (wroteStatistics) return;
+    if (!deckId) return;
+    statistics.deck = deckId;
+    writeStatistics(statistics);
+    setWroteStatistics(true);
+  }, [deckId]);
 
   return (
     <Center>
@@ -76,7 +87,7 @@ function FinishedLearningView({
           />
           <Stat
             name={t("learning.finished-repetions-count")}
-            value={ratingsList.length}
+            value={statistics.ratingsList.length}
             icon={IconTallymarks}
             color="blue"
           />
