@@ -122,7 +122,7 @@ function LearnView() {
           transitionProps={{ transition: "fade" }}
         >
           <FinishedLearningView
-            ratingsList={controller.ratingsList}
+            statistics={controller.statistics}
             time={stopwatchResult}
             deckId={deck?.id}
           />

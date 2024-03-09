@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
 import { Table } from "dexie";
 import { Rating, SchedulingInfo, State } from "fsrs.js";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { updateGlobalScheduler, useGlobalScheduler } from "./CardScheduler";
 import { Card, CardType, updateCardModel, useCardsWith } from "./card";
+import { DeckStatistics, newStatistics } from "./statistics";
 
 export type LearnOptions = {
   learnAll: boolean;
@@ -32,7 +33,7 @@ export type LearnController = {
   answerCard: (rating: Rating) => void;
   requestNextCard: () => void;
 
-  ratingsList: Rating[];
+  statistics: DeckStatistics;
   isFinished: boolean;
 
   options: LearnOptions;
@@ -72,7 +73,9 @@ export function useLearning(
   //Determines if FinishedLearningView is shown
   const [isFinished, setIsFinished] = useState<boolean>(false);
   //for progress bar and statistics on FinishedLearningView
-  const [ratingsList, setRatingsList] = useState<Rating[]>([]);
+  const [statistics, setStatistics] = useState<DeckStatistics>(() =>
+    newStatistics()
+  );
 
   useEffect(() => {
     //Check if there are already cards provided
@@ -133,7 +136,9 @@ export function useLearning(
 
   //Tries to set currentCard to the next card
   const nextCard = useCallback(() => {
-    if (isFinished) return;
+    if (isFinished) {
+      return;
+    }
     //If there are time critical cards that are due, set the first one as currentCard
     if (
       timeCriticalCards.length > 0 &&
@@ -215,13 +220,22 @@ export function useLearning(
             ].sort((a, b) => a.model.due.getTime() - b.model.due.getTime())
           );
         }
-        setRatingsList((rList) => [...rList, rating]);
+        setStatistics((ds) => {
+          return {
+            ...ds,
+            ratingsList: [...ds.ratingsList, rating],
+            cards: {
+              ...ds.cards,
+              [currentCard.model.state]: ds.cards[currentCard.model.state] + 1,
+            },
+          };
+        });
       } else {
         throw new Error("Card or cardModelInfo is missing");
       }
       setShowingAnswer(false);
     },
-    [currentCard, currentCardRepeatInfo, timeCriticalCards, ratingsList]
+    [currentCard, currentCardRepeatInfo, timeCriticalCards, statistics]
   );
 
   return {
@@ -239,7 +253,7 @@ export function useLearning(
     answerCard: answer,
     requestNextCard: setRequestedNextCard.bind(null, true),
 
-    ratingsList: ratingsList,
+    statistics: statistics,
     isFinished: isFinished,
 
     options: options,

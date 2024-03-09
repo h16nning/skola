@@ -36,8 +36,8 @@ function LearnViewHeader({
   const navigate = useNavigate();
   const progress = useMemo(
     () =>
-      (controller.ratingsList.length /
-        (controller.ratingsList.length +
+      (controller.statistics.ratingsList.length /
+        (controller.statistics.ratingsList.length +
           controller.newCardsNumber * 2 +
           controller.toReviewCardsNumber +
           controller.timeCriticalCardsNumber +
@@ -45,7 +45,7 @@ function LearnViewHeader({
       100,
     [
       controller.isFinished,
-      controller.ratingsList,
+      controller.statistics.ratingsList,
       controller.newCardsNumber,
       controller.toReviewCardsNumber,
       controller.timeCriticalCardsNumber,

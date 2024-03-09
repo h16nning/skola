@@ -120,6 +120,10 @@ export async function getCard(id: string) {
   return db.cards.get(id);
 }
 
+export async function getAllCards() {
+  return db.cards.toArray();
+}
+
 export async function getCardsOf(
   deck?: Deck,
   excludeSubDecks?: boolean
@@ -194,34 +198,40 @@ export function useStatesOf(cards?: Card<CardType>[]): Record<State, number> {
   }, [cards]);
 }
 
-export type ThreeTypeState = "new" | "learning" | "review";
+export type SimplifiedState = "new" | "learning" | "review" | "notDue";
 
+export function getSimplifiedStatesOf(
+  cards?: Card<CardType>[]
+): Record<SimplifiedState, number> {
+  const states = {
+    new: 0,
+    learning: 0,
+    review: 0,
+    notDue: 0,
+  };
+  cards?.forEach((card) => {
+    if (card.model.state === State.New) {
+      states.new++;
+    } else if (
+      card.model.state === State.Learning ||
+      card.model.state === State.Relearning
+    ) {
+      states.learning++;
+    } else if (
+      card.model.state === State.Review &&
+      card.model.due <= new Date(Date.now())
+    ) {
+      states.review++;
+    } else {
+      states.notDue++;
+    }
+  });
+  return states;
+}
 export function useSimplifiedStatesOf(
   cards?: Card<CardType>[]
-): Record<ThreeTypeState, number> {
-  return useMemo(() => {
-    const states = {
-      new: 0,
-      learning: 0,
-      review: 0,
-    };
-    cards?.forEach((card) => {
-      if (card.model.state === State.New) {
-        states.new++;
-      } else if (
-        card.model.state === State.Learning ||
-        card.model.state === State.Relearning
-      ) {
-        states.learning++;
-      } else if (
-        card.model.state === State.Review &&
-        card.model.due <= new Date(Date.now())
-      ) {
-        states.review++;
-      }
-    });
-    return states;
-  }, [cards]);
+): Record<SimplifiedState, number> {
+  return useMemo(() => getSimplifiedStatesOf(cards), [cards]);
 }
 
 export function toPreviewString(text: string): string {

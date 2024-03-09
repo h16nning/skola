@@ -26,7 +26,7 @@ export default function CardHistory({ card }: CardHistoryProps) {
       series={[{ name: "rating", color: "forest" }]}
       dataKey="date"
       curveType="monotone"
-      withTooltip={false}
+      withTooltip={true}
       gridAxis="x"
       yAxisProps={{
         domain: [1, 4],
