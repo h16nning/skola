@@ -76,7 +76,7 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "1.5.3",
+    "@biomejs/biome": "1.6.0",
     "@types/jest": "^29.4.0",
     "@types/lodash": "^4.14.202",
     "@types/node": "^18.14.4",
