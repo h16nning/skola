@@ -150,7 +150,7 @@ function getOcclusionNumberSet(text: string) {
   matches?.forEach((match) => {
     const numberMatch = match.match(/c(\d+)::/);
     if (numberMatch && numberMatch[1]) {
-      const number = parseInt(numberMatch[1]);
+      const number = Number.parseInt(numberMatch[1]);
       cardNumbers.add(number);
     }
   });
