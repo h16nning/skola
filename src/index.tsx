@@ -1,3 +1,4 @@
+import "@mantine/charts/styles.css";
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import React from "react";
@@ -18,7 +19,6 @@ import NewCardsView from "./components/editcard/NewCardsView";
 import LearnView from "./components/learning/LearnView/LearnView";
 import SettingsView from "./components/settings/SettingsView";
 import "./index.css";
-import "@mantine/charts/styles.css";
 import { getNote } from "./logic/note";
 import reportWebVitals from "./reportWebVitals";
 

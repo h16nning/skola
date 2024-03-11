@@ -1,8 +1,8 @@
-import React from "react";
+import { FileButton } from "@mantine/core";
 import { RichTextEditor } from "@mantine/tiptap";
 import { IconPhoto } from "@tabler/icons-react";
-import { FileButton } from "@mantine/core";
 import { Editor } from "@tiptap/react";
+import React from "react";
 
 interface AddImageControlProps {
   editor: Editor | null;

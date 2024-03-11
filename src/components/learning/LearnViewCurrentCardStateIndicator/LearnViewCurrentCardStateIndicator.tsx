@@ -1,7 +1,4 @@
-import classes from "./LearnViewCurrentCardStateIndicator.module.css";
-import React, { useCallback } from "react";
 import { Group, Text } from "@mantine/core";
-import { Card as Model } from "fsrs.js";
 import {
   IconBook,
   IconCircleArrowUpRight,
@@ -9,7 +6,10 @@ import {
   IconSparkles,
   TablerIconsProps,
 } from "@tabler/icons-react";
+import { Card as Model } from "fsrs.js";
 import { State } from "fsrs.js";
+import React, { useCallback } from "react";
+import classes from "./LearnViewCurrentCardStateIndicator.module.css";
 
 interface LearnViewCurrentCardStateIndicatorProps {
   currentCardModel: Model | undefined;

@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
-import { Card, CardType } from "./card";
-import { Deck } from "./deck";
-import { NormalCardUtils } from "./CardTypeImplementations/NormalCard";
 import { ClozeCardUtils } from "./CardTypeImplementations/ClozeCard";
 import { DoubleSidedCardUtils } from "./CardTypeImplementations/DoubleSidedCard";
+import { NormalCardUtils } from "./CardTypeImplementations/NormalCard";
 import { UndefinedCardUtils } from "./CardTypeImplementations/UndefinedCard";
+import { Card, CardType } from "./card";
+import { Deck } from "./deck";
 import { Note, NoteContent } from "./note";
 
 export interface TypeManager<T extends CardType> {

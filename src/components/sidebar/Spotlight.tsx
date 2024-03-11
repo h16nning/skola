@@ -3,6 +3,7 @@ import { useDebouncedState, useOs } from "@mantine/hooks";
 import { Spotlight, spotlight } from "@mantine/spotlight";
 import { IconCards, IconSearch, IconSquare } from "@tabler/icons-react";
 import cx from "clsx";
+import { t } from "i18next";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { NoteSorts } from "../../logic/NoteSorting";
@@ -12,7 +13,6 @@ import { CardType } from "../../logic/card";
 import { determineSuperDecks, getDeck, useDecks } from "../../logic/deck";
 import { Note, useNotesWith } from "../../logic/note";
 import classes from "./Spotlight.module.css";
-import { t } from "i18next";
 interface NoteWithPreview extends Note<CardType> {
   breadcrumb: string[];
 }

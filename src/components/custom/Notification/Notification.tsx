@@ -1,4 +1,3 @@
-import classes from "./Notification.module.css";
 import { notifications } from "@mantine/notifications";
 import {
   IconArrowsExchange,
@@ -7,6 +6,7 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import React from "react";
+import classes from "./Notification.module.css";
 
 export function successfullySaved() {
   return notifications.show({

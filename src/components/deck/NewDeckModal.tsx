@@ -1,10 +1,10 @@
-import React, { useState } from "react";
 import { Button, Group, Modal, Stack, Text, TextInput } from "@mantine/core";
-import ModalProps from "../custom/ModalProps";
-import { Deck, newDeck } from "../../logic/deck";
-import { useNavigate } from "react-router-dom";
 import { getHotkeyHandler, useHotkeys } from "@mantine/hooks";
 import { t } from "i18next";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Deck, newDeck } from "../../logic/deck";
+import ModalProps from "../custom/ModalProps";
 
 interface NewDeckModalProps extends ModalProps {
   superDeck?: Deck;

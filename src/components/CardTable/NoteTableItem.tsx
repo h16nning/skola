@@ -1,11 +1,11 @@
 import { Table } from "@mantine/core";
 import cx from "clsx";
 import { useEffect } from "react";
+import { getUtils } from "../../logic/TypeManager";
 import { CardType } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
 import { Note } from "../../logic/note";
 import classes from "./CardTable.module.css";
-import { getUtils } from "../../logic/TypeManager";
 
 export function NoteTableItem({
   note,

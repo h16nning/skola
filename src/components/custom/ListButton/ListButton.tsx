@@ -1,7 +1,7 @@
-import classes from "./ListButton.module.css";
-import React from "react";
 import { Group, UnstyledButton } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
+import React from "react";
+import classes from "./ListButton.module.css";
 
 interface ListButtonProps {
   children: JSX.Element;

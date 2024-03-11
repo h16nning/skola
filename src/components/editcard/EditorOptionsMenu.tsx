@@ -1,6 +1,6 @@
-import React from "react";
 import { ActionIcon, Menu } from "@mantine/core";
 import { IconDots, IconSettings } from "@tabler/icons-react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 interface EditorOptionsMenuProps {}

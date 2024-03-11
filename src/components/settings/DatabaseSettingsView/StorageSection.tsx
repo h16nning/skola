@@ -1,4 +1,4 @@
-import { Text, Paper, RingProgress, Group } from "@mantine/core";
+import { Group, Paper, RingProgress, Text } from "@mantine/core";
 import { t } from "i18next";
 import { useEffect, useState } from "react";
 
