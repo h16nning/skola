@@ -1,9 +1,9 @@
+import { Table } from "dexie";
 import { useLiveQuery } from "dexie-react-hooks";
+import { v4 as uuidv4 } from "uuid";
 import { CardType } from "./card";
 import { db } from "./db";
-import { v4 as uuidv4 } from "uuid";
 import { Deck } from "./deck";
-import { Table } from "dexie";
 
 export interface NoteSkeleton {
   id: string;

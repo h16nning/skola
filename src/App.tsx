@@ -2,19 +2,19 @@ import { AppShell, Center, MantineProvider, Stack } from "@mantine/core";
 import classes from "./App.module.css";
 
 import "@mantine/core/styles.css";
-import "@mantine/notifications/styles.css";
-import "@mantine/spotlight/styles.css";
 import { useDisclosure, useLocalStorage } from "@mantine/hooks";
 import { Notifications } from "@mantine/notifications";
+import "@mantine/notifications/styles.css";
+import "@mantine/spotlight/styles.css";
 import { useEffect } from "react";
-import WelcomeView from "./components/WelcomeView";
 import { I18nextProvider } from "react-i18next";
+import { Outlet } from "react-router-dom";
+import Header from "./components/Header/Header";
+import WelcomeView from "./components/WelcomeView";
 import Sidebar from "./components/sidebar/Sidebar";
 import i18n from "./i18n";
 import { useSetting } from "./logic/Settings";
 import { cssVariablesResolver, presetTheme } from "./style/StyleProvider";
-import Header from "./components/Header/Header";
-import { Outlet } from "react-router-dom";
 
 function useRestoreLanguage() {
   const [language] = useSetting("language");

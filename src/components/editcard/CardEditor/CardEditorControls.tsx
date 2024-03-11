@@ -1,9 +1,9 @@
-import classes from "./CardEditor.module.css";
-import { RichTextEditor } from "@mantine/tiptap";
-import AddImageControl from "../AddImageControl";
 import { Box } from "@mantine/core";
-import { useSettings } from "../../../logic/Settings";
+import { RichTextEditor } from "@mantine/tiptap";
 import { Editor } from "@tiptap/react";
+import { useSettings } from "../../../logic/Settings";
+import AddImageControl from "../AddImageControl";
+import classes from "./CardEditor.module.css";
 
 export interface NoteEditorControlsProps {
   editor: Editor | null;

@@ -17,9 +17,9 @@ import { useSetting, useShowShortcutHints } from "../../logic/Settings";
 import { Card, CardType } from "../../logic/card";
 import { Deck, deleteDeck } from "../../logic/deck";
 import DangerousConfirmModal from "../custom/DangerousConfirmModal";
-import RenameDeckModal from "./RenameDeckModal";
 import ImportModal from "../settings/importexport/ImportModal";
 import DebugDeckModal from "./DebugDeckModal";
+import RenameDeckModal from "./RenameDeckModal";
 
 interface DeckMenuProps {
   deck?: Deck;

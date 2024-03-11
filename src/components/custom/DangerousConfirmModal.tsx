@@ -1,7 +1,7 @@
-import React, { ReactNode } from "react";
-import ModalProps from "./ModalProps";
 import { Button, Group, Modal, Stack, Text } from "@mantine/core";
 import { t } from "i18next";
+import React, { ReactNode } from "react";
+import ModalProps from "./ModalProps";
 
 interface DangerousConfirmModalProps extends ModalProps {
   dangerousAction: Function;

@@ -1,7 +1,7 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
 import { Button, Center, Group, Stack, Text } from "@mantine/core";
 import { IconHome } from "@tabler/icons-react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function MissingObject() {
   const navigate = useNavigate();

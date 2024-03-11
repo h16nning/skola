@@ -3,12 +3,14 @@ import { useDebouncedValue, useFullscreen } from "@mantine/hooks";
 import { Rating } from "fsrs.js";
 import { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUtils } from "../../../logic/TypeManager";
+import { CardSorts } from "../../../logic/CardSorting";
 import { useSetting } from "../../../logic/Settings";
+import { getUtils } from "../../../logic/TypeManager";
 import { getCardsOf } from "../../../logic/card";
 import { useDeckFromUrl } from "../../../logic/deck";
 import { useLearning } from "../../../logic/learn";
-import { CardSorts } from "../../../logic/CardSorting";
+import { useNote } from "../../../logic/note";
+import { AppHeaderContent } from "../../Header/Header";
 import MissingObject from "../../custom/MissingObject";
 import { generalFail } from "../../custom/Notification/Notification";
 import FinishedLearningView from "../FinishedLearningView/FinishedLearningView";
@@ -16,8 +18,6 @@ import LearnViewCurrentCardStateIndicator from "../LearnViewCurrentCardStateIndi
 import classes from "./LearnView.module.css";
 import LearnViewFooter from "./LearnViewFooter";
 import LearnViewHeader, { stopwatchResult } from "./LearnViewHeader";
-import { AppHeaderContent } from "../../Header/Header";
-import { useNote } from "../../../logic/note";
 
 function LearnView() {
   const { toggle } = useFullscreen();

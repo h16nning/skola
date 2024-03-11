@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { Skeleton } from "@mantine/core";
+import React, { useEffect, useState } from "react";
 
 interface LazySkeletonProps {
   w?: string;

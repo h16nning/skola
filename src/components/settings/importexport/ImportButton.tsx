@@ -1,6 +1,6 @@
+import { Button } from "@mantine/core";
 import React from "react";
 import { ImportStatus } from "./ImportModal";
-import { Button } from "@mantine/core";
 
 interface ImportButtonProps {
   importFunction: () => Promise<void>;
