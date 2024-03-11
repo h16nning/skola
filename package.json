@@ -33,7 +33,7 @@
     "@tiptap/react": "^2.2.2",
     "@tiptap/starter-kit": "^2.2.4",
     "dayjs": "^1.11.7",
-    "dexie": "^3.2.3",
+    "dexie": "^3.2.6",
     "dexie-export-import": "^4.1.1",
     "dexie-react-hooks": "^1.1.7",
     "firebase": "^9.18.0",
