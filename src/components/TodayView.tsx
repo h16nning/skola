@@ -1,7 +1,7 @@
-import React from "react";
 import { Center, Stack, Title } from "@mantine/core";
-import { AppHeaderContent } from "./Header/Header";
 import { t } from "i18next";
+import React from "react";
+import { AppHeaderContent } from "./Header/Header";
 
 function TodayView({}: {}) {
   return (

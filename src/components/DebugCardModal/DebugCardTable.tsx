@@ -1,8 +1,8 @@
-import classes from "./DebugCard.module.css";
-import { Fragment } from "react";
-import { Card, CardType } from "../../logic/card";
 import { Anchor, Space, Stack, Text } from "@mantine/core";
 import { Rating, State } from "fsrs.js";
+import { Fragment } from "react";
+import { Card, CardType } from "../../logic/card";
+import classes from "./DebugCard.module.css";
 
 export default function DebugCardTable({
   card,

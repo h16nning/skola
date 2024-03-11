@@ -1,9 +1,4 @@
-import {
-  Badge,
-  Group,
-  Stack,
-  Tabs
-} from "@mantine/core";
+import { Badge, Group, Stack, Tabs } from "@mantine/core";
 import { useDocumentTitle, useHotkeys } from "@mantine/hooks";
 import { t } from "i18next";
 import { useState } from "react";

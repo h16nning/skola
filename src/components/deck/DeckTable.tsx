@@ -1,9 +1,9 @@
+import { Stack, Text } from "@mantine/core";
 import React from "react";
-import { Text, Stack } from "@mantine/core";
-import DeckPreview from "./DeckPreview";
+import { useTranslation } from "react-i18next";
 import { Deck } from "../../logic/deck";
 import LazySkeleton from "../custom/LazySkeleton";
-import { useTranslation } from "react-i18next";
+import DeckPreview from "./DeckPreview";
 
 interface DeckTableProps {
   deckList?: Deck[];

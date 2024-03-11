@@ -1,8 +1,8 @@
 import { AppShell, Burger, Group } from "@mantine/core";
+import { useWindowScroll } from "@mantine/hooks";
 import { PropsWithChildren } from "react";
 import { createPortal } from "react-dom";
 import classes from "./Header.module.css";
-import { useWindowScroll } from "@mantine/hooks";
 
 interface HeaderProps {
   menuOpened: boolean;

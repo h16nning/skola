@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
 import { AreaChart } from "@mantine/charts";
+import React, { useMemo } from "react";
 import { Card, CardType } from "../../logic/card";
 
 interface CardHistoryProps {

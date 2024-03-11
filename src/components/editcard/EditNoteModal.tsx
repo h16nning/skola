@@ -1,12 +1,12 @@
 import { Button, Group, Modal } from "@mantine/core";
+import { IconArrowUpRight } from "@tabler/icons-react";
 import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { getUtils } from "../../logic/TypeManager";
 import { CardType } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
-import { getUtils } from "../../logic/TypeManager";
 import { Note } from "../../logic/note";
 import classes from "./EditNoteModal.module.css";
-import { IconArrowUpRight } from "@tabler/icons-react";
-import { useNavigate } from "react-router-dom";
 
 interface EditNoteModalProps {
   note: Note<CardType>;

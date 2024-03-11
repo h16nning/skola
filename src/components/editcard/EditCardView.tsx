@@ -1,10 +1,10 @@
 import { Group, Stack, Text } from "@mantine/core";
 import { useMemo } from "react";
 import { useLoaderData } from "react-router-dom";
+import { getUtils } from "../../logic/TypeManager";
 import { CardType } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
 import { Note } from "../../logic/note";
-import { getUtils } from "../../logic/TypeManager";
 import NoteMenu from "./NoteMenu";
 
 function EditCardView() {
