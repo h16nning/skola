@@ -17,7 +17,7 @@ import { useSetting, useShowShortcutHints } from "../../logic/Settings";
 import { Card, CardType } from "../../logic/card";
 import { Deck, deleteDeck } from "../../logic/deck";
 import DangerousConfirmModal from "../custom/DangerousConfirmModal";
-import RenameCardModal from "../editcard/RenameCardModal";
+import RenameDeckModal from "./RenameDeckModal";
 import ImportModal from "../settings/importexport/ImportModal";
 import DebugDeckModal from "./DebugDeckModal";
 
@@ -166,7 +166,7 @@ function DeckMenu({
             opened={deleteModalOpened}
             setOpened={setDeleteModalOpened}
           />
-          <RenameCardModal
+          <RenameDeckModal
             deck={deck}
             opened={renameModalOpened}
             setOpened={setRenameModalOpened}

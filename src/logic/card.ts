@@ -1,11 +1,11 @@
-import { Content } from "./CardContent";
-import { v4 as uuidv4 } from "uuid";
-import { Deck } from "./deck";
-import { db } from "./db";
-import { useLiveQuery } from "dexie-react-hooks";
-import { useMemo } from "react";
 import { Table } from "dexie";
+import { useLiveQuery } from "dexie-react-hooks";
 import { Card as Model, ReviewLog, State } from "fsrs.js";
+import { useMemo } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { Content } from "./CardContent";
+import { db } from "./db";
+import { Deck } from "./deck";
 
 export enum CardType {
   Normal = "normal",

@@ -4,7 +4,7 @@
     "**/*.scss",
     "**/*.sass",
     "**/*.less",
-    "**/*.module.css", // Add support for CSS modules
+    "**/*.module.css",
 
     "node_modules/@mantine/core/styles.css"
   ],

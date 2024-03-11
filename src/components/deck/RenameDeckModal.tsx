@@ -1,17 +1,17 @@
-import React, { useCallback, useEffect, useState } from "react";
 import { Button, Group, Modal, Stack, TextInput } from "@mantine/core";
+import { getHotkeyHandler, useHotkeys } from "@mantine/hooks";
+import { t } from "i18next";
+import { useCallback, useEffect, useState } from "react";
 import { Deck, renameDeck } from "../../logic/deck";
 import { generalFail } from "../custom/Notification/Notification";
-import { t } from "i18next";
-import { getHotkeyHandler, useHotkeys } from "@mantine/hooks";
 
-interface RenameModalProps {
+interface RenameDeckModalProps {
   deck: Deck;
   opened: boolean;
   setOpened: Function;
 }
 
-function RenameCardModal({ deck, opened, setOpened }: RenameModalProps) {
+function RenameDeckModal({ deck, opened, setOpened }: RenameDeckModalProps) {
   const [nameValue, setNameValue] = useState<string>(deck.name);
 
   useEffect(() => setNameValue(deck.name), [deck]);
@@ -55,4 +55,4 @@ function RenameCardModal({ deck, opened, setOpened }: RenameModalProps) {
   );
 }
 
-export default RenameCardModal;
+export default RenameDeckModal;

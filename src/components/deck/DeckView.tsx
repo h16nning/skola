@@ -1,15 +1,13 @@
 import {
   Badge,
-  Button,
   Group,
-  Kbd,
   Stack,
-  Tabs,
-  Title,
-  Tooltip,
+  Tabs
 } from "@mantine/core";
 import { useDocumentTitle, useHotkeys } from "@mantine/hooks";
+import { t } from "i18next";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCardsOf } from "../../logic/card";
 import { useDeckFromUrl, useSuperDecks } from "../../logic/deck";
 import { useScrollResetOnLocationChange } from "../../logic/ui";
@@ -21,9 +19,7 @@ import DeckMenu from "./DeckMenu";
 import DeckOptionsModal from "./DeckOptionsModal";
 import HeroDeckSection from "./HeroDeckSection/HeroDeckSection";
 import SubDeckSection from "./SubDeckSection";
-import { t } from "i18next";
-import { useNavigate } from "react-router-dom";
-import { IconPlus } from "@tabler/icons-react";
+import TitleSection from "./TitleSection";
 
 function DeckView() {
   const navigate = useNavigate();
@@ -57,27 +53,7 @@ function DeckView() {
         </Group>
       </AppHeaderContent>
       <Stack gap="xl" align="start" w="100%" maw="600px" pt="lg">
-        <Group justify="space-between" align="center" w="100%">
-          <Title order={3} lineClamp={1}>
-            {deck?.name}
-          </Title>
-          <Tooltip
-            label={
-              <>
-                {t("deck.add-cards-tooltip")}
-                <Kbd>n</Kbd>
-              </>
-            }
-          >
-            <Button
-              leftSection={<IconPlus />}
-              variant="default"
-              onClick={() => navigate("/new/" + deck?.id)}
-            >
-              {t("deck.add-cards")}
-            </Button>
-          </Tooltip>
-        </Group>
+        <TitleSection deck={deck} />
         <HeroDeckSection
           deck={deck}
           isDeckReady={isDeckReady}
