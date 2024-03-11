@@ -1,6 +1,6 @@
-import React from "react";
 import { Anchor, Stack, Text } from "@mantine/core";
 import { t } from "i18next";
+import React from "react";
 
 export default function AboutSettingsView() {
   return (

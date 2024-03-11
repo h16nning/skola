@@ -1,7 +1,7 @@
-import React from "react";
 import { Select, Stack, Text } from "@mantine/core";
-import { Deck } from "../../logic/deck";
+import React from "react";
 import { useParams } from "react-router-dom";
+import { Deck } from "../../logic/deck";
 
 interface SelectDecksHeaderProps {
   label: string;

@@ -3,10 +3,10 @@ import { Center, SegmentedControl, Stack, Title } from "@mantine/core";
 import { State } from "fsrs.js";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { db } from "../logic/db";
-import { AppHeaderContent } from "./Header/Header";
-import { getDeck, useDecks } from "../logic/deck";
 import { getAllCards, getCardsOf, getSimplifiedStatesOf } from "../logic/card";
+import { db } from "../logic/db";
+import { getDeck, useDecks } from "../logic/deck";
+import { AppHeaderContent } from "./Header/Header";
 import SelectDecksHeader from "./custom/SelectDecksHeader";
 
 function StatsView() {

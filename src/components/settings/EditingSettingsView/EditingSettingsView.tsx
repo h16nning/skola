@@ -1,7 +1,4 @@
-import classes from "./EditingSettingsView.module.css";
-import React from "react";
 import { Alert, Stack } from "@mantine/core";
-import SettingsInput from "../SettingsInput";
 import {
   IconCode,
   IconHighlight,
@@ -14,8 +11,11 @@ import {
   IconSubscript,
   IconSuperscript,
 } from "@tabler/icons-react";
-import Section from "../Section";
 import { t } from "i18next";
+import React from "react";
+import Section from "../Section";
+import SettingsInput from "../SettingsInput";
+import classes from "./EditingSettingsView.module.css";
 
 interface EditingSettingsViewProps {}
 
