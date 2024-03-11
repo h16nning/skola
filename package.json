@@ -27,7 +27,7 @@
     "@tiptap/extension-placeholder": "^2.2.2",
     "@tiptap/extension-subscript": "^2.2.2",
     "@tiptap/extension-superscript": "^2.2.2",
-    "@tiptap/extension-text-align": "^2.2.2",
+    "@tiptap/extension-text-align": "^2.2.4",
     "@tiptap/extension-text-style": "^2.2.2",
     "@tiptap/extension-underline": "^2.2.2",
     "@tiptap/react": "^2.2.2",
