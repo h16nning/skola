@@ -1,6 +1,6 @@
 import * as fsrsjs from "fsrs.js";
-import { setSetting, useSetting } from "./Settings";
 import { useEffect } from "react";
+import { setSetting, useSetting } from "./Settings";
 
 const scheduler = new fsrsjs.FSRS();
 

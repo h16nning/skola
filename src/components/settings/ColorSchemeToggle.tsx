@@ -7,8 +7,8 @@ import {
   useMantineColorScheme,
 } from "@mantine/core";
 import { IconMoon, IconSun, IconSunMoon } from "@tabler/icons-react";
-import { SettingsValues, setSetting, useSetting } from "../../logic/Settings";
 import { t } from "i18next";
+import { SettingsValues, setSetting, useSetting } from "../../logic/Settings";
 
 export default function SegmentedToggle() {
   const [colorSchemePreference] = useSetting("colorSchemePreference");

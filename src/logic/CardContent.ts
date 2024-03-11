@@ -1,7 +1,7 @@
-import { CardType } from "./card";
-import { NormalContent } from "./CardTypeImplementations/NormalCard";
 import { ClozeContent } from "./CardTypeImplementations/ClozeCard";
 import { DoubleSidedContent } from "./CardTypeImplementations/DoubleSidedCard";
+import { NormalContent } from "./CardTypeImplementations/NormalCard";
+import { CardType } from "./card";
 
 export type Content<T extends CardType> = {
   type: T;

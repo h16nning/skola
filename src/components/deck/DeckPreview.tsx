@@ -1,10 +1,10 @@
 import { Alert, Badge, Group, Text } from "@mantine/core";
 import React from "react";
-import { Deck } from "../../logic/deck";
-import { useNavigate } from "react-router-dom";
-import ListButton from "../custom/ListButton/ListButton";
-import { useCardsOf, useSimplifiedStatesOf } from "../../logic/card";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { useCardsOf, useSimplifiedStatesOf } from "../../logic/card";
+import { Deck } from "../../logic/deck";
+import ListButton from "../custom/ListButton/ListButton";
 import badge from "./Badge.module.css";
 
 type DeckPreviewProps = {

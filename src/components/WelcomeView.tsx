@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import {
   Alert,
   Anchor,
@@ -10,8 +9,9 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import { IconInfoCircle } from "@tabler/icons-react";
 import { useLocalStorage } from "@mantine/hooks";
+import { IconInfoCircle } from "@tabler/icons-react";
+import React, { useEffect } from "react";
 
 export default function WelcomeView() {
   const [_, setRegistered] = useLocalStorage({

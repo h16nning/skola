@@ -1,8 +1,8 @@
 import { NavLink } from "@mantine/core";
 import { IconCards, IconChevronRight } from "@tabler/icons-react";
-import { Deck, useSubDecks } from "../../logic/deck";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Deck, useSubDecks } from "../../logic/deck";
 
 function DeckTree({ deck: parentDeck }: { deck: Deck }) {
   const [isOpened, setIsOpened] = useState(false);

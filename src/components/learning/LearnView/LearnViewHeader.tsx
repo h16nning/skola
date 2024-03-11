@@ -4,11 +4,11 @@ import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { StopwatchResult, useStopwatch } from "react-timer-hook";
 import { Card, CardType } from "../../../logic/card";
+import { Deck } from "../../../logic/deck";
 import { LearnController } from "../../../logic/learn";
 import CardMenu from "../../editcard/CardMenu";
 import RemainingCardsIndicator from "../RemainingCardsIndicator/RemainingCardsIndicator";
 import classes from "./LearnView.module.css";
-import { Deck } from "../../../logic/deck";
 
 export let stopwatchResult: StopwatchResult;
 

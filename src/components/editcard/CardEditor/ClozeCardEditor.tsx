@@ -8,6 +8,7 @@ import classes from "./ClozeCardEditor.module.css";
 import NoteEditor, { useNoteEditor } from "./NoteEditor";
 
 import { Stack } from "@mantine/core";
+import { Editor } from "@tiptap/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ClozeCardUtils } from "../../../logic/CardTypeImplementations/ClozeCard";
 import { Note } from "../../../logic/note";
@@ -18,7 +19,6 @@ import {
   successfullySaved,
 } from "../../custom/Notification/Notification";
 import CardEditorFooter from "../CardEditorFooter";
-import { Editor } from "@tiptap/react";
 
 interface ClozeCardEditorProps {
   note: Note<CardType.Cloze> | null;
