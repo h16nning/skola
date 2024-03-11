@@ -1,8 +1,7 @@
 import classes from "./HeroDeckSection.module.css";
 
-import React from "react";
 import { Button, Group, Paper, Stack, Text, Title } from "@mantine/core";
-import { Deck } from "../../../logic/deck";
+import { useHotkeys } from "@mantine/hooks";
 import {
   IconBolt,
   IconBook,
@@ -10,12 +9,13 @@ import {
   IconFile,
   IconSparkles,
 } from "@tabler/icons-react";
+import React from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Card, CardType, useSimplifiedStatesOf } from "../../../logic/card";
-import Stat from "../../custom/Stat/Stat";
-import { useTranslation } from "react-i18next";
-import { useHotkeys } from "@mantine/hooks";
+import { Deck } from "../../../logic/deck";
 import EmptyNotice from "../../EmptyNotice";
+import Stat from "../../custom/Stat/Stat";
 
 interface HeroDeckSectionProps {
   deck?: Deck;

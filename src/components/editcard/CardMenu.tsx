@@ -10,17 +10,17 @@ import {
 } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSetting, useShowShortcutHints } from "../../logic/Settings";
 import { Card, CardType } from "../../logic/card";
 import { Note, deleteNote, getNote } from "../../logic/note";
 import DebugCardModal from "../DebugCardModal/DebugCardModal";
-import CardStatisticsModal from "../statistics/CardStatisticsModal";
-import { useNavigate } from "react-router-dom";
 import DangerousConfirmModal from "../custom/DangerousConfirmModal";
 import {
   deleteFailed,
   successfullyDeleted,
 } from "../custom/Notification/Notification";
+import CardStatisticsModal from "../statistics/CardStatisticsModal";
 
 interface CardMenuProps {
   card: Card<CardType> | undefined;

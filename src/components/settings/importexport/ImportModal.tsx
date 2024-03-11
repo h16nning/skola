@@ -1,11 +1,11 @@
 import { Modal, Tabs } from "@mantine/core";
 import React, { useState } from "react";
-import ModalProps from "../../custom/ModalProps";
 import { Deck } from "../../../logic/deck";
+import ModalProps from "../../custom/ModalProps";
 
 import { IconJson, IconTxt } from "@tabler/icons-react";
-import ImportFromPlainText from "./ImportFromPlainText";
 import ImportFromJSON from "./ImportFromJSON";
+import ImportFromPlainText from "./ImportFromPlainText";
 
 interface ImportModalProps extends ModalProps {
   deck?: Deck;

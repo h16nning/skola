@@ -1,6 +1,6 @@
 import { useLiveQuery } from "dexie-react-hooks";
-import { db } from "./db";
 import { Rating, State } from "fsrs.js";
+import { db } from "./db";
 
 export interface DeckStatistics {
   deck: string;

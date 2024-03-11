@@ -1,4 +1,5 @@
 import { Divider, Stack, Title } from "@mantine/core";
+import { useState } from "react";
 import NormalCardEditor from "../../components/editcard/CardEditor/NormalCardEditor";
 import common from "../../style/CommonStyles.module.css";
 import { EditMode, TypeManager } from "../TypeManager";
@@ -13,7 +14,6 @@ import {
 import { db } from "../db";
 import { Deck } from "../deck";
 import { Note, NoteContent, newNote, updateNoteContent } from "../note";
-import { useState } from "react";
 
 export type NormalContent = {};
 
