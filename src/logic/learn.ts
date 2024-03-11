@@ -269,7 +269,7 @@ export function useRepetitionAccuracy(ratingsList: number[]): number {
       });
       return Math.round((sum / ratingsList.length) * 1000) / 10;
     } else {
-      return NaN;
+      return Number.NaN;
     }
   }, [ratingsList]);
 }
