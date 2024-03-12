@@ -76,7 +76,7 @@
     "i18next-parser": "8.13.0",
     "postcss": "8.4.35",
     "postcss-cli": "11.0.0",
-    "postcss-preset-mantine": "1.12.2",
+    "postcss-preset-mantine": "1.13.0",
     "postcss-simple-vars": "7.0.1",
     "typescript": "5.4.2",
     "vite": "5.1.6",
