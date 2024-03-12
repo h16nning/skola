@@ -47,7 +47,7 @@
     "react-router-dom": "6.22.3",
     "react-timer-hook": "3.0.5",
     "uuid": "9.0.1",
-    "web-vitals": "3.1.1"
+    "web-vitals": "3.5.2"
   },
   "scripts": {
     "start": "vite",
