@@ -54,13 +54,13 @@ const InnerCard = memo(
     const [answerToggled, setAnswerToggled] = useState(false);
 
     return (
-      <Paper
-        p="md"
-        className={classes.card}
-        onClick={() => setAnswerToggled(!answerToggled)}
-      >
+      <Paper p="md" className={classes.card}>
         <Group align="top" justify="space-between" wrap="nowrap">
-          <Group align="center" w="100%">
+          <Group
+            align="center"
+            w="100%"
+            onClick={() => setAnswerToggled(!answerToggled)}
+          >
             {getUtils(note).displayNote(
               note,
               showAnswer ? "strict" : answerToggled ? "facultative" : "none"
