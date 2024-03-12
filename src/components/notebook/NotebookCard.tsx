@@ -1,6 +1,7 @@
 import { Draggable } from "@hello-pangea/dnd";
 import { Group, Paper } from "@mantine/core";
-import { memo, useEffect, useState } from "react";
+import { useDisclosure } from "@mantine/hooks";
+import { memo, useEffect } from "react";
 import { getUtils } from "../../logic/TypeManager";
 import { CardType } from "../../logic/card";
 import { Note, updateNote } from "../../logic/note";
@@ -51,16 +52,12 @@ export default memo(NotebookCard);
 
 const InnerCard = memo(
   ({ note, showAnswer }: { note: Note<CardType>; showAnswer: boolean }) => {
-    const [answerToggled, setAnswerToggled] = useState(false);
+    const [answerToggled, handlers] = useDisclosure(false);
 
     return (
-      <Paper
-        p="md"
-        className={classes.card}
-        onClick={() => setAnswerToggled(!answerToggled)}
-      >
+      <Paper p="md" className={classes.card}>
         <Group align="top" justify="space-between" wrap="nowrap">
-          <Group align="center" w="100%">
+          <Group align="center" w="100%" onClick={handlers.toggle}>
             {getUtils(note).displayNote(
               note,
               showAnswer ? "strict" : answerToggled ? "facultative" : "none"
