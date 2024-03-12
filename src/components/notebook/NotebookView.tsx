@@ -52,7 +52,9 @@ export default function NotebookView() {
 
   useEffect(() => {
     setUseCustomSort(sortOption.value === "custom_order");
-    setSortedNotes((notes ?? []).sort(sortOption.sortFunction(sortOrder)));
+    setSortedNotes(
+      (notes ?? []).slice(0).sort(sortOption.sortFunction(sortOrder))
+    );
   }, [notes, sortOption, sortOrder, setSortedNotes]);
 
   return (
@@ -95,7 +97,6 @@ export default function NotebookView() {
         </DragDropContext>
       ) : (
         <Stack gap="xs">
-          {sortOption.label}
           {sortedNotes.map((note, index) => (
             <NotebookCard
               key={note.id}
