@@ -81,6 +81,6 @@
     "typescript": "5.4.2",
     "vite": "5.1.6",
     "vite-plugin-checker": "0.6.4",
-    "vite-tsconfig-paths": "4.2.3"
+    "vite-tsconfig-paths": "4.3.1"
   }
 }
