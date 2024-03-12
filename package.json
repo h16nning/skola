@@ -4,22 +4,13 @@
   "private": true,
   "dependencies": {
     "@hello-pangea/dnd": "16.5.0",
-    "@mantine/carousel": "7.6.2",
     "@mantine/charts": "7.6.2",
     "@mantine/core": "7.6.2",
-    "@mantine/dates": "7.6.2",
-    "@mantine/dropzone": "7.6.2",
-    "@mantine/form": "7.6.2",
     "@mantine/hooks": "7.6.2",
-    "@mantine/modals": "7.6.2",
     "@mantine/notifications": "7.6.2",
-    "@mantine/nprogress": "7.6.2",
     "@mantine/spotlight": "7.6.2",
     "@mantine/tiptap": "7.6.2",
     "@tabler/icons-react": "2.47.0",
-    "@testing-library/jest-dom": "5.16.5",
-    "@testing-library/react": "14.0.0",
-    "@testing-library/user-event": "14.4.3",
     "@tiptap/extension-color": "2.2.4",
     "@tiptap/extension-highlight": "2.2.4",
     "@tiptap/extension-image": "2.2.4",
@@ -32,7 +23,6 @@
     "@tiptap/extension-underline": "2.2.4",
     "@tiptap/react": "2.2.4",
     "@tiptap/starter-kit": "2.2.4",
-    "dayjs": "1.11.7",
     "dexie": "3.2.6",
     "dexie-export-import": "4.1.1",
     "dexie-react-hooks": "1.1.7",
@@ -59,8 +49,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {
