@@ -27,15 +27,6 @@ import { useDeckFromUrl } from "../../logic/deck";
 import { Note, useNotesOf } from "../../logic/note";
 import NotebookCard from "./NotebookCard";
 
-async function sortNotes(
-  notes: Note<CardType>[],
-  sortFunction: NoteSortFunction,
-  sortOrder: 1 | -1,
-  setSortedCards: (cards: Note<CardType>[]) => void
-) {
-  setSortedCards(notes.sort(sortFunction(sortOrder)));
-}
-
 export default function NotebookView() {
   const [deck] = useDeckFromUrl();
 
@@ -44,6 +35,7 @@ export default function NotebookView() {
 
   const [notes] = useNotesOf(deck, excludeSubDecks);
 
+  const [sortOption, setSortOption] = useState<SortOption>(sortOptions[0]);
   const [sortOrder] = useState<1 | -1>(1);
   const [sortedNotes, setSortedNotes] = useState<Note<CardType>[]>(notes ?? []);
 
@@ -58,12 +50,10 @@ export default function NotebookView() {
     }
   }, [sortedNotes]);
 
-  const [sortOption, setSortOption] = useState<SortOption>(sortOptions[0]);
-
   useEffect(() => {
     setUseCustomSort(sortOption.value === "custom_order");
-    sortNotes(notes ?? [], sortOption.sortFunction, sortOrder, setSortedNotes);
-  }, [notes, sortOption, sortOrder]);
+    setSortedNotes((notes ?? []).sort(sortOption.sortFunction(sortOrder)));
+  }, [notes, sortOption, sortOrder, setSortedNotes]);
 
   return (
     <Stack gap="sm">
@@ -105,6 +95,7 @@ export default function NotebookView() {
         </DragDropContext>
       ) : (
         <Stack gap="xs">
+          {sortOption.label}
           {sortedNotes.map((note, index) => (
             <NotebookCard
               key={note.id}
