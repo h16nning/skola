@@ -44,7 +44,8 @@ export interface TypeManager<T extends CardType> {
     note: Note<CardType> | null,
     deck: Deck,
     mode: EditMode,
-    onChanged?: () => void
+    requestedFinish: boolean,
+    setRequestedFinish: (finish: boolean) => void
   ): JSX.Element;
 }
 

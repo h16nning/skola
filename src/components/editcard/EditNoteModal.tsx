@@ -1,32 +1,40 @@
 import { Button, Group, Modal } from "@mantine/core";
 import { IconArrowUpRight } from "@tabler/icons-react";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUtils } from "../../logic/TypeManager";
 import { CardType } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
 import { Note } from "../../logic/note";
 import classes from "./EditNoteModal.module.css";
+import NoteSubmitButton from "./NoteSubmitButton";
 
 interface EditNoteModalProps {
   note: Note<CardType>;
   opened: boolean;
   setClose: () => void;
-  onChanged?: () => void;
 }
 
 export default function EditNoteModal({
   note,
   opened,
   setClose,
-  onChanged,
 }: EditNoteModalProps) {
   const [deck] = useDeckOf(note);
   const navigate = useNavigate();
+  const [requestedFinish, setRequestedFinish] = useState(false);
 
   const CardEditor = useMemo(() => {
-    return deck ? getUtils(note).editor(note, deck, "edit", onChanged) : null;
-  }, [note, deck]);
+    return deck
+      ? getUtils(note).editor(
+          note,
+          deck,
+          "edit",
+          requestedFinish,
+          setRequestedFinish
+        )
+      : null;
+  }, [note, deck, requestedFinish, setRequestedFinish]);
 
   return (
     <Modal
@@ -48,6 +56,15 @@ export default function EditNoteModal({
       onClose={setClose}
     >
       {CardEditor}
+      <Group justify="end" pt="md">
+        <NoteSubmitButton
+          finish={() => {
+            setRequestedFinish(true);
+            setClose();
+          }}
+          mode="edit"
+        />
+      </Group>
     </Modal>
   );
 }

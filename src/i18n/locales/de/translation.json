@@ -63,6 +63,12 @@
       "title": "Unterstapel"
     }
   },
+  "edit-notes": {
+    "submit-button": {
+      "add": "Karten hinzufügen",
+      "save": "Karten speichern"
+    }
+  },
   "global": {
     "cancel": "Abbrechen",
     "no-items-title": "Hier sieht es leer aus!"

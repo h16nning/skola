@@ -1,7 +1,7 @@
 import { Stack, Text } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import { Editor } from "@tiptap/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { DoubleSidedCardUtils } from "../../../logic/CardTypeImplementations/DoubleSidedCard";
 import { EditMode } from "../../../logic/TypeManager";
@@ -14,7 +14,6 @@ import {
   successfullyAdded,
   successfullySaved,
 } from "../../custom/Notification/Notification";
-import CardEditorFooter from "../CardEditorFooter";
 import classes from "./DoubleSidedCardEditor.module.css";
 import NoteEditor, { useNoteEditor } from "./NoteEditor";
 
@@ -22,17 +21,18 @@ interface DoubleSidedCardEditorProps {
   note: Note<CardType.DoubleSided> | null;
   deck: Deck;
   mode: EditMode;
-  onChanged?: () => void;
+  requestedFinish: boolean;
+  setRequestedFinish: (finish: boolean) => void;
 }
 
 function DoubleSidedCardEditor({
   note,
   deck,
   mode,
-  onChanged,
+  requestedFinish,
+  setRequestedFinish,
 }: DoubleSidedCardEditorProps) {
   const [t] = useTranslation();
-  const [requestedFinish, setRequestedFinish] = useState(false);
 
   useHotkeys([["mod+Enter", () => setRequestedFinish(true)]]);
 
@@ -79,13 +79,6 @@ function DoubleSidedCardEditor({
         </Text>
         <NoteEditor editor={editor2} key="back" />
       </Stack>
-      <CardEditorFooter
-        finish={() => {
-          finish(mode, clear, deck, note, editor1, editor2);
-          onChanged?.();
-        }}
-        mode={mode}
-      />
     </Stack>
   );
 }
