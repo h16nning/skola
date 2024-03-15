@@ -1,7 +1,7 @@
 import { Button } from "@mantine/core";
 import { IconDeviceFloppy, IconPlus } from "@tabler/icons-react";
-import { EditMode } from "../../logic/TypeManager";
 import { useTranslation } from "react-i18next";
+import { EditMode } from "../../logic/TypeManager";
 
 interface NoteSubmitButtonProps {
   mode: EditMode;
