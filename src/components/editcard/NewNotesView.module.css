@@ -32,6 +32,6 @@
     padding: var(--mantine-spacing-lg);
     border-top: solid 1px var(--mantine-color-light-border);
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     align-items: center;
 }

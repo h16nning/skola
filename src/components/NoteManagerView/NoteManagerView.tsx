@@ -12,11 +12,11 @@ import NoteTable from "../CardTable/NoteTable";
 import { AppHeaderContent } from "../Header/Header";
 import SelectDecksHeader from "../custom/SelectDecksHeader";
 import EditorOptionsMenu from "../editcard/EditorOptionsMenu";
-import classes from "./CardManagerView.module.css";
+import classes from "./NoteManagerView.module.css";
 
 const ALL_DECK_ID = "all";
 
-function CardManagerView() {
+function NoteManagerView() {
   const navigate = useNavigate();
   const noteId = useParams().noteId;
   let deckId = useParams().deckId;
@@ -24,13 +24,21 @@ function CardManagerView() {
 
   const location = useLocation();
 
+  const {
+    sortFunction,
+    sortDirection,
+  }: { sortFunction?: keyof typeof NoteSorts; sortDirection?: boolean } =
+    location.state ?? {};
+
   const [decks] = useDecks();
 
   const [filter, setFilter] = useDebouncedState<string>("", 250);
 
   const [sort, setSort] = useState<[NoteSortFunction, boolean]>([
-    NoteSorts.bySortField,
-    true,
+    sortFunction !== undefined
+      ? NoteSorts[sortFunction]
+      : NoteSorts.bySortField,
+    sortDirection !== undefined ? sortDirection : true,
   ]);
 
   const [notes] = useNotesWith(
@@ -49,7 +57,6 @@ function CardManagerView() {
         ),
     [location, filter, location, sort]
   );
-
   return (
     <Stack style={{ overflow: "hidden", width: "100%", height: "100%" }}>
       <AppHeaderContent>
@@ -106,4 +113,4 @@ function CardManagerView() {
   );
 }
 
-export default CardManagerView;
+export default NoteManagerView;
