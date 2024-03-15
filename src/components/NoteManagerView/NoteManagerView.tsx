@@ -57,6 +57,7 @@ function NoteManagerView() {
         ),
     [location, filter, location, sort]
   );
+
   return (
     <Stack style={{ overflow: "hidden", width: "100%", height: "100%" }}>
       <AppHeaderContent>
@@ -95,11 +96,11 @@ function NoteManagerView() {
             setSelectedIndex={(idx) => {
               navigate(`/notes/${deckId || ALL_DECK_ID}/${notes[idx].id}`);
             }}
-            selectedNote={notes.find((card) => noteId === card?.id)}
-            setSelectedNote={(card) => {
-              // avoid navigating to the same card
-              if (noteId !== card?.id)
-                navigate(`/cards/${deckId || ALL_DECK_ID}/${card.id}`);
+            selectedNote={notes.find((note) => noteId === note?.id)}
+            setSelectedNote={(note) => {
+              // avoid navigating to the same note
+              if (noteId !== note?.id)
+                navigate(`/notes/${deckId || ALL_DECK_ID}/${note.id}`);
             }}
             sort={sort}
             setSort={setSort}
