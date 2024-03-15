@@ -85,7 +85,7 @@ function NewNotesView() {
         <Space h="md" />
         <div className={classes.newNotesEditorContainer}>{CardEditor}</div>
       </div>
-      <NewNotesFooter setRequestedFinish={setRequestedFinish} />
+      <NewNotesFooter setRequestedFinish={setRequestedFinish} deck={deck} />
     </div>
   );
 }

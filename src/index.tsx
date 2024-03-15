@@ -9,7 +9,7 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import App from "./App";
-import CardManagerView from "./components/CardManagerView/CardManagerView";
+import NoteManagerView from "./components/NoteManagerView/NoteManagerView";
 import HomeView from "./components/HomeView";
 import StatsView from "./components/StatsView";
 import TodayView from "./components/TodayView";
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/notes/:deckId?",
-        element: <CardManagerView />,
+        element: <NoteManagerView />,
         children: [
           {
             index: true,
