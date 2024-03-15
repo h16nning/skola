@@ -9,10 +9,11 @@ import EmptyNotice from "../EmptyNotice";
 import classes from "./CardTable.module.css";
 import CardTableHeadItem from "./CardTableHeadItem";
 import { NoteTableItem } from "./NoteTableItem";
+import { useEffect } from "react";
 
 interface CardTableProps {
   noteSet: Note<CardType>[];
-  selectedIndex: number | undefined;
+  selectedIndex: number;
   setSelectedIndex: (index: number) => void;
   selectedNote: Note<CardType> | undefined;
   setSelectedNote: (card: Note<CardType>) => void;
@@ -44,6 +45,12 @@ function NoteTable({
       );
     }
   });
+
+  useEffect(() => {
+    if (selectedIndex === -1) {
+      setSelectedIndex(0);
+    }
+  }, [selectedIndex]);
 
   return (
     <Table.ScrollContainer
