@@ -12,6 +12,7 @@ import {
   Editor,
   EditorOptions,
   Extension,
+  FloatingMenu,
   useEditor,
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -98,6 +99,11 @@ function NoteEditor({ editor, controls, className }: NoteEditorProps) {
             <BubbleMenu editor={editor} tippyOptions={{ maxWidth: "none" }}>
               <NoteEditorControls controls={controls} editor={editor} />
             </BubbleMenu>
+          )}
+          {editor && settings.useBubbleMenu && (
+            <FloatingMenu editor={editor}>
+              <NoteEditorControls controls={controls} editor={editor} />
+            </FloatingMenu>
           )}
         </>
       )}
