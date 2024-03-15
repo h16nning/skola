@@ -53,6 +53,12 @@
       "title": ""
     }
   },
+  "edit-notes": {
+    "submit-button": {
+      "add": "Lägg till kort",
+      "save": "Spara kort"
+    }
+  },
   "global": {
     "cancel": ""
   },

@@ -7,9 +7,8 @@ import { Deck } from "../../../logic/deck";
 import classes from "./ClozeCardEditor.module.css";
 import NoteEditor, { useNoteEditor } from "./NoteEditor";
 
-import { Stack } from "@mantine/core";
 import { Editor } from "@tiptap/react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { ClozeCardUtils } from "../../../logic/CardTypeImplementations/ClozeCard";
 import { Note } from "../../../logic/note";
 import {
@@ -18,23 +17,22 @@ import {
   successfullyAdded,
   successfullySaved,
 } from "../../custom/Notification/Notification";
-import CardEditorFooter from "../CardEditorFooter";
 
 interface ClozeCardEditorProps {
   note: Note<CardType.Cloze> | null;
   deck: Deck;
   mode: EditMode;
-  onChanged?: () => void;
+  requestedFinish: boolean;
+  setRequestedFinish: (finish: boolean) => void;
 }
 
 export default function ClozeCardEditor({
   note,
   deck,
   mode,
-  onChanged,
+  requestedFinish,
+  setRequestedFinish,
 }: ClozeCardEditorProps) {
-  const [requestedFinish, setRequestedFinish] = useState(false);
-
   useHotkeys([["mod+Enter", () => setRequestedFinish(true)]]);
 
   const noteContent = note?.content ?? { type: CardType.Cloze, text: "" };
@@ -66,38 +64,32 @@ export default function ClozeCardEditor({
     if (requestedFinish) {
       finish(mode, clear, deck, note, editor);
       setRequestedFinish(false);
-      onChanged?.();
     }
   }, [requestedFinish, mode, clear, deck, note, editor]);
 
   return (
-    <Stack gap="2rem">
-      <NoteEditor
-        editor={editor}
-        className={classes}
-        controls={
-          <RichTextEditor.Control
-            tabIndex={-1}
-            onClick={() => {
-              if (editor?.state.selection.from !== editor?.state.selection.to) {
-                const occludedText = `{{c${smallestAvailableOcclusionNumber}::${window.getSelection()}}}`;
-                editor?.commands.insertContent(occludedText);
-              } else {
-                editor?.commands.insertContent(
-                  `{{c${smallestAvailableOcclusionNumber}::}}`
-                );
-                editor?.commands.setTextSelection(
-                  editor?.state.selection.to - 2
-                );
-              }
-            }}
-          >
-            <IconBracketsContain />
-          </RichTextEditor.Control>
-        }
-      />
-      <CardEditorFooter finish={() => setRequestedFinish(true)} mode={mode} />
-    </Stack>
+    <NoteEditor
+      editor={editor}
+      className={classes}
+      controls={
+        <RichTextEditor.Control
+          tabIndex={-1}
+          onClick={() => {
+            if (editor?.state.selection.from !== editor?.state.selection.to) {
+              const occludedText = `{{c${smallestAvailableOcclusionNumber}::${window.getSelection()}}}`;
+              editor?.commands.insertContent(occludedText);
+            } else {
+              editor?.commands.insertContent(
+                `{{c${smallestAvailableOcclusionNumber}::}}`
+              );
+              editor?.commands.setTextSelection(editor?.state.selection.to - 2);
+            }
+          }}
+        >
+          <IconBracketsContain />
+        </RichTextEditor.Control>
+      }
+    />
   );
 }
 

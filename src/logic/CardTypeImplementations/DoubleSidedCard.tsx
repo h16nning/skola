@@ -137,14 +137,16 @@ export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
     note: Note<CardType.DoubleSided> | null,
     deck: Deck,
     mode: EditMode,
-    onChanged?: () => void
+    requestedFinish: boolean,
+    setRequestedFinish: (finish: boolean) => void
   ) {
     return (
       <DoubleSidedCardEditor
         note={note}
         deck={deck}
         mode={mode}
-        onChanged={onChanged}
+        requestedFinish={requestedFinish}
+        setRequestedFinish={setRequestedFinish}
       />
     );
   },

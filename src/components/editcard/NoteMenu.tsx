@@ -114,7 +114,6 @@ function NoteMenu({
         note={note}
         opened={editModalOpened}
         setClose={editModal.close}
-        onChanged={editModal.close}
       />
     </>
   );

@@ -113,14 +113,16 @@ export const NormalCardUtils: TypeManager<CardType.Normal> = {
     note: Note<CardType.Normal> | null,
     deck: Deck,
     mode: EditMode,
-    onChanged?: () => void
+    requestedFinish: boolean,
+    setRequestedFinish: (finish: boolean) => void
   ) {
     return (
       <NormalCardEditor
         note={note}
         deck={deck}
         mode={mode}
-        onChanged={onChanged}
+        requestedFinish={requestedFinish}
+        setRequestedFinish={setRequestedFinish}
       />
     );
   },

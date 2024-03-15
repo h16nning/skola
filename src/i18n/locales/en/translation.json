@@ -65,6 +65,12 @@
       "title": "Subdecks"
     }
   },
+  "edit-notes": {
+    "submit-button": {
+      "add": "Add Cards",
+      "save": "Save Cards"
+    }
+  },
   "global": {
     "cancel": "Cancel",
     "no-items-title": "It is looking empty here!"

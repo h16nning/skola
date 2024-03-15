@@ -134,14 +134,16 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
     note: Note<CardType.Cloze> | null,
     deck: Deck,
     mode: EditMode,
-    onChanged?: () => void
+    requestedFinish: boolean,
+    setRequestedFinish: (finish: boolean) => void
   ) {
     return (
       <ClozeCardEditor
         note={note}
         deck={deck}
         mode={mode}
-        onChanged={onChanged}
+        requestedFinish={requestedFinish}
+        setRequestedFinish={setRequestedFinish}
       />
     );
   },
