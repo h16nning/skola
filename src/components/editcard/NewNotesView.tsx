@@ -1,7 +1,7 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { ActionIcon, Group, Select, Space, Title } from "@mantine/core";
+import { ActionIcon, Group, Paper, Select, Space, Stack } from "@mantine/core";
 import { IconChevronLeft } from "@tabler/icons-react";
 
 import { getUtilsOfType } from "../../logic/TypeManager";
@@ -35,6 +35,10 @@ function NewNotesView() {
       : null;
   }, [deck, cardType, requestedFinish, setRequestedFinish]);
 
+  const closeView = useCallback(() => {
+    navigate(deck ? "/deck/" + deck?.id : "/home");
+  }, [navigate, deck]);
+
   if (isReady && !deck) {
     return <MissingObject />;
   }
@@ -48,42 +52,47 @@ function NewNotesView() {
       <div className={classes.newNotesMain}>
         <AppHeaderContent>
           <Group justify="space-between" gap="xs" wrap="nowrap">
-            <Space />
-            <Title order={3}>Add card</Title>
+            <ActionIcon onClick={closeView} variant="subtle" color="gray">
+              <IconChevronLeft />
+            </ActionIcon>
             <EditorOptionsMenu />
           </Group>
         </AppHeaderContent>
-        <Group justify="space-between">
-          <Group gap="xs" align="end">
-            <ActionIcon onClick={() => navigate(-1)}>
-              <IconChevronLeft />
-            </ActionIcon>
-            <SelectDecksHeader
-              label="Adding cards to"
-              decks={decks}
-              disableAll
-              onSelect={(deckId) => navigate(`/new/${deckId}`)}
-            />
-          </Group>
-          <Select
-            value={cardType}
-            onChange={(type) =>
-              setCardType((type as CardType) ?? CardType.Normal)
-            }
-            label="Card Type"
-            data={[
-              { label: "Normal", value: CardType.Normal },
-              { label: "Double Sided", value: CardType.DoubleSided },
-              { label: "Cloze (In Development)", value: CardType.Cloze },
-              {
-                label: "Image Occlusion (Not Working)",
-                value: CardType.ImageOcclusion,
-              },
-            ]}
-          />
-        </Group>
+
         <Space h="md" />
-        <div className={classes.newNotesEditorContainer}>{CardEditor}</div>
+        <div className={classes.newNotesEditorContainer}>
+          <Stack>
+            <Group justify="space-between">
+              <Group gap="xs" align="end">
+                <SelectDecksHeader
+                  label="Adding cards to"
+                  decks={decks}
+                  disableAll
+                  onSelect={(deckId) => navigate(`/new/${deckId}`)}
+                />
+              </Group>
+              <Select
+                value={cardType}
+                onChange={(type) =>
+                  setCardType((type as CardType) ?? CardType.Normal)
+                }
+                label="Card Type"
+                data={[
+                  { label: "Normal", value: CardType.Normal },
+                  { label: "Double Sided", value: CardType.DoubleSided },
+                  { label: "Cloze (In Development)", value: CardType.Cloze },
+                  {
+                    label: "Image Occlusion (Not Working)",
+                    value: CardType.ImageOcclusion,
+                  },
+                ]}
+              />
+            </Group>
+            <Paper p="md" shadow="xs" withBorder>
+              {CardEditor}
+            </Paper>
+          </Stack>
+        </div>
       </div>
       <NewNotesFooter setRequestedFinish={setRequestedFinish} deck={deck} />
     </div>
