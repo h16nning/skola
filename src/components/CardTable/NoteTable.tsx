@@ -46,6 +46,7 @@ function NoteTable({
     }
   });
 
+  //Set the selected index to 0 if there is no selected index (i.e. on page load)
   useEffect(() => {
     if (selectedIndex === -1) {
       setSelectedIndex(0);

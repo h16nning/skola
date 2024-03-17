@@ -1,8 +1,12 @@
-import { Button } from "@mantine/core";
+import { Button, Kbd, Tooltip } from "@mantine/core";
 import { Deck } from "../../logic/deck";
 import classes from "./NewNotesView.module.css";
 import NoteSubmitButton from "./NoteSubmitButton";
 import { useNavigate } from "react-router-dom";
+import { IconHistory } from "@tabler/icons-react";
+import { t } from "i18next";
+import { useHotkeys, useOs } from "@mantine/hooks";
+import { useCallback } from "react";
 
 interface NewNotesFooterProps {
   setRequestedFinish: (finish: boolean) => void;
@@ -14,19 +18,34 @@ export default function NewNotesFooter({
   deck,
 }: NewNotesFooterProps) {
   const navigate = useNavigate();
+  const os = useOs();
+
+  const showHistory = useCallback(() => {
+    navigate("/notes" + (deck ? `/${deck.id}` : ""), {
+      state: { sortFunction: "byCreationDate", sortDirection: false },
+    });
+  }, [deck, navigate]);
+
+  useHotkeys([["Mod+Shift+H", showHistory]]);
+
   return (
     <div className={classes.newNotesFooter}>
-      <Button
-        leftSection="🔍"
-        variant="default"
-        onClick={() =>
-          navigate("/notes" + (deck ? `/${deck.id}` : ""), {
-            state: { sortFunction: "byCreationDate", sortDirection: false },
-          })
+      <Tooltip
+        label={
+          <>
+            {t("edit-notes.see-history-tooltip")}{" "}
+            <Kbd>{os === "macos" ? "Cmd" : "Ctrl"}+Shift+H</Kbd>
+          </>
         }
       >
-        See History
-      </Button>
+        <Button
+          leftSection={<IconHistory />}
+          variant="default"
+          onClick={showHistory}
+        >
+          {t("edit-notes.see-history-button")}
+        </Button>
+      </Tooltip>
       <NoteSubmitButton finish={() => setRequestedFinish(true)} mode="new" />
     </div>
   );

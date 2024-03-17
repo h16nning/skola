@@ -66,6 +66,8 @@
     }
   },
   "edit-notes": {
+    "see-history-button": "See History",
+    "see-history-tooltip": "Show history of last created cards",
     "submit-button": {
       "add": "Add Cards",
       "save": "Save Cards"
