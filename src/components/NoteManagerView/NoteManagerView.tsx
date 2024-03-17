@@ -94,7 +94,9 @@ function NoteManagerView() {
             noteSet={notes ?? []}
             selectedIndex={notes.findIndex((note) => noteId === note?.id)}
             setSelectedIndex={(idx) => {
-              navigate(`/notes/${deckId || ALL_DECK_ID}/${notes[idx].id}`);
+              const n = notes[idx];
+              if (!n) return;
+              navigate(`/notes/${deckId || ALL_DECK_ID}/${n.id}`);
             }}
             selectedNote={notes.find((note) => noteId === note?.id)}
             setSelectedNote={(note) => {
