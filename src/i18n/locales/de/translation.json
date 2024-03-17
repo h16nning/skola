@@ -65,7 +65,7 @@
   },
   "edit-notes": {
     "see-history-button": "Verlauf",
-    "see-history-tooltip": "Verlauf der zuletzt erstellen Karten anzeigen",
+    "see-history-tooltip": "Verlauf der zuletzt erstellten Karten anzeigen",
     "submit-button": {
       "add": "Karten hinzufügen",
       "save": "Karten speichern"

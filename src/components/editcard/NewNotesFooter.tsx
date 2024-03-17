@@ -1,12 +1,12 @@
 import { Button, Kbd, Tooltip } from "@mantine/core";
+import { useHotkeys, useOs } from "@mantine/hooks";
+import { IconHistory } from "@tabler/icons-react";
+import { t } from "i18next";
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { Deck } from "../../logic/deck";
 import classes from "./NewNotesView.module.css";
 import NoteSubmitButton from "./NoteSubmitButton";
-import { useNavigate } from "react-router-dom";
-import { IconHistory } from "@tabler/icons-react";
-import { t } from "i18next";
-import { useHotkeys, useOs } from "@mantine/hooks";
-import { useCallback } from "react";
 
 interface NewNotesFooterProps {
   setRequestedFinish: (finish: boolean) => void;

@@ -2,6 +2,7 @@ import { Table } from "@mantine/core";
 import { useEventListener } from "@mantine/hooks";
 import { IconCards } from "@tabler/icons-react";
 import { t } from "i18next";
+import { useEffect } from "react";
 import { NoteSortFunction, NoteSorts } from "../../logic/NoteSorting";
 import { CardType } from "../../logic/card";
 import { Note } from "../../logic/note";
@@ -9,7 +10,6 @@ import EmptyNotice from "../EmptyNotice";
 import classes from "./CardTable.module.css";
 import CardTableHeadItem from "./CardTableHeadItem";
 import { NoteTableItem } from "./NoteTableItem";
-import { useEffect } from "react";
 
 interface CardTableProps {
   noteSet: Note<CardType>[];
