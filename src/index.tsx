@@ -9,8 +9,8 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import App from "./App";
-import NoteManagerView from "./components/NoteManagerView/NoteManagerView";
 import HomeView from "./components/HomeView";
+import NoteManagerView from "./components/NoteManagerView/NoteManagerView";
 import StatsView from "./components/StatsView";
 import TodayView from "./components/TodayView";
 import DeckView from "./components/deck/DeckView";
