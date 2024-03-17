@@ -19,6 +19,7 @@ import React from "react";
 import { useSettings } from "../../../logic/Settings";
 import classes from "./CardEditor.module.css";
 import { NoteEditorControls } from "./CardEditorControls";
+import { ImageDrop } from "./ImageDrop";
 import { CustomHardBreak } from "./tiptap/CustomHardBreak";
 
 interface NoteEditorProps {
@@ -62,6 +63,7 @@ export function useNoteEditor(props: {
         Image.configure({
           allowBase64: true,
         }),
+        ImageDrop,
         ...(props.extensions ?? []),
       ],
       content: props.content,
@@ -73,6 +75,19 @@ export function useNoteEditor(props: {
 
 function NoteEditor({ editor, controls, className }: NoteEditorProps) {
   const [settings, areSettingsReady] = useSettings();
+
+  const addImage = (data: DataTransfer) => {
+    const { files } = data;
+    if (editor && files && files.length > 0) {
+      for (const file of Array.from(files)) {
+        const [mime] = file.type.split("/");
+        if (mime === "image") {
+          const url = URL.createObjectURL(file);
+          editor.commands.insertImage({ src: url });
+        }
+      }
+    }
+  };
 
   return (
     <RichTextEditor
@@ -102,7 +117,13 @@ function NoteEditor({ editor, controls, className }: NoteEditorProps) {
         </>
       )}
 
-      <RichTextEditor.Content />
+      <RichTextEditor.Content
+        onDrop={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          addImage(e.dataTransfer);
+        }}
+      />
     </RichTextEditor>
   );
 }
