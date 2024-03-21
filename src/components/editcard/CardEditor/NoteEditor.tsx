@@ -33,6 +33,7 @@ export function useNoteEditor(props: {
   onUpdate?: EditorOptions["onUpdate"];
   extensions?: any[];
   finish?: () => void;
+  focusSelectNoteType?: () => void;
 }) {
   return useEditor(
     {
@@ -43,6 +44,11 @@ export function useNoteEditor(props: {
             return {
               "Mod-Enter": () => {
                 props.finish && props.finish();
+                return false;
+              },
+              "Mod-j": () => {
+                this.editor.commands.blur();
+                props.focusSelectNoteType && props.focusSelectNoteType();
                 return false;
               },
             };

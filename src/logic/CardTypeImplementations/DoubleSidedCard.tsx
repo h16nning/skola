@@ -139,6 +139,7 @@ export const DoubleSidedCardUtils: TypeManager<NoteType.DoubleSided> = {
     mode,
     requestedFinish,
     setRequestedFinish,
+    focusSelectNoteType,
   }: NoteEditorProps) {
     return (
       <DoubleSidedCardEditor
@@ -147,6 +148,7 @@ export const DoubleSidedCardUtils: TypeManager<NoteType.DoubleSided> = {
         mode={mode}
         requestedFinish={requestedFinish}
         setRequestedFinish={setRequestedFinish}
+        focusSelectNoteType={focusSelectNoteType}
       />
     );
   },

@@ -21,6 +21,7 @@ interface NormalCardEditorProps {
   mode: EditMode;
   requestedFinish: boolean;
   setRequestedFinish: (finish: boolean) => void;
+  focusSelectNoteType?: () => void;
 }
 
 function NormalCardEditor({
@@ -29,6 +30,7 @@ function NormalCardEditor({
   mode,
   requestedFinish,
   setRequestedFinish,
+  focusSelectNoteType,
 }: NormalCardEditorProps) {
   const noteContent = note?.content ?? {
     type: NoteType.Normal,
@@ -39,11 +41,13 @@ function NormalCardEditor({
   const frontEditor = useNoteEditor({
     content: noteContent.front,
     finish: () => setRequestedFinish(true),
+    focusSelectNoteType: focusSelectNoteType,
   });
 
   const backEditor = useNoteEditor({
     content: noteContent.back,
     finish: () => setRequestedFinish(true),
+    focusSelectNoteType: focusSelectNoteType,
   });
 
   const clear = useCallback(() => {

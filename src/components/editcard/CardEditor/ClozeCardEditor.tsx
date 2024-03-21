@@ -24,6 +24,7 @@ interface ClozeCardEditorProps {
   mode: EditMode;
   requestedFinish: boolean;
   setRequestedFinish: (finish: boolean) => void;
+  focusSelectNoteType?: () => void;
 }
 
 export default function ClozeCardEditor({
@@ -32,6 +33,7 @@ export default function ClozeCardEditor({
   mode,
   requestedFinish,
   setRequestedFinish,
+  focusSelectNoteType,
 }: ClozeCardEditorProps) {
   useHotkeys([["mod+Enter", () => setRequestedFinish(true)]]);
 
@@ -43,6 +45,7 @@ export default function ClozeCardEditor({
     finish: () => {
       setRequestedFinish(true);
     },
+    focusSelectNoteType: focusSelectNoteType,
   });
 
   const smallestAvailableOcclusionNumber = useMemo(() => {

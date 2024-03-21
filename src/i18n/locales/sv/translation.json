@@ -54,6 +54,9 @@
     }
   },
   "edit-notes": {
+    "select-note-type": {
+      "tooltip": "Välj den typ av kort du vill skapa."
+    },
     "submit-button": {
       "add": "Lägg till kort",
       "add-tooltip": "Lägg till kort",
