@@ -2,14 +2,13 @@ import { useHotkeys } from "@mantine/hooks";
 import { RichTextEditor } from "@mantine/tiptap";
 import { IconBracketsContain } from "@tabler/icons-react";
 import { EditMode } from "../../../logic/TypeManager";
-import { CardType } from "../../../logic/card";
+import { NoteType } from "../../../logic/card";
 import { Deck } from "../../../logic/deck";
 import classes from "./ClozeCardEditor.module.css";
 import NoteEditor, { useNoteEditor } from "./NoteEditor";
 
-import { Stack } from "@mantine/core";
 import { Editor } from "@tiptap/react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { ClozeCardUtils } from "../../../logic/CardTypeImplementations/ClozeCard";
 import { Note } from "../../../logic/note";
 import {
@@ -18,26 +17,27 @@ import {
   successfullyAdded,
   successfullySaved,
 } from "../../custom/Notification/Notification";
-import CardEditorFooter from "../CardEditorFooter";
 
 interface ClozeCardEditorProps {
-  note: Note<CardType.Cloze> | null;
+  note: Note<NoteType.Cloze> | null;
   deck: Deck;
   mode: EditMode;
-  onChanged?: () => void;
+  requestedFinish: boolean;
+  setRequestedFinish: (finish: boolean) => void;
+  focusSelectNoteType?: () => void;
 }
 
 export default function ClozeCardEditor({
   note,
   deck,
   mode,
-  onChanged,
+  requestedFinish,
+  setRequestedFinish,
+  focusSelectNoteType,
 }: ClozeCardEditorProps) {
-  const [requestedFinish, setRequestedFinish] = useState(false);
-
   useHotkeys([["mod+Enter", () => setRequestedFinish(true)]]);
 
-  const noteContent = note?.content ?? { type: CardType.Cloze, text: "" };
+  const noteContent = note?.content ?? { type: NoteType.Cloze, text: "" };
 
   //fix sometime
   const editor = useNoteEditor({
@@ -45,6 +45,7 @@ export default function ClozeCardEditor({
     finish: () => {
       setRequestedFinish(true);
     },
+    focusSelectNoteType: focusSelectNoteType,
   });
 
   const smallestAvailableOcclusionNumber = useMemo(() => {
@@ -66,38 +67,32 @@ export default function ClozeCardEditor({
     if (requestedFinish) {
       finish(mode, clear, deck, note, editor);
       setRequestedFinish(false);
-      onChanged?.();
     }
   }, [requestedFinish, mode, clear, deck, note, editor]);
 
   return (
-    <Stack gap="2rem">
-      <NoteEditor
-        editor={editor}
-        className={classes}
-        controls={
-          <RichTextEditor.Control
-            tabIndex={-1}
-            onClick={() => {
-              if (editor?.state.selection.from !== editor?.state.selection.to) {
-                const occludedText = `{{c${smallestAvailableOcclusionNumber}::${window.getSelection()}}}`;
-                editor?.commands.insertContent(occludedText);
-              } else {
-                editor?.commands.insertContent(
-                  `{{c${smallestAvailableOcclusionNumber}::}}`
-                );
-                editor?.commands.setTextSelection(
-                  editor?.state.selection.to - 2
-                );
-              }
-            }}
-          >
-            <IconBracketsContain />
-          </RichTextEditor.Control>
-        }
-      />
-      <CardEditorFooter finish={() => setRequestedFinish(true)} mode={mode} />
-    </Stack>
+    <NoteEditor
+      editor={editor}
+      className={classes}
+      controls={
+        <RichTextEditor.Control
+          tabIndex={-1}
+          onClick={() => {
+            if (editor?.state.selection.from !== editor?.state.selection.to) {
+              const occludedText = `{{c${smallestAvailableOcclusionNumber}::${window.getSelection()}}}`;
+              editor?.commands.insertContent(occludedText);
+            } else {
+              editor?.commands.insertContent(
+                `{{c${smallestAvailableOcclusionNumber}::}}`
+              );
+              editor?.commands.setTextSelection(editor?.state.selection.to - 2);
+            }
+          }}
+        >
+          <IconBracketsContain />
+        </RichTextEditor.Control>
+      }
+    />
   );
 }
 
@@ -105,7 +100,7 @@ async function finish(
   mode: EditMode,
   clear: Function,
   deck: Deck,
-  note: Note<CardType.Cloze> | null,
+  note: Note<NoteType.Cloze> | null,
   editor: Editor | null
 ) {
   if (mode === "edit") {

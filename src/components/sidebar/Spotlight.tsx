@@ -9,11 +9,11 @@ import { useNavigate } from "react-router-dom";
 import { NoteSorts } from "../../logic/NoteSorting";
 import { useShowShortcutHints } from "../../logic/Settings";
 import { getUtils } from "../../logic/TypeManager";
-import { CardType } from "../../logic/card";
+import { NoteType } from "../../logic/card";
 import { determineSuperDecks, getDeck, useDecks } from "../../logic/deck";
 import { Note, useNotesWith } from "../../logic/note";
 import classes from "./Spotlight.module.css";
-interface NoteWithPreview extends Note<CardType> {
+interface NoteWithPreview extends Note<NoteType> {
   breadcrumb: string[];
 }
 
@@ -36,7 +36,7 @@ const useSearchNote = (filter: string) => {
     [filter]
   );
   useEffect(() => {
-    async function filterNotes(notes: Note<CardType>[]) {
+    async function filterNotes(notes: Note<NoteType>[]) {
       const decksPromises = notes?.map(async (note) => {
         const deck = await getDeck(note.deck);
         const superDecks = await determineSuperDecks(deck);

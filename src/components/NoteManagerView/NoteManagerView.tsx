@@ -12,11 +12,11 @@ import NoteTable from "../CardTable/NoteTable";
 import { AppHeaderContent } from "../Header/Header";
 import SelectDecksHeader from "../custom/SelectDecksHeader";
 import EditorOptionsMenu from "../editcard/EditorOptionsMenu";
-import classes from "./CardManagerView.module.css";
+import classes from "./NoteManagerView.module.css";
 
 const ALL_DECK_ID = "all";
 
-function CardManagerView() {
+function NoteManagerView() {
   const navigate = useNavigate();
   const noteId = useParams().noteId;
   let deckId = useParams().deckId;
@@ -24,13 +24,21 @@ function CardManagerView() {
 
   const location = useLocation();
 
+  const {
+    sortFunction,
+    sortDirection,
+  }: { sortFunction?: keyof typeof NoteSorts; sortDirection?: boolean } =
+    location.state ?? {};
+
   const [decks] = useDecks();
 
   const [filter, setFilter] = useDebouncedState<string>("", 250);
 
   const [sort, setSort] = useState<[NoteSortFunction, boolean]>([
-    NoteSorts.bySortField,
-    true,
+    sortFunction !== undefined
+      ? NoteSorts[sortFunction]
+      : NoteSorts.bySortField,
+    sortDirection !== undefined ? sortDirection : true,
   ]);
 
   const [notes] = useNotesWith(
@@ -86,13 +94,15 @@ function CardManagerView() {
             noteSet={notes ?? []}
             selectedIndex={notes.findIndex((note) => noteId === note?.id)}
             setSelectedIndex={(idx) => {
-              navigate(`/notes/${deckId || ALL_DECK_ID}/${notes[idx].id}`);
+              const n = notes[idx];
+              if (!n) return;
+              navigate(`/notes/${deckId || ALL_DECK_ID}/${n.id}`);
             }}
-            selectedNote={notes.find((card) => noteId === card?.id)}
-            setSelectedNote={(card) => {
-              // avoid navigating to the same card
-              if (noteId !== card?.id)
-                navigate(`/cards/${deckId || ALL_DECK_ID}/${card.id}`);
+            selectedNote={notes.find((note) => noteId === note?.id)}
+            setSelectedNote={(note) => {
+              // avoid navigating to the same note
+              if (noteId !== note?.id)
+                navigate(`/notes/${deckId || ALL_DECK_ID}/${note.id}`);
             }}
             sort={sort}
             setSort={setSort}
@@ -106,4 +116,4 @@ function CardManagerView() {
   );
 }
 
-export default CardManagerView;
+export default NoteManagerView;

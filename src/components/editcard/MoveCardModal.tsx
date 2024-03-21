@@ -1,12 +1,12 @@
 import { Button, Group, Modal, Select, Stack, Text } from "@mantine/core";
 import { IconArrowsExchange } from "@tabler/icons-react";
 import { useState } from "react";
-import { Card, CardType, moveCard } from "../../logic/card";
+import { Card, NoteType, moveCard } from "../../logic/card";
 import { useDecks } from "../../logic/deck";
 import { successfullyMovedTo } from "../custom/Notification/Notification";
 
 interface MoveCardModalProps {
-  card: Card<CardType>;
+  card: Card<NoteType>;
   opened: boolean;
   setOpened: Function;
 }

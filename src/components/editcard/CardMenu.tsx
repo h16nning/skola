@@ -12,7 +12,7 @@ import { t } from "i18next";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSetting, useShowShortcutHints } from "../../logic/Settings";
-import { Card, CardType } from "../../logic/card";
+import { Card, NoteType } from "../../logic/card";
 import { Note, deleteNote, getNote } from "../../logic/note";
 import DebugCardModal from "../DebugCardModal/DebugCardModal";
 import DangerousConfirmModal from "../custom/DangerousConfirmModal";
@@ -23,7 +23,7 @@ import {
 import CardStatisticsModal from "../statistics/CardStatisticsModal";
 
 interface CardMenuProps {
-  card: Card<CardType> | undefined;
+  card: Card<NoteType> | undefined;
   onDelete?: Function;
 }
 
@@ -45,7 +45,7 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
     ["Backspace", () => setDeleteModalOpened(true)],
   ]);
 
-  const [note, setNote] = useState<Note<CardType> | undefined>();
+  const [note, setNote] = useState<Note<NoteType> | undefined>();
 
   const fetchNote = useCallback(async () => {
     if (!card) return;

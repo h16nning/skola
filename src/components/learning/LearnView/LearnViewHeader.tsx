@@ -3,7 +3,7 @@ import { IconX } from "@tabler/icons-react";
 import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { StopwatchResult, useStopwatch } from "react-timer-hook";
-import { Card, CardType } from "../../../logic/card";
+import { Card, NoteType } from "../../../logic/card";
 import { Deck } from "../../../logic/deck";
 import { LearnController } from "../../../logic/learn";
 import CardMenu from "../../editcard/CardMenu";
@@ -23,7 +23,7 @@ function Stopwatch() {
 }
 
 interface LearnViewHeaderProps {
-  currentCard: Card<CardType> | undefined;
+  currentCard: Card<NoteType> | undefined;
   controller: LearnController;
   deck?: Deck;
 }

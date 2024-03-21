@@ -1,10 +1,10 @@
 import { Divider, Stack, Title } from "@mantine/core";
 import DoubleSidedCardEditor from "../../components/editcard/CardEditor/DoubleSidedCardEditor";
 import common from "../../style/CommonStyles.module.css";
-import { EditMode, TypeManager } from "../TypeManager";
+import { NoteEditorProps, TypeManager } from "../TypeManager";
 import {
   Card,
-  CardType,
+  NoteType,
   createCardSkeleton,
   deleteCard,
   newCard,
@@ -18,7 +18,7 @@ export type DoubleSidedContent = {
   frontIsField1: boolean;
 };
 
-export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
+export const DoubleSidedCardUtils: TypeManager<NoteType.DoubleSided> = {
   async createNote(params: { field1: string; field2: string }, deck: Deck) {
     function createDoubleSidedCard(
       noteId: string,
@@ -30,14 +30,14 @@ export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
         note: noteId,
         preview: toPreviewString(front),
         content: {
-          type: CardType.DoubleSided,
+          type: NoteType.DoubleSided,
           frontIsField1: frontIsField1,
         },
       };
     }
     return db.transaction("rw", db.notes, db.decks, db.cards, async () => {
       const noteId = await newNote(deck, {
-        type: CardType.DoubleSided,
+        type: NoteType.DoubleSided,
         field1: params.field1,
         field2: params.field2,
       });
@@ -48,11 +48,11 @@ export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
 
   async updateNote(
     params: { field1: string; field2: string },
-    existingNote: Note<CardType.DoubleSided>
+    existingNote: Note<NoteType.DoubleSided>
   ) {
     return db.transaction("rw", db.notes, db.cards, async () => {
       await updateNoteContent(existingNote.id, {
-        type: CardType.DoubleSided,
+        type: NoteType.DoubleSided,
         field1: params.field1,
         field2: params.field2,
       });
@@ -60,8 +60,8 @@ export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
   },
 
   displayQuestion(
-    card: Card<CardType.DoubleSided>,
-    content?: NoteContent<CardType.DoubleSided>
+    card: Card<NoteType.DoubleSided>,
+    content?: NoteContent<NoteType.DoubleSided>
   ) {
     function FrontComponent() {
       return (
@@ -81,8 +81,8 @@ export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
   },
 
   displayAnswer(
-    card: Card<CardType.DoubleSided>,
-    content?: NoteContent<CardType.DoubleSided>,
+    card: Card<NoteType.DoubleSided>,
+    content?: NoteContent<NoteType.DoubleSided>,
     place?: "learn" | "notebook"
   ) {
     function BackComponent() {
@@ -107,7 +107,7 @@ export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
   },
 
   displayNote(
-    note: Note<CardType.DoubleSided>,
+    note: Note<NoteType.DoubleSided>,
     showAllAnswers: "strict" | "facultative" | "none"
   ) {
     return (
@@ -133,24 +133,28 @@ export const DoubleSidedCardUtils: TypeManager<CardType.DoubleSided> = {
     return toPreviewString(content.field1);
   },
 
-  editor(
-    note: Note<CardType.DoubleSided> | null,
-    deck: Deck,
-    mode: EditMode,
-    onChanged?: () => void
-  ) {
+  editor({
+    note,
+    deck,
+    mode,
+    requestedFinish,
+    setRequestedFinish,
+    focusSelectNoteType,
+  }: NoteEditorProps) {
     return (
       <DoubleSidedCardEditor
-        note={note}
+        note={note as Note<NoteType.DoubleSided> | null}
         deck={deck}
         mode={mode}
-        onChanged={onChanged}
+        requestedFinish={requestedFinish}
+        setRequestedFinish={setRequestedFinish}
+        focusSelectNoteType={focusSelectNoteType}
       />
     );
   },
 
   //DEPRECATED
-  async deleteCard(card: Card<CardType.DoubleSided>) {
+  async deleteCard(card: Card<NoteType.DoubleSided>) {
     db.transaction("rw", db.decks, db.cards, db.notes, async () => {
       await deleteCard(card);
     });

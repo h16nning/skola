@@ -33,7 +33,7 @@ export default function Header({ menuOpened, menuHandlers }: HeaderProps) {
       withBorder={false}
       className={classes.header + " " + (scroll.y > 5 && classes.scrolled)}
     >
-      <Group h="100%" pl="md" pr="sm" p="sm" justify="flex-start" wrap="nowrap">
+      <Group h="100%" px="sm" p="sm" justify="flex-start" wrap="nowrap">
         <Burger
           opened={menuOpened}
           onClick={menuHandlers.toggle}

@@ -3,7 +3,7 @@ import { RichTextEditor } from "@mantine/tiptap";
 import { Editor } from "@tiptap/react";
 import { useSettings } from "../../../logic/Settings";
 import AddImageControl from "../AddImageControl";
-import classes from "./CardEditor.module.css";
+import classes from "./NoteEditor.module.css";
 
 export interface NoteEditorControlsProps {
   editor: Editor | null;

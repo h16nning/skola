@@ -1,14 +1,15 @@
 import { Group, Stack, Text } from "@mantine/core";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { getUtils } from "../../logic/TypeManager";
-import { CardType } from "../../logic/card";
+import { NoteType } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
 import { Note } from "../../logic/note";
 import NoteMenu from "./NoteMenu";
+import NoteSubmitButton from "./NoteSubmitButton";
 
-function EditCardView() {
-  const note = useLoaderData() as Note<CardType> | undefined;
+function EditNoteView() {
+  const note = useLoaderData() as Note<NoteType> | undefined;
   if (!note) {
     return <NoNoteView />;
   }
@@ -23,15 +24,24 @@ export function NoNoteView() {
   );
 }
 
-function NoteView({ note }: { note: Note<CardType> }) {
+function NoteView({ note }: { note: Note<NoteType> }) {
   const [deck] = useDeckOf(note);
+  const [requestedFinish, setRequestedFinish] = useState(false);
 
   const NoteEditor = useMemo(() => {
-    return deck ? getUtils(note).editor(note, deck, "edit") : null;
-  }, [note, deck]);
+    return deck
+      ? getUtils(note).editor({
+          note,
+          deck,
+          mode: "edit",
+          requestedFinish,
+          setRequestedFinish,
+        })
+      : null;
+  }, [note, deck, requestedFinish, setRequestedFinish]);
 
   return (
-    <Stack style={{ height: "100%", overflowY: "scroll" }}>
+    <Stack style={{ height: "100%", overflowY: "scroll" }} gap="xl">
       <Group justify="space-between" wrap="nowrap">
         <Group>
           <Text fz="xs" fw={600}>
@@ -44,7 +54,10 @@ function NoteView({ note }: { note: Note<CardType> }) {
         <NoteMenu note={note} withEdit={false} />
       </Group>
       {NoteEditor}
+      <Group justify="end">
+        <NoteSubmitButton finish={() => setRequestedFinish(true)} mode="edit" />
+      </Group>
     </Stack>
   );
 }
-export default EditCardView;
+export default EditNoteView;

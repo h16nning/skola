@@ -63,6 +63,19 @@
       "title": "Unterstapel"
     }
   },
+  "edit-notes": {
+    "see-history-button": "Verlauf",
+    "see-history-tooltip": "Verlauf der zuletzt erstellten Karten anzeigen",
+    "select-note-type": {
+      "tooltip": "Wähle den Kartentyp, den du erstellen möchtest."
+    },
+    "submit-button": {
+      "add": "Karten hinzufügen",
+      "add-tooltip": "Karte hinzufügen",
+      "save": "Karte speichern",
+      "save-tooltip": "Änderungen speichern"
+    }
+  },
   "global": {
     "cancel": "Abbrechen",
     "no-items-title": "Hier sieht es leer aus!"

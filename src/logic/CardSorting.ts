@@ -1,4 +1,4 @@
-import { Card, CardType } from "./card";
+import { Card, NoteType } from "./card";
 import { getDeck } from "./deck";
 
 //MIGHT BE DEPRECATED?
@@ -7,7 +7,7 @@ export type CardSortFunction = (sortOrder: 1 | -1) => (...args: any) => number;
 
 export const CardSorts: Record<any, CardSortFunction> = {
   byCreationDate:
-    (sortOrder: 1 | -1) => (a: Card<CardType>, b: Card<CardType>) =>
+    (sortOrder: 1 | -1) => (a: Card<NoteType>, b: Card<NoteType>) =>
       (a.creationDate.getTime() - b.creationDate.getTime()) * sortOrder,
   /*bySortField:
     (sortOrder: 1 | -1) => (a: Card<CardType>, b: Card<CardType>) => {
@@ -18,13 +18,13 @@ export const CardSorts: Record<any, CardSortFunction> = {
       return a.preview.localeCompare(b.preview) * sortOrder;
     },*/
   byCustomOrder:
-    (sortOrder: 1 | -1) => (a: Card<CardType>, b: Card<CardType>) => {
+    (sortOrder: 1 | -1) => (a: Card<NoteType>, b: Card<NoteType>) => {
       if (a.customOrder === undefined || b.customOrder === undefined) {
         return 0;
       }
       return (a.customOrder - b.customOrder) * Math.abs(sortOrder);
     },
-  byCardType: (sortOrder: 1 | -1) => (a: Card<CardType>, b: Card<CardType>) =>
+  byCardType: (sortOrder: 1 | -1) => (a: Card<NoteType>, b: Card<NoteType>) =>
     a.content.type.localeCompare(b.content.type) * sortOrder,
   byDeckName:
     (sortOrder: 1 | -1) =>
@@ -32,12 +32,12 @@ export const CardSorts: Record<any, CardSortFunction> = {
       a.deckName.localeCompare(b.deckName) * sortOrder,
 };
 
-export interface CardWithComparableDeckName extends Card<CardType> {
+export interface CardWithComparableDeckName extends Card<NoteType> {
   deckName: string;
 }
 
 export async function getCardsWithComparableDeckName(
-  cards: Card<CardType>[]
+  cards: Card<NoteType>[]
 ): Promise<CardWithComparableDeckName[]> {
   return Promise.all(
     cards.map(async (card) => {
