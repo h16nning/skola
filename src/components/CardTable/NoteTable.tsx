@@ -4,7 +4,7 @@ import { IconCards } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useEffect } from "react";
 import { NoteSortFunction, NoteSorts } from "../../logic/NoteSorting";
-import { CardType } from "../../logic/card";
+import { NoteType } from "../../logic/card";
 import { Note } from "../../logic/note";
 import EmptyNotice from "../EmptyNotice";
 import classes from "./CardTable.module.css";
@@ -12,11 +12,11 @@ import CardTableHeadItem from "./CardTableHeadItem";
 import { NoteTableItem } from "./NoteTableItem";
 
 interface CardTableProps {
-  noteSet: Note<CardType>[];
+  noteSet: Note<NoteType>[];
   selectedIndex: number;
   setSelectedIndex: (index: number) => void;
-  selectedNote: Note<CardType> | undefined;
-  setSelectedNote: (card: Note<CardType>) => void;
+  selectedNote: Note<NoteType> | undefined;
+  setSelectedNote: (card: Note<NoteType>) => void;
   sort: [NoteSortFunction, boolean];
   setSort: (sort: [NoteSortFunction, boolean]) => void;
 }

@@ -2,7 +2,7 @@ import { useHotkeys } from "@mantine/hooks";
 import { RichTextEditor } from "@mantine/tiptap";
 import { IconBracketsContain } from "@tabler/icons-react";
 import { EditMode } from "../../../logic/TypeManager";
-import { CardType } from "../../../logic/card";
+import { NoteType } from "../../../logic/card";
 import { Deck } from "../../../logic/deck";
 import classes from "./ClozeCardEditor.module.css";
 import NoteEditor, { useNoteEditor } from "./NoteEditor";
@@ -19,7 +19,7 @@ import {
 } from "../../custom/Notification/Notification";
 
 interface ClozeCardEditorProps {
-  note: Note<CardType.Cloze> | null;
+  note: Note<NoteType.Cloze> | null;
   deck: Deck;
   mode: EditMode;
   requestedFinish: boolean;
@@ -35,7 +35,7 @@ export default function ClozeCardEditor({
 }: ClozeCardEditorProps) {
   useHotkeys([["mod+Enter", () => setRequestedFinish(true)]]);
 
-  const noteContent = note?.content ?? { type: CardType.Cloze, text: "" };
+  const noteContent = note?.content ?? { type: NoteType.Cloze, text: "" };
 
   //fix sometime
   const editor = useNoteEditor({
@@ -97,7 +97,7 @@ async function finish(
   mode: EditMode,
   clear: Function,
   deck: Deck,
-  note: Note<CardType.Cloze> | null,
+  note: Note<NoteType.Cloze> | null,
   editor: Editor | null
 ) {
   if (mode === "edit") {

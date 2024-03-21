@@ -12,14 +12,14 @@ import {
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { Card, CardType, useSimplifiedStatesOf } from "../../../logic/card";
+import { Card, NoteType, useSimplifiedStatesOf } from "../../../logic/card";
 import { Deck } from "../../../logic/deck";
 import EmptyNotice from "../../EmptyNotice";
 import Stat from "../../custom/Stat/Stat";
 
 interface HeroDeckSectionProps {
   deck?: Deck;
-  cards?: Card<CardType>[];
+  cards?: Card<NoteType>[];
   isDeckReady: boolean;
   areCardsReady: boolean;
 }

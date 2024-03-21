@@ -56,7 +56,9 @@
   "edit-notes": {
     "submit-button": {
       "add": "Lägg till kort",
-      "save": "Spara kort"
+      "add-tooltip": "Lägg till kort",
+      "save": "Spara kort",
+      "save-tooltip": "Spara ändringar"
     }
   },
   "global": {

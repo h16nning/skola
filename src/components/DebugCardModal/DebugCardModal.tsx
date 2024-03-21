@@ -1,11 +1,11 @@
 import { Modal, Text } from "@mantine/core";
-import { Card, CardType } from "../../logic/card";
+import { Card, NoteType } from "../../logic/card";
 import DebugCardTable from "./DebugCardTable";
 
 interface DebugCardModalProps {
   opened: boolean;
   setOpened: Function;
-  card?: Card<CardType>;
+  card?: Card<NoteType>;
 }
 
 function DebugCardModal({ opened, setOpened, card }: DebugCardModalProps) {
