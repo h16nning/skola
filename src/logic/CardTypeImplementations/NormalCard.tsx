@@ -115,6 +115,7 @@ export const NormalCardUtils: TypeManager<NoteType.Normal> = {
     mode,
     requestedFinish,
     setRequestedFinish,
+    focusSelectNoteType,
   }: NoteEditorProps) {
     return (
       <NormalCardEditor
@@ -123,6 +124,7 @@ export const NormalCardUtils: TypeManager<NoteType.Normal> = {
         mode={mode}
         requestedFinish={requestedFinish}
         setRequestedFinish={setRequestedFinish}
+        focusSelectNoteType={focusSelectNoteType}
       />
     );
   },

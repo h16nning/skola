@@ -42,6 +42,7 @@ export default function NewNotesFooter({
           leftSection={<IconHistory />}
           variant="default"
           onClick={showHistory}
+          tabIndex={-1}
         >
           {t("edit-notes.see-history-button")}
         </Button>

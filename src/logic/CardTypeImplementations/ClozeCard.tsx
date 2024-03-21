@@ -136,6 +136,7 @@ export const ClozeCardUtils: TypeManager<NoteType.Cloze> = {
     mode,
     requestedFinish,
     setRequestedFinish,
+    focusSelectNoteType,
   }: NoteEditorProps) {
     return (
       <ClozeCardEditor
@@ -144,6 +145,7 @@ export const ClozeCardUtils: TypeManager<NoteType.Cloze> = {
         mode={mode}
         requestedFinish={requestedFinish}
         setRequestedFinish={setRequestedFinish}
+        focusSelectNoteType={focusSelectNoteType}
       />
     );
   },

@@ -1,7 +1,16 @@
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { ActionIcon, Group, Paper, Select, Space, Stack } from "@mantine/core";
+import {
+  ActionIcon,
+  Group,
+  Kbd,
+  Paper,
+  Select,
+  Space,
+  Stack,
+  Tooltip,
+} from "@mantine/core";
 import { IconChevronLeft } from "@tabler/icons-react";
 
 import { getUtilsOfType } from "../../logic/TypeManager";
@@ -14,16 +23,31 @@ import SelectDecksHeader from "../custom/SelectDecksHeader";
 import EditorOptionsMenu from "./EditorOptionsMenu";
 import NewNotesFooter from "./NewNotesFooter";
 import classes from "./NewNotesView.module.css";
+import { t } from "i18next";
+import { useHotkeys, useOs } from "@mantine/hooks";
+import React from "react";
 
 function NewNotesView() {
   const navigate = useNavigate();
+  const os = useOs();
 
   const [decks] = useDecks();
   const [deck, isReady] = useDeckFromUrl();
   const [noteType, setNoteType] = useState<NoteType>(NoteType.Normal);
   const [requestedFinish, setRequestedFinish] = useState(false);
 
-  const CardEditor = useMemo(() => {
+  const noteTypeSelectRef = React.createRef<HTMLInputElement>();
+  useHotkeys([
+    [
+      "Mod+J",
+      () => {
+        noteTypeSelectRef.current?.focus();
+        noteTypeSelectRef.current?.click();
+      },
+    ],
+  ]);
+
+  const NoteEditor = useMemo(() => {
     return deck
       ? getUtilsOfType(noteType).editor({
           note: null,
@@ -32,9 +56,13 @@ function NewNotesView() {
           requestedFinish,
           setRequestedFinish,
           setNoteType,
+          focusSelectNoteType: () => {
+            noteTypeSelectRef.current?.focus();
+            noteTypeSelectRef.current?.click();
+          },
         })
       : null;
-  }, [deck, noteType, requestedFinish, setRequestedFinish]);
+  }, [deck, noteType, setNoteType, requestedFinish, setRequestedFinish]);
 
   const closeView = useCallback(() => {
     navigate(deck ? "/deck/" + deck?.id : "/home");
@@ -66,31 +94,41 @@ function NewNotesView() {
             <Group justify="space-between">
               <Group gap="xs" align="end">
                 <SelectDecksHeader
-                  label="Adding cards to"
+                  label="Adding Cards to"
                   decks={decks}
                   disableAll
                   onSelect={(deckId) => navigate(`/new/${deckId}`)}
                 />
               </Group>
-              <Select
-                value={noteType}
-                onChange={(type) =>
-                  setNoteType((type as NoteType) ?? NoteType.Normal)
+              <Tooltip
+                label={
+                  <>
+                    {t("edit-notes.select-note-type.tooltip")}
+                    <Kbd>{os === "macos" ? "Cmd" : "Ctrl"} + J</Kbd>
+                  </>
                 }
-                label="Card Type"
-                data={[
-                  { label: "Normal", value: NoteType.Normal },
-                  { label: "Double Sided", value: NoteType.DoubleSided },
-                  { label: "Cloze (In Development)", value: NoteType.Cloze },
-                  {
-                    label: "Image Occlusion (Not Working)",
-                    value: NoteType.ImageOcclusion,
-                  },
-                ]}
-              />
+              >
+                <Select
+                  ref={noteTypeSelectRef}
+                  value={noteType}
+                  onChange={(type) => {
+                    setNoteType((type as NoteType) ?? NoteType.Normal);
+                  }}
+                  label="Card Type"
+                  data={[
+                    { label: "Normal", value: NoteType.Normal },
+                    { label: "Double Sided", value: NoteType.DoubleSided },
+                    { label: "Cloze (In Development)", value: NoteType.Cloze },
+                    {
+                      label: "Image Occlusion (Not Working)",
+                      value: NoteType.ImageOcclusion,
+                    },
+                  ]}
+                />
+              </Tooltip>
             </Group>
             <Paper p="md" shadow="xs" withBorder>
-              {CardEditor}
+              {NoteEditor}
             </Paper>
           </Stack>
         </div>

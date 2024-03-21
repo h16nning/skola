@@ -68,6 +68,9 @@
   "edit-notes": {
     "see-history-button": "See History",
     "see-history-tooltip": "Show history of last created cards",
+    "select-note-type": {
+      "tooltip": "Choose the type of card you want to create"
+    },
     "submit-button": {
       "add": "Add Cards",
       "add-tooltip": "Add Card",

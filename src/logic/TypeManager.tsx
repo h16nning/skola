@@ -52,6 +52,7 @@ export interface NoteEditorProps {
   requestedFinish: boolean;
   setRequestedFinish: (finish: boolean) => void;
   setNoteType?: (type: NoteType) => void;
+  focusSelectNoteType?: () => void;
 }
 
 export function getUtils(

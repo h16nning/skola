@@ -23,6 +23,7 @@ interface DoubleSidedCardEditorProps {
   mode: EditMode;
   requestedFinish: boolean;
   setRequestedFinish: (finish: boolean) => void;
+  focusSelectNoteType?: () => void;
 }
 
 function DoubleSidedCardEditor({
@@ -31,6 +32,7 @@ function DoubleSidedCardEditor({
   mode,
   requestedFinish,
   setRequestedFinish,
+  focusSelectNoteType,
 }: DoubleSidedCardEditorProps) {
   const [t] = useTranslation();
 
@@ -45,11 +47,13 @@ function DoubleSidedCardEditor({
   const editor1 = useNoteEditor({
     content: noteContent.field1,
     finish: () => setRequestedFinish(true),
+    focusSelectNoteType: focusSelectNoteType,
   });
 
   const editor2 = useNoteEditor({
     content: noteContent.field2,
     finish: () => setRequestedFinish(true),
+    focusSelectNoteType: focusSelectNoteType,
   });
 
   const clear = useCallback(() => {
