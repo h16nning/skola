@@ -11,7 +11,10 @@ import {
   Stack,
   Tooltip,
 } from "@mantine/core";
-import { IconChevronLeft } from "@tabler/icons-react";
+import {
+  IconAdjustmentsHorizontal,
+  IconChevronLeft,
+} from "@tabler/icons-react";
 
 import { getUtilsOfType } from "../../logic/TypeManager";
 import { NoteType } from "../../logic/card";
@@ -84,7 +87,13 @@ function NewNotesView() {
             <ActionIcon onClick={closeView} variant="subtle" color="gray">
               <IconChevronLeft />
             </ActionIcon>
-            <EditorOptionsMenu />
+            <ActionIcon
+              onClick={() => navigate("/settings/editing")}
+              variant="subtle"
+              color="gray"
+            >
+              <IconAdjustmentsHorizontal />
+            </ActionIcon>
           </Group>
         </AppHeaderContent>
 
