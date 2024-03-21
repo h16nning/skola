@@ -5,7 +5,7 @@ import { ActionIcon, Group, Paper, Select, Space, Stack } from "@mantine/core";
 import { IconChevronLeft } from "@tabler/icons-react";
 
 import { getUtilsOfType } from "../../logic/TypeManager";
-import { CardType } from "../../logic/card";
+import { NoteType } from "../../logic/card";
 import { useDeckFromUrl, useDecks } from "../../logic/deck";
 
 import { AppHeaderContent } from "../Header/Header";
@@ -20,20 +20,21 @@ function NewNotesView() {
 
   const [decks] = useDecks();
   const [deck, isReady] = useDeckFromUrl();
-  const [cardType, setCardType] = useState<CardType>(CardType.Normal);
+  const [noteType, setNoteType] = useState<NoteType>(NoteType.Normal);
   const [requestedFinish, setRequestedFinish] = useState(false);
 
   const CardEditor = useMemo(() => {
     return deck
-      ? getUtilsOfType(cardType).editor(
-          null,
-          deck,
-          "new",
+      ? getUtilsOfType(noteType).editor({
+          note: null,
+          deck: deck,
+          mode: "new",
           requestedFinish,
-          setRequestedFinish
-        )
+          setRequestedFinish,
+          setNoteType,
+        })
       : null;
-  }, [deck, cardType, requestedFinish, setRequestedFinish]);
+  }, [deck, noteType, requestedFinish, setRequestedFinish]);
 
   const closeView = useCallback(() => {
     navigate(deck ? "/deck/" + deck?.id : "/home");
@@ -72,18 +73,18 @@ function NewNotesView() {
                 />
               </Group>
               <Select
-                value={cardType}
+                value={noteType}
                 onChange={(type) =>
-                  setCardType((type as CardType) ?? CardType.Normal)
+                  setNoteType((type as NoteType) ?? NoteType.Normal)
                 }
                 label="Card Type"
                 data={[
-                  { label: "Normal", value: CardType.Normal },
-                  { label: "Double Sided", value: CardType.DoubleSided },
-                  { label: "Cloze (In Development)", value: CardType.Cloze },
+                  { label: "Normal", value: NoteType.Normal },
+                  { label: "Double Sided", value: NoteType.DoubleSided },
+                  { label: "Cloze (In Development)", value: NoteType.Cloze },
                   {
                     label: "Image Occlusion (Not Working)",
-                    value: CardType.ImageOcclusion,
+                    value: NoteType.ImageOcclusion,
                   },
                 ]}
               />

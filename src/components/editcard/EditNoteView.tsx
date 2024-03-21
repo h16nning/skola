@@ -2,14 +2,14 @@ import { Group, Stack, Text } from "@mantine/core";
 import { useMemo, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { getUtils } from "../../logic/TypeManager";
-import { CardType } from "../../logic/card";
+import { NoteType } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
 import { Note } from "../../logic/note";
 import NoteMenu from "./NoteMenu";
 import NoteSubmitButton from "./NoteSubmitButton";
 
 function EditNoteView() {
-  const note = useLoaderData() as Note<CardType> | undefined;
+  const note = useLoaderData() as Note<NoteType> | undefined;
   if (!note) {
     return <NoNoteView />;
   }
@@ -24,19 +24,19 @@ export function NoNoteView() {
   );
 }
 
-function NoteView({ note }: { note: Note<CardType> }) {
+function NoteView({ note }: { note: Note<NoteType> }) {
   const [deck] = useDeckOf(note);
   const [requestedFinish, setRequestedFinish] = useState(false);
 
   const NoteEditor = useMemo(() => {
     return deck
-      ? getUtils(note).editor(
+      ? getUtils(note).editor({
           note,
           deck,
-          "edit",
+          mode: "edit",
           requestedFinish,
-          setRequestedFinish
-        )
+          setRequestedFinish,
+        })
       : null;
   }, [note, deck, requestedFinish, setRequestedFinish]);
 

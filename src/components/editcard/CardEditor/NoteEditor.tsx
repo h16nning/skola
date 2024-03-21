@@ -18,8 +18,8 @@ import {
 import StarterKit from "@tiptap/starter-kit";
 import React from "react";
 import { useSettings } from "../../../logic/Settings";
-import classes from "./CardEditor.module.css";
-import { NoteEditorControls } from "./CardEditorControls";
+import classes from "./NoteEditor.module.css";
+import { NoteEditorControls } from "./NoteEditorControls";
 import { CustomHardBreak } from "./tiptap/CustomHardBreak";
 
 interface NoteEditorProps {
@@ -76,40 +76,40 @@ function NoteEditor({ editor, controls, className }: NoteEditorProps) {
   const [settings, areSettingsReady] = useSettings();
 
   return (
-    <RichTextEditor
-      editor={editor}
-      withTypographyStyles={false}
-      className={className}
-      classNames={{
-        root: classes.root,
-        toolbar: classes.toolbar,
-        content: classes.content,
-      }}
-    >
-      {areSettingsReady && (
-        <>
-          {editor && settings.useToolbar && (
-            <div tabIndex={-1}>
-              <RichTextEditor.Toolbar className={classes.toolbar}>
+    <>
+      <RichTextEditor
+        editor={editor}
+        withTypographyStyles={false}
+        className={className}
+        classNames={{
+          root: classes.root,
+          toolbar: classes.toolbar,
+          content: classes.content,
+        }}
+      >
+        {areSettingsReady && (
+          <>
+            {editor && editor.isFocused && settings.useToolbar && (
+              <RichTextEditor.Toolbar className={classes.toolbar} tabIndex={-1}>
                 <NoteEditorControls controls={controls} editor={editor} />
               </RichTextEditor.Toolbar>
-            </div>
-          )}
-          {editor && settings.useBubbleMenu && (
-            <BubbleMenu editor={editor} tippyOptions={{ maxWidth: "none" }}>
-              <NoteEditorControls controls={controls} editor={editor} />
-            </BubbleMenu>
-          )}
-          {editor && settings.useBubbleMenu && (
-            <FloatingMenu editor={editor}>
-              <NoteEditorControls controls={controls} editor={editor} />
-            </FloatingMenu>
-          )}
-        </>
-      )}
+            )}
+            {editor && settings.useBubbleMenu && (
+              <BubbleMenu editor={editor} tippyOptions={{ maxWidth: "none" }}>
+                <NoteEditorControls controls={controls} editor={editor} />
+              </BubbleMenu>
+            )}
+            {editor && settings.useBubbleMenu && (
+              <FloatingMenu editor={editor}>
+                <NoteEditorControls controls={controls} editor={editor} />
+              </FloatingMenu>
+            )}
+          </>
+        )}
 
-      <RichTextEditor.Content />
-    </RichTextEditor>
+        <RichTextEditor.Content />
+      </RichTextEditor>
+    </>
   );
 }
 

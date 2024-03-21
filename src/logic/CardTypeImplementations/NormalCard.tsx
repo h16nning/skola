@@ -2,10 +2,10 @@ import { Divider, Stack, Title } from "@mantine/core";
 import { useState } from "react";
 import NormalCardEditor from "../../components/editcard/CardEditor/NormalCardEditor";
 import common from "../../style/CommonStyles.module.css";
-import { EditMode, TypeManager } from "../TypeManager";
+import { NoteEditorProps, TypeManager } from "../TypeManager";
 import {
   Card,
-  CardType,
+  NoteType,
   createCardSkeleton,
   deleteCard,
   newCard,
@@ -17,11 +17,11 @@ import { Note, NoteContent, newNote, updateNoteContent } from "../note";
 
 export type NormalContent = {};
 
-export const NormalCardUtils: TypeManager<CardType.Normal> = {
+export const NormalCardUtils: TypeManager<NoteType.Normal> = {
   async createNote(params: { front: string; back: string }, deck: Deck) {
     return db.transaction("rw", db.notes, db.decks, db.cards, async () => {
       const noteId = await newNote(deck, {
-        type: CardType.Normal,
+        type: NoteType.Normal,
         front: params.front,
         back: params.back,
       });
@@ -29,7 +29,7 @@ export const NormalCardUtils: TypeManager<CardType.Normal> = {
         {
           ...createCardSkeleton(),
           note: noteId,
-          content: { type: CardType.Normal },
+          content: { type: NoteType.Normal },
         },
         deck
       );
@@ -38,11 +38,11 @@ export const NormalCardUtils: TypeManager<CardType.Normal> = {
 
   async updateNote(
     params: { front: string; back: string },
-    existingNote: Note<CardType.Normal>
+    existingNote: Note<NoteType.Normal>
   ) {
     return db.transaction("rw", db.notes, db.cards, async () => {
       await updateNoteContent(existingNote.id, {
-        type: CardType.Normal,
+        type: NoteType.Normal,
         front: params.front,
         back: params.back,
       });
@@ -50,8 +50,8 @@ export const NormalCardUtils: TypeManager<CardType.Normal> = {
   },
 
   displayQuestion(
-    _: Card<CardType.Normal>,
-    content?: NoteContent<CardType.Normal>
+    _: Card<NoteType.Normal>,
+    content?: NoteContent<NoteType.Normal>
   ) {
     return (
       <Title
@@ -63,8 +63,8 @@ export const NormalCardUtils: TypeManager<CardType.Normal> = {
   },
 
   displayAnswer(
-    card: Card<CardType.Normal>,
-    content?: NoteContent<CardType.Normal>,
+    card: Card<NoteType.Normal>,
+    content?: NoteContent<NoteType.Normal>,
     place?: "learn" | "notebook"
   ) {
     return (
@@ -77,7 +77,7 @@ export const NormalCardUtils: TypeManager<CardType.Normal> = {
   },
 
   displayNote(
-    note: Note<CardType.Normal>,
+    note: Note<NoteType.Normal>,
     showAllAnswers: "strict" | "facultative" | "none"
   ) {
     const [individualShowAnswer, setIndividualShowAnswer] = useState(false);
@@ -105,20 +105,20 @@ export const NormalCardUtils: TypeManager<CardType.Normal> = {
     );
   },
 
-  getSortFieldFromNoteContent(content?: NoteContent<CardType.Normal>) {
+  getSortFieldFromNoteContent(content?: NoteContent<NoteType.Normal>) {
     return toPreviewString(content?.front ?? "[error]");
   },
 
-  editor(
-    note: Note<CardType.Normal> | null,
-    deck: Deck,
-    mode: EditMode,
-    requestedFinish: boolean,
-    setRequestedFinish: (finish: boolean) => void
-  ) {
+  editor({
+    note,
+    deck,
+    mode,
+    requestedFinish,
+    setRequestedFinish,
+  }: NoteEditorProps) {
     return (
       <NormalCardEditor
-        note={note}
+        note={note as Note<NoteType.Normal> | null}
         deck={deck}
         mode={mode}
         requestedFinish={requestedFinish}
@@ -127,7 +127,7 @@ export const NormalCardUtils: TypeManager<CardType.Normal> = {
     );
   },
 
-  async deleteCard(card: Card<CardType.Normal>) {
+  async deleteCard(card: Card<NoteType.Normal>) {
     deleteCard(card);
   },
 };

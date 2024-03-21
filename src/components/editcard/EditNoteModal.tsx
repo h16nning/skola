@@ -3,14 +3,14 @@ import { IconArrowUpRight } from "@tabler/icons-react";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUtils } from "../../logic/TypeManager";
-import { CardType } from "../../logic/card";
+import { NoteType } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
 import { Note } from "../../logic/note";
 import classes from "./EditNoteModal.module.css";
 import NoteSubmitButton from "./NoteSubmitButton";
 
 interface EditNoteModalProps {
-  note: Note<CardType>;
+  note: Note<NoteType>;
   opened: boolean;
   setClose: () => void;
 }
@@ -26,13 +26,13 @@ export default function EditNoteModal({
 
   const CardEditor = useMemo(() => {
     return deck
-      ? getUtils(note).editor(
+      ? getUtils(note).editor({
           note,
           deck,
-          "edit",
+          mode: "edit",
           requestedFinish,
-          setRequestedFinish
-        )
+          setRequestedFinish,
+        })
       : null;
   }, [note, deck, requestedFinish, setRequestedFinish]);
 

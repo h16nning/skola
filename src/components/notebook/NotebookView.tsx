@@ -24,7 +24,7 @@ import {
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NoteSortFunction, NoteSorts } from "../../logic/NoteSorting";
-import { CardType } from "../../logic/card";
+import { NoteType } from "../../logic/card";
 import { useDeckFromUrl } from "../../logic/deck";
 import { Note, useNotesOf } from "../../logic/note";
 import NotebookCard from "./NotebookCard";
@@ -39,7 +39,7 @@ export default function NotebookView() {
 
   const [sortOption, setSortOption] = useState<SortOption>(sortOptions[0]);
   const [sortOrder] = useState<1 | -1>(1);
-  const [sortedNotes, setSortedNotes] = useState<Note<CardType>[]>(notes ?? []);
+  const [sortedNotes, setSortedNotes] = useState<Note<NoteType>[]>(notes ?? []);
 
   //only for custom sort
   const [useCustomSort, setUseCustomSort] = useState(false);

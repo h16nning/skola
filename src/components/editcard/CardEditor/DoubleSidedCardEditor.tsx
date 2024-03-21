@@ -5,7 +5,7 @@ import { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { DoubleSidedCardUtils } from "../../../logic/CardTypeImplementations/DoubleSidedCard";
 import { EditMode } from "../../../logic/TypeManager";
-import { CardType } from "../../../logic/card";
+import { NoteType } from "../../../logic/card";
 import { Deck } from "../../../logic/deck";
 import { Note } from "../../../logic/note";
 import {
@@ -18,7 +18,7 @@ import classes from "./DoubleSidedCardEditor.module.css";
 import NoteEditor, { useNoteEditor } from "./NoteEditor";
 
 interface DoubleSidedCardEditorProps {
-  note: Note<CardType.DoubleSided> | null;
+  note: Note<NoteType.DoubleSided> | null;
   deck: Deck;
   mode: EditMode;
   requestedFinish: boolean;
@@ -37,7 +37,7 @@ function DoubleSidedCardEditor({
   useHotkeys([["mod+Enter", () => setRequestedFinish(true)]]);
 
   const noteContent = note?.content ?? {
-    type: CardType.DoubleSided,
+    type: NoteType.DoubleSided,
     field1: "",
     field2: "",
   };
@@ -87,7 +87,7 @@ async function finish(
   mode: EditMode,
   clear: () => void,
   deck: Deck,
-  note: Note<CardType.DoubleSided> | null,
+  note: Note<NoteType.DoubleSided> | null,
   editor1: Editor | null,
   editor2: Editor | null
 ) {

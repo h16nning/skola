@@ -1,5 +1,5 @@
 import { getUtils } from "./TypeManager";
-import { Card, CardType } from "./card";
+import { Card, NoteType } from "./card";
 import { getDeck } from "./deck";
 import { Note } from "./note";
 
@@ -7,10 +7,10 @@ export type NoteSortFunction = (sortOrder: 1 | -1) => (...args: any) => number;
 
 export const NoteSorts: Record<any, NoteSortFunction> = {
   byCreationDate:
-    (sortOrder: 1 | -1) => (a: Note<CardType>, b: Note<CardType>) =>
+    (sortOrder: 1 | -1) => (a: Note<NoteType>, b: Note<NoteType>) =>
       (a.creationDate.getTime() - b.creationDate.getTime()) * sortOrder,
   bySortField:
-    (sortOrder: 1 | -1) => (a: Note<CardType>, b: Note<CardType>) => {
+    (sortOrder: 1 | -1) => (a: Note<NoteType>, b: Note<NoteType>) => {
       return (
         getUtils(a)
           .getSortFieldFromNoteContent(a.content)
@@ -19,13 +19,13 @@ export const NoteSorts: Record<any, NoteSortFunction> = {
       );
     },
   byCustomOrder:
-    (sortOrder: 1 | -1) => (a: Note<CardType>, b: Note<CardType>) => {
+    (sortOrder: 1 | -1) => (a: Note<NoteType>, b: Note<NoteType>) => {
       if (a.customOrder === undefined || b.customOrder === undefined) {
         return 0;
       }
       return (a.customOrder - b.customOrder) * Math.abs(sortOrder);
     },
-  byType: (sortOrder: 1 | -1) => (a: Card<CardType>, b: Card<CardType>) =>
+  byType: (sortOrder: 1 | -1) => (a: Card<NoteType>, b: Card<NoteType>) =>
     a.content.type.localeCompare(b.content.type) * sortOrder,
   byDeckName:
     (sortOrder: 1 | -1) =>
@@ -33,12 +33,12 @@ export const NoteSorts: Record<any, NoteSortFunction> = {
       a.deckName.localeCompare(b.deckName) * sortOrder,
 };
 
-export interface NoteWithComparableDeckName extends Note<CardType> {
+export interface NoteWithComparableDeckName extends Note<NoteType> {
   deckName: string;
 }
 
 export async function getNotesWithComparableDeckName(
-  notes: Note<CardType>[]
+  notes: Note<NoteType>[]
 ): Promise<NoteWithComparableDeckName[]> {
   return Promise.all(
     notes.map(async (note) => {

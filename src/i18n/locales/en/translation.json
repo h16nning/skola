@@ -70,7 +70,9 @@
     "see-history-tooltip": "Show history of last created cards",
     "submit-button": {
       "add": "Add Cards",
-      "save": "Save Cards"
+      "add-tooltip": "Add Card",
+      "save": "Save Card",
+      "save-tooltip": "Save Changes"
     }
   },
   "global": {

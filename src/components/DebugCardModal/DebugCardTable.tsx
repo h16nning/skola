@@ -1,12 +1,12 @@
 import { Anchor, Space, Stack, Text } from "@mantine/core";
 import { Rating, State } from "fsrs.js";
 import { Fragment } from "react";
-import { Card, CardType } from "../../logic/card";
+import { Card, NoteType } from "../../logic/card";
 import classes from "./DebugCard.module.css";
 
 export default function DebugCardTable({
   card,
-}: { card: Card<CardType> | undefined }) {
+}: { card: Card<NoteType> | undefined }) {
   return card ? (
     <Stack className={classes.container}>
       <table className={classes.table}>

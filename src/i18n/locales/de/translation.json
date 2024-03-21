@@ -68,7 +68,9 @@
     "see-history-tooltip": "Verlauf der zuletzt erstellten Karten anzeigen",
     "submit-button": {
       "add": "Karten hinzufügen",
-      "save": "Karten speichern"
+      "add-tooltip": "Karte hinzufügen",
+      "save": "Karte speichern",
+      "save-tooltip": "Änderungen speichern"
     }
   },
   "global": {

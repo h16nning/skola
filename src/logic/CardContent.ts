@@ -1,10 +1,10 @@
 import { ClozeContent } from "./CardTypeImplementations/ClozeCard";
 import { DoubleSidedContent } from "./CardTypeImplementations/DoubleSidedCard";
 import { NormalContent } from "./CardTypeImplementations/NormalCard";
-import { CardType } from "./card";
+import { NoteType } from "./card";
 
-export type Content<T extends CardType> = {
+export type Content<T extends NoteType> = {
   type: T;
-} & (T extends CardType.Normal ? NormalContent : {}) &
-  (T extends CardType.Cloze ? ClozeContent : {}) &
-  (T extends CardType.DoubleSided ? DoubleSidedContent : {});
+} & (T extends NoteType.Normal ? NormalContent : {}) &
+  (T extends NoteType.Cloze ? ClozeContent : {}) &
+  (T extends NoteType.DoubleSided ? DoubleSidedContent : {});
