@@ -15,23 +15,6 @@ export enum NoteType {
   DoubleSided = "doubleSided",
   Undefined = "undefined",
 }
-export const CardTypesLabels: Record<CardType, string> = {
-  get [CardType.Normal]() {
-    return i18n.t("cardTypes.normal");
-  },
-  get [CardType.Cloze]() {
-    return i18n.t("cardTypes.cloze");
-  },
-  get [CardType.ImageOcclusion]() {
-    return i18n.t("cardTypes.imageOcclusion");
-  },
-  get [CardType.DoubleSided]() {
-    return i18n.t("cardTypes.doubleSided");
-  },
-  get [CardType.Undefined]() {
-    return i18n.t("cardTypes.undefined");
-  },
-};
 
 export const NoteTypeLabels: Record<NoteType, string> = {
   get [NoteType.Normal]() {
