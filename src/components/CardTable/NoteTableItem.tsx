@@ -2,7 +2,7 @@ import { Table } from "@mantine/core";
 import cx from "clsx";
 import { useEffect } from "react";
 import { getUtils } from "../../logic/TypeManager";
-import { NoteType } from "../../logic/card";
+import { NoteType, NoteTypeLabels } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
 import { Note } from "../../logic/note";
 import classes from "./CardTable.module.css";
@@ -50,7 +50,9 @@ export function NoteTableItem({
       <Table.Td className={classes.td}>
         {getUtils(note).getSortFieldFromNoteContent(note.content)}
       </Table.Td>
-      <Table.Td className={classes.td}>{note.content.type}</Table.Td>
+      <Table.Td className={classes.td}>
+        {NoteTypeLabels[note.content.type]}
+      </Table.Td>
 
       <Table.Td className={classes.td}>{deck?.name ?? "?"}</Table.Td>
       <Table.Td className={classes.td}>

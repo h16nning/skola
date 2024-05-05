@@ -62,6 +62,9 @@
       "title": "Subdecks"
     }
   },
+  "edit-card": {
+    "edit-note": "Edit note"
+  },
   "global": {
     "cancel": "Cancel",
     "feature-status": {
@@ -101,6 +104,11 @@
       "no-cards-found": "No Cards Found"
     },
     "title": "Manage Cards"
+  },
+  "new-card": {
+    "add": "Add card",
+    "add-to-deck": "Adding cards to",
+    "card-type": "Card Type"
   },
   "note": {
     "delete-modal": {

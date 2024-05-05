@@ -1,8 +1,9 @@
 import { Group, Stack, Text } from "@mantine/core";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useLoaderData } from "react-router-dom";
 import { getUtils } from "../../logic/TypeManager";
-import { NoteType } from "../../logic/card";
+import { NoteType, NoteTypeLabels } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
 import { Note } from "../../logic/note";
 import NoteMenu from "./NoteMenu";
@@ -25,6 +26,7 @@ export function NoNoteView() {
 }
 
 function NoteView({ note }: { note: Note<NoteType> }) {
+  const [t] = useTranslation();
   const [deck] = useDeckOf(note);
   const [requestedFinish, setRequestedFinish] = useState(false);
 
@@ -45,9 +47,9 @@ function NoteView({ note }: { note: Note<NoteType> }) {
       <Group justify="space-between" wrap="nowrap">
         <Group>
           <Text fz="xs" fw={600}>
-            Edit Note{" "}
+            {t("note.edit.title")}{" "}
             <Text c="dimmed" span fz="xs" fw={600}>
-              ({note.content.type})
+              ({NoteTypeLabels[note.content.type]})
             </Text>
           </Text>
         </Group>
