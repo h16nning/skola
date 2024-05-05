@@ -13,6 +13,13 @@
       "statistics": "Statistics"
     }
   },
+  "cardTypes": {
+    "cloze": "Cloze (In Development)",
+    "doubleSided": "Double Sided",
+    "imageOcclusion": "Image Occlusion (Not Working)",
+    "normal": "Normal",
+    "undefined": "Undefined"
+  },
   "cards": {
     "editor": {
       "double_sided": {
@@ -65,6 +72,9 @@
       "title": "Subdecks"
     }
   },
+  "edit-card": {
+    "edit-note": "Edit note"
+  },
   "global": {
     "cancel": "Cancel",
     "no-items-title": "It is looking empty here!"
@@ -100,6 +110,11 @@
     },
     "title": "Manage Cards"
   },
+  "new-card": {
+    "add": "Add card",
+    "add-to-deck": "Adding cards to",
+    "card-type": "Card Type"
+  },
   "note": {
     "delete-modal": {
       "description": "You are about to delete this note. This cannot be undone.",
@@ -109,7 +124,8 @@
       "delete": "Delete",
       "edit": "Edit",
       "move": "Move"
-    }
+    },
+    "view": "Edit Note"
   },
   "notebook": {
     "individual-show-answer-toggle-tooltip": "Click to Show Answer",

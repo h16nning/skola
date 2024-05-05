@@ -1,9 +1,10 @@
 import { ActionIcon, Group, Select, Space, Stack, Title } from "@mantine/core";
 import { IconChevronLeft } from "@tabler/icons-react";
 import React, { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { getUtilsOfType } from "../../logic/TypeManager";
-import { CardType } from "../../logic/card";
+import { CardType, CardTypesLabels } from "../../logic/card";
 import { useDeckFromUrl, useDecks } from "../../logic/deck";
 import { AppHeaderContent } from "../Header/Header";
 import MissingObject from "../custom/MissingObject";
@@ -12,6 +13,7 @@ import EditorOptionsMenu from "./EditorOptionsMenu";
 
 function NewCardsView() {
   const navigate = useNavigate();
+  const [t] = useTranslation();
 
   const [decks] = useDecks();
   const [deck, isReady] = useDeckFromUrl();
@@ -34,7 +36,7 @@ function NewCardsView() {
       <AppHeaderContent>
         <Group justify="space-between" gap="xs" wrap="nowrap">
           <Space />
-          <Title order={3}>Add card</Title>
+          <Title order={3}>{t("new-card.add")}</Title>
           <EditorOptionsMenu />
         </Group>
       </AppHeaderContent>
@@ -44,7 +46,7 @@ function NewCardsView() {
             <IconChevronLeft />
           </ActionIcon>
           <SelectDecksHeader
-            label="Adding cards to"
+            label={t("new-card.add-to-deck")}
             decks={decks}
             disableAll
             onSelect={(deckId) => navigate(`/new/${deckId}`)}
@@ -56,13 +58,16 @@ function NewCardsView() {
           onChange={(type) =>
             setCardType((type as CardType) ?? CardType.Normal)
           }
-          label="Card Type"
+          label={t("new-card.card-type")}
           data={[
-            { label: "Normal", value: CardType.Normal },
-            { label: "Double Sided", value: CardType.DoubleSided },
-            { label: "Cloze (In Development)", value: CardType.Cloze },
+            { label: CardTypesLabels[CardType.Normal], value: CardType.Normal },
             {
-              label: "Image Occlusion (Not Working)",
+              label: CardTypesLabels[CardType.DoubleSided],
+              value: CardType.DoubleSided,
+            },
+            { label: CardTypesLabels[CardType.Cloze], value: CardType.Cloze },
+            {
+              label: CardTypesLabels[CardType.ImageOcclusion],
               value: CardType.ImageOcclusion,
             },
           ]}
