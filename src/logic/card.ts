@@ -3,6 +3,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { Card as Model, ReviewLog, State } from "fsrs.js";
 import { useMemo } from "react";
 import { v4 as uuidv4 } from "uuid";
+import i18n from "../i18n";
 import { Content } from "./CardContent";
 import { db } from "./db";
 import { Deck } from "./deck";
@@ -14,6 +15,23 @@ export enum CardType {
   DoubleSided = "doubleSided",
   Undefined = "undefined",
 }
+export const CardTypesLabels: Record<CardType, string> = {
+  get [CardType.Normal]() {
+    return i18n.t("cardTypes.normal");
+  },
+  get [CardType.Cloze]() {
+    return i18n.t("cardTypes.cloze");
+  },
+  get [CardType.ImageOcclusion]() {
+    return i18n.t("cardTypes.imageOcclusion");
+  },
+  get [CardType.DoubleSided]() {
+    return i18n.t("cardTypes.doubleSided");
+  },
+  get [CardType.Undefined]() {
+    return i18n.t("cardTypes.undefined");
+  },
+};
 
 export interface CardSkeleton {
   id: string;
