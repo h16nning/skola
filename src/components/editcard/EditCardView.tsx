@@ -1,8 +1,9 @@
 import { Group, Stack, Text } from "@mantine/core";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useLoaderData } from "react-router-dom";
 import { getUtils } from "../../logic/TypeManager";
-import { CardType } from "../../logic/card";
+import { CardType, CardTypesLabels } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
 import { Note } from "../../logic/note";
 import NoteMenu from "./NoteMenu";
@@ -24,6 +25,7 @@ export function NoNoteView() {
 }
 
 function NoteView({ note }: { note: Note<CardType> }) {
+  const [t] = useTranslation();
   const [deck] = useDeckOf(note);
 
   const NoteEditor = useMemo(() => {
@@ -35,9 +37,9 @@ function NoteView({ note }: { note: Note<CardType> }) {
       <Group justify="space-between" wrap="nowrap">
         <Group>
           <Text fz="xs" fw={600}>
-            Edit Note{" "}
+            {t("note.view")}{" "}
             <Text c="dimmed" span fz="xs" fw={600}>
-              ({note.content.type})
+              ({CardTypesLabels[note.content.type]})
             </Text>
           </Text>
         </Group>
