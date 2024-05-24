@@ -1,5 +1,6 @@
 import { Stack, Text } from "@mantine/core";
 import { Editor } from "@tiptap/react";
+import { t } from "i18next";
 import { useCallback, useEffect } from "react";
 import { NormalCardUtils } from "../../../logic/CardTypeImplementations/NormalCard";
 import { EditMode } from "../../../logic/TypeManager";
@@ -14,7 +15,6 @@ import {
 } from "../../custom/Notification/Notification";
 import classes from "./NormalCardEditor.module.css";
 import NoteEditor, { useNoteEditor } from "./NoteEditor";
-import { t } from "i18next";
 
 interface NormalCardEditorProps {
   note: Note<NoteType.Normal> | null;
