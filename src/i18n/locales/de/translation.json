@@ -53,6 +53,7 @@
     "notebook": {
       "title": "Notizbuch"
     },
+    "no-decks-found": "Es gibt noch keine Stapel hier. Füge einen neuen hinzu!",
     "review-cards-label": "Wiederholen",
     "review-cards-label_one": "1 Wiederholen",
     "review-cards-label_other": "{{count}} Wiederholen",

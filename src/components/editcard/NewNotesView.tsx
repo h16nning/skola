@@ -20,15 +20,14 @@ import { getUtilsOfType } from "../../logic/TypeManager";
 import { NoteType } from "../../logic/card";
 import { useDeckFromUrl, useDecks } from "../../logic/deck";
 
+import { useHotkeys, useOs } from "@mantine/hooks";
+import { t } from "i18next";
+import React from "react";
 import { AppHeaderContent } from "../Header/Header";
 import MissingObject from "../custom/MissingObject";
 import SelectDecksHeader from "../custom/SelectDecksHeader";
-import EditorOptionsMenu from "./EditorOptionsMenu";
 import NewNotesFooter from "./NewNotesFooter";
 import classes from "./NewNotesView.module.css";
-import { t } from "i18next";
-import { useHotkeys, useOs } from "@mantine/hooks";
-import React from "react";
 
 function NewNotesView() {
   const navigate = useNavigate();
