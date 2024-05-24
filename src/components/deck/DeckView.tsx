@@ -62,10 +62,10 @@ function DeckView() {
               {t("deck.notebook.title")}
               <Badge
                 size="xs"
-                circle
                 ml={"sm"}
                 variant="light"
                 color={cards?.length ? undefined : "gray"}
+                style={{ textOverflow: "clip" }}
               >
                 {areCardsReady ? cards?.length : "-"}
               </Badge>
@@ -74,10 +74,10 @@ function DeckView() {
               {t("deck.subdeck.title")}
               <Badge
                 size="xs"
-                circle
                 ml={"sm"}
                 variant="light"
                 color={deck?.subDecks.length ? undefined : "gray"}
+                style={{ textOverflow: "clip" }}
               >
                 {deck?.subDecks.length}
               </Badge>
