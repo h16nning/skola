@@ -3,10 +3,10 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { Card as Model, ReviewLog, State } from "fsrs.js";
 import { useMemo } from "react";
 import { v4 as uuidv4 } from "uuid";
+import i18n from "../i18n";
 import { Content } from "./CardContent";
 import { db } from "./db";
 import { Deck } from "./deck";
-import i18n from "../i18n";
 
 export enum NoteType {
   Normal = "normal",
