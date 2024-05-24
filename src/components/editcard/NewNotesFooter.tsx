@@ -33,7 +33,7 @@ export default function NewNotesFooter({
       <Tooltip
         label={
           <>
-            {t("edit-notes.see-history-tooltip")}{" "}
+            {t("note.edit.see-history-tooltip")}{" "}
             <Kbd>{os === "macos" ? "Cmd" : "Ctrl"}+Shift+H</Kbd>
           </>
         }
@@ -44,7 +44,7 @@ export default function NewNotesFooter({
           onClick={showHistory}
           tabIndex={-1}
         >
-          {t("edit-notes.see-history-button")}
+          {t("note.edit.see-history-button")}
         </Button>
       </Tooltip>
       <NoteSubmitButton finish={() => setRequestedFinish(true)} mode="new" />

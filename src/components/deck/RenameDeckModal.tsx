@@ -30,14 +30,14 @@ function RenameDeckModal({ deck, opened, setOpened }: RenameDeckModalProps) {
 
   return (
     <Modal
-      title={t("rename-deck.title", { deckName: deck.name })}
+      title={t("deck.rename.title", { deckName: deck.name })}
       opened={opened}
       onClose={() => setOpened(false)}
     >
       <Stack>
         <TextInput
           data-autofocus
-          label={t("rename-deck.new-name")}
+          label={t("deck.rename.new-name")}
           value={nameValue}
           onChange={(e) => setNameValue(e.currentTarget.value)}
           onKeyDown={getHotkeyHandler([["mod+Enter", () => tryRenameDeck()]])}
@@ -47,7 +47,7 @@ function RenameDeckModal({ deck, opened, setOpened }: RenameDeckModalProps) {
             {t("global.cancel")}
           </Button>
           <Button disabled={nameValue === ""} onClick={tryRenameDeck}>
-            {t("rename-deck.rename-button")}
+            {t("deck.rename.rename-button")}
           </Button>
         </Group>
       </Stack>

@@ -50,10 +50,15 @@
       "new-subdeck": "Neuen Unterstapel in {{superDeck}} erstellen",
       "submit": "Erstellen"
     },
+    "no-decks-found": "Es gibt noch keine Stapel hier. Füge einen neuen hinzu!",
     "notebook": {
       "title": "Notizbuch"
     },
-    "no-decks-found": "Es gibt noch keine Stapel hier. Füge einen neuen hinzu!",
+    "rename": {
+      "new-name": "Neuer Name",
+      "rename-button": "Umbenennen",
+      "title": "„{{deckName}}“ umbenennen"
+    },
     "review-cards-label": "Wiederholen",
     "review-cards-label_one": "1 Wiederholen",
     "review-cards-label_other": "{{count}} Wiederholen",
@@ -64,21 +69,13 @@
       "title": "Unterstapel"
     }
   },
-  "edit-notes": {
-    "see-history-button": "Verlauf",
-    "see-history-tooltip": "Verlauf der zuletzt erstellten Karten anzeigen",
-    "select-note-type": {
-      "tooltip": "Wähle den Kartentyp, den du erstellen möchtest."
-    },
-    "submit-button": {
-      "add": "Karten hinzufügen",
-      "add-tooltip": "Karte hinzufügen",
-      "save": "Karte speichern",
-      "save-tooltip": "Änderungen speichern"
-    }
-  },
   "global": {
     "cancel": "Abbrechen",
+    "feature-status": {
+      "in-development": " (In Entwicklung)",
+      "new": " (Neu)",
+      "planned": " (Geplant)"
+    },
     "no-items-title": "Hier sieht es leer aus!"
   },
   "hero-deck-section": {
@@ -116,11 +113,34 @@
       "description": "Du bist gerade dabei, diese Notiz zu löschen. Das kann nicht rückgängig gemacht werden.",
       "title": "Notiz löschen"
     },
+    "edit": {
+      "see-history-button": "Verlauf",
+      "see-history-tooltip": "Verlauf der zuletzt erstellten Karten anzeigen",
+      "submit-button": "Karte speichern",
+      "submit-button-tooltip": "Änderungen speichern"
+    },
     "menu": {
       "delete": "Löschen",
       "edit": "Bearbeiten",
       "move": "Bewegen"
-    }
+    },
+    "new": {
+      "adding-to-deck": "Zu „{{deckName}}“ hinzufügen",
+      "select-note-type": {
+        "label": "Kartentyp",
+        "tooltip": "Wähle den Kartentyp, den du erstellen möchtest."
+      },
+      "submit-button": "Karten hinzufügen",
+      "submit-button-tooltip": "Karte hinzufügen",
+      "title": "Neue Karten"
+    },
+    "type": {
+      "cloze": "Lückentext",
+      "image-occlusion": "Bildverdeckung",
+      "normal": "Normal",
+      "undefined": "Nicht definiert"
+    },
+    "type-double-sided": "Beidseitig"
   },
   "notebook": {
     "individual-show-answer-toggle-tooltip": "Klicke, um die Antwort anzuzeigen",
@@ -128,11 +148,6 @@
       "exclude-subdecks": "Unterstapel ausschließen",
       "show-answer": "Antworten anzeigen"
     }
-  },
-  "rename-deck": {
-    "new-name": "Neuer Name",
-    "rename-button": "Umbenennen",
-    "title": "„{{deckName}}“ umbenennen"
   },
   "settings": {
     "about": {

@@ -55,6 +55,11 @@
     "notebook": {
       "title": "Notebook"
     },
+    "rename": {
+      "new-name": "New Name",
+      "rename-button": "Rename",
+      "title": "Rename \"{{deckName}}\""
+    },
     "review-cards-label": "Review",
     "review-cards-label_one": "1 Review",
     "review-cards-label_other": "{{ count }} Review",
@@ -65,21 +70,13 @@
       "title": "Subdecks"
     }
   },
-  "edit-notes": {
-    "see-history-button": "See History",
-    "see-history-tooltip": "Show history of last created cards",
-    "select-note-type": {
-      "tooltip": "Choose the type of card you want to create"
-    },
-    "submit-button": {
-      "add": "Add Cards",
-      "add-tooltip": "Add Card",
-      "save": "Save Card",
-      "save-tooltip": "Save Changes"
-    }
-  },
   "global": {
     "cancel": "Cancel",
+    "feature-status": {
+      "in-development": " (In Development)",
+      "new": " (New)",
+      "planned": " (Planned)"
+    },
     "no-items-title": "It is looking empty here!"
   },
   "hero-deck-section": {
@@ -118,11 +115,34 @@
       "description": "You are about to delete this note. This cannot be undone.",
       "title": "Delete Note"
     },
+    "edit": {
+      "see-history-button": "See History",
+      "see-history-tooltip": "Show history of last created cards",
+      "submit-button": "Save Card",
+      "submit-button-tooltip": "Save Card"
+    },
     "menu": {
       "delete": "Delete",
       "edit": "Edit",
       "move": "Move"
-    }
+    },
+    "new": {
+      "adding-to-deck": "Adding to \"{{deckName}}\"",
+      "select-note-type": {
+        "label": "Card Type",
+        "tooltip": "Choose the type of card you want to create"
+      },
+      "submit-button": "Add Card",
+      "submit-button-tooltip": "Add Card",
+      "title": "New Cards"
+    },
+    "type": {
+      "cloze": "Cloze",
+      "image-occlusion": "Image Occlusion",
+      "normal": "Normal",
+      "undefined": "Undefined"
+    },
+    "type-double-sided": "Double Sided"
   },
   "notebook": {
     "individual-show-answer-toggle-tooltip": "Click to Show Answer",
@@ -131,11 +151,6 @@
       "menu": "Notebook menu",
       "show-answer": "Show Answers"
     }
-  },
-  "rename-deck": {
-    "new-name": "New Name",
-    "rename-button": "Rename",
-    "title": "Rename \"{{deckName}}\""
   },
   "settings": {
     "about": {
