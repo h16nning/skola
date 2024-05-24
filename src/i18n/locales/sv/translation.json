@@ -6,14 +6,6 @@
       "move": "Flytta"
     }
   },
-  "cards": {
-    "editor": {
-      "double_sided": {
-        "back": "",
-        "front": ""
-      }
-    }
-  },
   "deck": {
     "add-cards": "Lägg till kort",
     "add-cards-tooltip": "Lägg till kort till denna kortlek",
@@ -91,7 +83,17 @@
   "note": {
     "edit": {
       "submit-button": "Spara kort",
-      "submit-button-tooltip": "Spara ändringar"
+      "submit-button-tooltip": "Spara ändringar",
+      "type-specific": {
+        "double-sided": {
+          "back": "Baksida",
+          "front": "Framsida"
+        },
+        "normal": {
+          "back": "Baksida",
+          "front": "Framsida"
+        }
+      }
     },
     "menu": {
       "edit": "Redigera",
