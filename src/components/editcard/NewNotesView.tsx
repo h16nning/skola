@@ -17,12 +17,12 @@ import {
   IconChevronLeft,
 } from "@tabler/icons-react";
 
-import { getUtilsOfType } from "../../logic/TypeManager";
-import { NoteType, NoteTypeLabels } from "../../logic/card";
-import { useDeckFromUrl, useDecks } from "../../logic/deck";
 import { useHotkeys, useOs } from "@mantine/hooks";
 import { t } from "i18next";
 import React from "react";
+import { getUtilsOfType } from "../../logic/TypeManager";
+import { NoteType, NoteTypeLabels } from "../../logic/card";
+import { useDeckFromUrl, useDecks } from "../../logic/deck";
 import { AppHeaderContent } from "../Header/Header";
 import MissingObject from "../custom/MissingObject";
 import SelectDecksHeader from "../custom/SelectDecksHeader";
