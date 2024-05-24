@@ -21,8 +21,8 @@ export default function NoteSubmitButton({
       label={
         <>
           {mode === "edit"
-            ? t("edit-notes.submit-button.save-tooltip")
-            : t("edit-notes.submit-button.add-tooltip")}
+            ? t("note.edit.submit-button-tooltip")
+            : t("note.new.submit-button-tooltip")}
           <Kbd>{os === "macos" ? "Cmd" : "Ctrl"}+Enter</Kbd>
         </>
       }
@@ -32,8 +32,8 @@ export default function NoteSubmitButton({
         leftSection={mode === "edit" ? <IconDeviceFloppy /> : <IconPlus />}
       >
         {mode === "edit"
-          ? t("edit-notes.submit-button.save")
-          : t("edit-notes.submit-button.add")}
+          ? t("note.edit.submit-button")
+          : t("note.new.submit-button")}
       </Button>
     </Tooltip>
   );

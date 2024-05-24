@@ -9,6 +9,7 @@ import {
   Select,
   Space,
   Stack,
+  Title,
   Tooltip,
 } from "@mantine/core";
 import {
@@ -17,9 +18,8 @@ import {
 } from "@tabler/icons-react";
 
 import { getUtilsOfType } from "../../logic/TypeManager";
-import { NoteType } from "../../logic/card";
+import { NoteType, NoteTypeLabels } from "../../logic/card";
 import { useDeckFromUrl, useDecks } from "../../logic/deck";
-
 import { useHotkeys, useOs } from "@mantine/hooks";
 import { t } from "i18next";
 import React from "react";
@@ -86,6 +86,7 @@ function NewNotesView() {
             <ActionIcon onClick={closeView} variant="subtle" color="gray">
               <IconChevronLeft />
             </ActionIcon>
+            <Title order={3}>{t("note.new.title")}</Title>
             <ActionIcon
               onClick={() => navigate("/settings/editing")}
               variant="subtle"
@@ -102,7 +103,7 @@ function NewNotesView() {
             <Group justify="space-between">
               <Group gap="xs" align="end">
                 <SelectDecksHeader
-                  label="Adding Cards to"
+                  label={t("note.new.adding-to-deck", { deckName: deck.name })}
                   decks={decks}
                   disableAll
                   onSelect={(deckId) => navigate(`/new/${deckId}`)}
@@ -111,7 +112,7 @@ function NewNotesView() {
               <Tooltip
                 label={
                   <>
-                    {t("edit-notes.select-note-type.tooltip")}
+                    {t("note.new.select-note-type.tooltip")}
                     <Kbd>{os === "macos" ? "Cmd" : "Ctrl"} + J</Kbd>
                   </>
                 }
@@ -122,13 +123,26 @@ function NewNotesView() {
                   onChange={(type) => {
                     setNoteType((type as NoteType) ?? NoteType.Normal);
                   }}
-                  label="Card Type"
+                  label={t("note.new.select-note-type.label")}
                   data={[
-                    { label: "Normal", value: NoteType.Normal },
-                    { label: "Double Sided", value: NoteType.DoubleSided },
-                    { label: "Cloze (In Development)", value: NoteType.Cloze },
                     {
-                      label: "Image Occlusion (Not Working)",
+                      label: NoteTypeLabels[NoteType.Normal],
+                      value: NoteType.Normal,
+                    },
+                    {
+                      label: NoteTypeLabels[NoteType.DoubleSided],
+                      value: NoteType.DoubleSided,
+                    },
+                    {
+                      label:
+                        NoteTypeLabels[NoteType.Cloze] +
+                        t("global.feature-status.in-development"),
+                      value: NoteType.Cloze,
+                    },
+                    {
+                      label:
+                        NoteTypeLabels[NoteType.ImageOcclusion] +
+                        t("global.feature-status.planned"),
                       value: NoteType.ImageOcclusion,
                     },
                   ]}

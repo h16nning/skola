@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Content } from "./CardContent";
 import { db } from "./db";
 import { Deck } from "./deck";
+import i18n from "../i18n";
 
 export enum NoteType {
   Normal = "normal",
@@ -14,6 +15,24 @@ export enum NoteType {
   DoubleSided = "doubleSided",
   Undefined = "undefined",
 }
+
+export const NoteTypeLabels: Record<NoteType, string> = {
+  get [NoteType.Normal]() {
+    return i18n.t("note.type.normal");
+  },
+  get [NoteType.Cloze]() {
+    return i18n.t("note.type.cloze");
+  },
+  get [NoteType.ImageOcclusion]() {
+    return i18n.t("note.type.image-occlusion");
+  },
+  get [NoteType.DoubleSided]() {
+    return i18n.t("note.type-double-sided");
+  },
+  get [NoteType.Undefined]() {
+    return i18n.t("note.type.undefined");
+  },
+};
 
 export interface CardSkeleton {
   id: string;

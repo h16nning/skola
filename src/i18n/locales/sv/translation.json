@@ -43,6 +43,11 @@
     "notebook": {
       "title": "Anteckningsbok"
     },
+    "rename": {
+      "new-name": "",
+      "rename-button": "",
+      "title": ""
+    },
     "review-cards-label": "Repetera",
     "review-cards-label_one": "",
     "review-cards-label_other": "",
@@ -53,19 +58,13 @@
       "title": ""
     }
   },
-  "edit-notes": {
-    "select-note-type": {
-      "tooltip": "Välj den typ av kort du vill skapa."
-    },
-    "submit-button": {
-      "add": "Lägg till kort",
-      "add-tooltip": "Lägg till kort",
-      "save": "Spara kort",
-      "save-tooltip": "Spara ändringar"
-    }
-  },
   "global": {
-    "cancel": ""
+    "cancel": "Avbryt",
+    "feature-status": {
+      "in-development": " (Under utveckling)",
+      "new": " (Ny)",
+      "planned": " (Planerad)"
+    }
   },
   "hero-deck-section": {
     "error": "",
@@ -90,15 +89,30 @@
     "title": "Hantera kort"
   },
   "note": {
+    "edit": {
+      "submit-button": "Spara kort",
+      "submit-button-tooltip": "Spara ändringar"
+    },
     "menu": {
       "edit": "Redigera",
       "move": "Flytta"
-    }
-  },
-  "rename-deck": {
-    "new-name": "",
-    "rename-button": "",
-    "title": ""
+    },
+    "new": {
+      "select-note-type": {
+        "label": "Korttyp",
+        "tooltip": "Välj den typ av kort du vill skapa."
+      },
+      "submit-button": "Lägg till kort",
+      "submit-button-tooltip": "Lägg till kort",
+      "title": "Nya kort"
+    },
+    "type": {
+      "cloze": "Cloze",
+      "image-occlusion": "Bildocklusion",
+      "normal": "Vanligt",
+      "undefined": "Odefinierad"
+    },
+    "type-double-sided": "Dubbelsidig"
   },
   "settings": {
     "about": {
@@ -152,7 +166,7 @@
     "learn": {
       "maximumInterval": "",
       "requestRetention": "",
-      "title": ""
+      "title": "Lära"
     },
     "title": "Inställningar"
   },
