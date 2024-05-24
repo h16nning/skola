@@ -1,8 +1,8 @@
 import { Button, Kbd, Tooltip } from "@mantine/core";
+import { useOs } from "@mantine/hooks";
 import { IconDeviceFloppy, IconPlus } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 import { EditMode } from "../../logic/TypeManager";
-import { useOs } from "@mantine/hooks";
 
 interface NoteSubmitButtonProps {
   mode: EditMode;
