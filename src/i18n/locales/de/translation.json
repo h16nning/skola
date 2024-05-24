@@ -13,14 +13,6 @@
       "statistics": "Statistiken"
     }
   },
-  "cards": {
-    "editor": {
-      "double_sided": {
-        "back": "Hinterseite",
-        "front": "Vorderseite"
-      }
-    }
-  },
   "deck": {
     "add-cards": "Karten hinzufügen",
     "add-cards-tooltip": "Füge diesem Stapel Karten hinzu",
@@ -117,7 +109,17 @@
       "see-history-button": "Verlauf",
       "see-history-tooltip": "Verlauf der zuletzt erstellten Karten anzeigen",
       "submit-button": "Karte speichern",
-      "submit-button-tooltip": "Änderungen speichern"
+      "submit-button-tooltip": "Änderungen speichern",
+      "type-specific": {
+        "double-sided": {
+          "back": "Rückseite",
+          "front": "Vorderseite"
+        },
+        "normal": {
+          "back": "Rückseite",
+          "front": "Vorderseite"
+        }
+      }
     },
     "menu": {
       "delete": "Löschen",

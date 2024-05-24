@@ -13,14 +13,6 @@
       "statistics": "Statistics"
     }
   },
-  "cards": {
-    "editor": {
-      "double_sided": {
-        "back": "Back",
-        "front": "Front"
-      }
-    }
-  },
   "deck": {
     "add-cards": "Add Cards",
     "add-cards-tooltip": "Add Cards to this Deck",
@@ -119,7 +111,17 @@
       "see-history-button": "See History",
       "see-history-tooltip": "Show history of last created cards",
       "submit-button": "Save Card",
-      "submit-button-tooltip": "Save Card"
+      "submit-button-tooltip": "Save Card",
+      "type-specific": {
+        "double-sided": {
+          "back": "Back",
+          "front": "Front"
+        },
+        "normal": {
+          "back": "Back",
+          "front": "Front"
+        }
+      }
     },
     "menu": {
       "delete": "Delete",

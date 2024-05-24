@@ -14,6 +14,7 @@ import {
 } from "../../custom/Notification/Notification";
 import classes from "./NormalCardEditor.module.css";
 import NoteEditor, { useNoteEditor } from "./NoteEditor";
+import { t } from "i18next";
 
 interface NormalCardEditorProps {
   note: Note<NoteType.Normal> | null;
@@ -69,7 +70,7 @@ function NormalCardEditor({
     <Stack gap="2rem">
       <Stack gap={0}>
         <Text fz="sm" fw={600}>
-          Front
+          {t("note.edit.type-specific.normal.front")}
         </Text>
         <NoteEditor
           editor={frontEditor}
@@ -79,7 +80,7 @@ function NormalCardEditor({
       </Stack>
       <Stack gap={0}>
         <Text fz="sm" fw={600}>
-          Back
+          {t("note.edit.type-specific.normal.back")}
         </Text>
         <NoteEditor editor={backEditor} key="back" />
       </Stack>
