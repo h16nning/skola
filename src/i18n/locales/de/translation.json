@@ -110,6 +110,7 @@
       "see-history-tooltip": "Verlauf der zuletzt erstellten Karten anzeigen",
       "submit-button": "Karte speichern",
       "submit-button-tooltip": "Änderungen speichern",
+      "title": "Notiz bearbeiten",
       "type-specific": {
         "double-sided": {
           "back": "Rückseite",

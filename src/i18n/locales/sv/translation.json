@@ -84,6 +84,7 @@
     "edit": {
       "submit-button": "Spara kort",
       "submit-button-tooltip": "Spara ändringar",
+      "title": "Redigera anteckning",
       "type-specific": {
         "double-sided": {
           "back": "Baksida",
