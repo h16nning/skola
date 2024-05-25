@@ -120,6 +120,7 @@
       "see-history-tooltip": "Show history of last created cards",
       "submit-button": "Save Card",
       "submit-button-tooltip": "Save Card",
+      "title": "Edit Note",
       "type-specific": {
         "double-sided": {
           "back": "Back",
