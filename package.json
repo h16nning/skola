@@ -76,7 +76,7 @@
     "postcss-cli": "11.0.0",
     "postcss-preset-mantine": "1.13.0",
     "postcss-simple-vars": "7.0.1",
-    "typescript": "5.4.3",
+    "typescript": "5.5.2",
     "vite": "5.2.13",
     "vite-plugin-checker": "0.6.4",
     "vite-tsconfig-paths": "4.3.1"
