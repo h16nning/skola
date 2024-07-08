@@ -10,7 +10,7 @@
     "@mantine/notifications": "7.8.1",
     "@mantine/spotlight": "7.8.1",
     "@mantine/tiptap": "7.8.1",
-    "@tabler/icons-react": "2.47.0",
+    "@tabler/icons-react": "3.9.0",
     "@tiptap/extension-color": "2.3.1",
     "@tiptap/extension-highlight": "2.3.1",
     "@tiptap/extension-image": "2.3.1",
