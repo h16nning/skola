@@ -27,7 +27,7 @@ export default function LearnSettingsView() {
         settingsKey="learn_newToReviewRatio"
         inputType="number"
       />
-      <Text>{w.map((x) => x + ", ")}</Text>
+      <Text>{w.join(",")}</Text>
     </Stack>
   );
 }
