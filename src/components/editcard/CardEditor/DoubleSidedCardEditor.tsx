@@ -1,11 +1,11 @@
 import { Stack, Text } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import { Editor } from "@tiptap/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { DoubleSidedCardUtils } from "../../../logic/CardTypeImplementations/DoubleSidedCard";
 import { EditMode } from "../../../logic/TypeManager";
-import { CardType } from "../../../logic/card";
+import { NoteType } from "../../../logic/card";
 import { Deck } from "../../../logic/deck";
 import { Note } from "../../../logic/note";
 import {
@@ -14,30 +14,32 @@ import {
   successfullyAdded,
   successfullySaved,
 } from "../../custom/Notification/Notification";
-import CardEditorFooter from "../CardEditorFooter";
 import classes from "./DoubleSidedCardEditor.module.css";
 import NoteEditor, { useNoteEditor } from "./NoteEditor";
 
 interface DoubleSidedCardEditorProps {
-  note: Note<CardType.DoubleSided> | null;
+  note: Note<NoteType.DoubleSided> | null;
   deck: Deck;
   mode: EditMode;
-  onChanged?: () => void;
+  requestedFinish: boolean;
+  setRequestedFinish: (finish: boolean) => void;
+  focusSelectNoteType?: () => void;
 }
 
 function DoubleSidedCardEditor({
   note,
   deck,
   mode,
-  onChanged,
+  requestedFinish,
+  setRequestedFinish,
+  focusSelectNoteType,
 }: DoubleSidedCardEditorProps) {
   const [t] = useTranslation();
-  const [requestedFinish, setRequestedFinish] = useState(false);
 
   useHotkeys([["mod+Enter", () => setRequestedFinish(true)]]);
 
   const noteContent = note?.content ?? {
-    type: CardType.DoubleSided,
+    type: NoteType.DoubleSided,
     field1: "",
     field2: "",
   };
@@ -45,11 +47,13 @@ function DoubleSidedCardEditor({
   const editor1 = useNoteEditor({
     content: noteContent.field1,
     finish: () => setRequestedFinish(true),
+    focusSelectNoteType: focusSelectNoteType,
   });
 
   const editor2 = useNoteEditor({
     content: noteContent.field2,
     finish: () => setRequestedFinish(true),
+    focusSelectNoteType: focusSelectNoteType,
   });
 
   const clear = useCallback(() => {
@@ -69,23 +73,16 @@ function DoubleSidedCardEditor({
     <Stack gap="2rem">
       <Stack gap={0}>
         <Text fz="sm" fw={600}>
-          {t("cards.editor.double_sided.front")}
+          {t("note.edit.type-specific.double-sided.front")}
         </Text>
         <NoteEditor editor={editor1} key="front" className={classes} />
       </Stack>
       <Stack gap={0}>
         <Text fz="sm" fw={600}>
-          {t("cards.editor.double_sided.back")}
+          {t("note.edit.type-specific.double-sided.back")}
         </Text>
         <NoteEditor editor={editor2} key="back" />
       </Stack>
-      <CardEditorFooter
-        finish={() => {
-          finish(mode, clear, deck, note, editor1, editor2);
-          onChanged?.();
-        }}
-        mode={mode}
-      />
     </Stack>
   );
 }
@@ -94,7 +91,7 @@ async function finish(
   mode: EditMode,
   clear: () => void,
   deck: Deck,
-  note: Note<CardType.DoubleSided> | null,
+  note: Note<NoteType.DoubleSided> | null,
   editor1: Editor | null,
   editor2: Editor | null
 ) {

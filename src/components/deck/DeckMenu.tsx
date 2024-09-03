@@ -14,7 +14,7 @@ import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useSetting, useShowShortcutHints } from "../../logic/Settings";
-import { Card, CardType } from "../../logic/card";
+import { Card, NoteType } from "../../logic/card";
 import { Deck, deleteDeck } from "../../logic/deck";
 import DangerousConfirmModal from "../custom/DangerousConfirmModal";
 import ImportModal from "../settings/importexport/ImportModal";
@@ -24,7 +24,7 @@ import RenameDeckModal from "./RenameDeckModal";
 interface DeckMenuProps {
   deck?: Deck;
   isDeckReady: boolean;
-  cards?: Card<CardType>[];
+  cards?: Card<NoteType>[];
   areCardsReady: boolean;
   setDeckOptionsOpened: Function;
 }

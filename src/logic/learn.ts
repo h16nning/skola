@@ -2,19 +2,19 @@ import { Table } from "dexie";
 import { Rating, SchedulingInfo, State } from "fsrs.js";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { updateGlobalScheduler, useGlobalScheduler } from "./CardScheduler";
-import { Card, CardType, updateCardModel, useCardsWith } from "./card";
+import { Card, NoteType, updateCardModel, useCardsWith } from "./card";
 import { DeckStatistics, newStatistics } from "./statistics";
 
 export type LearnOptions = {
   learnAll: boolean;
   newToReviewRatio: number;
-  sort?: (a: Card<CardType>, b: Card<CardType>) => number;
+  sort?: (a: Card<NoteType>, b: Card<NoteType>) => number;
 };
 
 export type CardQuerier = {
   querier: (
-    cards: Table<Card<CardType>>
-  ) => Promise<Card<CardType>[] | undefined>;
+    cards: Table<Card<NoteType>>
+  ) => Promise<Card<NoteType>[] | undefined>;
   dependencies: any[];
 };
 
@@ -24,7 +24,7 @@ export type LearnController = {
   toReviewCardsNumber: number;
   learnedCardsNumber: number;
 
-  currentCard: Card<CardType> | null;
+  currentCard: Card<NoteType> | null;
   currentCardRepeatInfo: Record<number, SchedulingInfo> | null;
 
   showingAnswer: boolean;
@@ -52,19 +52,19 @@ export function useLearning(
   const scheduler = useGlobalScheduler();
 
   //Time critical cards are cards that are due today / should be done within this learning session (5-10 min interval). timeCriticalCards should be sorted by due date
-  const [timeCriticalCards, setTimeCriticalCards] = useState<Card<CardType>[]>(
+  const [timeCriticalCards, setTimeCriticalCards] = useState<Card<NoteType>[]>(
     []
   );
 
   //New cards are cards that have never been reviewed
-  const [newCards, setNewCards] = useState<Card<CardType>[]>([]);
+  const [newCards, setNewCards] = useState<Card<NoteType>[]>([]);
   //To review cards are cards that have been answered correctly before and are due for a review
-  const [toReviewCards, setToReviewCards] = useState<Card<CardType>[]>([]);
+  const [toReviewCards, setToReviewCards] = useState<Card<NoteType>[]>([]);
   //Learned cards are cards that have been answered correctly but are not due for a review. These cards are not regulary shown, only with learnAll true
-  const [learnedCards, setLearnedCards] = useState<Card<CardType>[]>([]);
+  const [learnedCards, setLearnedCards] = useState<Card<NoteType>[]>([]);
 
   //Currently shown card
-  const [currentCard, setCurrentCard] = useState<Card<CardType> | null>(null);
+  const [currentCard, setCurrentCard] = useState<Card<NoteType> | null>(null);
 
   const [showingAnswer, setShowingAnswer] = useState<boolean>(false);
   //Used so that nextCard isn't called immediately but only after state has been updated

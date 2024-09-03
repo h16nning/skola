@@ -12,14 +12,17 @@ import {
   Editor,
   EditorOptions,
   Extension,
+  FloatingMenu,
   useEditor,
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import React from "react";
 import { useSettings } from "../../../logic/Settings";
+
 import classes from "./CardEditor.module.css";
 import { NoteEditorControls } from "./CardEditorControls";
 import { ImageDrop } from "./ImageDrop";
+
 import { CustomHardBreak } from "./tiptap/CustomHardBreak";
 
 interface NoteEditorProps {
@@ -33,6 +36,7 @@ export function useNoteEditor(props: {
   onUpdate?: EditorOptions["onUpdate"];
   extensions?: any[];
   finish?: () => void;
+  focusSelectNoteType?: () => void;
 }) {
   return useEditor(
     {
@@ -43,6 +47,11 @@ export function useNoteEditor(props: {
             return {
               "Mod-Enter": () => {
                 props.finish && props.finish();
+                return false;
+              },
+              "Mod-j": () => {
+                this.editor.commands.blur();
+                props.focusSelectNoteType && props.focusSelectNoteType();
                 return false;
               },
             };
@@ -90,32 +99,36 @@ function NoteEditor({ editor, controls, className }: NoteEditorProps) {
   };
 
   return (
-    <RichTextEditor
-      editor={editor}
-      withTypographyStyles={false}
-      className={className}
-      classNames={{
-        root: classes.root,
-        toolbar: classes.toolbar,
-        content: classes.content,
-      }}
-    >
-      {areSettingsReady && (
-        <>
-          {editor && settings.useToolbar && (
-            <div tabIndex={-1}>
-              <RichTextEditor.Toolbar className={classes.toolbar}>
+    <>
+      <RichTextEditor
+        editor={editor}
+        withTypographyStyles={false}
+        className={className}
+        classNames={{
+          root: classes.root,
+          toolbar: classes.toolbar,
+          content: classes.content,
+        }}
+      >
+        {areSettingsReady && (
+          <>
+            {editor && editor.isFocused && settings.useToolbar && (
+              <RichTextEditor.Toolbar className={classes.toolbar} tabIndex={-1}>
                 <NoteEditorControls controls={controls} editor={editor} />
               </RichTextEditor.Toolbar>
-            </div>
-          )}
-          {editor && settings.useBubbleMenu && (
-            <BubbleMenu editor={editor} tippyOptions={{ maxWidth: "none" }}>
-              <NoteEditorControls controls={controls} editor={editor} />
-            </BubbleMenu>
-          )}
-        </>
-      )}
+            )}
+            {editor && settings.useBubbleMenu && (
+              <BubbleMenu editor={editor} tippyOptions={{ maxWidth: "none" }}>
+                <NoteEditorControls controls={controls} editor={editor} />
+              </BubbleMenu>
+            )}
+            {editor && settings.useBubbleMenu && (
+              <FloatingMenu editor={editor}>
+                <NoteEditorControls controls={controls} editor={editor} />
+              </FloatingMenu>
+            )}
+          </>
+        )}
 
       <RichTextEditor.Content
         onDrop={(e) => {
@@ -125,6 +138,7 @@ function NoteEditor({ editor, controls, className }: NoteEditorProps) {
         }}
       />
     </RichTextEditor>
+
   );
 }
 

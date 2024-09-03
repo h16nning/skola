@@ -1,9 +1,10 @@
 import { Stack, Text } from "@mantine/core";
 import { Editor } from "@tiptap/react";
-import React, { useCallback, useEffect } from "react";
+import { t } from "i18next";
+import { useCallback, useEffect } from "react";
 import { NormalCardUtils } from "../../../logic/CardTypeImplementations/NormalCard";
 import { EditMode } from "../../../logic/TypeManager";
-import { CardType } from "../../../logic/card";
+import { NoteType } from "../../../logic/card";
 import { Deck } from "../../../logic/deck";
 import { Note } from "../../../logic/note";
 import {
@@ -12,27 +13,28 @@ import {
   successfullyAdded,
   successfullySaved,
 } from "../../custom/Notification/Notification";
-import CardEditorFooter from "../CardEditorFooter";
 import classes from "./NormalCardEditor.module.css";
 import NoteEditor, { useNoteEditor } from "./NoteEditor";
 
 interface NormalCardEditorProps {
-  note: Note<CardType.Normal> | null;
+  note: Note<NoteType.Normal> | null;
   deck: Deck;
   mode: EditMode;
-  onChanged?: () => void;
+  requestedFinish: boolean;
+  setRequestedFinish: (finish: boolean) => void;
+  focusSelectNoteType?: () => void;
 }
 
 function NormalCardEditor({
   note,
   deck,
   mode,
-  onChanged,
+  requestedFinish,
+  setRequestedFinish,
+  focusSelectNoteType,
 }: NormalCardEditorProps) {
-  const [requestedFinish, setRequestedFinish] = React.useState(false);
-
   const noteContent = note?.content ?? {
-    type: CardType.Normal,
+    type: NoteType.Normal,
     front: "",
     back: "",
   };
@@ -40,11 +42,13 @@ function NormalCardEditor({
   const frontEditor = useNoteEditor({
     content: noteContent.front,
     finish: () => setRequestedFinish(true),
+    focusSelectNoteType: focusSelectNoteType,
   });
 
   const backEditor = useNoteEditor({
     content: noteContent.back,
     finish: () => setRequestedFinish(true),
+    focusSelectNoteType: focusSelectNoteType,
   });
 
   const clear = useCallback(() => {
@@ -55,9 +59,10 @@ function NormalCardEditor({
 
   useEffect(() => {
     if (requestedFinish) {
+      console.log("requestedFinish");
       finish(mode, clear, deck, note, frontEditor, backEditor);
       setRequestedFinish(false);
-      onChanged?.();
+      //onChanged?.(); TODO was this used?
     }
   }, [requestedFinish, mode, clear, deck, note, frontEditor, backEditor]);
 
@@ -65,7 +70,7 @@ function NormalCardEditor({
     <Stack gap="2rem">
       <Stack gap={0}>
         <Text fz="sm" fw={600}>
-          Front
+          {t("note.edit.type-specific.normal.front")}
         </Text>
         <NoteEditor
           editor={frontEditor}
@@ -75,11 +80,10 @@ function NormalCardEditor({
       </Stack>
       <Stack gap={0}>
         <Text fz="sm" fw={600}>
-          Back
+          {t("note.edit.type-specific.normal.back")}
         </Text>
         <NoteEditor editor={backEditor} key="back" />
       </Stack>
-      <CardEditorFooter finish={() => setRequestedFinish(true)} mode={mode} />
     </Stack>
   );
 }
@@ -88,7 +92,7 @@ async function finish(
   mode: EditMode,
   clear: Function,
   deck: Deck,
-  note: Note<CardType.Normal> | null,
+  note: Note<NoteType.Normal> | null,
   frontEditor: Editor | null,
   backEditor: Editor | null
 ) {

@@ -4,13 +4,15 @@ import {
   Combobox,
   Group,
   InputBase,
+  Kbd,
   Menu,
   Stack,
   Switch,
   Text,
+  Tooltip,
   useCombobox,
 } from "@mantine/core";
-import { useListState } from "@mantine/hooks";
+import { useHotkeys, useListState } from "@mantine/hooks";
 import {
   IconCalendar,
   IconDots,
@@ -22,7 +24,7 @@ import {
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NoteSortFunction, NoteSorts } from "../../logic/NoteSorting";
-import { CardType } from "../../logic/card";
+import { NoteType } from "../../logic/card";
 import { useDeckFromUrl } from "../../logic/deck";
 import { Note, useNotesOf } from "../../logic/note";
 import NotebookCard from "./NotebookCard";
@@ -37,7 +39,7 @@ export default function NotebookView() {
 
   const [sortOption, setSortOption] = useState<SortOption>(sortOptions[0]);
   const [sortOrder] = useState<1 | -1>(1);
-  const [sortedNotes, setSortedNotes] = useState<Note<CardType>[]>(notes ?? []);
+  const [sortedNotes, setSortedNotes] = useState<Note<NoteType>[]>(notes ?? []);
 
   //only for custom sort
   const [useCustomSort, setUseCustomSort] = useState(false);
@@ -218,6 +220,9 @@ function NotebookMenu({
   setShowAnswer: (value: boolean) => void;
 }) {
   const [t] = useTranslation();
+
+  useHotkeys([["Shift+Space", () => setShowAnswer(!showAnswer)]]);
+
   return (
     <Menu closeOnItemClick={false}>
       <Menu.Target>
@@ -243,24 +248,31 @@ function NotebookMenu({
         >
           {t("notebook.options.exclude-subdecks")}
         </Menu.Item>
-
-        <Menu.Item
-          leftSection={<IconEye />}
-          rightSection={
-            <Switch
-              checked={showAnswer}
-              onChange={(event) => {
-                setShowAnswer(event.currentTarget.checked);
-              }}
-            />
+        <Tooltip
+          label={
+            <>
+              Press <Kbd>Shift</Kbd> + <Kbd>Space</Kbd> to toggle all answers
+            </>
           }
-          onClick={(event) => {
-            event.preventDefault();
-            setShowAnswer(!showAnswer);
-          }}
         >
-          {t("notebook.options.show-answer")}
-        </Menu.Item>
+          <Menu.Item
+            leftSection={<IconEye />}
+            rightSection={
+              <Switch
+                checked={showAnswer}
+                onChange={(event) => {
+                  setShowAnswer(event.currentTarget.checked);
+                }}
+              />
+            }
+            onClick={(event) => {
+              event.preventDefault();
+              setShowAnswer(!showAnswer);
+            }}
+          >
+            {t("notebook.options.show-answer")}
+          </Menu.Item>
+        </Tooltip>
       </Menu.Dropdown>
     </Menu>
   );

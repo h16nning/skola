@@ -8,10 +8,10 @@ import parse, {
 } from "html-react-parser";
 import { ReactNode, memo, useState } from "react";
 import ClozeCardEditor from "../../components/editcard/CardEditor/ClozeCardEditor";
-import { EditMode, TypeManager } from "../TypeManager";
+import { NoteEditorProps, TypeManager } from "../TypeManager";
 import {
   Card,
-  CardType,
+  NoteType,
   createCardSkeleton,
   deleteCard,
   newCard,
@@ -33,7 +33,7 @@ export type ClozeContent = {
   occlusionNumber: number;
 };
 
-export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
+export const ClozeCardUtils: TypeManager<NoteType.Cloze> = {
   createNote(
     params: { text: string; occlusionNumberSet: number[] },
     deck: Deck
@@ -47,7 +47,7 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
         ...createCardSkeleton(),
         note: noteId,
         content: {
-          type: CardType.Cloze,
+          type: NoteType.Cloze,
           occlusionNumber: occlusionNumber,
         },
       };
@@ -55,7 +55,7 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
 
     return db.transaction("rw", db.notes, db.decks, db.cards, async () => {
       const noteId = await newNote(deck, {
-        type: CardType.Cloze,
+        type: NoteType.Cloze,
         text: params.text,
       });
       await Promise.all(
@@ -72,11 +72,11 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
 
   updateNote(
     params: { text: string; occclusionNumberSet: number[] },
-    existingNote: Note<CardType.Cloze>
+    existingNote: Note<NoteType.Cloze>
   ) {
     return db.transaction("rw", db.notes, db.cards, async () => {
       await updateNoteContent(existingNote.id, {
-        type: CardType.Cloze,
+        type: NoteType.Cloze,
         text: params.text,
       });
       //might want to update occlusion numbers or delete cards if they are removed from the note?
@@ -84,8 +84,8 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
   },
 
   displayQuestion(
-    card: Card<CardType.Cloze>,
-    content?: NoteContent<CardType.Cloze>
+    card: Card<NoteType.Cloze>,
+    content?: NoteContent<NoteType.Cloze>
   ) {
     return (
       <ClozeComponent
@@ -97,8 +97,8 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
     );
   },
   displayAnswer(
-    card: Card<CardType.Cloze>,
-    content?: NoteContent<CardType.Cloze>
+    card: Card<NoteType.Cloze>,
+    content?: NoteContent<NoteType.Cloze>
   ) {
     return (
       <ClozeComponent
@@ -111,7 +111,7 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
   },
 
   displayNote(
-    note: Note<CardType.Cloze>,
+    note: Note<NoteType.Cloze>,
     showAllAnswers: "strict" | "facultative" | "none"
   ) {
     return (
@@ -130,31 +130,35 @@ export const ClozeCardUtils: TypeManager<CardType.Cloze> = {
     );
   },
 
-  editor(
-    note: Note<CardType.Cloze> | null,
-    deck: Deck,
-    mode: EditMode,
-    onChanged?: () => void
-  ) {
+  editor({
+    note,
+    deck,
+    mode,
+    requestedFinish,
+    setRequestedFinish,
+    focusSelectNoteType,
+  }: NoteEditorProps) {
     return (
       <ClozeCardEditor
-        note={note}
+        note={note as Note<NoteType.Cloze> | null}
         deck={deck}
         mode={mode}
-        onChanged={onChanged}
+        requestedFinish={requestedFinish}
+        setRequestedFinish={setRequestedFinish}
+        focusSelectNoteType={focusSelectNoteType}
       />
     );
   },
 
   //DEPRECATED
-  async deleteCard(card: Card<CardType.Cloze>) {
+  async deleteCard(card: Card<NoteType.Cloze>) {
     db.transaction("rw", db.decks, db.cards, db.notes, async () => {
       const noteText = await getNote(card.note).then((n) =>
         n !== undefined ? (n.content as ClozeNoteContent).text : undefined
       );
       if (noteText !== undefined) {
         await updateNoteContent(card.note, {
-          type: CardType.Cloze,
+          type: NoteType.Cloze,
           text: noteText.replace(
             new RegExp(
               `{{c${card.content.occlusionNumber}::((?!{{|}}).)*}}`,
@@ -176,10 +180,10 @@ const ClozeComponent = memo(
     allAreVisible,
     content,
   }: {
-    activeCard?: Card<CardType.Cloze>;
+    activeCard?: Card<NoteType.Cloze>;
     activeIsVisible?: boolean;
     allAreVisible?: boolean;
-    content?: NoteContent<CardType.Cloze>;
+    content?: NoteContent<NoteType.Cloze>;
   }) => {
     let finalText = content?.text ?? "";
     if (activeCard) {

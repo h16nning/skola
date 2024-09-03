@@ -2,7 +2,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { Card, CardType } from "./card";
+import { Card, NoteType } from "./card";
 import { db } from "./db";
 import { Note } from "./note";
 
@@ -63,7 +63,7 @@ export async function newDeck(
 }
 
 export function useDeckOf(
-  a: Card<CardType> | Note<CardType>
+  a: Card<NoteType> | Note<NoteType>
 ): [Deck | undefined, boolean] {
   return useLiveQuery(
     () => db.decks.get(a.deck).then((deck) => [deck, true]),

@@ -9,7 +9,7 @@ import {
 import { t } from "i18next";
 import { useState } from "react";
 import { useShowShortcutHints } from "../../logic/Settings";
-import { CardType } from "../../logic/card";
+import { NoteType } from "../../logic/card";
 import { Note, deleteNote } from "../../logic/note";
 import DangerousConfirmModal from "../custom/DangerousConfirmModal";
 import {
@@ -19,7 +19,7 @@ import {
 import EditNoteModal from "./EditNoteModal";
 
 interface NoteMenuProps {
-  note: Note<CardType> | undefined;
+  note: Note<NoteType> | undefined;
   withEdit?: boolean;
   withShortcuts?: boolean;
   onDelete?: Function;
@@ -114,7 +114,6 @@ function NoteMenu({
         note={note}
         opened={editModalOpened}
         setClose={editModal.close}
-        onChanged={editModal.close}
       />
     </>
   );
