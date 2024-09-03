@@ -16,6 +16,7 @@
   "deck": {
     "add-cards": "Add Cards",
     "add-cards-tooltip": "Add Cards to this Deck",
+    "create-deck-tooltip": "Click to create a new deck",
     "error-failed-to-load": "This card failed to load",
     "learning-cards-label": "Learning",
     "learning-cards-label_one": "1 Learning",
