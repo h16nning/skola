@@ -1,7 +1,7 @@
 import { TypeManager } from "../TypeManager";
-import { CardType } from "../card";
+import { NoteType } from "../card";
 
-export const UndefinedCardUtils: TypeManager<CardType.Undefined> = {
+export const UndefinedCardUtils: TypeManager<NoteType.Undefined> = {
   createNote() {
     console.warn("tried to create note of type undefined. Not possible.");
     return Promise.resolve();

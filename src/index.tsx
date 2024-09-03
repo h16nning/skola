@@ -9,13 +9,13 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import App from "./App";
-import CardManagerView from "./components/CardManagerView/CardManagerView";
 import HomeView from "./components/HomeView";
+import NoteManagerView from "./components/NoteManagerView/NoteManagerView";
 import StatsView from "./components/StatsView";
 import TodayView from "./components/TodayView";
 import DeckView from "./components/deck/DeckView";
-import EditCardView, { NoNoteView } from "./components/editcard/EditCardView";
-import NewCardsView from "./components/editcard/NewCardsView";
+import EditNoteView, { NoNoteView } from "./components/editcard/EditNoteView";
+import NewNotesView from "./components/editcard/NewNotesView";
 import LearnView from "./components/learning/LearnView/LearnView";
 import SettingsView from "./components/settings/SettingsView";
 import "./index.css";
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/new/:deckId?",
-        element: <NewCardsView />,
+        element: <NewNotesView />,
       },
       {
         path: "/learn/:deckId/:params?",
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/notes/:deckId?",
-        element: <CardManagerView />,
+        element: <NoteManagerView />,
         children: [
           {
             index: true,
@@ -67,7 +67,7 @@ const router = createBrowserRouter([
           },
           {
             path: ":noteId",
-            element: <EditCardView />,
+            element: <EditNoteView />,
             loader: async ({ params }) => {
               const { noteId } = params;
               if (!noteId) throw new Response("Not Found", { status: 404 });

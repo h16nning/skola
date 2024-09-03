@@ -3,17 +3,36 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { Card as Model, ReviewLog, State } from "fsrs.js";
 import { useMemo } from "react";
 import { v4 as uuidv4 } from "uuid";
+import i18n from "../i18n";
 import { Content } from "./CardContent";
 import { db } from "./db";
 import { Deck } from "./deck";
 
-export enum CardType {
+export enum NoteType {
   Normal = "normal",
   Cloze = "cloze",
   ImageOcclusion = "imageOcclusion",
   DoubleSided = "doubleSided",
   Undefined = "undefined",
 }
+
+export const NoteTypeLabels: Record<NoteType, string> = {
+  get [NoteType.Normal]() {
+    return i18n.t("note.type.normal");
+  },
+  get [NoteType.Cloze]() {
+    return i18n.t("note.type.cloze");
+  },
+  get [NoteType.ImageOcclusion]() {
+    return i18n.t("note.type.image-occlusion");
+  },
+  get [NoteType.DoubleSided]() {
+    return i18n.t("note.type-double-sided");
+  },
+  get [NoteType.Undefined]() {
+    return i18n.t("note.type.undefined");
+  },
+};
 
 export interface CardSkeleton {
   id: string;
@@ -24,7 +43,7 @@ export interface CardSkeleton {
   customOrder?: number;
 }
 
-export interface Card<T extends CardType> extends CardSkeleton {
+export interface Card<T extends NoteType> extends CardSkeleton {
   content: Content<T>;
   note: string;
 }
@@ -40,7 +59,7 @@ export function createCardSkeleton(): CardSkeleton {
   };
 }
 
-function isCard(card: Card<CardType> | undefined): card is Card<CardType> {
+function isCard(card: Card<NoteType> | undefined): card is Card<NoteType> {
   return !!card;
 }
 
@@ -49,7 +68,7 @@ function isCard(card: Card<CardType> | undefined): card is Card<CardType> {
  *
  * **Side effects:** It also updates the deck to include the new card.
  */
-export async function newCard(card: Card<CardType>, deck: Deck) {
+export async function newCard(card: Card<NoteType>, deck: Deck) {
   card.deck = deck.id;
   deck.cards.push(card.id);
   await db.transaction("rw", db.decks, db.cards, () => {
@@ -59,7 +78,7 @@ export async function newCard(card: Card<CardType>, deck: Deck) {
   return card.id;
 }
 
-export async function newCards(cards: Card<CardType>[], deck: Deck) {
+export async function newCards(cards: Card<NoteType>[], deck: Deck) {
   cards.forEach((card) => (card.deck = deck.id));
   deck.cards.push(...cards.map((card) => card.id));
   return db.transaction("rw", db.decks, db.cards, () => {
@@ -78,7 +97,7 @@ export async function updateCard(
 }
 
 export async function updateCardModel(
-  card: Card<CardType>,
+  card: Card<NoteType>,
   model: Model,
   log: ReviewLog
 ) {
@@ -88,7 +107,7 @@ export async function updateCardModel(
   });
 }
 
-export async function moveCard(card: Card<CardType>, newDeck: Deck) {
+export async function moveCard(card: Card<NoteType>, newDeck: Deck) {
   //Remove card from old deck
   const oldDeck = await db.decks.get(card.deck);
   if (oldDeck) {
@@ -103,7 +122,7 @@ export async function moveCard(card: Card<CardType>, newDeck: Deck) {
   return db.cards.update(card.id, { deck: newDeck.id });
 }
 
-export async function deleteCard(card: Card<CardType>) {
+export async function deleteCard(card: Card<NoteType>) {
   return db.transaction("rw", db.decks, db.cards, () => {
     db.cards.delete(card.id);
     db.decks.get(card.deck).then((d) => {
@@ -127,9 +146,9 @@ export async function getAllCards() {
 export async function getCardsOf(
   deck?: Deck,
   excludeSubDecks?: boolean
-): Promise<Card<CardType>[] | undefined> {
+): Promise<Card<NoteType>[] | undefined> {
   if (!deck) return undefined;
-  let cards: Card<CardType>[] = await db.cards
+  let cards: Card<NoteType>[] = await db.cards
     .where("id")
     .anyOf(deck.cards)
     .filter((c) => isCard(c))
@@ -159,7 +178,7 @@ export async function getCardsOf(
 export function useCardsOf(
   deck: Deck | undefined,
   excludeSubDecks?: boolean
-): [Card<CardType>[] | undefined, boolean] {
+): [Card<NoteType>[] | undefined, boolean] {
   return useLiveQuery(
     () =>
       getCardsOf(deck, excludeSubDecks).then((cards) => [
@@ -173,17 +192,17 @@ export function useCardsOf(
 
 export function useCardsWith(
   querier: (
-    cards: Table<Card<CardType>>
-  ) => Promise<Card<CardType>[] | undefined>,
+    cards: Table<Card<NoteType>>
+  ) => Promise<Card<NoteType>[] | undefined>,
   dependencies: any[]
-): [Card<CardType>[] | undefined, boolean] {
+): [Card<NoteType>[] | undefined, boolean] {
   return useLiveQuery(
     () => querier(db.cards).then((cards) => [cards, cards !== undefined]),
     dependencies,
     [undefined, false]
   );
 }
-export function useStatesOf(cards?: Card<CardType>[]): Record<State, number> {
+export function useStatesOf(cards?: Card<NoteType>[]): Record<State, number> {
   return useMemo(() => {
     const states = {
       [State.New]: 0,
@@ -201,7 +220,7 @@ export function useStatesOf(cards?: Card<CardType>[]): Record<State, number> {
 export type SimplifiedState = "new" | "learning" | "review" | "notDue";
 
 export function getSimplifiedStatesOf(
-  cards?: Card<CardType>[]
+  cards?: Card<NoteType>[]
 ): Record<SimplifiedState, number> {
   const states = {
     new: 0,
@@ -229,7 +248,7 @@ export function getSimplifiedStatesOf(
   return states;
 }
 export function useSimplifiedStatesOf(
-  cards?: Card<CardType>[]
+  cards?: Card<NoteType>[]
 ): Record<SimplifiedState, number> {
   return useMemo(() => getSimplifiedStatesOf(cards), [cards]);
 }

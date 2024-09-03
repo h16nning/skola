@@ -6,17 +6,10 @@
       "move": "Flytta"
     }
   },
-  "cards": {
-    "editor": {
-      "double_sided": {
-        "back": "",
-        "front": ""
-      }
-    }
-  },
   "deck": {
     "add-cards": "Lägg till kort",
     "add-cards-tooltip": "Lägg till kort till denna kortlek",
+    "create-deck-tooltip": "Klicka här för att skapa en ny kortlek",
     "learning-cards-label": "Plugga",
     "learning-cards-label_one": "",
     "learning-cards-label_other": "",
@@ -43,6 +36,11 @@
     "notebook": {
       "title": "Anteckningsbok"
     },
+    "rename": {
+      "new-name": "",
+      "rename-button": "",
+      "title": ""
+    },
     "review-cards-label": "Repetera",
     "review-cards-label_one": "",
     "review-cards-label_other": "",
@@ -54,7 +52,12 @@
     }
   },
   "global": {
-    "cancel": ""
+    "cancel": "Avbryt",
+    "feature-status": {
+      "in-development": " (Under utveckling)",
+      "new": " (Ny)",
+      "planned": " (Planerad)"
+    }
   },
   "hero-deck-section": {
     "error": "",
@@ -79,15 +82,41 @@
     "title": "Hantera kort"
   },
   "note": {
+    "edit": {
+      "submit-button": "Spara kort",
+      "submit-button-tooltip": "Spara ändringar",
+      "title": "Redigera anteckning",
+      "type-specific": {
+        "double-sided": {
+          "back": "Baksida",
+          "front": "Framsida"
+        },
+        "normal": {
+          "back": "Baksida",
+          "front": "Framsida"
+        }
+      }
+    },
     "menu": {
       "edit": "Redigera",
       "move": "Flytta"
-    }
-  },
-  "rename-deck": {
-    "new-name": "",
-    "rename-button": "",
-    "title": ""
+    },
+    "new": {
+      "select-note-type": {
+        "label": "Korttyp",
+        "tooltip": "Välj den typ av kort du vill skapa."
+      },
+      "submit-button": "Lägg till kort",
+      "submit-button-tooltip": "Lägg till kort",
+      "title": "Nya kort"
+    },
+    "type": {
+      "cloze": "Cloze",
+      "image-occlusion": "Bildocklusion",
+      "normal": "Vanligt",
+      "undefined": "Odefinierad"
+    },
+    "type-double-sided": "Dubbelsidig"
   },
   "settings": {
     "about": {
@@ -141,7 +170,7 @@
     "learn": {
       "maximumInterval": "",
       "requestRetention": "",
-      "title": ""
+      "title": "Lära"
     },
     "title": "Inställningar"
   },

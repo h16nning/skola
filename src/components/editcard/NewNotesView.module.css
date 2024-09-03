@@ -1,0 +1,39 @@
+.newNotesView {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    padding-top: 3.6875rem;
+    @mixin larger-than $mantine-breakpoint-xs {
+        padding-left: 3.5rem;
+      }
+    @mixin larger-than $mantine-breakpoint-lg {
+    padding-left: 18.75rem;
+    }
+
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+}
+
+.newNotesMain {
+    flex-grow: 1;
+    padding: var(--mantine-spacing-lg);
+}
+
+.newNotesEditorContainer {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.newNotesFooter {
+    padding: var(--mantine-spacing-md);
+    border-top: solid 1px var(--mantine-color-light-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+}

@@ -3,14 +3,14 @@ import { Group, Paper } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { memo, useEffect } from "react";
 import { getUtils } from "../../logic/TypeManager";
-import { CardType } from "../../logic/card";
+import { NoteType } from "../../logic/card";
 import { Note, updateNote } from "../../logic/note";
 import NoteMenu from "../editcard/NoteMenu";
 import classes from "./NotebookView.module.css";
 
 interface NotebookCardProps {
   index: number;
-  note: Note<CardType>;
+  note: Note<NoteType>;
   useCustomSort: boolean;
   showAnswer: boolean;
 }
@@ -51,7 +51,7 @@ function NotebookCard({
 export default memo(NotebookCard);
 
 const InnerCard = memo(
-  ({ note, showAnswer }: { note: Note<CardType>; showAnswer: boolean }) => {
+  ({ note, showAnswer }: { note: Note<NoteType>; showAnswer: boolean }) => {
     const [answerToggled, handlers] = useDisclosure(false);
 
     return (
