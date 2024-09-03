@@ -76,38 +76,41 @@ function NoteManagerView() {
           onSelect={(deckId) => navigate(`/notes/${deckId}`)}
         />
       </Group>
-      <TextInput
-        leftSection={<IconSearch size={16} />}
-        defaultValue={filter}
-        placeholder="Filter Notes"
-        maw="20rem"
-        onChange={(event) => setFilter(event.currentTarget.value)}
-      />
+
       <Group
         gap="md"
         grow
         align="start"
         style={{ overflowY: "scroll", height: "100%" }}
       >
-        {notes && (
-          <NoteTable
-            noteSet={notes ?? []}
-            selectedIndex={notes.findIndex((note) => noteId === note?.id)}
-            setSelectedIndex={(idx) => {
-              const n = notes[idx];
-              if (!n) return;
-              navigate(`/notes/${deckId || ALL_DECK_ID}/${n.id}`);
-            }}
-            selectedNote={notes.find((note) => noteId === note?.id)}
-            setSelectedNote={(note) => {
-              // avoid navigating to the same note
-              if (noteId !== note?.id)
-                navigate(`/notes/${deckId || ALL_DECK_ID}/${note.id}`);
-            }}
-            sort={sort}
-            setSort={setSort}
+        <Stack>
+          <TextInput
+            leftSection={<IconSearch size={16} />}
+            defaultValue={filter}
+            placeholder="Filter Notes"
+            w="100%"
+            onChange={(event) => setFilter(event.currentTarget.value)}
           />
-        )}
+          {notes && (
+            <NoteTable
+              noteSet={notes ?? []}
+              selectedIndex={notes.findIndex((note) => noteId === note?.id)}
+              setSelectedIndex={(idx) => {
+                const n = notes[idx];
+                if (!n) return;
+                navigate(`/notes/${deckId || ALL_DECK_ID}/${n.id}`);
+              }}
+              selectedNote={notes.find((note) => noteId === note?.id)}
+              setSelectedNote={(note) => {
+                // avoid navigating to the same note
+                if (noteId !== note?.id)
+                  navigate(`/notes/${deckId || ALL_DECK_ID}/${note.id}`);
+              }}
+              sort={sort}
+              setSort={setSort}
+            />
+          )}
+        </Stack>
         <Stack className={classes.cardBox}>
           <Outlet />
         </Stack>

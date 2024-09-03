@@ -2,21 +2,21 @@ import { Box, Table } from "@mantine/core";
 import { IconArrowUp } from "@tabler/icons-react";
 import cx from "clsx";
 import { NoteSortFunction } from "../../logic/NoteSorting";
-import classes from "./CardTable.module.css";
+import classes from "./NoteTable.module.css";
 
-interface CardTableHeadItemProps {
+interface NoteTableHeadItemProps {
   name: string;
   sortFunction: NoteSortFunction;
   sort: [NoteSortFunction, boolean];
   setSort: (sort: [NoteSortFunction, boolean]) => void;
 }
 
-export default function CardTableHeadItem({
+export default function NoteTableHeadItem({
   name,
   sortFunction,
   sort,
   setSort,
-}: CardTableHeadItemProps) {
+}: NoteTableHeadItemProps) {
   return (
     <Table.Th
       className={classes.th}
