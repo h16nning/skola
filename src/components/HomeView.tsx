@@ -1,4 +1,4 @@
-import { Button, Center, Stack, Title } from "@mantine/core";
+import { Button, Center, Kbd, Stack, Title, Tooltip } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import { IconFolder, IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
@@ -47,13 +47,22 @@ export default function HomeView({}: {}) {
         </Stack>
       ) : (
         <Stack gap="xs" w="600px" maw="100%" align="flex-end" pt="xl">
-          <Button
-            onClick={() => setNewDeckModalOpened(true)}
-            leftSection={<IconPlus />}
-            variant="default"
+          <Tooltip
+            label={
+              <>
+                {t("deck.create-deck-tooltip")}
+                <Kbd>n</Kbd>
+              </>
+            }
           >
-            {t("deck.new-deck-button")}
-          </Button>
+            <Button
+              onClick={() => setNewDeckModalOpened(true)}
+              leftSection={<IconPlus />}
+              variant="default"
+            >
+              {t("deck.new-deck-button")}
+            </Button>
+          </Tooltip>
           <DeckTable deckList={decks} isReady={isReady} />
         </Stack>
       )}
