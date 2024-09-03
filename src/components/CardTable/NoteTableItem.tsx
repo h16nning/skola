@@ -5,7 +5,7 @@ import { getUtils } from "../../logic/TypeManager";
 import { NoteType, NoteTypeLabels } from "../../logic/card";
 import { useDeckOf } from "../../logic/deck";
 import { Note } from "../../logic/note";
-import classes from "./CardTable.module.css";
+import classes from "./NoteTable.module.css";
 
 export function NoteTableItem({
   note,

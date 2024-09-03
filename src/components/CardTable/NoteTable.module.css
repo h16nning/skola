@@ -1,7 +1,7 @@
 .tableScrollContainer {
   height: 100%;
   min-width: 300px;
-  width: 400px;
+  width: 100%;
   max-width: 100%;
   /*FIXME no hardcoded value*/
   @media (max-width: 904px) {

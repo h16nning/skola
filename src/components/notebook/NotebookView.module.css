@@ -9,6 +9,10 @@
     ul {
         padding-inline-start: 1.25rem;
     }
+
+    & img {
+        width: 75%;
+    }
 }
 
 .cardWrapper {

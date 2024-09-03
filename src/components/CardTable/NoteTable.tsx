@@ -7,8 +7,8 @@ import { NoteSortFunction, NoteSorts } from "../../logic/NoteSorting";
 import { NoteType } from "../../logic/card";
 import { Note } from "../../logic/note";
 import EmptyNotice from "../EmptyNotice";
-import classes from "./CardTable.module.css";
-import CardTableHeadItem from "./CardTableHeadItem";
+import classes from "./NoteTable.module.css";
+import NoteTableHeadItem from "./NoteTableHeadItem";
 import { NoteTableItem } from "./NoteTableItem";
 
 interface CardTableProps {
@@ -71,25 +71,25 @@ function NoteTable({
       >
         <Table.Thead>
           <Table.Tr className={classes.tr}>
-            <CardTableHeadItem
+            <NoteTableHeadItem
               name={"Name"}
               sortFunction={NoteSorts.bySortField}
               sort={sort}
               setSort={setSort}
             />
-            <CardTableHeadItem
+            <NoteTableHeadItem
               name={"Type"}
               sortFunction={NoteSorts.byType}
               sort={sort}
               setSort={setSort}
             />
-            <CardTableHeadItem
+            <NoteTableHeadItem
               name={"Deck"}
               sortFunction={NoteSorts.byDeckName}
               sort={sort}
               setSort={setSort}
             />
-            <CardTableHeadItem
+            <NoteTableHeadItem
               name={"Creation Date"}
               sortFunction={NoteSorts.byCreationDate}
               sort={sort}
