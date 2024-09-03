@@ -19,8 +19,8 @@ import StarterKit from "@tiptap/starter-kit";
 import React from "react";
 import { useSettings } from "../../../logic/Settings";
 
-import classes from "./CardEditor.module.css";
-import { NoteEditorControls } from "./CardEditorControls";
+import classes from "./NoteEditor.module.css";
+import { NoteEditorControls } from "./NoteEditorControls";
 import { ImageDrop } from "./ImageDrop";
 
 import { CustomHardBreak } from "./tiptap/CustomHardBreak";
@@ -130,15 +130,15 @@ function NoteEditor({ editor, controls, className }: NoteEditorProps) {
           </>
         )}
 
-      <RichTextEditor.Content
-        onDrop={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          addImage(e.dataTransfer);
-        }}
-      />
-    </RichTextEditor>
-
+        <RichTextEditor.Content
+          onDrop={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            addImage(e.dataTransfer);
+          }}
+        />
+      </RichTextEditor>
+    </>
   );
 }
 
