@@ -5,11 +5,11 @@ import {
   Text,
   ThemeIcon,
 } from "@mantine/core";
-import { TablerIconsProps } from "@tabler/icons-react";
+import { IconProps } from "@tabler/icons-react";
 import { t } from "i18next";
 
 interface EmptyNoticeProps {
-  icon: React.FC<TablerIconsProps>;
+  icon: React.FC<IconProps>;
   title?: string;
   description?: string;
   p?: StyleProp<MantineSpacing>;

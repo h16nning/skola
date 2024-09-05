@@ -1,5 +1,5 @@
 import { Box, Group, Stack, Text, useComputedColorScheme } from "@mantine/core";
-import { TablerIconsProps } from "@tabler/icons-react";
+import { IconProps } from "@tabler/icons-react";
 import React from "react";
 import classes from "./Stat.module.css";
 
@@ -10,7 +10,7 @@ export default function Stat({
   color,
 }: {
   value: number | string;
-  icon: React.FC<TablerIconsProps>;
+  icon: React.FC<IconProps>;
   name: string;
   color: string;
 }) {
