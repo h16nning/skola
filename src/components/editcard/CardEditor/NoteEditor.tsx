@@ -19,9 +19,9 @@ import StarterKit from "@tiptap/starter-kit";
 import React from "react";
 import { useSettings } from "../../../logic/Settings";
 
+import { ImageDrop } from "./ImageDrop";
 import classes from "./NoteEditor.module.css";
 import { NoteEditorControls } from "./NoteEditorControls";
-import { ImageDrop } from "./ImageDrop";
 
 import { CustomHardBreak } from "./tiptap/CustomHardBreak";
 

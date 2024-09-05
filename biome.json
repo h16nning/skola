@@ -1,5 +1,11 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.6.0/schema.json",
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true,
+    "defaultBranch": "main"
+  },
   "organizeImports": {
     "enabled": true
   },
@@ -38,16 +44,16 @@
         "noDangerouslySetInnerHtml": "warn"
       }
     },
-    "ignore": ["node_modules", "*.json"]
+    "ignore": ["*.json"]
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
-    "ignore": ["node_modules", "*.json"]
+    "ignore": ["*.json"]
   },
   "javascript": {
     "formatter": {
-      "trailingComma": "es5"
+      "trailingCommas": "es5"
     }
   }
 }
