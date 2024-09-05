@@ -18,8 +18,8 @@ import {
   IconDots,
   IconEye,
   IconMenuOrder,
+  IconProps,
   IconTextCaption,
-  TablerIconsProps,
 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -116,7 +116,7 @@ export default function NotebookView() {
 
 interface SortOption {
   value: string;
-  icon: React.FC<TablerIconsProps>;
+  icon: React.FC<IconProps>;
   label: string;
   sortFunction: NoteSortFunction;
 }
