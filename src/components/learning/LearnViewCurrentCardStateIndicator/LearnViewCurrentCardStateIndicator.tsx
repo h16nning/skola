@@ -3,8 +3,8 @@ import {
   IconBook,
   IconCircleArrowUpRight,
   IconInfoCircle,
+  IconProps,
   IconSparkles,
-  TablerIconsProps,
 } from "@tabler/icons-react";
 import { Card as Model } from "fsrs.js";
 import { State } from "fsrs.js";
@@ -21,7 +21,7 @@ function Indicator({
   text,
 }: {
   color: string;
-  icon: React.FC<TablerIconsProps>;
+  icon: React.FC<IconProps>;
   text: string;
 }) {
   return (
