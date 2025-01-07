@@ -45,7 +45,8 @@
     "lint": "biome check",
     "lint:type": "tsc --noEmit",
     "extract": "i18next --config i18next-parser.config.mjs 'src/**/*.{ts,tsx}'",
-    "format": "biome check --apply"
+    "format": "biome check --apply",
+    "tauri": "tauri"
   },
   "eslintConfig": {
     "extends": [
@@ -66,6 +67,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
+    "@tauri-apps/cli": "^2.2.2",
     "@types/lodash": "4.17.0",
     "@types/node": "22.5.5",
     "@types/react": "18.2.65",
