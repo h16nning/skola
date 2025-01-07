@@ -18,6 +18,7 @@ export interface SettingsValues {
   name?: string;
   language: SupportedLanguages;
   useZenMode: boolean;
+  useVisualFeedback: boolean;
   developerMode: boolean;
   showShortcutHints: boolean;
 
@@ -43,6 +44,7 @@ export interface SettingsValues {
 export const defaultSettings: SettingsValues = {
   language: SupportedLanguages.English,
   useZenMode: false,
+  useVisualFeedback: true,
   developerMode: false,
   showShortcutHints: true,
 

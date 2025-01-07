@@ -18,7 +18,7 @@ import {
   IconDots,
   IconEye,
   IconMenuOrder,
-  IconProps,
+  TablerIconsProps as IconProps,
   IconTextCaption,
 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";

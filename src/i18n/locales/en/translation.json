@@ -215,6 +215,8 @@
       "title": "General"
     },
     "learn": {
+      "enable-visual-feedback": "Enable Visual Feedback",
+      "enable-visual-feedback-description": "Show a short color flash after answering a card depending on your rating.",
       "maximumInterval": "Maxium interval",
       "maximumIntervalDescription": "The maximum interval in days between two repetitions of a card",
       "newToReviewRatio": "New Cards Per Reviews",
