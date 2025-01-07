@@ -3,7 +3,7 @@ import {
   IconBook,
   IconCircleArrowUpRight,
   IconInfoCircle,
-  TablerIconsProps as IconProps,
+  IconProps,
   IconSparkles,
 } from "@tabler/icons-react";
 import { Card as Model } from "fsrs.js";

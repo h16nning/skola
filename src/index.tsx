@@ -1,4 +1,5 @@
-import "@mantine/charts/styles.css";
+import "./index.css";
+
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import React from "react";
@@ -18,7 +19,6 @@ import EditNoteView, { NoNoteView } from "./components/editcard/EditNoteView";
 import NewNotesView from "./components/editcard/NewNotesView";
 import LearnView from "./components/learning/LearnView/LearnView";
 import SettingsView from "./components/settings/SettingsView";
-import "./index.css";
 import { getNote } from "./logic/note";
 
 const root = ReactDOM.createRoot(
@@ -102,7 +102,7 @@ navigator.serviceWorker.getRegistrations().then((registrations) => {
 
 async function persist() {
   return (
-    (await navigator.storage) &&
+    navigator.storage &&
     navigator.storage.persist &&
     navigator.storage.persist()
   );

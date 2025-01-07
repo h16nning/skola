@@ -1,14 +1,14 @@
 @import "font.css";
 
 body {
-  margin: 0;
+    margin: 0;
 
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  padding: env(safe-area-inset-top) env(safe-area-inset-right)
-    env(safe-area-inset-bottom) env(safe-area-inset-left);
-  –webkit-overflow-scrolling: touch;
-  height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+        env(safe-area-inset-bottom) env(safe-area-inset-left);
+    –webkit-overflow-scrolling: touch;
+    height: 100%;
 }
 
 html,
@@ -17,16 +17,16 @@ body,
 .mantine-AppShell-root,
 .mantine-AppShell-main,
 .mantine-AppShell-body {
-  height: 100%;
+    height: 100%;
 }
 
 button .tabler-icon,
 input .tabler-icon {
-  stroke-width: 1.5px;
-  width: 1.2rem;
+    stroke-width: 1.5px;
+    width: 1.2rem;
 }
 
 * {
-  transition-duration: 0.2s;
-  transition-property: background;
+    transition-duration: 0.2s;
+    transition-property: background;
 }

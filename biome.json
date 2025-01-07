@@ -49,6 +49,7 @@
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
+    "indentWidth": 2,
     "ignore": ["*.json"]
   },
   "javascript": {

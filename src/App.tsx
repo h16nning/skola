@@ -1,11 +1,15 @@
+import "@mantine/core/styles.css";
+
+import "@mantine/notifications/styles.css";
+import "@mantine/charts/styles.css";
+import "@mantine/spotlight/styles.css";
+
 import { AppShell, Center, MantineProvider, Stack } from "@mantine/core";
+
 import classes from "./App.module.css";
 
-import "@mantine/core/styles.css";
 import { useDisclosure, useLocalStorage } from "@mantine/hooks";
 import { Notifications } from "@mantine/notifications";
-import "@mantine/notifications/styles.css";
-import "@mantine/spotlight/styles.css";
 import { useEffect } from "react";
 import { I18nextProvider } from "react-i18next";
 import { Outlet } from "react-router-dom";
