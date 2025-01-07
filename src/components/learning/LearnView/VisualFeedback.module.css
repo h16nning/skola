@@ -1,0 +1,35 @@
+.visualFeedback {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    pointer-events: none;
+    box-shadow: none;
+    opacity: 60%;
+    transition: box-shadow ease-out 0.05s;
+}
+
+.visualFeedback.Easy,
+.visualFeedback.Good,
+.visualFeedback.Hard,
+.visualFeedback.Again {
+    transition: none;
+}
+
+.visualFeedback.Good {
+    box-shadow: inset 0 0 40px 10px var(--mantine-color-green-6);
+}
+
+.visualFeedback.Easy {
+    box-shadow: inset 0 0 40px 10px var(--mantine-color-blue-6);
+}
+
+.visualFeedback.Hard {
+    box-shadow: inset 0 0 40px 10px var(--mantine-color-yellow-6);
+}
+
+.visualFeedback.Again {
+    box-shadow: inset 0 0 40px 10px var(--mantine-color-red-6);
+}

@@ -5,7 +5,7 @@ import {
   Text,
   ThemeIcon,
 } from "@mantine/core";
-import { IconProps } from "@tabler/icons-react";
+import { TablerIconsProps as IconProps } from "@tabler/icons-react";
 import { t } from "i18next";
 
 interface EmptyNoticeProps {

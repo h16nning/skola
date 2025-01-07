@@ -204,6 +204,8 @@
       "title": "Allgemein"
     },
     "learn": {
+      "enable-visual-feedback": "Visuelles Feedback aktivieren",
+      "enable-visual-feedback-description": "Zeige eine kurzes farbiges Blinken, wenn eine Karte richtig oder falsch beantwortet wurde.",
       "maximumInterval": "Maximales Intervall",
       "maximumIntervalDescription": "Das maximale Intervall in Tagen zwischen zwei Wiederholungen einer Karte",
       "newToReviewRatio": "Neue Karten pro Wiederholungen",
