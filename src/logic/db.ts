@@ -1,5 +1,6 @@
 import Dexie, { Table } from "dexie";
 import "dexie-export-import";
+import dexieCloud from "dexie-cloud-addon";
 import { Settings, SettingsValues } from "./Settings";
 import { Card, NoteType } from "./card";
 import { Deck } from "./deck";
@@ -14,16 +15,21 @@ export class Database extends Dexie {
   settings!: Table<Settings<keyof SettingsValues>>;
 
   constructor() {
-    super("database");
-    this.version(13).stores({
-      cards: "++id, note",
-      decks: "++id",
-      notes: "++id",
+    super("database", { addons: [dexieCloud] });
+    this.version(16).stores({
+      cards: "id, note",
+      decks: "id",
+      notes: "id",
       statistics: "[deck+day], day",
-      settings: "++key",
+      settings: "key",
     });
     this.open();
   }
 }
 
 export const db = new Database();
+
+db.cloud.configure({
+  databaseUrl: "https://zo30f12v5.dexie.cloud",
+  tryUseServiceWorker: true,
+});
