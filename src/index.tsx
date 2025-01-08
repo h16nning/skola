@@ -4,11 +4,7 @@ import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import {
-  Navigate,
-  RouterProvider,
-  createBrowserRouter,
-} from "react-router-dom";
+import { Navigate, RouterProvider, createHashRouter } from "react-router-dom";
 import App from "./App";
 import HomeView from "./components/HomeView";
 import NoteManagerView from "./components/NoteManagerView/NoteManagerView";
@@ -24,7 +20,7 @@ import { getNote } from "./logic/note";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-const router = createBrowserRouter(
+const router = createHashRouter(
   [
     {
       path: "/",
