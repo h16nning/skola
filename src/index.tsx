@@ -20,72 +20,70 @@ import { getNote } from "./logic/note";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-const router = createHashRouter(
-  [
-    {
-      path: "/",
-      element: <App />,
-      children: [
-        {
-          index: true,
-          element: <Navigate to="/home" replace={true} />,
-        },
-        {
-          path: "/home",
-          element: <HomeView />,
-        },
-        {
-          path: "/settings/:section?",
-          element: <SettingsView />,
-        },
-        {
-          path: "/deck/:deckId",
-          element: <DeckView />,
-        },
-        {
-          path: "/deck/:deckId/:params",
-          element: <DeckView />,
-        },
-        {
-          path: "/new/:deckId?",
-          element: <NewNotesView />,
-        },
-        {
-          path: "/learn/:deckId/:params?",
-          element: <LearnView />,
-        },
-        {
-          path: "/notes/:deckId?",
-          element: <NoteManagerView />,
-          children: [
-            {
-              index: true,
-              element: <NoNoteView />,
+const router = createHashRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        index: true,
+        element: <Navigate to="/home" replace={true} />,
+      },
+      {
+        path: "/home",
+        element: <HomeView />,
+      },
+      {
+        path: "/settings/:section?",
+        element: <SettingsView />,
+      },
+      {
+        path: "/deck/:deckId",
+        element: <DeckView />,
+      },
+      {
+        path: "/deck/:deckId/:params",
+        element: <DeckView />,
+      },
+      {
+        path: "/new/:deckId?",
+        element: <NewNotesView />,
+      },
+      {
+        path: "/learn/:deckId/:params?",
+        element: <LearnView />,
+      },
+      {
+        path: "/notes/:deckId?",
+        element: <NoteManagerView />,
+        children: [
+          {
+            index: true,
+            element: <NoNoteView />,
+          },
+          {
+            path: ":noteId",
+            element: <EditNoteView />,
+            loader: async ({ params }) => {
+              const { noteId } = params;
+              if (!noteId) throw new Response("Not Found", { status: 404 });
+              return await getNote(noteId);
             },
-            {
-              path: ":noteId",
-              element: <EditNoteView />,
-              loader: async ({ params }) => {
-                const { noteId } = params;
-                if (!noteId) throw new Response("Not Found", { status: 404 });
-                return await getNote(noteId);
-              },
-            },
-          ],
-        },
-        {
-          path: "/today",
-          element: <TodayView />,
-        },
-        {
-          path: "/stats/:deckId?",
-          element: <StatsView />,
-        },
-      ],
-    },
-  ],
-  { basename: PUBLIC_URL }
-);
+          },
+        ],
+      },
+      {
+        path: "/today",
+        element: <TodayView />,
+      },
+      {
+        path: "/stats/:deckId?",
+        element: <StatsView />,
+      },
+    ],
+  },
+]);
+console.log("PUBLIC_URL =", PUBLIC_URL);
 
 root.render(
   <React.StrictMode>
