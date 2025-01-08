@@ -12,6 +12,7 @@ export default defineConfig({
   },
   define: {
     ENABLE_FIREBASE: process.env.ENABLE_FIREBASE || true,
+    PUBLIC_URL: JSON.stringify(process.env.PUBLIC_URL || "/"),
   },
   plugins: [react(), viteTsconfigPaths(), Checker({ typescript: true })],
 
