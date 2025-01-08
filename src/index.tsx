@@ -1,4 +1,4 @@
-import "./index.css";
+import "./style/index.css";
 
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
