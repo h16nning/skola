@@ -5,7 +5,6 @@ import {
   Image,
   NavLink,
   Stack,
-  Text,
   Title,
   Tooltip,
   useMantineTheme,
@@ -16,19 +15,16 @@ import {
   IconCards,
   IconChartBar,
   IconHome,
-  IconPlus,
   IconSettings,
   IconX,
 } from "@tabler/icons-react";
 import cx from "clsx";
 import { t } from "i18next";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useTopLevelDecks } from "../../logic/deck";
-import NewDeckModal from "../deck/NewDeckModal";
-import DeckTree from "./DeckTree";
 import classes from "./Sidebar.module.css";
 
+import CloudSection from "./CloudSection";
+import DeckList from "./DeckList";
 import SpotlightCard from "./Spotlight";
 
 const InteractiveNavLink = ({
@@ -85,13 +81,11 @@ function Sidebar({
     readonly toggle: () => void;
   };
 }) {
-  const [newDeckModalOpened, setNewDeckModalOpened] = useState(false);
   const theme = useMantineTheme();
 
   const fullscreenMode = !!useMediaQuery(
     "(max-width: " + theme.breakpoints.xs + ")"
   );
-  const isXsLayout = useMediaQuery("(min-width: " + theme.breakpoints.sm + ")");
   const minimalMode = !!useMediaQuery(
     "(max-width: " +
       theme.breakpoints.lg +
@@ -101,7 +95,6 @@ function Sidebar({
   );
 
   const landscapeMode = useMediaQuery("(orientation: landscape)");
-  const [decks, isReady] = useTopLevelDecks();
 
   return (
     <Box
@@ -114,88 +107,70 @@ function Sidebar({
         fullscreenMode && menuOpened && classes.fullscreenModeOpened
       )}
     >
-      <Stack gap="xs">
-        <Group className={classes.topRow}>
-          <Group gap="xs" align="center">
-            <Image src="/logo.svg" alt="Skola Logo" maw="1.5rem" />
-            <Title order={5}>Skola</Title>
+      <Stack justify="space-between" h="100%">
+        <Stack gap="xs">
+          <Group className={classes.topRow}>
+            <Group gap="xs" align="center">
+              <Image src="/logo.svg" alt="Skola Logo" maw="1.5rem" />
+              <Title order={5}>Skola</Title>
+            </Group>
+            {fullscreenMode ? (
+              <ActionIcon
+                onClick={menuHandlers.close}
+                style={{ alignSelf: "end" }}
+                variant="subtle"
+              >
+                <IconX />
+              </ActionIcon>
+            ) : null}
           </Group>
-          {fullscreenMode ? (
-            <ActionIcon
-              onClick={menuHandlers.close}
-              style={{ alignSelf: "end" }}
-              variant="subtle"
-            >
-              <IconX />
-            </ActionIcon>
-          ) : null}
-        </Group>
-        <SpotlightCard minimalMode={minimalMode} />
+          <SpotlightCard minimalMode={minimalMode} />
 
-        <InteractiveNavLink
-          label={t("home.title")}
-          path="/home"
-          icon={<IconHome />}
-          minimalMode={minimalMode}
-          fullscreenMode={fullscreenMode}
-          closeMenu={menuHandlers.close}
-        />
-        <InteractiveNavLink
-          label={t("today.title")}
-          path="/today"
-          icon={<IconBolt />}
-          minimalMode={minimalMode}
-          fullscreenMode={fullscreenMode}
-          closeMenu={menuHandlers.close}
-        />
-        <InteractiveNavLink
-          label={t("statistics.title")}
-          path="/stats"
-          icon={<IconChartBar />}
-          minimalMode={minimalMode}
-          fullscreenMode={fullscreenMode}
-          closeMenu={menuHandlers.close}
-        />
+          <InteractiveNavLink
+            label={t("home.title")}
+            path="/home"
+            icon={<IconHome />}
+            minimalMode={minimalMode}
+            fullscreenMode={fullscreenMode}
+            closeMenu={menuHandlers.close}
+          />
+          <InteractiveNavLink
+            label={t("today.title")}
+            path="/today"
+            icon={<IconBolt />}
+            minimalMode={minimalMode}
+            fullscreenMode={fullscreenMode}
+            closeMenu={menuHandlers.close}
+          />
+          <InteractiveNavLink
+            label={t("statistics.title")}
+            path="/stats"
+            icon={<IconChartBar />}
+            minimalMode={minimalMode}
+            fullscreenMode={fullscreenMode}
+            closeMenu={menuHandlers.close}
+          />
 
-        <InteractiveNavLink
-          label={t("manage-cards.title")}
-          path="/notes"
-          icon={<IconCards />}
-          minimalMode={minimalMode}
-          fullscreenMode={fullscreenMode}
-          closeMenu={menuHandlers.close}
-        />
-        <InteractiveNavLink
-          label={t("settings.title")}
-          path="/settings"
-          icon={<IconSettings />}
-          minimalMode={minimalMode}
-          fullscreenMode={fullscreenMode}
-          closeMenu={menuHandlers.close}
-        />
+          <InteractiveNavLink
+            label={t("manage-cards.title")}
+            path="/notes"
+            icon={<IconCards />}
+            minimalMode={minimalMode}
+            fullscreenMode={fullscreenMode}
+            closeMenu={menuHandlers.close}
+          />
+          <InteractiveNavLink
+            label={t("settings.title")}
+            path="/settings"
+            icon={<IconSettings />}
+            minimalMode={minimalMode}
+            fullscreenMode={fullscreenMode}
+            closeMenu={menuHandlers.close}
+          />
+          <DeckList minimalMode={minimalMode} />
+        </Stack>
+        <CloudSection minimalMode={minimalMode} />
       </Stack>
-      {isXsLayout && !minimalMode && (
-        <>
-          <Text c="dimmed" p="xs" pt="md" fz="sm">
-            {t("sidebar.decks-title")}
-          </Text>
-          {isReady &&
-            decks?.map((deck) => <DeckTree deck={deck} key={deck.id} />)}
-          <NavLink
-            label={
-              <Text c="dimmed" fz="xs">
-                {t("sidebar.decks-add")}
-              </Text>
-            }
-            onClick={() => setNewDeckModalOpened(true)}
-            leftSection={<IconPlus size={"1rem"} color={"gray"} />}
-          />
-          <NewDeckModal
-            opened={newDeckModalOpened}
-            setOpened={setNewDeckModalOpened}
-          />
-        </>
-      )}
     </Box>
   );
 }

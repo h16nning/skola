@@ -11,6 +11,7 @@
     "@mantine/spotlight": "7.12.2",
     "@mantine/tiptap": "7.12.2",
     "@tabler/icons-react": "3.14.0",
+    "@tauri-apps/api": "^1.6.0",
     "@tiptap/extension-color": "2.3.1",
     "@tiptap/extension-highlight": "2.3.1",
     "@tiptap/extension-image": "2.3.1",
@@ -23,7 +24,8 @@
     "@tiptap/extension-underline": "2.3.1",
     "@tiptap/react": "2.3.1",
     "@tiptap/starter-kit": "2.3.1",
-    "dexie": "3.2.6",
+    "dexie": "^4.0.10",
+    "dexie-cloud-addon": "^4.0.8",
     "dexie-export-import": "4.1.1",
     "dexie-react-hooks": "1.1.7",
     "firebase": "10.9.0",
@@ -45,7 +47,8 @@
     "lint": "biome check",
     "lint:type": "tsc --noEmit",
     "extract": "i18next --config i18next-parser.config.mjs 'src/**/*.{ts,tsx}'",
-    "format": "biome check --apply"
+    "format": "biome check --apply",
+    "tauri": "tauri"
   },
   "eslintConfig": {
     "extends": [
@@ -66,6 +69,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
+    "@tauri-apps/cli": "^2.2.2",
     "@types/lodash": "4.17.0",
     "@types/node": "22.5.5",
     "@types/react": "18.2.65",
