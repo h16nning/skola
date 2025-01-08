@@ -86,7 +86,6 @@ const router = createHashRouter(
   ],
   { basename: "/skola" }
 );
-console.log("PUBLIC_URL =", PUBLIC_URL);
 
 root.render(
   <React.StrictMode>

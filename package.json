@@ -2,7 +2,7 @@
   "name": "skola",
   "homepage": "https://h16nning.github.io/skola",
   "version": "0.2.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@hello-pangea/dnd": "16.5.0",
     "@mantine/charts": "7.12.2",
