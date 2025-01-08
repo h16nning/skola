@@ -10,6 +10,7 @@
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store
@@ -18,7 +19,6 @@
 .env.test.local
 .env.production.local
 
-/.idea
 /.firebase
 
 npm-debug.log*
