@@ -1,7 +1,7 @@
 import "@mantine/core/styles.css";
 
-import "@mantine/notifications/styles.css";
 import "@mantine/charts/styles.css";
+import "@mantine/notifications/styles.css";
 import "@mantine/spotlight/styles.css";
 
 import { AppShell, Center, MantineProvider, Stack } from "@mantine/core";
@@ -15,6 +15,7 @@ import { I18nextProvider } from "react-i18next";
 import { Outlet } from "react-router-dom";
 import Header from "./components/Header/Header";
 import WelcomeView from "./components/WelcomeView";
+import LoginUI from "./components/login/LoginUI";
 import Sidebar from "./components/sidebar/Sidebar";
 import i18n from "./i18n";
 import { useSetting } from "./logic/Settings";
@@ -81,6 +82,7 @@ export default function App() {
                 </Center>
               </Stack>
             </AppShell.Main>
+            <LoginUI />
           </AppShell>
         ) : (
           <WelcomeView />
