@@ -2,7 +2,7 @@
 
 ![Skola](https://github.com/h16nning/skola/assets/48356881/fa7e08d5-af5d-4d5a-bd1c-3dafb68cc033)
 
-An early project aiming to create a web-based spaced repetition flash card app like anki. View a demo [here](https://skola.web.app).
+An early project aiming to create a web-based spaced repetition flash card app like anki. View a demo [here](https://skola.cards).
 
 #### Current state of the project:
 - normal / double-sided and cloze cards
