@@ -4,7 +4,7 @@ import Checker from "vite-plugin-checker";
 import viteTsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  base: "/skola/",
+  base: "/skola",
   css: {
     modules: {},
   },
@@ -29,7 +29,7 @@ export default defineConfig({
     "TAURI_DEBUG",
   ],
   build: {
-    outDir: "build",
+    outDir: "dist",
     // Tauri uses Chromium on Windows and WebKit on macOS and Linux
     target: process.env.TAURI_PLATFORM === "windows" ? "chrome105" : "safari13",
     // don't minify for debug builds

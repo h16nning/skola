@@ -1,6 +1,6 @@
 {
   "name": "skola",
-  "homepage": "https://h16nning.github.io/skola",
+  "homepage": "https://skola.cards/",
   "version": "0.2.0",
   "private": false,
   "dependencies": {
@@ -51,7 +51,7 @@
     "format": "biome check --apply",
     "tauri": "tauri",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "eslintConfig": {
     "extends": [
