@@ -23,7 +23,6 @@ const root = ReactDOM.createRoot(
 const router = createHashRouter(
   [
     {
-      path: "/",
       element: <App />,
       children: [
         {
@@ -84,7 +83,7 @@ const router = createHashRouter(
       ],
     },
   ],
-  { basename: "/skola" }
+  { basename: "/" }
 );
 
 root.render(
