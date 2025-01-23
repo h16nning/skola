@@ -23,7 +23,7 @@ const root = ReactDOM.createRoot(
 const router = createHashRouter(
   [
     {
-      path: "/*",
+      path: "/",
       element: <App />,
       children: [
         {
