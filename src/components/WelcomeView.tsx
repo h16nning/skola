@@ -31,12 +31,25 @@ export default function WelcomeView() {
           </Text>
         </Stack>
         <Alert color="gray" icon={<IconInfoCircle />}>
-          Please note that this app is still in early development. You may encounter bugs and missing features. If you find any issues, consider reporting them on the{" "} <Anchor href="https://www.github.com/h16nning/skola">GitHub repository</Anchor>.
+          Please note that this app is still in early development. You may
+          encounter bugs and missing features. If you find any issues, consider
+          reporting them on the{" "}
+          <Anchor href="https://www.github.com/h16nning/skola">
+            GitHub repository
+          </Anchor>
+          .
         </Alert>
         <Stack gap="xs">
           <Title order={3}>About the project</Title>
           <Text fz="sm">
-            Skola aims to provide an alternative to spaced repetition apps like Anki and SuperMemo. It is open-source and completely free to use. The focus lies on creating a fun to use and intuitive experience. You can find more information on the <Anchor href="https://www.github.com/h16nning/skola">GitHub repository</Anchor>.
+            Skola aims to provide an alternative to spaced repetition apps like
+            Anki and SuperMemo. It is open-source and completely free to use.
+            The focus lies on creating a fun to use and intuitive experience.
+            You can find more information on the{" "}
+            <Anchor href="https://www.github.com/h16nning/skola">
+              GitHub repository
+            </Anchor>
+            .
           </Text>
         </Stack>
         <Stack gap="xs">
