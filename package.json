@@ -50,8 +50,10 @@
     "extract": "i18next --config i18next-parser.config.mjs 'src/**/*.{ts,tsx}'",
     "format": "biome check --apply",
     "tauri": "tauri",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "add-domain": "echo https://skola.cards> dist/CNAME",
+    "predeploy": "npm run add-domain && npm run build",
+    "deploy": "gh-pages -d dist",
+    "build-and-deploy": "npm run build && npm run deploy"
   },
   "eslintConfig": {
     "extends": [
