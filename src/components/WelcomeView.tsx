@@ -31,23 +31,12 @@ export default function WelcomeView() {
           </Text>
         </Stack>
         <Alert color="gray" icon={<IconInfoCircle />}>
-          Please note that this app is still in early development. You may
-          encounter bugs and missing features.
+          Please note that this app is still in early development. You may encounter bugs and missing features. If you find any issues, consider reporting them on the{" "} <Anchor href="https://www.github.com/h16nning/skola">GitHub repository</Anchor>.
         </Alert>
         <Stack gap="xs">
           <Title order={3}>About the project</Title>
           <Text fz="sm">
-            Skola is a hobby project of mine. I am Henning Thomas Flath, a
-            student from Germany. It aims to provide an alternative to spaced
-            repetition apps like Anki and SuperMemo. It is open-source and free
-            to use. The focus lies on creating an intuitive and easy to use
-            experience. It is a web app written in React and Typescript and uses
-            the Mantine UI library as well as dexie.js. You can find more
-            information on the{" "}
-            <Anchor href="https://www.github.com/h16nning/skola">
-              GitHub repository
-            </Anchor>
-            .
+            Skola aims to provide an alternative to spaced repetition apps like Anki and SuperMemo. It is open-source and completely free to use. The focus lies on creating a fun to use and intuitive experience. You can find more information on the <Anchor href="https://www.github.com/h16nning/skola">GitHub repository</Anchor>.
           </Text>
         </Stack>
         <Stack gap="xs">
@@ -55,13 +44,8 @@ export default function WelcomeView() {
           <Text fz="sm">
             Privacy is a focus of this project. Skola saves decks and cards
             locally in your browser using the IndexedDB API. Furthermore local
-            storage and cookies are being used to store relevant date. We do not
-            collect any personal data. However, we do use Google Analytics
-            (involving the usage of cookies and local storage) to collect
-            anonymous usage data (i.e. the number of site visitors per day). The
-            google analytics data is not shared with any third parties or used
-            for any other purpose than to improve the app. There aren't any
-            tracking mechanisms used on this site.{" "}
+            storage and cookies are being used to store relevant data. We do not
+            collect any personal data.
             <b>You agree to the above by using this app.</b>
           </Text>
         </Stack>
