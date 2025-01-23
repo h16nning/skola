@@ -29,7 +29,6 @@
     "dexie-cloud-addon": "^4.0.8",
     "dexie-export-import": "4.1.1",
     "dexie-react-hooks": "1.1.7",
-    "firebase": "10.9.0",
     "fsrs.js": "1.2.2",
     "html-react-parser": "5.1.8",
     "html-to-text": "9.0.5",
