@@ -4,7 +4,7 @@ import Checker from "vite-plugin-checker";
 import viteTsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  base: "/skola",
+  base: "/",
   css: {
     modules: {},
   },
