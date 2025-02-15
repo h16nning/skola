@@ -1,7 +1,9 @@
 import EmptyNotice from "@/components/EmptyNotice";
 import Stat from "@/components/Stat/Stat";
-import { Card, NoteType, useSimplifiedStatesOf } from "@/logic/card";
-import { Deck } from "@/logic/deck";
+import { Card } from "@/logic/card/card";
+import { useSimplifiedStatesOf } from "@/logic/card/hooks/useSimplifiedStatesOf";
+import { Deck } from "@/logic/deck/deck";
+import { NoteType } from "@/logic/note/note";
 import { Button, Group, Paper, Stack, Text, Title } from "@mantine/core";
 import classes from "./HeroDeckSection.module.css";
 

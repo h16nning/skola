@@ -1,10 +1,11 @@
 import Dexie, { Table } from "dexie";
 import "dexie-export-import";
 import dexieCloud from "dexie-cloud-addon";
-import { Settings, SettingsValues } from "./Settings";
-import { Card, NoteType } from "./card";
-import { Deck } from "./deck";
-import { Note } from "./note";
+import { Card } from "./card/card";
+import { Deck } from "./deck/deck";
+import { NoteType } from "./note/note";
+import { Note } from "./note/note";
+import { Settings, SettingsValues } from "./settings/Settings";
 import { DeckStatistics } from "./statistics";
 
 export class Database extends Dexie {

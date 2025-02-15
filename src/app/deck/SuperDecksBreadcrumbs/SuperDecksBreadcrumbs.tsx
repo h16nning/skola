@@ -4,7 +4,7 @@ import { IconCards, IconHome } from "@tabler/icons-react";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { Deck } from "../../../logic/deck";
+import { Deck } from "../../../logic/deck/deck";
 import classes from "./SuperDecksBreadcrumbs.module.css";
 
 interface SuperDecksBreadcrumbsProps {

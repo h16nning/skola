@@ -1,11 +1,11 @@
+import { useTopLevelDecks } from "@/logic/deck/hooks/useTopLevelDecks";
+import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { Button, Center, Kbd, Stack, Title, Tooltip } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import { IconFolder, IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import EmptyNotice from "../../components/EmptyNotice";
-import { useSetting } from "../../logic/Settings";
-import { useTopLevelDecks } from "../../logic/deck";
 import DeckTable from "../deck/DeckTable";
 import NewDeckModal from "../deck/NewDeckModal";
 import { AppHeaderContent } from "../shell/Header/Header";

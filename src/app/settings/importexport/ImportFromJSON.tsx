@@ -1,7 +1,7 @@
 import { Alert, Button, Select, Stack, Text } from "@mantine/core";
 import { IconChevronRight, IconInfoCircle } from "@tabler/icons-react";
 import { useState } from "react";
-import { Deck } from "../../../logic/deck";
+import { Deck } from "../../../logic/deck/deck";
 import FileImport from "./FileImport";
 import ImportButton from "./ImportButton";
 import { ImportFromSourceProps, ImportStatus } from "./ImportModal";

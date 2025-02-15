@@ -1,7 +1,7 @@
 import { Modal, Tabs } from "@mantine/core";
 import React, { useState } from "react";
 import ModalProps from "../../../components/ModalProps";
-import { Deck } from "../../../logic/deck";
+import { Deck } from "../../../logic/deck/deck";
 
 import { IconJson, IconTxt } from "@tabler/icons-react";
 import ImportFromJSON from "./ImportFromJSON";

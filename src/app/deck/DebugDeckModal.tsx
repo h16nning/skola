@@ -1,7 +1,9 @@
+import { useStatesOf } from "@/logic/card/hooks/useStatesOf";
+import { NoteType } from "@/logic/note/note";
 import { Anchor, Modal, Stack, Text } from "@mantine/core";
 import { State } from "fsrs.js";
-import { Card, NoteType, useStatesOf } from "../../logic/card";
-import { Deck } from "../../logic/deck";
+import { Card } from "../../logic/card/card";
+import { Deck } from "../../logic/deck/deck";
 
 interface DebugDeckModalProps {
   opened: boolean;

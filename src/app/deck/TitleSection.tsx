@@ -1,11 +1,12 @@
 import { genericFail } from "@/components/Notification/Notification";
+import { renameDeck } from "@/logic/deck/renameDeck";
 import { Button, Group, Kbd, TextInput, Title, Tooltip } from "@mantine/core";
 import { getHotkeyHandler } from "@mantine/hooks";
 import { IconPlus } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Deck, renameDeck } from "../../logic/deck";
+import { Deck } from "../../logic/deck/deck";
 
 type TitleSectionProps = {
   deck: Deck | undefined;

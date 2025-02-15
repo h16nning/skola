@@ -1,8 +1,8 @@
+import { EditMode } from "@/logic/NoteTypeAdapter";
 import { Button, Kbd, Tooltip } from "@mantine/core";
 import { useOs } from "@mantine/hooks";
 import { IconDeviceFloppy, IconPlus } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
-import { EditMode } from "../../logic/TypeManager";
 
 interface NoteSubmitButtonProps {
   mode: EditMode;

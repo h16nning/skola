@@ -1,13 +1,13 @@
 import { AppHeaderContent } from "@/app/shell/Header/Header";
 import MissingObject from "@/components/MissingObject";
 import { genericFail } from "@/components/Notification/Notification";
-import { CardSorts } from "@/logic/CardSorting";
-import { useSetting } from "@/logic/Settings";
-import { getUtils } from "@/logic/TypeManager";
-import { getCardsOf } from "@/logic/card";
-import { useDeckFromUrl } from "@/logic/deck";
+import { getAdapter } from "@/logic/NoteTypeAdapter";
+import { CardSorts } from "@/logic/card/CardSorting";
+import { getCardsOf } from "@/logic/card/getCardsOf";
+import { useDeckFromUrl } from "@/logic/deck/hooks/useDeckFromUrl";
 import { useLearning } from "@/logic/learn";
-import { useNote } from "@/logic/note";
+import { useNote } from "@/logic/note/hooks/useNote";
+import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { Center, Flex, Modal, Paper } from "@mantine/core";
 import { useDebouncedValue, useFullscreen } from "@mantine/hooks";
 import { Rating } from "fsrs.js";
@@ -111,13 +111,13 @@ function LearnView() {
             />
             {!controller.showingAnswer &&
               controller.currentCard &&
-              getUtils(controller.currentCard).displayQuestion(
+              getAdapter(controller.currentCard).displayQuestion(
                 controller.currentCard,
                 cardContent
               )}
             {controller.showingAnswer &&
               controller.currentCard &&
-              getUtils(controller.currentCard).displayAnswer(
+              getAdapter(controller.currentCard).displayAnswer(
                 controller.currentCard,
                 cardContent
               )}

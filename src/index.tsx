@@ -8,10 +8,10 @@ import LearnView from "@/app/learn/LearnView/LearnView";
 import SettingsView from "@/app/settings/SettingsView";
 import StatsView from "@/app/statistics/StatsView";
 import TodayView from "@/app/today/TodayView";
-import { getNote } from "@/logic/note";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Navigate, RouterProvider, createHashRouter } from "react-router-dom";
+import { getNote } from "./logic/note/getNote";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

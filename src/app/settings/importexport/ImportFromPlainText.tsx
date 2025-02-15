@@ -1,8 +1,9 @@
+import { getAdapterOfType } from "@/logic/NoteTypeAdapter";
+import { newCard } from "@/logic/card/newCard";
+import { Deck } from "@/logic/deck/deck";
+import { NoteType } from "@/logic/note/note";
 import { Stack, TextInput } from "@mantine/core";
 import { useState } from "react";
-import { getUtilsOfType } from "../../../logic/TypeManager";
-import { NoteType, newCard } from "../../../logic/card";
-import { Deck } from "../../../logic/deck";
 import FileImport from "./FileImport";
 import ImportButton from "./ImportButton";
 import { ImportFromSourceProps } from "./ImportModal";
@@ -24,7 +25,7 @@ async function importCards(
 
   const cards = await Promise.all(
     questionAnswerPairs.map(async (pair) => {
-      return getUtilsOfType(NoteType.Normal).createNote(
+      return getAdapterOfType(NoteType.Basic).createNote(
         {
           front: pair[0],
           back: pair[1],

@@ -1,10 +1,11 @@
+import { getAdapter } from "@/logic/NoteTypeAdapter";
+import { NoteType } from "@/logic/note/note";
+import { Note } from "@/logic/note/note";
+import { updateNote } from "@/logic/note/updateNote";
 import { Draggable } from "@hello-pangea/dnd";
 import { Group, Paper } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { memo, useEffect } from "react";
-import { getUtils } from "../../logic/TypeManager";
-import { NoteType } from "../../logic/card";
-import { Note, updateNote } from "../../logic/note";
 import NoteMenu from "../editor/NoteMenu";
 import classes from "./NotebookView.module.css";
 
@@ -58,9 +59,9 @@ const InnerCard = memo(
       <Paper p="md" className={classes.card}>
         <Group align="top" justify="space-between" wrap="nowrap">
           <Group align="center" w="100%" onClick={handlers.toggle}>
-            {getUtils(note).displayNote(
+            {getAdapter(note).displayNote(
               note,
-              showAnswer ? "strict" : answerToggled ? "facultative" : "none"
+              showAnswer ? "strict" : answerToggled ? "optional" : "none"
             )}
           </Group>
           <NoteMenu note={note} withShortcuts={false} />

@@ -1,17 +1,17 @@
+import NoteTable from "@/app/NoteTable/NoteTable";
+import EditorOptionsMenu from "@/app/editor/EditorOptionsMenu";
+import { AppHeaderContent } from "@/app/shell/Header/Header";
+import SelectDecksHeader from "@/components/SelectDecksHeader";
+import { getAdapter } from "@/logic/NoteTypeAdapter";
+import { useDecks } from "@/logic/deck/hooks/useDecks";
+import { useNotesWith } from "@/logic/note/hooks/useNotesWith";
+import { NoteSortFunction, NoteSorts } from "@/logic/note/sort";
 import { Group, Space, Stack, TextInput, Title } from "@mantine/core";
 import { useDebouncedState } from "@mantine/hooks";
 import { IconSearch } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useState } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
-import SelectDecksHeader from "../../../components/SelectDecksHeader";
-import { NoteSortFunction, NoteSorts } from "../../../logic/NoteSorting";
-import { getUtils } from "../../../logic/TypeManager";
-import { useDecks } from "../../../logic/deck";
-import { useNotesWith } from "../../../logic/note";
-import NoteTable from "../../CardTable/NoteTable";
-import EditorOptionsMenu from "../../editor/EditorOptionsMenu";
-import { AppHeaderContent } from "../../shell/Header/Header";
 import classes from "./NoteManagerView.module.css";
 
 const ALL_DECK_ID = "all";
@@ -48,7 +48,7 @@ function NoteManagerView() {
         .then((m) =>
           m
             .filter((note) =>
-              getUtils(note)
+              getAdapter(note)
                 .getSortFieldFromNoteContent(note.content)
                 .toLowerCase()
                 .includes(filter.toLowerCase())

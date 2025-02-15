@@ -1,3 +1,4 @@
+import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { Center, Stack, Tabs, Title } from "@mantine/core";
 import {
   IconBolt,
@@ -10,7 +11,6 @@ import {
 } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSetting } from "../../logic/Settings";
 import { AppHeaderContent } from "../shell/Header/Header";
 import AboutSettingsView from "./AboutSettingsView";
 import AppearanceSettingsView from "./AppearanceSettingsView";

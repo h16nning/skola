@@ -4,7 +4,7 @@ import { IconHistory } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Deck } from "../../logic/deck";
+import { Deck } from "../../logic/deck/deck";
 import classes from "./NewNotesView.module.css";
 import NoteSubmitButton from "./NoteSubmitButton";
 

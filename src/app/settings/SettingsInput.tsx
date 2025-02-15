@@ -1,7 +1,9 @@
+import { useSetting } from "@/logic/settings/hooks/useSetting";
+import { setSetting } from "@/logic/settings/setSetting";
 import { Checkbox, Group, NumberInput, Switch, TextInput } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import React, { useEffect, useState } from "react";
-import { SettingsValues, setSetting, useSetting } from "../../logic/Settings";
+import { SettingsValues } from "../../logic/settings/Settings";
 import { SettingStatus, StatusIndicator } from "./SettingStatus";
 
 interface SettingsInputProps {

@@ -1,16 +1,15 @@
+import { getAllCards } from "@/logic/card/getAllCards";
+import { getCardsOf } from "@/logic/card/getCardsOf";
+import { getSimplifiedStatesOf } from "@/logic/card/getSimplifiedStatesOf";
+import { getDeck } from "@/logic/deck/getDeck";
+import { useDecks } from "@/logic/deck/hooks/useDecks";
 import { BarChart, DonutChart } from "@mantine/charts";
 import { Center, SegmentedControl, Stack, Title } from "@mantine/core";
 import { State } from "fsrs.js";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import SelectDecksHeader from "../../components/SelectDecksHeader";
-import {
-  getAllCards,
-  getCardsOf,
-  getSimplifiedStatesOf,
-} from "../../logic/card";
 import { db } from "../../logic/db";
-import { getDeck, useDecks } from "../../logic/deck";
 import { AppHeaderContent } from "../shell/Header/Header";
 
 function StatsView() {

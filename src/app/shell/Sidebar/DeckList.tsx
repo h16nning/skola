@@ -1,5 +1,5 @@
 import NewDeckModal from "@/app/deck/NewDeckModal";
-import { useTopLevelDecks } from "@/logic/deck";
+import { useTopLevelDecks } from "@/logic/deck/hooks/useTopLevelDecks";
 import { NavLink, Text, useMantineTheme } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { IconPlus } from "@tabler/icons-react";

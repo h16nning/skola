@@ -1,4 +1,4 @@
-import { Deck } from "@/logic/deck";
+import { Deck } from "@/logic/deck/deck";
 import { Select, Stack, Text } from "@mantine/core";
 import React from "react";
 import { useParams } from "react-router-dom";

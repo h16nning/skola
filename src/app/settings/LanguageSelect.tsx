@@ -1,11 +1,9 @@
+import { useSetting } from "@/logic/settings/hooks/useSetting";
+import { setSetting } from "@/logic/settings/setSetting";
 import { Select } from "@mantine/core";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import {
-  SupportedLanguages,
-  setSetting,
-  useSetting,
-} from "../../logic/Settings";
+import { SupportedLanguages } from "../../logic/settings/Settings";
 
 export default function LanguageSelect() {
   const [language] = useSetting("language");

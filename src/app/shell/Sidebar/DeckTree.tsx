@@ -1,4 +1,5 @@
-import { Deck, useSubDecks } from "@/logic/deck";
+import { Deck } from "@/logic/deck/deck";
+import { useSubDecks } from "@/logic/deck/hooks/useSubDecks";
 import { NavLink } from "@mantine/core";
 import { IconCards, IconChevronRight } from "@tabler/icons-react";
 import { useState } from "react";

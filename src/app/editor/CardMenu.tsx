@@ -1,8 +1,16 @@
+import CardStatisticsModal from "@/app/statistics/CardStatisticsModal";
 import DangerousConfirmModal from "@/components/DangerousConfirmModal";
 import {
   deleteFailed,
   successfullyDeleted,
 } from "@/components/Notification/Notification";
+import { Card } from "@/logic/card/card";
+import { deleteNote } from "@/logic/note/deleteNote";
+import { getNote } from "@/logic/note/getNote";
+import { NoteType } from "@/logic/note/note";
+import { Note } from "@/logic/note/note";
+import { useSetting } from "@/logic/settings/hooks/useSetting";
+import { useShowShortcutHints } from "@/logic/settings/hooks/useShowShortcutHints";
 import { ActionIcon, Group, Kbd, Menu } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import {
@@ -16,11 +24,7 @@ import {
 import { t } from "i18next";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSetting, useShowShortcutHints } from "../../logic/Settings";
-import { Card, NoteType } from "../../logic/card";
-import { Note, deleteNote, getNote } from "../../logic/note";
 import DebugCardModal from "../DebugCardModal/DebugCardModal";
-import CardStatisticsModal from "../statistics/CardStatisticsModal";
 
 interface CardMenuProps {
   card: Card<NoteType> | undefined;
