@@ -3,9 +3,10 @@ import {
   deleteFailed,
   successfullyDeleted,
 } from "@/components/Notification/Notification";
-import { useShowShortcutHints } from "@/logic/Settings";
-import { NoteType } from "@/logic/card";
-import { Note, deleteNote } from "@/logic/note";
+import { deleteNote } from "@/logic/note/deleteNote";
+import { NoteType } from "@/logic/note/note";
+import { Note } from "@/logic/note/note";
+import { useShowShortcutHints } from "@/logic/settings/hooks/useShowShortcutHints";
 import { ActionIcon, Kbd, Menu } from "@mantine/core";
 import { useDisclosure, useHotkeys } from "@mantine/hooks";
 import {

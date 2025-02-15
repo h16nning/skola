@@ -1,8 +1,9 @@
+import { useSubDecks } from "@/logic/deck/hooks/useSubDecks";
 import { Button, Group, Stack, Text } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Deck, useSubDecks } from "../../logic/deck";
+import { Deck } from "../../logic/deck/deck";
 import DeckTable from "./DeckTable";
 import NewDeckModal from "./NewDeckModal";
 

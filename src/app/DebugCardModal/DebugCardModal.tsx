@@ -1,5 +1,6 @@
+import { NoteType } from "@/logic/note/note";
 import { Modal, Text } from "@mantine/core";
-import { Card, NoteType } from "../../logic/card";
+import { Card } from "../../logic/card/card";
 import DebugCardTable from "./DebugCardTable";
 
 interface DebugCardModalProps {

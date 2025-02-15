@@ -18,7 +18,7 @@ import LoginUI from "./app/login/LoginUI";
 import Header from "./app/shell/Header/Header";
 import Sidebar from "./app/shell/Sidebar/Sidebar";
 import i18n from "./i18n";
-import { useSetting } from "./logic/Settings";
+import { useSetting } from "./logic/settings/hooks/useSetting";
 import { cssVariablesResolver, presetTheme } from "./style/StyleProvider";
 
 function useRestoreLanguage() {
@@ -77,7 +77,7 @@ export default function App() {
 
             <AppShell.Main>
               <Stack>
-                <Center className={classes.main}>
+                <Center className={classes.main} p="md" h="100%" mih={0}>
                   <Outlet />
                 </Center>
               </Stack>

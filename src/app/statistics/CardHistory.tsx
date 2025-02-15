@@ -1,6 +1,7 @@
+import { NoteType } from "@/logic/note/note";
 import { AreaChart } from "@mantine/charts";
 import React, { useMemo } from "react";
-import { Card, NoteType } from "../../logic/card";
+import { Card } from "../../logic/card/card";
 
 interface CardHistoryProps {
   card?: Card<NoteType>;

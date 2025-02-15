@@ -1,11 +1,11 @@
+import { getAdapter } from "@/logic/NoteTypeAdapter";
+import { useDeckOf } from "@/logic/deck/hooks/useDeckOf";
+import { NoteType } from "@/logic/note/note";
 import { Button, Group, Modal } from "@mantine/core";
 import { IconArrowUpRight } from "@tabler/icons-react";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUtils } from "../../logic/TypeManager";
-import { NoteType } from "../../logic/card";
-import { useDeckOf } from "../../logic/deck";
-import { Note } from "../../logic/note";
+import { Note } from "../../logic/note/note";
 import classes from "./EditNoteModal.module.css";
 import NoteSubmitButton from "./NoteSubmitButton";
 
@@ -26,7 +26,7 @@ export default function EditNoteModal({
 
   const CardEditor = useMemo(() => {
     return deck
-      ? getUtils(note).editor({
+      ? getAdapter(note).editor({
           note,
           deck,
           mode: "edit",

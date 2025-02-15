@@ -1,3 +1,5 @@
+import { useSetting } from "@/logic/settings/hooks/useSetting";
+import { setSetting } from "@/logic/settings/setSetting";
 import {
   Box,
   Center,
@@ -8,7 +10,7 @@ import {
 } from "@mantine/core";
 import { IconMoon, IconSun, IconSunMoon } from "@tabler/icons-react";
 import { t } from "i18next";
-import { SettingsValues, setSetting, useSetting } from "../../logic/Settings";
+import { SettingsValues } from "../../logic/settings/Settings";
 
 export default function SegmentedToggle() {
   const [colorSchemePreference] = useSetting("colorSchemePreference");

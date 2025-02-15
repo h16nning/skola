@@ -1,11 +1,12 @@
+import { getAdapter } from "@/logic/NoteTypeAdapter";
+import { useDeckOf } from "@/logic/deck/hooks/useDeckOf";
+import { NoteType } from "@/logic/note/note";
+import { Note } from "@/logic/note/note";
 import { Group, Stack, Text } from "@mantine/core";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLoaderData } from "react-router-dom";
-import { getUtils } from "../../logic/TypeManager";
-import { NoteType, NoteTypeLabels } from "../../logic/card";
-import { useDeckOf } from "../../logic/deck";
-import { Note } from "../../logic/note";
+import { NoteTypeLabels } from "../../logic/card/card";
 import NoteMenu from "./NoteMenu";
 import NoteSubmitButton from "./NoteSubmitButton";
 
@@ -32,7 +33,7 @@ function NoteView({ note }: { note: Note<NoteType> }) {
 
   const NoteEditor = useMemo(() => {
     return deck
-      ? getUtils(note).editor({
+      ? getAdapter(note).editor({
           note,
           deck,
           mode: "edit",

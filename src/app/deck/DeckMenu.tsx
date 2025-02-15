@@ -1,3 +1,11 @@
+import ImportModal from "@/app/settings/importexport/ImportModal";
+import DangerousConfirmModal from "@/components/DangerousConfirmModal";
+import { Card } from "@/logic/card/card";
+import { Deck } from "@/logic/deck/deck";
+import { deleteDeck } from "@/logic/deck/deleteDeck";
+import { NoteType } from "@/logic/note/note";
+import { useSetting } from "@/logic/settings/hooks/useSetting";
+import { useShowShortcutHints } from "@/logic/settings/hooks/useShowShortcutHints";
 import { ActionIcon, Group, Kbd, Menu } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import {
@@ -13,11 +21,6 @@ import {
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import DangerousConfirmModal from "../../components/DangerousConfirmModal";
-import { useSetting, useShowShortcutHints } from "../../logic/Settings";
-import { Card, NoteType } from "../../logic/card";
-import { Deck, deleteDeck } from "../../logic/deck";
-import ImportModal from "../settings/importexport/ImportModal";
 import DebugDeckModal from "./DebugDeckModal";
 import RenameDeckModal from "./RenameDeckModal";
 

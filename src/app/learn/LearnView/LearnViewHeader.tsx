@@ -1,10 +1,11 @@
+import { NoteType } from "@/logic/note/note";
 import { ActionIcon, Group, Progress } from "@mantine/core";
 import { IconX } from "@tabler/icons-react";
 import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { StopwatchResult, useStopwatch } from "react-timer-hook";
-import { Card, NoteType } from "../../../logic/card";
-import { Deck } from "../../../logic/deck";
+import { Card } from "../../../logic/card/card";
+import { Deck } from "../../../logic/deck/deck";
 import { LearnController } from "../../../logic/learn";
 import CardMenu from "../../editor/CardMenu";
 import RemainingCardsIndicator from "../RemainingCardsIndicator/RemainingCardsIndicator";

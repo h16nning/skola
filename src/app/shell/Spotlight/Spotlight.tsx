@@ -1,9 +1,12 @@
-import { NoteSorts } from "@/logic/NoteSorting";
-import { useShowShortcutHints } from "@/logic/Settings";
-import { getUtils } from "@/logic/TypeManager";
-import { NoteType } from "@/logic/card";
-import { determineSuperDecks, getDeck, useDecks } from "@/logic/deck";
-import { Note, useNotesWith } from "@/logic/note";
+import { getAdapter } from "@/logic/NoteTypeAdapter";
+import { getDeck } from "@/logic/deck/getDeck";
+import { getSuperDecks } from "@/logic/deck/getSuperDecks";
+import { useDecks } from "@/logic/deck/hooks/useDecks";
+import { useNotesWith } from "@/logic/note/hooks/useNotesWith";
+import { NoteType } from "@/logic/note/note";
+import { Note } from "@/logic/note/note";
+import { NoteSorts } from "@/logic/note/sort";
+import { useShowShortcutHints } from "@/logic/settings/hooks/useShowShortcutHints";
 import { Group, Kbd, UnstyledButton, rem } from "@mantine/core";
 import { useDebouncedState, useOs } from "@mantine/hooks";
 import { Spotlight, spotlight } from "@mantine/spotlight";
@@ -26,7 +29,7 @@ const useSearchNote = (filter: string) => {
         .then((m) =>
           m
             .filter((note) =>
-              getUtils(note)
+              getAdapter(note)
                 .getSortFieldFromNoteContent(note.content)
                 .toLowerCase()
                 .includes(filter.toLowerCase())
@@ -39,7 +42,7 @@ const useSearchNote = (filter: string) => {
     async function filterNotes(notes: Note<NoteType>[]) {
       const decksPromises = notes?.map(async (note) => {
         const deck = await getDeck(note.deck);
-        const superDecks = await determineSuperDecks(deck);
+        const superDecks = await getSuperDecks(deck);
         return [
           ...(superDecks[0] || []).map((sd) => sd.name),
           deck?.name || "Empty",
@@ -96,7 +99,7 @@ export default function SpotlightCard({
         ...filteredNotes.map((note) => {
           return {
             id: note.id,
-            label: getUtils(note).getSortFieldFromNoteContent(note.content),
+            label: getAdapter(note).getSortFieldFromNoteContent(note.content),
             description: note.breadcrumb.join(" > "),
             onClick: () => navigate(`/deck/${note.deck}`),
             leftSection: (

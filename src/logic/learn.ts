@@ -1,8 +1,14 @@
 import { Table } from "dexie";
 import { Rating, SchedulingInfo, State } from "fsrs.js";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { updateGlobalScheduler, useGlobalScheduler } from "./CardScheduler";
-import { Card, NoteType, updateCardModel, useCardsWith } from "./card";
+import {
+  updateGlobalScheduler,
+  useGlobalScheduler,
+} from "./card/CardScheduler";
+import { Card } from "./card/card";
+import { useCardsWith } from "./card/hooks/useCardsWith";
+import { updateCardModel } from "./card/updateCardModel";
+import { NoteType } from "./note/note";
 import { DeckStatistics, newStatistics } from "./statistics";
 
 export type LearnOptions = {

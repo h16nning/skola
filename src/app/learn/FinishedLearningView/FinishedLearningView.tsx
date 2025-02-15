@@ -1,6 +1,6 @@
 import Stat from "@/components/Stat/Stat";
-import { useSetting } from "@/logic/Settings";
 import { useRepetitionAccuracy } from "@/logic/learn";
+import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { DeckStatistics, writeStatistics } from "@/logic/statistics";
 import {
   Button,

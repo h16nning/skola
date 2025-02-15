@@ -1,10 +1,11 @@
 import ListButton from "@/components/ListButton/ListButton";
+import { useCardsOf } from "@/logic/card/hooks/useCardsOf";
+import { useSimplifiedStatesOf } from "@/logic/card/hooks/useSimplifiedStatesOf";
 import { Alert, Badge, Group, Text } from "@mantine/core";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { useCardsOf, useSimplifiedStatesOf } from "../../logic/card";
-import { Deck } from "../../logic/deck";
+import { Deck } from "../../logic/deck/deck";
 import badge from "./Badge.module.css";
 
 type DeckPreviewProps = {

@@ -1,9 +1,10 @@
 import { genericFail } from "@/components/Notification/Notification";
+import { renameDeck } from "@/logic/deck/renameDeck";
 import { Button, Group, Modal, Stack, TextInput } from "@mantine/core";
 import { getHotkeyHandler, useHotkeys } from "@mantine/hooks";
 import { t } from "i18next";
 import { useCallback, useEffect, useState } from "react";
-import { Deck, renameDeck } from "../../logic/deck";
+import { Deck } from "../../logic/deck/deck";
 
 interface RenameDeckModalProps {
   deck: Deck;

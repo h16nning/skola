@@ -2,7 +2,7 @@ import LazySkeleton from "@/components/LazySkeleton";
 import { Stack, Text } from "@mantine/core";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Deck } from "../../logic/deck";
+import { Deck } from "../../logic/deck/deck";
 import DeckPreview from "./DeckPreview";
 
 interface DeckTableProps {

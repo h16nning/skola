@@ -19,9 +19,11 @@ import {
 
 import MissingObject from "@/components/MissingObject";
 import SelectDecksHeader from "@/components/SelectDecksHeader";
-import { getUtilsOfType } from "@/logic/TypeManager";
-import { NoteType, NoteTypeLabels } from "@/logic/card";
-import { useDeckFromUrl, useDecks } from "@/logic/deck";
+import { getAdapterOfType } from "@/logic/NoteTypeAdapter";
+import { NoteTypeLabels } from "@/logic/card/card";
+import { useDeckFromUrl } from "@/logic/deck/hooks/useDeckFromUrl";
+import { useDecks } from "@/logic/deck/hooks/useDecks";
+import { NoteType } from "@/logic/note/note";
 import { useHotkeys, useOs } from "@mantine/hooks";
 import { t } from "i18next";
 import React from "react";
@@ -35,7 +37,7 @@ function NewNotesView() {
 
   const [decks] = useDecks();
   const [deck, isReady] = useDeckFromUrl();
-  const [noteType, setNoteType] = useState<NoteType>(NoteType.Normal);
+  const [noteType, setNoteType] = useState<NoteType>(NoteType.Basic);
   const [requestedFinish, setRequestedFinish] = useState(false);
 
   const noteTypeSelectRef = React.createRef<HTMLInputElement>();
@@ -51,7 +53,7 @@ function NewNotesView() {
 
   const NoteEditor = useMemo(() => {
     return deck
-      ? getUtilsOfType(noteType).editor({
+      ? getAdapterOfType(noteType).editor({
           note: null,
           deck: deck,
           mode: "new",
@@ -121,13 +123,13 @@ function NewNotesView() {
                   ref={noteTypeSelectRef}
                   value={noteType}
                   onChange={(type) => {
-                    setNoteType((type as NoteType) ?? NoteType.Normal);
+                    setNoteType((type as NoteType) ?? NoteType.Basic);
                   }}
                   label={t("note.new.select-note-type.label")}
                   data={[
                     {
-                      label: NoteTypeLabels[NoteType.Normal],
-                      value: NoteType.Normal,
+                      label: NoteTypeLabels[NoteType.Basic],
+                      value: NoteType.Basic,
                     },
                     {
                       label: NoteTypeLabels[NoteType.DoubleSided],

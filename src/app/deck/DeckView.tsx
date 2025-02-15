@@ -1,7 +1,8 @@
 import MissingObject from "@/components/MissingObject";
-import { useCardsOf } from "@/logic/card";
-import { useDeckFromUrl, useSuperDecks } from "@/logic/deck";
-import { useScrollResetOnLocationChange } from "@/logic/ui";
+import { useScrollResetOnLocationChange } from "@/lib/ui";
+import { useCardsOf } from "@/logic/card/hooks/useCardsOf";
+import { useDeckFromUrl } from "@/logic/deck/hooks/useDeckFromUrl";
+import { useSuperDecks } from "@/logic/deck/hooks/useSuperDecks";
 import { Badge, Group, Stack, Tabs } from "@mantine/core";
 import { useDocumentTitle, useHotkeys } from "@mantine/hooks";
 import { t } from "i18next";

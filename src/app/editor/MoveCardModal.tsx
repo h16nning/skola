@@ -1,6 +1,8 @@
 import { successfullyMovedTo } from "@/components/Notification/Notification";
-import { Card, NoteType, moveCard } from "@/logic/card";
-import { useDecks } from "@/logic/deck";
+import { Card } from "@/logic/card/card";
+import { moveCard } from "@/logic/card/moveCard";
+import { useDecks } from "@/logic/deck/hooks/useDecks";
+import { NoteType } from "@/logic/note/note";
 import { Button, Group, Modal, Select, Stack, Text } from "@mantine/core";
 import { IconArrowsExchange } from "@tabler/icons-react";
 import { useState } from "react";
@@ -11,7 +13,7 @@ interface MoveCardModalProps {
   setOpened: Function;
 }
 
-//MAY BE DEPRECATED. Allow moving single cards?
+// DEPRECATED. TODO: implement MoveNote
 
 export default function MoveCardModal({
   card,

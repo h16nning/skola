@@ -1,7 +1,7 @@
 import ModalProps from "@/components/ModalProps";
 import { Modal } from "@mantine/core";
 import React from "react";
-import { Deck } from "../../logic/deck";
+import { Deck } from "../../logic/deck/deck";
 
 interface DeckOptionsModalProps extends ModalProps {
   deck: Deck;

@@ -1,6 +1,6 @@
+import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { Stack, Text } from "@mantine/core";
 import { useTranslation } from "react-i18next";
-import { useSetting } from "../../logic/Settings";
 import SettingsInput from "./SettingsInput";
 
 export default function LearnSettingsView() {

@@ -1,7 +1,8 @@
+import { NoteType } from "@/logic/note/note";
 import { Anchor, Space, Stack, Text } from "@mantine/core";
 import { Rating, State } from "fsrs.js";
 import { Fragment } from "react";
-import { Card, NoteType } from "../../logic/card";
+import { Card } from "../../logic/card/card";
 import classes from "./DebugCard.module.css";
 
 export default function DebugCardTable({
