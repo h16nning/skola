@@ -22,6 +22,7 @@ import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import DebugDeckModal from "./DebugDeckModal";
+import MoveDeckModal from "./MoveDeckModal";
 import RenameDeckModal from "./RenameDeckModal";
 
 interface DeckMenuProps {
@@ -45,11 +46,12 @@ function DeckMenu({
   const [developerMode] = useSetting("developerMode");
 
   const [deleteModalOpened, setDeleteModalOpened] = useState<boolean>(false);
+  const [moveModalOpened, setMoveModalOpened] = useState<boolean>(false);
   const [renameModalOpened, setRenameModalOpened] = useState<boolean>(false);
   const [importModalOpened, setImportModalOpened] = useState<boolean>(false);
   const [debugModalOpened, setDebugModalOpened] = useState<boolean>(false);
 
-  const tryDeleteDeck = useCallback(async () => {
+  const handleDelete = useCallback(async () => {
     if (!deck) {
       return;
     }
@@ -107,7 +109,7 @@ function DeckMenu({
           <Menu.Item
             leftSection={<IconArrowsExchange size={16} />}
             rightSection={showShortcutHints && <Kbd>m</Kbd>}
-            disabled
+            onClick={() => setMoveModalOpened(true)}
           >
             {t("deck.menu.move")}
           </Menu.Item>
@@ -160,7 +162,7 @@ function DeckMenu({
       {deck && cards && (
         <>
           <DangerousConfirmModal
-            dangerousAction={() => tryDeleteDeck()}
+            dangerousAction={() => handleDelete()}
             dangerousDependencies={[deck]}
             dangerousTitle={"Delete Deck"}
             dangerousDescription={
@@ -173,6 +175,11 @@ function DeckMenu({
             deck={deck}
             opened={renameModalOpened}
             setOpened={setRenameModalOpened}
+          />
+          <MoveDeckModal
+            deck={deck}
+            opened={moveModalOpened}
+            setOpened={setMoveModalOpened}
           />
           <DebugDeckModal
             deck={deck}

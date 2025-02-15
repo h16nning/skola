@@ -1,31 +1,33 @@
 import { successfullyMovedCardTo } from "@/components/Notification/Notification";
-import { Card } from "@/logic/card/card";
-import { moveCard } from "@/logic/card/moveCard";
+import { Deck } from "@/logic/deck/deck";
 import { useDecks } from "@/logic/deck/hooks/useDecks";
-import { NoteType } from "@/logic/note/note";
+import { moveDeck } from "@/logic/deck/moveDeck";
 import { Button, Group, Modal, Select, Stack, Text } from "@mantine/core";
 import { IconArrowsExchange } from "@tabler/icons-react";
 import { useState } from "react";
 
-interface MoveCardModalProps {
-  card: Card<NoteType>;
+interface MoveDeckModalProps {
+  deck: Deck;
   opened: boolean;
   setOpened: Function;
 }
 
-// DEPRECATED. TODO: implement MoveNote
-
-export default function MoveCardModal({
-  card,
+export default function MoveDeckModal({
+  deck,
   opened,
   setOpened,
-}: MoveCardModalProps) {
+}: MoveDeckModalProps) {
+  const oldSuperDeck = deck.superDecks
+    ? deck.superDecks[deck.superDecks.length - 1]
+    : null;
+
   const [decks, areDecksReady] = useDecks((decks) =>
-    decks?.filter((deck) => deck.id !== card.deck)
+    decks?.filter((d) => d.id !== oldSuperDeck)
   );
   const [newDeckID, setNewDeckID] = useState<string | null>(null);
+
   return (
-    <Modal title={"Move"} opened={opened} onClose={() => setOpened(false)}>
+    <Modal title={"Move Deck"} opened={opened} onClose={() => setOpened(false)}>
       <Stack>
         <Select
           searchable
@@ -46,7 +48,7 @@ export default function MoveCardModal({
         />
         {decks?.length === 0 && (
           <Text fz="sm">
-            It seems like there are no other valid decks to move this card to.
+            It seems like there are no other valid decks to move this deck to.
             Try creating another one.
           </Text>
         )}
@@ -55,16 +57,18 @@ export default function MoveCardModal({
             onClick={() => {
               const newDeck = decks?.find((deck) => deck.id === newDeckID);
               if (newDeck !== undefined) {
-                moveCard(card, newDeck);
+                moveDeck(deck.id, newDeck.id);
                 successfullyMovedCardTo(newDeck.name);
                 setOpened(false);
               } else {
               }
             }}
             leftSection={<IconArrowsExchange />}
-            disabled={!areDecksReady || !newDeckID || newDeckID === card.deck}
+            disabled={
+              !areDecksReady || !newDeckID || newDeckID === oldSuperDeck
+            }
           >
-            Move Card
+            Move Deck
           </Button>
         </Group>
       </Stack>

@@ -1,4 +1,6 @@
 import { useStatesOf } from "@/logic/card/hooks/useStatesOf";
+import { useSubDecks } from "@/logic/deck/hooks/useSubDecks";
+import { useSuperDecks } from "@/logic/deck/hooks/useSuperDecks";
 import { NoteType } from "@/logic/note/note";
 import { Anchor, Modal, Stack, Text } from "@mantine/core";
 import { State } from "fsrs.js";
@@ -19,6 +21,11 @@ function DebugDeckModal({
   cards,
 }: DebugDeckModalProps) {
   const states = useStatesOf(cards);
+
+  const [superDecks] = useSuperDecks(deck);
+
+  const [subDecks] = useSubDecks(deck);
+
   return (
     <Modal opened={opened} onClose={() => setOpened(false)} title="Debug">
       <Stack justify="space-between">
@@ -32,14 +39,20 @@ function DebugDeckModal({
             </Text>
             <Text fz="xs">
               <b>SubDecks: </b>
-              {deck.subDecks.map((subDeckId) => (
-                <span key={subDeckId}>
-                  <Anchor href={"/deck/" + subDeckId}>{subDeckId}</Anchor>,{" "}
+              {subDecks?.map((s) => (
+                <span key={s.id}>
+                  <Anchor href={"/deck/" + s.id}>{s.name}</Anchor>,{" "}
                 </span>
               ))}
             </Text>
             <Text fz="xs">
-              <b>SuperDecks: </b>"{deck.superDecks}"
+              <b>SuperDecks: </b>"
+              {superDecks?.map((s) => (
+                <span key={s.id}>
+                  <Anchor href={"/deck/" + s.id}>{s.name}</Anchor>,{" "}
+                </span>
+              ))}
+              "
             </Text>
             <Text fz="xs">
               <b>Cards: </b>"
