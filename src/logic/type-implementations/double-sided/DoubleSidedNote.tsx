@@ -1,63 +1,20 @@
 import DoubleSidedCardEditor from "@/app/editor/NoteEditor/DoubleSidedCardEditor";
 import { NoteEditorProps, NoteTypeAdapter } from "@/logic/NoteTypeAdapter";
 import { Card, HTMLtoPreviewString } from "@/logic/card/card";
-import { createCardSkeleton } from "@/logic/card/createCardSkeleton";
 import { deleteCard } from "@/logic/card/deleteCard";
-import { newCard } from "@/logic/card/newCard";
 import { db } from "@/logic/db";
-import { Deck } from "@/logic/deck/deck";
 import { NoteContent } from "@/logic/note/NoteContent";
-import { newNote } from "@/logic/note/newNote";
-import { NoteType } from "@/logic/note/note";
-import { Note } from "@/logic/note/note";
-import { updateNoteContent } from "@/logic/note/updateNoteContent";
+import { Note, NoteType } from "@/logic/note/note";
 import common from "@/style/CommonStyles.module.css";
 import { Divider, Stack, Title } from "@mantine/core";
+import createDoubleSidedNote from "./createDoubleSidedNote";
+import { updateDoubleSidedNote } from "./updateDoubleSidedNote";
 
 export const DoubleSidedNoteTypeAdapter: NoteTypeAdapter<NoteType.DoubleSided> =
   {
-    async createNote(params: { field1: string; field2: string }, deck: Deck) {
-      function createDoubleSidedCard(
-        noteId: string,
-        frontIsField1: boolean,
-        front: string
-      ) {
-        return {
-          ...createCardSkeleton(),
-          note: noteId,
-          preview: HTMLtoPreviewString(front),
-          content: {
-            type: NoteType.DoubleSided,
-            frontIsField1: frontIsField1,
-          },
-        };
-      }
-      return db.transaction("rw", db.notes, db.decks, db.cards, async () => {
-        const noteId = await newNote(deck, {
-          type: NoteType.DoubleSided,
-          field1: params.field1,
-          field2: params.field2,
-        });
-        await newCard(createDoubleSidedCard(noteId, true, params.field1), deck);
-        await newCard(
-          createDoubleSidedCard(noteId, false, params.field2),
-          deck
-        );
-      });
-    },
+    createNote: createDoubleSidedNote,
 
-    async updateNote(
-      params: { field1: string; field2: string },
-      existingNote: Note<NoteType.DoubleSided>
-    ) {
-      return db.transaction("rw", db.notes, db.cards, async () => {
-        await updateNoteContent(existingNote.id, {
-          type: NoteType.DoubleSided,
-          field1: params.field1,
-          field2: params.field2,
-        });
-      });
-    },
+    updateNote: updateDoubleSidedNote,
 
     displayQuestion(
       card: Card<NoteType.DoubleSided>,

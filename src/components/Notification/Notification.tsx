@@ -31,10 +31,22 @@ export function successfullyAdded() {
   });
 }
 
-export function successfullyMovedTo(deckName: string) {
+export function successfullyMovedCardTo(deckName: string) {
   return notifications.show({
     title: "Card Moved",
     message: `Card moved to ${deckName}!`,
+    autoClose: 1000,
+    color: "teal",
+    withCloseButton: false,
+    icon: <IconArrowsExchange />,
+    className: classes,
+  });
+}
+
+export function successfullyMovedDeckTo(deckName: string) {
+  return notifications.show({
+    title: "Deck Moved",
+    message: `Deck moved to ${deckName}!`,
     autoClose: 1000,
     color: "teal",
     withCloseButton: false,
