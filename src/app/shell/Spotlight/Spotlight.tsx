@@ -160,12 +160,7 @@ export default function SpotlightCard({
         limit={10}
         scrollable={true}
         searchProps={{
-          leftSection: (
-            <IconSearch
-              style={{ width: rem(20), height: rem(20) }}
-              stroke={1.5}
-            />
-          ),
+          leftSection: <IconSearch size={18} stroke={2} />,
           placeholder: "Search...",
         }}
       />
