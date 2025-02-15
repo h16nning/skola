@@ -1,8 +1,8 @@
 import "@mantine/core/styles.css";
-
 import "@mantine/charts/styles.css";
 import "@mantine/notifications/styles.css";
 import "@mantine/spotlight/styles.css";
+import "./style/index.css";
 
 import { AppShell, Center, MantineProvider, Stack } from "@mantine/core";
 
@@ -13,10 +13,10 @@ import { Notifications } from "@mantine/notifications";
 import { useEffect } from "react";
 import { I18nextProvider } from "react-i18next";
 import { Outlet } from "react-router-dom";
-import Header from "./components/Header/Header";
-import WelcomeView from "./components/WelcomeView";
-import LoginUI from "./components/login/LoginUI";
-import Sidebar from "./components/sidebar/Sidebar";
+import WelcomeView from "./app/WelcomeView";
+import LoginUI from "./app/login/LoginUI";
+import Header from "./app/shell/Header/Header";
+import Sidebar from "./app/shell/Sidebar/Sidebar";
 import i18n from "./i18n";
 import { useSetting } from "./logic/Settings";
 import { cssVariablesResolver, presetTheme } from "./style/StyleProvider";

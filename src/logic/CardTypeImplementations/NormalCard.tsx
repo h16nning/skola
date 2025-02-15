@@ -1,6 +1,6 @@
+import NormalCardEditor from "@/app/editor/CardEditor/NormalCardEditor";
 import { Divider, Stack, Title } from "@mantine/core";
 import { useState } from "react";
-import NormalCardEditor from "../../components/editcard/CardEditor/NormalCardEditor";
 import common from "../../style/CommonStyles.module.css";
 import { NoteEditorProps, TypeManager } from "../TypeManager";
 import {
