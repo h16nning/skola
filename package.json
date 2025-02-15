@@ -52,7 +52,7 @@
     "add-domain": "echo https://skola.cards> dist/CNAME",
     "predeploy": "npm run add-domain && npm run build",
     "deploy": "gh-pages -d dist",
-    "build-and-deploy": "npm run build && npm run deploy"
+    "build-and-deploy": "npm run predeploy && npm run deploy"
   },
   "eslintConfig": {
     "extends": [

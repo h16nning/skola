@@ -1,5 +1,6 @@
 import { NoteType } from "@/logic/note/note";
-import { ActionIcon, Group, Progress } from "@mantine/core";
+import { ActionIcon, Group, Kbd, Progress, Tooltip } from "@mantine/core";
+import { useHotkeys } from "@mantine/hooks";
 import { IconX } from "@tabler/icons-react";
 import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
@@ -35,6 +36,9 @@ function LearnViewHeader({
   deck,
 }: LearnViewHeaderProps) {
   const navigate = useNavigate();
+
+  useHotkeys([["d", () => navigate("/deck/" + deck?.id)]]);
+
   const progress = useMemo(
     () =>
       (controller.statistics.ratingsList.length /
@@ -58,13 +62,21 @@ function LearnViewHeader({
     <>
       <Group justify="space-between" wrap="nowrap">
         <Group wrap="nowrap" gap="xs">
-          <ActionIcon
-            onClick={() => navigate("/deck/" + deck?.id)}
-            variant="subtle"
-            color="gray"
+          <Tooltip
+            label={
+              <>
+                Back to deck <Kbd>d</Kbd>
+              </>
+            }
           >
-            <IconX />
-          </ActionIcon>
+            <ActionIcon
+              onClick={() => navigate("/deck/" + deck?.id)}
+              variant="subtle"
+              color="gray"
+            >
+              <IconX />
+            </ActionIcon>
+          </Tooltip>
           <Stopwatch />
         </Group>
 
