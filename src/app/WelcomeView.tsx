@@ -3,6 +3,7 @@ import {
   Anchor,
   Button,
   Center,
+  CheckIcon,
   Group,
   Image,
   Stack,
@@ -11,7 +12,7 @@ import {
 } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import { IconInfoCircle } from "@tabler/icons-react";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 export default function WelcomeView() {
   const [_, setRegistered] = useLocalStorage({
@@ -23,18 +24,47 @@ export default function WelcomeView() {
   return (
     <Center py="4rem" px="0.5rem" w="100%">
       <Stack gap="2rem" maw="600px">
-        <Image src="logo.svg" alt="Skola Logo" maw="4rem" />
+        <div style={{ position: "relative" }}>
+          <Image
+            src="logo.svg"
+            alt="Skola Logo"
+            maw="4rem"
+            style={{
+              position: "absolute",
+              filter: "blur(20px)",
+              opacity: 0.5,
+              zIndex: -1,
+            }}
+          />
+          <Image src="logo.svg" alt="Skola Logo" maw="4rem" />
+        </div>
         <Stack gap="xs">
           <Title order={1}>Welcome to Skola!</Title>
-          <Text fz="sm">
-            An open-source and free flash card learning app in your browser.
-          </Text>
+          <Text fz="sm">A flash card learning app here in your browser.</Text>
+          {[
+            "No sign-up required",
+            "Free and open source",
+            "Directly in your browser",
+            "No tracking",
+          ].map((item) => (
+            <Group key={item} align="center" gap="xs">
+              <CheckIcon
+                style={{ color: "var(--mantine-color-green-strong)" }}
+                size={12}
+              />{" "}
+              <Text fz="sm">{item}</Text>
+            </Group>
+          ))}
         </Stack>
         <Alert color="gray" icon={<IconInfoCircle />}>
           Please note that this app is still in early development. You may
           encounter bugs and missing features. If you find any issues, consider
           reporting them on the{" "}
-          <Anchor href="https://www.github.com/h16nning/skola">
+          <Anchor
+            href="https://www.github.com/h16nning/skola"
+            fz="sm"
+            style={{ whiteSpace: "nowrap" }}
+          >
             GitHub repository
           </Anchor>
           .
@@ -42,11 +72,12 @@ export default function WelcomeView() {
         <Stack gap="xs">
           <Title order={3}>About the project</Title>
           <Text fz="sm">
-            Skola aims to provide an alternative to spaced repetition apps like
-            Anki and SuperMemo. It is open-source and completely free to use.
-            The focus lies on creating a fun to use and intuitive experience.
-            You can find more information on the{" "}
-            <Anchor href="https://www.github.com/h16nning/skola">
+            Skola is a project developed by a student aiming to provide an
+            alternative to spaced repetition apps like Anki and SuperMemo. It is
+            open-source and completely free to use. The focus lies on creating a
+            fun to use and intuitive experience. You can find more information
+            on the{" "}
+            <Anchor href="https://www.github.com/h16nning/skola" fz="sm">
               GitHub repository
             </Anchor>
             .
@@ -55,11 +86,12 @@ export default function WelcomeView() {
         <Stack gap="xs">
           <Title order={3}>About privacy</Title>
           <Text fz="sm">
-            Privacy is a focus of this project. Skola saves decks and cards
+            Privacy is a priority of this project. Skola saves decks and cards
             locally in your browser using the IndexedDB API. Furthermore local
             storage and cookies are being used to store relevant data. We do not
-            collect any personal data.
-            <b>You agree to the above by using this app.</b>
+            collect any personal data. Currently, a syncing feature is under
+            development allowing you to store your data in the cloud. However,
+            this feature is totally optional.
           </Text>
         </Stack>
         <Group align="start">
@@ -68,7 +100,7 @@ export default function WelcomeView() {
             size="md"
             variant="gradient"
           >
-            Get started
+            Get Started Now
           </Button>
         </Group>
       </Stack>
