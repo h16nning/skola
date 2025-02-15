@@ -16,7 +16,10 @@
         "noEmit": true,
         "noUnusedLocals": true,
         "jsx": "preserve",
-        "types": ["./vite-env.d.ts", "node"]
+        "types": ["./vite-env.d.ts", "node"],
+        "paths": {
+            "@/*": ["./src/*"]
+        }
     },
     "include": ["src"],
     "references": [{ "path": "./tsconfig.node.json" }]

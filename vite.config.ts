@@ -12,9 +12,12 @@ export default defineConfig({
     ENABLE_FIREBASE: process.env.ENABLE_FIREBASE || true,
     PUBLIC_URL: JSON.stringify(process.env.PUBLIC_URL || "/"),
   },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
+  },
   plugins: [react(), viteTsconfigPaths(), Checker({ typescript: true })],
-
-  //changes for transition to tauri
   clearScreen: false,
   server: {
     strictPort: true,

@@ -1,3 +1,4 @@
+import spotlight from "@/app/shell/Spotlight/Spotlight.module.css";
 import {
   ActionIcon,
   AppShell,
@@ -16,7 +17,6 @@ import {
   createTheme,
 } from "@mantine/core";
 import { Spotlight } from "@mantine/spotlight";
-import spotlight from "../components/sidebar/Spotlight.module.css";
 import actionIcon from "./ActionIcon.module.css";
 import appShell from "./AppShell.module.css";
 import breadcrumbs from "./Breadcrumbs.module.css";

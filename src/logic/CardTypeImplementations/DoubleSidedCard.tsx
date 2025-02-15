@@ -1,6 +1,6 @@
+import DoubleSidedCardEditor from "@/app/editor/CardEditor/DoubleSidedCardEditor";
+import common from "@/style/CommonStyles.module.css";
 import { Divider, Stack, Title } from "@mantine/core";
-import DoubleSidedCardEditor from "../../components/editcard/CardEditor/DoubleSidedCardEditor";
-import common from "../../style/CommonStyles.module.css";
 import { NoteEditorProps, TypeManager } from "../TypeManager";
 import {
   Card,

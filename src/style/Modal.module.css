@@ -1,25 +1,21 @@
 .title {
-  font-size: var(--mantine-font-size-sm);
-  font-weight: 600;
+    font-size: var(--mantine-font-size-sm);
+    font-weight: 600;
 }
 
 .close:active {
-  transform: scale(0.9);
+    transform: scale(0.9);
 }
 .overlay {
-  @mixin light {
-    background: linear-gradient(
-      165deg,
-      rgba(173, 181, 189, 0.2) 80%,
-      rgba(117, 183, 151, 0.2) 100%
-    );
-  }
+    @mixin light {
+        background: linear-gradient(
+            165deg,
+            rgba(173, 181, 189, 0.2) 80%,
+            rgba(117, 183, 151, 0.2) 100%
+        );
+    }
 
-  @mixin dark {
-    background: linear-gradient(
-      165deg,
-      rgba(0, 0, 0, 0.3) 80%,
-      rgba(7, 61, 4, 0.2) 100%
-    );
-  }
+    @mixin dark {
+        background: rgba(0, 0, 0, 0.3) 80%;
+    }
 }

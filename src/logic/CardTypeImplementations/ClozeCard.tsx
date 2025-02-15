@@ -1,3 +1,4 @@
+import ClozeCardEditor from "@/app/editor/CardEditor/ClozeCardEditor";
 import { Text, UnstyledButton } from "@mantine/core";
 import cx from "clsx";
 import parse, {
@@ -7,7 +8,6 @@ import parse, {
   domToReact,
 } from "html-react-parser";
 import { ReactNode, memo, useState } from "react";
-import ClozeCardEditor from "../../components/editcard/CardEditor/ClozeCardEditor";
 import { NoteEditorProps, TypeManager } from "../TypeManager";
 import {
   Card,

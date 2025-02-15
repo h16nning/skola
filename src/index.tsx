@@ -1,19 +1,17 @@
-import "./style/index.css";
-
+import App from "@/App";
+import DeckView from "@/app/deck/DeckView";
+import EditNoteView, { NoNoteView } from "@/app/editor/EditNoteView";
+import NewNotesView from "@/app/editor/NewNotesView";
+import NoteManagerView from "@/app/explorer/NoteManagerView/NoteManagerView";
+import HomeView from "@/app/home/HomeView";
+import LearnView from "@/app/learn/LearnView/LearnView";
+import SettingsView from "@/app/settings/SettingsView";
+import StatsView from "@/app/statistics/StatsView";
+import TodayView from "@/app/today/TodayView";
+import { getNote } from "@/logic/note";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Navigate, RouterProvider, createHashRouter } from "react-router-dom";
-import App from "./App";
-import HomeView from "./components/HomeView";
-import NoteManagerView from "./components/NoteManagerView/NoteManagerView";
-import StatsView from "./components/StatsView";
-import TodayView from "./components/TodayView";
-import DeckView from "./components/deck/DeckView";
-import EditNoteView, { NoNoteView } from "./components/editcard/EditNoteView";
-import NewNotesView from "./components/editcard/NewNotesView";
-import LearnView from "./components/learning/LearnView/LearnView";
-import SettingsView from "./components/settings/SettingsView";
-import { getNote } from "./logic/note";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

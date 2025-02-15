@@ -2,9 +2,9 @@
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "skola",
   "version": "0.1.0",
-  "identifier": "com.tauri.dev",
+  "identifier": "cards.skola",
   "build": {
-    "frontendDist": "../build",
+    "frontendDist": "../dist",
     "devUrl": "http://localhost:5173",
     "beforeDevCommand": "npm run start",
     "beforeBuildCommand": "npm run build"
