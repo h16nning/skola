@@ -12,11 +12,11 @@ import { IconSearch } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useState } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
-import classes from "./NoteManagerView.module.css";
+import classes from "./NoteExplorerView.module.css";
 
 const ALL_DECK_ID = "all";
 
-function NoteManagerView() {
+function NoteExplorerView() {
   const navigate = useNavigate();
   const noteId = useParams().noteId;
   let deckId = useParams().deckId;
@@ -59,7 +59,13 @@ function NoteManagerView() {
   );
 
   return (
-    <Stack style={{ overflow: "hidden", width: "100%", height: "100%" }}>
+    <Stack
+      style={{
+        overflow: "hidden",
+        width: "100%",
+        height: "100%",
+      }}
+    >
       <AppHeaderContent>
         <AppHeaderContent>
           <Group justify="space-between" gap="xs" wrap="nowrap">
@@ -81,9 +87,10 @@ function NoteManagerView() {
         gap="md"
         grow
         align="start"
-        style={{ overflowY: "scroll", height: "100%" }}
+        style={{ overflowY: "hidden", height: "100%" }}
+        className={classes.xGroup}
       >
-        <Stack>
+        <Stack h="100%" w="100%">
           <TextInput
             leftSection={<IconSearch size={16} />}
             defaultValue={filter}
@@ -119,4 +126,4 @@ function NoteManagerView() {
   );
 }
 
-export default NoteManagerView;
+export default NoteExplorerView;
