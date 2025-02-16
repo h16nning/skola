@@ -20,7 +20,7 @@ export class Database extends Dexie {
     this.version(16).stores({
       cards: "id, note, deck",
       decks: "id, *cards, *notes, *subDecks, *superDecks",
-      notes: "id, deck",
+      notes: "id, deck, sortField",
       statistics: "[deck+day], day",
       settings: "key",
     });

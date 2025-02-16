@@ -1,3 +1,4 @@
+import { getAdapterOfType } from "../NoteTypeAdapter";
 import { db } from "../db";
 import { Deck } from "../deck/deck";
 import { NoteContent } from "./NoteContent";
@@ -17,6 +18,9 @@ export async function newNote<T extends NoteType>(
   const note = {
     ...createNoteSkeleton(deck.id),
     content,
+    sortField: getAdapterOfType(content.type).getSortFieldFromNoteContent(
+      content
+    ),
   };
   await db.transaction("rw", db.decks, db.notes, async () => {
     await db.notes.add(note, note.id);

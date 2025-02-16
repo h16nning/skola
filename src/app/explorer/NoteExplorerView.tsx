@@ -2,7 +2,6 @@ import NoteTable from "@/app/NoteTable/NoteTable";
 import EditorOptionsMenu from "@/app/editor/EditorOptionsMenu";
 import { AppHeaderContent } from "@/app/shell/Header/Header";
 import SelectDecksHeader from "@/components/SelectDecksHeader";
-import { getAdapter } from "@/logic/NoteTypeAdapter";
 import { useDecks } from "@/logic/deck/hooks/useDecks";
 import { useNotesWith } from "@/logic/note/hooks/useNotesWith";
 import { NoteSortFunction, NoteSorts } from "@/logic/note/sort";
@@ -44,17 +43,12 @@ function NoteExplorerView() {
   const [notes] = useNotesWith(
     (n) =>
       n
+        .orderBy("sortField")
+        .filter((note) =>
+          note.sortField.toLowerCase().includes(filter.toLowerCase())
+        )
         .toArray()
-        .then((m) =>
-          m
-            .filter((note) =>
-              getAdapter(note)
-                .getSortFieldFromNoteContent(note.content)
-                .toLowerCase()
-                .includes(filter.toLowerCase())
-            )
-            .sort(sort[0](sort[1] ? 1 : -1))
-        ),
+        .then((m) => m.sort(sort[0](sort[1] ? 1 : -1))),
     [location, filter, location, sort]
   );
 
