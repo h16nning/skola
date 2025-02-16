@@ -43,6 +43,18 @@ export function successfullyMovedCardTo(deckName: string) {
   });
 }
 
+export function successfullyMovedNoteTo(deckName: string) {
+  return notifications.show({
+    title: "Note Moved",
+    message: `Note moved to ${deckName}!`,
+    autoClose: 1000,
+    color: "teal",
+    withCloseButton: false,
+    icon: <IconArrowsExchange />,
+    className: classes,
+  });
+}
+
 export function successfullyMovedDeckTo(deckName: string) {
   return notifications.show({
     title: "Deck Moved",

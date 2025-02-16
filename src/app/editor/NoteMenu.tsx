@@ -18,6 +18,7 @@ import {
 import { t } from "i18next";
 import { useState } from "react";
 import EditNoteModal from "./EditNoteModal";
+import MoveNoteModal from "./MoveNoteModal";
 
 interface NoteMenuProps {
   note: Note<NoteType> | undefined;
@@ -36,7 +37,7 @@ function NoteMenu({
 
   useState<boolean>(false);
 
-  //const [moveModalOpened, setMoveModalOpened] = useState<boolean>(false);
+  const [moveModalOpened, setMoveModalOpened] = useState<boolean>(false);
   const [deleteModalOpened, setDeleteModalOpened] = useState<boolean>(false);
 
   async function tryDeleteNote() {
@@ -88,10 +89,9 @@ function NoteMenu({
           <Menu.Item
             leftSection={<IconArrowsExchange size={16} />}
             rightSection={withShortcuts && showShortcutHints && <Kbd>m</Kbd>}
-            disabled
-            //onClick={() => setMoveModalOpened(true)}
+            onClick={() => setMoveModalOpened(true)}
           >
-            {t("note.menu.move")} Not implemented yet
+            {t("note.menu.move")}
           </Menu.Item>
           <Menu.Item
             color="red"
@@ -115,6 +115,11 @@ function NoteMenu({
         note={note}
         opened={editModalOpened}
         setClose={editModal.close}
+      />
+      <MoveNoteModal
+        note={note}
+        opened={moveModalOpened}
+        setOpened={setMoveModalOpened}
       />
     </>
   );

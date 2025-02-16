@@ -62,19 +62,19 @@ function DeckView() {
             <Tabs.Tab value="notebook">
               {t("deck.notebook.title")}
               <Badge
-                size="xs"
+                size="sm"
                 ml={"sm"}
                 variant="light"
-                color={cards?.length ? undefined : "gray"}
+                color={deck?.notes.length ? undefined : "gray"}
                 style={{ textOverflow: "clip" }}
               >
-                {areCardsReady ? cards?.length : "-"}
+                {deck?.notes.length}
               </Badge>
             </Tabs.Tab>
             <Tabs.Tab value="subdecks">
               {t("deck.subdeck.title")}
               <Badge
-                size="xs"
+                size="sm"
                 ml={"sm"}
                 variant="light"
                 color={deck?.subDecks.length ? undefined : "gray"}
