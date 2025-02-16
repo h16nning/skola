@@ -1,6 +1,5 @@
 import MissingObject from "@/components/MissingObject";
 import { useScrollResetOnLocationChange } from "@/lib/ui";
-import { useCardsOf } from "@/logic/card/hooks/useCardsOf";
 import { useDeckFromUrl } from "@/logic/deck/hooks/useDeckFromUrl";
 import { useSuperDecks } from "@/logic/deck/hooks/useSuperDecks";
 import { Badge, Group, Stack, Tabs } from "@mantine/core";
@@ -24,7 +23,6 @@ function DeckView() {
 
   const [deck, isDeckReady] = useDeckFromUrl();
   const [superDecks] = useSuperDecks(deck);
-  const [cards, areCardsReady] = useCardsOf(deck);
   useScrollResetOnLocationChange();
 
   useDocumentTitle(deck?.name ? deck?.name : "Skola");
@@ -42,20 +40,13 @@ function DeckView() {
           <DeckMenu
             deck={deck}
             isDeckReady={isDeckReady}
-            cards={cards}
-            areCardsReady={areCardsReady}
             setDeckOptionsOpened={setDeckOptionsOpened}
           />
         </Group>
       </AppHeaderContent>
       <Stack gap="xl" align="start" w="100%" maw="600px" pt="lg">
         <TitleSection deck={deck} />
-        <HeroDeckSection
-          deck={deck}
-          isDeckReady={isDeckReady}
-          cards={cards}
-          areCardsReady={areCardsReady}
-        />
+        <HeroDeckSection deck={deck} isDeckReady={isDeckReady} />
 
         <Tabs defaultValue={"notebook"} w="100%" variant="outline">
           <Tabs.List>

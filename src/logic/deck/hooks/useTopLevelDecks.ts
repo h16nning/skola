@@ -7,7 +7,7 @@ export function useTopLevelDecks(): [Deck[] | undefined, boolean] {
     async () => {
       //measure time
       const start = performance.now();
-      const val = await db.decks.limit(1).toArray();
+      const val = await db.decks.toArray();
       const end = performance.now();
       console.log(`useTopLevelDecks took ${end - start} ms`);
       return [val, true];

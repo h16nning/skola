@@ -1,26 +1,20 @@
+import { useCardsOf } from "@/logic/card/hooks/useCardsOf";
 import { useStatesOf } from "@/logic/card/hooks/useStatesOf";
 import { useSubDecks } from "@/logic/deck/hooks/useSubDecks";
 import { useSuperDecks } from "@/logic/deck/hooks/useSuperDecks";
-import { NoteType } from "@/logic/note/note";
 import { Anchor, Modal, Stack, Text } from "@mantine/core";
 import { State } from "fsrs.js";
-import { Card } from "../../logic/card/card";
 import { Deck } from "../../logic/deck/deck";
 
 interface DebugDeckModalProps {
   opened: boolean;
   setOpened: Function;
   deck?: Deck;
-  cards: Card<NoteType>[];
 }
 
-function DebugDeckModal({
-  opened,
-  setOpened,
-  deck,
-  cards,
-}: DebugDeckModalProps) {
-  const states = useStatesOf(cards);
+function DebugDeckModal({ opened, setOpened, deck }: DebugDeckModalProps) {
+  const [cards] = useCardsOf(deck);
+  const states = useStatesOf(cards ?? []);
 
   const [superDecks] = useSuperDecks(deck);
 
@@ -75,7 +69,7 @@ function DebugDeckModal({
             </Text>
             <Text fz="xs">
               <b>Contained Card Length: </b>
-              {cards.length}
+              {cards?.length}
             </Text>
             <Text fz="xs">
               <b>New: </b>
