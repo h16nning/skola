@@ -76,7 +76,7 @@ export default function App() {
             </AppShell.Navbar>
 
             <AppShell.Main>
-              <Stack>
+              <Stack h="100%">
                 <Center className={classes.main} p="md" h="100%" mih={0}>
                   <Outlet />
                 </Center>

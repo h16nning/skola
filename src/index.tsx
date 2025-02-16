@@ -2,7 +2,7 @@ import App from "@/App";
 import DeckView from "@/app/deck/DeckView";
 import EditNoteView, { NoNoteView } from "@/app/editor/EditNoteView";
 import NewNotesView from "@/app/editor/NewNotesView";
-import NoteManagerView from "@/app/explorer/NoteManagerView/NoteManagerView";
+import NoteExplorerView from "@/app/explorer/NoteExplorerView";
 import HomeView from "@/app/home/HomeView";
 import LearnView from "@/app/learn/LearnView/LearnView";
 import SettingsView from "@/app/settings/SettingsView";
@@ -51,7 +51,7 @@ const router = createHashRouter(
         },
         {
           path: "/notes/:deckId?",
-          element: <NoteManagerView />,
+          element: <NoteExplorerView />,
           children: [
             {
               index: true,
