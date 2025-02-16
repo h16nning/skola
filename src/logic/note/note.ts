@@ -9,6 +9,7 @@ export interface NoteSkeleton {
 
 export interface Note<T extends NoteType> extends NoteSkeleton {
   content: NoteContent<T>;
+  sortField: string;
 }
 
 export enum NoteType {
