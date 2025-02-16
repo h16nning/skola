@@ -61,6 +61,13 @@ function DebugDeckModal({
               ))}
               "
             </Text>
+            <Text fz="xs">
+              <b>Notes: </b>"
+              {deck.notes.map((s) => (
+                <span key={s}>{s + ", "}</span>
+              ))}
+              "
+            </Text>
 
             <Text fz="xs">
               <b>Direct Card Length: </b>
