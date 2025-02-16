@@ -18,9 +18,10 @@ export async function newNote<T extends NoteType>(
     ...createNoteSkeleton(deck.id),
     content,
   };
-  await db.transaction("rw", db.decks, db.notes, () => {
-    db.notes.add(note, note.id);
-    db.decks.update(deck.id, { notes: deck.notes.concat(note.id) });
+  await db.transaction("rw", db.decks, db.notes, async () => {
+    await db.notes.add(note, note.id);
+    deck.notes.push(note.id);
+    await db.decks.update(deck.id, { notes: deck.notes });
   });
   return note.id;
 }

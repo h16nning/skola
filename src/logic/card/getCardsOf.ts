@@ -2,7 +2,6 @@ import { db } from "../db";
 import { Deck } from "../deck/deck";
 import { NoteType } from "../note/note";
 import { Card } from "./card";
-import { isCard } from "./isCard";
 
 export async function getCardsOf(
   deck?: Deck,
@@ -10,9 +9,8 @@ export async function getCardsOf(
 ): Promise<Card<NoteType>[] | undefined> {
   if (!deck) return undefined;
   let cards: Card<NoteType>[] = await db.cards
-    .where("id")
-    .anyOf(deck.cards)
-    .filter((c) => isCard(c))
+    .where("deck")
+    .equals(deck.id)
     .toArray();
   if (excludeSubDecks) {
     return cards;

@@ -1,5 +1,4 @@
 import { getAdapterOfType } from "@/logic/NoteTypeAdapter";
-import { newCard } from "@/logic/card/newCard";
 import { Deck } from "@/logic/deck/deck";
 import { NoteType } from "@/logic/note/note";
 import { Stack, TextInput } from "@mantine/core";
@@ -23,7 +22,7 @@ async function importCards(
     return line.split(questionAnswerSeperator);
   });
 
-  const cards = await Promise.all(
+  await Promise.all(
     questionAnswerPairs.map(async (pair) => {
       return getAdapterOfType(NoteType.Basic).createNote(
         {
@@ -34,8 +33,6 @@ async function importCards(
       );
     })
   );
-
-  return Promise.all(cards.map((card) => newCard(card, deck)));
 }
 
 export default function ImportFromPlainText({
