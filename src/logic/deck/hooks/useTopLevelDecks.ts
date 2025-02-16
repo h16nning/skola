@@ -4,11 +4,14 @@ import { Deck } from "../deck";
 
 export function useTopLevelDecks(): [Deck[] | undefined, boolean] {
   return useLiveQuery(
-    () =>
-      db.decks
-        .filter((deck) => !deck.superDecks)
-        .sortBy("name")
-        .then((decks) => [decks, true]),
+    async () => {
+      //measure time
+      const start = performance.now();
+      const val = await db.decks.limit(1).toArray();
+      const end = performance.now();
+      console.log(`useTopLevelDecks took ${end - start} ms`);
+      return [val, true];
+    },
     [],
     [undefined, false]
   );

@@ -5,9 +5,9 @@ import { Card } from "./card";
 
 /**
  * Deprecated, consider disallowing moving single cards between decks
- * @param card 
- * @param newDeck 
- * @returns 
+ * @param card
+ * @param newDeck
+ * @returns
  */
 export async function moveCard(card: Card<NoteType>, newDeck: Deck) {
   //Remove card from old deck

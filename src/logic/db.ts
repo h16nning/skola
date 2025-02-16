@@ -18,9 +18,9 @@ export class Database extends Dexie {
   constructor() {
     super("database", { addons: [dexieCloud] });
     this.version(16).stores({
-      cards: "id, note",
+      cards: "id, note, deck",
       decks: "id",
-      notes: "id",
+      notes: "id, deck",
       statistics: "[deck+day], day",
       settings: "key",
     });
