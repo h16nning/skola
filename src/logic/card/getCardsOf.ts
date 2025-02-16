@@ -8,10 +8,9 @@ export async function getCardsOf(
   excludeSubDecks?: boolean
 ): Promise<Card<NoteType>[] | undefined> {
   if (!deck) return undefined;
-  let cards: Card<NoteType>[] = await db.cards
-    .where("deck")
-    .equals(deck.id)
-    .toArray();
+  let cards: Card<NoteType>[] = (await db.cards.bulkGet(deck.cards)).filter(
+    (c) => c !== undefined
+  );
   if (excludeSubDecks) {
     return cards;
   }

@@ -5,11 +5,12 @@ import { Note, NoteType } from "../note";
 
 export function useNotesOf(
   deck: Deck | undefined,
-  excludeSubDecks?: boolean
+  excludeSubDecks?: boolean,
+  limit?: number
 ): [Note<NoteType>[] | undefined, boolean] {
   return useLiveQuery(
     () =>
-      getNotesOf(deck, excludeSubDecks).then((notes) => [
+      getNotesOf(deck, excludeSubDecks, limit).then((notes) => [
         notes,
         deck !== undefined,
       ]),

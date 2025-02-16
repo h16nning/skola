@@ -1,9 +1,7 @@
 import ImportModal from "@/app/settings/importexport/ImportModal";
 import DangerousConfirmModal from "@/components/DangerousConfirmModal";
-import { Card } from "@/logic/card/card";
 import { Deck } from "@/logic/deck/deck";
 import { deleteDeck } from "@/logic/deck/deleteDeck";
-import { NoteType } from "@/logic/note/note";
 import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { useShowShortcutHints } from "@/logic/settings/hooks/useShowShortcutHints";
 import { ActionIcon, Group, Kbd, Menu } from "@mantine/core";
@@ -28,18 +26,10 @@ import RenameDeckModal from "./RenameDeckModal";
 interface DeckMenuProps {
   deck?: Deck;
   isDeckReady: boolean;
-  cards?: Card<NoteType>[];
-  areCardsReady: boolean;
   setDeckOptionsOpened: Function;
 }
 
-function DeckMenu({
-  deck,
-  isDeckReady,
-  setDeckOptionsOpened,
-  cards,
-  areCardsReady,
-}: DeckMenuProps) {
+function DeckMenu({ deck, isDeckReady, setDeckOptionsOpened }: DeckMenuProps) {
   const navigate = useNavigate();
   const [t] = useTranslation();
 
@@ -93,7 +83,7 @@ function DeckMenu({
             variant="subtle"
             color="gray"
             aria-label={t("deck.menu.label")}
-            disabled={(isDeckReady && !deck) || (areCardsReady && !cards)}
+            disabled={isDeckReady && !deck}
           >
             <IconDots />
           </ActionIcon>
@@ -159,7 +149,7 @@ function DeckMenu({
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>
-      {deck && cards && (
+      {deck && (
         <>
           <DangerousConfirmModal
             dangerousAction={() => handleDelete()}
@@ -183,7 +173,6 @@ function DeckMenu({
           />
           <DebugDeckModal
             deck={deck}
-            cards={cards}
             opened={debugModalOpened}
             setOpened={setDebugModalOpened}
           />

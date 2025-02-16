@@ -30,13 +30,17 @@ import { useTranslation } from "react-i18next";
 import { Note } from "../../logic/note/note";
 import NotebookCard from "./NotebookCard";
 
+/**
+ * The maximum number of notes to display in the notebook. Hard-coded to 50. Replace with a pagination feature or similar.
+ */
+const NOTEBOOK_LIMIT = 50;
 export default function NotebookView() {
   const [deck] = useDeckFromUrl();
 
   const [excludeSubDecks, setExcludeSubDecks] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
 
-  const [notes] = useNotesOf(deck, excludeSubDecks);
+  const [notes] = useNotesOf(deck, excludeSubDecks, NOTEBOOK_LIMIT);
 
   const [sortOption, setSortOption] = useState<SortOption>(sortOptions[0]);
   const [sortOrder] = useState<1 | -1>(1);
@@ -71,6 +75,12 @@ export default function NotebookView() {
           setShowAnswer={setShowAnswer}
         />
       </Group>
+      {deck?.notes && deck?.notes?.length > NOTEBOOK_LIMIT && (
+        <Text c="gray" fz="sm" ta="center">
+          Currently there is a limit of {NOTEBOOK_LIMIT} notes displayed.{" "}
+          {deck.notes.length - NOTEBOOK_LIMIT} notes are not shown.
+        </Text>
+      )}
       {useCustomSort ? (
         <DragDropContext
           onDragEnd={({ destination, source }) => {

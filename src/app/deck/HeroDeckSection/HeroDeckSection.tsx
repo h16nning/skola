@@ -1,12 +1,11 @@
 import EmptyNotice from "@/components/EmptyNotice";
 import Stat from "@/components/Stat/Stat";
-import { Card } from "@/logic/card/card";
 import { useSimplifiedStatesOf } from "@/logic/card/hooks/useSimplifiedStatesOf";
 import { Deck } from "@/logic/deck/deck";
-import { NoteType } from "@/logic/note/note";
 import { Button, Group, Paper, Stack, Text, Title } from "@mantine/core";
 import classes from "./HeroDeckSection.module.css";
 
+import { useCardsOf } from "@/logic/card/hooks/useCardsOf";
 import { useHotkeys } from "@mantine/hooks";
 import {
   IconBolt,
@@ -15,22 +14,20 @@ import {
   IconFile,
   IconSparkles,
 } from "@tabler/icons-react";
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 interface HeroDeckSectionProps {
   deck?: Deck;
-  cards?: Card<NoteType>[];
   isDeckReady: boolean;
-  areCardsReady: boolean;
 }
 
-function HeroDeckSection({ deck, cards, areCardsReady }: HeroDeckSectionProps) {
+function HeroDeckSection({ deck }: HeroDeckSectionProps) {
   const navigate = useNavigate();
   const [t] = useTranslation();
   useHotkeys([["Space", startLearning]]);
 
+  const [cards, areCardsReady] = useCardsOf(deck);
   const states = useSimplifiedStatesOf(cards);
 
   function isDone() {
