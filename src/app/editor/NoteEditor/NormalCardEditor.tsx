@@ -10,9 +10,9 @@ import { Stack, Text } from "@mantine/core";
 import { Editor } from "@tiptap/react";
 import { t } from "i18next";
 import { useCallback, useEffect } from "react";
-import { Deck } from "../../../logic/deck/deck";
-import { Note } from "../../../logic/note/note";
-import { BasicNoteTypeAdapter } from "../../../logic/type-implementations/normal/BasicNote";
+import { Deck } from "@/logic/deck/deck";
+import { Note } from "@/logic/note/note";
+import { BasicNoteTypeAdapter } from "@/logic/type-implementations/normal/BasicNote";
 import classes from "./NormalCardEditor.module.css";
 import NoteEditor, { useNoteEditor } from "./NoteEditor";
 
@@ -59,10 +59,8 @@ function NormalCardEditor({
 
   useEffect(() => {
     if (requestedFinish) {
-      console.log("requestedFinish");
       finish(mode, clear, deck, note, frontEditor, backEditor);
       setRequestedFinish(false);
-      //onChanged?.(); TODO was this used?
     }
   }, [requestedFinish, mode, clear, deck, note, frontEditor, backEditor]);
 
@@ -114,7 +112,6 @@ async function finish(
       saveFailed();
     }
   } else {
-    //NEW
     try {
       await BasicNoteTypeAdapter.createNote(
         {

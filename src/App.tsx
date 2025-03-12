@@ -2,12 +2,13 @@ import "@mantine/core/styles.css";
 import "@mantine/charts/styles.css";
 import "@mantine/notifications/styles.css";
 import "@mantine/spotlight/styles.css";
+import 'mantine-datatable/styles.css';
 import "./style/index.css";
 
-import { AppShell, Center, MantineProvider, Stack } from "@mantine/core";
-
 import classes from "./App.module.css";
+import { cssVariablesResolver, presetTheme } from "./style/StyleProvider";
 
+import { AppShell, Center, MantineProvider, Stack } from "@mantine/core";
 import { useDisclosure, useLocalStorage } from "@mantine/hooks";
 import { Notifications } from "@mantine/notifications";
 import { useEffect } from "react";
@@ -19,7 +20,6 @@ import Header from "./app/shell/Header/Header";
 import Sidebar from "./app/shell/Sidebar/Sidebar";
 import i18n from "./i18n";
 import { useSetting } from "./logic/settings/hooks/useSetting";
-import { cssVariablesResolver, presetTheme } from "./style/StyleProvider";
 
 function useRestoreLanguage() {
   const [language] = useSetting("language");
