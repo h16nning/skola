@@ -1,17 +1,14 @@
 import { getAdapter } from "@/logic/NoteTypeAdapter";
+import { NoteTypeLabels } from "@/logic/card/card";
 import { useDeckOf } from "@/logic/deck/hooks/useDeckOf";
-import { NoteType } from "@/logic/note/note";
-import { Note } from "@/logic/note/note";
+import { Note, NoteType } from "@/logic/note/note";
 import { Group, Stack, Text } from "@mantine/core";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useLoaderData } from "react-router-dom";
-import { NoteTypeLabels } from "../../logic/card/card";
 import NoteMenu from "./NoteMenu";
 import NoteSubmitButton from "./NoteSubmitButton";
 
-function EditNoteView() {
-  const note = useLoaderData() as Note<NoteType> | undefined;
+export function EditNoteView({ note }: { note: Note<NoteType> | undefined }) {
   if (!note) {
     return <NoNoteView />;
   }

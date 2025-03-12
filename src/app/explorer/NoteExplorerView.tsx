@@ -1,27 +1,34 @@
-import NoteTable from "@/app/NoteTable/NoteTable";
+import NoteTable from "../NoteTable/NoteTable";
 import EditorOptionsMenu from "@/app/editor/EditorOptionsMenu";
 import { AppHeaderContent } from "@/app/shell/Header/Header";
 import SelectDecksHeader from "@/components/SelectDecksHeader";
 import { useDecks } from "@/logic/deck/hooks/useDecks";
+import { getNote } from "@/logic/note/getNote";
 import { useNotesWith } from "@/logic/note/hooks/useNotesWith";
+import { Note, NoteType } from "@/logic/note/note";
 import { NoteSortFunction, NoteSorts } from "@/logic/note/sort";
-import { Group, Space, Stack, TextInput, Title } from "@mantine/core";
+import { Box, Group, Space, Stack, TextInput, Title } from "@mantine/core";
 import { useDebouncedState } from "@mantine/hooks";
 import { IconSearch } from "@tabler/icons-react";
 import { t } from "i18next";
-import { useState } from "react";
-import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import EditNoteModal from "../editor/EditNoteModal";
+import { EditNoteView } from "../editor/EditNoteView";
 import classes from "./NoteExplorerView.module.css";
 
-const ALL_DECK_ID = "all";
+const ALL_DECKS_ID = "all";
 
 function NoteExplorerView() {
-  const navigate = useNavigate();
-  const noteId = useParams().noteId;
-  let deckId = useParams().deckId;
-  if (deckId === ALL_DECK_ID) deckId = undefined;
 
+  const navigate = useNavigate();
   const location = useLocation();
+
+  const [decks] = useDecks();
+  let deckId = useParams().deckId;
+  if (deckId === ALL_DECKS_ID) deckId = undefined;
+
+  const noteId = useParams().noteId;
 
   const {
     sortFunction,
@@ -29,7 +36,6 @@ function NoteExplorerView() {
   }: { sortFunction?: keyof typeof NoteSorts; sortDirection?: boolean } =
     location.state ?? {};
 
-  const [decks] = useDecks();
 
   const [filter, setFilter] = useDebouncedState<string>("", 250);
 
@@ -51,6 +57,21 @@ function NoteExplorerView() {
         .then((m) => m.sort(sort[0](sort[1] ? 1 : -1))),
     [location, filter, location, sort]
   );
+
+  const [editNoteModalOpened, setEditNoteModalOpened] =
+    useState<boolean>(false);
+
+  const [openedNote, setOpenedNote] = useState<Note<NoteType> | undefined>();
+
+  useEffect(() => {
+    if (noteId) {
+      getNote(noteId).then((note) => {
+        if (note) {
+          setOpenedNote(note);
+        }
+      });
+    }
+  }, [noteId]);
 
   return (
     <Stack
@@ -76,15 +97,10 @@ function NoteExplorerView() {
           onSelect={(deckId) => navigate(`/notes/${deckId}`)}
         />
       </Group>
-
-      <Group
-        gap="md"
-        grow
-        align="start"
-        style={{ overflowY: "hidden", height: "100%" }}
-        className={classes.xGroup}
+      <div
+        className={classes.container}
       >
-        <Stack h="100%" w="100%">
+        <Stack>
           <TextInput
             leftSection={<IconSearch size={16} />}
             defaultValue={filter}
@@ -95,27 +111,25 @@ function NoteExplorerView() {
           {notes && (
             <NoteTable
               noteSet={notes ?? []}
-              selectedIndex={notes.findIndex((note) => noteId === note?.id)}
-              setSelectedIndex={(idx) => {
-                const n = notes[idx];
-                if (!n) return;
-                navigate(`/notes/${deckId || ALL_DECK_ID}/${n.id}`);
-              }}
-              selectedNote={notes.find((note) => noteId === note?.id)}
-              setSelectedNote={(note) => {
-                // avoid navigating to the same note
-                if (noteId !== note?.id)
-                  navigate(`/notes/${deckId || ALL_DECK_ID}/${note.id}`);
-              }}
+              openedNote={openedNote}
+              setOpenedNote={setOpenedNote}
+              openModal={() => setEditNoteModalOpened(true)}
               sort={sort}
               setSort={setSort}
             />
           )}
         </Stack>
-        <Stack className={classes.cardBox}>
-          <Outlet />
-        </Stack>
-      </Group>
+        <Box className={classes.noteDisplay}>
+          <EditNoteView note={openedNote} />
+        </Box>
+      </div>
+      {openedNote && (
+        <EditNoteModal
+          note={openedNote}
+          setClose={() => setEditNoteModalOpened(false)}
+          opened={editNoteModalOpened}
+        />
+      )}
     </Stack>
   );
 }

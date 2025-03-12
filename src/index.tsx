@@ -1,6 +1,5 @@
 import App from "@/App";
 import DeckView from "@/app/deck/DeckView";
-import EditNoteView, { NoNoteView } from "@/app/editor/EditNoteView";
 import NewNotesView from "@/app/editor/NewNotesView";
 import NoteExplorerView from "@/app/explorer/NoteExplorerView";
 import HomeView from "@/app/home/HomeView";
@@ -11,7 +10,6 @@ import TodayView from "@/app/today/TodayView";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Navigate, RouterProvider, createHashRouter } from "react-router-dom";
-import { getNote } from "./logic/note/getNote";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -52,21 +50,6 @@ const router = createHashRouter(
         {
           path: "/notes/:deckId?",
           element: <NoteExplorerView />,
-          children: [
-            {
-              index: true,
-              element: <NoNoteView />,
-            },
-            {
-              path: ":noteId",
-              element: <EditNoteView />,
-              loader: async ({ params }) => {
-                const { noteId } = params;
-                if (!noteId) throw new Response("Not Found", { status: 404 });
-                return await getNote(noteId);
-              },
-            },
-          ],
         },
         {
           path: "/today",

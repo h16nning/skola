@@ -19,7 +19,7 @@ export const NoteSorts: Record<any, NoteSortFunction> = {
         sortOrder
       );
     },
-  byCustomOrder:
+  "byCustomOrder":
     (sortOrder: 1 | -1) => (a: Note<NoteType>, b: Note<NoteType>) => {
       if (a.customOrder === undefined || b.customOrder === undefined) {
         return 0;
