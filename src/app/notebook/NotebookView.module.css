@@ -3,7 +3,10 @@
     border: solid 1px var(--mantine-color-light-border);
     cursor: pointer;
 
-    p, div, ul, ol {
+    p,
+    div,
+    ul,
+    ol {
         margin: 0;
     }
     ul {
