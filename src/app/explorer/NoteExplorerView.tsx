@@ -48,10 +48,9 @@ function NoteExplorerView() {
 
   const [notes] = useNotesWith(
     (n) =>
-      n
-        .orderBy("sortField")
+      n.orderBy("sortField")
         .filter((note) =>
-          note.sortField.toLowerCase().includes(filter.toLowerCase())
+          note.sortField.toLowerCase().includes(filter.toLowerCase()) && (deckId === undefined || note.deck === deckId)
         )
         .toArray()
         .then((m) => m.sort(sort[0](sort[1] ? 1 : -1))),
