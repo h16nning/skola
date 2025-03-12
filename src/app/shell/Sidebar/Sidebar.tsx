@@ -20,7 +20,7 @@ import {
 } from "@tabler/icons-react";
 import cx from "clsx";
 import { t } from "i18next";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import classes from "./Sidebar.module.css";
 
 import SpotlightCard from "../Spotlight/Spotlight";
@@ -43,6 +43,8 @@ const InteractiveNavLink = ({
   closeMenu: () => void;
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
   return (
     <Tooltip
       label={label}
@@ -57,7 +59,7 @@ const InteractiveNavLink = ({
           label: classes.sidebarItemLabel,
           section: classes.sidebarItemIcon,
         }}
-        variant="subtle"
+        variant="filled"
         label={label}
         leftSection={icon}
         onClick={() => {
@@ -126,6 +128,7 @@ function Sidebar({
           </Group>
           <SpotlightCard minimalMode={minimalMode} />
 
+<Stack gap={0}>
           <InteractiveNavLink
             label={t("home.title")}
             path="/home"
@@ -166,7 +169,7 @@ function Sidebar({
             minimalMode={minimalMode}
             fullscreenMode={fullscreenMode}
             closeMenu={menuHandlers.close}
-          />
+          /></Stack>
           <DeckList minimalMode={minimalMode} />
         </Stack>
         <CloudSection minimalMode={minimalMode} />
