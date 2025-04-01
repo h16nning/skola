@@ -128,48 +128,49 @@ function Sidebar({
           </Group>
           <SpotlightCard minimalMode={minimalMode} />
 
-<Stack gap={0}>
-          <InteractiveNavLink
-            label={t("home.title")}
-            path="/home"
-            icon={<IconHome />}
-            minimalMode={minimalMode}
-            fullscreenMode={fullscreenMode}
-            closeMenu={menuHandlers.close}
-          />
-          <InteractiveNavLink
-            label={t("today.title")}
-            path="/today"
-            icon={<IconBolt />}
-            minimalMode={minimalMode}
-            fullscreenMode={fullscreenMode}
-            closeMenu={menuHandlers.close}
-          />
-          <InteractiveNavLink
-            label={t("statistics.title")}
-            path="/stats"
-            icon={<IconChartBar />}
-            minimalMode={minimalMode}
-            fullscreenMode={fullscreenMode}
-            closeMenu={menuHandlers.close}
-          />
+          <Stack gap={0}>
+            <InteractiveNavLink
+              label={t("home.title")}
+              path="/home"
+              icon={<IconHome />}
+              minimalMode={minimalMode}
+              fullscreenMode={fullscreenMode}
+              closeMenu={menuHandlers.close}
+            />
+            <InteractiveNavLink
+              label={t("today.title")}
+              path="/today"
+              icon={<IconBolt />}
+              minimalMode={minimalMode}
+              fullscreenMode={fullscreenMode}
+              closeMenu={menuHandlers.close}
+            />
+            <InteractiveNavLink
+              label={t("statistics.title")}
+              path="/stats"
+              icon={<IconChartBar />}
+              minimalMode={minimalMode}
+              fullscreenMode={fullscreenMode}
+              closeMenu={menuHandlers.close}
+            />
 
-          <InteractiveNavLink
-            label={t("manage-cards.title")}
-            path="/notes"
-            icon={<IconCards />}
-            minimalMode={minimalMode}
-            fullscreenMode={fullscreenMode}
-            closeMenu={menuHandlers.close}
-          />
-          <InteractiveNavLink
-            label={t("settings.title")}
-            path="/settings"
-            icon={<IconSettings />}
-            minimalMode={minimalMode}
-            fullscreenMode={fullscreenMode}
-            closeMenu={menuHandlers.close}
-          /></Stack>
+            <InteractiveNavLink
+              label={t("manage-cards.title")}
+              path="/notes"
+              icon={<IconCards />}
+              minimalMode={minimalMode}
+              fullscreenMode={fullscreenMode}
+              closeMenu={menuHandlers.close}
+            />
+            <InteractiveNavLink
+              label={t("settings.title")}
+              path="/settings"
+              icon={<IconSettings />}
+              minimalMode={minimalMode}
+              fullscreenMode={fullscreenMode}
+              closeMenu={menuHandlers.close}
+            />
+          </Stack>
           <DeckList minimalMode={minimalMode} />
         </Stack>
         <CloudSection minimalMode={minimalMode} />

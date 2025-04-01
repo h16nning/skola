@@ -15,6 +15,10 @@ export async function newNote<T extends NoteType>(
   deck: Deck,
   content: NoteContent<T>
 ) {
+  console.log("creating new note");
+  console.log(
+    getAdapterOfType(content.type).getSortFieldFromNoteContent(content)
+  );
   const note = {
     ...createNoteSkeleton(deck.id),
     content,
@@ -25,7 +29,9 @@ export async function newNote<T extends NoteType>(
   await db.transaction("rw", db.decks, db.notes, async () => {
     await db.notes.add(note, note.id);
     deck.notes.push(note.id);
-    await db.decks.update(deck.id, { notes: deck.notes });
+    await db.decks.update(deck.id, {
+      notes: deck.notes,
+    });
   });
   return note.id;
 }

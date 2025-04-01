@@ -21,8 +21,8 @@ export default function EditNoteModal({
 }: EditNoteModalProps) {
   const [deck] = useDeckOf(note);
   const [requestedFinish, setRequestedFinish] = useState(false);
-  // const navigate = useNavigate();
-  const isMobile = useMediaQuery('(max-width: 50em)');
+
+  const isMobile = useMediaQuery("(max-width: 50em)");
 
   const CardEditor = useMemo(() => {
     return deck
@@ -40,7 +40,7 @@ export default function EditNoteModal({
     <Modal
       className={classes.modal}
       title={
-        <Group justify="space-between" align="center" w="100%" flex-grow>
+        <Group justify="space-between" align="center" w="100%" flex-grow={1}>
           <span>Edit Note</span>
           {/*<Button
             variant="subtle"

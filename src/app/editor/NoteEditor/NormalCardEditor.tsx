@@ -5,14 +5,14 @@ import {
   successfullySaved,
 } from "@/components/Notification/Notification";
 import { EditMode } from "@/logic/NoteTypeAdapter";
+import { Deck } from "@/logic/deck/deck";
 import { NoteType } from "@/logic/note/note";
+import { Note } from "@/logic/note/note";
+import { BasicNoteTypeAdapter } from "@/logic/type-implementations/normal/BasicNote";
 import { Stack, Text } from "@mantine/core";
 import { Editor } from "@tiptap/react";
 import { t } from "i18next";
 import { useCallback, useEffect } from "react";
-import { Deck } from "@/logic/deck/deck";
-import { Note } from "@/logic/note/note";
-import { BasicNoteTypeAdapter } from "@/logic/type-implementations/normal/BasicNote";
 import classes from "./NormalCardEditor.module.css";
 import NoteEditor, { useNoteEditor } from "./NoteEditor";
 

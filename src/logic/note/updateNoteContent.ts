@@ -7,7 +7,10 @@ export function updateNoteContent<T extends NoteType>(
   noteId: string,
   content: NoteContent<T>
 ) {
-  return db.notes.update(noteId, { content, sortField: getAdapterOfType(content.type).getSortFieldFromNoteContent(
-        content
-      ), });
+  return db.notes.update(noteId, {
+    content,
+    sortField: getAdapterOfType(content.type).getSortFieldFromNoteContent(
+      content
+    ),
+  });
 }

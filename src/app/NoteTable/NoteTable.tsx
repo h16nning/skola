@@ -1,12 +1,12 @@
 import { Note, NoteType } from "@/logic/note/note";
 import { NoteSortFunction, NoteSorts } from "@/logic/note/sort";
+import { useMediaQuery } from "@mantine/hooks";
 import clsx from "clsx";
 import { DataTable, DataTableSortStatus } from "mantine-datatable";
 import { useEffect, useState } from "react";
 import classes from "./NoteTable.module.css";
-import { useMediaQuery } from "@mantine/hooks";
 
-interface CardTableProps {
+interface NoteTableProps {
   noteSet: Note<NoteType>[];
   sort: [NoteSortFunction, boolean];
   setSort: (sort: [NoteSortFunction, boolean]) => void;
@@ -21,22 +21,26 @@ function NoteTable({
   setOpenedNote,
   setSort,
   openModal,
-}: CardTableProps) {
+}: NoteTableProps) {
   const [selectedNotes, setSelectedNotes] = useState<Note<NoteType>[]>([]);
-  
-  const [sortStatus, setSortStatus] = useState<DataTableSortStatus<Note<NoteType>>>({
-    columnAccessor: 'sortField',
-    sortKey: 'bySortField',
-    direction: 'asc',
+
+  const [sortStatus, setSortStatus] = useState<
+    DataTableSortStatus<Note<NoteType>>
+  >({
+    columnAccessor: "sortField",
+    sortKey: "bySortField",
+    direction: "asc",
   });
 
   useEffect(() => {
-    setSort([NoteSorts[sortStatus.sortKey as keyof typeof NoteSorts], sortStatus.direction === 'asc']);
+    setSort([
+      NoteSorts[sortStatus.sortKey as keyof typeof NoteSorts],
+      sortStatus.direction === "asc",
+    ]);
   }, [sortStatus]);
 
-
-  const isTouch = useMediaQuery('(pointer: coarse)');
-  const isMobile = useMediaQuery('(max-width: 50em)');
+  const isTouch = useMediaQuery("(pointer: coarse)");
+  const isMobile = useMediaQuery("(max-width: 50em)");
 
   return (
     <DataTable
@@ -89,7 +93,7 @@ function NoteTable({
       }
       onRowClick={(row) => {
         setOpenedNote(row.record);
-        if(isMobile) {
+        if (isMobile) {
           openModal();
         }
       }}

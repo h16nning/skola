@@ -163,7 +163,7 @@ export default function SpotlightCard({
           leftSection: <IconSearch size={18} stroke={2} />,
           placeholder: "Search...",
         }}
-        transitionProps={{transition: "pop", duration: 100}}
+        transitionProps={{ transition: "pop", duration: 100 }}
       />
     </>
   );

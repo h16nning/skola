@@ -3,16 +3,12 @@ import { db } from "../../db";
 import { Deck } from "../deck";
 
 export function useTopLevelDecks(): [Deck[] | undefined, boolean] {
-  return useLiveQuery(
-    async () => {
-      //measure time
-      const start = performance.now();
-      const val = await db.decks.toArray();
-      const end = performance.now();
-      console.log(`useTopLevelDecks took ${end - start} ms`);
-      return [val, true];
-    },
-    [],
-    [undefined, false]
-  );
+    return useLiveQuery(
+        async () => {
+            const val = await db.decks.toArray();
+            return [val, true];
+        },
+        [],
+        [undefined, false],
+    );
 }

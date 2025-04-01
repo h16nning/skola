@@ -1,4 +1,3 @@
-import NoteTable from "../NoteTable/NoteTable";
 import EditorOptionsMenu from "@/app/editor/EditorOptionsMenu";
 import { AppHeaderContent } from "@/app/shell/Header/Header";
 import SelectDecksHeader from "@/components/SelectDecksHeader";
@@ -13,6 +12,7 @@ import { IconSearch } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import NoteTable from "../NoteTable/NoteTable";
 import EditNoteModal from "../editor/EditNoteModal";
 import { EditNoteView } from "../editor/EditNoteView";
 import classes from "./NoteExplorerView.module.css";
@@ -20,7 +20,6 @@ import classes from "./NoteExplorerView.module.css";
 const ALL_DECKS_ID = "all";
 
 function NoteExplorerView() {
-
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -36,7 +35,6 @@ function NoteExplorerView() {
   }: { sortFunction?: keyof typeof NoteSorts; sortDirection?: boolean } =
     location.state ?? {};
 
-
   const [filter, setFilter] = useDebouncedState<string>("", 250);
 
   const [sort, setSort] = useState<[NoteSortFunction, boolean]>([
@@ -48,9 +46,12 @@ function NoteExplorerView() {
 
   const [notes] = useNotesWith(
     (n) =>
-      n.orderBy("sortField")
-        .filter((note) =>
-          note.sortField.toLowerCase().includes(filter.toLowerCase()) && (deckId === undefined || note.deck === deckId)
+      n
+        .orderBy("sortField")
+        .filter(
+          (note) =>
+            note.sortField.toLowerCase().includes(filter.toLowerCase()) &&
+            (deckId === undefined || note.deck === deckId)
         )
         .toArray()
         .then((m) => m.sort(sort[0](sort[1] ? 1 : -1))),
@@ -96,9 +97,7 @@ function NoteExplorerView() {
           onSelect={(deckId) => navigate(`/notes/${deckId}`)}
         />
       </Group>
-      <div
-        className={classes.container}
-      >
+      <div className={classes.container}>
         <Stack>
           <TextInput
             leftSection={<IconSearch size={16} />}
