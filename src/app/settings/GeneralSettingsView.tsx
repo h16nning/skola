@@ -21,12 +21,6 @@ export default function GeneralSettingsView() {
         inputType={"checkbox"}
       />
       <SettingsInput
-        label={t("settings.general.enable-zen-mode")}
-        description={t("settings.general.enable-zen-mode-description")}
-        settingsKey="useZenMode"
-        inputType={"checkbox"}
-      />
-      <SettingsInput
         label={t("settings.general.enable-developer-mode")}
         description={t("settings.general.enable-developer-mode-description")}
         settingsKey="developerMode"

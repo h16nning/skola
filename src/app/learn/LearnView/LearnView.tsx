@@ -9,7 +9,7 @@ import { useLearning } from "@/logic/learn";
 import { useNote } from "@/logic/note/hooks/useNote";
 import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { Center, Flex, Modal, Paper } from "@mantine/core";
-import { useDebouncedValue, useFullscreen } from "@mantine/hooks";
+import { useDebouncedValue } from "@mantine/hooks";
 import { Rating } from "fsrs.js";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -21,8 +21,6 @@ import LearnViewHeader, { stopwatchResult } from "./LearnViewHeader";
 import VisualFeedback from "./VisualFeedback";
 
 function LearnView() {
-  const { toggle } = useFullscreen();
-  const [zenMode] = useSetting("useZenMode");
   const [useVisualFeedback] = useSetting("useVisualFeedback");
 
   const navigate = useNavigate();
@@ -38,24 +36,12 @@ function LearnView() {
       learnAll: params === "all",
       newToReviewRatio: newToReviewRatio,
       sort: CardSorts.byCreationDate(1),
-    }
+    },
   );
 
   const cardContent = useNote(controller.currentCard?.note ?? "")?.content;
 
   const [currentRating, setCurrentRating] = useState<Rating | null>(null);
-
-  // ZEN MODE
-  useEffect(() => {
-    if (zenMode) {
-      toggle();
-    }
-    return () => {
-      if (zenMode) {
-        toggle();
-      }
-    };
-  }, []);
 
   const [debouncedFinish] = useDebouncedValue(controller.isFinished, 50);
 
@@ -71,7 +57,7 @@ function LearnView() {
         console.log(error);
       }
     },
-    [controller]
+    [controller],
   );
 
   useEffect(() => {
@@ -113,13 +99,13 @@ function LearnView() {
               controller.currentCard &&
               getAdapter(controller.currentCard).displayQuestion(
                 controller.currentCard,
-                cardContent
+                cardContent,
               )}
             {controller.showingAnswer &&
               controller.currentCard &&
               getAdapter(controller.currentCard).displayAnswer(
                 controller.currentCard,
-                cardContent
+                cardContent,
               )}
           </Paper>
         </Center>

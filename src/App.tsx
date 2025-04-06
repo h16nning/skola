@@ -13,7 +13,7 @@ import { useDisclosure, useLocalStorage } from "@mantine/hooks";
 import { Notifications } from "@mantine/notifications";
 import { useEffect } from "react";
 import { I18nextProvider } from "react-i18next";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import WelcomeView from "./app/WelcomeView";
 import LoginUI from "./app/login/LoginUI";
 import Header from "./app/shell/Header/Header";
@@ -40,6 +40,15 @@ export default function App() {
     defaultValue: false,
   });
 
+  const routeIsLearn = useLocation().pathname.includes("learn");
+  useEffect(() => {
+    if (routeIsLearn) {
+      sidebarhandlers.close();
+    } else {
+      sidebarhandlers.open();
+    }
+  }, [routeIsLearn]);
+
   return (
     <I18nextProvider i18n={i18n}>
       <MantineProvider
@@ -60,7 +69,10 @@ export default function App() {
             navbar={{
               width: { xs: "3.5rem", lg: 300 },
               breakpoint: "xs",
-              collapsed: { mobile: !sidebarMenuOpened },
+              collapsed: {
+                mobile: !sidebarMenuOpened,
+                desktop: !sidebarMenuOpened,
+              },
             }}
             header={{ height: 60 }}
           >

@@ -12,7 +12,6 @@ export enum SupportedLanguages {
 export interface SettingsValues {
   name?: string;
   language: SupportedLanguages;
-  useZenMode: boolean;
   useVisualFeedback: boolean;
   developerMode: boolean;
   showShortcutHints: boolean;
