@@ -48,20 +48,8 @@ function DeckView() {
         <TitleSection deck={deck} />
         <HeroDeckSection deck={deck} isDeckReady={isDeckReady} />
 
-        <Tabs defaultValue={"notebook"} w="100%" variant="outline">
+        <Tabs defaultValue={"subdecks"} w="100%" variant="outline">
           <Tabs.List>
-            <Tabs.Tab value="notebook">
-              {t("deck.notebook.title")}
-              <Badge
-                size="sm"
-                ml={"sm"}
-                variant="light"
-                color={deck?.notes.length ? undefined : "gray"}
-                style={{ textOverflow: "clip" }}
-              >
-                {deck?.notes.length}
-              </Badge>
-            </Tabs.Tab>
             <Tabs.Tab value="subdecks">
               {t("deck.subdeck.title")}
               <Badge
@@ -72,6 +60,18 @@ function DeckView() {
                 style={{ textOverflow: "clip" }}
               >
                 {deck?.subDecks.length}
+              </Badge>
+            </Tabs.Tab>
+            <Tabs.Tab value="notebook">
+              {t("deck.notebook.title")}
+              <Badge
+                size="sm"
+                ml={"sm"}
+                variant="light"
+                color={deck?.notes.length ? undefined : "gray"}
+                style={{ textOverflow: "clip" }}
+              >
+                {deck?.notes.length}
               </Badge>
             </Tabs.Tab>
           </Tabs.List>
