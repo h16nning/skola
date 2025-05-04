@@ -19,7 +19,7 @@ export class Database extends Dexie {
     super("skola_db", { addons: [dexieCloud], cache: "disabled" });
     this.version(16).stores({
       cards: "id, note, deck",
-      decks: "id, *cards, *notes, *subDecks, *superDecks",
+      decks: "id, nestingLevel, *cards, *notes, *subDecks, *superDecks",
       notes: "id, deck, sortField",
       statistics: "[deck+day], day",
       settings: "key",
