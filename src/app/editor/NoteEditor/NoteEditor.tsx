@@ -113,12 +113,12 @@ function NoteEditor({ editor, controls, className }: NoteEditorProps) {
                 <NoteEditorControls controls={controls} editor={editor} />
               </RichTextEditor.Toolbar>
             )}
-            {editor && settings.useBubbleMenu && (
+            {editor && settings.useBubbleMenu && !settings.useToolbar && (
               <BubbleMenu editor={editor} tippyOptions={{ maxWidth: "none" }}>
                 <NoteEditorControls controls={controls} editor={editor} />
               </BubbleMenu>
             )}
-            {editor && settings.useBubbleMenu && (
+            {editor && settings.useBubbleMenu && !settings.useToolbar && (
               <FloatingMenu editor={editor}>
                 <NoteEditorControls controls={controls} editor={editor} />
               </FloatingMenu>
