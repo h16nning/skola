@@ -19,7 +19,8 @@ export default function AnswerCardButton({
     <Button
       color={color}
       onClick={() => action()}
-      h="2.5rem"
+      h="4rem"
+      w="10rem"
       px={0}
       fullWidth
       miw="0"

@@ -1,22 +1,68 @@
+:root {
+  --app-header-height: 3.6875rem;
+  --app-footer-height: 80px;
+}
+
 .learnView {
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
-  padding-top: 3.6875rem;
+  padding-top: 0;
+  padding-left: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0;
   background-color: light-dark(
     var(--mantine-color-gray-0),
     var(--mantine-color-dark-8)
   );
+
+  overflow: hidden;
+}
+
+.learnViewHeader {
+   height: var(--app-header-height);
+   flex-shrink: 0;
+   margin-bottom: 0px;
 }
 
 .learnViewWrapper {
-  position: relative;
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  scrollbar-gutter: stable;
+
+  padding-top: var(--app-header-height);
+  padding-bottom: var(--app-footer-height);
+
+  padding-left: var(--mantine-spacing-lg);
+  padding-right: var(--mantine-spacing-lg);
+}
+
+.learnViewFooterWrapper {
+  flex-shrink: 0;
+
+  background-color: light-dark(
+    var(--mantine-color-white),
+    var(--mantine-color-dark-7)
+  );
+  border-top: solid 1px var(--mantine-color-light-border);
+  padding: var(--mantine-spacing-md);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .cardContainer {
   padding: var(--mantine-spacing-lg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 0;
 }
 .card {
   width: 100%;
@@ -39,15 +85,6 @@
   & img {
     max-width: 100%;
   }
-}
-
-.footerContainer {
-  background-color: light-dark(
-    var(--mantine-color-white),
-    var(--mantine-color-dark-7)
-  );
-  padding: var(--mantine-spacing-md);
-  border-top: solid 1px var(--mantine-color-light-border);
 }
 
 .progressBar {
