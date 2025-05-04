@@ -1,3 +1,16 @@
+interface SaveFilePickerOptions {
+  suggestedName?: string;
+  types?: {
+    description: string;
+    accept: Record<string, string[]>;
+  }[];
+  excludeAcceptAllOption?: boolean;
+}
+
+declare function showSaveFilePicker(
+  options?: SaveFilePickerOptions
+): Promise<FileSystemFileHandle>;
+
 import DangerousConfirmModal from "@/components/DangerousConfirmModal";
 import { Button, Card, FileButton, Stack, Text, Title } from "@mantine/core";
 import {
@@ -17,22 +30,41 @@ export default function DatabaseSettingsView() {
   const [deleteAllDataModalOpened, setDeleteAllDataModalOpened] =
     useState<boolean>(false);
 
+  const handleExport = async () => {
+    const now = new Date();
+    const blob = await exportDB(db);
+    const filename = `skola-export-${now.toLocaleDateString()}-${now.toLocaleTimeString()}.json`;
+
+    if ("showSaveFilePicker" in window) {
+      try {
+        const fileHandle = await showSaveFilePicker({
+          suggestedName: filename,
+          types: [
+            {
+              description: "JSON file",
+              accept: { "application/json": [".json"] },
+            },
+          ],
+        });
+        const writable = await fileHandle.createWritable();
+        await writable.write(blob);
+        await writable.close();
+      } catch (error) {
+        console.error("Export cancelled or failed:", error);
+      }
+    } else {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+    }
+  };
+
   return (
     <>
       <Stack gap="xl" align="start">
         <StorageSection />
-        <Button
-          leftSection={<IconDatabaseExport />}
-          onClick={async () => {
-            const now = new Date(Date.now());
-            const blob = await exportDB(db);
-            //convert blob to file and download it
-            const a = document.createElement("a");
-            a.href = URL.createObjectURL(blob);
-            a.download = `skola-export-${now.toLocaleDateString()}-${now.toLocaleTimeString()}.json`;
-            a.click();
-          }}
-        >
+        <Button leftSection={<IconDatabaseExport />} onClick={handleExport}>
           Export All
         </Button>
         <Card withBorder className={classes.dangerZone}>
