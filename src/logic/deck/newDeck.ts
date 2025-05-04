@@ -10,12 +10,14 @@ export async function newDeck(
   const uuid = uuidv4();
 
   let superDecks: string[] | undefined = undefined;
+  let nestingLevel: number;
   if (superDeck) {
     if (superDeck.superDecks) {
       superDecks = [...superDeck.superDecks, superDeck.id];
     } else {
       superDecks = [superDeck.id];
     }
+    nestingLevel = superDeck.nestingLevel + 1;
     const unmodifiedParent = await db.decks.get(superDeck.id);
     if (unmodifiedParent) {
       await db.decks.update(superDeck.id, {
@@ -25,10 +27,13 @@ export async function newDeck(
     } else {
       throw Error("Super deck not found");
     }
+  } else {
+    nestingLevel = 0;
   }
   await db.decks.add({
     name: name,
     id: uuid,
+    nestingLevel: nestingLevel,
     cards: [],
     notes: [],
     subDecks: [],

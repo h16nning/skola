@@ -41,13 +41,15 @@ export default function App() {
   });
 
   const routeIsLearn = useLocation().pathname.includes("learn");
+  const routeIsSettings = useLocation().pathname.includes("settings");
+
   useEffect(() => {
-    if (routeIsLearn) {
+    if (routeIsLearn && !routeIsSettings) {
       sidebarhandlers.close();
     } else {
       sidebarhandlers.open();
     }
-  }, [routeIsLearn]);
+  }, [routeIsLearn, routeIsSettings]);
 
   return (
     <I18nextProvider i18n={i18n}>

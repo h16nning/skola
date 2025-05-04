@@ -8,7 +8,7 @@ import { useDeckFromUrl } from "@/logic/deck/hooks/useDeckFromUrl";
 import { useLearning } from "@/logic/learn";
 import { useNote } from "@/logic/note/hooks/useNote";
 import { useSetting } from "@/logic/settings/hooks/useSetting";
-import { Center, Flex, Modal, Paper } from "@mantine/core";
+import { Center, Modal, Paper } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { Rating } from "fsrs.js";
 import { useCallback, useEffect, useState } from "react";
@@ -36,7 +36,7 @@ function LearnView() {
       learnAll: params === "all",
       newToReviewRatio: newToReviewRatio,
       sort: CardSorts.byCreationDate(1),
-    },
+    }
   );
 
   const cardContent = useNote(controller.currentCard?.note ?? "")?.content;
@@ -57,7 +57,7 @@ function LearnView() {
         console.log(error);
       }
     },
-    [controller],
+    [controller]
   );
 
   useEffect(() => {
@@ -72,23 +72,23 @@ function LearnView() {
     return <MissingObject />;
   }
 
+  if (!deck) {
+    return null;
+  }
+
   return (
     <div className={classes.learnView}>
-      <AppHeaderContent>
-        <LearnViewHeader
-          currentCard={controller.currentCard ?? undefined}
-          controller={controller}
-          deck={deck}
-        />
-      </AppHeaderContent>
+      <div className={classes.learnViewHeader}>
+        <AppHeaderContent>
+          <LearnViewHeader
+            currentCard={controller.currentCard ?? undefined}
+            controller={controller}
+            deck={deck}
+          />
+        </AppHeaderContent>
+      </div>
 
-      <Flex
-        direction="column"
-        justify="space-between"
-        h="100%"
-        w="100%"
-        className={classes.learnViewWrapper}
-      >
+      <div className={classes.learnViewWrapper}>
         {useVisualFeedback && <VisualFeedback rating={currentRating} />}
         <Center className={classes.cardContainer}>
           <Paper className={classes.card}>
@@ -99,34 +99,37 @@ function LearnView() {
               controller.currentCard &&
               getAdapter(controller.currentCard).displayQuestion(
                 controller.currentCard,
-                cardContent,
+                cardContent
               )}
             {controller.showingAnswer &&
               controller.currentCard &&
               getAdapter(controller.currentCard).displayAnswer(
                 controller.currentCard,
-                cardContent,
+                cardContent
               )}
           </Paper>
         </Center>
-        <LearnViewFooter controller={controller} answer={answerButtonPressed} />
+      </div>
 
-        <Modal
-          opened={debouncedFinish}
-          onClose={() => navigate("/home")}
-          fullScreen
-          closeOnClickOutside={false}
-          closeOnEscape={false}
-          withCloseButton={false}
-          transitionProps={{ transition: "fade" }}
-        >
-          <FinishedLearningView
-            statistics={controller.statistics}
-            time={stopwatchResult}
-            deckId={deck?.id}
-          />
-        </Modal>
-      </Flex>
+      <div className={classes.learnViewFooterWrapper}>
+        <LearnViewFooter controller={controller} answer={answerButtonPressed} />
+      </div>
+
+      <Modal
+        opened={debouncedFinish}
+        onClose={() => navigate("/home")}
+        fullScreen
+        closeOnClickOutside={false}
+        closeOnEscape={false}
+        withCloseButton={false}
+        transitionProps={{ transition: "fade" }}
+      >
+        <FinishedLearningView
+          statistics={controller.statistics}
+          time={stopwatchResult}
+          deckId={deck?.id}
+        />
+      </Modal>
     </div>
   );
 }

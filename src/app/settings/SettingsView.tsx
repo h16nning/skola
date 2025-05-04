@@ -25,7 +25,7 @@ export default function SettingsView() {
   const { section } = useParams();
 
   return (
-    <Stack gap="xl" w="100%" maw="600px">
+    <Stack gap="xl" w="100%" maw={{ sm: 600, md: 800, lg: 1000 }}>
       <AppHeaderContent>
         <Center>
           <Title order={3}>{t("settings.title")}</Title>
