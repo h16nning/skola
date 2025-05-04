@@ -29,6 +29,7 @@ interface NoteEditorProps {
   className?: string;
   controls?: React.ReactNode;
 }
+import { PasteImageExtension } from "./tiptap/PasteImageExtension";
 
 export function useNoteEditor(props: {
   content: string;
@@ -40,6 +41,10 @@ export function useNoteEditor(props: {
   return useEditor(
     {
       extensions: [
+        ImageDrop.configure({
+          allowBase64: true,
+        }),
+        PasteImageExtension, // 👈 aggiunta qui
         Extension.create({
           name: "addcard",
           addKeyboardShortcuts() {
@@ -68,11 +73,10 @@ export function useNoteEditor(props: {
         TextAlign.configure({ types: ["heading", "paragraph"] }),
         Color,
         TextStyle,
-        ImageDrop,
         ...(props.extensions ?? []),
       ],
       content: props.content,
-      onUpdate: props.onUpdate || (() => {}), // tiptap default
+      onUpdate: props.onUpdate || (() => {}),
     },
     [props.content]
   );
