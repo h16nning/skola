@@ -1,11 +1,11 @@
 import { getAdapter } from "@/logic/NoteTypeAdapter";
+import { NoteTypeLabels } from "@/logic/card/card";
 import { useDeckOf } from "@/logic/deck/hooks/useDeckOf";
 import { NoteType } from "@/logic/note/note";
+import { Note } from "@/logic/note/note";
 import { Table } from "@mantine/core";
 import cx from "clsx";
 import { useEffect } from "react";
-import { NoteTypeLabels } from "@/logic/card/card";
-import { Note } from "@/logic/note/note";
 import classes from "./NoteTable.module.css";
 
 export function NoteTableItem({

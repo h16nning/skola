@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import ModalProps from "../../../components/ModalProps";
 import { Deck } from "../../../logic/deck/deck";
 
-import { IconJson, IconTxt } from "@tabler/icons-react";
+import { IconClipboardText, IconJson, IconTxt } from "@tabler/icons-react";
 import ImportFromJSON from "./ImportFromJSON";
+import ImportFromPaste from "./ImportFromPaste";
 import ImportFromPlainText from "./ImportFromPlainText";
 
 interface ImportModalProps extends ModalProps {
@@ -28,7 +29,7 @@ export default function ImportModal({
   setOpened,
   deck,
 }: ImportModalProps) {
-  const [tab, setTab] = useState("cardsfromplaintext");
+  const [tab, setTab] = useState("cardsfrompaste");
   const [file, setFile] = useState<File | null>(null);
   const [fileText, setFileText] = useState<string | null>(null);
   const [importStatus, setImportStatus] = useState<ImportStatus>("passive");
@@ -52,6 +53,13 @@ export default function ImportModal({
         >
           <Tabs.List>
             <Tabs.Tab
+              value="cardsfrompaste"
+              leftSection={<IconClipboardText />}
+              onClick={() => setTab("cardsfrompaste")}
+            >
+              From Paste
+            </Tabs.Tab>
+            <Tabs.Tab
               value="cardsfromplaintext"
               leftSection={<IconTxt />}
               onClick={() => setTab("cardsfromplaintext")}
@@ -66,6 +74,17 @@ export default function ImportModal({
               From JSON
             </Tabs.Tab>
           </Tabs.List>
+          <Tabs.Panel value="cardsfrompaste">
+            <ImportFromPaste
+              file={file}
+              setFile={setFile}
+              fileText={fileText}
+              setFileText={setFileText}
+              deck={deck}
+              importStatus={importStatus}
+              setImportStatus={setImportStatus}
+            />
+          </Tabs.Panel>
           <Tabs.Panel value="cardsfromplaintext">
             <ImportFromPlainText
               file={file}
@@ -90,7 +109,7 @@ export default function ImportModal({
           </Tabs.Panel>
         </Tabs>
       )}
-      {importStatus}
+      {importStatus !== "passive" && importStatus}
     </Modal>
   );
 }
