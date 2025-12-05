@@ -1,0 +1,243 @@
+{
+  "card": {
+    "delete-modal": {
+      "description": "Você está prestes a apagar esta carta. Isso não pode ser desfeito. Você quer continuar?",
+      "title": "Apagar Carta"
+    },
+    "menu": {
+      "debug": "Debug",
+      "delete": "Apagar",
+      "edit": "Editar",
+      "move": "Mover",
+      "options": "Opções",
+      "statistics": "Estatísticas"
+    }
+  },
+  "deck": {
+    "add-cards": "Adicionar Cartas",
+    "add-cards-tooltip": "Adicionar Cartas para esse Deck",
+    "create-deck-tooltip": "Clique para criar um novo Deck",
+    "error-failed-to-load": "Essa carta falhou ao carregar",
+    "learning-cards-label": "Aprendendo",
+    "learning-cards-label_one": "1 Aprendendo",
+    "learning-cards-label_other": "{{ count }} Aprendendo",
+    "menu": {
+      "debug": "Debug",
+      "delete": "Apagar",
+      "import-cards": "Importar Cartas",
+      "label": "Menu",
+      "manage-cards": "Gerenciar Cartas",
+      "move": "Mover",
+      "options": "Opções",
+      "rename": "Renomear"
+    },
+    "new-cards-label": "Novo",
+    "new-cards-label_one": "1 Novo",
+    "new-cards-label_other": "{{ count }} Novo",
+    "new-deck-button": "Novo Deck",
+    "new-deck-modal": {
+      "description": "Descrição",
+      "description-placeholder": "Opcional",
+      "name": "Nome",
+      "name-placeholder": "Por exemplo 'Espanhol', 'Anatomia' ou 'História",
+      "new-deck": "Criar Novo Deck",
+      "new-subdeck": "Criar Novo Subdeck {{superDeck}}",
+      "submit": "Criar"
+    },
+    "no-decks-found": "Não há novos decks aqui. Clique no botão acima para criar um!",
+    "notebook": {
+      "title": "Caderno"
+    },
+    "rename": {
+      "new-name": "Novo Nome",
+      "rename-button": "Renomear",
+      "title": "Renomear \"{{deckName}}\""
+    },
+    "review-cards-label": "Revisar",
+    "review-cards-label_one": "1 Revisar",
+    "review-cards-label_other": "{{ count }} Revisar",
+    "settings": "Configurações",
+    "subdeck": {
+      "add-subdeck-button": "Adicionar",
+      "load-fail": "Falha ao carregar sub decks.",
+      "title": "Subdecks"
+    }
+  },
+  "edit-card": {
+    "edit-note": "Editar anotação"
+  },
+  "global": {
+    "cancel": "Cancelar",
+    "feature-status": {
+      "in-development": " (Em Desenvolvimento)",
+      "new": " (Novo)",
+      "planned": " (Planejado)"
+    },
+    "no-items-title": "Parece que está vazio aqui!"
+  },
+  "hero-deck-section": {
+    "all-cards-done-learn-anyway": "Aprender mesmo assim",
+    "all-cards-done-subtitle": "Retorne amanhã ou escolha aprender mesmo assim.",
+    "all-cards-done-title": "Parabéns! Esse deck foi finalizado por hoje!",
+    "error": "Falha ao carregar cartas.",
+    "learn": "Aprender",
+    "no-cards": "Comece criando algumas cartas!"
+  },
+  "home": {
+    "create-deck": "Criar um deck",
+    "no-decks-found": "Você não criou nenhum deck ainda.",
+    "title": "Início",
+    "welcome": "Bem-vindo!",
+    "welcome-user": "Bem-vindo de volta, {{name}}!"
+  },
+  "learning": {
+    "finished-accuracy-ratio": "Precisão",
+    "finished-button-home": "Ir para o Início",
+    "finished-button-to-deck": "Voltar para o Deck",
+    "finished-congrats": "Parabéns!",
+    "finished-congrats-name": "Parabéns, {{name}}!",
+    "finished-duration": "Tempo",
+    "finished-info": "Você finalizou todos os cartões por hoje.",
+    "finished-repetions-count": "Repetições"
+  },
+  "manage-cards": {
+    "table": {
+      "no-cards-found": "Nenhuma carta encontrada"
+    },
+    "title": "Gerenciar Cartas"
+  },
+  "new-card": {
+    "add": "Adicionar carta",
+    "add-to-deck": "Adicionando carta a",
+    "card-type": "Tipo de Carta"
+  },
+  "note": {
+    "delete-modal": {
+      "description": "Você está prestes a apagar essa anotação. Isso não pode ser desfeito.",
+      "title": "Apagar Anotação"
+    },
+    "edit": {
+      "see-history-button": "Ver Histórico",
+      "see-history-tooltip": "Mostrar histórico das ultimas cartas criadas",
+      "submit-button": "Salvar Carta",
+      "submit-button-tooltip": "Salvar Carta",
+      "title": "Editar Anotação",
+      "type-specific": {
+        "double-sided": {
+          "back": "Verso",
+          "front": "Frente"
+        },
+        "normal": {
+          "back": "Verso",
+          "front": "Frente"
+        }
+      }
+    },
+    "menu": {
+      "delete": "Apagar",
+      "edit": "Editar",
+      "move": "Mover"
+    },
+    "new": {
+      "adding-to-deck": "Adicionando a/ao \"{{deckName}}\"",
+      "select-note-type": {
+        "label": "Tipo de Carta",
+        "tooltip": "Escolha o tipo de carta que você quer criar"
+      },
+      "submit-button": "Adicionar Carta",
+      "submit-button-tooltip": "Adicionar Carta",
+      "title": "Novas Cartas"
+    },
+    "type": {
+      "cloze": "Lacuna",
+      "image-occlusion": "Oclusão de Imagem",
+      "normal": "Normal",
+      "undefined": "Indefinido"
+    },
+    "type-double-sided": "Face Dupla"
+  },
+  "notebook": {
+    "individual-show-answer-toggle-tooltip": "Clique Para Mostrar a Resposta",
+    "options": {
+      "exclude-subdecks": "Excluir subdecks",
+      "menu": "Menu do caderno",
+      "show-answer": "Mostrar respostas"
+    }
+  },
+  "settings": {
+    "about": {
+      "description": "Este programa foi feito por um estudante de medicina da Alemanha. Skola está em desenvolvimento inicial. Você poderá encontrar bugs. Cado encontre, Eu ficaria muito agradecido se você os reportasse no repositório no git.",
+      "title": "Sobre"
+    },
+    "appearance": {
+      "color-scheme": "Esquema de Cores",
+      "color-scheme-auto": "Sistema",
+      "color-scheme-dark": "Escuro",
+      "color-scheme-description": "Escolha entre o tema sempre claro ou escuro ou use o tema do seu sistema.",
+      "color-scheme-light": "Claro",
+      "title": "Aparência"
+    },
+    "database": {
+      "storage-used": "usado",
+      "title": "Banco de dados"
+    },
+    "developer": {
+      "description": "Esta é a aba de desenvolvedor. Ela irá conter configurações extras para desenvolvedores.",
+      "title": "Desenvolvedor"
+    },
+    "editing": {
+      "editor-options": "Editor",
+      "individual-options": "Opções individuais",
+      "markdown-hint": "Você também pode usar os atalhos do teclas e markdown básico para formatar o texto.",
+      "show-code-option": "Mostrar opção de código",
+      "show-highlight-option": "Mostrar opção de destaque",
+      "show-link-option": "Mostrar opções para links",
+      "show-list-option": "Mostrar opções para lists",
+      "show-options-for-subscript-and-superscript": "Mostrar opções para subscrito e sobrescrito",
+      "show-strikethrough-option": "Mostrar opção tachada",
+      "title": "Editando",
+      "use-bubble-menu": "Usar menu embutido",
+      "use-toolbar": "Usar barra de ferramentas",
+      "use-toolbar-description": "Sempre mostrar uma barra de ferramentas com opções de formatação acima do editor"
+    },
+    "editing-use-bubble-menu-description": "Mostrar opções de formatação somente quando o texto for selecionado",
+    "general": {
+      "enable-developer-mode": "Habilitar Modo Desenvolvedor",
+      "enable-developer-mode-description": "Isso habilitará opções adicionais para depuração e criação de plugins e temas personalizados.",
+      "enable-zen-mode": "Modo Zen",
+      "enable-zen-mode-description": "O Modo Zen ativa automaticamente o modo de tela cheia durante as sessões de aprendizado.",
+      "language": "Linguágem",
+      "language-description": "Defina o idioma da interface do usuário.",
+      "name": "Nome",
+      "name-description": "Este nome será usado para personalizar a experiência do usuário.",
+      "show-shortcut-hints": "Mostrar Atalhos",
+      "show-shortcut-hints-description": "Possíveis atalhos de teclado aparecerão em menus etc.",
+      "title": "Geral"
+    },
+    "learn": {
+      "enable-visual-feedback": "Habilitar Feedback Visual",
+      "enable-visual-feedback-description": "Mostrar um breve flash colorido após responder uma carta, dependendo da sua classificação.",
+      "maximumInterval": "Intervalo Máximo",
+      "maximumIntervalDescription": "O intervalo máximo em dias entre duas repetições de um cartão",
+      "newToReviewRatio": "Novas Cartas Por Revisão",
+      "newToReviewRatioDescription": "Isso determina quantas novas cartas serão exibidas por revisão, em média. Um valor de 0,5 significa que revisões e novas cartas serão pedidas em quantidades iguais.",
+      "requestRetention": "Retencão pedida",
+      "requestRetentionDescription": "Defina a porcentagem de perguntas que você deseja memorizar a longo prazo. Observação: Valores altos resultarão em mais revisões e intervalos mais curtos. Porcentagens mais baixas geralmente reduzem a quantidade de aprendizado. Se a retenção solicitada for muito baixa, você esquecerá suas cartas com muita frequência, o que pode resultar em um aumento na demanda de aprendizado. Os valores recomendados ficam entre 0,70 e 0,95.",
+      "title": "Apredizado"
+    },
+    "title": "Configurações"
+  },
+  "sidebar": {
+    "decks-add": "Adicionar deck",
+    "decks-title": "Decks"
+  },
+  "spotlight": {
+    "no-results": "Sem resultados"
+  },
+  "statistics": {
+    "title": "Estatísticas"
+  },
+  "today": {
+    "title": "Hoje"
+  }
+}

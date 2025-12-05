@@ -28,6 +28,7 @@ export default function LanguageSelect() {
         { value: SupportedLanguages.German, label: "Deutsch (Incomplete)" },
         { value: SupportedLanguages.English, label: "English" },
         { value: SupportedLanguages.Swedish, label: "Svenska (Incomplete)" },
+        { value: SupportedLanguages.Portuguese, label: "Português (Incompleto)" },
       ]}
     />
   );
