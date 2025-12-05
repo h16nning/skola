@@ -27,20 +27,41 @@ const ImageDrop = Image.extend<{}>({
 
     return {
       ...this.parent?.(),
-      insertImage(attributes) {
-        return ({ editor, commands }) => {
-          const selectionAtEnd = Selection.atEnd(editor.state.doc);
+      insertImage(attributes: {
+        src: string;
+        alt?: string;
+        title?: string;
+      }) {
+        return ({
+          editor,
+          commands,
+        }: {
+          editor: any;
+          commands: any;
+        }) => {
+          const selectionAtEnd =
+            Selection.atEnd(
+              editor.state.doc,
+            );
 
-          return commands.insertContent([
-            {
-              type: nodeTypeName,
-              attrs: attributes,
-            },
-            // Insert a blank paragraph after the image when at the end of the document
-            ...(editor.state.selection.to === selectionAtEnd.to
-              ? [{ type: "paragraph" }]
-              : []),
-          ]);
+          return commands.insertContent(
+            [
+              {
+                type: nodeTypeName,
+                attrs: attributes,
+              },
+              // Insert a blank paragraph after the image when at the end of the document
+              ...(editor.state.selection
+                .to ===
+              selectionAtEnd.to
+                ? [
+                    {
+                      type: "paragraph",
+                    },
+                  ]
+                : []),
+            ],
+          );
         };
       },
     };
