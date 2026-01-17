@@ -52,6 +52,10 @@ const router = createHashRouter(
           element: <NoteExplorerView />,
         },
         {
+          path: "/notes/:deckId/:noteId?",
+          element: <NoteExplorerView />,
+        },
+        {
           path: "/today",
           element: <TodayView />,
         },
