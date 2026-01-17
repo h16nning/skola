@@ -42,13 +42,18 @@ function LearnViewHeader({
 
   const progress = useMemo(
     () =>
-      (controller.statistics.ratingsList.length /
-        (controller.statistics.ratingsList.length +
-          controller.newCardsNumber * 2 +
-          controller.toReviewCardsNumber +
-          controller.timeCriticalCardsNumber +
-          (controller.options.learnAll ? controller.learnedCardsNumber : 0))) *
-      100,
+      controller.isFinished
+        ? 100
+        : (controller.statistics.ratingsList.length /
+            (+1 +
+              controller.statistics.ratingsList.length +
+              controller.newCardsNumber * 2 +
+              controller.toReviewCardsNumber +
+              controller.timeCriticalCardsNumber +
+              (controller.options.learnAll
+                ? controller.learnedCardsNumber
+                : 0))) *
+          100,
     [
       controller.isFinished,
       controller.statistics.ratingsList,
