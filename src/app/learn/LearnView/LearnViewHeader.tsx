@@ -11,6 +11,7 @@ import { LearnController } from "../../../logic/learn";
 import CardMenu from "../../editor/CardMenu";
 import RemainingCardsIndicator from "../RemainingCardsIndicator/RemainingCardsIndicator";
 import classes from "./LearnView.module.css";
+import { t } from "i18next";
 
 export let stopwatchResult: StopwatchResult;
 
@@ -65,7 +66,7 @@ function LearnViewHeader({
           <Tooltip
             label={
               <>
-                Back to deck <Kbd>d</Kbd>
+                {t("learning.back-to-deck")} <Kbd>d</Kbd>
               </>
             }
           >

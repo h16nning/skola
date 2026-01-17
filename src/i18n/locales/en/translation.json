@@ -91,6 +91,12 @@
     "welcome-user": "Welcome back, {{name}}!"
   },
   "learning": {
+    "rate-again": "Again",
+    "rate-hard": "Hard",
+    "rate-good": "Good",
+    "rate-easy": "Easy",
+    "back-to-deck": "Back to Deck",
+    "show-answers": "Show Answer",
     "finished-accuracy-ratio": "Accuracy",
     "finished-button-home": "Go Home",
     "finished-button-to-deck": "Back to Deck",

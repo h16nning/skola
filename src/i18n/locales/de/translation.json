@@ -86,6 +86,12 @@
     "welcome-user": "Willkommen zurück, {{name}}!"
   },
   "learning": {
+    "rate-again": "Nochmal",
+    "rate-hard": "Schwer",
+    "rate-good": "Gut",
+    "rate-easy": "Einfach",
+    "show-answer": "Antwort anzeigen",
+    "back-to-deck": "Zurück zum Stapel",
     "finished-accuracy-ratio": "Genauigkeit",
     "finished-button-home": "Zum Start",
     "finished-button-to-deck": "Zurück zum Stapel",

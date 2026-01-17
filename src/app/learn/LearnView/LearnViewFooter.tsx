@@ -5,6 +5,7 @@ import i18n from "../../../i18n";
 import { LearnController } from "../../../logic/learn";
 import AnswerCardButton from "./AnswerCardButton";
 import classes from "./LearnView.module.css";
+import { t } from "i18next";
 
 const DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24;
 const MINUTE_IN_MILLISECONDS = 1000 * 60;
@@ -70,25 +71,25 @@ function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
       {controller.showingAnswer ? (
         <Group gap="xs" wrap="nowrap" justify="center" w="100%" maw="25rem">
           <AnswerCardButton
-            label="Again"
+            label={t("learning.rate-again")}
             timeInfo={timeStringForRating(Rating.Again, controller)}
             color="red"
             action={() => answer(Rating.Again)}
           />
           <AnswerCardButton
-            label="Hard"
+            label={t("learning.rate-hard")}
             timeInfo={timeStringForRating(Rating.Hard, controller)}
             color="yellow"
             action={() => answer(Rating.Hard)}
           />
           <AnswerCardButton
-            label="Good"
+            label={t("learning.rate-good")}
             timeInfo={timeStringForRating(Rating.Good, controller)}
             color="green"
             action={() => answer(Rating.Good)}
           />
           <AnswerCardButton
-            label="Easy"
+            label={t("learning.rate-easy")}
             timeInfo={timeStringForRating(Rating.Easy, controller)}
             color="blue"
             action={() => answer(Rating.Easy)}
@@ -96,7 +97,7 @@ function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
         </Group>
       ) : (
         <Button onClick={controller.showAnswer} h="2.5rem">
-          Show Answer
+          {t("learning.show-answer")}
         </Button>
       )}
     </Group>

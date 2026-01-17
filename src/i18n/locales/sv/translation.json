@@ -19,11 +19,11 @@
       "import-cards": "Importera kort",
       "manage-cards": "Hantera kort",
       "move": "Flytta",
-      "options": "",
+      "options": "Alternativ",
       "rename": "Döp om"
     },
     "new-cards-label": "Nya",
-    "new-cards-label_one": "",
+    "new-cards-label_one": "Nytt",
     "new-cards-label_other": "",
     "new-deck-button": "",
     "new-deck-modal": {
@@ -65,10 +65,15 @@
   },
   "home": {
     "title": "Hem",
-    "welcome": "Welcome!",
-    "welcome-user": "Welcome back, {{name}}!"
+    "welcome": "Välkommen!",
+    "welcome-user": "Välkommen tillbaka, {{name}}!"
   },
   "learning": {
+    "back-to-deck": "Tillbaka till kortleken",
+    "rate-again": "Igen",
+    "rate-hard": "Svårt",
+    "rate-good": "Bra",
+    "rate-easy": "Enkelt",
     "finished-accuracy-ratio": "",
     "finished-button-home": "",
     "finished-button-to-deck": "",
@@ -125,10 +130,10 @@
     },
     "appearance": {
       "color-scheme": "Färgschema",
-      "color-scheme-auto": "",
-      "color-scheme-dark": "",
+      "color-scheme-auto": "Automatisk",
+      "color-scheme-dark": "Mörkt",
       "color-scheme-description": "Välj mellan alltid ljust eller mörkt tema eller använd färgtemat för ditt system.",
-      "color-scheme-light": "",
+      "color-scheme-light": "Ljust",
       "title": "Utseende"
     },
     "database": {
@@ -136,7 +141,7 @@
       "title": "Databas"
     },
     "developer": {
-      "description": "",
+      "description": "använt",
       "title": "Utvecklare"
     },
     "editing": {
