@@ -52,27 +52,31 @@ function DeckView() {
           <Tabs.List>
             <Tabs.Tab value="subdecks">
               {t("deck.subdeck.title")}
-              <Badge
-                size="sm"
-                ml={"sm"}
-                variant="light"
-                color={deck?.subDecks.length ? undefined : "gray"}
-                style={{ textOverflow: "clip" }}
-              >
-                {deck?.subDecks.length}
-              </Badge>
+              {(deck?.subDecks.length as number) > 0 && (
+                <Badge
+                  size="sm"
+                  ml={"sm"}
+                  variant="light"
+                  color={deck?.subDecks.length ? undefined : "gray"}
+                  style={{ textOverflow: "clip" }}
+                >
+                  {deck?.subDecks.length}
+                </Badge>
+              )}
             </Tabs.Tab>
             <Tabs.Tab value="notebook">
               {t("deck.notebook.title")}
-              <Badge
-                size="sm"
-                ml={"sm"}
-                variant="light"
-                color={deck?.notes.length ? undefined : "gray"}
-                style={{ textOverflow: "clip" }}
-              >
-                {deck?.notes.length}
-              </Badge>
+              {(deck?.notes.length as number) > 0 && (
+                <Badge
+                  size="sm"
+                  ml={"sm"}
+                  variant="light"
+                  color={deck?.notes.length ? undefined : "gray"}
+                  style={{ textOverflow: "clip" }}
+                >
+                  {deck?.notes.length}
+                </Badge>
+              )}
             </Tabs.Tab>
           </Tabs.List>
           <Tabs.Panel value="notebook">
