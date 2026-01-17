@@ -36,7 +36,7 @@ function LearnView() {
       learnAll: params === "all",
       newToReviewRatio: newToReviewRatio,
       sort: CardSorts.byCreationDate(1),
-    },
+    }
   );
 
   const cardContent = useNote(controller.currentCard?.note ?? "")?.content;
@@ -57,7 +57,7 @@ function LearnView() {
         console.log(error);
       }
     },
-    [controller],
+    [controller]
   );
 
   useEffect(() => {
@@ -90,7 +90,7 @@ function LearnView() {
         className={classes.learnViewWrapper}
       >
         {useVisualFeedback && <VisualFeedback rating={currentRating} />}
-        <Center className={classes.cardContainer}>
+        <Center className={classes.cardContainer} h="100%">
           <Paper className={classes.card}>
             <LearnViewCurrentCardStateIndicator
               currentCardModel={controller.currentCard?.model}
@@ -99,13 +99,13 @@ function LearnView() {
               controller.currentCard &&
               getAdapter(controller.currentCard).displayQuestion(
                 controller.currentCard,
-                cardContent,
+                cardContent
               )}
             {controller.showingAnswer &&
               controller.currentCard &&
               getAdapter(controller.currentCard).displayAnswer(
                 controller.currentCard,
-                cardContent,
+                cardContent
               )}
           </Paper>
         </Center>
