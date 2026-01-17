@@ -2,8 +2,10 @@ import { Center, Stack, Title } from "@mantine/core";
 import { t } from "i18next";
 import React from "react";
 import { AppHeaderContent } from "../shell/Header/Header";
+import { useDocumentTitle } from "@mantine/hooks";
 
 function TodayView({}: {}) {
+  useDocumentTitle(`${t("today.title")} | Skola`);
   return (
     <Stack>
       <AppHeaderContent>

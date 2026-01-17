@@ -11,8 +11,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import SelectDecksHeader from "../../components/SelectDecksHeader";
 import { db } from "../../logic/db";
 import { AppHeaderContent } from "../shell/Header/Header";
+import { t } from "i18next";
+import { useDocumentTitle } from "@mantine/hooks";
 
 function StatsView() {
+  useDocumentTitle(`${t("statistics.title")} | Skola`);
   const [decks] = useDecks();
   const navigate = useNavigate();
 

@@ -18,8 +18,10 @@ import DatabaseSettingsView from "./DatabaseSettingsView/DatabaseSettingsView";
 import EditingSettingsView from "./EditingSettingsView/EditingSettingsView";
 import GeneralSettingsView from "./GeneralSettingsView";
 import LearnSettingsView from "./LearnSettingsView";
+import { useDocumentTitle } from "@mantine/hooks";
 
 export default function SettingsView() {
+  useDocumentTitle(`${t("settings.title")} | Skola`);
   const [developerMode] = useSetting("developerMode");
   const navigate = useNavigate();
   const { section } = useParams();

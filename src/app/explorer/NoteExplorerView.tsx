@@ -7,7 +7,7 @@ import { useNotesWith } from "@/logic/note/hooks/useNotesWith";
 import { Note, NoteType } from "@/logic/note/note";
 import { NoteSortFunction, NoteSorts } from "@/logic/note/sort";
 import { Box, Group, Space, Stack, TextInput, Title } from "@mantine/core";
-import { useDebouncedState } from "@mantine/hooks";
+import { useDebouncedState, useDocumentTitle } from "@mantine/hooks";
 import { IconSearch } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useEffect, useState } from "react";
@@ -20,6 +20,7 @@ import classes from "./NoteExplorerView.module.css";
 const ALL_DECKS_ID = "all";
 
 function NoteExplorerView() {
+  useDocumentTitle(`${t("manage-cards.title")} | Skola`);
   const navigate = useNavigate();
   const location = useLocation();
 

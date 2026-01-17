@@ -1,7 +1,7 @@
 import { useTopLevelDecks } from "@/logic/deck/hooks/useTopLevelDecks";
 import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { Button, Center, Kbd, Stack, Title, Tooltip } from "@mantine/core";
-import { useHotkeys } from "@mantine/hooks";
+import { useDocumentTitle, useHotkeys } from "@mantine/hooks";
 import { IconFolder, IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -11,6 +11,7 @@ import NewDeckModal from "../deck/NewDeckModal";
 import { AppHeaderContent } from "../shell/Header/Header";
 
 export default function HomeView({}: {}) {
+  useDocumentTitle("Skola");
   const [t] = useTranslation();
   const [newDeckModalOpened, setNewDeckModalOpened] = useState(false);
   const [decks, isReady] = useTopLevelDecks();
