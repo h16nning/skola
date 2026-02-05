@@ -6,5 +6,6 @@ export function createNoteSkeleton(deck: string): NoteSkeleton {
     deck: deck,
     creationDate: new Date(Date.now()),
     id: uuidv4(),
+    linkedNotes: [],
   };
 }
