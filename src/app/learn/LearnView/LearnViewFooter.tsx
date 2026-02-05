@@ -106,7 +106,7 @@ function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
           )}
         </Group>
       ) : (
-        <Button onClick={controller.showAnswer} h="2.5rem">
+        <Button onClick={controller.showAnswer} h="2.5rem" variant="light">
           {t("learning.show-answer")}
         </Button>
       )}

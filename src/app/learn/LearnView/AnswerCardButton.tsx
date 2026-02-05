@@ -1,5 +1,4 @@
 import { Button, Stack, Text } from "@mantine/core";
-import React from "react";
 
 interface AnswerCardButtonProps {
   label: string;
@@ -23,6 +22,7 @@ export default function AnswerCardButton({
       px={0}
       fullWidth
       miw="0"
+      variant="light"
     >
       <Stack gap="0" align="center">
         <Text fz="xs" fw={400} lh="1">
