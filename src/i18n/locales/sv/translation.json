@@ -69,6 +69,42 @@
     "welcome-user": "Välkommen tillbaka, {{name}}!"
   },
   "learning": {
+    "cognitive-prompts": {
+      "invert": {
+        "label": "Invertera",
+        "description": "Vad är motsatsen? Tänk om detta inte stämde?",
+        "placeholder": "Utforska inversionen eller negationen av detta koncept..."
+      },
+      "connect": {
+        "label": "Koppla",
+        "description": "Hur hänger detta ihop med något annat du vet?",
+        "placeholder": "Länka detta till ett annat koncept, område eller erfarenhet..."
+      },
+      "process": {
+        "label": "Process",
+        "description": "Vilka steg eller mekanismer är involverade?",
+        "placeholder": "Bryt ner processen eller förklara hur det fungerar..."
+      },
+      "analogy": {
+        "label": "Analogi",
+        "description": "Vad liknar detta? Skapa en jämförelse.",
+        "placeholder": "Detta är som... eftersom..."
+      },
+      "critique": {
+        "label": "Kritik",
+        "description": "Vilka är begränsningarna eller svagheterna?",
+        "placeholder": "Överväg specialfall, undantag eller motargument..."
+      },
+      "apply": {
+        "label": "Tillämpa",
+        "description": "Hur skulle du använda detta i praktiken?",
+        "placeholder": "Beskriv en verklig tillämpning eller ett exempel..."
+      }
+    },
+    "quick-add": {
+      "add-note": "Lägg till anteckning",
+      "cancel": "Avbryt"
+    },
     "back-to-deck": "Tillbaka till kortleken",
     "rate-again": "Igen",
     "rate-hard": "Svårt",
@@ -173,8 +209,16 @@
       "title": "General"
     },
     "learn": {
-      "maximumInterval": "",
-      "requestRetention": "",
+      "enable-visual-feedback": "Aktivera visuell feedback",
+      "enable-visual-feedback-description": "Visa en kort färgblixt efter att ha svarat på ett kort beroende på ditt betyg.",
+      "show-cognitive-prompts": "Visa kognitiva uppmaningar",
+      "show-cognitive-prompts-description": "Visa tänkuppmaningar efter bemästrade kort för att uppmuntra djupare engagemang med materialet.",
+      "maximumInterval": "Maximalt intervall",
+      "maximumIntervalDescription": "Det maximala intervallet i dagar mellan två repetitioner av ett kort",
+      "requestRetention": "Begärd retention",
+      "requestRetentionDescription": "Ange vilken procentandel av frågorna du vill kunna komma ihåg på lång sikt.",
+      "newToReviewRatio": "Nya kort per repetition",
+      "newToReviewRatioDescription": "Detta bestämmer hur många nya kort som visas per repetition i genomsnitt.",
       "title": "Lära"
     },
     "title": "Inställningar"

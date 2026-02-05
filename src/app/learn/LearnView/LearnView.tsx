@@ -20,6 +20,7 @@ import VisualFeedback from "./VisualFeedback";
 
 function LearnView() {
   const [useVisualFeedback] = useSetting("useVisualFeedback");
+  const [showCognitivePrompts] = useSetting("showCognitivePrompts");
   const [newToReviewRatio] = useSetting("learn_newToReviewRatio");
 
   const navigate = useNavigate();
@@ -92,7 +93,7 @@ function LearnView() {
                   cardContent
                 )}
             </Paper>
-            {controller.showingAnswer && (
+            {showCognitivePrompts && controller.showingAnswer && (
               <>
                 {showPrompts && (
                   <CognitivePromptConnector

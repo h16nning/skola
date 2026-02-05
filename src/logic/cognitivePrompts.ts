@@ -1,3 +1,5 @@
+import { t } from "i18next";
+
 export type CognitivePromptCategory =
   | "invert"
   | "connect"
@@ -20,44 +22,44 @@ export const UNIVERSAL_COGNITIVE_PROMPTS: Record<
 > = {
   invert: {
     category: "invert",
-    label: "Invert",
-    description: "What's the opposite? What if this weren't true?",
-    placeholder: "Explore the inverse or negation of this concept...",
+    label: t("learning.cognitive-prompts.invert.label"),
+    description: t("learning.cognitive-prompts.invert.description"),
+    placeholder: t("learning.cognitive-prompts.invert.placeholder"),
     color: "violet",
   },
   connect: {
     category: "connect",
-    label: "Connect",
-    description: "How does this relate to something else you know?",
-    placeholder: "Link this to another concept, field, or experience...",
+    label: t("learning.cognitive-prompts.connect.label"),
+    description: t("learning.cognitive-prompts.connect.description"),
+    placeholder: t("learning.cognitive-prompts.connect.placeholder"),
     color: "blue",
   },
   process: {
     category: "process",
-    label: "Process",
-    description: "What are the steps or mechanisms involved?",
-    placeholder: "Break down the process or explain how it works...",
+    label: t("learning.cognitive-prompts.process.label"),
+    description: t("learning.cognitive-prompts.process.description"),
+    placeholder: t("learning.cognitive-prompts.process.placeholder"),
     color: "teal",
   },
   analogy: {
     category: "analogy",
-    label: "Analogy",
-    description: "What is this like? Create a comparison.",
-    placeholder: "This is like... because...",
+    label: t("learning.cognitive-prompts.analogy.label"),
+    description: t("learning.cognitive-prompts.analogy.description"),
+    placeholder: t("learning.cognitive-prompts.analogy.placeholder"),
     color: "orange",
   },
   critique: {
     category: "critique",
-    label: "Critique",
-    description: "What are the limitations or weaknesses?",
-    placeholder: "Consider edge cases, exceptions, or counterarguments...",
+    label: t("learning.cognitive-prompts.critique.label"),
+    description: t("learning.cognitive-prompts.critique.description"),
+    placeholder: t("learning.cognitive-prompts.critique.placeholder"),
     color: "red",
   },
   apply: {
     category: "apply",
-    label: "Apply",
-    description: "How would you use this in practice?",
-    placeholder: "Describe a real-world application or example...",
+    label: t("learning.cognitive-prompts.apply.label"),
+    description: t("learning.cognitive-prompts.apply.description"),
+    placeholder: t("learning.cognitive-prompts.apply.placeholder"),
     color: "green",
   },
 };

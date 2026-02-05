@@ -96,7 +96,7 @@ function QuickAddNote({ deck, prompt, onClose }: QuickAddNoteProps) {
 
         <Group justify="flex-end" gap="xs">
           <Button variant="subtle" color="gray" size="sm" onClick={onClose}>
-            Cancel
+            {t("learning.quick-add.cancel")}
           </Button>
           <Button
             size="sm"
@@ -105,7 +105,7 @@ function QuickAddNote({ deck, prompt, onClose }: QuickAddNoteProps) {
               !frontEditor?.getText().trim() || !backEditor?.getText().trim()
             }
           >
-            Add Note
+            {t("learning.quick-add.add-note")}
           </Button>
         </Group>
       </Stack>

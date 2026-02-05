@@ -7,6 +7,7 @@ export const defaultSettings: SettingsValues = {
   showShortcutHints: true,
 
   colorSchemePreference: "auto",
+  showCognitivePrompts: true,
 
   useBubbleMenu: true,
   useToolbar: false,
