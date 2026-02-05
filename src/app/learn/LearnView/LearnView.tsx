@@ -101,13 +101,16 @@ function LearnView() {
                     selectedPrompt={selectedPrompt}
                   />
                 )}
-                {selectedPrompt && deck && (
-                  <QuickAddNote
-                    deck={deck}
-                    prompt={selectedPrompt}
-                    onClose={closeQuickAdd}
-                  />
-                )}
+                {selectedPrompt &&
+                  deck &&
+                  typeof controller.currentCard?.note === "string" && (
+                    <QuickAddNote
+                      deck={deck}
+                      sourceNoteId={controller.currentCard.note}
+                      prompt={selectedPrompt}
+                      onClose={closeQuickAdd}
+                    />
+                  )}
               </>
             )}
           </Stack>

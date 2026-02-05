@@ -13,7 +13,7 @@ type DeckPreviewProps = {
   i: number;
 };
 
-export default function DeckPreview({ deck, i }: DeckPreviewProps) {
+export default function DeckPreview({ deck }: DeckPreviewProps) {
   const navigate = useNavigate();
   const [t] = useTranslation();
   const [cards] = useCardsOf(deck);
@@ -21,7 +21,6 @@ export default function DeckPreview({ deck, i }: DeckPreviewProps) {
 
   return (
     <ListButton
-      i={i}
       onClick={() => {
         navigate("/deck/" + deck.id);
       }}

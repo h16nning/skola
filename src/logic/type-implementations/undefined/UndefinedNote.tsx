@@ -4,7 +4,7 @@ import { NoteType } from "@/logic/note/note";
 export const UndefinedNoteTypeAdapter: NoteTypeAdapter<NoteType.Undefined> = {
   createNote() {
     console.warn("tried to create note of type undefined. Not possible.");
-    return Promise.resolve();
+    return Promise.resolve(undefined);
   },
 
   updateNote() {

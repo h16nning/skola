@@ -31,6 +31,7 @@ export const BasicNoteTypeAdapter: NoteTypeAdapter<NoteType.Basic> = {
         },
         deck
       );
+      return noteId;
     });
   },
 

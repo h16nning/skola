@@ -14,7 +14,10 @@ export interface NoteTypeAdapter<T extends NoteType> {
   //DEPRECEATED
   deleteCard: (card: Card<T>) => void;
 
-  createNote: (params: any, deck: Deck) => Promise<any>;
+  createNote: (
+    params: any,
+    deck: Deck
+  ) => Promise<string | undefined> | undefined;
 
   updateNote: (params: any, existingNote: Note<T>) => Promise<any>;
 

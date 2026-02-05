@@ -7,7 +7,7 @@ export const ImageOcclusionTypeAdapter: NoteTypeAdapter<NoteType.DoubleSided> =
       console.warn(
         "tried to create note of type image occlusion. Not implemented."
       );
-      return Promise.resolve();
+      return Promise.resolve(undefined);
     },
 
     updateNote() {

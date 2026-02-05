@@ -1,5 +1,5 @@
 import { useSetting } from "@/logic/settings/hooks/useSetting";
-import { Stack, Text } from "@mantine/core";
+import { Badge, Group, Stack, Text } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import SettingsInput from "./SettingsInput";
 
@@ -16,7 +16,14 @@ export default function LearnSettingsView() {
         inputType="checkbox"
       />
       <SettingsInput
-        label={t("settings.learn.show-cognitive-prompts")}
+        label={
+          <Group gap="xs">
+            {t("settings.learn.show-cognitive-prompts")}
+            <Badge color="red" size="xs">
+              Beta
+            </Badge>
+          </Group>
+        }
         description={t("settings.learn.show-cognitive-prompts-description")}
         settingsKey="showCognitivePrompts"
         inputType="checkbox"
