@@ -6,7 +6,6 @@ import HomeView from "@/app/home/HomeView";
 import LearnView from "@/app/learn/LearnView/LearnView";
 import SettingsView from "@/app/settings/SettingsView";
 import StatsView from "@/app/statistics/StatsView";
-import TodayView from "@/app/today/TodayView";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Navigate, RouterProvider, createHashRouter } from "react-router-dom";
@@ -54,10 +53,6 @@ const router = createHashRouter(
         {
           path: "/notes/:deckId/:noteId?",
           element: <NoteExplorerView />,
-        },
-        {
-          path: "/today",
-          element: <TodayView />,
         },
         {
           path: "/stats/:deckId?",

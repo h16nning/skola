@@ -11,7 +11,6 @@ import {
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import {
-  IconBolt,
   IconCards,
   IconChartBar,
   IconHome,
@@ -133,14 +132,6 @@ function Sidebar({
               label={t("home.title")}
               path="/home"
               icon={<IconHome />}
-              minimalMode={minimalMode}
-              fullscreenMode={fullscreenMode}
-              closeMenu={menuHandlers.close}
-            />
-            <InteractiveNavLink
-              label={t("today.title")}
-              path="/today"
-              icon={<IconBolt />}
               minimalMode={minimalMode}
               fullscreenMode={fullscreenMode}
               closeMenu={menuHandlers.close}
