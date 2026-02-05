@@ -119,7 +119,7 @@ function NoteExplorerView() {
           )}
         </Stack>
         <Box className={classes.noteDisplay}>
-          <EditNoteView note={openedNote} />
+          <EditNoteView note={openedNote} setOpenedNote={setOpenedNote} />
         </Box>
       </div>
       {openedNote && (

@@ -93,7 +93,7 @@ function Sidebar({
       theme.breakpoints.lg +
       ") and (min-width: " +
       theme.breakpoints.xs +
-      ")",
+      ")"
   );
 
   const landscapeMode = useMediaQuery("(orientation: landscape)");
@@ -106,7 +106,7 @@ function Sidebar({
         minimalMode && classes.minimalMode,
         landscapeMode && classes.landscapeMode,
         fullscreenMode && classes.fullscreenMode,
-        fullscreenMode && menuOpened && classes.fullscreenModeOpened,
+        fullscreenMode && menuOpened && classes.fullscreenModeOpened
       )}
     >
       <Stack justify="space-between" h="100%">

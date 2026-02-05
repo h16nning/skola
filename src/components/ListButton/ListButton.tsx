@@ -5,7 +5,6 @@ import classes from "./ListButton.module.css";
 
 interface ListButtonProps {
   children: JSX.Element;
-  i: number;
   onClick?: () => void;
   onContextMenu?: () => void;
 }
@@ -19,7 +18,7 @@ function ListButton({ children, onClick, onContextMenu }: ListButtonProps) {
       className={classes.listButton}
     >
       {
-        <Group gap="apart" wrap="nowrap">
+        <Group gap="apart" wrap="nowrap" w="100%">
           {children}
           <IconChevronRight className={classes.rightArrow} />
         </Group>

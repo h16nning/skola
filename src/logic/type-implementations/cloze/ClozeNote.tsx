@@ -28,7 +28,7 @@ export const ClozeNoteTypeAdapter: NoteTypeAdapter<NoteType.Cloze> = {
   createNote(
     params: { text: string; occlusionNumberSet: number[] },
     deck: Deck
-  ): Promise<string | undefined> {
+  ) {
     function createClozeCard(
       noteId: string,
       occlusionNumber: number,

@@ -1,5 +1,6 @@
 import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { Center, Stack, Tabs, Title } from "@mantine/core";
+import { useDocumentTitle } from "@mantine/hooks";
 import {
   IconBolt,
   IconBraces,
@@ -18,7 +19,6 @@ import DatabaseSettingsView from "./DatabaseSettingsView/DatabaseSettingsView";
 import EditingSettingsView from "./EditingSettingsView/EditingSettingsView";
 import GeneralSettingsView from "./GeneralSettingsView";
 import LearnSettingsView from "./LearnSettingsView";
-import { useDocumentTitle } from "@mantine/hooks";
 
 export default function SettingsView() {
   useDocumentTitle(`${t("settings.title")} | Skola`);

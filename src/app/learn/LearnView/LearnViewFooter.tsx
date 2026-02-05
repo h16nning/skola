@@ -1,11 +1,11 @@
 import { Button, Group } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import { Rating } from "fsrs.js";
+import { t } from "i18next";
 import i18n from "../../../i18n";
 import { LearnController } from "../../../logic/learn";
 import AnswerCardButton from "./AnswerCardButton";
 import classes from "./LearnView.module.css";
-import { t } from "i18next";
 
 const DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24;
 const MINUTE_IN_MILLISECONDS = 1000 * 60;

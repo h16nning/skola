@@ -1,0 +1,14 @@
+.pillsContainer {
+  max-width: 600px;
+  width: 100%;
+}
+
+.pill {
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.pill:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}

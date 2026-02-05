@@ -1,18 +1,28 @@
 import { getAdapter } from "@/logic/NoteTypeAdapter";
 import { NoteTypeLabels } from "@/logic/card/card";
 import { useDeckOf } from "@/logic/deck/hooks/useDeckOf";
+import { getNote } from "@/logic/note/getNote";
 import { Note, NoteType } from "@/logic/note/note";
 import { Group, Stack, Text } from "@mantine/core";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import LinkedNotesSection from "../explorer/LinkedNotesSection";
 import NoteMenu from "./NoteMenu";
 import NoteSubmitButton from "./NoteSubmitButton";
 
-export function EditNoteView({ note }: { note: Note<NoteType> | undefined }) {
+type SetOpenedNote = (note: Note<NoteType> | undefined) => void;
+
+export function EditNoteView({
+  note,
+  setOpenedNote,
+}: {
+  note: Note<NoteType> | undefined;
+  setOpenedNote?: SetOpenedNote;
+}) {
   if (!note) {
     return <NoNoteView />;
   }
-  return <NoteView note={note} />;
+  return <NoteView key={note.id} note={note} setOpenedNote={setOpenedNote} />;
 }
 
 export function NoNoteView() {
@@ -23,7 +33,13 @@ export function NoNoteView() {
   );
 }
 
-function NoteView({ note }: { note: Note<NoteType> }) {
+function NoteView({
+  note,
+  setOpenedNote,
+}: {
+  note: Note<NoteType>;
+  setOpenedNote?: SetOpenedNote;
+}) {
   const [t] = useTranslation();
   const [deck] = useDeckOf(note);
   const [requestedFinish, setRequestedFinish] = useState(false);
@@ -57,6 +73,14 @@ function NoteView({ note }: { note: Note<NoteType> }) {
       <Group justify="end">
         <NoteSubmitButton finish={() => setRequestedFinish(true)} mode="edit" />
       </Group>
+      <LinkedNotesSection
+        linkedNotes={note.linkedNotes}
+        onSelectNote={
+          setOpenedNote
+            ? (noteId) => getNote(noteId).then((n) => n && setOpenedNote(n))
+            : undefined
+        }
+      />
     </Stack>
   );
 }

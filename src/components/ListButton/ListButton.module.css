@@ -1,4 +1,7 @@
 .listButton {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
     p {
         font-size: var(--mantine-font-size-sm);
         font-weight: 600;

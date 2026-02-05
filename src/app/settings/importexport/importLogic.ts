@@ -21,7 +21,7 @@ export async function importCards(
 
   await Promise.all(
     questionAnswerPairs.map(async (pair) => {
-      if (pair.length < 2) return; 
+      if (pair.length < 2) return;
       return getAdapterOfType(NoteType.Basic).createNote(
         {
           front: pair[0],
@@ -32,4 +32,3 @@ export async function importCards(
     })
   );
 }
-

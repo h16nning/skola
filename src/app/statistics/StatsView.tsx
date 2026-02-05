@@ -5,14 +5,14 @@ import { getDeck } from "@/logic/deck/getDeck";
 import { useDecks } from "@/logic/deck/hooks/useDecks";
 import { BarChart, DonutChart } from "@mantine/charts";
 import { Center, SegmentedControl, Stack, Title } from "@mantine/core";
+import { useDocumentTitle } from "@mantine/hooks";
 import { State } from "fsrs.js";
+import { t } from "i18next";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import SelectDecksHeader from "../../components/SelectDecksHeader";
 import { db } from "../../logic/db";
 import { AppHeaderContent } from "../shell/Header/Header";
-import { t } from "i18next";
-import { useDocumentTitle } from "@mantine/hooks";
 
 function StatsView() {
   useDocumentTitle(`${t("statistics.title")} | Skola`);

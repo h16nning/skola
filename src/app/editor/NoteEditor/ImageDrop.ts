@@ -39,29 +39,22 @@ const ImageDrop = Image.extend<{}>({
           editor: any;
           commands: any;
         }) => {
-          const selectionAtEnd =
-            Selection.atEnd(
-              editor.state.doc,
-            );
+          const selectionAtEnd = Selection.atEnd(editor.state.doc);
 
-          return commands.insertContent(
-            [
-              {
-                type: nodeTypeName,
-                attrs: attributes,
-              },
-              // Insert a blank paragraph after the image when at the end of the document
-              ...(editor.state.selection
-                .to ===
-              selectionAtEnd.to
-                ? [
-                    {
-                      type: "paragraph",
-                    },
-                  ]
-                : []),
-            ],
-          );
+          return commands.insertContent([
+            {
+              type: nodeTypeName,
+              attrs: attributes,
+            },
+            // Insert a blank paragraph after the image when at the end of the document
+            ...(editor.state.selection.to === selectionAtEnd.to
+              ? [
+                  {
+                    type: "paragraph",
+                  },
+                ]
+              : []),
+          ]);
         };
       },
     };

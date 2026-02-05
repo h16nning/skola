@@ -91,6 +91,42 @@
     "welcome-user": "Welcome back, {{name}}!"
   },
   "learning": {
+    "cognitive-prompts": {
+      "invert": {
+        "label": "Invert",
+        "description": "What's the opposite? What if this weren't true?",
+        "placeholder": "Explore the inverse or negation of this concept..."
+      },
+      "connect": {
+        "label": "Connect",
+        "description": "How does this relate to something else you know?",
+        "placeholder": "Link this to another concept, field, or experience..."
+      },
+      "process": {
+        "label": "Process",
+        "description": "What are the steps or mechanisms involved?",
+        "placeholder": "Break down the process or explain how it works..."
+      },
+      "analogy": {
+        "label": "Analogy",
+        "description": "What is this like? Create a comparison.",
+        "placeholder": "This is like... because..."
+      },
+      "critique": {
+        "label": "Critique",
+        "description": "What are the limitations or weaknesses?",
+        "placeholder": "Consider edge cases, exceptions, or counterarguments..."
+      },
+      "apply": {
+        "label": "Apply",
+        "description": "How would you use this in practice?",
+        "placeholder": "Describe a real-world application or example..."
+      }
+    },
+    "quick-add": {
+      "add-note": "Add Note",
+      "cancel": "Cancel"
+    },
     "rate-again": "Again",
     "rate-hard": "Hard",
     "rate-good": "Good",
@@ -223,6 +259,8 @@
     "learn": {
       "enable-visual-feedback": "Enable Visual Feedback",
       "enable-visual-feedback-description": "Show a short color flash after answering a card depending on your rating.",
+      "show-cognitive-prompts": "Show Cognitive Prompts",
+      "show-cognitive-prompts-description": "Display thinking prompts after mastered cards to encourage deeper engagement with the material.",
       "maximumInterval": "Maxium interval",
       "maximumIntervalDescription": "The maximum interval in days between two repetitions of a card",
       "newToReviewRatio": "New Cards Per Reviews",

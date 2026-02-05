@@ -86,6 +86,42 @@
     "welcome-user": "Willkommen zurück, {{name}}!"
   },
   "learning": {
+    "cognitive-prompts": {
+      "invert": {
+        "label": "Umkehrung",
+        "description": "Was ist das Gegenteil? Was wäre, wenn das nicht stimmen würde?",
+        "placeholder": "Erkunde die Umkehrung oder Verneinung dieses Konzepts..."
+      },
+      "connect": {
+        "label": "Verknüpfung",
+        "description": "Wie hängt das mit etwas anderem zusammen, das du kennst?",
+        "placeholder": "Verknüpfe dies mit einem anderen Konzept, Fachgebiet oder einer Erfahrung..."
+      },
+      "process": {
+        "label": "Prozess",
+        "description": "Welche Schritte oder Mechanismen sind beteiligt?",
+        "placeholder": "Zerlege den Prozess oder erkläre, wie es funktioniert..."
+      },
+      "analogy": {
+        "label": "Analogie",
+        "description": "Womit ist das vergleichbar? Erstelle einen Vergleich.",
+        "placeholder": "Das ist wie... weil..."
+      },
+      "critique": {
+        "label": "Kritik",
+        "description": "Was sind die Einschränkungen oder Schwächen?",
+        "placeholder": "Bedenke Grenzfälle, Ausnahmen oder Gegenargumente..."
+      },
+      "apply": {
+        "label": "Anwendung",
+        "description": "Wie würdest du das in der Praxis nutzen?",
+        "placeholder": "Beschreibe eine praktische Anwendung oder ein Beispiel..."
+      }
+    },
+    "quick-add": {
+      "add-note": "Notiz hinzufügen",
+      "cancel": "Abbrechen"
+    },
     "rate-again": "Nochmal",
     "rate-hard": "Schwer",
     "rate-good": "Gut",
@@ -212,6 +248,8 @@
     "learn": {
       "enable-visual-feedback": "Visuelles Feedback aktivieren",
       "enable-visual-feedback-description": "Zeige eine kurzes farbiges Blinken, wenn eine Karte richtig oder falsch beantwortet wurde.",
+      "show-cognitive-prompts": "Denkimpulse anzeigen",
+      "show-cognitive-prompts-description": "Zeige Denkimpulse beim Wiederholen von öfter wiederholten Karten an, um eine tiefere Auseinandersetzung mit dem Lernstoff zu fördern.",
       "maximumInterval": "Maximales Intervall",
       "maximumIntervalDescription": "Das maximale Intervall in Tagen zwischen zwei Wiederholungen einer Karte",
       "newToReviewRatio": "Neue Karten pro Wiederholungen",

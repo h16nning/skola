@@ -1,64 +1,48 @@
 import { AppHeaderContent } from "@/app/shell/Header/Header";
 import MissingObject from "@/components/MissingObject";
-import { genericFail } from "@/components/Notification/Notification";
 import { getAdapter } from "@/logic/NoteTypeAdapter";
-import { CardSorts } from "@/logic/card/CardSorting";
-import { getCardsOf } from "@/logic/card/getCardsOf";
 import { useDeckFromUrl } from "@/logic/deck/hooks/useDeckFromUrl";
-import { useLearning } from "@/logic/learn";
 import { useNote } from "@/logic/note/hooks/useNote";
 import { useSetting } from "@/logic/settings/hooks/useSetting";
-import { Center, Flex, Modal, Paper } from "@mantine/core";
+import { Center, Flex, Modal, Paper, Stack } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
-import { Rating } from "fsrs.js";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import FinishedLearningView from "../FinishedLearningView/FinishedLearningView";
 import LearnViewCurrentCardStateIndicator from "../LearnViewCurrentCardStateIndicator/LearnViewCurrentCardStateIndicator";
+import CognitivePromptConnector from "./CognitivePromptConnector";
 import classes from "./LearnView.module.css";
 import LearnViewFooter from "./LearnViewFooter";
 import LearnViewHeader, { stopwatchResult } from "./LearnViewHeader";
+import QuickAddNote from "./QuickAddNote";
 import VisualFeedback from "./VisualFeedback";
+import { useLearnSession } from "./useLearnSession";
 
 function LearnView() {
   const [useVisualFeedback] = useSetting("useVisualFeedback");
+  const [showCognitivePrompts] = useSetting("showCognitivePrompts");
+  const [newToReviewRatio] = useSetting("learn_newToReviewRatio");
 
   const navigate = useNavigate();
   const [deck, isReady, params] = useDeckFromUrl();
 
-  const [newToReviewRatio] = useSetting("learn_newToReviewRatio");
-  const controller = useLearning(
-    {
-      querier: () => getCardsOf(deck),
-      dependencies: [deck],
-    },
-    {
-      learnAll: params === "all",
-      newToReviewRatio: newToReviewRatio,
-      sort: CardSorts.byCreationDate(1),
-    }
-  );
+  const {
+    controller,
+    currentRating,
+    selectedPrompt,
+    showPrompts,
+    answerCard,
+    togglePrompt,
+    closeQuickAdd,
+  } = useLearnSession({
+    deck,
+    learnAll: params === "all",
+    newToReviewRatio,
+  });
 
   const cardContent = useNote(controller.currentCard?.note ?? "")?.content;
 
-  const [currentRating, setCurrentRating] = useState<Rating | null>(null);
-
   const [debouncedFinish] = useDebouncedValue(controller.isFinished, 50);
-
-  const answerButtonPressed = useCallback(
-    async (rating: Rating) => {
-      try {
-        controller.answerCard(rating);
-        controller.requestNextCard();
-        setCurrentRating(rating);
-        setTimeout(() => setCurrentRating(null), 150);
-      } catch (error) {
-        genericFail();
-        console.log(error);
-      }
-    },
-    [controller]
-  );
 
   useEffect(() => {
     if (controller.isFinished) {
@@ -91,25 +75,47 @@ function LearnView() {
       >
         {useVisualFeedback && <VisualFeedback rating={currentRating} />}
         <Center className={classes.cardContainer} h="100%">
-          <Paper className={classes.card}>
-            <LearnViewCurrentCardStateIndicator
-              currentCardModel={controller.currentCard?.model}
-            />
-            {!controller.showingAnswer &&
-              controller.currentCard &&
-              getAdapter(controller.currentCard).displayQuestion(
-                controller.currentCard,
-                cardContent
-              )}
-            {controller.showingAnswer &&
-              controller.currentCard &&
-              getAdapter(controller.currentCard).displayAnswer(
-                controller.currentCard,
-                cardContent
-              )}
-          </Paper>
+          <Stack w="100%" align="center" gap={0}>
+            <Paper className={classes.card}>
+              <LearnViewCurrentCardStateIndicator
+                currentCardModel={controller.currentCard?.model}
+              />
+              {!controller.showingAnswer &&
+                controller.currentCard &&
+                getAdapter(controller.currentCard).displayQuestion(
+                  controller.currentCard,
+                  cardContent
+                )}
+              {controller.showingAnswer &&
+                controller.currentCard &&
+                getAdapter(controller.currentCard).displayAnswer(
+                  controller.currentCard,
+                  cardContent
+                )}
+            </Paper>
+            {showCognitivePrompts && controller.showingAnswer && (
+              <>
+                {showPrompts && (
+                  <CognitivePromptConnector
+                    onToggle={togglePrompt}
+                    selectedPrompt={selectedPrompt}
+                  />
+                )}
+                {selectedPrompt &&
+                  deck &&
+                  typeof controller.currentCard?.note === "string" && (
+                    <QuickAddNote
+                      deck={deck}
+                      sourceNoteId={controller.currentCard.note}
+                      prompt={selectedPrompt}
+                      onClose={closeQuickAdd}
+                    />
+                  )}
+              </>
+            )}
+          </Stack>
         </Center>
-        <LearnViewFooter controller={controller} answer={answerButtonPressed} />
+        <LearnViewFooter controller={controller} answer={answerCard} />
 
         <Modal
           opened={debouncedFinish}

@@ -33,5 +33,6 @@ export default async function createDoubleSidedNote(
     });
     await newCard(createDoubleSidedCard(noteId, true, params.field1), deck);
     await newCard(createDoubleSidedCard(noteId, false, params.field2), deck);
+    return noteId;
   });
 }
