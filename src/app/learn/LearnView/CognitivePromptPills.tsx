@@ -17,7 +17,7 @@ function CognitivePromptPills({
   const displayPrompts = selectedPrompt ? [selectedPrompt] : prompts;
 
   return (
-    <Group justify="center" gap="xs" mt="md" className={classes.pillsContainer}>
+    <Group justify="center" gap="xs" className={classes.pillsContainer}>
       {displayPrompts.map((prompt) => (
         <Badge
           key={prompt.category}

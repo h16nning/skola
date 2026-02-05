@@ -14,7 +14,7 @@ export interface CognitivePrompt {
   color: string;
 }
 
-export const COGNITIVE_PROMPTS: Record<
+export const UNIVERSAL_COGNITIVE_PROMPTS: Record<
   CognitivePromptCategory,
   CognitivePrompt
 > = {
@@ -62,8 +62,8 @@ export const COGNITIVE_PROMPTS: Record<
   },
 };
 
-export function getRandomPrompts(count: number = 3): CognitivePrompt[] {
-  const allPrompts = Object.values(COGNITIVE_PROMPTS);
+export function getRandomPrompts(count = 3): CognitivePrompt[] {
+  const allPrompts = Object.values(UNIVERSAL_COGNITIVE_PROMPTS);
   const shuffled = [...allPrompts].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, Math.min(count, allPrompts.length));
 }

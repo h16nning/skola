@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import FinishedLearningView from "../FinishedLearningView/FinishedLearningView";
 import LearnViewCurrentCardStateIndicator from "../LearnViewCurrentCardStateIndicator/LearnViewCurrentCardStateIndicator";
-import CognitivePromptPills from "./CognitivePromptPills";
+import CognitivePromptConnector from "./CognitivePromptConnector";
 import classes from "./LearnView.module.css";
 import LearnViewFooter from "./LearnViewFooter";
 import LearnViewHeader, { stopwatchResult } from "./LearnViewHeader";
@@ -74,7 +74,7 @@ function LearnView() {
       >
         {useVisualFeedback && <VisualFeedback rating={currentRating} />}
         <Center className={classes.cardContainer} h="100%">
-          <Stack w="100%" align="center">
+          <Stack w="100%" align="center" gap={0}>
             <Paper className={classes.card}>
               <LearnViewCurrentCardStateIndicator
                 currentCardModel={controller.currentCard?.model}
@@ -95,7 +95,7 @@ function LearnView() {
             {controller.showingAnswer && (
               <>
                 {showPrompts && (
-                  <CognitivePromptPills
+                  <CognitivePromptConnector
                     onToggle={togglePrompt}
                     selectedPrompt={selectedPrompt}
                   />

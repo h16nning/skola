@@ -70,7 +70,6 @@ function QuickAddNote({ deck, prompt, onClose }: QuickAddNoteProps) {
       style={{
         maxWidth: 600,
         width: "100%",
-        marginTop: "1rem",
       }}
       p="md"
     >

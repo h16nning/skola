@@ -16,6 +16,12 @@ export default function LearnSettingsView() {
         inputType="checkbox"
       />
       <SettingsInput
+        label={t("settings.learn.show-cognitive-prompts")}
+        description={t("settings.learn.show-cognitive-prompts-description")}
+        settingsKey="showCognitivePrompts"
+        inputType="checkbox"
+      />
+      <SettingsInput
         label={t("settings.learn.requestRetention")}
         description={t("settings.learn.requestRetentionDescription")}
         settingsKey="globalScheduler_requestRetention"
