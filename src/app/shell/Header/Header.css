@@ -1,0 +1,31 @@
+.header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3.75rem;
+  z-index: 50;
+  background-color: var(--theme-neutral-50);
+  backdrop-filter: blur(4rem);
+  border-bottom: 1px solid var(--theme-neutral-200);
+  transition: box-shadow 0.3s ease;
+}
+
+.header--scrolled {
+  box-shadow: 0 -1rem 2rem 1rem rgba(0, 0, 0, 0.04),
+    0 -0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.07);
+}
+
+.header__content {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: var(--spacing-sm);
+  gap: var(--spacing-sm);
+}
+
+.header__outlet {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
