@@ -12,7 +12,6 @@ import {
   Editor,
   EditorOptions,
   Extension,
-  FloatingMenu,
   useEditor,
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -106,24 +105,17 @@ function NoteEditor({ editor, controls, className }: NoteEditorProps) {
           content: classes.content,
         }}
       >
-        {areSettingsReady && (
-          <>
-            {editor && editor.isFocused && settings.useToolbar && (
-              <RichTextEditor.Toolbar className={classes.toolbar} tabIndex={-1}>
-                <NoteEditorControls controls={controls} editor={editor} />
-              </RichTextEditor.Toolbar>
+        {areSettingsReady && settings.useToolbar && (
+          <RichTextEditor.Toolbar className={classes.toolbar} tabIndex={-1}>
+            {editor && editor.isFocused && (
+              <NoteEditorControls controls={controls} editor={editor} />
             )}
-            {editor && settings.useBubbleMenu && (
-              <BubbleMenu editor={editor} tippyOptions={{ maxWidth: "none" }}>
-                <NoteEditorControls controls={controls} editor={editor} />
-              </BubbleMenu>
-            )}
-            {editor && settings.useBubbleMenu && (
-              <FloatingMenu editor={editor}>
-                <NoteEditorControls controls={controls} editor={editor} />
-              </FloatingMenu>
-            )}
-          </>
+          </RichTextEditor.Toolbar>
+        )}
+        {areSettingsReady && editor && settings.useBubbleMenu && (
+          <BubbleMenu editor={editor} tippyOptions={{ maxWidth: "none" }}>
+            <NoteEditorControls controls={controls} editor={editor} />
+          </BubbleMenu>
         )}
 
         <RichTextEditor.Content
