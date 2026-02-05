@@ -17,10 +17,10 @@ export class Database extends Dexie {
 
   constructor() {
     super("skola_db", { addons: [dexieCloud], cache: "disabled" });
-    this.version(16).stores({
+    this.version(17).stores({
       cards: "id, note, deck",
       decks: "id, *cards, *notes, *subDecks, *superDecks",
-      notes: "id, deck, sortField",
+      notes: "id, deck, sortField, *linkedNotes",
       statistics: "[deck+day], day",
       settings: "key",
     });
