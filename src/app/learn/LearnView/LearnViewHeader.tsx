@@ -2,6 +2,7 @@ import { NoteType } from "@/logic/note/note";
 import { ActionIcon, Group, Kbd, Progress, Tooltip } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import { IconX } from "@tabler/icons-react";
+import { t } from "i18next";
 import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { StopwatchResult, useStopwatch } from "react-timer-hook";
@@ -11,7 +12,6 @@ import { LearnController } from "../../../logic/learn";
 import CardMenu from "../../editor/CardMenu";
 import RemainingCardsIndicator from "../RemainingCardsIndicator/RemainingCardsIndicator";
 import classes from "./LearnView.module.css";
-import { t } from "i18next";
 
 export let stopwatchResult: StopwatchResult;
 

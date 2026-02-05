@@ -10,26 +10,15 @@ export default defineConfig({
     modules: {},
   },
   define: {
-    ENABLE_FIREBASE:
-      process.env.ENABLE_FIREBASE ||
-      true,
-    PUBLIC_URL: JSON.stringify(
-      process.env.PUBLIC_URL || "/",
-    ),
+    ENABLE_FIREBASE: process.env.ENABLE_FIREBASE || true,
+    PUBLIC_URL: JSON.stringify(process.env.PUBLIC_URL || "/"),
   },
   resolve: {
     alias: {
-      "@": path.resolve(
-        __dirname,
-        "src",
-      ),
+      "@": path.resolve(__dirname, "src"),
     },
   },
-  plugins: [
-    react(),
-    viteTsconfigPaths(),
-    Checker({ typescript: true }),
-  ],
+  plugins: [react(), viteTsconfigPaths(), Checker({ typescript: true })],
   clearScreen: false,
   server: {
     strictPort: true,
@@ -46,17 +35,10 @@ export default defineConfig({
   build: {
     outDir: "dist",
     // Tauri uses Chromium on Windows and WebKit on macOS and Linux
-    target:
-      process.env.TAURI_PLATFORM ===
-      "windows"
-        ? "chrome105"
-        : "safari13",
+    target: process.env.TAURI_PLATFORM === "windows" ? "chrome105" : "safari13",
     // don't minify for debug builds
-    minify: !process.env.TAURI_DEBUG
-      ? "esbuild"
-      : false,
+    minify: !process.env.TAURI_DEBUG ? "esbuild" : false,
     // produce sourcemaps for debug builds
-    sourcemap:
-      !!process.env.TAURI_DEBUG,
+    sourcemap: !!process.env.TAURI_DEBUG,
   },
 });

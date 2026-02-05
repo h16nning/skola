@@ -6,9 +6,9 @@ import { Note, NoteType } from "@/logic/note/note";
 import { Group, Stack, Text } from "@mantine/core";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import LinkedNotesSection from "../explorer/LinkedNotesSection";
 import NoteMenu from "./NoteMenu";
 import NoteSubmitButton from "./NoteSubmitButton";
-import LinkedNotesSection from "../explorer/LinkedNotesSection";
 
 type SetOpenedNote = (note: Note<NoteType> | undefined) => void;
 

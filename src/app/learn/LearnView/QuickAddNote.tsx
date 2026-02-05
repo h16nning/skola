@@ -4,12 +4,12 @@ import {
 } from "@/components/Notification/Notification";
 import { CognitivePrompt } from "@/logic/cognitivePrompts";
 import { Deck } from "@/logic/deck/deck";
+import { linkNotes } from "@/logic/note/linkNotes";
 import { BasicNoteTypeAdapter } from "@/logic/type-implementations/normal/BasicNote";
 import { Button, Group, Paper, Stack, Text } from "@mantine/core";
 import { t } from "i18next";
 import { useCallback, useEffect, useState } from "react";
 import NoteEditor, { useNoteEditor } from "../../editor/NoteEditor/NoteEditor";
-import { linkNotes } from "@/logic/note/linkNotes";
 
 interface QuickAddNoteProps {
   sourceNoteId: string;
