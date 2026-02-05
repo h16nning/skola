@@ -4,6 +4,7 @@ import { Rating } from "fsrs.js";
 import { t } from "i18next";
 import i18n from "../../../i18n";
 import { LearnController } from "../../../logic/learn";
+import { useSetting } from "../../../logic/settings/hooks/useSetting";
 import AnswerCardButton from "./AnswerCardButton";
 import classes from "./LearnView.module.css";
 
@@ -41,30 +42,35 @@ function timeStringForRating(rating: Rating, controller: LearnController) {
 }
 
 function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
-  useHotkeys(
-    !controller.isFinished
-      ? [
-          ["1", () => answer(Rating.Again)],
-          ["2", () => answer(Rating.Hard)],
-          ["3", () => answer(Rating.Good)],
-          ["4", () => answer(Rating.Easy)],
-          [
-            "Space",
-            () =>
-              !controller.showingAnswer
-                ? controller.showAnswer()
-                : answer(Rating.Good),
-          ],
-          [
-            "Enter",
-            () =>
-              !controller.showingAnswer
-                ? controller.showAnswer()
-                : answer(Rating.Good),
-          ],
-        ]
-      : []
-  );
+  const [enableHardAndEasy] = useSetting("learn_enableHardAndEasy");
+
+  const baseHotkeys: [string, () => void][] = [
+    ["1", () => answer(Rating.Again)],
+    ["3", () => answer(Rating.Good)],
+    [
+      "Space",
+      () =>
+        !controller.showingAnswer
+          ? controller.showAnswer()
+          : answer(Rating.Good),
+    ],
+    [
+      "Enter",
+      () =>
+        !controller.showingAnswer
+          ? controller.showAnswer()
+          : answer(Rating.Good),
+    ],
+  ];
+
+  const hardAndEasyHotkeys: [string, () => void][] = enableHardAndEasy
+    ? [
+        ["2", () => answer(Rating.Hard)],
+        ["4", () => answer(Rating.Easy)],
+      ]
+    : [];
+
+  useHotkeys(!controller.isFinished ? [...baseHotkeys, ...hardAndEasyHotkeys] : []);
 
   return (
     <Group className={classes.footerContainer} justify="center">
@@ -76,24 +82,28 @@ function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
             color="red"
             action={() => answer(Rating.Again)}
           />
-          <AnswerCardButton
-            label={t("learning.rate-hard")}
-            timeInfo={timeStringForRating(Rating.Hard, controller)}
-            color="yellow"
-            action={() => answer(Rating.Hard)}
-          />
+          {enableHardAndEasy && (
+            <AnswerCardButton
+              label={t("learning.rate-hard")}
+              timeInfo={timeStringForRating(Rating.Hard, controller)}
+              color="yellow"
+              action={() => answer(Rating.Hard)}
+            />
+          )}
           <AnswerCardButton
             label={t("learning.rate-good")}
             timeInfo={timeStringForRating(Rating.Good, controller)}
             color="green"
             action={() => answer(Rating.Good)}
           />
-          <AnswerCardButton
-            label={t("learning.rate-easy")}
-            timeInfo={timeStringForRating(Rating.Easy, controller)}
-            color="blue"
-            action={() => answer(Rating.Easy)}
-          />
+          {enableHardAndEasy && (
+            <AnswerCardButton
+              label={t("learning.rate-easy")}
+              timeInfo={timeStringForRating(Rating.Easy, controller)}
+              color="blue"
+              action={() => answer(Rating.Easy)}
+            />
+          )}
         </Group>
       ) : (
         <Button onClick={controller.showAnswer} h="2.5rem">

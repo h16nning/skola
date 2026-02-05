@@ -248,6 +248,8 @@
     "learn": {
       "enable-visual-feedback": "Visuelles Feedback aktivieren",
       "enable-visual-feedback-description": "Zeige eine kurzes farbiges Blinken, wenn eine Karte richtig oder falsch beantwortet wurde.",
+      "enableHardAndEasy": "Schwer und Einfach Buttons anzeigen",
+      "enableHardAndEasyDescription": "Zeige zusätzliche Buttons für 'Schwer' und 'Einfach' beim Lernen an. Wenn deaktiviert, werden nur 'Nochmal' und 'Gut' angezeigt.",
       "show-cognitive-prompts": "Denkimpulse anzeigen",
       "show-cognitive-prompts-description": "Zeige Denkimpulse beim Wiederholen von öfter wiederholten Karten an, um eine tiefere Auseinandersetzung mit dem Lernstoff zu fördern.",
       "maximumInterval": "Maximales Intervall",

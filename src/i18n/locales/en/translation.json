@@ -259,6 +259,8 @@
     "learn": {
       "enable-visual-feedback": "Enable Visual Feedback",
       "enable-visual-feedback-description": "Show a short color flash after answering a card depending on your rating.",
+      "enableHardAndEasy": "Enable Hard and Easy Buttons",
+      "enableHardAndEasyDescription": "Show the Hard and Easy rating buttons during learning. When disabled, only Again and Good are available.",
       "show-cognitive-prompts": "Show Cognitive Prompts",
       "show-cognitive-prompts-description": "Display thinking prompts after mastered cards to encourage deeper engagement with the material.",
       "maximumInterval": "Maxium interval",

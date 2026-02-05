@@ -211,6 +211,8 @@
     "learn": {
       "enable-visual-feedback": "Aktivera visuell feedback",
       "enable-visual-feedback-description": "Visa en kort färgblixt efter att ha svarat på ett kort beroende på ditt betyg.",
+      "enableHardAndEasy": "Visa Svårt och Enkelt knappar",
+      "enableHardAndEasyDescription": "Visa knapparna Svårt och Enkelt vid inlärning. Om inaktiverad visas endast Igen och Bra.",
       "show-cognitive-prompts": "Visa kognitiva uppmaningar",
       "show-cognitive-prompts-description": "Visa tänkuppmaningar efter bemästrade kort för att uppmuntra djupare engagemang med materialet.",
       "maximumInterval": "Maximalt intervall",

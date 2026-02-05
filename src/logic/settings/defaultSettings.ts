@@ -20,6 +20,7 @@ export const defaultSettings: SettingsValues = {
 
   learn_newToReviewRatio: 0.5,
   learn_sort: "creationDate",
+  learn_enableHardAndEasy: true,
   globalScheduler_maximumInterval: 36500,
   globalScheduler_requestRetention: 0.9,
   globalScheduler_w: [

@@ -31,6 +31,7 @@ export interface SettingsValues {
 
   learn_newToReviewRatio: number;
   learn_sort: "creationDate" | "dueDate";
+  learn_enableHardAndEasy: boolean;
 
   globalScheduler_maximumInterval: number;
   globalScheduler_requestRetention: number;

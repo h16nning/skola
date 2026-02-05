@@ -29,6 +29,12 @@ export default function LearnSettingsView() {
         inputType="checkbox"
       />
       <SettingsInput
+        label={t("settings.learn.enableHardAndEasy")}
+        description={t("settings.learn.enableHardAndEasyDescription")}
+        settingsKey="learn_enableHardAndEasy"
+        inputType="checkbox"
+      />
+      <SettingsInput
         label={t("settings.learn.requestRetention")}
         description={t("settings.learn.requestRetentionDescription")}
         settingsKey="globalScheduler_requestRetention"

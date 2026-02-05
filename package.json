@@ -94,6 +94,7 @@
     "typescript": "5.5.2",
     "vite": "5.2.13",
     "vite-plugin-checker": "0.6.4",
+    "vite-plugin-pwa": "^1.2.0",
     "vite-tsconfig-paths": "4.3.2"
   },
   "packageManager": "pnpm@10.28.2"
