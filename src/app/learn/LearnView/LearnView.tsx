@@ -1,8 +1,8 @@
 import { AppHeaderContent } from "@/app/shell/Header/Header";
 import MissingObject from "@/components/MissingObject";
+import { getAdapter } from "@/logic/NoteTypeAdapter";
 import { useDeckFromUrl } from "@/logic/deck/hooks/useDeckFromUrl";
 import { useNote } from "@/logic/note/hooks/useNote";
-import { getAdapter } from "@/logic/NoteTypeAdapter";
 import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { Center, Flex, Modal, Paper, Stack } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
@@ -15,8 +15,8 @@ import classes from "./LearnView.module.css";
 import LearnViewFooter from "./LearnViewFooter";
 import LearnViewHeader, { stopwatchResult } from "./LearnViewHeader";
 import QuickAddNote from "./QuickAddNote";
-import { useLearnSession } from "./useLearnSession";
 import VisualFeedback from "./VisualFeedback";
+import { useLearnSession } from "./useLearnSession";
 
 function LearnView() {
   const [useVisualFeedback] = useSetting("useVisualFeedback");
