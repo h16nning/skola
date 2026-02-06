@@ -1,6 +1,8 @@
+import { InputDescription } from "@/components/ui/InputDescription";
+import { InputLabel } from "@/components/ui/InputLabel";
+import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { setSetting } from "@/logic/settings/setSetting";
-import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { IconMoon, IconSun, IconSunMoon } from "@tabler/icons-react";
 import { t } from "i18next";
 import { SettingsValues } from "../../logic/settings/Settings";
@@ -19,7 +21,9 @@ export default function ColorSchemeToggle() {
 
     const html = document.documentElement;
     if (value === "auto") {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
       html.setAttribute("data-theme", prefersDark ? "dark" : "light");
     } else {
       html.setAttribute("data-theme", value);
@@ -28,12 +32,10 @@ export default function ColorSchemeToggle() {
 
   return (
     <div className={BASE}>
-      <label className={`${BASE}__label`}>
-        {t("settings.appearance.color-scheme")}
-      </label>
-      <div className={`${BASE}__description`}>
+      <InputLabel>{t("settings.appearance.color-scheme")}</InputLabel>
+      <InputDescription>
         {t("settings.appearance.color-scheme-description")}
-      </div>
+      </InputDescription>
       <SegmentedControl
         value={colorSchemePreference}
         onChange={handleColorSchemeChange}

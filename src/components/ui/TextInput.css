@@ -12,7 +12,7 @@
   box-shadow: var(--inset-shadow-xs);
   background-color: var(--theme-neutral-50);
   color: var(--theme-neutral-900);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-md);
   font-family: var(--font-sans);
   transition: var(--transition-input);
   box-sizing: border-box;

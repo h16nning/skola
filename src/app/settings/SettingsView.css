@@ -5,19 +5,4 @@
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
-  padding: var(--spacing-md);
-}
-
-.settings-view__header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.settings-view__title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--theme-neutral-900);
-  margin: 0;
-  font-family: var(--font-sans);
 }

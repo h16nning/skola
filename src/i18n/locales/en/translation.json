@@ -217,6 +217,11 @@
       "color-scheme-dark": "Dark",
       "color-scheme-description": "Choose between always light or dark theme or use the color theme of your system.",
       "color-scheme-light": "Light",
+      "density": "Density",
+      "density-auto": "Auto",
+      "density-compact": "Compact",
+      "density-description": "Choose between relaxed spacing or compact spacing. Auto uses compact on desktop and relaxed on touch devices.",
+      "density-relaxed": "Relaxed",
       "title": "Appearance"
     },
     "database": {

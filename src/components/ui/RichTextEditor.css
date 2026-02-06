@@ -1,0 +1,183 @@
+.rich-text-editor {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.rich-text-editor__content {
+  width: 100%;
+}
+
+.rich-text-editor__content .ProseMirror {
+  padding: var(--spacing-md);
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid var(--theme-neutral-300);
+  border-radius: var(--radius-md);
+  background-color: transparent;
+  box-shadow: var(--inset-shadow-xs);
+  color: var(--theme-neutral-900);
+  font-size: var(--font-size-md);
+  line-height: 1.55;
+  min-height: 100px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.rich-text-editor__content .ProseMirror:focus {
+  outline: var(--ring-outline);
+  border-color: var(--ring-border-color);
+  box-shadow: var(--ring-shadow);
+}
+
+.rich-text-editor__content .ProseMirror p {
+  margin: 0;
+}
+
+.rich-text-editor__content .ProseMirror p + p {
+  margin-top: 0.5em;
+}
+
+.rich-text-editor__content .ProseMirror img {
+  max-width: 75%;
+  height: auto;
+  border-radius: var(--radius-sm);
+}
+
+.rich-text-editor__content .ProseMirror h1,
+.rich-text-editor__content .ProseMirror h2,
+.rich-text-editor__content .ProseMirror h3 {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+
+.rich-text-editor__content .ProseMirror ul,
+.rich-text-editor__content .ProseMirror ol {
+  padding-left: 1.5em;
+  margin: 0.5em 0;
+}
+
+.rich-text-editor__content .ProseMirror code {
+  background-color: var(--theme-neutral-200);
+  padding: 0.125rem 0.25rem;
+  border-radius: var(--radius-xs);
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+.rich-text-editor__content .ProseMirror mark {
+  background-color: var(--theme-orange-200);
+  padding: 0.125rem 0;
+  border-radius: var(--radius-xs);
+}
+
+.rich-text-editor__content .ProseMirror a {
+  color: var(--theme-primary-600);
+  text-decoration: underline;
+}
+
+.rich-text-editor__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--spacing-xs);
+  padding: 0 0 var(--spacing-sm) 0;
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.rich-text-editor__toolbar > div {
+  gap: var(--spacing-sm);
+}
+
+.rich-text-editor__toolbar::-webkit-scrollbar {
+  display: none;
+}
+
+.rich-text-editor__controls-group {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border-radius: var(--radius-md);
+}
+
+.rich-text-editor__control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: var(--theme-neutral-700);
+  cursor: pointer;
+  transition: background-color 0.1s ease, color 0.1s ease;
+}
+
+.rich-text-editor__control:first-child {
+  border-top-left-radius: var(--radius-md);
+  border-bottom-left-radius: var(--radius-md);
+}
+
+.rich-text-editor__control:last-child {
+  border-top-right-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+}
+
+.rich-text-editor__control:hover:not(:disabled) {
+  background-color: var(--theme-neutral-200);
+  color: var(--theme-neutral-900);
+}
+
+.rich-text-editor__control:active:not(:disabled) {
+  background-color: var(--theme-neutral-300);
+}
+
+.rich-text-editor__control[data-active] {
+  background-color: var(--theme-primary-500);
+  color: white;
+}
+
+.rich-text-editor__control[data-active]:hover {
+  background-color: var(--theme-primary-600);
+}
+
+.rich-text-editor__control:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.rich-text-editor__control svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  display: block;
+}
+
+.tippy-box {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xl);
+  background-color: var(--theme-neutral-50);
+  border: 1px solid var(--theme-neutral-200);
+  overflow: visible;
+}
+
+.tippy-box[data-theme~="dark"] {
+  background-color: var(--theme-neutral-100);
+  border-color: var(--theme-neutral-300);
+}
+
+.tippy-box .rich-text-editor__toolbar {
+  padding: var(--spacing-xs);
+}
+
+.tippy-box .rich-text-editor__controls-group {
+  background-color: transparent;
+  padding: 0;
+  gap: 2px;
+}
+
+.tippy-arrow {
+  color: var(--theme-neutral-50);
+}

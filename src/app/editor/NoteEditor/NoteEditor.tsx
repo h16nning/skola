@@ -1,5 +1,6 @@
 import { useSettings } from "@/logic/settings/hooks/useSettings";
-import { Link, RichTextEditor } from "@mantine/tiptap";
+import { RichTextEditor } from "@/components/ui/RichTextEditor";
+import { Link } from "@tiptap/extension-link";
 import { Color } from "@tiptap/extension-color";
 import Highlight from "@tiptap/extension-highlight";
 import SubScript from "@tiptap/extension-subscript";
@@ -71,7 +72,7 @@ export function useNoteEditor(props: {
         ...(props.extensions ?? []),
       ],
       content: props.content,
-      onUpdate: props.onUpdate || (() => {}), // tiptap default
+      onUpdate: props.onUpdate || (() => {}),
     },
     [props.content]
   );
@@ -95,37 +96,29 @@ function NoteEditor({ editor, controls, className }: NoteEditorProps) {
 
   return (
     <>
-      <RichTextEditor
-        editor={editor}
-        withTypographyStyles={false}
-        className={className}
-        classNames={{
-          root: classes.root,
-          toolbar: classes.toolbar,
-          content: classes.content,
+      <div
+        className={classes.contentWrapper}
+        onDrop={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          addImage(e.dataTransfer);
         }}
       >
-        {areSettingsReady && settings.useToolbar && (
-          <RichTextEditor.Toolbar className={classes.toolbar} tabIndex={-1}>
-            {editor && editor.isFocused && (
+        <RichTextEditor editor={editor} className={className}>
+          {areSettingsReady && settings.useToolbar && editor && (
+            <RichTextEditor.Toolbar className={classes.toolbar}>
               <NoteEditorControls controls={controls} editor={editor} />
-            )}
-          </RichTextEditor.Toolbar>
-        )}
-        {areSettingsReady && editor && settings.useBubbleMenu && (
-          <BubbleMenu editor={editor} tippyOptions={{ maxWidth: "none" }}>
-            <NoteEditorControls controls={controls} editor={editor} />
-          </BubbleMenu>
-        )}
-
-        <RichTextEditor.Content
-          onDrop={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            addImage(e.dataTransfer);
-          }}
-        />
-      </RichTextEditor>
+            </RichTextEditor.Toolbar>
+          )}
+          {areSettingsReady && editor && settings.useBubbleMenu && (
+            <BubbleMenu editor={editor} tippyOptions={{ maxWidth: "none" }}>
+              <div className={classes.bubbleMenuWrapper}>
+                <NoteEditorControls controls={controls} editor={editor} />
+              </div>
+            </BubbleMenu>
+          )}
+        </RichTextEditor>
+      </div>
     </>
   );
 }

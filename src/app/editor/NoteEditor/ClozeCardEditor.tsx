@@ -1,8 +1,6 @@
 import { EditMode } from "@/logic/NoteTypeAdapter";
 import { Deck } from "@/logic/deck/deck";
 import { NoteType } from "@/logic/note/note";
-import { useHotkeys } from "@mantine/hooks";
-import { RichTextEditor } from "@mantine/tiptap";
 import { IconBracketsContain } from "@tabler/icons-react";
 import classes from "./ClozeCardEditor.module.css";
 import NoteEditor, { useNoteEditor } from "./NoteEditor";
@@ -17,6 +15,7 @@ import { Note } from "@/logic/note/note";
 import { ClozeNoteTypeAdapter } from "@/logic/type-implementations/cloze/ClozeNote";
 import { Editor } from "@tiptap/react";
 import { useCallback, useEffect, useMemo } from "react";
+import { RichTextEditorControl } from "@/components/ui/RichTextEditor";
 
 interface ClozeCardEditorProps {
   note: Note<NoteType.Cloze> | null;
@@ -35,8 +34,6 @@ export default function ClozeCardEditor({
   setRequestedFinish,
   focusSelectNoteType,
 }: ClozeCardEditorProps) {
-  useHotkeys([["mod+Enter", () => setRequestedFinish(true)]]);
-
   const noteContent = note?.content ?? { type: NoteType.Cloze, text: "" };
 
   //fix sometime
@@ -75,8 +72,7 @@ export default function ClozeCardEditor({
       editor={editor}
       className={classes}
       controls={
-        <RichTextEditor.Control
-          tabIndex={-1}
+        <RichTextEditorControl
           onClick={() => {
             if (editor?.state.selection.from !== editor?.state.selection.to) {
               const occludedText = `{{c${smallestAvailableOcclusionNumber}::${window.getSelection()}}}`;
@@ -88,9 +84,10 @@ export default function ClozeCardEditor({
               editor?.commands.setTextSelection(editor?.state.selection.to - 2);
             }
           }}
+          title="Add cloze deletion"
         >
           <IconBracketsContain />
-        </RichTextEditor.Control>
+        </RichTextEditorControl>
       }
     />
   );

@@ -16,3 +16,7 @@ export { Switch } from "./Switch";
 export { NumberInput } from "./NumberInput";
 export { SegmentedControl } from "./SegmentedControl";
 export { Select } from "./Select";
+export { Text } from "./Text";
+export { RichTextEditor } from "./RichTextEditor";
+export * from "./RichTextEditorControls";
+export { Menu, MenuTrigger, MenuDropdown, MenuItem } from "./Menu";

@@ -1,9 +1,27 @@
 :root {
-  --icon-size-xs: 1rem;
-  --icon-size-sm: 1.25rem;
-  --icon-size-md: 1.5rem;
-  --icon-size-lg: 2rem;
-  --icon-size-xl: 2.5rem;
-  --icon-size-2xl: 3rem;
-  --icon-size-3xl: 3.75rem;
+  --icon-size-base-xs: 1rem;
+  --icon-size-base-sm: 1.25rem;
+  --icon-size-base-md: 1.5rem;
+  --icon-size-base-lg: 2rem;
+  --icon-size-base-xl: 2.5rem;
+  --icon-size-base-2xl: 3rem;
+  --icon-size-base-3xl: 3.75rem;
+
+  --icon-size-xs: var(--icon-size-base-xs);
+  --icon-size-sm: var(--icon-size-base-sm);
+  --icon-size-md: var(--icon-size-base-md);
+  --icon-size-lg: var(--icon-size-base-lg);
+  --icon-size-xl: var(--icon-size-base-xl);
+  --icon-size-2xl: var(--icon-size-base-2xl);
+  --icon-size-3xl: var(--icon-size-base-3xl);
+}
+
+[data-density="compact"] {
+  --icon-size-xs: calc(var(--icon-size-base-xs) * var(--density-compact));
+  --icon-size-sm: calc(var(--icon-size-base-sm) * var(--density-compact));
+  --icon-size-md: calc(var(--icon-size-base-md) * var(--density-compact));
+  --icon-size-lg: calc(var(--icon-size-base-lg) * var(--density-compact));
+  --icon-size-xl: calc(var(--icon-size-base-xl) * var(--density-compact));
+  --icon-size-2xl: calc(var(--icon-size-base-2xl) * var(--density-compact));
+  --icon-size-3xl: calc(var(--icon-size-base-3xl) * var(--density-compact));
 }

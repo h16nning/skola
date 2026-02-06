@@ -1,17 +1,17 @@
-.color-scheme-toggle {
+.density-toggle {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
   width: fit-content;
 }
 
-.color-scheme-toggle__option {
+.density-toggle__option {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
 }
 
-.color-scheme-toggle__option-text {
+.density-toggle__option-text {
   font-size: 0.8125rem;
   font-weight: 600;
 }

@@ -1,9 +1,27 @@
 :root {
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
-  --spacing-3xl: 4rem;
+  --spacing-base-xs: 0.25rem;
+  --spacing-base-sm: 0.5rem;
+  --spacing-base-md: 1rem;
+  --spacing-base-lg: 1.5rem;
+  --spacing-base-xl: 2rem;
+  --spacing-base-2xl: 3rem;
+  --spacing-base-3xl: 4rem;
+
+  --spacing-xs: var(--spacing-base-xs);
+  --spacing-sm: var(--spacing-base-sm);
+  --spacing-md: var(--spacing-base-md);
+  --spacing-lg: var(--spacing-base-lg);
+  --spacing-xl: var(--spacing-base-xl);
+  --spacing-2xl: var(--spacing-base-2xl);
+  --spacing-3xl: var(--spacing-base-3xl);
+}
+
+[data-density="compact"] {
+  --spacing-xs: calc(var(--spacing-base-xs) * var(--density-compact));
+  --spacing-sm: calc(var(--spacing-base-sm) * var(--density-compact));
+  --spacing-md: calc(var(--spacing-base-md) * var(--density-compact));
+  --spacing-lg: calc(var(--spacing-base-lg) * var(--density-compact));
+  --spacing-xl: calc(var(--spacing-base-xl) * var(--density-compact));
+  --spacing-2xl: calc(var(--spacing-base-2xl) * var(--density-compact));
+  --spacing-3xl: calc(var(--spacing-base-3xl) * var(--density-compact));
 }

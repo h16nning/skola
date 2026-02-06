@@ -5,13 +5,13 @@ import {
   successfullyAdded,
   successfullySaved,
 } from "@/components/Notification/Notification";
+import { Stack } from "@/components/ui/Stack";
+import { Text } from "@/components/ui/Text";
 import { EditMode } from "@/logic/NoteTypeAdapter";
 import { Deck } from "@/logic/deck/deck";
 import { NoteType } from "@/logic/note/note";
 import { Note } from "@/logic/note/note";
 import { DoubleSidedNoteTypeAdapter } from "@/logic/type-implementations/double-sided/DoubleSidedNote";
-import { Stack, Text } from "@mantine/core";
-import { useHotkeys } from "@mantine/hooks";
 import { Editor } from "@tiptap/react";
 import { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -35,8 +35,6 @@ function DoubleSidedCardEditor({
   focusSelectNoteType,
 }: DoubleSidedCardEditorProps) {
   const [t] = useTranslation();
-
-  useHotkeys([["mod+Enter", () => setRequestedFinish(true)]]);
 
   const noteContent = note?.content ?? {
     type: NoteType.DoubleSided,
@@ -70,15 +68,15 @@ function DoubleSidedCardEditor({
   }, [requestedFinish, mode, clear, deck, note, editor1, editor2]);
 
   return (
-    <Stack gap="2rem">
-      <Stack gap={0}>
-        <Text fz="sm" fw={600}>
+    <Stack gap="xl">
+      <Stack gap="xs">
+        <Text size="sm" weight="semibold">
           {t("note.edit.type-specific.double-sided.front")}
         </Text>
         <NoteEditor editor={editor1} key="front" className={classes} />
       </Stack>
-      <Stack gap={0}>
-        <Text fz="sm" fw={600}>
+      <Stack gap="xs">
+        <Text size="sm" weight="semibold">
           {t("note.edit.type-specific.double-sided.back")}
         </Text>
         <NoteEditor editor={editor2} key="back" />

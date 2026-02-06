@@ -9,6 +9,10 @@
 @import "patterns.css";
 @import "transitions.css";
 
+:root {
+  --density-compact: 0.875;
+}
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -2,15 +2,15 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
-  padding: var(--spacing-md);
-  border-top: 1px dashed var(--theme-neutral-200);
-  background: var(--pattern-diagonal-stripes);
+  padding: var(--spacing-sm);
+  border-top: 1px solid var(--theme-neutral-200);
+  background-color: var(--theme-neutral-150, var(--theme-neutral-100));
 }
 
 .cloud-section__badge {
   display: inline-flex;
   align-items: center;
-  padding: var(--spacing-xs) var(--spacing-sm);
+  padding: 2px var(--spacing-sm);
   font-size: var(--font-size-xs);
   font-weight: 600;
   font-family: var(--font-sans);
@@ -37,14 +37,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-sm) var(--spacing-md);
   border: none;
-  border-radius: var(--radius-sm);
-  font-size: var(--font-size-base);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
   font-weight: 500;
   font-family: var(--font-sans);
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color 0.1s ease, color 0.1s ease;
   background-color: var(--theme-primary-600);
   color: white;
 }

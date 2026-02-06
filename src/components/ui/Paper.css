@@ -1,5 +1,6 @@
 .paper {
   background-color: var(--theme-neutral-50);
+  background: var(--pattern-noise);
   border-radius: var(--radius-md);
   padding: var(--spacing-md);
   width: 100%;

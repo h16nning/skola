@@ -1,8 +1,10 @@
 import { EditMode } from "@/logic/NoteTypeAdapter";
-import { Button, Kbd, Tooltip } from "@mantine/core";
-import { useOs } from "@mantine/hooks";
 import { IconDeviceFloppy, IconPlus } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
+import { Button } from "../../components/ui/Button";
+import { Kbd } from "../../components/ui/Kbd";
+import { Tooltip } from "../../components/ui/Tooltip";
+import { useOs } from "../../lib/hooks/useOs";
 
 interface NoteSubmitButtonProps {
   mode: EditMode;
@@ -22,7 +24,7 @@ export default function NoteSubmitButton({
         <>
           {mode === "edit"
             ? t("note.edit.submit-button-tooltip")
-            : t("note.new.submit-button-tooltip")}
+            : t("note.new.submit-button-tooltip")}{" "}
           <Kbd>{os === "macos" ? "Cmd" : "Ctrl"}+Enter</Kbd>
         </>
       }
@@ -30,6 +32,7 @@ export default function NoteSubmitButton({
       <Button
         onClick={() => finish()}
         leftSection={mode === "edit" ? <IconDeviceFloppy /> : <IconPlus />}
+        variant="primary"
       >
         {mode === "edit"
           ? t("note.edit.submit-button")

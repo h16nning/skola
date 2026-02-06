@@ -23,7 +23,7 @@
 
 .badge--lg {
   padding: var(--spacing-sm) var(--spacing-md);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-md);
 }
 
 .badge--light.badge--primary {

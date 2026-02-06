@@ -206,6 +206,11 @@
       "color-scheme-dark": "Dunkel",
       "color-scheme-description": "Wähle ein immer helles oder dunkles Erscheinungsbild oder benutze deine Systemeinstellungen.",
       "color-scheme-light": "Hell",
+      "density": "Dichte",
+      "density-auto": "Auto",
+      "density-compact": "Kompakt",
+      "density-description": "Wähle zwischen entspanntem oder kompaktem Abstand. Auto verwendet kompakt auf Desktop und entspannt auf Touch-Geräten.",
+      "density-relaxed": "Entspannt",
       "title": "Erscheinungsbild"
     },
     "database": {

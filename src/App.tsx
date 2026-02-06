@@ -17,6 +17,7 @@ import WelcomeView from "./app/WelcomeView";
 import LoginUI from "./app/login/LoginUI";
 import Header from "./app/shell/Header/Header";
 import Sidebar from "./app/shell/Sidebar/Sidebar";
+import { useDensity } from "./hooks/useDensity";
 import { useTheme } from "./hooks/useTheme";
 import i18n from "./i18n";
 import { breakpoints } from "./lib/breakpoints";
@@ -38,6 +39,7 @@ function useRestoreLanguage() {
 
 export default function App() {
   const [colorSchemePreference] = useSetting("colorSchemePreference");
+  useDensity();
   useTheme();
   useRestoreLanguage();
   const [sidebarMenuOpened, sidebarHandlers] = useDisclosure(false);

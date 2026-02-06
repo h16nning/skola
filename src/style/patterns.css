@@ -2,8 +2,10 @@
   --pattern-diagonal-stripes: repeating-linear-gradient(
     135deg,
     transparent,
-    transparent 2px,
+    transparent 1px,
     var(--theme-neutral-100) 2px,
-    var(--theme-neutral-100) 4px
+    var(--theme-neutral-100) 2px
   );
+
+  --pattern-noise: url("/patterns/noise.svg");
 }

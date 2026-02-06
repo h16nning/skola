@@ -20,14 +20,24 @@ export function useWindowScroll(): [
   }));
 
   useEffect(() => {
+    let throttleTimeout: NodeJS.Timeout | null = null;
+
     const handleScroll = () => {
-      setPosition({ x: window.scrollX, y: window.scrollY });
+      if (throttleTimeout) return;
+
+      throttleTimeout = setTimeout(() => {
+        setPosition({ x: window.scrollX, y: window.scrollY });
+        throttleTimeout = null;
+      }, 16);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (throttleTimeout) clearTimeout(throttleTimeout);
+    };
   }, []);
 
   const scrollTo = useCallback((options: ScrollToOptions) => {

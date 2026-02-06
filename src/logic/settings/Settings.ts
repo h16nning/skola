@@ -18,6 +18,7 @@ export interface SettingsValues {
   showShortcutHints: boolean;
 
   colorSchemePreference: "light" | "dark" | "auto";
+  densityPreference: "relaxed" | "compact" | "auto";
   showCognitivePrompts: boolean;
 
   useBubbleMenu: boolean;

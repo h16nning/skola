@@ -1,3 +1,4 @@
+import AppHeaderTitle from "@/components/AppHeaderTitle/AppHeaderTitle";
 import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { Tabs } from "@/components/ui/Tabs";
 import {
@@ -32,9 +33,7 @@ export default function SettingsView() {
   return (
     <div className={BASE}>
       <AppHeaderContent>
-        <div className={`${BASE}__header`}>
-          <h3 className={`${BASE}__title`}>{t("settings.title")}</h3>
-        </div>
+        <AppHeaderTitle>{t("settings.title")}</AppHeaderTitle>
       </AppHeaderContent>
       <Tabs
         variant="pills"

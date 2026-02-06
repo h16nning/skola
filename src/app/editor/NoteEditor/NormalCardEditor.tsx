@@ -9,7 +9,8 @@ import { Deck } from "@/logic/deck/deck";
 import { NoteType } from "@/logic/note/note";
 import { Note } from "@/logic/note/note";
 import { BasicNoteTypeAdapter } from "@/logic/type-implementations/normal/BasicNote";
-import { Stack, Text } from "@mantine/core";
+import { Stack } from "@/components/ui/Stack";
+import { Text } from "@/components/ui/Text";
 import { Editor } from "@tiptap/react";
 import { t } from "i18next";
 import { useCallback, useEffect } from "react";
@@ -65,9 +66,9 @@ function NormalCardEditor({
   }, [requestedFinish, mode, clear, deck, note, frontEditor, backEditor]);
 
   return (
-    <Stack gap="2rem">
-      <Stack gap={0}>
-        <Text fz="sm" fw={600}>
+    <Stack gap="xl">
+      <Stack gap="xs">
+        <Text size="sm" weight="semibold">
           {t("note.edit.type-specific.normal.front")}
         </Text>
         <NoteEditor
@@ -76,8 +77,8 @@ function NormalCardEditor({
           className={classes.front}
         />
       </Stack>
-      <Stack gap={0}>
-        <Text fz="sm" fw={600}>
+      <Stack gap="xs">
+        <Text size="sm" weight="semibold">
           {t("note.edit.type-specific.normal.back")}
         </Text>
         <NoteEditor editor={backEditor} key="back" />

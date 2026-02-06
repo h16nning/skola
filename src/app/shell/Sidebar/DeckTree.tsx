@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IconCards, IconChevronRight } from "@tabler/icons-react";
+import { NavItem } from "@/components/ui/NavItem";
 import { Deck } from "@/logic/deck/deck";
 import { useSubDecks } from "@/logic/deck/hooks/useSubDecks";
 import "./DeckTree.css";
@@ -25,42 +26,35 @@ function DeckTree({ deck: parentDeck, level = 0 }: DeckTreeProps) {
     return null;
   }
 
-  const itemClasses = [BASE, isActive && `${BASE}--active`]
-    .filter(Boolean)
-    .join(" ");
-
   const handleClick = () => {
     navigate(`/deck/${parentDeck.id}`);
   };
 
-  const handleToggle = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleToggle = () => {
     setIsOpened(!isOpened);
   };
 
+  const expandButton = hasSubDecks ? (
+    <button
+      type="button"
+      className={`${BASE}__toggle ${isOpened ? `${BASE}__toggle--open` : ""}`}
+      onClick={handleToggle}
+      aria-label={isOpened ? "Collapse" : "Expand"}
+    >
+      <IconChevronRight size={14} stroke={1.5} />
+    </button>
+  ) : undefined;
+
   return (
     <div className={`${BASE}__container`}>
-      <button
-        type="button"
-        className={itemClasses}
+      <NavItem
+        label={parentDeck.name}
+        icon={<IconCards size={16} stroke={1.5} />}
         onClick={handleClick}
-        style={{ paddingLeft: `calc(var(--spacing-md) + ${level * 0.75}rem)` }}
-      >
-        <span className={`${BASE}__icon`}>
-          <IconCards size={16} stroke={1.5} />
-        </span>
-        <span className={`${BASE}__label`}>{parentDeck.name}</span>
-        {hasSubDecks && (
-          <button
-            type="button"
-            className={`${BASE}__toggle ${isOpened ? `${BASE}__toggle--open` : ""}`}
-            onClick={handleToggle}
-            aria-label={isOpened ? "Collapse" : "Expand"}
-          >
-            <IconChevronRight size={14} stroke={1.5} />
-          </button>
-        )}
-      </button>
+        active={isActive}
+        indent={level}
+        rightElement={expandButton}
+      />
 
       {hasSubDecks && isOpened && (
         <div className={`${BASE}__children`}>

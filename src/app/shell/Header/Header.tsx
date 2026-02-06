@@ -1,8 +1,7 @@
 import { HamburgerButton } from "@/components/ui/HamburgerButton";
 import { breakpoints } from "@/lib/breakpoints";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
-import { useWindowScroll } from "@/lib/hooks/useWindowScroll";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import "./Header.css";
 
@@ -31,10 +30,26 @@ export const AppHeaderContent = ({ children }: PropsWithChildren) => {
 };
 
 export default function Header({ menuOpened, menuHandlers }: HeaderProps) {
-  const [scroll] = useWindowScroll();
+  const [scrolled, setScrolled] = useState(false);
   const isXsOrLarger = useMediaQuery(`(min-width: ${breakpoints.xs}px)`);
 
-  const headerClasses = [BASE, scroll.y > 5 && `${BASE}--scrolled`]
+  useEffect(() => {
+    const mainContent = document.querySelector(".app-shell__main-content");
+    if (!mainContent) return;
+
+    const handleScroll = () => {
+      setScrolled(mainContent.scrollTop > 5);
+    };
+
+    mainContent.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      mainContent.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const headerClasses = [BASE, scrolled && `${BASE}--scrolled`]
     .filter(Boolean)
     .join(" ");
 

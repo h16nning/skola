@@ -14,10 +14,10 @@
 }
 
 .settings-section__title {
-  font-size: var(--font-size-3xl);
+  font-size: var(--font-size-xl);
   font-weight: 500;
   color: var(--theme-neutral-900);
-  margin: 0;
+  margin-bottom: var(--spacing-md);
   font-family: var(--font-serif);
 }
 

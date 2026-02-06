@@ -1,3 +1,4 @@
+import AppHeaderTitle from "@/components/AppHeaderTitle/AppHeaderTitle";
 import EmptyNotice from "@/components/EmptyNotice";
 import { Button, Kbd, Tooltip } from "@/components/ui";
 import { useDocumentTitle } from "@/lib/hooks/useDocumentTitle";
@@ -26,13 +27,11 @@ export default function HomeView() {
   return (
     <>
       <AppHeaderContent>
-        <div className={`${BASE_URL}__header`}>
-          <h3 className={`${BASE_URL}__title`}>
-            {userName
-              ? t("home.welcome-user", { name: userName })
-              : t("home.welcome")}
-          </h3>
-        </div>
+        <AppHeaderTitle>
+          {userName
+            ? t("home.welcome-user", { name: userName })
+            : t("home.welcome")}
+        </AppHeaderTitle>
       </AppHeaderContent>
 
       {isReady && decks?.length === 0 ? (

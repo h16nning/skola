@@ -1,10 +1,11 @@
+import AppHeaderTitle from "@/components/AppHeaderTitle/AppHeaderTitle";
 import { getAllCards } from "@/logic/card/getAllCards";
 import { getCardsOf } from "@/logic/card/getCardsOf";
 import { getSimplifiedStatesOf } from "@/logic/card/getSimplifiedStatesOf";
 import { getDeck } from "@/logic/deck/getDeck";
 import { useDecks } from "@/logic/deck/hooks/useDecks";
 import { BarChart, DonutChart } from "@mantine/charts";
-import { Center, SegmentedControl, Stack, Title } from "@mantine/core";
+import { SegmentedControl, Stack } from "@mantine/core";
 import { useDocumentTitle } from "@mantine/hooks";
 import { State } from "fsrs.js";
 import { t } from "i18next";
@@ -109,9 +110,7 @@ function StatsView() {
   return (
     <>
       <AppHeaderContent>
-        <Center>
-          <Title order={3}>Statistics</Title>
-        </Center>
+        <AppHeaderTitle>Statistics</AppHeaderTitle>
       </AppHeaderContent>
 
       <Stack w="100%" maw="600px" gap="xl">

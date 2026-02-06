@@ -1,14 +1,13 @@
 .deck-list {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
-  padding-top: var(--spacing-md);
+  gap: var(--spacing-sm);
 }
 
 .deck-list__title {
   font-family: var(--font-sans);
-  font-size: var(--font-size-sm);
-  font-weight: 500;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--theme-neutral-500);
@@ -19,33 +18,34 @@
 .deck-list__items {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: var(--spacing-xs);
 }
 
 .deck-list__add-button {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: var(--spacing-xs) var(--spacing-md);
   border: none;
   background: transparent;
   cursor: pointer;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   color: var(--theme-neutral-500);
   font-size: var(--font-size-sm);
+  font-weight: 500;
   font-family: var(--font-sans);
   width: 100%;
   text-align: left;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color 0.1s ease, color 0.1s ease;
 }
 
 .deck-list__add-button:hover {
-  background-color: var(--theme-neutral-100);
+  background-color: var(--theme-neutral-200);
   color: var(--theme-neutral-700);
 }
 
 .deck-list__add-button:active {
-  background-color: var(--theme-neutral-200);
+  background-color: var(--theme-neutral-300);
 }
 
 .deck-list__add-button:focus-visible {
@@ -54,5 +54,5 @@
 }
 
 .deck-list__add-button svg {
-  stroke-width: 1.5;
+  stroke-width: 1.75;
 }
