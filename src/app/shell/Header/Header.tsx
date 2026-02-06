@@ -1,9 +1,9 @@
-import { PropsWithChildren } from "react";
-import { createPortal } from "react-dom";
+import { HamburgerButton } from "@/components/ui/HamburgerButton";
 import { breakpoints } from "@/lib/breakpoints";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { useWindowScroll } from "@/lib/hooks/useWindowScroll";
-import { HamburgerButton } from "@/components/ui/HamburgerButton";
+import { PropsWithChildren } from "react";
+import { createPortal } from "react-dom";
 import "./Header.css";
 
 const BASE = "header";
@@ -24,7 +24,9 @@ export const AppHeaderOutlet = () => (
 );
 
 export const AppHeaderContent = ({ children }: PropsWithChildren) => {
-  const element = document.getElementById(APP_HEADER_OUTLET_NAME) as HTMLElement;
+  const element = document.getElementById(
+    APP_HEADER_OUTLET_NAME
+  ) as HTMLElement;
   return element && createPortal(children, element);
 };
 
@@ -32,10 +34,7 @@ export default function Header({ menuOpened, menuHandlers }: HeaderProps) {
   const [scroll] = useWindowScroll();
   const isXsOrLarger = useMediaQuery(`(min-width: ${breakpoints.xs}px)`);
 
-  const headerClasses = [
-    BASE,
-    scroll.y > 5 && `${BASE}--scrolled`,
-  ]
+  const headerClasses = [BASE, scroll.y > 5 && `${BASE}--scrolled`]
     .filter(Boolean)
     .join(" ");
 

@@ -1,12 +1,11 @@
 import EmptyNotice from "@/components/EmptyNotice";
 import Stat from "@/components/Stat/Stat";
+import { Button } from "@/components/ui/Button";
+import { Paper } from "@/components/ui/Paper";
+import { useHotkeys } from "@/lib/hooks/useHotkeys";
+import { useCardsOf } from "@/logic/card/hooks/useCardsOf";
 import { useSimplifiedStatesOf } from "@/logic/card/hooks/useSimplifiedStatesOf";
 import { Deck } from "@/logic/deck/deck";
-import { Button, Group, Paper, Stack, Text, Title } from "@mantine/core";
-import classes from "./HeroDeckSection.module.css";
-
-import { useCardsOf } from "@/logic/card/hooks/useCardsOf";
-import { useHotkeys } from "@mantine/hooks";
 import {
   IconBolt,
   IconBook,
@@ -16,6 +15,9 @@ import {
 } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import "./HeroDeckSection.css";
+
+const BASE_URL = "hero-deck-section";
 
 interface HeroDeckSectionProps {
   deck?: Deck;
@@ -39,37 +41,36 @@ function HeroDeckSection({ deck }: HeroDeckSectionProps) {
   }
 
   return (
-    <Paper className={classes.container} withBorder shadow="xs">
+    <Paper className={BASE_URL} withBorder shadow="xs">
       {areCardsReady &&
         (!cards ? (
-          <Text c="red" fw={700}>
+          <span className={`${BASE_URL}__error`}>
             {t("hero-deck-section.error")}
-          </Text>
+          </span>
         ) : cards.length === 0 ? (
           <EmptyNotice
             icon={IconFile}
             description={t("hero-deck-section.no-cards")}
           />
         ) : isDone() ? (
-          <Stack gap="md" align="center">
-            <Title order={3}>
+          <div className={`${BASE_URL}__content`}>
+            <h3 className={`${BASE_URL}__title`}>
               {t("hero-deck-section.all-cards-done-title")}
-            </Title>
-            <Text fz="sm">
+            </h3>
+            <p className={`${BASE_URL}__subtitle`}>
               {t("hero-deck-section.all-cards-done-subtitle")}
-            </Text>
-            <Button variant="subtle" w="50%" onClick={startLearning}>
+            </p>
+            <Button
+              variant="subtle"
+              className={`${BASE_URL}__button`}
+              onClick={startLearning}
+            >
               {t("hero-deck-section.all-cards-done-learn-anyway")}
             </Button>
-          </Stack>
+          </div>
         ) : (
-          <Stack gap="md" align="center" w="100%">
-            <Group
-              wrap="nowrap"
-              w="100%"
-              justify="center"
-              className={classes.statsGroup}
-            >
+          <div className={`${BASE_URL}__content`}>
+            <div className={`${BASE_URL}__stats-group`}>
               <Stat
                 value={states.new}
                 name={t("deck.new-cards-label")}
@@ -88,18 +89,18 @@ function HeroDeckSection({ deck }: HeroDeckSectionProps) {
                 color="blue"
                 icon={IconBook}
               />
-            </Group>
+            </div>
             <Button
               disabled={
                 !deck || states.new + states.learning + states.review === 0
               }
               leftSection={<IconBolt />}
-              w="50%"
+              className={`${BASE_URL}__button`}
               onClick={startLearning}
             >
               {t("hero-deck-section.learn")}
             </Button>
-          </Stack>
+          </div>
         ))}
     </Paper>
   );

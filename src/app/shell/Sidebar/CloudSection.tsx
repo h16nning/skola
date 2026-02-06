@@ -1,6 +1,6 @@
-import { useCallback } from "react";
-import { useObservable } from "dexie-react-hooks";
 import { db } from "@/logic/db";
+import { useObservable } from "dexie-react-hooks";
+import { useCallback } from "react";
 import "./CloudSection.css";
 
 const BASE = "cloud-section";
@@ -36,7 +36,11 @@ export default function CloudSection({ minimalMode }: CloudSectionProps) {
       <span className={`${BASE}__badge`}>Experimental</span>
 
       {!user?.isLoggedIn ? (
-        <button type="button" className={`${BASE}__button`} onClick={handleLogin}>
+        <button
+          type="button"
+          className={`${BASE}__button`}
+          onClick={handleLogin}
+        >
           Login with OTP
         </button>
       ) : (
@@ -44,7 +48,11 @@ export default function CloudSection({ minimalMode }: CloudSectionProps) {
           <p className={`${BASE}__info`}>
             Logged in as <strong>{user.email}</strong>
           </p>
-          <button type="button" className={`${BASE}__button ${BASE}__button--secondary`} onClick={handleLogout}>
+          <button
+            type="button"
+            className={`${BASE}__button ${BASE}__button--secondary`}
+            onClick={handleLogout}
+          >
             Logout
           </button>
         </>

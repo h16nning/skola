@@ -77,7 +77,7 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.3",
+    "@biomejs/biome": "1.9.4",
     "@tauri-apps/cli": "^2.9.4",
     "@types/lodash": "4.17.0",
     "@types/node": "22.5.5",

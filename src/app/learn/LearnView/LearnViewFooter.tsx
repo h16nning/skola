@@ -70,7 +70,9 @@ function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
       ]
     : [];
 
-  useHotkeys(!controller.isFinished ? [...baseHotkeys, ...hardAndEasyHotkeys] : []);
+  useHotkeys(
+    !controller.isFinished ? [...baseHotkeys, ...hardAndEasyHotkeys] : []
+  );
 
   return (
     <Group className={classes.footerContainer} justify="center">

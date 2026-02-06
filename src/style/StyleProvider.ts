@@ -11,7 +11,6 @@ import {
   NavLink,
   Popover,
   Select,
-  Tabs,
   ThemeIcon,
   Tooltip,
   createTheme,
@@ -27,7 +26,6 @@ import navLink from "./NavLink.module.css";
 import navbar from "./Navbar.module.css";
 import popover from "./Popover.module.css";
 import select from "./Select.module.css";
-import tabs from "./Tabs.module.css";
 import themeIcon from "./ThemeIcon.module.css";
 import tooltip from "./Tooltip.module.css";
 
@@ -158,14 +156,6 @@ export const presetTheme = createTheme({
     }),
     Spotlight: Spotlight.extend({
       classNames: spotlight,
-    }),
-    Tabs: Tabs.extend({
-      classNames: tabs,
-    }),
-    TabsPanel: Tabs.Panel.extend({
-      defaultProps: {
-        pt: "sm",
-      },
     }),
     ThemeIcon: ThemeIcon.extend({
       classNames: themeIcon,

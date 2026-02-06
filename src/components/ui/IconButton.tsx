@@ -19,12 +19,7 @@ export function IconButton({
   className = "",
   ...props
 }: IconButtonProps) {
-  const classes = [
-    BASE,
-    `${BASE}--${variant}`,
-    `${BASE}--${size}`,
-    className,
-  ]
+  const classes = [BASE, `${BASE}--${variant}`, `${BASE}--${size}`, className]
     .filter(Boolean)
     .join(" ");
 

@@ -1,40 +1,26 @@
-import { Box, Group, Stack, Text, useComputedColorScheme } from "@mantine/core";
-import { IconProps } from "@tabler/icons-react";
-import React from "react";
-import classes from "./Stat.module.css";
+import type { IconProps } from "@tabler/icons-react";
+import type React from "react";
+import "./Stat.css";
 
-export default function Stat({
-  name,
-  value,
-  icon: Icon,
-  color,
-}: {
+const BASE = "stat";
+
+interface StatProps {
   value: number | string;
   icon: React.FC<IconProps>;
   name: string;
   color: string;
-}) {
-  const scheme = useComputedColorScheme("light");
+}
 
+export default function Stat({ name, value, icon: Icon, color }: StatProps) {
   return (
-    <Box
-      component="div"
-      className={classes.stat}
-      style={{
-        color: `var(--mantine-color-${color}-${scheme === "light" ? 9 : 2})`,
-        backgroundColor: `var(--mantine-color-${color}-light)`,
-        borderColor: `var(--mantine-color-${color}-light)`,
-      }}
-    >
-      <Stack gap="0" w="100%" align="center">
-        <Text truncate="end" className={classes.statValue}>
-          {value}
-        </Text>
-        <Group align="center" gap="4px" wrap="nowrap" opacity={0.8}>
-          <Icon className={classes.statIcon} />
-          <Text className={classes.statName}>{name}</Text>
-        </Group>
-      </Stack>
-    </Box>
+    <div className={BASE} data-color={color}>
+      <div className={`${BASE}__content`}>
+        <span className={`${BASE}__value`}>{value}</span>
+        <div className={`${BASE}__label`}>
+          <Icon className={`${BASE}__icon`} />
+          <span className={`${BASE}__name`}>{name}</span>
+        </div>
+      </div>
+    </div>
   );
 }

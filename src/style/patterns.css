@@ -1,0 +1,9 @@
+:root {
+  --pattern-diagonal-stripes: repeating-linear-gradient(
+    135deg,
+    transparent,
+    transparent 2px,
+    var(--theme-neutral-100) 2px,
+    var(--theme-neutral-100) 4px
+  );
+}

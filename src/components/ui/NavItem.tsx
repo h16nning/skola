@@ -28,12 +28,21 @@ export function NavItem({
     onClick?.();
   };
 
-  const classes = [BASE, isActive && `${BASE}--active`, collapsed && `${BASE}--collapsed`]
+  const classes = [
+    BASE,
+    isActive && `${BASE}--active`,
+    collapsed && `${BASE}--collapsed`,
+  ]
     .filter(Boolean)
     .join(" ");
 
   return (
-    <button type="button" className={classes} onClick={handleClick} title={collapsed ? label : undefined}>
+    <button
+      type="button"
+      className={classes}
+      onClick={handleClick}
+      title={collapsed ? label : undefined}
+    >
       <span className={`${BASE}__icon`}>{icon}</span>
       {!collapsed && <span className={`${BASE}__label`}>{label}</span>}
     </button>

@@ -1,0 +1,5 @@
+:root {
+  --ring-border-color: var(--theme-primary-500);
+  --ring-outline: none;
+  --ring-shadow: 0 0 0 3px var(--theme-primary-100);
+}

@@ -18,6 +18,7 @@
 }
 
 .app-shell__main {
+  background-color: var(--theme-neutral-50);
   flex: 1;
   min-width: 0;
   display: flex;

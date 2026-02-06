@@ -1,0 +1,18 @@
+.deck-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  align-items: flex-start;
+  width: 100%;
+  max-width: 600px;
+  padding-top: var(--spacing-lg);
+}
+
+.deck-view__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-xs);
+  flex-wrap: nowrap;
+  width: 100%;
+}

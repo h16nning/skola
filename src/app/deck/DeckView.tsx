@@ -1,9 +1,11 @@
 import MissingObject from "@/components/MissingObject";
+import { Badge } from "@/components/ui/Badge";
+import { Tabs } from "@/components/ui/Tabs";
+import { useDocumentTitle } from "@/lib/hooks/useDocumentTitle";
+import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { useScrollResetOnLocationChange } from "@/lib/ui";
 import { useDeckFromUrl } from "@/logic/deck/hooks/useDeckFromUrl";
 import { useSuperDecks } from "@/logic/deck/hooks/useSuperDecks";
-import { Badge, Group, Stack, Tabs } from "@mantine/core";
-import { useDocumentTitle, useHotkeys } from "@mantine/hooks";
 import { t } from "i18next";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,10 +13,13 @@ import NotebookView from "../notebook/NotebookView";
 import { AppHeaderContent } from "../shell/Header/Header";
 import DeckMenu from "./DeckMenu";
 import DeckOptionsModal from "./DeckOptionsModal";
+import "./DeckView.css";
 import HeroDeckSection from "./HeroDeckSection/HeroDeckSection";
 import SubDeckSection from "./SubDeckSection";
 import SuperDecksBreadcrumbs from "./SuperDecksBreadcrumbs/SuperDecksBreadcrumbs";
 import TitleSection from "./TitleSection";
+
+const BASE_URL = "deck-view";
 
 function DeckView() {
   const navigate = useNavigate();
@@ -35,27 +40,26 @@ function DeckView() {
   return (
     <>
       <AppHeaderContent>
-        <Group justify="space-between" gap="xs" wrap="nowrap">
+        <div className={`${BASE_URL}__header`}>
           <SuperDecksBreadcrumbs superDecks={superDecks} />
           <DeckMenu
             deck={deck}
             isDeckReady={isDeckReady}
             setDeckOptionsOpened={setDeckOptionsOpened}
           />
-        </Group>
+        </div>
       </AppHeaderContent>
-      <Stack gap="xl" align="start" w="100%" maw="600px" pt="lg">
+      <div className={BASE_URL}>
         <TitleSection deck={deck} />
         <HeroDeckSection deck={deck} isDeckReady={isDeckReady} />
 
-        <Tabs defaultValue={"subdecks"} w="100%" variant="outline">
+        <Tabs defaultValue="subdecks" variant="outline">
           <Tabs.List>
             <Tabs.Tab value="subdecks">
               {t("deck.subdeck.title")}
               {(deck?.subDecks.length as number) > 0 && (
                 <Badge
                   size="sm"
-                  ml={"sm"}
                   variant="light"
                   color={deck?.subDecks.length ? undefined : "gray"}
                   style={{ textOverflow: "clip" }}
@@ -69,7 +73,6 @@ function DeckView() {
               {(deck?.notes.length as number) > 0 && (
                 <Badge
                   size="sm"
-                  ml={"sm"}
                   variant="light"
                   color={deck?.notes.length ? undefined : "gray"}
                   style={{ textOverflow: "clip" }}
@@ -95,7 +98,7 @@ function DeckView() {
         ) : (
           ""
         )}
-      </Stack>
+      </div>
     </>
   );
 }

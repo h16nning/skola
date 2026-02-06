@@ -30,7 +30,11 @@ export function useLocalStorage<T>(
     return JSON.stringify(defaultValue);
   }, [defaultValue]);
 
-  const storedValue = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const storedValue = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot
+  );
 
   const [value, setInternalValue] = useState<T>(() => {
     try {
@@ -51,7 +55,8 @@ export function useLocalStorage<T>(
   const setValue = useCallback(
     (newValue: T | ((prev: T) => T)) => {
       try {
-        const valueToStore = newValue instanceof Function ? newValue(value) : newValue;
+        const valueToStore =
+          newValue instanceof Function ? newValue(value) : newValue;
         setInternalValue(valueToStore);
         window.localStorage.setItem(key, JSON.stringify(valueToStore));
         window.dispatchEvent(new Event("storage"));

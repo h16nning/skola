@@ -1,11 +1,14 @@
+import type ModalProps from "@/components/ModalProps";
+import { Button, Modal, TextInput } from "@/components/ui";
+import { useHotkeys } from "@/lib/hooks/useHotkeys";
+import type { Deck } from "@/logic/deck/deck";
 import { newDeck } from "@/logic/deck/newDeck";
-import { Button, Group, Modal, Stack, Text, TextInput } from "@mantine/core";
-import { getHotkeyHandler, useHotkeys } from "@mantine/hooks";
 import { t } from "i18next";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ModalProps from "../../components/ModalProps";
-import { Deck } from "../../logic/deck/deck";
+import "./NewDeckModal.css";
+
+const BASE = "new-deck-modal";
 
 interface NewDeckModalProps extends ModalProps {
   superDeck?: Deck;
@@ -18,6 +21,14 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
   const [descriptionValue, setDescriptionValue] = useState<string>("");
   const [addingDeck, setAddingDeck] = useState<boolean>(false);
   const [status, setStatus] = useState<string | null>(null);
+
+  function isInputValid(): boolean {
+    return nameValue.trim() !== "";
+  }
+
+  function handleClose() {
+    setOpened(false);
+  }
 
   async function tryAddDeck() {
     if (!isInputValid()) return;
@@ -35,63 +46,53 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
     setDescriptionValue("");
   }
 
+  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+      event.preventDefault();
+      void tryAddDeck();
+    }
+  }
+
   useHotkeys([["mod+Enter", () => tryAddDeck()]]);
 
+  const title = superDeck
+    ? t("deck.new-deck-modal.new-subdeck", { superDeck: superDeck.name })
+    : t("deck.new-deck-modal.new-deck");
+
   return (
-    <Modal
-      opened={opened}
-      onClose={() => setOpened(false)}
-      withCloseButton={false}
-      title={
-        superDeck
-          ? t("deck.new-deck-modal.new-subdeck", { superDeck: superDeck.name })
-          : t("deck.new-deck-modal.new-deck")
-      }
-    >
-      <Stack justify="space-between">
+    <Modal opened={opened} onClose={handleClose} title={title}>
+      <div className={`${BASE}__form`}>
         <TextInput
           placeholder={t("deck.new-deck-modal.name-placeholder")}
-          data-autofocus
+          autoFocus
           label={t("deck.new-deck-modal.name")}
           value={nameValue}
           onChange={(e) => setNameValue(e.currentTarget.value)}
-          onKeyDown={getHotkeyHandler([["mod+Enter", () => tryAddDeck()]])}
+          onKeyDown={handleKeyDown}
         />
         <TextInput
           placeholder={t("deck.new-deck-modal.description-placeholder")}
-          data-autofocus
           label={t("deck.new-deck-modal.description")}
           value={descriptionValue}
           onChange={(e) => setDescriptionValue(e.currentTarget.value)}
-          onKeyDown={getHotkeyHandler([["mod+Enter", () => tryAddDeck()]])}
+          onKeyDown={handleKeyDown}
         />
-        {status ? <Text>{status}</Text> : <></>}
-        <Group justify="flex-end" gap="sm">
-          <Button
-            variant="default"
-            onClick={() => {
-              setOpened(false);
-            }}
-          >
+        {status && <p className={`${BASE}__status`}>{status}</p>}
+        <div className={`${BASE}__actions`}>
+          <Button variant="default" onClick={handleClose}>
             {t("global.cancel")}
           </Button>
           <Button
-            disabled={!isInputValid()}
-            loading={addingDeck}
-            onClick={() => {
-              void tryAddDeck();
-            }}
+            disabled={!isInputValid() || addingDeck}
+            variant="primary"
+            onClick={() => void tryAddDeck()}
           >
-            {t("deck.new-deck-modal.submit")}
+            {addingDeck ? "..." : t("deck.new-deck-modal.submit")}
           </Button>
-        </Group>
-      </Stack>
+        </div>
+      </div>
     </Modal>
   );
-
-  function isInputValid(): boolean {
-    return nameValue.trim() !== "";
-  }
 }
 
 export default NewDeckModal;

@@ -1,3 +1,9 @@
 export { HamburgerButton } from "./HamburgerButton";
 export { IconButton } from "./IconButton";
 export { NavItem } from "./NavItem";
+export { Button } from "./Button";
+export { Kbd } from "./Kbd";
+export { Tooltip } from "./Tooltip";
+export { Modal } from "./Modal";
+export { TextInput } from "./TextInput";
+export { Paper } from "./Paper";

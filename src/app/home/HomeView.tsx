@@ -1,16 +1,20 @@
+import EmptyNotice from "@/components/EmptyNotice";
+import { Button, Kbd, Tooltip } from "@/components/ui";
+import { useDocumentTitle } from "@/lib/hooks/useDocumentTitle";
+import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { useTopLevelDecks } from "@/logic/deck/hooks/useTopLevelDecks";
 import { useSetting } from "@/logic/settings/hooks/useSetting";
-import { Button, Center, Kbd, Stack, Title, Tooltip } from "@mantine/core";
-import { useDocumentTitle, useHotkeys } from "@mantine/hooks";
 import { IconFolder, IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import EmptyNotice from "../../components/EmptyNotice";
 import DeckTable from "../deck/DeckTable";
 import NewDeckModal from "../deck/NewDeckModal";
 import { AppHeaderContent } from "../shell/Header/Header";
+import "./HomeView.css";
 
-export default function HomeView({}: {}) {
+const BASE_URL = "home-view";
+
+export default function HomeView() {
   useDocumentTitle("Skola");
   const [t] = useTranslation();
   const [newDeckModalOpened, setNewDeckModalOpened] = useState(false);
@@ -22,17 +26,17 @@ export default function HomeView({}: {}) {
   return (
     <>
       <AppHeaderContent>
-        <Center>
-          <Title order={3}>
+        <div className={`${BASE_URL}__header`}>
+          <h3 className={`${BASE_URL}__title`}>
             {userName
               ? t("home.welcome-user", { name: userName })
               : t("home.welcome")}
-          </Title>
-        </Center>
+          </h3>
+        </div>
       </AppHeaderContent>
 
       {isReady && decks?.length === 0 ? (
-        <Stack align="center" p="xl" gap="xl">
+        <div className={`${BASE_URL}__empty-state`}>
           <EmptyNotice
             icon={IconFolder}
             description={t("home.no-decks-found")}
@@ -45,9 +49,9 @@ export default function HomeView({}: {}) {
           >
             {t("deck.new-deck-button")}
           </Button>
-        </Stack>
+        </div>
       ) : (
-        <Stack gap="xs" w="600px" maw="100%" align="flex-end" pt="xl">
+        <div className={`${BASE_URL}__content`}>
           <Tooltip
             label={
               <>
@@ -65,7 +69,7 @@ export default function HomeView({}: {}) {
             </Button>
           </Tooltip>
           <DeckTable deckList={decks} isReady={isReady} />
-        </Stack>
+        </div>
       )}
       <NewDeckModal
         opened={newDeckModalOpened}

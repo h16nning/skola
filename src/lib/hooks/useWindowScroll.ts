@@ -10,7 +10,10 @@ type ScrollToOptions = {
   y?: number;
 };
 
-export function useWindowScroll(): [ScrollPosition, (options: ScrollToOptions) => void] {
+export function useWindowScroll(): [
+  ScrollPosition,
+  (options: ScrollToOptions) => void,
+] {
   const [position, setPosition] = useState<ScrollPosition>(() => ({
     x: typeof window !== "undefined" ? window.scrollX : 0,
     y: typeof window !== "undefined" ? window.scrollY : 0,

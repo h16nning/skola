@@ -1,10 +1,10 @@
-import "@mantine/core/styles.css";
 import "@mantine/charts/styles.css";
+import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
 import "@mantine/spotlight/styles.css";
 import "mantine-datatable/styles.css";
-import "./style/index.css";
 import "./app/shell/AppShell.css";
+import "./style/index.css";
 
 import { cssVariablesResolver, presetTheme } from "./style/StyleProvider";
 
@@ -19,9 +19,11 @@ import Header from "./app/shell/Header/Header";
 import Sidebar from "./app/shell/Sidebar/Sidebar";
 import { useTheme } from "./hooks/useTheme";
 import i18n from "./i18n";
-import { useSetting } from "./logic/settings/hooks/useSetting";
+import { breakpoints } from "./lib/breakpoints";
 import { useDisclosure } from "./lib/hooks/useDisclosure";
 import { useLocalStorage } from "./lib/hooks/useLocalStorage";
+import { useMediaQuery } from "./lib/hooks/useMediaQuery";
+import { useSetting } from "./logic/settings/hooks/useSetting";
 
 const BASE = "app-shell";
 
@@ -43,6 +45,9 @@ export default function App() {
   const [registered] = useLocalStorage("registered", false);
 
   const routeIsLearn = useLocation().pathname.includes("learn");
+  const isXsOrSmaller = useMediaQuery(`(max-width: ${breakpoints.xs}px)`);
+  const fullscreenMode = isXsOrSmaller || routeIsLearn;
+
   useEffect(() => {
     if (routeIsLearn) {
       sidebarHandlers.close();
@@ -53,7 +58,7 @@ export default function App() {
 
   const overlayClasses = [
     `${BASE}__overlay`,
-    sidebarMenuOpened && `${BASE}__overlay--visible`,
+    fullscreenMode && sidebarMenuOpened && `${BASE}__overlay--visible`,
   ]
     .filter(Boolean)
     .join(" ");
@@ -85,10 +90,7 @@ export default function App() {
                   menuHandlers={sidebarHandlers}
                 />
               </nav>
-              <div
-                className={overlayClasses}
-                onClick={sidebarHandlers.close}
-              />
+              <div className={overlayClasses} onClick={sidebarHandlers.close} />
               <main className={`${BASE}__main`}>
                 <div className={`${BASE}__main-content`}>
                   <div className={`${BASE}__main-center`}>

@@ -1,0 +1,9 @@
+:root {
+  --icon-size-xs: 1rem;
+  --icon-size-sm: 1.25rem;
+  --icon-size-md: 1.5rem;
+  --icon-size-lg: 2rem;
+  --icon-size-xl: 2.5rem;
+  --icon-size-2xl: 3rem;
+  --icon-size-3xl: 3.75rem;
+}

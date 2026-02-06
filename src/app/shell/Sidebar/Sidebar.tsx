@@ -1,10 +1,16 @@
-import { IconCards, IconChartBar, IconHome, IconSettings, IconX } from "@tabler/icons-react";
+import { IconButton } from "@/components/ui/IconButton";
+import { NavItem } from "@/components/ui/NavItem";
+import { breakpoints } from "@/lib/breakpoints";
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
+import {
+  IconCards,
+  IconChartBar,
+  IconHome,
+  IconSettings,
+  IconX,
+} from "@tabler/icons-react";
 import { t } from "i18next";
 import { useLocation } from "react-router-dom";
-import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
-import { breakpoints } from "@/lib/breakpoints";
-import { NavItem } from "@/components/ui/NavItem";
-import { IconButton } from "@/components/ui/IconButton";
 import CloudSection from "./CloudSection";
 import DeckList from "./DeckList";
 import "./Sidebar.css";
@@ -46,11 +52,19 @@ function Sidebar({ menuOpened, menuHandlers }: SidebarProps) {
         <div className={`${BASE}__top`}>
           <header className={`${BASE}__header`}>
             <div className={`${BASE}__brand`}>
-              <img src="/logo.svg" alt="Skola Logo" className={`${BASE}__logo`} />
+              <img
+                src="/logo.svg"
+                alt="Skola Logo"
+                className={`${BASE}__logo`}
+              />
               {!minimalMode && <h1 className={`${BASE}__title`}>Skola</h1>}
             </div>
             {fullscreenMode && (
-              <IconButton variant="ghost" onClick={menuHandlers.close} aria-label="Close menu">
+              <IconButton
+                variant="ghost"
+                onClick={menuHandlers.close}
+                aria-label="Close menu"
+              >
                 <IconX />
               </IconButton>
             )}

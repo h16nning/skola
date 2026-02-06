@@ -3,16 +3,20 @@
 @import "colors.css";
 @import "spacings.css";
 @import "radius.css";
+@import "icon-sizes.css";
+@import "rings.css";
+@import "shadows.css";
+@import "patterns.css";
 
 body {
-    margin: 0;
-
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     padding: env(safe-area-inset-top) env(safe-area-inset-right)
         env(safe-area-inset-bottom) env(safe-area-inset-left);
     -webkit-overflow-scrolling: touch;
-    height: 100%;
+
+
+    font-family: var(--font-sans);
 }
 
 html,
@@ -20,6 +24,7 @@ body,
 #root,
 .app-shell {
     height: 100%;
+    margin: 0;
 }
 
 button .tabler-icon,

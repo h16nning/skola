@@ -24,7 +24,12 @@ export function HamburgerButton({
     .join(" ");
 
   return (
-    <button type="button" className={classes} aria-label="Toggle menu" {...props}>
+    <button
+      type="button"
+      className={classes}
+      aria-label="Toggle menu"
+      {...props}
+    >
       <span className={`${BASE}__bar`} />
       <span className={`${BASE}__bar`} />
       <span className={`${BASE}__bar`} />

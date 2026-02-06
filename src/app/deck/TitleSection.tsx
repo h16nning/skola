@@ -1,12 +1,18 @@
 import { genericFail } from "@/components/Notification/Notification";
+import { Button } from "@/components/ui/Button";
+import { Kbd } from "@/components/ui/Kbd";
+import { TextInput } from "@/components/ui/TextInput";
+import { Tooltip } from "@/components/ui/Tooltip";
+import { getHotkeyHandler } from "@/lib/hooks/getHotkeyHandler";
 import { renameDeck } from "@/logic/deck/renameDeck";
-import { Button, Group, Kbd, TextInput, Title, Tooltip } from "@mantine/core";
-import { getHotkeyHandler } from "@mantine/hooks";
 import { IconPlus } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Deck } from "../../logic/deck/deck";
+import "./TitleSection.css";
+
+const BASE_URL = "title-section";
 
 type TitleSectionProps = {
   deck: Deck | undefined;
@@ -30,15 +36,14 @@ export default function TitleSection({ deck }: TitleSectionProps) {
   }, [isEditingTitle]);
 
   return (
-    <Group justify="space-between" align="center" w="100%">
+    <div className={BASE_URL}>
       {!isEditingTitle ? (
-        <Title
-          order={3}
-          lineClamp={1}
+        <h3
+          className={`${BASE_URL}__title`}
           onDoubleClick={() => setIsEditingTitle(true)}
         >
           {deck?.name}
-        </Title>
+        </h3>
       ) : (
         <TextInput
           type="text"
@@ -56,6 +61,7 @@ export default function TitleSection({ deck }: TitleSectionProps) {
           ])}
           onBlur={() => setIsEditingTitle(false)}
           autoFocus
+          className={`${BASE_URL}__input`}
         />
       )}
       <Tooltip
@@ -70,10 +76,11 @@ export default function TitleSection({ deck }: TitleSectionProps) {
           leftSection={<IconPlus />}
           variant="default"
           onClick={() => navigate("/new/" + deck?.id)}
+          className={`${BASE_URL}__button`}
         >
           {t("deck.add-cards")}
         </Button>
       </Tooltip>
-    </Group>
+    </div>
   );
 }
