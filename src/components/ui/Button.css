@@ -64,12 +64,18 @@
 }
 
 .button--primary {
-  background-color: var(--theme-primary-600);
+  background-color: light-dark(
+    var(--theme-primary-600),
+    var(--theme-primary-400)
+  );
   color: white;
 }
 
 .button--primary:hover {
-  background-color: var(--theme-primary-700);
+  background-color: light-dark(
+    var(--theme-primary-700),
+    var(--theme-primary-500)
+  );
 }
 
 .button--subtle {
@@ -87,7 +93,16 @@
 }
 
 .button--ghost:hover {
-  background-color: var(--theme-neutral-50);
+  background-color: var(--theme-neutral-100);
+}
+
+.button--destructive {
+  background-color: var(--theme-red-500);
+  color: white;
+}
+
+.button--destructive:hover {
+  background-color: light-dark(var(--theme-red-700), var(--theme-red-500));
 }
 
 .button--sm {

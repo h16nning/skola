@@ -83,7 +83,8 @@
     "no-decks-found": "Du hast noch keine Stapel erstellt.",
     "title": "Startseite",
     "welcome": "Willkommen!",
-    "welcome-user": "Willkommen zurück, {{name}}!"
+    "welcome-user": "Willkommen zurück, {{name}}!",
+    "welcome-subtitle": "Bist du bereit zu lernen?"
   },
   "learning": {
     "cognitive-prompts": {

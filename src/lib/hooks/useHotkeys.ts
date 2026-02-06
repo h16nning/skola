@@ -8,7 +8,11 @@ export function useHotkeys(hotkeys: HotkeyDefinition[]) {
     const handleKeyDown = (event: KeyboardEvent) => {
       for (const [key, handler, options] of hotkeys) {
         const keys = key.toLowerCase().split("+");
-        const eventKey = event.key.toLowerCase();
+        let eventKey = event.key.toLowerCase();
+
+        if (eventKey === " ") {
+          eventKey = "space";
+        }
 
         const requiresCtrl = keys.includes("ctrl") || keys.includes("control");
         const requiresAlt = keys.includes("alt");
@@ -21,10 +25,10 @@ export function useHotkeys(hotkeys: HotkeyDefinition[]) {
 
         if (!mainKey) continue;
 
-        const ctrlMatch = requiresCtrl ? event.ctrlKey : !event.ctrlKey;
-        const altMatch = requiresAlt ? event.altKey : !event.altKey;
-        const shiftMatch = requiresShift ? event.shiftKey : !event.shiftKey;
-        const metaMatch = requiresMeta ? event.metaKey : !event.metaKey;
+        const ctrlMatch = requiresCtrl ? event.ctrlKey : true;
+        const altMatch = requiresAlt ? event.altKey : true;
+        const shiftMatch = requiresShift ? event.shiftKey : true;
+        const metaMatch = requiresMeta ? event.metaKey : true;
 
         if (
           eventKey === mainKey &&

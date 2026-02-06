@@ -5,7 +5,18 @@ const BASE = "badge";
 
 type BadgeVariant = "light" | "filled" | "outline";
 type BadgeSize = "sm" | "md" | "lg";
-type BadgeColor = "primary" | "gray" | "neutral";
+type BadgeColor =
+  | "primary"
+  | "neutral"
+  | "red"
+  | "orange"
+  | "lime"
+  | "sky"
+  | "fuchsia"
+  | "grape"
+  | "blue"
+  | "green"
+  | "yellow";
 
 interface BadgeProps {
   children: ReactNode;
@@ -14,6 +25,7 @@ interface BadgeProps {
   color?: BadgeColor;
   className?: string;
   style?: React.CSSProperties;
+  onClick?: () => void;
 }
 
 export function Badge({
@@ -23,20 +35,29 @@ export function Badge({
   color = "primary",
   className = "",
   style,
+  onClick,
 }: BadgeProps) {
   const classes = [
     BASE,
     `${BASE}--${variant}`,
     `${BASE}--${size}`,
     `${BASE}--${color}`,
+    onClick && `${BASE}--clickable`,
     className,
   ]
     .filter(Boolean)
     .join(" ");
 
+  const Element = onClick ? "button" : "span";
+
   return (
-    <span className={classes} style={style}>
+    <Element
+      className={classes}
+      style={style}
+      onClick={onClick}
+      type={onClick ? "button" : undefined}
+    >
       {children}
-    </span>
+    </Element>
   );
 }

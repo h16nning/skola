@@ -7,6 +7,8 @@ import { t } from "i18next";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./NewDeckModal.css";
+import { ColorIdentifier } from "@/lib/ColorIdentifier";
+import DeckColorChooser from "./DeckColorChooser";
 
 const BASE = "new-deck-modal";
 
@@ -19,6 +21,7 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
 
   const [nameValue, setNameValue] = useState<string>("");
   const [descriptionValue, setDescriptionValue] = useState<string>("");
+  const [deckColor, setDeckColor] = useState<ColorIdentifier>("sky");
   const [addingDeck, setAddingDeck] = useState<boolean>(false);
   const [status, setStatus] = useState<string | null>(null);
 
@@ -34,7 +37,12 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
     if (!isInputValid()) return;
     setAddingDeck(true);
     try {
-      const id = await newDeck(nameValue, superDeck, descriptionValue);
+      const id = await newDeck(
+        nameValue,
+        superDeck,
+        descriptionValue,
+        deckColor
+      );
       setNameValue("");
       setOpened(false);
       navigate("/deck/" + id);
@@ -77,6 +85,7 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
           onChange={(e) => setDescriptionValue(e.currentTarget.value)}
           onKeyDown={handleKeyDown}
         />
+        <DeckColorChooser deckColor={deckColor} setDeckColor={setDeckColor} />
         {status && <p className={`${BASE}__status`}>{status}</p>}
         <div className={`${BASE}__actions`}>
           <Button variant="default" onClick={handleClose}>

@@ -1,22 +1,25 @@
 import { AppHeaderContent } from "@/app/shell/Header/Header";
 import MissingObject from "@/components/MissingObject";
+import { Modal } from "@/components/ui/Modal";
+import { Paper } from "@/components/ui/Paper";
+import { useDebouncedValue } from "@/lib/hooks/useDebouncedValue";
 import { getAdapter } from "@/logic/NoteTypeAdapter";
 import { useDeckFromUrl } from "@/logic/deck/hooks/useDeckFromUrl";
 import { useNote } from "@/logic/note/hooks/useNote";
 import { useSetting } from "@/logic/settings/hooks/useSetting";
-import { Center, Flex, Modal, Paper, Stack } from "@mantine/core";
-import { useDebouncedValue } from "@mantine/hooks";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import FinishedLearningView from "../FinishedLearningView/FinishedLearningView";
 import LearnViewCurrentCardStateIndicator from "../LearnViewCurrentCardStateIndicator/LearnViewCurrentCardStateIndicator";
 import CognitivePromptConnector from "./CognitivePromptConnector";
-import classes from "./LearnView.module.css";
+import "./LearnView.css";
 import LearnViewFooter from "./LearnViewFooter";
 import LearnViewHeader, { stopwatchResult } from "./LearnViewHeader";
 import QuickAddNote from "./QuickAddNote";
 import VisualFeedback from "./VisualFeedback";
 import { useLearnSession } from "./useLearnSession";
+
+const BASE_URL = "learn-view";
 
 function LearnView() {
   const [useVisualFeedback] = useSetting("useVisualFeedback");
@@ -57,7 +60,7 @@ function LearnView() {
   }
 
   return (
-    <div className={classes.learnView}>
+    <div className={BASE_URL}>
       <AppHeaderContent>
         <LearnViewHeader
           currentCard={controller.currentCard ?? undefined}
@@ -66,20 +69,14 @@ function LearnView() {
         />
       </AppHeaderContent>
 
-      <Flex
-        direction="column"
-        justify="space-between"
-        h="100%"
-        w="100%"
-        className={classes.learnViewWrapper}
-      >
+      <div className={`${BASE_URL}__wrapper`}>
         {useVisualFeedback && <VisualFeedback rating={currentRating} />}
-        <Center className={classes.cardContainer} h="100%">
-          <Stack w="100%" align="center" gap={0}>
-            <Paper className={classes.card}>
-              <LearnViewCurrentCardStateIndicator
-                currentCardModel={controller.currentCard?.model}
-              />
+        <div className={`${BASE_URL}__card-container`}>
+          <div className={`${BASE_URL}__card-stack`}>
+            <LearnViewCurrentCardStateIndicator
+              currentCardModel={controller.currentCard?.model}
+            />
+            <Paper className={`${BASE_URL}__card`} shadow="xs" withBorder>
               {!controller.showingAnswer &&
                 controller.currentCard &&
                 getAdapter(controller.currentCard).displayQuestion(
@@ -113,26 +110,25 @@ function LearnView() {
                   )}
               </>
             )}
-          </Stack>
-        </Center>
+          </div>
+        </div>
         <LearnViewFooter controller={controller} answer={answerCard} />
 
-        <Modal
-          opened={debouncedFinish}
-          onClose={() => navigate("/home")}
-          fullScreen
-          closeOnClickOutside={false}
-          closeOnEscape={false}
-          withCloseButton={false}
-          transitionProps={{ transition: "fade" }}
-        >
-          <FinishedLearningView
-            statistics={controller.statistics}
-            time={stopwatchResult}
-            deckId={deck?.id}
-          />
-        </Modal>
-      </Flex>
+        {debouncedFinish && (
+          <Modal
+            opened={debouncedFinish}
+            onClose={() => navigate("/home")}
+            showCloseButton={false}
+            fullscreen
+          >
+            <FinishedLearningView
+              statistics={controller.statistics}
+              time={stopwatchResult}
+              deck={deck}
+            />
+          </Modal>
+        )}
+      </div>
     </div>
   );
 }

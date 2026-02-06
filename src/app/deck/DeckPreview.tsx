@@ -1,17 +1,19 @@
-import ListButton from "@/components/ListButton/ListButton";
+import { Badge, Paper } from "@/components/ui";
 import { useCardsOf } from "@/logic/card/hooks/useCardsOf";
 import { useSimplifiedStatesOf } from "@/logic/card/hooks/useSimplifiedStatesOf";
-import { Alert, Badge, Group, Text } from "@mantine/core";
-import React from "react";
+import { Alert } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Deck } from "../../logic/deck/deck";
-import badge from "./Badge.module.css";
+import "./DeckPreview.css";
+import { COLORS } from "@/lib/ColorIdentifier";
 
 type DeckPreviewProps = {
   deck: Deck;
   i: number;
 };
+
+const BASE = "deck-preview";
 
 export default function DeckPreview({ deck }: DeckPreviewProps) {
   const navigate = useNavigate();
@@ -19,46 +21,46 @@ export default function DeckPreview({ deck }: DeckPreviewProps) {
   const [cards] = useCardsOf(deck);
   const states = useSimplifiedStatesOf(cards);
 
-  return (
-    <ListButton
-      onClick={() => {
-        navigate("/deck/" + deck.id);
-      }}
+  const color = deck.color ?? COLORS[0];
+  return deck ? (
+    <Paper
+      className={`${BASE} ${BASE}--color-${color}`}
+      onClick={() => navigate(`/deck/${deck.id}`)}
+      withTexture
+      withBorder
     >
-      {deck ? (
-        <Group justify="space-between" w="100%" wrap="nowrap">
-          <Text>{deck.name}</Text>
-          <Group gap="xs" wrap="nowrap">
-            {states.review > 0 ? (
-              <Badge variant="light" color="blue" classNames={badge}>
-                {t("deck.review-cards-label", { count: states.review })}
-              </Badge>
-            ) : (
-              <></>
-            )}
-            {states.new > 0 ? (
-              <Badge variant="light" color="grape" classNames={badge}>
-                {t("deck.new-cards-label", { count: states.new })}
-              </Badge>
-            ) : (
-              <></>
-            )}
-            {states.learning > 0 ? (
-              <Badge variant="light" color="orange" classNames={badge}>
-                {t("deck.learning-cards-label", {
-                  count: states.learning,
-                })}
-              </Badge>
-            ) : (
-              <></>
-            )}
-          </Group>
-        </Group>
-      ) : (
-        <Alert title="Error" color="red" variant="filled">
-          {t("deck.error-failed-to-load")}
-        </Alert>
-      )}
-    </ListButton>
+      <div className={`${BASE}__footer`}>
+        <h3 className={`${BASE}__title`}>{deck.name}</h3>
+        <div className={`${BASE}__details`}>
+          {states.review > 0 ? (
+            <Badge variant="light">
+              {t("deck.review-cards-label", { count: states.review })}
+            </Badge>
+          ) : (
+            <></>
+          )}
+          {states.new > 0 ? (
+            <Badge variant="light">
+              {t("deck.new-cards-label", { count: states.new })}
+            </Badge>
+          ) : (
+            <></>
+          )}
+          {states.learning > 0 ? (
+            <Badge variant="light">
+              {t("deck.learning-cards-label", {
+                count: states.learning,
+              })}
+            </Badge>
+          ) : (
+            <></>
+          )}
+        </div>
+      </div>
+    </Paper>
+  ) : (
+    <Alert title="Error" color="red" variant="filled">
+      {t("deck.error-failed-to-load")}
+    </Alert>
   );
 }

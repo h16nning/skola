@@ -1,7 +1,8 @@
 import { CognitivePrompt } from "@/logic/cognitivePrompts";
-import { Box } from "@mantine/core";
-import classes from "./CognitivePromptConnector.module.css";
 import CognitivePromptPills from "./CognitivePromptPills";
+import "./CognitivePromptConnector.css";
+
+const BASE_URL = "cognitive-prompt-connector";
 
 interface CognitivePromptConnectorProps {
   onToggle: (prompt: CognitivePrompt) => void;
@@ -12,29 +13,19 @@ function CognitivePromptConnector({
   onToggle,
   selectedPrompt,
 }: CognitivePromptConnectorProps) {
-  const getPromptColor = () => {
-    if (!selectedPrompt) return "var(--mantine-color-gray-5)";
-
-    const colorName = selectedPrompt.color;
-    return `var(--mantine-color-${colorName}-6)`;
-  };
-
-  const lineColor = getPromptColor();
-
   return (
-    <Box className={classes.connector}>
-      <Box className={classes.lineTop} style={{ backgroundColor: lineColor }} />
+    <div className={BASE_URL}>
+      {selectedPrompt ? (
+        <div className={`${BASE_URL}__line-top`} />
+      ) : (
+        <div className={`${BASE_URL}__spacer`} />
+      )}
       <CognitivePromptPills
         onToggle={onToggle}
         selectedPrompt={selectedPrompt}
       />
-      {selectedPrompt && (
-        <Box
-          className={classes.lineBottom}
-          style={{ backgroundColor: lineColor }}
-        />
-      )}
-    </Box>
+      {selectedPrompt && <div className={`${BASE_URL}__line-bottom`} />}
+    </div>
   );
 }
 

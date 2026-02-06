@@ -1,13 +1,13 @@
 import {
+  type ReactNode,
   createContext,
   useCallback,
   useContext,
   useEffect,
   useId,
-  useRef,
   useState,
-  type ReactNode,
 } from "react";
+import { createPortal } from "react-dom";
 import "./Menu.css";
 
 const BASE = "menu";
@@ -15,8 +15,9 @@ const BASE = "menu";
 type MenuPosition = "bottom-start" | "bottom-end" | "top-start" | "top-end";
 
 interface MenuContextValue {
-  dropdownRef: React.RefObject<HTMLDivElement>;
-  triggerRef: React.RefObject<HTMLDivElement>;
+  dropdownElement: HTMLDivElement | null;
+  setTriggerElement: (el: HTMLDivElement | null) => void;
+  triggerElement: HTMLDivElement | null;
   close: () => void;
   closeOnItemClick: boolean;
 }
@@ -42,25 +43,27 @@ export function Menu({
   closeOnItemClick = true,
 }: MenuProps) {
   const popoverId = useId();
-  const triggerRef = useRef<HTMLDivElement>(null!);
-  const dropdownRef = useRef<HTMLDivElement>(null!);
+  const [triggerElement, setTriggerElement] = useState<HTMLDivElement | null>(
+    null
+  );
+  const [dropdownElement, setDropdownElement] = useState<HTMLDivElement | null>(
+    null
+  );
   const [isOpen, setIsOpen] = useState(false);
 
   const close = useCallback(() => {
-    const el = dropdownRef.current;
-    if (!el) return;
+    if (!dropdownElement) return;
     try {
-      (el as any).hidePopover();
+      (dropdownElement as any).hidePopover();
     } catch {
       // already hidden
     }
-  }, []);
+  }, [dropdownElement]);
 
   useEffect(() => {
-    const el = dropdownRef.current;
-    if (!el) return;
+    if (!dropdownElement) return;
 
-    el.setAttribute("popover", "auto");
+    dropdownElement.setAttribute("popover", "auto");
 
     function handleToggle(event: Event) {
       const opening = (event as any).newState === "open";
@@ -71,12 +74,10 @@ export function Menu({
     }
 
     function positionDropdown() {
-      const trigger = triggerRef.current;
-      const dropdown = dropdownRef.current;
-      if (!trigger || !dropdown) return;
+      if (!triggerElement || !dropdownElement) return;
 
-      const triggerRect = trigger.getBoundingClientRect();
-      const dropdownRect = dropdown.getBoundingClientRect();
+      const triggerRect = triggerElement.getBoundingClientRect();
+      const dropdownRect = dropdownElement.getBoundingClientRect();
       const verticalGap = 4;
 
       let top: number;
@@ -103,17 +104,18 @@ export function Menu({
         Math.min(left, window.innerWidth - dropdownRect.width - 8)
       );
 
-      dropdown.style.top = `${top}px`;
-      dropdown.style.left = `${left}px`;
+      dropdownElement.style.top = `${top}px`;
+      dropdownElement.style.left = `${left}px`;
     }
 
-    el.addEventListener("toggle", handleToggle);
-    return () => el.removeEventListener("toggle", handleToggle);
-  }, [position]);
+    dropdownElement.addEventListener("toggle", handleToggle);
+    return () => dropdownElement.removeEventListener("toggle", handleToggle);
+  }, [dropdownElement, triggerElement, position]);
 
   const contextValue: MenuContextValue = {
-    dropdownRef,
-    triggerRef,
+    dropdownElement,
+    setTriggerElement,
+    triggerElement,
     close,
     closeOnItemClick,
   };
@@ -130,7 +132,7 @@ export function Menu({
       <div className={BASE}>
         {children}
         <div
-          ref={dropdownRef}
+          ref={setDropdownElement}
           id={popoverId}
           className={dropdownClasses}
           role="menu"
@@ -145,13 +147,12 @@ interface MenuTriggerProps {
 }
 
 export function MenuTrigger({ children }: MenuTriggerProps) {
-  const { dropdownRef, triggerRef } = useMenuContext();
+  const { dropdownElement, setTriggerElement } = useMenuContext();
 
   function handleClick() {
-    const el = dropdownRef.current;
-    if (!el) return;
+    if (!dropdownElement) return;
     try {
-      (el as any).togglePopover();
+      (dropdownElement as any).togglePopover();
     } catch {
       // popover not supported
     }
@@ -159,7 +160,7 @@ export function MenuTrigger({ children }: MenuTriggerProps) {
 
   return (
     <div
-      ref={triggerRef}
+      ref={setTriggerElement}
       className={`${BASE}__trigger`}
       onClick={handleClick}
     >
@@ -173,34 +174,11 @@ interface MenuDropdownProps {
 }
 
 export function MenuDropdown({ children }: MenuDropdownProps) {
-  const { dropdownRef } = useMenuContext();
-  const portalRef = useRef<HTMLDivElement>(null!);
+  const { dropdownElement } = useMenuContext();
 
-  useEffect(() => {
-    const portal = portalRef.current;
-    const target = dropdownRef.current;
-    if (!target || !portal) return;
+  if (!dropdownElement) return null;
 
-    const nodes: Node[] = [];
-    while (portal.firstChild) {
-      nodes.push(portal.firstChild);
-      target.appendChild(portal.firstChild);
-    }
-
-    return () => {
-      for (const node of nodes) {
-        if (node.parentNode === target) {
-          portal.appendChild(node);
-        }
-      }
-    };
-  }, [dropdownRef]);
-
-  return (
-    <div ref={portalRef} style={{ display: "none" }}>
-      {children}
-    </div>
-  );
+  return createPortal(children, dropdownElement);
 }
 
 type MenuItemColor = "default" | "red";

@@ -1,0 +1,63 @@
+.learn-view {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  padding-top: 3.6875rem;
+  background-color: var(--theme-neutral-100);
+}
+
+.learn-view__wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+}
+
+.learn-view__card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  height: 100%;
+}
+
+.learn-view__card-stack {
+  width: 100%;
+  max-width: 600px;
+}
+
+.learn-view__card {
+  position: relative;
+  padding: var(--spacing-md);
+  transition: height 0.2s ease;
+}
+
+.learn-view__card p:first-of-type {
+  margin-top: 0;
+}
+
+.learn-view__card p:last-of-type {
+  margin-bottom: 0;
+}
+
+.learn-view__card img {
+  max-width: 100%;
+}
+
+.learn-view__footer-container {
+  background-color: var(--theme-neutral-50);
+  padding: var(--spacing-md);
+  border-top: solid 1px var(--theme-neutral-300);
+}
+
+.learn-view__progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

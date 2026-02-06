@@ -19,8 +19,9 @@
   z-index: 1000;
   opacity: 0;
   transform: scale(0.95) translateY(-4px);
-  transition: opacity var(--transition-duration-fast) var(--transition-timing-ease),
-    transform var(--transition-duration-fast) var(--transition-timing-ease);
+  transition: opacity var(--transition-duration-fast)
+    var(--transition-timing-ease), transform var(--transition-duration-fast)
+    var(--transition-timing-ease);
 }
 
 .menu__dropdown:popover-open {
@@ -44,10 +45,12 @@
   color: var(--theme-neutral-800);
   font-size: var(--font-size-md);
   font-family: var(--font-sans);
+  font-weight: 500;
   cursor: pointer;
   text-align: left;
   white-space: nowrap;
-  transition: background-color var(--transition-duration-fast) var(--transition-timing-ease);
+  transition: background-color var(--transition-duration-fast)
+    var(--transition-timing-ease);
 }
 
 .menu__item:hover {

@@ -3,7 +3,7 @@ import "./Button.css";
 
 const BASE = "button";
 
-type ButtonVariant = "default" | "primary" | "subtle" | "ghost";
+type ButtonVariant = "default" | "primary" | "subtle" | "ghost" | "destructive";
 type ButtonSize = "sm" | "md" | "lg";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

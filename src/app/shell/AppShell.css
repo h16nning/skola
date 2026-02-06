@@ -23,7 +23,7 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  padding-top: 3.75rem;
+  padding-top: var(--app-header-height);
   height: 100%;
 }
 
@@ -43,6 +43,7 @@
   flex: 1;
   min-height: 0;
   padding: var(--spacing-md);
+  padding-top: var(--spacing-lg);
   height: 100%;
 }
 

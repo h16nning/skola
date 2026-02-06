@@ -1,13 +1,11 @@
 .database-settings-view__danger-zone {
-  padding: var(--spacing-lg);
-  background-color: rgba(220, 38, 38, 0.05);
-  border-color: rgba(220, 38, 38, 0.2);
+  background-color: var(--theme-red-100);
 }
 
 .database-settings-view__danger-title {
   font-size: 1rem;
   font-weight: 600;
-  color: #dc2626;
+  color: var(--theme-red-500);
   margin: 0;
   font-family: var(--font-sans);
 }

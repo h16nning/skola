@@ -4,7 +4,6 @@
   width: 0;
   max-width: 7rem;
   flex-basis: 0;
-  flex: 1 1 0;
   overflow: hidden;
   border: solid 1px;
 }

@@ -1,0 +1,8 @@
+.learn-view-current-card-state-indicator {
+  align-self: center;
+  gap: var(--spacing-lg);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  margin-bottom: var(--spacing-lg);
+  margin-left: var(--spacing-md);
+}

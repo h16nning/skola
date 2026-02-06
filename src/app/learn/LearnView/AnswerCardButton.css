@@ -1,0 +1,55 @@
+.answer-card-button {
+  height: 2.5rem;
+  padding: 0;
+  width: 100%;
+  min-width: 0;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition-button);
+  font-family: var(--font-sans);
+}
+
+.answer-card-button:hover {
+  filter: brightness(0.95);
+}
+
+.answer-card-button:active {
+  transform: scale(0.96);
+}
+
+.answer-card-button--red {
+  background-color: var(--theme-red-100);
+  color: var(--theme-red-700);
+}
+
+.answer-card-button--red:hover {
+  background-color: var(--theme-red-200);
+}
+
+.answer-card-button--yellow {
+  background-color: var(--theme-orange-100);
+  color: var(--theme-orange-700);
+}
+
+.answer-card-button--yellow:hover {
+  background-color: var(--theme-orange-200);
+}
+
+.answer-card-button--green {
+  background-color: var(--theme-primary-100);
+  color: var(--theme-primary-700);
+}
+
+.answer-card-button--green:hover {
+  background-color: var(--theme-primary-200);
+}
+
+.answer-card-button--blue {
+  background-color: var(--theme-sky-100);
+  color: var(--theme-sky-700);
+}
+
+.answer-card-button--blue:hover {
+  background-color: var(--theme-sky-200);
+}

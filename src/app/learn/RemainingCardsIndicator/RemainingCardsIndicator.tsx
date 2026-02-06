@@ -1,4 +1,5 @@
-import { Group, Text, ThemeIcon } from "@mantine/core";
+import { Group } from "@/components/ui/Group";
+import { Text } from "@/components/ui/Text";
 import {
   IconBook,
   IconCircleArrowUpRight,
@@ -7,7 +8,10 @@ import {
 } from "@tabler/icons-react";
 import { ReactNode } from "react";
 import { LearnController } from "../../../logic/learn";
-import classes from "./RemainingCardsIndicator.module.css";
+import "./RemainingCardsIndicator.css";
+
+const BASE_URL = "remaining-cards-indicator";
+
 interface RemainingCardsIndicatorProps {
   controller: LearnController;
 }
@@ -16,7 +20,7 @@ export default function RemainingCardsIndicator({
   controller,
 }: RemainingCardsIndicatorProps) {
   return (
-    <Group align="end" gap="xs" className={classes.container} wrap="nowrap">
+    <Group align="end" gap="xs" className={BASE_URL} wrap="nowrap">
       <TinyStat
         value={controller.newCardsNumber}
         color="grape"
@@ -45,27 +49,26 @@ export function TinyStat({
   value,
   color,
   icon,
-}: { value: number; color: string; icon: ReactNode }) {
+}: {
+  value: number;
+  color: string;
+  icon: ReactNode;
+}) {
+  const colorMap: Record<string, string> = {
+    grape: "var(--theme-fuchsia-700)",
+    orange: "var(--theme-orange-700)",
+    blue: "var(--theme-sky-700)",
+    gray: "var(--theme-neutral-600)",
+  };
+
+  const iconColor = colorMap[color] || "var(--theme-neutral-600)";
+
   return (
-    <Group
-      gap="0.125rem"
-      wrap="nowrap"
-      style={{
-        color: `var(--mantine-color-${color}-strong`,
-      }}
-    >
-      <ThemeIcon
-        style={{ color: `var(--mantine-color-${color}-strong` }}
-        variant="transparent"
-        size={20}
-      >
+    <Group gap="xs" wrap="nowrap" style={{ color: iconColor }}>
+      <div className={`${BASE_URL}__icon`} style={{ color: iconColor }}>
         {icon}
-      </ThemeIcon>
-      <Text
-        fz="sm"
-        fw={600}
-        style={{ color: `var(--mantine-color-${color}-strong)` }}
-      >
+      </div>
+      <Text size="sm" weight="semibold" style={{ color: iconColor }}>
         {value}
       </Text>
     </Group>

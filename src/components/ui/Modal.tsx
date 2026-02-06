@@ -1,5 +1,5 @@
-import { useEffect, useRef, type ReactNode } from "react";
 import { IconX } from "@tabler/icons-react";
+import { type ReactNode, useEffect, useRef } from "react";
 import "./Modal.css";
 
 const BASE = "modal";
@@ -10,6 +10,7 @@ interface ModalProps {
   title?: ReactNode;
   children: ReactNode;
   showCloseButton?: boolean;
+  fullscreen?: boolean;
 }
 
 export function Modal({
@@ -18,6 +19,7 @@ export function Modal({
   title,
   children,
   showCloseButton = true,
+  fullscreen = false,
 }: ModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -58,11 +60,16 @@ export function Modal({
 
   const hasHeader = title || showCloseButton;
 
+  const classes = [
+    BASE,
+    !hasHeader && `${BASE}--no-header`,
+    fullscreen && `${BASE}--fullscreen`,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <dialog
-      ref={dialogRef}
-      className={`${BASE} ${!hasHeader ? `${BASE}--no-header` : ""}`}
-    >
+    <dialog ref={dialogRef} className={classes}>
       {hasHeader && (
         <header className={`${BASE}__header`}>
           {title && <h2 className={`${BASE}__title`}>{title}</h2>}

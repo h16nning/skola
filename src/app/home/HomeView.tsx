@@ -27,49 +27,56 @@ export default function HomeView() {
   return (
     <>
       <AppHeaderContent>
-        <AppHeaderTitle>
-          {userName
-            ? t("home.welcome-user", { name: userName })
-            : t("home.welcome")}
-        </AppHeaderTitle>
-      </AppHeaderContent>
-
-      {isReady && decks?.length === 0 ? (
-        <div className={`${BASE_URL}__empty-state`}>
-          <EmptyNotice
-            icon={IconFolder}
-            description={t("home.no-decks-found")}
-          />
+        <AppHeaderTitle></AppHeaderTitle>
+        <Tooltip
+          label={
+            <>
+              {t("deck.create-deck-tooltip")}
+              <Kbd>n</Kbd>
+            </>
+          }
+          position="left"
+        >
           <Button
             onClick={() => setNewDeckModalOpened(true)}
             leftSection={<IconPlus />}
-            variant="primary"
-            autoFocus
+            variant="ghost"
           >
             {t("deck.new-deck-button")}
           </Button>
-        </div>
-      ) : (
-        <div className={`${BASE_URL}__content`}>
-          <Tooltip
-            label={
-              <>
-                {t("deck.create-deck-tooltip")}
-                <Kbd>n</Kbd>
-              </>
-            }
-          >
+        </Tooltip>
+      </AppHeaderContent>
+
+      <div className={`${BASE_URL}__content`}>
+        <section className={`${BASE_URL}__welcome-section`}>
+          <h1 className={`${BASE_URL}__welcome-title`}>
+            {userName
+              ? t("home.welcome-user", { name: userName })
+              : t("home.welcome")}
+          </h1>
+          <sub className={`${BASE_URL}__welcome-subtitle`}>
+            {t("home.welcome-subtitle")}
+          </sub>
+        </section>
+        {isReady && decks?.length === 0 ? (
+          <div className={`${BASE_URL}__empty-state`}>
+            <EmptyNotice
+              icon={IconFolder}
+              description={t("home.no-decks-found")}
+            />
             <Button
               onClick={() => setNewDeckModalOpened(true)}
               leftSection={<IconPlus />}
-              variant="default"
+              variant="primary"
+              autoFocus
             >
               {t("deck.new-deck-button")}
             </Button>
-          </Tooltip>
+          </div>
+        ) : (
           <DeckTable deckList={decks} isReady={isReady} />
-        </div>
-      )}
+        )}
+      </div>
       <NewDeckModal
         opened={newDeckModalOpened}
         setOpened={setNewDeckModalOpened}

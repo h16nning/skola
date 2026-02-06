@@ -1,37 +1,40 @@
 .header {
+  height: var(--app-header-height);
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
-  height: 3.75rem;
   z-index: 50;
   background-color: var(--theme-neutral-50);
-  backdrop-filter: blur(4rem);
   transition: box-shadow 0.3s ease;
+  border-bottom: 1px dotted var(--theme-neutral-200);
 }
 
 @media (min-width: 577px) {
   .header {
-    left: 15rem;
+    left: var(--sidebar-width);
   }
 }
 
 @media (min-width: 577px) and (max-width: 1200px) {
   .header {
-    left: 3.5rem;
+    left: var(--minimal-sidebar-width);
   }
+}
+
+.header--fullwidth {
+  left: 0;
 }
 
 .header--scrolled {
   box-shadow: var(--shadow-xs);
-  border-bottom: 1px solid var(--theme-neutral-200);
 }
 
 .header__content {
   display: flex;
   align-items: center;
   height: 100%;
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: var(--spacing-sm);
   gap: var(--spacing-sm);
 }
 

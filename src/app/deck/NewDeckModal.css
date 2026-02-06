@@ -7,7 +7,7 @@
 .new-deck-modal__status {
   margin: 0;
   font-size: var(--font-size-sm);
-  color: #dc2626;
+  color: var(--theme-red-600);
 }
 
 .new-deck-modal__actions {

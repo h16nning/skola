@@ -1,36 +1,31 @@
 .wrapper {
   position: relative;
-  &:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    /*width: 2rem*/
-    @mixin light {
-      background: linear-gradient(
-        to left,
-        var(--mantine-color-white),
-        transparent
-      );
-    }
-    @mixin dark {
-      background: linear-gradient(
-        to left,
-        var(--mantine-color-dark-7),
-        transparent
-      );
-    }
-  }
+}
+
+.wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 2rem;
+  background: linear-gradient(
+    to left,
+    var(--theme-neutral-50),
+    transparent
+  );
+  pointer-events: none;
 }
 
 .breadcrumbs {
   white-space: nowrap;
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: visible;
-  padding-right: 1.5rem;
-  /*hiding scrollbars on ios*/
+  padding-right: var(--spacing-lg);
   scrollbar-width: none;
-  /*::-webkit-scrollbar: {
-    display: none;}*/
+  -ms-overflow-style: none;
+}
+
+.breadcrumbs::-webkit-scrollbar {
+  display: none;
 }

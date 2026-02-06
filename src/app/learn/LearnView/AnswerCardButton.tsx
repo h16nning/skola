@@ -1,10 +1,13 @@
-import { Button, Stack, Text } from "@mantine/core";
+import { Stack } from "@/components/ui/Stack";
+import { Text } from "@/components/ui/Text";
+import "./AnswerCardButton.css";
+
+const BASE_URL = "answer-card-button";
 
 interface AnswerCardButtonProps {
   label: string;
   timeInfo: string;
   color: string;
-
   action: Function;
 }
 
@@ -15,23 +18,19 @@ export default function AnswerCardButton({
   action,
 }: AnswerCardButtonProps) {
   return (
-    <Button
-      color={color}
+    <button
+      type="button"
+      className={`${BASE_URL} ${BASE_URL}--${color}`}
       onClick={() => action()}
-      h="2.5rem"
-      px={0}
-      fullWidth
-      miw="0"
-      variant="light"
     >
-      <Stack gap="0" align="center">
-        <Text fz="xs" fw={400} lh="1">
+      <Stack gap="xs" align="center">
+        <Text size="xs" weight="normal" style={{ lineHeight: 1 }}>
           {timeInfo}
         </Text>
-        <Text fz="sm" fw={600} lh="1.25">
+        <Text size="sm" weight="semibold" style={{ lineHeight: 1.25 }}>
           {label}
         </Text>
       </Stack>
-    </Button>
+    </button>
   );
 }

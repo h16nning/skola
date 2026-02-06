@@ -1,16 +1,21 @@
 import LazySkeleton from "@/components/LazySkeleton";
-import { Stack, Text } from "@mantine/core";
+import { Stack } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Deck } from "../../logic/deck/deck";
 import DeckPreview from "./DeckPreview";
 
+import EmptyNotice from "@/components/EmptyNotice";
+import { IconCards } from "@tabler/icons-react";
+import "./DeckTable.css";
+
 interface DeckTableProps {
   deckList?: Deck[];
   isReady: boolean;
 }
+
+const BASE = "deck-table";
 
 function DeckTable({ deckList, isReady }: DeckTableProps) {
   const [t] = useTranslation();
@@ -25,17 +30,15 @@ function DeckTable({ deckList, isReady }: DeckTableProps) {
 
   return isReady && deckList ? (
     deckList.length !== 0 ? (
-      <Stack gap="0" w="100%">
+      <div className={BASE}>
         {deckList
           .sort((a: Deck, b: Deck) => a.name.localeCompare(b.name))
           .map((deck, index) => (
             <DeckPreview key={deck.id} deck={deck} i={index} />
           ))}
-      </Stack>
+      </div>
     ) : (
-      <Text fz="sm" c="dimmed" pt="lg" ta="center">
-        {t("deck.no-decks-found")}
-      </Text>
+      <EmptyNotice icon={IconCards} title={t("home.no-decks-found")} />
     )
   ) : (
     <SkeletonTable />

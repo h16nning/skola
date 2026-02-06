@@ -1,6 +1,10 @@
+import { Group } from "@/components/ui/Group";
+import { IconButton } from "@/components/ui/IconButton";
+import { Kbd } from "@/components/ui/Kbd";
+import { Progress } from "@/components/ui/Progress";
+import { Tooltip } from "@/components/ui/Tooltip";
+import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { NoteType } from "@/logic/note/note";
-import { ActionIcon, Group, Kbd, Progress, Tooltip } from "@mantine/core";
-import { useHotkeys } from "@mantine/hooks";
 import { IconX } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useEffect, useMemo } from "react";
@@ -11,7 +15,9 @@ import { Deck } from "../../../logic/deck/deck";
 import { LearnController } from "../../../logic/learn";
 import CardMenu from "../../editor/CardMenu";
 import RemainingCardsIndicator from "../RemainingCardsIndicator/RemainingCardsIndicator";
-import classes from "./LearnView.module.css";
+import "./LearnViewHeader.css";
+
+const BASE_URL = "learn-view-header";
 
 export let stopwatchResult: StopwatchResult;
 
@@ -61,12 +67,12 @@ function LearnViewHeader({
       controller.toReviewCardsNumber,
       controller.timeCriticalCardsNumber,
       controller.learnedCardsNumber,
-      //FIXME
     ]
   );
+
   return (
     <>
-      <Group justify="space-between" wrap="nowrap">
+      <Group justify="space-between" wrap="nowrap" style={{ width: "100%" }}>
         <Group wrap="nowrap" gap="xs">
           <Tooltip
             label={
@@ -75,29 +81,26 @@ function LearnViewHeader({
               </>
             }
           >
-            <ActionIcon
+            <IconButton
               onClick={() => navigate("/deck/" + deck?.id)}
               variant="subtle"
-              color="gray"
             >
               <IconX />
-            </ActionIcon>
+            </IconButton>
           </Tooltip>
           <Stopwatch />
         </Group>
 
-        <Group justify="flex-end" wrap="nowrap" gap="xs">
+        <Group justify="end" wrap="nowrap" gap="xs">
           <RemainingCardsIndicator controller={controller} />
           <CardMenu card={currentCard} onDelete={controller.requestNextCard} />
         </Group>
       </Group>
       <Progress
-        className={classes.progressBar}
+        className={BASE_URL + "__progress-bar"}
         size="xs"
         value={progress}
-        transitionDuration={200}
-        radius={0}
-        w="100%"
+        style={{ width: "100%", borderRadius: 0 }}
       />
     </>
   );

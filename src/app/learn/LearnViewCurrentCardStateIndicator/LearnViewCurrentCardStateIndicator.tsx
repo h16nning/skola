@@ -1,4 +1,5 @@
-import { Group, Text } from "@mantine/core";
+import { Group } from "@/components/ui/Group";
+import { Text } from "@/components/ui/Text";
 import {
   IconBook,
   IconCircleArrowUpRight,
@@ -9,7 +10,9 @@ import {
 import { Card as Model } from "fsrs.js";
 import { State } from "fsrs.js";
 import React, { useCallback } from "react";
-import classes from "./LearnViewCurrentCardStateIndicator.module.css";
+import "./LearnViewCurrentCardStateIndicator.css";
+
+const BASE = "learn-view-current-card-state-indicator";
 
 interface LearnViewCurrentCardStateIndicatorProps {
   currentCardModel: Model | undefined;
@@ -24,17 +27,24 @@ function Indicator({
   icon: React.FC<IconProps>;
   text: string;
 }) {
+  const colorMap: Record<string, string> = {
+    fuchsia: "var(--theme-fuchsia-700)",
+    orange: "var(--theme-orange-700)",
+    sky: "var(--theme-sky-700)",
+    gray: "var(--theme-neutral-600)",
+  };
+
+  const iconColor = colorMap[color] || "var(--theme-neutral-600)";
+
   return (
     <Group
-      className={classes.indicator}
-      gap="0.25rem"
+      className={BASE}
+      gap="xs"
       align="center"
-      style={{
-        color: `var(--mantine-color-${color}-strong`,
-      }}
+      style={{ color: iconColor, alignSelf: "flex-start" }}
     >
       <Icon size={16} />
-      <Text fz="sm" fw={500}>
+      <Text size="sm" weight="medium">
         {text}
       </Text>
     </Group>
@@ -49,7 +59,7 @@ export default function LearnViewCurrentCardStateIndicator({
       return;
     }
     if (currentCardModel.state === State.New) {
-      return <Indicator color="grape" icon={IconSparkles} text="New card" />;
+      return <Indicator color="fuchsia" icon={IconSparkles} text="New card" />;
     } else if (
       currentCardModel.state === State.Learning ||
       currentCardModel.state === State.Relearning
@@ -65,10 +75,14 @@ export default function LearnViewCurrentCardStateIndicator({
       currentCardModel.state === State.Review &&
       currentCardModel.due <= new Date(Date.now())
     ) {
-      return <Indicator color="blue" icon={IconBook} text="Review card" />;
+      return <Indicator color="sky" icon={IconBook} text="Review card" />;
     } else {
       return (
-        <Indicator color="gray" icon={IconInfoCircle} text="Already learned" />
+        <Indicator
+          color="neutral"
+          icon={IconInfoCircle}
+          text="Already learned"
+        />
       );
     }
   }, [currentCardModel]);

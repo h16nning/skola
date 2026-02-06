@@ -1,7 +1,8 @@
-import { Button, Group, Modal, Stack, Text } from "@mantine/core";
 import { t } from "i18next";
 import React, { ReactNode } from "react";
 import ModalProps from "./ModalProps";
+import { Modal } from "./ui/Modal";
+import { Button } from "./ui/Button";
 
 interface DangerousConfirmModalProps extends ModalProps {
   dangerousAction: Function;
@@ -24,15 +25,18 @@ function DangerousConfirmModal({
       opened={opened}
       onClose={() => setOpened(false)}
     >
-      <Stack>
-        <Text fz="sm">{dangerousDescription}</Text>
-        <Group justify="flex-end" gap="sm">
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-sm)" }}>
+        <p style={{
+          fontSize: "var(--font-size-md)",
+          color: "var(--theme-neutral-600"
+        }}>{dangerousDescription}</p>
+        <div style={{ display: "flex", justifyContent: "flex-end", gap: "var(--spacing-sm)" }}>
           <Button variant="default" onClick={() => setOpened(false)}>
             {t("global.cancel")}
           </Button>
           <Button
             data-autofocus
-            color="red"
+            variant="destructive"
             onClick={() => {
               dangerousAction(...dangerousDependencies);
               setOpened(false);
@@ -40,8 +44,8 @@ function DangerousConfirmModal({
           >
             {dangerousTitle}
           </Button>
-        </Group>
-      </Stack>
+        </div>
+      </div>
     </Modal>
   );
 }

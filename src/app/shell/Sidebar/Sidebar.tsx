@@ -16,6 +16,7 @@ import DeckList from "./DeckList";
 import "./Sidebar.css";
 
 const BASE = "sidebar";
+const APP_VERSION = import.meta.env.VITE_APP_VERSION || "0.0.0";
 
 interface SidebarProps {
   menuOpened: boolean;
@@ -57,7 +58,12 @@ function Sidebar({ menuOpened, menuHandlers }: SidebarProps) {
                 alt="Skola Logo"
                 className={`${BASE}__logo`}
               />
-              {!minimalMode && <h1 className={`${BASE}__title`}>Skola</h1>}
+              {!minimalMode && (
+                <div className={`${BASE}__brand-text`}>
+                  <h1 className={`${BASE}__title`}>Skola</h1>
+                  <div className={`${BASE}__version`}>v{APP_VERSION}</div>
+                </div>
+              )}
             </div>
             {fullscreenMode && (
               <IconButton

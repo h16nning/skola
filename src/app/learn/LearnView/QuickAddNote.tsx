@@ -2,11 +2,15 @@ import {
   addFailed,
   successfullyAdded,
 } from "@/components/Notification/Notification";
+import { Button } from "@/components/ui/Button";
+import { Group } from "@/components/ui/Group";
+import { Paper } from "@/components/ui/Paper";
+import { Stack } from "@/components/ui/Stack";
+import { Text } from "@/components/ui/Text";
 import { CognitivePrompt } from "@/logic/cognitivePrompts";
 import { Deck } from "@/logic/deck/deck";
 import { linkNotes } from "@/logic/note/linkNotes";
 import { BasicNoteTypeAdapter } from "@/logic/type-implementations/normal/BasicNote";
-import { Button, Group, Paper, Stack, Text } from "@mantine/core";
 import { t } from "i18next";
 import { useCallback, useEffect, useState } from "react";
 import NoteEditor, { useNoteEditor } from "../../editor/NoteEditor/NoteEditor";
@@ -59,7 +63,7 @@ function QuickAddNote({
     } catch {
       addFailed();
     }
-  }, [deck, frontEditor, backEditor, clear, onClose]);
+  }, [deck, frontEditor, backEditor, clear, onClose, sourceNoteId]);
 
   useEffect(() => {
     if (requestedFinish) {
@@ -73,38 +77,35 @@ function QuickAddNote({
   }, [frontEditor]);
 
   return (
-    <Paper
-      shadow="xs"
-      withBorder
-      style={{
-        maxWidth: 600,
-        width: "100%",
-      }}
-      p="md"
-    >
+    <Paper shadow="xs" withBorder>
       <Stack gap="md">
-        <Group justify="space-between" align="flex-start">
-          <Text ff="heading" fs="italic">
+        <Group justify="space-between" align="start">
+          <Text
+            style={{
+              fontFamily: "var(--font-serif)",
+              fontStyle: "italic",
+            }}
+          >
             {prompt.description}
           </Text>
         </Group>
 
         <Stack gap="xs">
-          <Text size="sm" fw={600}>
+          <Text size="sm" weight="semibold">
             {t("note.edit.type-specific.normal.front")}
           </Text>
           <NoteEditor editor={frontEditor} />
         </Stack>
 
         <Stack gap="xs">
-          <Text size="sm" fw={600}>
+          <Text size="sm" weight="semibold">
             {t("note.edit.type-specific.normal.back")}
           </Text>
           <NoteEditor editor={backEditor} />
         </Stack>
 
-        <Group justify="flex-end" gap="xs">
-          <Button variant="subtle" color="gray" size="sm" onClick={onClose}>
+        <Group justify="end" gap="xs">
+          <Button variant="subtle" size="sm" onClick={onClose}>
             {t("learning.quick-add.cancel")}
           </Button>
           <Button
@@ -113,6 +114,7 @@ function QuickAddNote({
             disabled={
               !frontEditor?.getText().trim() || !backEditor?.getText().trim()
             }
+            variant="primary"
           >
             {t("learning.quick-add.add-note")}
           </Button>

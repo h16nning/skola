@@ -3,24 +3,25 @@ import "./Paper.css";
 
 const BASE = "paper";
 
-interface PaperProps {
+interface PaperProps extends React.HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
   withBorder?: boolean;
+  withTexture?: boolean;
   shadow?: "xs" | "sm" | "md" | "lg" | "xl";
-  className?: string;
-  style?: React.CSSProperties;
 }
 
 export function Paper({
   children,
   withBorder = false,
+  withTexture = true,
   shadow,
   className = "",
-  style,
+  ...props
 }: PaperProps) {
   const classes = [
     BASE,
     withBorder && `${BASE}--with-border`,
+    withTexture && `${BASE}--with-texture`,
     shadow && `${BASE}--shadow-${shadow}`,
     className,
   ]
@@ -28,7 +29,7 @@ export function Paper({
     .join(" ");
 
   return (
-    <div className={classes} style={style}>
+    <div className={classes} {...props}>
       {children}
     </div>
   );

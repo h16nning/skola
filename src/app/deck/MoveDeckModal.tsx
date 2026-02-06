@@ -1,15 +1,20 @@
 import { successfullyMovedCardTo } from "@/components/Notification/Notification";
+import { Button } from "@/components/ui/Button";
+import { Combobox } from "@/components/ui/Combobox";
+import { Modal } from "@/components/ui/Modal";
 import { Deck } from "@/logic/deck/deck";
 import { useDecks } from "@/logic/deck/hooks/useDecks";
 import { moveDeck } from "@/logic/deck/moveDeck";
-import { Button, Group, Modal, Select, Stack, Text } from "@mantine/core";
 import { IconArrowsExchange } from "@tabler/icons-react";
 import { useState } from "react";
+import "./MoveDeckModal.css";
+
+const BASE_URL = "move-deck-modal";
 
 interface MoveDeckModalProps {
   deck: Deck;
   opened: boolean;
-  setOpened: Function;
+  setOpened: (opened: boolean) => void;
 }
 
 export default function MoveDeckModal({
@@ -26,15 +31,25 @@ export default function MoveDeckModal({
   );
   const [newDeckID, setNewDeckID] = useState<string | null>(null);
 
+  const handleMove = () => {
+    const newDeck = decks?.find((deck) => deck.id === newDeckID);
+    if (newDeck !== undefined) {
+      moveDeck(deck.id, newDeck.id);
+      successfullyMovedCardTo(newDeck.name);
+      setOpened(false);
+    }
+  };
+
+  const isValidSelection = areDecksReady && newDeckID && newDeckID !== oldSuperDeck;
+
   return (
-    <Modal title={"Move Deck"} opened={opened} onClose={() => setOpened(false)}>
-      <Stack>
-        <Select
+    <Modal title="Move Deck" opened={opened} onClose={() => setOpened(false)}>
+      <div className={`${BASE_URL}__content`}>
+        <Combobox
           searchable
           label="Move To"
           nothingFoundMessage="No Decks Found"
           disabled={!areDecksReady}
-          //withinPortal
           data={
             decks?.map((deck) => ({
               value: deck.id,
@@ -42,36 +57,27 @@ export default function MoveDeckModal({
             })) ?? []
           }
           value={newDeckID}
-          onChange={(value) => {
+          onChange={(value: string | null) => {
             setNewDeckID(value);
           }}
         />
         {decks?.length === 0 && (
-          <Text fz="sm">
+          <p className={`${BASE_URL}__empty-message`}>
             It seems like there are no other valid decks to move this deck to.
             Try creating another one.
-          </Text>
+          </p>
         )}
-        <Group justify="flex-end">
+        <div className={`${BASE_URL}__actions`}>
           <Button
-            onClick={() => {
-              const newDeck = decks?.find((deck) => deck.id === newDeckID);
-              if (newDeck !== undefined) {
-                moveDeck(deck.id, newDeck.id);
-                successfullyMovedCardTo(newDeck.name);
-                setOpened(false);
-              } else {
-              }
-            }}
+            onClick={handleMove}
             leftSection={<IconArrowsExchange />}
-            disabled={
-              !areDecksReady || !newDeckID || newDeckID === oldSuperDeck
-            }
+            disabled={!isValidSelection}
+            variant="primary"
           >
             Move Deck
           </Button>
-        </Group>
-      </Stack>
+        </div>
+      </div>
     </Modal>
   );
 }

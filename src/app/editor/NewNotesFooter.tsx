@@ -1,17 +1,14 @@
+import { Button } from "@/components/ui/Button";
+import { Kbd } from "@/components/ui/Kbd";
+import { Tooltip } from "@/components/ui/Tooltip";
+import { useHotkeys } from "@/lib/hooks/useHotkeys";
+import { useOs } from "@/lib/hooks/useOs";
+import { Deck } from "@/logic/deck/deck";
 import { IconHistory } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../components/ui/Button";
-import { Kbd } from "../../components/ui/Kbd";
-import { Tooltip } from "../../components/ui/Tooltip";
-import { useHotkeys } from "../../lib/hooks/useHotkeys";
-import { useOs } from "../../lib/hooks/useOs";
-import { Deck } from "../../logic/deck/deck";
-import "./NewNotesFooter.css";
 import NoteSubmitButton from "./NoteSubmitButton";
-
-const BASE = "new-notes-footer";
 
 interface NewNotesFooterProps {
   setRequestedFinish: (finish: boolean) => void;
@@ -34,7 +31,7 @@ export default function NewNotesFooter({
   useHotkeys([["Mod+Shift+H", showHistory]]);
 
   return (
-    <div className={BASE}>
+    <div className="new-notes-view__footer">
       <Tooltip
         label={
           <>

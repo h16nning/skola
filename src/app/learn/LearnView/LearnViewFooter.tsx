@@ -1,15 +1,19 @@
-import { Button, Group } from "@mantine/core";
-import { useHotkeys } from "@mantine/hooks";
+import { Button } from "@/components/ui/Button";
+import { Group } from "@/components/ui/Group";
+import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { Rating } from "fsrs.js";
 import { t } from "i18next";
 import i18n from "../../../i18n";
 import { LearnController } from "../../../logic/learn";
 import { useSetting } from "../../../logic/settings/hooks/useSetting";
 import AnswerCardButton from "./AnswerCardButton";
-import classes from "./LearnView.module.css";
+import "./LearnViewFooter.css";
+
+const BASE_URL = "learn-view-footer";
 
 const DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24;
 const MINUTE_IN_MILLISECONDS = 1000 * 60;
+
 interface LearnViewFooterProps {
   controller: LearnController;
   answer: Function;
@@ -75,9 +79,14 @@ function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
   );
 
   return (
-    <Group className={classes.footerContainer} justify="center">
+    <Group className={BASE_URL} justify="center">
       {controller.showingAnswer ? (
-        <Group gap="xs" wrap="nowrap" justify="center" w="100%" maw="25rem">
+        <Group
+          gap="xs"
+          wrap="nowrap"
+          justify="center"
+          style={{ width: "100%", maxWidth: "25rem" }}
+        >
           <AnswerCardButton
             label={t("learning.rate-again")}
             timeInfo={timeStringForRating(Rating.Again, controller)}
@@ -108,7 +117,11 @@ function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
           )}
         </Group>
       ) : (
-        <Button onClick={controller.showAnswer} h="2.5rem" variant="light">
+        <Button
+          onClick={controller.showAnswer}
+          style={{ height: "2.5rem" }}
+          variant="primary"
+        >
           {t("learning.show-answer")}
         </Button>
       )}
@@ -117,5 +130,3 @@ function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
 }
 
 export default LearnViewFooter;
-
-/**/

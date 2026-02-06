@@ -1,0 +1,31 @@
+.progress {
+  width: 100%;
+  height: var(--spacing-md);
+  background-color: var(--theme-neutral-200);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress__bar {
+  height: 100%;
+  background-color: var(--theme-primary-600);
+  transition: width 0.2s ease-in-out;
+  border-radius: var(--radius-md);
+}
+
+.progress--xs {
+  height: 0.25rem;
+}
+
+.progress--sm {
+  height: 0.5rem;
+}
+
+.progress--md {
+  height: var(--spacing-md);
+}
+
+.progress--lg {
+  height: var(--spacing-lg);
+}

@@ -3,6 +3,7 @@ import { breakpoints } from "@/lib/breakpoints";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { PropsWithChildren, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { useLocation } from "react-router-dom";
 import "./Header.css";
 
 const BASE = "header";
@@ -32,6 +33,7 @@ export const AppHeaderContent = ({ children }: PropsWithChildren) => {
 export default function Header({ menuOpened, menuHandlers }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const isXsOrLarger = useMediaQuery(`(min-width: ${breakpoints.xs}px)`);
+  const routeIsLearn = useLocation().pathname.startsWith("/learn");
 
   useEffect(() => {
     const mainContent = document.querySelector(".app-shell__main-content");
@@ -49,7 +51,11 @@ export default function Header({ menuOpened, menuHandlers }: HeaderProps) {
     };
   }, []);
 
-  const headerClasses = [BASE, scrolled && `${BASE}--scrolled`]
+  const headerClasses = [
+    BASE,
+    scrolled && `${BASE}--scrolled`,
+    routeIsLearn && `${BASE}--fullwidth`,
+  ]
     .filter(Boolean)
     .join(" ");
 

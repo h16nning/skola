@@ -2,14 +2,12 @@ import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
-  ActionIcon,
   Group,
   Kbd,
   Paper,
   Select,
   Space,
   Stack,
-  Title,
   Tooltip,
 } from "@mantine/core";
 import {
@@ -17,8 +15,10 @@ import {
   IconChevronLeft,
 } from "@tabler/icons-react";
 
+import AppHeaderTitle from "@/components/AppHeaderTitle";
 import MissingObject from "@/components/MissingObject";
 import SelectDecksHeader from "@/components/SelectDecksHeader";
+import { IconButton } from "@/components/ui";
 import { getAdapterOfType } from "@/logic/NoteTypeAdapter";
 import { NoteTypeLabels } from "@/logic/card/card";
 import { useDeckFromUrl } from "@/logic/deck/hooks/useDeckFromUrl";
@@ -29,7 +29,9 @@ import { t } from "i18next";
 import React from "react";
 import { AppHeaderContent } from "../shell/Header/Header";
 import NewNotesFooter from "./NewNotesFooter";
-import classes from "./NewNotesView.module.css";
+import "./NewNotesView.css";
+
+const BASE = "new-notes-view";
 
 function NewNotesView() {
   const navigate = useNavigate();
@@ -81,26 +83,25 @@ function NewNotesView() {
   }
 
   return (
-    <div className={classes.newNotesView}>
-      <div className={classes.newNotesMain}>
+    <div className={BASE}>
+      <div className={BASE + "__content"}>
         <AppHeaderContent>
-          <Group justify="space-between" gap="xs" wrap="nowrap">
-            <ActionIcon onClick={closeView} variant="subtle" color="gray">
+          <div className={BASE + "__header"} style={{ marginRight: "auto" }}>
+            <IconButton onClick={closeView} variant="subtle">
               <IconChevronLeft />
-            </ActionIcon>
-            <Title order={3}>{t("note.new.title")}</Title>
-            <ActionIcon
+            </IconButton>
+            <AppHeaderTitle>{t("note.new.title")}</AppHeaderTitle>
+            <IconButton
               onClick={() => navigate("/settings/editing")}
               variant="subtle"
-              color="gray"
             >
               <IconAdjustmentsHorizontal />
-            </ActionIcon>
-          </Group>
+            </IconButton>
+          </div>
         </AppHeaderContent>
 
         <Space h="md" />
-        <div className={classes.newNotesEditorContainer}>
+        <div className={BASE + "__editor-container"}>
           <Stack>
             <Group justify="space-between">
               <Group gap="xs" align="end">

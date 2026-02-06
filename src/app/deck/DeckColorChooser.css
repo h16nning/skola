@@ -1,0 +1,25 @@
+.deck-color-chooser {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+.deck-color-chooser__color-options {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.deck-color-chooser__color-button {
+  border: 1px solid;
+  border-radius: var(--radius-full);
+  width: var(--icon-size-lg);
+  height: var(--icon-size-lg);
+  cursor: pointer;
+}
+
+.deck-color-chooser__color-button--selected {
+  outline: 2px solid var(--theme-neutral-900);
+}

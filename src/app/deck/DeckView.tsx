@@ -61,7 +61,7 @@ function DeckView() {
                 <Badge
                   size="sm"
                   variant="light"
-                  color={deck?.subDecks.length ? undefined : "gray"}
+                  color={deck?.subDecks.length ? undefined : "neutral"}
                   style={{ textOverflow: "clip" }}
                 >
                   {deck?.subDecks.length}
@@ -74,7 +74,7 @@ function DeckView() {
                 <Badge
                   size="sm"
                   variant="light"
-                  color={deck?.notes.length ? undefined : "gray"}
+                  color={deck?.notes.length ? undefined : "neutral"}
                   style={{ textOverflow: "clip" }}
                 >
                   {deck?.notes.length}

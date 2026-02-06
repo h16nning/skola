@@ -9,10 +9,41 @@
 .home-view__content {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-md);
   width: 600px;
   max-width: 100%;
-  padding-top: var(--spacing-xl);
   margin: 0 auto;
+}
+
+.home-view__welcome-section {
+  text-align: center;
+  width: 100%;
+  padding: var(--spacing-3xl);
+  margin-bottom: var(--spacing-3xl);
+  border-bottom: 1px dotted var(--theme-neutral-200);
+}
+
+.home-view__welcome-title {
+  font-size: var(--font-size-3xl);
+  font-family: var(--font-serif);
+  font-weight: 500;
+  color: var(--theme-neutral-900);
+  margin: 0;
+}
+
+.home-view__welcome-subtitle {
+  font-size: var(--font-size-md);
+  color: var(--theme-neutral-700);
+  margin: 0;
+}
+
+@media (max-width: 36rem) {
+  .home-view__welcome-section {
+    padding: var(--spacing-2xl);
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .home-view__welcome-title {
+    font-size: var(--font-size-2xl);
+  }
 }

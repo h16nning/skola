@@ -1,0 +1,19 @@
+.cognitive-prompt-pills {
+  max-width: 600px;
+  width: 100%;
+}
+
+.cognitive-prompt-pills__pill {
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.cognitive-prompt-pills__pill:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.cognitive-prompt-pills__pill:focus-visible {
+  outline: var(--ring-outline);
+  box-shadow: var(--ring-shadow);
+}

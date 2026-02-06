@@ -125,3 +125,7 @@
   width: 1rem;
   height: 1rem;
 }
+
+.sidebar--minimal .nav-item {
+  aspect-ratio: 1 / 1;
+}

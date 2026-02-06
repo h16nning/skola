@@ -8,6 +8,7 @@
 @import "shadows.css";
 @import "patterns.css";
 @import "transitions.css";
+@import "shell.css";
 
 :root {
   --density-compact: 0.875;
@@ -21,6 +22,28 @@ body {
   -webkit-overflow-scrolling: touch;
 
   font-family: var(--font-sans);
+}
+
+@supports (top: env(titlebar-area-height)) {
+  body {
+    padding-top: max(env(safe-area-inset-top), env(titlebar-area-height));
+  }
+}
+
+.titlebar-drag-region {
+  position: fixed;
+  top: 0;
+  left: env(titlebar-area-x, 0);
+  width: env(titlebar-area-width, 100%);
+  height: env(titlebar-area-height, 0);
+  -webkit-app-region: drag;
+  app-region: drag;
+  z-index: 1000;
+}
+
+.titlebar-drag-region * {
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
 }
 
 html,

@@ -12,6 +12,6 @@
 }
 
 .color-scheme-toggle__option-text {
-  font-size: 0.8125rem;
+  font-size: var(--font-size-sm);
   font-weight: 600;
 }

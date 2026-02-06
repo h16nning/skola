@@ -88,7 +88,8 @@
     "no-decks-found": "You have not created any decks yet.",
     "title": "Home",
     "welcome": "Welcome!",
-    "welcome-user": "Welcome back, {{name}}!"
+    "welcome-user": "Welcome back, {{name}}!",
+    "welcome-subtitle": "Ready to start studying?"
   },
   "learning": {
     "cognitive-prompts": {

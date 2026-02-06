@@ -1,14 +1,12 @@
 import { Rating } from "fsrs.js";
-import classes from "./VisualFeedback.module.css";
+import "./VisualFeedback.css";
+
+const BASE_URL = "visual-feedback";
 
 export default function VisualFeedback({ rating }: { rating: Rating | null }) {
   return (
     <div
-      className={
-        classes.visualFeedback +
-        " " +
-        (rating === null ? "" : classes[Rating[rating]])
-      }
+      className={`${BASE_URL} ${rating !== null ? `${BASE_URL}--${Rating[rating].toLowerCase()}` : ""}`}
     />
   );
 }

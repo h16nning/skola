@@ -1,6 +1,13 @@
 import ImportModal from "@/app/settings/importexport/ImportModal";
 import DangerousConfirmModal from "@/components/DangerousConfirmModal";
-import { IconButton, Kbd, Menu, MenuDropdown, MenuItem, MenuTrigger } from "@/components/ui";
+import {
+  IconButton,
+  Kbd,
+  Menu,
+  MenuDropdown,
+  MenuItem,
+  MenuTrigger,
+} from "@/components/ui";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { Deck } from "@/logic/deck/deck";
 import { deleteDeck } from "@/logic/deck/deleteDeck";
@@ -128,8 +135,14 @@ function DeckMenu({ deck, isDeckReady, setDeckOptionsOpened }: DeckMenuProps) {
               leftSection={<IconCode size={16} />}
               rightSection={
                 showShortcutHints && (
-                  <span style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
-                    <Kbd>shift</Kbd>+<Kbd>d</Kbd>
+                  <span
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.25rem",
+                    }}
+                  >
+                    <Kbd>&#8679; d</Kbd>
                   </span>
                 )
               }

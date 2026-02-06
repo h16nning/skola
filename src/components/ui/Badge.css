@@ -31,10 +31,9 @@
   color: var(--theme-primary-700);
 }
 
-.badge--light.badge--gray,
 .badge--light.badge--neutral {
-  background-color: var(--theme-neutral-100);
-  color: var(--theme-neutral-600);
+  background-color: var(--theme-neutral-200);
+  color: var(--theme-neutral-700);
 }
 
 .badge--filled.badge--primary {
@@ -42,10 +41,9 @@
   color: white;
 }
 
-.badge--filled.badge--gray,
 .badge--filled.badge--neutral {
-  background-color: var(--theme-neutral-600);
-  color: white;
+  background-color: var(--theme-neutral-700);
+  color: var(--theme-neutral-100);
 }
 
 .badge--outline.badge--primary {
@@ -59,4 +57,109 @@
   background-color: transparent;
   color: var(--theme-neutral-700);
   border: 1px solid var(--theme-neutral-300);
+}
+
+.badge--light.badge--red {
+  background-color: var(--theme-red-100);
+  color: var(--theme-red-700);
+}
+
+.badge--filled.badge--red {
+  background-color: var(--theme-red-600);
+  color: white;
+}
+
+.badge--light.badge--orange {
+  background-color: var(--theme-orange-100);
+  color: var(--theme-orange-700);
+}
+
+.badge--filled.badge--orange {
+  background-color: var(--theme-orange-600);
+  color: white;
+}
+
+.badge--light.badge--lime {
+  background-color: var(--theme-lime-100);
+  color: var(--theme-lime-700);
+}
+
+.badge--filled.badge--lime {
+  background-color: var(--theme-lime-600);
+  color: white;
+}
+
+.badge--light.badge--sky {
+  background-color: var(--theme-sky-100);
+  color: var(--theme-sky-700);
+}
+
+.badge--filled.badge--sky {
+  background-color: var(--theme-sky-600);
+  color: white;
+}
+
+.badge--light.badge--fuchsia {
+  background-color: var(--theme-fuchsia-100);
+  color: var(--theme-fuchsia-700);
+}
+
+.badge--filled.badge--fuchsia {
+  background-color: var(--theme-fuchsia-600);
+  color: white;
+}
+
+.badge--light.badge--grape {
+  background-color: var(--theme-fuchsia-100);
+  color: var(--theme-fuchsia-700);
+}
+
+.badge--filled.badge--grape {
+  background-color: var(--theme-fuchsia-600);
+  color: white;
+}
+
+.badge--light.badge--blue {
+  background-color: var(--theme-sky-100);
+  color: var(--theme-sky-700);
+}
+
+.badge--filled.badge--blue {
+  background-color: var(--theme-sky-600);
+  color: white;
+}
+
+.badge--light.badge--green {
+  background-color: var(--theme-primary-100);
+  color: var(--theme-primary-700);
+}
+
+.badge--filled.badge--green {
+  background-color: var(--theme-primary-600);
+  color: white;
+}
+
+.badge--light.badge--yellow {
+  background-color: var(--theme-orange-100);
+  color: var(--theme-orange-700);
+}
+
+.badge--filled.badge--yellow {
+  background-color: var(--theme-orange-600);
+  color: white;
+}
+
+.badge--clickable {
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.badge--clickable:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+.badge--clickable:active {
+  transform: scale(0.98);
 }

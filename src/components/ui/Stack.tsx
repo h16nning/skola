@@ -6,6 +6,7 @@ interface StackProps {
   align?: "start" | "center" | "end" | "stretch";
   className?: string;
   style?: CSSProperties;
+  onClick?: () => void;
 }
 
 export function Stack({
@@ -14,6 +15,7 @@ export function Stack({
   align = "stretch",
   className = "",
   style,
+  onClick,
 }: StackProps) {
   const gapMap = {
     xs: "var(--spacing-xs)",
@@ -39,7 +41,7 @@ export function Stack({
   };
 
   return (
-    <div className={className} style={stackStyle}>
+    <div className={className} style={stackStyle} onClick={onClick}>
       {children}
     </div>
   );
