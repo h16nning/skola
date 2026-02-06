@@ -7,7 +7,7 @@
 
 .home-view__title {
   font-size: var(--font-size-3xl);
-  font-weight: 500;
+  font-weight: 600;
   font-family: var(--font-serif);
   color: var(--theme-neutral-900);
   margin: 0;

@@ -27,7 +27,7 @@ interface SidebarProps {
 }
 
 function Sidebar({ menuOpened, menuHandlers }: SidebarProps) {
-  const routeIsLearn = useLocation().pathname.includes("learn");
+  const routeIsLearn = useLocation().pathname.startsWith("/learn");
 
   const isXsOrSmaller = useMediaQuery(`(max-width: ${breakpoints.xs}px)`);
   const isLgOrSmaller = useMediaQuery(`(max-width: ${breakpoints.lg}px)`);

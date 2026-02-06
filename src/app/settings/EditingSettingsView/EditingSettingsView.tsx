@@ -1,98 +1,103 @@
-import { Alert, Stack } from "@mantine/core";
+import { Paper } from "@/components/ui/Paper";
 import {
-  IconCode,
-  IconHighlight,
-  IconInfoCircle,
-  IconLink,
-  IconLinkOff,
-  IconList,
-  IconListNumbers,
-  IconStrikethrough,
-  IconSubscript,
-  IconSuperscript,
+    IconCode,
+    IconHighlight,
+    IconInfoCircle,
+    IconLink,
+    IconLinkOff,
+    IconList,
+    IconListNumbers,
+    IconStrikethrough,
+    IconSubscript,
+    IconSuperscript,
 } from "@tabler/icons-react";
 import { t } from "i18next";
-import React from "react";
 import Section from "../Section";
 import SettingsInput from "../SettingsInput";
-import classes from "./EditingSettingsView.module.css";
+import "./EditingSettingsView.css";
 
-interface EditingSettingsViewProps {}
+const BASE = "editing-settings-view";
 
-export default function EditingSettingsView({}: EditingSettingsViewProps) {
+export default function EditingSettingsView() {
   return (
-    <Stack className={classes.container} gap="xl">
+    <div className={BASE}>
       <Section title={t("settings.editing.editor-options")}>
         <SettingsInput
           label={t("settings.editing.use-toolbar")}
           description={t("settings.editing.use-toolbar-description")}
           settingsKey="useToolbar"
-          inputType={"checkbox"}
+          inputType="checkbox"
         />
         <SettingsInput
           label={t("settings.editing.use-bubble-menu")}
           description={t("settings.editing-use-bubble-menu-description")}
           settingsKey="useBubbleMenu"
-          inputType={"checkbox"}
+          inputType="checkbox"
         />
-        <Alert color="gray" icon={<IconInfoCircle />}>
-          {t("settings.editing.markdown-hint")}
-        </Alert>
+        <Paper withBorder className={`${BASE}__alert`}>
+          <div className={`${BASE}__alert-content`}>
+            <IconInfoCircle size={20} className={`${BASE}__alert-icon`} />
+            <span className={`${BASE}__alert-text`}>
+              {t("settings.editing.markdown-hint")}
+            </span>
+          </div>
+        </Paper>
       </Section>
       <Section title={t("settings.editing.individual-options")}>
         <SettingsInput
-          label={<IconStrikethrough />}
+          label={<IconStrikethrough size={18} />}
           description={t("settings.editing.show-strikethrough-option")}
           settingsKey="showStrikethroughOptionInEditor"
-          inputType={"checkbox"}
+          inputType="checkbox"
         />
         <SettingsInput
-          label={<IconHighlight />}
+          label={<IconHighlight size={18} />}
           description={t("settings.editing.show-highlight-option")}
           settingsKey="showHighlightOptionInEditor"
-          inputType={"checkbox"}
+          inputType="checkbox"
         />
         <SettingsInput
           label={
-            <>
-              <IconList /> <IconListNumbers />
-            </>
+            <div style={{ display: "flex", gap: "var(--spacing-xs)" }}>
+              <IconList size={18} />
+              <IconListNumbers size={18} />
+            </div>
           }
           description={t("settings.editing.show-list-option")}
           settingsKey="showListOptionInEditor"
-          inputType={"checkbox"}
+          inputType="checkbox"
         />
         <SettingsInput
-          label={<IconCode />}
+          label={<IconCode size={18} />}
           description={t("settings.editing.show-code-option")}
           settingsKey="showCodeOptionInEditor"
-          inputType={"checkbox"}
+          inputType="checkbox"
         />
         <SettingsInput
           label={
-            <>
-              <IconSubscript />
-              <IconSuperscript />
-            </>
+            <div style={{ display: "flex", gap: "var(--spacing-xs)" }}>
+              <IconSubscript size={18} />
+              <IconSuperscript size={18} />
+            </div>
           }
           description={t(
             "settings.editing.show-options-for-subscript-and-superscript"
           )}
           settingsKey="showSubAndSuperScriptOptionInEditor"
-          inputType={"checkbox"}
+          inputType="checkbox"
         />
         <SettingsInput
           label={
-            <>
-              <IconLink />
-              <IconLinkOff />
-            </>
+            <div style={{ display: "flex", gap: "var(--spacing-xs)" }}>
+              <IconLink size={18} />
+              <IconLinkOff size={18} />
+            </div>
           }
           description={t("settings.editing.show-link-option")}
           settingsKey="showLinkOptionInEditor"
-          inputType={"checkbox"}
+          inputType="checkbox"
         />
       </Section>
-    </Stack>
+    </div>
   );
 }

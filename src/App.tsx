@@ -44,7 +44,7 @@ export default function App() {
 
   const [registered] = useLocalStorage("registered", false);
 
-  const routeIsLearn = useLocation().pathname.includes("learn");
+  const routeIsLearn = useLocation().pathname.startsWith("/learn");
   const isXsOrSmaller = useMediaQuery(`(max-width: ${breakpoints.xs}px)`);
   const fullscreenMode = isXsOrSmaller || routeIsLearn;
 
@@ -90,7 +90,22 @@ export default function App() {
                   menuHandlers={sidebarHandlers}
                 />
               </nav>
-              <div className={overlayClasses} onClick={sidebarHandlers.close} />
+              <div
+                className={overlayClasses}
+                onClick={sidebarHandlers.close}
+                onKeyDown={(e) => {
+                  if (
+                    e.key === "Escape" ||
+                    e.key === "Enter" ||
+                    e.key === " "
+                  ) {
+                    sidebarHandlers.close();
+                  }
+                }}
+                role="button"
+                tabIndex={fullscreenMode && sidebarMenuOpened ? 0 : -1}
+                aria-label="Close sidebar"
+              />
               <main className={`${BASE}__main`}>
                 <div className={`${BASE}__main-content`}>
                   <div className={`${BASE}__main-center`}>

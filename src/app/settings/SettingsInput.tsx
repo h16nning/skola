@@ -1,10 +1,16 @@
 import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { setSetting } from "@/logic/settings/setSetting";
-import { Checkbox, Group, NumberInput, Switch, TextInput } from "@mantine/core";
-import { useDebouncedValue } from "@mantine/hooks";
+import { Checkbox } from "@/components/ui/Checkbox";
+import { NumberInput } from "@/components/ui/NumberInput";
+import { Switch } from "@/components/ui/Switch";
+import { TextInput } from "@/components/ui/TextInput";
+import { useDebouncedValue } from "@/lib/hooks/useDebouncedValue";
 import React, { useEffect, useState } from "react";
 import { SettingsValues } from "../../logic/settings/Settings";
 import { SettingStatus, StatusIndicator } from "./SettingStatus";
+import "./SettingsInput.css";
+
+const BASE = "settings-input";
 
 interface SettingsInputProps {
   label: string | React.ReactNode;
@@ -31,11 +37,13 @@ export default function SettingsInput({
     value,
     250
   );
+
   useEffect(() => {
     if (touched) {
       setStatus(SettingStatus.LOADING);
     }
   }, [touched, value]);
+
   useEffect(() => setValue(setting !== undefined ? setting : ""), [setting]);
 
   useEffect(() => {
@@ -50,20 +58,24 @@ export default function SettingsInput({
   switch (inputType) {
     case "text":
       return (
-        <TextInput
-          value={value as string}
-          label={label}
-          description={description}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setTouched(true);
-            setValue(event.currentTarget.value);
-          }}
-          rightSection={<StatusIndicator status={status} />}
-        ></TextInput>
+        <div className={BASE}>
+          <TextInput
+            value={value as string}
+            label={label}
+            description={description}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setTouched(true);
+              setValue(event.currentTarget.value);
+            }}
+          />
+          <div className={`${BASE}__status`}>
+            <StatusIndicator status={status} />
+          </div>
+        </div>
       );
     case "switch":
       return (
-        <Group align="start" wrap="nowrap" gap="xs" justify="space-between">
+        <div className={`${BASE} ${BASE}--switch`}>
           <Switch
             checked={value as boolean | undefined}
             label={label}
@@ -74,12 +86,14 @@ export default function SettingsInput({
               setValue(event.currentTarget.checked);
             }}
           />
-          <StatusIndicator status={status} />
-        </Group>
+          <div className={`${BASE}__status`}>
+            <StatusIndicator status={status} />
+          </div>
+        </div>
       );
     case "checkbox":
       return (
-        <Group align="start" wrap="nowrap" gap="xs" justify="space-between">
+        <div className={`${BASE} ${BASE}--checkbox`}>
           <Checkbox
             checked={value as boolean | undefined}
             label={label}
@@ -89,21 +103,27 @@ export default function SettingsInput({
               setValue(event.currentTarget.checked);
             }}
           />
-          <StatusIndicator status={status} />
-        </Group>
+          <div className={`${BASE}__status`}>
+            <StatusIndicator status={status} />
+          </div>
+        </div>
       );
     case "number":
       return (
-        <NumberInput
-          value={value as number}
-          label={label}
-          description={description}
-          onChange={(e) => {
-            setTouched(true);
-            setValue(e);
-          }}
-          rightSection={<StatusIndicator status={status} />}
-        />
+        <div className={BASE}>
+          <NumberInput
+            value={value as number}
+            label={label}
+            description={description}
+            onChange={(e) => {
+              setTouched(true);
+              setValue(e);
+            }}
+          />
+          <div className={`${BASE}__status`}>
+            <StatusIndicator status={status} />
+          </div>
+        </div>
       );
   }
   return <>Input type not found</>;

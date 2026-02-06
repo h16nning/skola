@@ -3,8 +3,8 @@
   flex-direction: column;
   gap: var(--spacing-sm);
   padding: var(--spacing-md);
-  background-color: var(--theme-neutral-100);
-  border-radius: var(--radius-md);
+  border-top: 1px dashed var(--theme-neutral-200);
+  background: var(--pattern-diagonal-stripes);
 }
 
 .cloud-section__badge {

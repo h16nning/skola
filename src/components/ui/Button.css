@@ -11,7 +11,7 @@
   font-size: var(--font-size-base);
   font-weight: 500;
   font-family: var(--font-sans);
-  transition: background-color 0.15s ease, color 0.15s ease, transform 0.2s ease;
+  transition: var(--transition-button);
   white-space: nowrap;
 }
 

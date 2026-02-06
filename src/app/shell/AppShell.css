@@ -33,6 +33,7 @@
   flex: 1;
   min-height: 0;
   height: 100%;
+  overflow: scroll;
 }
 
 .app-shell__main-center {

@@ -7,33 +7,32 @@
 @import "rings.css";
 @import "shadows.css";
 @import "patterns.css";
+@import "transitions.css";
 
 body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    padding: env(safe-area-inset-top) env(safe-area-inset-right)
-        env(safe-area-inset-bottom) env(safe-area-inset-left);
-    -webkit-overflow-scrolling: touch;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  -webkit-overflow-scrolling: touch;
 
-
-    font-family: var(--font-sans);
+  font-family: var(--font-sans);
 }
 
 html,
 body,
 #root,
 .app-shell {
-    height: 100%;
-    margin: 0;
+  height: 100%;
+  margin: 0;
 }
 
 button .tabler-icon,
 input .tabler-icon {
-    stroke-width: 1.5px;
-    width: 1.2rem;
+  stroke-width: 1.5px;
+  width: 1.2rem;
 }
 
 * {
-    transition-duration: 0.2s;
-    transition-property: background-color, color, border-color;
+  transition: var(--transition-colors);
 }

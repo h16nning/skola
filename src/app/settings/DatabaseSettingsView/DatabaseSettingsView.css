@@ -1,0 +1,35 @@
+.database-settings-view__danger-zone {
+  padding: var(--spacing-lg);
+  background-color: rgba(220, 38, 38, 0.05);
+  border-color: rgba(220, 38, 38, 0.2);
+}
+
+.database-settings-view__danger-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #dc2626;
+  margin: 0;
+  font-family: var(--font-sans);
+}
+
+.database-settings-view__danger-text {
+  font-size: 0.875rem;
+  color: var(--theme-neutral-700);
+  line-height: 1.5;
+  margin: 0;
+  font-family: var(--font-sans);
+}
+
+.database-settings-view__file-input-wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.database-settings-view__file-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}

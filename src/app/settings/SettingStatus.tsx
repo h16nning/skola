@@ -1,4 +1,4 @@
-import { Loader } from "@mantine/core";
+import { Spinner } from "@/components/ui/Spinner";
 import { IconCheck, IconX } from "@tabler/icons-react";
 
 export enum SettingStatus {
@@ -13,10 +13,10 @@ export function StatusIndicator({ status }: { status: SettingStatus }) {
     case SettingStatus.NONE:
       return null;
     case SettingStatus.LOADING:
-      return <Loader size="xs" />;
+      return <Spinner size="xs" />;
     case SettingStatus.SUCCESS:
-      return <IconCheck color="green" />;
+      return <IconCheck size={16} color="green" />;
     case SettingStatus.FAILED:
-      return <IconX color="red" />;
+      return <IconX size={16} color="red" />;
   }
 }

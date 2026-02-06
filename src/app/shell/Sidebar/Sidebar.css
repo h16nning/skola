@@ -1,7 +1,6 @@
 .sidebar {
   width: 16rem;
   height: 100%;
-  padding: var(--spacing-sm);
   background-color: var(--theme-neutral-50);
   border-right: 1px solid var(--theme-neutral-200);
   overflow-y: auto;

@@ -1,0 +1,33 @@
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  width: 100%;
+}
+
+.settings-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: var(--spacing-md);
+}
+
+.settings-section__title {
+  font-size: var(--font-size-3xl);
+  font-weight: 500;
+  color: var(--theme-neutral-900);
+  margin: 0;
+  font-family: var(--font-serif);
+}
+
+.settings-section__right-section {
+  display: flex;
+  align-items: center;
+}
+
+.settings-section__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}

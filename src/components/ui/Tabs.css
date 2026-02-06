@@ -1,15 +1,69 @@
-
-tabs {
+.tabs {
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+
+.tabs__list-wrapper {
+  position: relative;
+  margin-bottom: var(--spacing-md);
+}
+
+.tabs__list-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 3rem;
+  background: linear-gradient(to right, var(--theme-neutral-50), transparent);
+  pointer-events: none;
+  opacity: 0;
+  transition: var(--transition-opacity);
+  z-index: 1;
+}
+
+.tabs__list-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 3rem;
+  background: linear-gradient(to right, transparent, var(--theme-neutral-50));
+  pointer-events: none;
+  opacity: 0;
+  transition: var(--transition-opacity);
+  z-index: 1;
+}
+
+.tabs__list-wrapper--show-left::before {
+  opacity: 1;
+}
+
+.tabs__list-wrapper--show-right::after {
+  opacity: 1;
+}
+
+[data-theme="dark"] .tabs__list-wrapper::before {
+  background: linear-gradient(to right, var(--theme-neutral-50), transparent);
+}
+
+[data-theme="dark"] .tabs__list-wrapper::after {
+  background: linear-gradient(to right, transparent, var(--theme-neutral-50));
 }
 
 .tabs__list {
   display: flex;
   gap: var(--spacing-xs);
   border-bottom: 1px solid var(--theme-neutral-200);
-  margin-bottom: var(--spacing-md);
+  overflow-x: auto;
+  overflow-y: visible;
+  scrollbar-width: none;
+}
+
+.tabs__list::-webkit-scrollbar {
+  display: none;
 }
 
 .tabs__tab {
@@ -25,15 +79,15 @@ tabs {
   font-weight: 500;
   font-family: var(--font-sans);
   cursor: pointer;
-  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+  transition: var(--transition-tab);
   white-space: nowrap;
   position: relative;
   margin-bottom: -1px;
 }
 
 .tabs__tab:hover {
-  color: var(--theme-neutral-900);
-  background-color: var(--theme-neutral-50);
+  color: var(--theme-neutral-800);
+  background-color: var(--theme-neutral-100);
 }
 
 .tabs__tab--active {
@@ -42,9 +96,8 @@ tabs {
 }
 
 .tabs__tab:focus-visible {
-  outline: 2px solid var(--theme-primary-500);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
+  outline: none;
+  box-shadow: var(--ring-shadow);
 }
 
 .tabs__panel {
@@ -85,7 +138,7 @@ tabs {
 }
 
 .tabs--pills .tabs__tab--active {
-  background-color: var(--theme-primary-100);
-  color: var(--theme-primary-700);
+  background-color: var(--theme-primary-500);
+  color: var(--color-primary-50);
   border-bottom: none;
 }

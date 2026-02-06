@@ -1,7 +1,6 @@
 import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { setSetting } from "@/logic/settings/setSetting";
-import { Select } from "@mantine/core";
-import React from "react";
+import { Select } from "@/components/ui/Select";
 import { useTranslation } from "react-i18next";
 import { SupportedLanguages } from "../../logic/settings/Settings";
 
@@ -12,7 +11,6 @@ export default function LanguageSelect() {
   return (
     <Select
       value={language}
-      defaultValue={language}
       label={t("settings.general.language")}
       description={t("settings.general.language-description")}
       onChange={(value) => {
@@ -21,8 +19,6 @@ export default function LanguageSelect() {
           i18n.changeLanguage(value);
           window.location.reload();
         }
-
-        return value;
       }}
       data={[
         { value: SupportedLanguages.German, label: "Deutsch (Incomplete)" },

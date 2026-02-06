@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import "./Tabs.css";
 
 const BASE = "tabs";
@@ -64,9 +64,55 @@ interface TabsListProps {
 }
 
 function TabsList({ children, className = "" }: TabsListProps) {
-  const classes = [`${BASE}__list`, className].filter(Boolean).join(" ");
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  const [showLeftGradient, setShowLeftGradient] = useState(false);
+  const [showRightGradient, setShowRightGradient] = useState(false);
 
-  return <div className={classes}>{children}</div>;
+  useEffect(() => {
+    const checkScroll = () => {
+      if (listRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = listRef.current;
+        const hasOverflow = scrollWidth > clientWidth;
+
+        setShowLeftGradient(hasOverflow && scrollLeft > 0);
+        setShowRightGradient(hasOverflow && scrollLeft < scrollWidth - clientWidth - 1);
+      }
+    };
+
+    checkScroll();
+
+    const listElement = listRef.current;
+    if (listElement) {
+      listElement.addEventListener("scroll", checkScroll);
+    }
+
+    window.addEventListener("resize", checkScroll);
+
+    return () => {
+      if (listElement) {
+        listElement.removeEventListener("scroll", checkScroll);
+      }
+      window.removeEventListener("resize", checkScroll);
+    };
+  }, [children]);
+
+  const wrapperClasses = [
+    `${BASE}__list-wrapper`,
+    showLeftGradient && `${BASE}__list-wrapper--show-left`,
+    showRightGradient && `${BASE}__list-wrapper--show-right`,
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <div ref={wrapperRef} className={wrapperClasses}>
+      <div ref={listRef} className={`${BASE}__list`}>
+        {children}
+      </div>
+    </div>
+  );
 }
 
 interface TabsTabProps {

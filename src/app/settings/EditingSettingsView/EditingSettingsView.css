@@ -1,0 +1,31 @@
+.editing-settings-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  width: 100%;
+}
+
+.editing-settings-view__alert {
+  padding: var(--spacing-md);
+  background-color: var(--theme-neutral-100);
+  border-color: var(--theme-neutral-200);
+}
+
+.editing-settings-view__alert-content {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+}
+
+.editing-settings-view__alert-icon {
+  flex-shrink: 0;
+  color: var(--theme-neutral-600);
+  margin-top: 0.125rem;
+}
+
+.editing-settings-view__alert-text {
+  font-size: 0.875rem;
+  color: var(--theme-neutral-700);
+  line-height: 1.5;
+  font-family: var(--font-sans);
+}

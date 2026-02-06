@@ -1,0 +1,105 @@
+.checkbox {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+
+.checkbox--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.checkbox__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.checkbox__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkbox__box {
+  width: 1.125rem;
+  height: 1.125rem;
+  border: 1px solid var(--theme-neutral-300);
+  box-shadow: var(--inset-shadow-xs);
+  border-radius: var(--radius-sm);
+  background-color: var(--theme-neutral-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-checkbox);
+  flex-shrink: 0;
+}
+
+.checkbox__input:focus-visible + .checkbox__box {
+  outline: var(--ring-outline);
+  border-color: var(--ring-border-color);
+  box-shadow: var(--ring-shadow);
+}
+
+.checkbox__input:checked + .checkbox__box {
+  background: linear-gradient(
+    to bottom,
+    var(--color-primary-500),
+    var(--color-primary-600) 50%
+  );
+  border-color: var(--color-primary-600);
+}
+
+.checkbox__input:checked + .checkbox__box .checkbox__icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.checkbox__box:hover {
+  background-color: var(--theme-neutral-100);
+}
+
+.checkbox__input:checked + .checkbox__box:hover {
+  background-color: var(--color-primary-700);
+  border-color: var(--color-primary-700);
+}
+
+.checkbox--disabled .checkbox__box {
+  background-color: var(--theme-neutral-100);
+  border-color: var(--theme-neutral-200);
+}
+
+.checkbox--disabled .checkbox__box:hover {
+  border-color: var(--theme-neutral-200);
+}
+
+.checkbox__icon {
+  color: white;
+  width: 0.875rem;
+  height: 0.875rem;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: var(--transition-icon);
+}
+
+.checkbox__label-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  flex: 1;
+}
+
+.checkbox__label {
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--theme-neutral-900);
+  line-height: 1.4;
+}
+
+.checkbox--disabled .checkbox__label {
+  opacity: 0.6;
+}

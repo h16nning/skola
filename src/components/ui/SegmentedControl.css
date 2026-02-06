@@ -1,0 +1,55 @@
+.segmented-control {
+  display: inline-flex;
+  background-color: var(--theme-neutral-100);
+  border-radius: var(--radius-md);
+  padding: 0.25rem;
+  gap: 0.25rem;
+  font-family: var(--font-sans);
+}
+
+.segmented-control__option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--theme-neutral-700);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  min-height: 2rem;
+}
+
+.segmented-control__option:hover {
+  background-color: var(--theme-neutral-50);
+  color: var(--theme-neutral-900);
+}
+
+.segmented-control__option:focus-visible {
+  outline: 2px solid var(--theme-primary-500);
+  outline-offset: 2px;
+}
+
+.segmented-control__option--active {
+  background-color: white;
+  color: var(--theme-neutral-900);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .segmented-control__option--active {
+  background-color: var(--theme-neutral-200);
+}
+
+.segmented-control__option--active:hover {
+  background-color: white;
+}
+
+[data-theme="dark"] .segmented-control__option--active:hover {
+  background-color: var(--theme-neutral-200);
+}
