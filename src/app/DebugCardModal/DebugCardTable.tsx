@@ -1,16 +1,28 @@
+import { Text } from "@/components/ui/Text";
 import { NoteType } from "@/logic/note/note";
-import { Anchor, Space, Stack, Text } from "@mantine/core";
 import { Rating, State } from "fsrs.js";
 import { Fragment } from "react";
 import { Card } from "../../logic/card/card";
-import classes from "./DebugCard.module.css";
+import "./DebugCardTable.css";
+
+const BASE = "debug-card-table";
 
 export default function DebugCardTable({
   card,
-}: { card: Card<NoteType> | undefined }) {
-  return card ? (
-    <Stack className={classes.container}>
-      <table className={classes.table}>
+}: {
+  card: Card<NoteType> | undefined;
+}) {
+  if (!card) {
+    return (
+      <Text size="sm" variant="dimmed" className={`${BASE}__empty`}>
+        This card could not be found.
+      </Text>
+    );
+  }
+
+  return (
+    <div className={BASE}>
+      <table className={`${BASE}__table`}>
         <tbody>
           <tr>
             <th>Card Type:</th>
@@ -31,20 +43,27 @@ export default function DebugCardTable({
           <tr>
             <th>Decks:</th>
             <td>
-              <Anchor href={"/deck/" + card.deck}>{card.deck}</Anchor>,{" "}
+              <a href={"/deck/" + card.deck} className={`${BASE}__link`}>
+                {card.deck}
+              </a>
             </td>
           </tr>
         </tbody>
       </table>
-      <table className={classes.table}>
+
+      <table className={`${BASE}__table`}>
         <thead>
-          <th>FSRS Model</th>
+          <tr>
+            <th colSpan={2} className={`${BASE}__section-header`}>
+              FSRS Model
+            </th>
+          </tr>
         </thead>
         <tbody>
           <tr>
             <th>Due:</th>
             <td>
-              {card.model.due.toLocaleDateString()},
+              {card.model.due.toLocaleDateString()},{" "}
               {card.model.due.toLocaleTimeString()}
             </td>
           </tr>
@@ -79,58 +98,60 @@ export default function DebugCardTable({
           <tr>
             <th>Last Review:</th>
             <td>
-              {card.model.last_review.toLocaleDateString()},
+              {card.model.last_review.toLocaleDateString()},{" "}
               {card.model.last_review.toLocaleTimeString()}
             </td>
           </tr>
         </tbody>
       </table>
-      <table className={classes.table}>
+
+      <table className={`${BASE}__table`}>
         <thead>
-          <th>History</th>
+          <tr>
+            <th colSpan={2} className={`${BASE}__section-header`}>
+              History ({card.history.length})
+            </th>
+          </tr>
         </thead>
         <tbody>
-          {card.history.length}
-          {card.history.map((log) => (
+          {card.history.map((log, index) => (
             <Fragment key={log.review.toISOString()}>
               <tr>
-                <th>Date: </th>
+                <th>Date:</th>
                 <td>
-                  {log.review.toLocaleDateString()},
+                  {log.review.toLocaleDateString()},{" "}
                   {log.review.toLocaleTimeString()}
                 </td>
               </tr>
               <tr>
-                <th>Result: </th>
+                <th>Result:</th>
                 <td>
                   {Rating[log.rating]} ({log.rating})
                 </td>
               </tr>
               <tr>
-                <th>State: </th>
+                <th>State:</th>
                 <td>
                   {State[log.state]} ({log.state})
                 </td>
               </tr>
               <tr>
-                <th>Elapsed Days: </th>
+                <th>Elapsed Days:</th>
                 <td>{log.elapsed_days}</td>
               </tr>
               <tr>
-                <th>Scheduled Days: </th>
+                <th>Scheduled Days:</th>
                 <td>{log.scheduled_days}</td>
               </tr>
-              <tr>
-                <Space h="xs" />
-              </tr>
+              {index < card.history.length - 1 && (
+                <tr>
+                  <td colSpan={2} className={`${BASE}__spacer`} />
+                </tr>
+              )}
             </Fragment>
           ))}
         </tbody>
       </table>
-    </Stack>
-  ) : (
-    <Text color="dimmed" fz="sm">
-      This card could not be found.
-    </Text>
+    </div>
   );
 }

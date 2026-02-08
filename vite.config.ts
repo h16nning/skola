@@ -1,9 +1,12 @@
+import fs from "node:fs";
 import path from "node:path";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import Checker from "vite-plugin-checker";
 import { VitePWA } from "vite-plugin-pwa";
 import viteTsconfigPaths from "vite-tsconfig-paths";
+
+const pkg = JSON.parse(fs.readFileSync("./package.json", "utf-8"));
 
 export default defineConfig({
   base: "/",
@@ -13,6 +16,7 @@ export default defineConfig({
   define: {
     ENABLE_FIREBASE: process.env.ENABLE_FIREBASE || true,
     PUBLIC_URL: JSON.stringify(process.env.PUBLIC_URL || "/"),
+    "import.meta.env.VITE_APP_VERSION": JSON.stringify(pkg.version),
   },
   resolve: {
     alias: {

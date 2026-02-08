@@ -1,0 +1,26 @@
+.cognitive-prompt-pills {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+  .cognitive-prompt-pills {
+    gap: var(--spacing-sm);
+  }
+}
+
+.cognitive-prompt-pills__pill {
+  cursor: pointer;
+}
+
+.cognitive-prompt-pills__pill:hover {
+  opacity: 1;
+}
+
+.cognitive-prompt-pills__pill:focus-visible {
+  outline: var(--ring-outline);
+  box-shadow: var(--ring-shadow);
+}

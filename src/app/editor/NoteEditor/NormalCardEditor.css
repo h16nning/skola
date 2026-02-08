@@ -1,0 +1,5 @@
+.normal-card-editor__front .rich-text-editor__content .ProseMirror p {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+}

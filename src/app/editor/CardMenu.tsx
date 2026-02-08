@@ -4,6 +4,16 @@ import {
   deleteFailed,
   successfullyDeleted,
 } from "@/components/Notification/Notification";
+import { Group } from "@/components/ui/Group";
+import { IconButton } from "@/components/ui/IconButton";
+import { Kbd } from "@/components/ui/Kbd";
+import {
+  Menu,
+  MenuDropdown,
+  MenuItem,
+  MenuTrigger,
+} from "@/components/ui/Menu";
+import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { Card } from "@/logic/card/card";
 import { deleteNote } from "@/logic/note/deleteNote";
 import { getNote } from "@/logic/note/getNote";
@@ -11,8 +21,6 @@ import { NoteType } from "@/logic/note/note";
 import { Note } from "@/logic/note/note";
 import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { useShowShortcutHints } from "@/logic/settings/hooks/useShowShortcutHints";
-import { ActionIcon, Group, Kbd, Menu } from "@mantine/core";
-import { useHotkeys } from "@mantine/hooks";
 import {
   IconAdjustmentsHorizontal,
   IconChartBar,
@@ -83,59 +91,61 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
   return (
     <>
       <Menu position="bottom-end">
-        <Menu.Target>
-          <ActionIcon variant="subtle" color="gray">
+        <MenuTrigger>
+          <IconButton variant="subtle">
             <IconDots />
-          </ActionIcon>
-        </Menu.Target>
-        <Menu.Dropdown>
+          </IconButton>
+        </MenuTrigger>
+        <MenuDropdown>
           {note && (
-            <Menu.Item
+            <MenuItem
               leftSection={<IconEdit size={16} />}
               rightSection={showShortcutHints && <Kbd>e</Kbd>}
               onClick={() => navigate(`/notes/${note.deck}/${note.id}`)}
             >
               {t("note.menu.edit")}
-            </Menu.Item>
+            </MenuItem>
           )}
-          <Menu.Item
+          <MenuItem
             leftSection={<IconChartBar size={16} />}
             rightSection={showShortcutHints && <Kbd>s</Kbd>}
             onClick={() => setStatisticsModalOpened(true)}
           >
             {t("card.menu.statistics")}
-          </Menu.Item>
-          <Menu.Item
+          </MenuItem>
+          <MenuItem
             leftSection={<IconAdjustmentsHorizontal size={16} />}
             rightSection={showShortcutHints && <Kbd>o</Kbd>}
             disabled
           >
             {t("card.menu.options")}
-          </Menu.Item>
+          </MenuItem>
           {developerMode && (
-            <Menu.Item
+            <MenuItem
               leftSection={<IconCode size={16} />}
               rightSection={
                 showShortcutHints && (
-                  <Group align="center" gap="0.25rem">
-                    <Kbd>shift</Kbd>+<Kbd>d</Kbd>
+                  <Group gap="xs" align="center">
+                    <Kbd>shift</Kbd>
+                    <span>+</span>
+                    <Kbd>d</Kbd>
                   </Group>
                 )
               }
               onClick={() => setDebugModalOpened(true)}
             >
               {t("card.menu.debug")}
-            </Menu.Item>
+            </MenuItem>
           )}
-          <Menu.Item
+          <MenuItem
             color="red"
             leftSection={<IconTrash size={16} />}
             rightSection={showShortcutHints && <Kbd>←</Kbd>}
             onClick={() => setDeleteModalOpened(true)}
           >
             {t("note.menu.delete")}
-          </Menu.Item>
-        </Menu.Dropdown>
+          </MenuItem>
+        </MenuDropdown>
       </Menu>
       <CardStatisticsModal
         opened={statisticsModalOpened}

@@ -1,42 +1,38 @@
-import {
-  MantineSpacing,
-  Stack,
-  StyleProp,
-  Text,
-  ThemeIcon,
-} from "@mantine/core";
-import { IconProps } from "@tabler/icons-react";
+import type { IconProps } from "@tabler/icons-react";
 import { t } from "i18next";
+import "./EmptyNotice.css";
+
+const BASE = "empty-notice";
 
 interface EmptyNoticeProps {
   icon: React.FC<IconProps>;
   title?: string;
   description?: string;
-  p?: StyleProp<MantineSpacing>;
   hideTitle?: boolean;
+  className?: string;
 }
 
 function EmptyNotice({
   icon: Icon,
   description,
   title,
-  p,
   hideTitle,
+  className = "",
 }: EmptyNoticeProps) {
+  const classes = [BASE, className].filter(Boolean).join(" ");
+
   return (
-    <Stack gap="0" align="center" p={p}>
-      <ThemeIcon variant="white" c="dimmed" size="lg" mb="xs">
-        <Icon size={60} />
-      </ThemeIcon>
-      {hideTitle || (
-        <Text fz="md" fw={500}>
+    <div className={classes}>
+      <div className={`${BASE}__icon`}>
+        <Icon />
+      </div>
+      {!hideTitle && (
+        <span className={`${BASE}__title`}>
           {title || t("global.no-items-title")}
-        </Text>
+        </span>
       )}
-      <Text fz="sm" c="dimmed">
-        {description}
-      </Text>
-    </Stack>
+      <span className={`${BASE}__description`}>{description}</span>
+    </div>
   );
 }
 

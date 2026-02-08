@@ -1,12 +1,15 @@
-import { Modal, Tabs } from "@mantine/core";
-import React, { useState } from "react";
-import ModalProps from "../../../components/ModalProps";
-import { Deck } from "../../../logic/deck/deck";
-
+import ModalProps from "@/components/ModalProps";
+import { Modal } from "@/components/ui/Modal";
+import { Tabs } from "@/components/ui/Tabs";
+import { Deck } from "@/logic/deck/deck";
 import { IconClipboardText, IconJson, IconTxt } from "@tabler/icons-react";
+import React, { useState } from "react";
 import ImportFromJSON from "./ImportFromJSON";
 import ImportFromPaste from "./ImportFromPaste";
 import ImportFromPlainText from "./ImportFromPlainText";
+import "./ImportModal.css";
+
+const BASE_URL = "import-modal";
 
 interface ImportModalProps extends ModalProps {
   deck?: Deck;
@@ -45,33 +48,19 @@ export default function ImportModal({
       title="Import"
     >
       {(importStatus === "passive" || importStatus === "importing") && (
-        <Tabs
-          orientation="horizontal"
-          defaultValue="General"
-          variant="pills"
-          value={tab}
-        >
+        <Tabs value={tab} onChange={setTab} variant="pills">
           <Tabs.List>
-            <Tabs.Tab
-              value="cardsfrompaste"
-              leftSection={<IconClipboardText />}
-              onClick={() => setTab("cardsfrompaste")}
-            >
-              From Paste
+            <Tabs.Tab value="cardsfrompaste">
+              <IconClipboardText size={16} />
+              <span>From Paste</span>
             </Tabs.Tab>
-            <Tabs.Tab
-              value="cardsfromplaintext"
-              leftSection={<IconTxt />}
-              onClick={() => setTab("cardsfromplaintext")}
-            >
-              From Plain Text
+            <Tabs.Tab value="cardsfromplaintext">
+              <IconTxt size={16} />
+              <span>From Plain Text</span>
             </Tabs.Tab>
-            <Tabs.Tab
-              value="deckfromjson"
-              leftSection={<IconJson />}
-              onClick={() => setTab("deckfromjson")}
-            >
-              From JSON
+            <Tabs.Tab value="deckfromjson">
+              <IconJson size={16} />
+              <span>From JSON</span>
             </Tabs.Tab>
           </Tabs.List>
           <Tabs.Panel value="cardsfrompaste">
@@ -109,7 +98,9 @@ export default function ImportModal({
           </Tabs.Panel>
         </Tabs>
       )}
-      {importStatus !== "passive" && importStatus}
+      {importStatus !== "passive" && (
+        <div className={`${BASE_URL}__status`}>{importStatus}</div>
+      )}
     </Modal>
   );
 }

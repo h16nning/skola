@@ -1,0 +1,23 @@
+:root {
+  --app-header-base-height: 3.5rem;
+  --sidebar-width: 15rem;
+
+  --max-content-width: 40rem;
+
+  --minimal-sidebar-base-width: 3.5rem;
+
+  --app-header-height: var(--app-header-base-height);
+  --minimal-sidebar-width: var(--minimal-sidebar-base-width);
+}
+
+[data-density="compact"] {
+  --app-header-height: calc(
+    var(--app-header-base-height) *
+    var(--density-compact)
+  );
+
+  --minimal-sidebar-width: calc(
+    var(--minimal-sidebar-base-width) *
+    var(--density-compact)
+  );
+}

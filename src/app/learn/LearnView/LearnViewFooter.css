@@ -1,0 +1,22 @@
+.learn-view-footer {
+  background-color: var(--theme-neutral-50);
+  padding: var(--spacing-md);
+  border-top: solid 1px var(--theme-neutral-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.learn-view-footer__buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 25rem;
+  gap: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+  .learn-view-footer__buttons {
+    gap: var(--spacing-sm);
+  }
+}

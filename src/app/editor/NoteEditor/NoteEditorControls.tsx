@@ -1,6 +1,20 @@
+import { RichTextEditor } from "@/components/ui/RichTextEditor";
+import {
+  BoldControl,
+  BulletListControl,
+  ClearFormattingControl,
+  CodeControl,
+  HighlightControl,
+  ItalicControl,
+  LinkControl,
+  OrderedListControl,
+  StrikethroughControl,
+  SubscriptControl,
+  SuperscriptControl,
+  UnderlineControl,
+  UnlinkControl,
+} from "@/components/ui/RichTextEditorControls";
 import { useSettings } from "@/logic/settings/hooks/useSettings";
-import { Box } from "@mantine/core";
-import { RichTextEditor } from "@mantine/tiptap";
 import { Editor } from "@tiptap/react";
 import AddImageControl from "../AddImageControl";
 import classes from "./NoteEditor.module.css";
@@ -16,35 +30,33 @@ export function NoteEditorControls({
 }: NoteEditorControlsProps) {
   const [settings] = useSettings();
   return (
-    <Box className={classes.controlsWrapper} tabIndex={-1}>
-      <RichTextEditor.ControlsGroup tabIndex={-1}>
-        <RichTextEditor.Bold tabIndex={-1} />
-        <RichTextEditor.Italic tabIndex={-1} />
-        <RichTextEditor.Underline tabIndex={-1} />
+    <div className={classes.controlsWrapper} tabIndex={-1}>
+      <RichTextEditor.ControlsGroup>
+        <BoldControl editor={editor} />
+        <ItalicControl editor={editor} />
+        <UnderlineControl editor={editor} />
         {settings.showStrikethroughOptionInEditor && (
-          <RichTextEditor.Strikethrough tabIndex={-1} />
+          <StrikethroughControl editor={editor} />
         )}
         {settings.showHighlightOptionInEditor && (
-          <RichTextEditor.Highlight tabIndex={-1} />
+          <HighlightControl editor={editor} />
         )}
-        {settings.showCodeOptionInEditor && (
-          <RichTextEditor.Code tabIndex={-1} />
-        )}
+        {settings.showCodeOptionInEditor && <CodeControl editor={editor} />}
         {settings.showSubAndSuperScriptOptionInEditor && (
           <>
-            <RichTextEditor.Subscript tabIndex={-1} />
-            <RichTextEditor.Superscript tabIndex={-1} />
+            <SubscriptControl editor={editor} />
+            <SuperscriptControl editor={editor} />
           </>
         )}
 
-        <RichTextEditor.ClearFormatting tabIndex={-1} />
+        <ClearFormattingControl editor={editor} />
       </RichTextEditor.ControlsGroup>
 
-      <RichTextEditor.ControlsGroup tabIndex={-1}>
+      <RichTextEditor.ControlsGroup>
         {settings.showListOptionInEditor && (
           <>
-            <RichTextEditor.BulletList tabIndex={-1} />
-            <RichTextEditor.OrderedList tabIndex={-1} />
+            <BulletListControl editor={editor} />
+            <OrderedListControl editor={editor} />
           </>
         )}
 
@@ -52,14 +64,12 @@ export function NoteEditorControls({
       </RichTextEditor.ControlsGroup>
 
       {settings.showLinkOptionInEditor && (
-        <RichTextEditor.ControlsGroup tabIndex={-1}>
-          <RichTextEditor.Link tabIndex={-1} />
-          <RichTextEditor.Unlink tabIndex={-1} />
+        <RichTextEditor.ControlsGroup>
+          <LinkControl editor={editor} />
+          <UnlinkControl editor={editor} />
         </RichTextEditor.ControlsGroup>
       )}
-      <RichTextEditor.ControlsGroup tabIndex={-1}>
-        {controls}
-      </RichTextEditor.ControlsGroup>
-    </Box>
+      <RichTextEditor.ControlsGroup>{controls}</RichTextEditor.ControlsGroup>
+    </div>
   );
 }

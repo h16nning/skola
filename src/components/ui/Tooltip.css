@@ -1,0 +1,22 @@
+.tooltip-wrapper {
+  display: inline-flex;
+  width: 100% w;
+}
+
+.tooltip {
+  z-index: 9999;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--theme-neutral-50);
+  background-color: var(--theme-neutral-900);
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.tooltip--visible {
+  opacity: 1;
+}

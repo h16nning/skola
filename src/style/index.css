@@ -1,32 +1,81 @@
-@import "font.css";
+@import "fonts.css";
+@import "font-sizes.css";
+@import "colors.css";
+@import "spacings.css";
+@import "radius.css";
+@import "icon-sizes.css";
+@import "rings.css";
+@import "shadows.css";
+@import "patterns.css";
+@import "transitions.css";
+@import "shell.css";
+
+:root {
+  --density-compact: 0.875;
+  --max-input-width: 12rem;
+}
 
 body {
-    margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  -webkit-overflow-scrolling: touch;
 
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    padding: env(safe-area-inset-top) env(safe-area-inset-right)
-        env(safe-area-inset-bottom) env(safe-area-inset-left);
-    –webkit-overflow-scrolling: touch;
-    height: 100%;
+  font-family: var(--font-sans);
+}
+
+@supports (top: env(titlebar-area-height)) {
+  body {
+    padding-top: max(env(safe-area-inset-top), env(titlebar-area-height));
+  }
+}
+
+article {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-serif);
+  }
+}
+
+.titlebar-drag-region {
+  position: fixed;
+  top: 0;
+  left: env(titlebar-area-x, 0);
+  width: env(titlebar-area-width, 100%);
+  height: env(titlebar-area-height, 0);
+  -webkit-app-region: drag;
+  app-region: drag;
+  z-index: 1000;
+}
+
+.titlebar-drag-region * {
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
 }
 
 html,
 body,
 #root,
-.mantine-AppShell-root,
-.mantine-AppShell-main,
-.mantine-AppShell-body {
-    height: 100%;
+.app-shell {
+  color: var(--theme-neutral-900);
+  height: 100%;
+  margin: 0;
+  * {
+    box-sizing: border-box;
+  }
 }
 
 button .tabler-icon,
 input .tabler-icon {
-    stroke-width: 1.5px;
-    width: 1.2rem;
+  stroke-width: 1.5px;
+  width: 1.2rem;
 }
 
 * {
-    transition-duration: 0.2s;
-    transition-property: background;
+  transition: var(--transition-colors);
 }

@@ -1,15 +1,8 @@
-import {
-  ActionIcon,
-  Box,
-  Group,
-  Image,
-  NavLink,
-  Stack,
-  Title,
-  Tooltip,
-  useMantineTheme,
-} from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
+import { CloudSyncState } from "@/components/CloudSyncState";
+import { IconButton } from "@/components/ui/IconButton";
+import { NavItem } from "@/components/ui/NavItem";
+import { breakpoints } from "@/lib/breakpoints";
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import {
   IconCards,
   IconChartBar,
@@ -17,156 +10,111 @@ import {
   IconSettings,
   IconX,
 } from "@tabler/icons-react";
-import cx from "clsx";
 import { t } from "i18next";
-import { useLocation, useNavigate } from "react-router-dom";
-import classes from "./Sidebar.module.css";
-
-import SpotlightCard from "../Spotlight/Spotlight";
-import CloudSection from "./CloudSection";
+import { useLocation } from "react-router-dom";
 import DeckList from "./DeckList";
+import "./Sidebar.css";
+import { SpotlightCard } from "../Spotlight";
 
-const InteractiveNavLink = ({
-  label,
-  path,
-  icon,
-  minimalMode,
-  fullscreenMode,
-  closeMenu,
-}: {
-  label: string;
-  path: string;
-  icon: JSX.Element;
-  minimalMode: boolean;
-  fullscreenMode: boolean;
-  closeMenu: () => void;
-}) => {
-  const navigate = useNavigate();
-  const location = useLocation();
+const BASE = "sidebar";
+const APP_VERSION = import.meta.env.VITE_APP_VERSION || "0.0.0";
 
-  return (
-    <Tooltip
-      label={label}
-      disabled={!minimalMode || fullscreenMode}
-      position="right"
-      keepMounted={false}
-    >
-      <NavLink
-        classNames={{
-          root: classes.sidebarItem,
-          body: classes.sidebarItemBody,
-          label: classes.sidebarItemLabel,
-          section: classes.sidebarItemIcon,
-        }}
-        variant="filled"
-        label={label}
-        leftSection={icon}
-        onClick={() => {
-          navigate(path);
-          fullscreenMode && closeMenu();
-        }}
-        active={location.pathname.startsWith(path)}
-      />
-    </Tooltip>
-  );
-};
-
-function Sidebar({
-  menuOpened,
-  menuHandlers,
-}: {
+interface SidebarProps {
   menuOpened: boolean;
   menuHandlers: {
     readonly open: () => void;
     readonly close: () => void;
     readonly toggle: () => void;
   };
-}) {
-  const theme = useMantineTheme();
-  const routeIsLearn = useLocation().pathname.includes("learn");
-  const fullscreenMode =
-    !!useMediaQuery("(max-width: " + theme.breakpoints.xs + ")") ||
-    routeIsLearn;
-  const minimalMode = !!useMediaQuery(
-    "(max-width: " +
-      theme.breakpoints.lg +
-      ") and (min-width: " +
-      theme.breakpoints.xs +
-      ")"
-  );
+}
 
-  const landscapeMode = useMediaQuery("(orientation: landscape)");
+function Sidebar({ menuOpened, menuHandlers }: SidebarProps) {
+  const routeIsLearn = useLocation().pathname.startsWith("/learn");
+
+  const isXsOrSmaller = useMediaQuery(`(max-width: ${breakpoints.xs}px)`);
+  const isLgOrSmaller = useMediaQuery(`(max-width: ${breakpoints.lg}px)`);
+  const isLandscape = useMediaQuery("(orientation: landscape)");
+
+  const fullscreenMode = isXsOrSmaller || routeIsLearn;
+  const minimalMode = isLgOrSmaller && !isXsOrSmaller && !routeIsLearn;
+
+  const sidebarClasses = [
+    BASE,
+    minimalMode && `${BASE}--minimal`,
+    isLandscape && `${BASE}--landscape`,
+    fullscreenMode && `${BASE}--fullscreen`,
+    fullscreenMode && menuOpened && `${BASE}--open`,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
-    <Box
-      p="0.5rem"
-      className={cx(
-        classes.sidebar,
-        minimalMode && classes.minimalMode,
-        landscapeMode && classes.landscapeMode,
-        fullscreenMode && classes.fullscreenMode,
-        fullscreenMode && menuOpened && classes.fullscreenModeOpened
-      )}
-    >
-      <Stack justify="space-between" h="100%">
-        <Stack gap="xs">
-          <Group className={classes.topRow}>
-            <Group gap="xs" align="center">
-              <Image src="/logo.svg" alt="Skola Logo" maw="1.5rem" />
-              <Title order={5}>Skola</Title>
-            </Group>
-            {fullscreenMode ? (
-              <ActionIcon
+    <aside className={sidebarClasses}>
+      <div className={`${BASE}__content`}>
+        <div className={`${BASE}__top`}>
+          <header className={`${BASE}__header`}>
+            <div className={`${BASE}__brand`}>
+              <img
+                src="/logo.svg"
+                alt="Skola Logo"
+                className={`${BASE}__logo`}
+              />
+              {!minimalMode && (
+                <div className={`${BASE}__brand-text`}>
+                  <h1 className={`${BASE}__title`}>Skola</h1>
+                  <div className={`${BASE}__version`}>v{APP_VERSION}</div>
+                </div>
+              )}
+            </div>
+            {fullscreenMode && (
+              <IconButton
+                variant="ghost"
                 onClick={menuHandlers.close}
-                style={{ alignSelf: "end" }}
-                variant="subtle"
+                aria-label="Close menu"
               >
                 <IconX />
-              </ActionIcon>
-            ) : null}
-          </Group>
-          <SpotlightCard minimalMode={minimalMode} />
+              </IconButton>
+            )}
+          </header>
 
-          <Stack gap={0}>
-            <InteractiveNavLink
+          <nav className={`${BASE}__nav`}>
+            <SpotlightCard minimalMode={minimalMode} />
+            <NavItem
               label={t("home.title")}
               path="/home"
               icon={<IconHome />}
-              minimalMode={minimalMode}
-              fullscreenMode={fullscreenMode}
-              closeMenu={menuHandlers.close}
+              collapsed={minimalMode}
+              onClick={fullscreenMode ? menuHandlers.close : undefined}
             />
-            <InteractiveNavLink
+            <NavItem
               label={t("statistics.title")}
               path="/stats"
               icon={<IconChartBar />}
-              minimalMode={minimalMode}
-              fullscreenMode={fullscreenMode}
-              closeMenu={menuHandlers.close}
+              collapsed={minimalMode}
+              onClick={fullscreenMode ? menuHandlers.close : undefined}
             />
-
-            <InteractiveNavLink
+            <NavItem
               label={t("manage-cards.title")}
               path="/notes"
               icon={<IconCards />}
-              minimalMode={minimalMode}
-              fullscreenMode={fullscreenMode}
-              closeMenu={menuHandlers.close}
+              collapsed={minimalMode}
+              onClick={fullscreenMode ? menuHandlers.close : undefined}
             />
-            <InteractiveNavLink
+            <NavItem
               label={t("settings.title")}
               path="/settings"
               icon={<IconSettings />}
-              minimalMode={minimalMode}
-              fullscreenMode={fullscreenMode}
-              closeMenu={menuHandlers.close}
+              collapsed={minimalMode}
+              onClick={fullscreenMode ? menuHandlers.close : undefined}
             />
-          </Stack>
+          </nav>
+
           <DeckList minimalMode={minimalMode} />
-        </Stack>
-        <CloudSection minimalMode={minimalMode} />
-      </Stack>
-    </Box>
+        </div>
+
+        <CloudSyncState minimal={minimalMode} />
+      </div>
+    </aside>
   );
 }
 

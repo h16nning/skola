@@ -1,14 +1,19 @@
-import { Anchor, Stack, Text } from "@mantine/core";
 import { t } from "i18next";
-import React from "react";
+import "./AboutSettingsView.css";
+
+const BASE = "about-skola";
 
 export default function AboutSettingsView() {
   return (
-    <Stack gap="xl" align="start">
-      <Text size="sm">{t("settings.about.description")}</Text>
-      <Anchor href="https://www.github.com/h16nning/super-anki">
+    <div className={BASE}>
+      <p>{t("settings.about.description")}</p>
+      <a
+        href="https://www.github.com/h16nning/skola"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         Link to Git Repository
-      </Anchor>
-    </Stack>
+      </a>
+    </div>
   );
 }

@@ -1,0 +1,29 @@
+.storage-section {
+  width: 100%;
+  padding: var(--spacing-md);
+}
+
+.storage-section__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-lg);
+}
+
+.storage-section__ring {
+  flex-shrink: 0;
+}
+
+.storage-section__ring-background,
+.storage-section__ring-progress {
+  transition: stroke-dashoffset 0.3s ease;
+}
+
+.storage-section__text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--theme-neutral-900);
+  margin: 0;
+  font-family: var(--font-sans);
+  line-height: 1.5;
+}

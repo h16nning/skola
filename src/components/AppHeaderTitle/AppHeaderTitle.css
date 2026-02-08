@@ -1,0 +1,13 @@
+.app-header-title__wrapper {
+  width: 100%;
+}
+
+.app-header-title {
+  margin: 0;
+  margin-left: var(--spacing-sm);
+  font-weight: 500;
+  color: var(--theme-neutral-700);
+  font-size: var(--font-size-xl);
+  font-family: var(--font-sans);
+  letter-spacing: var(--letter-spacing-tight);
+}

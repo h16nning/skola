@@ -1,3 +1,5 @@
+import { ColorIdentifier } from "@/lib/ColorIdentifier";
+
 export interface Deck {
   id: string;
   name: string;
@@ -7,6 +9,7 @@ export interface Deck {
   notes: Array<string>;
   description?: string;
   options: DeckOptions;
+  color?: ColorIdentifier;
 }
 
 export interface DeckOptions {

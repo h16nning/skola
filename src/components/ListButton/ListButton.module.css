@@ -1,37 +1,57 @@
 .listButton {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    p {
-        font-size: var(--mantine-font-size-sm);
-        font-weight: 600;
-    }
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  text-align: left;
 
-    border-radius: var(--mantine-radius-md);
-    background-color: transparent;
-    padding: var(--mantine-spacing-sm);
+  border-radius: var(--radius-md);
+  background-color: transparent;
+  padding: var(--spacing-sm);
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
 
-    &:nth-child(odd) {
-        background-color: light-dark(
-            var(--mantine-color-gray-1),
-            var(--mantine-color-dark-6)
-        );
-    }
+.listButton p {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  margin: 0;
+}
 
-    &:hover {
-        background-color: light-dark(
-            var(--mantine-color-gray-2),
-            var(--mantine-color-dark-5)
-        );
-        box-shadow: none;
-    }
+.listButton:nth-child(odd) {
+  background-color: var(--theme-neutral-100);
+}
 
-    &:active {
-        transform: scale(0.99);
-    }
+.listButton:hover {
+  background-color: var(--theme-neutral-200);
+  box-shadow: none;
+}
+
+.listButton:active {
+  transform: scale(0.99);
+}
+
+.listButton:focus-visible {
+  outline: 2px solid var(--theme-primary-500);
+  outline-offset: 2px;
+}
+
+.list-button__content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  width: 100%;
+  flex-wrap: nowrap;
 }
 
 .rightArrow {
-    stroke-width: 1.5px;
-    width: 1.2rem;
+  stroke-width: 1.5px;
+  width: 1.2rem;
+  height: 1.2rem;
+  flex-shrink: 0;
+  color: var(--theme-neutral-600);
 }

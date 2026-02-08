@@ -1,0 +1,86 @@
+@import "../DeckCardBase.css";
+
+.deck-hero-section {
+  padding: 0;
+  min-height: 20rem;
+  overflow: hidden;
+}
+
+.deck-hero-section__content {
+  padding: var(--spacing-lg);
+  z-index: 1;
+}
+
+.deck-hero-section__title {
+  margin-bottom: var(--spacing-sm);
+}
+
+.deck-hero-section__message {
+  margin-top: var(--spacing-lg);
+}
+.deck-hero-section__message-title {
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+  margin: 0;
+}
+
+.deck-hero-section__message-subtitle {
+  font-size: var(--font-size-md);
+  opacity: 0.8;
+  margin-top: var(--spacing-xs);
+}
+
+.deck-hero-section__action-button {
+  border: none;
+  padding: var(--spacing-md) var(--spacing-lg);
+  margin: 0 var(--spacing-lg) var(--spacing-lg) var(--spacing-lg);
+}
+
+.deck-hero-section--color-red .deck-hero-section__action-button {
+  background-color: var(--theme-red-50);
+  color: var(--theme-red-900);
+}
+
+.deck-hero-section--color-red .deck-hero-section__action-button:hover {
+  background-color: var(--theme-red-100);
+}
+
+.deck-hero-section--color-fuchsia .deck-hero-section__action-button {
+  background-color: var(--theme-fuchsia-50);
+  color: var(--theme-fuchsia-900);
+}
+
+.deck-hero-section--color-fuchsia .deck-hero-section__action-button:hover {
+  background-color: var(--theme-fuchsia-100);
+}
+
+.deck-hero-section--color-sky .deck-hero-section__action-button {
+  background-color: var(--theme-sky-50);
+  color: var(--theme-sky-900);
+}
+
+.deck-hero-section--color-sky .deck-hero-section__action-button:hover {
+  background-color: var(--theme-sky-100);
+}
+
+.deck-hero-section--color-lime .deck-hero-section__action-button {
+  background-color: var(--theme-lime-50);
+  color: var(--theme-lime-900);
+}
+
+.deck-hero-section--color-lime .deck-hero-section__action-button:hover {
+  background-color: var(--theme-lime-100);
+}
+
+.deck-hero-section--color-orange .deck-hero-section__action-button {
+  background-color: var(--theme-orange-50);
+  color: var(--theme-orange-900);
+}
+
+.deck-hero-section--color-orange .deck-hero-section__action-button:hover {
+  background-color: var(--theme-orange-100);
+}
+
+.deck-hero-section--done {
+  opacity: 0.95;
+}

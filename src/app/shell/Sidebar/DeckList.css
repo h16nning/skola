@@ -1,0 +1,59 @@
+.deck-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: 0 var(--spacing-xs);
+  margin-top: var(--spacing-md);
+}
+
+.deck-list__title {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--theme-neutral-500);
+  margin: 0;
+  padding: 0 var(--spacing-sm);
+}
+
+.deck-list__items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.deck-list__add-button {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  color: var(--theme-neutral-500);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  width: 100%;
+  text-align: left;
+  transition: background-color 0.1s ease, color 0.1s ease;
+}
+
+.deck-list__add-button:hover {
+  background-color: var(--theme-neutral-200);
+  color: var(--theme-neutral-700);
+}
+
+.deck-list__add-button:active {
+  background-color: var(--theme-neutral-300);
+}
+
+.deck-list__add-button:focus-visible {
+  outline: 2px solid var(--theme-primary-500);
+  outline-offset: -2px;
+}
+
+.deck-list__add-button svg {
+  stroke-width: 1.75;
+}

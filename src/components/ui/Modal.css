@@ -1,0 +1,125 @@
+.modal {
+  position: fixed;
+  border: 1px solid var(--theme-neutral-200);
+  border-radius: var(--radius-lg);
+  background-color: var(--theme-neutral-50);
+  box-shadow: var(--shadow-xl);
+  padding: 0;
+  max-width: min(90vw, 28rem);
+  width: 100%;
+  max-height: 85vh;
+  overflow: hidden;
+  z-index: 2000;
+}
+
+.modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 1999;
+}
+
+[data-theme="dark"] .modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal[open] {
+  animation: modal-fade-in 0.15s ease-out;
+}
+
+.modal[open]::backdrop {
+  animation: backdrop-fade-in 0.15s ease-out;
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes backdrop-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--pattern-diagonal-stripes);
+  border-bottom: 1px solid var(--theme-neutral-200);
+}
+
+.modal__title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--theme-neutral-900);
+}
+
+.modal__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xs);
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  color: var(--theme-neutral-500);
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
+  cursor: pointer;
+}
+
+.modal__close:hover {
+  background-color: var(--theme-neutral-100);
+  color: var(--theme-neutral-700);
+}
+
+.modal__close:focus-visible {
+  border: var(--ring-border);
+  outline: var(--ring-outline);
+  box-shadow: var(--ring-shadow);
+}
+
+.modal__close svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  stroke-width: 2;
+}
+
+.modal__body {
+  padding: var(--spacing-lg);
+  overflow-y: auto;
+  max-height: calc(85vh - 4rem);
+}
+
+.modal--no-header .modal__body {
+  max-height: 85vh;
+}
+
+.modal--fullscreen {
+  max-width: 100vw;
+  max-height: 100vh;
+  width: 100vw;
+  height: 100vh;
+  border-radius: 0;
+  border: none;
+}
+
+.modal--fullscreen .modal__body {
+  max-height: calc(100vh - 4rem);
+  padding: 0;
+}
+
+.modal--fullscreen.modal--no-header .modal__body {
+  max-height: 100vh;
+}

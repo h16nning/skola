@@ -1,25 +1,29 @@
 import MissingObject from "@/components/MissingObject";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { Kbd } from "@/components/ui/Kbd";
+import { Tabs } from "@/components/ui/Tabs";
+import { Tooltip } from "@/components/ui/Tooltip";
+import { useDocumentTitle } from "@/lib/hooks/useDocumentTitle";
+import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { useScrollResetOnLocationChange } from "@/lib/ui";
 import { useDeckFromUrl } from "@/logic/deck/hooks/useDeckFromUrl";
 import { useSuperDecks } from "@/logic/deck/hooks/useSuperDecks";
-import { Badge, Group, Stack, Tabs } from "@mantine/core";
-import { useDocumentTitle, useHotkeys } from "@mantine/hooks";
+import { IconPlus } from "@tabler/icons-react";
 import { t } from "i18next";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NotebookView from "../notebook/NotebookView";
 import { AppHeaderContent } from "../shell/Header/Header";
 import DeckMenu from "./DeckMenu";
-import DeckOptionsModal from "./DeckOptionsModal";
-import HeroDeckSection from "./HeroDeckSection/HeroDeckSection";
+import "./DeckView.css";
+import DeckHeroSection from "./DeckHeroSection/DeckHeroSection";
 import SubDeckSection from "./SubDeckSection";
 import SuperDecksBreadcrumbs from "./SuperDecksBreadcrumbs/SuperDecksBreadcrumbs";
-import TitleSection from "./TitleSection";
+
+const BASE = "deck-view";
 
 function DeckView() {
   const navigate = useNavigate();
-
-  const [deckOptionsOpened, setDeckOptionsOpened] = useState(false);
 
   const [deck, isDeckReady] = useDeckFromUrl();
   const [superDecks] = useSuperDecks(deck);
@@ -35,29 +39,42 @@ function DeckView() {
   return (
     <>
       <AppHeaderContent>
-        <Group justify="space-between" gap="xs" wrap="nowrap">
-          <SuperDecksBreadcrumbs superDecks={superDecks} />
-          <DeckMenu
-            deck={deck}
-            isDeckReady={isDeckReady}
-            setDeckOptionsOpened={setDeckOptionsOpened}
-          />
-        </Group>
+        <div className={`${BASE}__header`}>
+          <SuperDecksBreadcrumbs deck={deck} superDecks={superDecks} />
+          <div className={`${BASE}__actions`}>
+            <Tooltip
+              position="left"
+              label={
+                <>
+                  {t("deck.add-cards-tooltip")}
+                  <Kbd>n</Kbd>
+                </>
+              }
+            >
+              <Button
+                leftSection={<IconPlus />}
+                variant="ghost"
+                onClick={() => navigate("/new/" + deck?.id)}
+              >
+                {t("deck.add-cards")}
+              </Button>
+            </Tooltip>
+            <DeckMenu deck={deck} isDeckReady={isDeckReady} />
+          </div>
+        </div>
       </AppHeaderContent>
-      <Stack gap="xl" align="start" w="100%" maw="600px" pt="lg">
-        <TitleSection deck={deck} />
-        <HeroDeckSection deck={deck} isDeckReady={isDeckReady} />
+      <div className={BASE}>
+        <DeckHeroSection deck={deck} isDeckReady={isDeckReady} />
 
-        <Tabs defaultValue={"subdecks"} w="100%" variant="outline">
+        <Tabs defaultValue="subdecks" variant="outline">
           <Tabs.List>
             <Tabs.Tab value="subdecks">
               {t("deck.subdeck.title")}
               {(deck?.subDecks.length as number) > 0 && (
                 <Badge
                   size="sm"
-                  ml={"sm"}
                   variant="light"
-                  color={deck?.subDecks.length ? undefined : "gray"}
+                  color={deck?.subDecks.length ? undefined : "neutral"}
                   style={{ textOverflow: "clip" }}
                 >
                   {deck?.subDecks.length}
@@ -69,9 +86,8 @@ function DeckView() {
               {(deck?.notes.length as number) > 0 && (
                 <Badge
                   size="sm"
-                  ml={"sm"}
                   variant="light"
-                  color={deck?.notes.length ? undefined : "gray"}
+                  color={deck?.notes.length ? undefined : "neutral"}
                   style={{ textOverflow: "clip" }}
                 >
                   {deck?.notes.length}
@@ -86,16 +102,7 @@ function DeckView() {
             <SubDeckSection deck={deck} />
           </Tabs.Panel>
         </Tabs>
-        {deck ? (
-          <DeckOptionsModal
-            deck={deck}
-            opened={deckOptionsOpened}
-            setOpened={setDeckOptionsOpened}
-          />
-        ) : (
-          ""
-        )}
-      </Stack>
+      </div>
     </>
   );
 }

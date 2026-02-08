@@ -1,0 +1,56 @@
+.cloud-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  border-top: 1px solid var(--theme-neutral-200);
+  background-color: var(--theme-neutral-150, var(--theme-neutral-100));
+  font-size: var(--font-size-sm);
+  font-family: var(--font-sans);
+  color: var(--theme-neutral-600);
+}
+
+.cloud-section__info strong {
+  color: var(--theme-neutral-800);
+}
+
+.cloud-section__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: background-color 0.1s ease, color 0.1s ease;
+  background-color: var(--theme-primary-600);
+  color: white;
+}
+
+.cloud-section__button:hover {
+  background-color: var(--theme-primary-700);
+}
+
+.cloud-section__button:active {
+  background-color: var(--theme-primary-800);
+}
+
+.cloud-section__button:focus-visible {
+  outline: 2px solid var(--theme-primary-500);
+  outline-offset: 2px;
+}
+
+.cloud-section__button--secondary {
+  background-color: var(--theme-neutral-200);
+  color: var(--theme-neutral-700);
+}
+
+.cloud-section__button--secondary:hover {
+  background-color: var(--theme-neutral-300);
+}
+
+.cloud-section__button--secondary:active {
+  background-color: var(--theme-neutral-400);
+}

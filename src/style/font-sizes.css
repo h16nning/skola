@@ -1,0 +1,37 @@
+:root {
+  --font-size-base-xs: 0.625rem;
+  --font-size-base-sm: 0.75rem;
+  --font-size-base-md: 0.875rem;
+  --font-size-base-lg: 1rem;
+  --font-size-base-xl: 1.25rem;
+  --font-size-base-2xl: 1.5rem;
+  --font-size-base-3xl: 2rem;
+  --font-size-base-4xl: 3rem;
+  --font-size-base-5xl: 3.5rem;
+
+  --font-size-xs: var(--font-size-base-xs);
+  --font-size-sm: var(--font-size-base-sm);
+  --font-size-md: var(--font-size-base-md);
+  --font-size-lg: var(--font-size-base-lg);
+  --font-size-xl: var(--font-size-base-xl);
+  --font-size-2xl: var(--font-size-base-2xl);
+  --font-size-3xl: var(--font-size-base-3xl);
+  --font-size-4xl: var(--font-size-base-4xl);
+  --font-size-5xl: var(--font-size-base-5xl);
+
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.02em;
+}
+
+[data-density="compact"] {
+  --font-size-xs: calc(var(--font-size-base-xs) * var(--density-compact));
+  --font-size-sm: calc(var(--font-size-base-sm) * var(--density-compact));
+  --font-size-md: calc(var(--font-size-base-md) * var(--density-compact));
+  --font-size-lg: calc(var(--font-size-base-lg) * var(--density-compact));
+  --font-size-xl: calc(var(--font-size-base-xl) * var(--density-compact));
+  --font-size-2xl: calc(var(--font-size-base-2xl) * var(--density-compact));
+  --font-size-3xl: calc(var(--font-size-base-3xl) * var(--density-compact));
+  --font-size-4xl: calc(var(--font-size-base-4xl) * var(--density-compact));
+  --font-size-5xl: calc(var(--font-size-base-5xl) * var(--density-compact));
+}

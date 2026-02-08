@@ -1,0 +1,5 @@
+.double-sided-card-editor__field .rich-text-editor__content .ProseMirror {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+}

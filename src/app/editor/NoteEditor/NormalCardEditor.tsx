@@ -4,17 +4,19 @@ import {
   successfullyAdded,
   successfullySaved,
 } from "@/components/Notification/Notification";
+import { Stack } from "@/components/ui/Stack";
+import { Text } from "@/components/ui/Text";
 import { EditMode } from "@/logic/NoteTypeAdapter";
 import { Deck } from "@/logic/deck/deck";
-import { NoteType } from "@/logic/note/note";
-import { Note } from "@/logic/note/note";
+import { Note, NoteType } from "@/logic/note/note";
 import { BasicNoteTypeAdapter } from "@/logic/type-implementations/normal/BasicNote";
-import { Stack, Text } from "@mantine/core";
 import { Editor } from "@tiptap/react";
 import { t } from "i18next";
 import { useCallback, useEffect } from "react";
-import classes from "./NormalCardEditor.module.css";
+import "./NormalCardEditor.css";
 import NoteEditor, { useNoteEditor } from "./NoteEditor";
+
+const BASE = "normal-card-editor";
 
 interface NormalCardEditorProps {
   note: Note<NoteType.Basic> | null;
@@ -65,19 +67,19 @@ function NormalCardEditor({
   }, [requestedFinish, mode, clear, deck, note, frontEditor, backEditor]);
 
   return (
-    <Stack gap="2rem">
-      <Stack gap={0}>
-        <Text fz="sm" fw={600}>
+    <Stack gap="xl">
+      <Stack gap="xs">
+        <Text size="sm" weight="semibold">
           {t("note.edit.type-specific.normal.front")}
         </Text>
         <NoteEditor
           editor={frontEditor}
           key="front"
-          className={classes.front}
+          className={`${BASE}__front`}
         />
       </Stack>
-      <Stack gap={0}>
-        <Text fz="sm" fw={600}>
+      <Stack gap="xs">
+        <Text size="sm" weight="semibold">
           {t("note.edit.type-specific.normal.back")}
         </Text>
         <NoteEditor editor={backEditor} key="back" />
@@ -95,7 +97,6 @@ async function finish(
   backEditor: Editor | null
 ) {
   if (mode === "edit") {
-    //SAVE
     try {
       if (note === null) {
         throw new Error("Note is null");

@@ -26,6 +26,7 @@
   ],
   "start_url": "/",
   "display": "standalone",
+  "display_override": ["window-controls-overlay"],
   "theme_color": "#439C72",
   "background_color": "#ffffff",
   "orientation": "portrait-primary"

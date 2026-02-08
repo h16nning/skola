@@ -1,10 +1,7 @@
 import { EditMode } from "@/logic/NoteTypeAdapter";
 import { Deck } from "@/logic/deck/deck";
 import { NoteType } from "@/logic/note/note";
-import { useHotkeys } from "@mantine/hooks";
-import { RichTextEditor } from "@mantine/tiptap";
 import { IconBracketsContain } from "@tabler/icons-react";
-import classes from "./ClozeCardEditor.module.css";
 import NoteEditor, { useNoteEditor } from "./NoteEditor";
 
 import {
@@ -13,10 +10,14 @@ import {
   successfullyAdded,
   successfullySaved,
 } from "@/components/Notification/Notification";
+import { RichTextEditorControl } from "@/components/ui/RichTextEditor";
 import { Note } from "@/logic/note/note";
 import { ClozeNoteTypeAdapter } from "@/logic/type-implementations/cloze/ClozeNote";
 import { Editor } from "@tiptap/react";
 import { useCallback, useEffect, useMemo } from "react";
+import "./ClozeCardEditor.css";
+
+const BASE = "cloze-card-editor";
 
 interface ClozeCardEditorProps {
   note: Note<NoteType.Cloze> | null;
@@ -35,11 +36,8 @@ export default function ClozeCardEditor({
   setRequestedFinish,
   focusSelectNoteType,
 }: ClozeCardEditorProps) {
-  useHotkeys([["mod+Enter", () => setRequestedFinish(true)]]);
-
   const noteContent = note?.content ?? { type: NoteType.Cloze, text: "" };
 
-  //fix sometime
   const editor = useNoteEditor({
     content: noteContent.text,
     finish: () => {
@@ -73,10 +71,9 @@ export default function ClozeCardEditor({
   return (
     <NoteEditor
       editor={editor}
-      className={classes}
+      className={BASE}
       controls={
-        <RichTextEditor.Control
-          tabIndex={-1}
+        <RichTextEditorControl
           onClick={() => {
             if (editor?.state.selection.from !== editor?.state.selection.to) {
               const occludedText = `{{c${smallestAvailableOcclusionNumber}::${window.getSelection()}}}`;
@@ -88,9 +85,10 @@ export default function ClozeCardEditor({
               editor?.commands.setTextSelection(editor?.state.selection.to - 2);
             }
           }}
+          title="Add cloze deletion"
         >
           <IconBracketsContain />
-        </RichTextEditor.Control>
+        </RichTextEditorControl>
       }
     />
   );
@@ -104,7 +102,6 @@ async function finish(
   editor: Editor | null
 ) {
   if (mode === "edit") {
-    //ISSUE newly introduced cards through edit are not recognized
     try {
       if (!note) throw new Error("Note not found");
       await ClozeNoteTypeAdapter.updateNote(

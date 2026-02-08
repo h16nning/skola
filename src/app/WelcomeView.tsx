@@ -1,109 +1,110 @@
-import {
-  Alert,
-  Anchor,
-  Button,
-  Center,
-  CheckIcon,
-  Group,
-  Image,
-  Stack,
-  Text,
-  Title,
-} from "@mantine/core";
-import { useLocalStorage } from "@mantine/hooks";
+import { Alert } from "@/components/ui/Alert";
+import { Button } from "@/components/ui/Button";
+import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 import { IconInfoCircle } from "@tabler/icons-react";
 import { useEffect } from "react";
+import "./WelcomeView.css";
+
+const BASE = "welcome-view";
 
 export default function WelcomeView() {
-  const [_, setRegistered] = useLocalStorage({
-    key: "registered",
-    defaultValue: false,
-  });
+  const [_, setRegistered] = useLocalStorage("registered", false);
 
   useEffect(() => {}, []);
+
   return (
-    <Center py="4rem" px="0.5rem" w="100%">
-      <Stack gap="2rem" maw="600px">
-        <div style={{ position: "relative" }}>
-          <Image
-            src="logo.svg"
-            alt="Skola Logo"
-            maw="4rem"
-            style={{
-              position: "absolute",
-              filter: "blur(20px)",
-              opacity: 0.5,
-              zIndex: -1,
-            }}
+    <div className={BASE}>
+      <div className={`${BASE}__container`}>
+        <div className={`${BASE}__logo-wrapper`}>
+          <img
+            src="/logo.svg"
+            alt=""
+            className={`${BASE}__logo ${BASE}__logo-blur`}
           />
-          <Image src="logo.svg" alt="Skola Logo" maw="4rem" />
         </div>
-        <Stack gap="xs">
-          <Title order={1}>Welcome to Skola!</Title>
-          <Text fz="sm">A flash card learning app here in your browser.</Text>
-          {[
-            "No sign-up required",
-            "Free and open source",
-            "Directly in your browser",
-            "No tracking",
-          ].map((item) => (
-            <Group key={item} align="center" gap="xs">
-              <CheckIcon
-                style={{ color: "var(--mantine-color-green-strong)" }}
-                size={12}
-              />{" "}
-              <Text fz="sm">{item}</Text>
-            </Group>
-          ))}
-        </Stack>
-        <Alert color="gray" icon={<IconInfoCircle />}>
+
+        <div className={`${BASE}__section`}>
+          <h1 className={`${BASE}__title`}>Welcome to Skola!</h1>
+          <p className={`${BASE}__subtitle`}>
+            A flash card learning app here in your browser.
+          </p>
+
+          <div className={`${BASE}__feature-list`}>
+            {[
+              "No sign-up required",
+              "Free and open source",
+              "Directly in your browser",
+              "No tracking",
+            ].map((item) => (
+              <div key={item} className={`${BASE}__feature-item`}>
+                <svg
+                  className={`${BASE}__check-icon`}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span className={`${BASE}__feature-text`}>{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <Alert variant="info" icon={<IconInfoCircle />}>
           Please note that this app is still in early development. You may
           encounter bugs and missing features. If you find any issues, consider
           reporting them on the{" "}
-          <Anchor
+          <a
             href="https://www.github.com/h16nning/skola"
-            fz="sm"
-            style={{ whiteSpace: "nowrap" }}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             GitHub repository
-          </Anchor>
+          </a>
           .
         </Alert>
-        <Stack gap="xs">
-          <Title order={3}>About the project</Title>
-          <Text fz="sm">
+
+        <div className={`${BASE}__section`}>
+          <h3 className={`${BASE}__heading`}>About the project</h3>
+          <p className={`${BASE}__text`}>
             Skola is a project developed by a student aiming to provide an
             alternative to spaced repetition apps like Anki and SuperMemo. It is
             open-source and completely free to use. The focus lies on creating a
             fun to use and intuitive experience. You can find more information
             on the{" "}
-            <Anchor href="https://www.github.com/h16nning/skola" fz="sm">
+            <a
+              href="https://www.github.com/h16nning/skola"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               GitHub repository
-            </Anchor>
+            </a>
             .
-          </Text>
-        </Stack>
-        <Stack gap="xs">
-          <Title order={3}>About privacy</Title>
-          <Text fz="sm">
+          </p>
+        </div>
+
+        <div className={`${BASE}__section`}>
+          <h3 className={`${BASE}__heading`}>About privacy</h3>
+          <p className={`${BASE}__text`}>
             Privacy is a priority of this project. Skola saves decks and cards
             locally in your browser using the IndexedDB API. Furthermore local
             storage and cookies are being used to store relevant data. We do not
             collect any personal data. Currently, a syncing feature is under
             development allowing you to store your data in the cloud. However,
             this feature is totally optional.
-          </Text>
-        </Stack>
-        <Group align="start">
-          <Button
-            onClick={() => setRegistered(true)}
-            size="md"
-            variant="gradient"
-          >
+          </p>
+        </div>
+
+        <div className={`${BASE}__actions`}>
+          <Button onClick={() => setRegistered(true)} variant="primary">
             Get Started Now
           </Button>
-        </Group>
-      </Stack>
-    </Center>
+        </div>
+      </div>
+    </div>
   );
 }

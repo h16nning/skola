@@ -1,0 +1,22 @@
+.cloze-card-editor .rich-text-editor__content .ProseMirror .gap {
+  border-bottom: 2px solid var(--theme-primary-500);
+  background-color: var(--theme-primary-100);
+  border-radius: var(--radius-xs);
+  padding: 0 3px;
+  position: relative;
+}
+
+.cloze-card-editor .rich-text-editor__content .ProseMirror .gap.clicked {
+  background-color: var(--theme-red-500);
+}
+
+.cloze-card-editor .rich-text-editor__content .ProseMirror .inline-menu {
+  position: absolute;
+  bottom: 0;
+  background-color: var(--theme-neutral-50);
+  border-radius: var(--radius-xs);
+  padding: 3px 5px;
+  font-size: 0.8em;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--theme-neutral-200);
+}

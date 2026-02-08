@@ -76,11 +76,11 @@
     "no-items-title": "It is looking empty here!"
   },
   "hero-deck-section": {
-    "all-cards-done-learn-anyway": "Learn anyway",
-    "all-cards-done-subtitle": "Return back tomorrow or choose to learn anyway.",
+    "all-cards-done-learn-anyway": "Study anyway",
+    "all-cards-done-subtitle": "Return back tomorrow or choose to study anyway.",
     "all-cards-done-title": "Congratulations! This deck is done for today!",
     "error": "Failed to load cards.",
-    "learn": "Learn",
+    "learn": "Study",
     "no-cards": "Start by creating some cards!"
   },
   "home": {
@@ -88,7 +88,8 @@
     "no-decks-found": "You have not created any decks yet.",
     "title": "Home",
     "welcome": "Welcome!",
-    "welcome-user": "Welcome back, {{name}}!"
+    "welcome-user": "Welcome back, {{name}}!",
+    "welcome-subtitle": "Ready to start studying?"
   },
   "learning": {
     "cognitive-prompts": {
@@ -132,7 +133,7 @@
     "rate-good": "Good",
     "rate-easy": "Easy",
     "back-to-deck": "Back to Deck",
-    "show-answers": "Show Answer",
+    "show-answer": "Show Answer",
     "finished-accuracy-ratio": "Accuracy",
     "finished-button-home": "Go Home",
     "finished-button-to-deck": "Back to Deck",
@@ -217,11 +218,19 @@
       "color-scheme-dark": "Dark",
       "color-scheme-description": "Choose between always light or dark theme or use the color theme of your system.",
       "color-scheme-light": "Light",
+      "density": "Density",
+      "density-auto": "Auto",
+      "density-compact": "Compact",
+      "density-description": "Choose between relaxed spacing or compact spacing. Auto uses compact on desktop and relaxed on touch devices.",
+      "density-relaxed": "Relaxed",
       "title": "Appearance"
     },
     "database": {
       "storage-used": "used",
       "title": "Database"
+    },
+    "cloud": {
+      "title": "Cloud Sync"
     },
     "developer": {
       "description": "This is the developer tab. It will contain extra settings for developers.",

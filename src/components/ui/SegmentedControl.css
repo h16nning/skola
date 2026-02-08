@@ -1,0 +1,57 @@
+.segmented-control {
+  display: inline-flex;
+  background-color: var(--theme-neutral-100);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-xs);
+  gap: var(--spacing-xs);
+  font-family: var(--font-sans);
+  width: fit-content;
+}
+
+.segmented-control__option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--theme-neutral-700);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  min-height: 2rem;
+}
+
+.segmented-control__option:hover {
+  background-color: var(--theme-neutral-50);
+  color: var(--theme-neutral-900);
+}
+
+.segmented-control__option:focus-visible {
+  outline: var(--ring-outline);
+  border-color: var(--ring-border-color);
+  box-shadow: var(--ring-shadow);
+}
+
+.segmented-control__option--active {
+  background-color: white;
+  color: var(--theme-neutral-900);
+  box-shadow: var(--shadow-xs);
+}
+
+[data-theme="dark"] .segmented-control__option--active {
+  background-color: var(--theme-neutral-200);
+}
+
+.segmented-control__option--active:hover {
+  background-color: white;
+}
+
+[data-theme="dark"] .segmented-control__option--active:hover {
+  background-color: var(--theme-neutral-200);
+}

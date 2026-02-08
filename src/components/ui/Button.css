@@ -1,0 +1,153 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-md);
+  font-weight: 500;
+  font-family: var(--font-sans);
+  transition: var(--transition-button);
+  white-space: nowrap;
+}
+
+.button:hover {
+  filter: brightness(0.95);
+}
+
+.button:active {
+  transform: scale(0.96);
+}
+
+.button:focus-visible {
+  border-color: var(--ring-border-color);
+  outline: var(--ring-outline);
+  box-shadow: var(--ring-shadow);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button__left-section,
+.button__right-section {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button__left-section svg,
+.button__right-section svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  stroke-width: 1.5;
+}
+
+.button__content {
+  display: inline-flex;
+  align-items: center;
+}
+
+.button--default {
+  background-color: var(--theme-neutral-100);
+  color: var(--theme-neutral-900);
+  border: 1px solid var(--theme-neutral-300);
+}
+
+.button--default:hover {
+  background-color: var(--theme-neutral-200);
+}
+
+.button--primary {
+  background-color: light-dark(
+    var(--theme-primary-600),
+    var(--theme-primary-400)
+  );
+  color: white;
+}
+
+.button--primary:hover {
+  background-color: light-dark(
+    var(--theme-primary-700),
+    var(--theme-primary-500)
+  );
+}
+
+.button--subtle {
+  background-color: transparent;
+  color: var(--theme-neutral-700);
+}
+
+.button--subtle:hover {
+  background-color: var(--theme-neutral-100);
+}
+
+.button--ghost,
+.button--ghost-transparent {
+  background-color: transparent;
+  color: var(--theme-neutral-700);
+}
+
+.button--ghost:hover {
+  background-color: var(--theme-neutral-100);
+}
+
+.button--ghost-transparent:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .button--ghost-transparent:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.button--white {
+  background-color: #ffffffee;
+  color: var(--color-neutral-800);
+}
+
+.button--neutral {
+  background-color: var(--theme-neutral-700);
+  color: var(--theme-neutral-100);
+}
+
+.button--neutral:hover {
+  background-color: var(--theme-neutral-800);
+}
+
+.button--destructive {
+  background-color: var(--theme-red-500);
+  color: white;
+}
+
+.button--destructive:hover {
+  background-color: light-dark(var(--theme-red-700), var(--theme-red-500));
+}
+
+.button--sm {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  gap: var(--spacing-xs);
+}
+
+.button--sm .button__left-section svg,
+.button--sm .button__right-section svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.button--lg {
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-lg);
+  gap: var(--spacing-md);
+}
+
+.button--lg .button__left-section svg,
+.button--lg .button__right-section svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}

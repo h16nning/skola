@@ -1,72 +1,80 @@
+import { InputDescription } from "@/components/ui/InputDescription";
+import { InputLabel } from "@/components/ui/InputLabel";
+import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { setSetting } from "@/logic/settings/setSetting";
-import {
-  Box,
-  Center,
-  Input,
-  MantineColorScheme,
-  SegmentedControl,
-  useMantineColorScheme,
-} from "@mantine/core";
 import { IconMoon, IconSun, IconSunMoon } from "@tabler/icons-react";
 import { t } from "i18next";
 import { SettingsValues } from "../../logic/settings/Settings";
+import "./ColorSchemeToggle.css";
 
-export default function SegmentedToggle() {
+const BASE = "color-scheme-toggle";
+
+export default function ColorSchemeToggle() {
   const [colorSchemePreference] = useSetting("colorSchemePreference");
-  const { setColorScheme } = useMantineColorScheme();
+
+  const handleColorSchemeChange = (value: string) => {
+    setSetting(
+      "colorSchemePreference",
+      (value as SettingsValues["colorSchemePreference"]) || "light"
+    );
+
+    const html = document.documentElement;
+    if (value === "auto") {
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      html.setAttribute("data-theme", prefersDark ? "dark" : "light");
+    } else {
+      html.setAttribute("data-theme", value);
+    }
+  };
 
   return (
-    <Input.Wrapper
-      label={t("settings.appearance.color-scheme")}
-      description={t("settings.appearance.color-scheme-description")}
-    >
+    <div className={BASE}>
+      <InputLabel>{t("settings.appearance.color-scheme")}</InputLabel>
+      <InputDescription>
+        {t("settings.appearance.color-scheme-description")}
+      </InputDescription>
       <SegmentedControl
-        mt="xs"
         value={colorSchemePreference}
-        onChange={(value) => {
-          setSetting(
-            "colorSchemePreference",
-            (value as SettingsValues["colorSchemePreference"]) || "light"
-          );
-          setColorScheme((value as MantineColorScheme) || "auto");
-        }}
+        onChange={handleColorSchemeChange}
         data={[
           {
             value: "light",
             label: (
-              <Center>
+              <div className={`${BASE}__option`}>
                 <IconSun size={16} />
-                <Box fz="xs" fw={600} ml={10}>
+                <span className={`${BASE}__option-text`}>
                   {t("settings.appearance.color-scheme-light")}
-                </Box>
-              </Center>
+                </span>
+              </div>
             ),
           },
           {
             value: "dark",
             label: (
-              <Center>
+              <div className={`${BASE}__option`}>
                 <IconMoon size={16} />
-                <Box fz="xs" fw={600} ml={10}>
+                <span className={`${BASE}__option-text`}>
                   {t("settings.appearance.color-scheme-dark")}
-                </Box>
-              </Center>
+                </span>
+              </div>
             ),
           },
           {
             value: "auto",
             label: (
-              <Center>
+              <div className={`${BASE}__option`}>
                 <IconSunMoon size={16} />
-                <Box fz="xs" fw={600} ml={10}>
+                <span className={`${BASE}__option-text`}>
                   {t("settings.appearance.color-scheme-auto")}
-                </Box>
-              </Center>
+                </span>
+              </div>
             ),
           },
         ]}
       />
-    </Input.Wrapper>
+    </div>
   );
 }

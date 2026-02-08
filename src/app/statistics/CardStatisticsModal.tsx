@@ -1,7 +1,7 @@
+import ModalProps from "@/components/ModalProps";
+import { Modal } from "@/components/ui";
+import { Card } from "@/logic/card/card";
 import { NoteType } from "@/logic/note/note";
-import { Modal } from "@mantine/core";
-import ModalProps from "../../components/ModalProps";
-import { Card } from "../../logic/card/card";
 import CardHistory from "./CardHistory";
 
 interface DeckOptionsModalProps extends ModalProps {

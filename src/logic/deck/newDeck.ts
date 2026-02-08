@@ -1,3 +1,4 @@
+import { ColorIdentifier } from "@/lib/ColorIdentifier";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "../db";
 import { Deck } from "./deck";
@@ -5,7 +6,8 @@ import { Deck } from "./deck";
 export async function newDeck(
   name: string,
   superDeck?: Deck,
-  description?: string
+  description?: string,
+  color?: ColorIdentifier
 ): Promise<string> {
   const uuid = uuidv4();
 
@@ -34,6 +36,7 @@ export async function newDeck(
     subDecks: [],
     superDecks: superDecks,
     description: description,
+    color: color,
     options: {
       newToReviewRatio: 0.5,
       dailyNewCards: 25,

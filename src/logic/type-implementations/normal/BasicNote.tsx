@@ -1,4 +1,5 @@
 import NormalCardEditor from "@/app/editor/NoteEditor/NormalCardEditor";
+import { Divider, Stack } from "@/components/ui";
 import { NoteEditorProps, NoteTypeAdapter } from "@/logic/NoteTypeAdapter";
 import { Card, HTMLtoPreviewString } from "@/logic/card/card";
 import { createCardSkeleton } from "@/logic/card/createCardSkeleton";
@@ -11,8 +12,6 @@ import { newNote } from "@/logic/note/newNote";
 import { NoteType } from "@/logic/note/note";
 import { Note } from "@/logic/note/note";
 import { updateNoteContent } from "@/logic/note/updateNoteContent";
-import common from "@/style/CommonStyles.module.css";
-import { Divider, Stack, Title } from "@mantine/core";
 import { useState } from "react";
 
 export const BasicNoteTypeAdapter: NoteTypeAdapter<NoteType.Basic> = {
@@ -53,11 +52,15 @@ export const BasicNoteTypeAdapter: NoteTypeAdapter<NoteType.Basic> = {
     content?: NoteContent<NoteType.Basic>
   ) {
     return (
-      <Title
-        order={3}
-        fw={600}
+      <h3
+        style={{
+          fontFamily: "var(--font-serif)",
+          fontSize: "1.25rem",
+          fontWeight: 600,
+          margin: 0,
+        }}
         dangerouslySetInnerHTML={{ __html: content?.front ?? "" }}
-      ></Title>
+      />
     );
   },
 
@@ -67,9 +70,9 @@ export const BasicNoteTypeAdapter: NoteTypeAdapter<NoteType.Basic> = {
     place?: "learn" | "notebook"
   ) {
     return (
-      <Stack gap={place === "notebook" ? "sm" : "lg"} w="100%">
+      <Stack gap={place === "notebook" ? "sm" : "lg"} style={{ width: "100%" }}>
         {BasicNoteTypeAdapter.displayQuestion(card, content)}
-        <Divider className={common.lightBorderColor} />
+        <Divider />
         <div dangerouslySetInnerHTML={{ __html: content?.back ?? "" }}></div>
       </Stack>
     );
@@ -84,17 +87,21 @@ export const BasicNoteTypeAdapter: NoteTypeAdapter<NoteType.Basic> = {
     return (
       <Stack
         gap="sm"
-        w="100%"
+        style={{ width: "100%" }}
         onClick={() => setIndividualShowAnswer(!individualShowAnswer)}
       >
-        <Title
-          order={3}
-          fw={600}
+        <h3
+          style={{
+            fontFamily: "var(--font-serif)",
+            fontSize: "1.25rem",
+            fontWeight: 600,
+            margin: 0,
+          }}
           dangerouslySetInnerHTML={{ __html: note.content?.front ?? "" }}
         />
         {showAllAnswers !== "none" && (
           <>
-            <Divider className={common.lightBorderColor} />
+            <Divider />
             <div
               dangerouslySetInnerHTML={{ __html: note.content?.back ?? "" }}
             />

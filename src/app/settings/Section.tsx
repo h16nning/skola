@@ -1,23 +1,28 @@
-import { Group, Stack, Title } from "@mantine/core";
-import React, { ReactNode } from "react";
+import type { ReactNode } from "react";
+import "./Section.css";
+
+const BASE = "settings-section";
 
 type SectionProps = {
   title: string | ReactNode;
   children: ReactNode;
   rightSection?: ReactNode;
 };
+
 export default function Section({
   title,
   children,
   rightSection,
 }: SectionProps) {
   return (
-    <Stack gap="sm" w="100%">
-      <Group justify="space-between">
-        <Title order={4}>{title}</Title>
-        {rightSection}
-      </Group>
-      {children}
-    </Stack>
+    <div className={BASE}>
+      <div className={`${BASE}__header`}>
+        <h4 className={`${BASE}__title`}>{title}</h4>
+        {rightSection && (
+          <div className={`${BASE}__right-section`}>{rightSection}</div>
+        )}
+      </div>
+      <div className={`${BASE}__content`}>{children}</div>
+    </div>
   );
 }

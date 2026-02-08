@@ -1,16 +1,10 @@
 {
   "name": "skola",
   "homepage": "https://skola.cards/",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": false,
   "dependencies": {
     "@hello-pangea/dnd": "16.5.0",
-    "@mantine/charts": "7.15.1",
-    "@mantine/core": "7.15.1",
-    "@mantine/hooks": "7.15.1",
-    "@mantine/notifications": "7.15.1",
-    "@mantine/spotlight": "7.15.1",
-    "@mantine/tiptap": "7.15.1",
     "@tabler/icons-react": "3.14.0",
     "@tauri-apps/api": "^1.6.0",
     "@tiptap/core": "2.27.1",
@@ -37,7 +31,6 @@
     "html-react-parser": "5.1.8",
     "html-to-text": "9.0.5",
     "i18next": "23.15.1",
-    "mantine-datatable": "^7.17.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-i18next": "14.1.0",
@@ -55,9 +48,9 @@
     "format": "biome check --apply",
     "tauri": "tauri",
     "add-domain": "echo https://skola.cards> dist/CNAME",
-    "predeploy": "npm run add-domain && npm run build",
+    "predeploy": "pnpm run add-domain && pnpm run build",
     "deploy": "gh-pages -d dist",
-    "build-and-deploy": "npm run predeploy && npm run deploy"
+    "build-and-deploy": "pnpm run predeploy && pnpm run deploy"
   },
   "eslintConfig": {
     "extends": [
@@ -77,7 +70,7 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.3",
+    "@biomejs/biome": "1.9.4",
     "@tauri-apps/cli": "^2.9.4",
     "@types/lodash": "4.17.0",
     "@types/node": "22.5.5",

@@ -170,11 +170,19 @@
       "color-scheme-dark": "Mörkt",
       "color-scheme-description": "Välj mellan alltid ljust eller mörkt tema eller använd färgtemat för ditt system.",
       "color-scheme-light": "Ljust",
+      "density": "Täthet",
+      "density-auto": "Auto",
+      "density-compact": "Kompakt",
+      "density-description": "Välj mellan avslappnat eller kompakt avstånd. Auto använder kompakt på skrivbord och avslappnat på pekenheter.",
+      "density-relaxed": "Avslappnat",
       "title": "Utseende"
     },
     "database": {
       "storage-used": "",
       "title": "Databas"
+    },
+    "cloud": {
+      "title": "Molnsynkronisering"
     },
     "developer": {
       "description": "använt",

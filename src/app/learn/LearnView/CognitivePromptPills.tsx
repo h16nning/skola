@@ -1,7 +1,9 @@
+import { Badge } from "@/components/ui/Badge";
 import { CognitivePrompt, getRandomPrompts } from "@/logic/cognitivePrompts";
-import { Badge, Group } from "@mantine/core";
 import { useMemo } from "react";
-import classes from "./CognitivePromptPills.module.css";
+import "./CognitivePromptPills.css";
+
+const BASE = "cognitive-prompt-pills";
 
 interface CognitivePromptPillsProps {
   onToggle: (prompt: CognitivePrompt) => void;
@@ -17,20 +19,20 @@ function CognitivePromptPills({
   const displayPrompts = selectedPrompt ? [selectedPrompt] : prompts;
 
   return (
-    <Group justify="center" gap="xs" className={classes.pillsContainer}>
+    <div className={BASE}>
       {displayPrompts.map((prompt) => (
         <Badge
           key={prompt.category}
           variant={selectedPrompt === prompt ? "filled" : "light"}
-          color={prompt.color}
+          color="neutral"
           size="lg"
-          className={classes.pill}
+          className={`${BASE}__pill`}
           onClick={() => onToggle(prompt)}
         >
           {prompt.label}
         </Badge>
       ))}
-    </Group>
+    </div>
   );
 }
 

@@ -1,0 +1,24 @@
+.file-import {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  width: 100%;
+}
+
+.file-import__label {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.file-import__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

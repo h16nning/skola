@@ -1,10 +1,11 @@
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { Note, NoteType } from "@/logic/note/note";
 import { NoteSortFunction, NoteSorts } from "@/logic/note/sort";
-import { useMediaQuery } from "@mantine/hooks";
-import clsx from "clsx";
-import { DataTable, DataTableSortStatus } from "mantine-datatable";
-import { useEffect, useState } from "react";
-import classes from "./NoteTable.module.css";
+import "./NoteTable.css";
+import NoteTableHeadItem from "./NoteTableHeadItem";
+import { NoteTableItem } from "./NoteTableItem";
+
+const BASE = "note-table";
 
 interface NoteTableProps {
   noteSet: Note<NoteType>[];
@@ -17,91 +18,72 @@ interface NoteTableProps {
 
 function NoteTable({
   noteSet,
+  sort,
+  setSort,
   openedNote,
   setOpenedNote,
-  setSort,
   openModal,
 }: NoteTableProps) {
-  const [selectedNotes, setSelectedNotes] = useState<Note<NoteType>[]>([]);
-
-  const [sortStatus, setSortStatus] = useState<
-    DataTableSortStatus<Note<NoteType>>
-  >({
-    columnAccessor: "sortField",
-    sortKey: "bySortField",
-    direction: "asc",
-  });
-
-  useEffect(() => {
-    setSort([
-      NoteSorts[sortStatus.sortKey as keyof typeof NoteSorts],
-      sortStatus.direction === "asc",
-    ]);
-  }, [sortStatus]);
-
-  const isTouch = useMediaQuery("(pointer: coarse)");
   const isMobile = useMediaQuery("(max-width: 50em)");
 
+  function handleRowSelect(note: Note<NoteType>) {
+    setOpenedNote(note);
+    if (isMobile) {
+      openModal();
+    }
+  }
+
+  function handleRowOpen(note: Note<NoteType>) {
+    setOpenedNote(note);
+    openModal();
+  }
+
   return (
-    <DataTable
-      className={classes.table}
-      records={noteSet}
-      columns={[
-        {
-          accessor: "sortField",
-          title: "Name",
-          ellipsis: true,
-          width: 200,
-          resizable: true,
-          filtering: true,
-          sortable: true,
-          sortKey: "bySortField",
-        },
-        {
-          accessor: "creationDate",
-          title: "Creation Date",
-          render: (note) => note.creationDate.toLocaleDateString(),
-          resizable: true,
-          sortable: true,
-          sortKey: "byCreationDate",
-        },
-        {
-          accessor: "content.type",
-          title: "Note Type",
-          resizable: true,
-          sortable: true,
-          sortKey: "byType",
-        },
-      ]}
-      withTableBorder={false}
-      withRowBorders={false}
-      highlightOnHover
-      borderRadius="md"
-      striped="odd"
-      height="100%"
-      textSelectionDisabled={isTouch}
-      selectionCheckboxProps={{ size: isMobile ? "sm" : "xs" }}
-      selectedRecords={selectedNotes}
-      onSelectedRecordsChange={setSelectedNotes}
-      sortStatus={sortStatus}
-      onSortStatusChange={setSortStatus}
-      rowClassName={(record) =>
-        clsx({
-          [classes.selected]: record.id === openedNote?.id,
-          [classes.row]: true,
-        })
-      }
-      onRowClick={(row) => {
-        setOpenedNote(row.record);
-        if (isMobile) {
-          openModal();
-        }
-      }}
-      onRowDoubleClick={(row) => {
-        setOpenedNote(row.record);
-        openModal();
-      }}
-    />
+    <div className={BASE}>
+      <table className={`${BASE}__table`}>
+        <thead className={`${BASE}__head`}>
+          <tr>
+            <NoteTableHeadItem
+              name="Name"
+              sortFunction={NoteSorts.bySortField}
+              sort={sort}
+              setSort={setSort}
+            />
+            <NoteTableHeadItem
+              name="Creation Date"
+              sortFunction={NoteSorts.byCreationDate}
+              sort={sort}
+              setSort={setSort}
+            />
+            <NoteTableHeadItem
+              name="Note Type"
+              sortFunction={NoteSorts.byType}
+              sort={sort}
+              setSort={setSort}
+            />
+          </tr>
+        </thead>
+        <tbody className={`${BASE}__body`}>
+          {noteSet.length === 0 ? (
+            <tr>
+              <td className={`${BASE}__empty`} colSpan={3}>
+                No notes found
+              </td>
+            </tr>
+          ) : (
+            noteSet.map((note) => (
+              <NoteTableItem
+                key={note.id}
+                note={note}
+                isSelected={note.id === openedNote?.id}
+                onSelect={() => handleRowSelect(note)}
+                onOpen={() => handleRowOpen(note)}
+              />
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
   );
 }
 

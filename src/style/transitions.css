@@ -1,0 +1,53 @@
+:root {
+  --transition-duration-fast: 0.1s;
+  --transition-duration-normal: 0.15s;
+  --transition-duration-slow: 0.2s;
+  --transition-duration-slower: 0.3s;
+
+  --transition-timing-ease: ease;
+  --transition-timing-ease-in: ease-in;
+  --transition-timing-ease-out: ease-out;
+  --transition-timing-ease-in-out: ease-in-out;
+
+  --transition-colors: background-color var(--transition-duration-normal)
+    var(--transition-timing-ease), color var(--transition-duration-normal)
+    var(--transition-timing-ease), border-color
+    var(--transition-duration-normal) var(--transition-timing-ease);
+
+  --transition-opacity: opacity var(--transition-duration-normal)
+    var(--transition-timing-ease);
+
+  --transition-transform: transform var(--transition-duration-slow)
+    var(--transition-timing-ease);
+
+  --transition-shadow: box-shadow var(--transition-duration-normal)
+    var(--transition-timing-ease);
+
+  --transition-all: all var(--transition-duration-normal)
+    var(--transition-timing-ease);
+
+  --transition-button: background-color var(--transition-duration-normal)
+    var(--transition-timing-ease), color var(--transition-duration-normal)
+    var(--transition-timing-ease), transform var(--transition-duration-slow)
+    var(--transition-timing-ease);
+
+  --transition-input: border-color var(--transition-duration-normal)
+    var(--transition-timing-ease), box-shadow var(--transition-duration-normal)
+    var(--transition-timing-ease), background-color
+    var(--transition-duration-normal) var(--transition-timing-ease);
+
+  --transition-tab: color var(--transition-duration-normal)
+    var(--transition-timing-ease), border-color
+    var(--transition-duration-normal) var(--transition-timing-ease),
+    background-color var(--transition-duration-normal)
+    var(--transition-timing-ease);
+
+  --transition-checkbox: all var(--transition-duration-normal)
+    var(--transition-timing-ease);
+
+  --transition-paper: all var(--transition-duration-normal);
+
+  --transition-icon: opacity var(--transition-duration-normal)
+    var(--transition-timing-ease), transform var(--transition-duration-normal)
+    var(--transition-timing-ease);
+}

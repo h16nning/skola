@@ -1,0 +1,51 @@
+.paper {
+  background: var(--theme-neutral-50);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  width: 100%;
+  position: relative;
+}
+
+.paper--with-texture::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--pattern-noise);
+  mask-image: linear-gradient(to top, black 25%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, black 25%, transparent 100%);
+  pointer-events: none;
+  opacity: 0.25;
+  mix-blend-mode: multiply;
+}
+
+[data-theme="dark"] .paper--with-texture::before {
+  opacity: 0.15;
+  mix-blend-mode: hard-light;
+  mask-image: linear-gradient(to bottom, black 25%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 25%, transparent 100%);
+}
+
+.paper--with-border {
+  border: 1px solid light-dark(#00000022, #ffffff22);
+}
+
+.paper--shadow-xs {
+  box-shadow: var(--shadow-xs);
+}
+
+.paper--shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.paper--shadow-md {
+  box-shadow: var(--shadow-md);
+}
+
+.paper--shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+.paper--shadow-xl {
+  box-shadow: var(--shadow-xl);
+}

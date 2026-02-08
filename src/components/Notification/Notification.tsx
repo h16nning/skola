@@ -1,143 +1,135 @@
-import { notifications } from "@mantine/notifications";
-import {
-  IconArrowsExchange,
-  IconCheck,
-  IconTrash,
-  IconX,
-} from "@tabler/icons-react";
-import React from "react";
-import classes from "./Notification.module.css";
+import { useNotifications } from "./NotificationContext";
+
+let showNotificationFn:
+  | ((notification: {
+      title: string;
+      message: string;
+      type: "success" | "error" | "info";
+      autoClose?: number | false;
+    }) => string)
+  | null = null;
+
+export function setNotificationHandler(handler: typeof showNotificationFn) {
+  showNotificationFn = handler;
+}
+
+function showNotification(
+  title: string,
+  message: string,
+  type: "success" | "error" | "info",
+  autoClose?: number | false
+) {
+  if (!showNotificationFn) {
+    console.warn("Notification system not initialized");
+    return;
+  }
+  return showNotificationFn({ title, message, type, autoClose });
+}
 
 export function successfullySaved() {
-  return notifications.show({
-    title: "Card Saved",
-    message: "The changes have been saved!",
-    color: "green",
-    withCloseButton: false,
-    icon: <IconCheck />,
-    className: classes,
-  });
+  return showNotification(
+    "Card Saved",
+    "The changes have been saved!",
+    "success",
+    3000
+  );
 }
 
 export function successfullyAdded() {
-  return notifications.show({
-    title: "Card Added",
-    message: "Card added successfully!",
-    autoClose: 1000,
-    color: "teal",
-    withCloseButton: false,
-    icon: <IconCheck />,
-    className: classes,
-  });
+  return showNotification(
+    "Card Added",
+    "Card added successfully!",
+    "success",
+    1000
+  );
 }
 
 export function successfullyMovedCardTo(deckName: string) {
-  return notifications.show({
-    title: "Card Moved",
-    message: `Card moved to ${deckName}!`,
-    autoClose: 1000,
-    color: "teal",
-    withCloseButton: false,
-    icon: <IconArrowsExchange />,
-    className: classes,
-  });
+  return showNotification(
+    "Card Moved",
+    `Card moved to ${deckName}!`,
+    "success",
+    1000
+  );
 }
 
 export function successfullyMovedNoteTo(deckName: string) {
-  return notifications.show({
-    title: "Note Moved",
-    message: `Note moved to ${deckName}!`,
-    autoClose: 1000,
-    color: "teal",
-    withCloseButton: false,
-    icon: <IconArrowsExchange />,
-    className: classes,
-  });
+  return showNotification(
+    "Note Moved",
+    `Note moved to ${deckName}!`,
+    "success",
+    1000
+  );
 }
 
 export function successfullyMovedDeckTo(deckName: string) {
-  return notifications.show({
-    title: "Deck Moved",
-    message: `Deck moved to ${deckName}!`,
-    autoClose: 1000,
-    color: "teal",
-    withCloseButton: false,
-    icon: <IconArrowsExchange />,
-    className: classes,
-  });
+  return showNotification(
+    "Deck Moved",
+    `Deck moved to ${deckName}!`,
+    "success",
+    1000
+  );
 }
 
 export function successfullyDeleted(type: "card" | "deck" | "note") {
-  return notifications.show({
-    title: { card: "Card Deleted", deck: "Deck Deleted", note: "Note Deleted" }[
-      type
-    ],
-    message: "This object has been deleted!",
-    autoClose: 1000,
-    color: "teal",
-    withCloseButton: false,
-    icon: <IconTrash />,
-    className: classes,
-  });
+  const titles = {
+    card: "Card Deleted",
+    deck: "Deck Deleted",
+    note: "Note Deleted",
+  };
+  return showNotification(
+    titles[type],
+    "This object has been deleted!",
+    "success",
+    1000
+  );
 }
 
 export function saveFailed() {
-  return notifications.show({
-    title: "Something went wrong!",
-    message: "The changes could not be saved. Please try again later!",
-    autoClose: 1500,
-    color: "red",
-    withCloseButton: false,
-    icon: <IconX />,
-    className: classes,
-  });
+  return showNotification(
+    "Something went wrong!",
+    "The changes could not be saved. Please try again later!",
+    "error",
+    1500
+  );
 }
 
 export function addFailed() {
-  return notifications.show({
-    title: "Something went wrong!",
-    message: "The card could not be added. Please try again later!",
-    autoClose: 1500,
-    color: "red",
-    withCloseButton: false,
-    icon: <IconX />,
-    className: classes,
-  });
+  return showNotification(
+    "Something went wrong!",
+    "The card could not be added. Please try again later!",
+    "error",
+    1500
+  );
 }
 
 export function deleteFailed(type: "card" | "deck" | "note") {
-  return notifications.show({
-    title:
-      { card: "Card", deck: "Deck", note: "Note" }[type] +
-      " Could Not Be Deleted",
-    message: "There was an error deleting this object. Please try again later!",
-    autoClose: 1500,
-    color: "red",
-    withCloseButton: false,
-    icon: <IconX />,
-    className: classes,
-  });
+  const typeLabels = { card: "Card", deck: "Deck", note: "Note" };
+  return showNotification(
+    `${typeLabels[type]} Could Not Be Deleted`,
+    "There was an error deleting this object. Please try again later!",
+    "error",
+    1500
+  );
 }
 
 export function genericFail() {
-  return notifications.show({
-    title: "Something went wrong!",
-    message: "This action could not be completed. Please try again later!",
-    autoClose: 1500,
-    color: "red",
-    withCloseButton: false,
-    icon: <IconX />,
-    className: classes,
-  });
+  return showNotification(
+    "Something went wrong!",
+    "This action could not be completed. Please try again later!",
+    "error",
+    1500
+  );
 }
 
 export function test() {
-  return notifications.show({
-    title: "Test",
-    message: "This is a description",
-    color: "teal",
-    withCloseButton: false,
-    icon: <IconCheck />,
-    className: classes,
-  });
+  return showNotification("Test", "This is a description", "info", 3000);
+}
+
+export function useNotificationSetup() {
+  const { showNotification: show } = useNotifications();
+
+  if (!showNotificationFn) {
+    setNotificationHandler(show);
+  }
 }

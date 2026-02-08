@@ -1,15 +1,19 @@
-import { Button, Group } from "@mantine/core";
-import { useHotkeys } from "@mantine/hooks";
+import { Button } from "@/components/ui/Button";
+import { Group } from "@/components/ui/Group";
+import i18n from "@/i18n";
+import { useHotkeys } from "@/lib/hooks/useHotkeys";
+import { LearnController } from "@/logic/learn";
+import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { Rating } from "fsrs.js";
 import { t } from "i18next";
-import i18n from "../../../i18n";
-import { LearnController } from "../../../logic/learn";
-import { useSetting } from "../../../logic/settings/hooks/useSetting";
 import AnswerCardButton from "./AnswerCardButton";
-import classes from "./LearnView.module.css";
+import "./LearnViewFooter.css";
+
+const BASE_URL = "learn-view-footer";
 
 const DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24;
 const MINUTE_IN_MILLISECONDS = 1000 * 60;
+
 interface LearnViewFooterProps {
   controller: LearnController;
   answer: Function;
@@ -45,8 +49,8 @@ function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
   const [enableHardAndEasy] = useSetting("learn_enableHardAndEasy");
 
   const baseHotkeys: [string, () => void][] = [
-    ["1", () => answer(Rating.Again)],
-    ["3", () => answer(Rating.Good)],
+    ["1", () => controller.showingAnswer && answer(Rating.Again)],
+    ["3", () => controller.showingAnswer && answer(Rating.Good)],
     [
       "Space",
       () =>
@@ -65,17 +69,19 @@ function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
 
   const hardAndEasyHotkeys: [string, () => void][] = enableHardAndEasy
     ? [
-        ["2", () => answer(Rating.Hard)],
-        ["4", () => answer(Rating.Easy)],
+        ["2", () => controller.showingAnswer && answer(Rating.Hard)],
+        ["4", () => controller.showingAnswer && answer(Rating.Easy)],
       ]
     : [];
 
-  useHotkeys(!controller.isFinished ? [...baseHotkeys, ...hardAndEasyHotkeys] : []);
+  useHotkeys(
+    !controller.isFinished ? [...baseHotkeys, ...hardAndEasyHotkeys] : []
+  );
 
   return (
-    <Group className={classes.footerContainer} justify="center">
+    <Group className={BASE_URL} justify="center">
       {controller.showingAnswer ? (
-        <Group gap="xs" wrap="nowrap" justify="center" w="100%" maw="25rem">
+        <div className={BASE_URL + "__buttons"}>
           <AnswerCardButton
             label={t("learning.rate-again")}
             timeInfo={timeStringForRating(Rating.Again, controller)}
@@ -104,9 +110,13 @@ function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
               action={() => answer(Rating.Easy)}
             />
           )}
-        </Group>
+        </div>
       ) : (
-        <Button onClick={controller.showAnswer} h="2.5rem">
+        <Button
+          onClick={controller.showAnswer}
+          style={{ height: "2.5rem" }}
+          variant="primary"
+        >
           {t("learning.show-answer")}
         </Button>
       )}
@@ -115,5 +125,3 @@ function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
 }
 
 export default LearnViewFooter;
-
-/**/

@@ -1,0 +1,51 @@
+.cloud-sync-sign-in {
+  background: url("https://images.unsplash.com/photo-1711020023180-3c6569fed486?q=80&w=2350&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--radius-lg);
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  margin-bottom: var(--spacing-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ffffffcc;
+}
+
+.cloud-sync-sign-in .badge {
+  background-color: #ffffffcc;
+  color: var(--color-neutral-700);
+}
+
+.cloud-sync-sign-in h1 {
+  font-size: var(--font-size-3xl);
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  font-family: var(--font-serif);
+  font-weight: 600;
+  margin: 0;
+}
+
+.cloud-sync-sign-in p {
+  text-align: center;
+  font-size: var(--font-size-md);
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
+  font-family: var(--font-sans);
+  margin-bottom: var(--spacing-3xl);
+}
+
+@media (max-width: 768px) {
+  .cloud-sync-sign-in {
+    aspect-ratio: 4 / 3;
+  }
+
+  .cloud-sync-sign-in h1 {
+    font-size: var(--font-size-2xl);
+  }
+
+  .cloud-sync-sign-in p {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-xl);
+  }
+}

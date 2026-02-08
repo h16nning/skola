@@ -1,45 +1,43 @@
 import { db } from "@/logic/db";
-import { Badge, Button, Card, Stack, Text } from "@mantine/core";
-import { notifications } from "@mantine/notifications";
 import { useObservable } from "dexie-react-hooks";
-import { useCallback } from "react";
+import "./CloudSection.css";
 
-export default function CloudSection({
-  minimalMode,
-}: { minimalMode: boolean }) {
+const BASE = "cloud-section";
+
+interface CloudSectionProps {
+  minimalMode: boolean;
+}
+
+export default function CloudSection({ minimalMode }: CloudSectionProps) {
   const user = useObservable(db.cloud.currentUser);
+  const syncState = useObservable(db.cloud.syncState);
+  const persistedSyncState = useObservable(db.cloud.persistedSyncState);
 
-  const handleLogin = useCallback(async () => {
-    try {
-      await db.cloud.login();
-    } catch (e: any) {
-      if (e?.name === "AbortError") {
-        return;
-      }
-      notifications.show({
-        message: <span>{e?.message}</span>,
-        color: "red",
-      });
-    }
-  }, []);
-
+  if (!user || !user.isLoggedIn || minimalMode) {
+    return null;
+  }
   return (
-    !minimalMode && (
-      <Card component="section" p="md">
-        <Stack gap="sm">
-          <Badge color="red">Experimental</Badge>
-          {!user?.isLoggedIn ? (
-            <Button onClick={handleLogin}>Login with OTP</Button>
-          ) : (
-            <>
-              <Text size="xs" c="gray">
-                Logged in as <strong>{user.email}</strong>
-              </Text>
-              <Button onClick={() => db.cloud.logout()}>Logout</Button>
-            </>
-          )}
-        </Stack>
-      </Card>
-    )
+    <section className={BASE}>
+      <p>{user.email}</p>
+      <h2>Sync State</h2>
+      <p>Error Message: {syncState?.error?.message}</p>
+      <p>License: {syncState?.license}</p>
+      <p>Phase: {syncState?.phase}</p>
+      <p>Progresss: {syncState?.progress} / 100</p>
+      <p>Status: {syncState?.status}</p>
+      <h2>Persisted Sync State</h2>
+      <p>Client Identiy: {persistedSyncState?.clientIdentity}</p>
+      <p>Error: {persistedSyncState?.error}</p>
+      <p>Initially Synced: {persistedSyncState?.initiallySynced}</p>
+      <p>
+        Latest Revision{JSON.stringify(persistedSyncState?.latestRevisions)}
+      </p>
+      <p>
+        Timestamp:{" "}
+        {persistedSyncState?.timestamp?.toLocaleDateString() +
+          " " +
+          persistedSyncState?.timestamp?.toLocaleTimeString()}
+      </p>
+    </section>
   );
 }

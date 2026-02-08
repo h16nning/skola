@@ -1,4 +1,4 @@
-import { Group, Text, ThemeIcon } from "@mantine/core";
+import { LearnController } from "@/logic/learn";
 import {
   IconBook,
   IconCircleArrowUpRight,
@@ -6,8 +6,10 @@ import {
   IconSparkles,
 } from "@tabler/icons-react";
 import { ReactNode } from "react";
-import { LearnController } from "../../../logic/learn";
-import classes from "./RemainingCardsIndicator.module.css";
+import "./RemainingCardsIndicator.css";
+
+const BASE = "remaining-cards-indicator";
+
 interface RemainingCardsIndicatorProps {
   controller: LearnController;
 }
@@ -16,10 +18,10 @@ export default function RemainingCardsIndicator({
   controller,
 }: RemainingCardsIndicatorProps) {
   return (
-    <Group align="end" gap="xs" className={classes.container} wrap="nowrap">
+    <div className={BASE}>
       <TinyStat
         value={controller.newCardsNumber}
-        color="grape"
+        color="fuchsia"
         icon={<IconSparkles />}
       />
       <TinyStat
@@ -29,15 +31,15 @@ export default function RemainingCardsIndicator({
       />
       <TinyStat
         value={controller.toReviewCardsNumber}
-        color="blue"
+        color="sky"
         icon={<IconBook />}
       />
       <TinyStat
         value={controller.learnedCardsNumber}
-        color="gray"
+        color="neutral"
         icon={<IconInfoCircle />}
       />
-    </Group>
+    </div>
   );
 }
 
@@ -45,29 +47,28 @@ export function TinyStat({
   value,
   color,
   icon,
-}: { value: number; color: string; icon: ReactNode }) {
+}: {
+  value: number;
+  color: string;
+  icon: ReactNode;
+}) {
+  const colorMap: Record<string, string> = {
+    fuchsia: "var(--theme-fuchsia-700)",
+    orange: "var(--theme-orange-700)",
+    sky: "var(--theme-sky-700)",
+    neutral: "var(--theme-neutral-600)",
+  };
+
+  const iconColor = colorMap[color] || "var(--theme-neutral-600)";
+
   return (
-    <Group
-      gap="0.125rem"
-      wrap="nowrap"
-      style={{
-        color: `var(--mantine-color-${color}-strong`,
-      }}
-    >
-      <ThemeIcon
-        style={{ color: `var(--mantine-color-${color}-strong` }}
-        variant="transparent"
-        size={20}
-      >
+    <div className={`${BASE}__tiny-stat`}>
+      <div className={`${BASE}__icon`} style={{ color: iconColor }}>
         {icon}
-      </ThemeIcon>
-      <Text
-        fz="sm"
-        fw={600}
-        style={{ color: `var(--mantine-color-${color}-strong)` }}
-      >
+      </div>
+      <span className={`${BASE}__value`} style={{ color: iconColor }}>
         {value}
-      </Text>
-    </Group>
+      </span>
+    </div>
   );
 }

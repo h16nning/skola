@@ -1,0 +1,32 @@
+.settings-input {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: var(--spacing-xs);
+  width: 100%;
+  position: relative;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.settings-input--switch,
+.settings-input--checkbox {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  justify-content: space-between;
+}
+
+.settings-input__status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--icon-size-md);
+  height: var(--icon-size-md);
+  flex-shrink: 0;
+}
+
+.settings-input--switch .settings-input__status,
+.settings-input--checkbox .settings-input__status {
+  margin-top: 0;
+}

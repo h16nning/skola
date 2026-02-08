@@ -1,0 +1,11 @@
+.kbd {
+  display: inline-block;
+  padding: var(--spacing-xxs) var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: 1;
+  font-family: var(--font-sans);
+  color: var(--theme-neutral-500);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}

@@ -175,11 +175,19 @@
       "color-scheme-dark": "Escuro",
       "color-scheme-description": "Escolha entre o tema sempre claro ou escuro ou use o tema do seu sistema.",
       "color-scheme-light": "Claro",
+      "density": "Densidade",
+      "density-auto": "Auto",
+      "density-compact": "Compacto",
+      "density-description": "Escolha entre espaçamento relaxado ou compacto. Auto usa compacto no desktop e relaxado em dispositivos de toque.",
+      "density-relaxed": "Relaxado",
       "title": "Aparência"
     },
     "database": {
       "storage-used": "usado",
       "title": "Banco de dados"
+    },
+    "cloud": {
+      "title": "Sincronização na Nuvem"
     },
     "developer": {
       "description": "Esta é a aba de desenvolvedor. Ela irá conter configurações extras para desenvolvedores.",

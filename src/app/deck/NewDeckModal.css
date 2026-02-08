@@ -1,0 +1,18 @@
+.new-deck-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.new-deck-modal__status {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--theme-red-600);
+}
+
+.new-deck-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+}

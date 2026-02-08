@@ -1,9 +1,10 @@
+import AppHeaderTitle from "@/components/AppHeaderTitle/AppHeaderTitle";
+import { Tabs } from "@/components/ui/Tabs";
 import { useSetting } from "@/logic/settings/hooks/useSetting";
-import { Center, Stack, Tabs, Title } from "@mantine/core";
-import { useDocumentTitle } from "@mantine/hooks";
 import {
   IconBolt,
   IconBraces,
+  IconCloud,
   IconDatabase,
   IconInfoCircle,
   IconPalette,
@@ -15,55 +16,68 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AppHeaderContent } from "../shell/Header/Header";
 import AboutSettingsView from "./AboutSettingsView";
 import AppearanceSettingsView from "./AppearanceSettingsView";
+import CloudSettingsView from "./CloudSettingsView";
 import DatabaseSettingsView from "./DatabaseSettingsView/DatabaseSettingsView";
 import EditingSettingsView from "./EditingSettingsView/EditingSettingsView";
 import GeneralSettingsView from "./GeneralSettingsView";
 import LearnSettingsView from "./LearnSettingsView";
+import "./SettingsView.css";
+
+const BASE = "settings-view";
 
 export default function SettingsView() {
-  useDocumentTitle(`${t("settings.title")} | Skola`);
   const [developerMode] = useSetting("developerMode");
   const navigate = useNavigate();
   const { section } = useParams();
 
+  const activeSection = section || "general";
+
   return (
-    <Stack gap="xl" w="100%" maw="600px">
+    <div className={BASE}>
       <AppHeaderContent>
-        <Center>
-          <Title order={3}>{t("settings.title")}</Title>
-        </Center>
+        <AppHeaderTitle>{t("settings.title")}</AppHeaderTitle>
       </AppHeaderContent>
       <Tabs
-        orientation="horizontal"
         variant="pills"
-        value={section}
-        defaultValue={"general"}
+        value={activeSection}
+        defaultValue="general"
         onChange={(value) => navigate(`/settings/${value}`)}
       >
         <Tabs.List>
-          <Tabs.Tab value="general" leftSection={<IconSettings />}>
+          <Tabs.Tab value="general">
+            <IconSettings size={18} />
             {t("settings.general.title")}
           </Tabs.Tab>
-          <Tabs.Tab value="appearance" leftSection={<IconPalette />}>
+          <Tabs.Tab value="appearance">
+            <IconPalette size={18} />
             {t("settings.appearance.title")}
           </Tabs.Tab>
-          <Tabs.Tab value="editing" leftSection={<IconPencil />}>
+          <Tabs.Tab value="editing">
+            <IconPencil size={18} />
             {t("settings.editing.title")}
           </Tabs.Tab>
-          <Tabs.Tab value="learn" leftSection={<IconBolt />}>
+          <Tabs.Tab value="learn">
+            <IconBolt size={18} />
             {t("settings.learn.title")}
           </Tabs.Tab>
-          <Tabs.Tab value="database" leftSection={<IconDatabase />}>
+          <Tabs.Tab value="database">
+            <IconDatabase size={18} />
             {t("settings.database.title")}
           </Tabs.Tab>
-          <Tabs.Tab value="about" leftSection={<IconInfoCircle />}>
+          <Tabs.Tab value="cloud">
+            <IconCloud size={18} />
+            {t("settings.cloud.title")}
+          </Tabs.Tab>
+          <Tabs.Tab value="about">
+            <IconInfoCircle size={18} />
             {t("settings.about.title")}
           </Tabs.Tab>
-          {developerMode ? (
-            <Tabs.Tab value="developer" leftSection={<IconBraces />}>
+          {developerMode && (
+            <Tabs.Tab value="developer">
+              <IconBraces size={18} />
               {t("settings.developer.title")}
             </Tabs.Tab>
-          ) : null}
+          )}
         </Tabs.List>
         <Tabs.Panel value="general">
           <GeneralSettingsView />
@@ -80,13 +94,16 @@ export default function SettingsView() {
         <Tabs.Panel value="database">
           <DatabaseSettingsView />
         </Tabs.Panel>
+        <Tabs.Panel value="cloud">
+          <CloudSettingsView />
+        </Tabs.Panel>
         <Tabs.Panel value="about">
           <AboutSettingsView />
         </Tabs.Panel>
-        <Tabs.Panel value="Developer">
+        <Tabs.Panel value="developer">
           {t("settings.developer.description")}
         </Tabs.Panel>
       </Tabs>
-    </Stack>
+    </div>
   );
 }

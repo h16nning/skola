@@ -1,0 +1,105 @@
+.switch {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  font-family: var(--font-sans);
+}
+
+.switch--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.switch--label-left {
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.switch--label-right {
+  flex-direction: row;
+}
+
+.switch__label-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  flex: 1;
+}
+
+.switch__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--theme-neutral-900);
+  line-height: 1.4;
+}
+
+.switch__control-wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.switch--disabled .switch__control-wrapper {
+  cursor: not-allowed;
+}
+
+.switch__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.switch__track {
+  display: block;
+  width: 2.75rem;
+  height: 1.5rem;
+  background-color: var(--theme-neutral-300);
+  border-radius: var(--radius-full);
+  transition: background-color 0.2s ease;
+  position: relative;
+}
+
+.switch__control-wrapper:hover .switch__track {
+  background-color: var(--theme-neutral-400);
+}
+
+.switch__input:focus-visible + .switch__track {
+  outline: 2px solid var(--theme-primary-500);
+  outline-offset: 2px;
+}
+
+.switch__input:checked + .switch__track {
+  background-color: var(--theme-primary-600);
+}
+
+.switch__input:checked + .switch__track:hover {
+  background-color: var(--theme-primary-700);
+}
+
+.switch__thumb {
+  position: absolute;
+  top: 0.125rem;
+  left: 0.125rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: white;
+  border-radius: var(--radius-full);
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.switch__input:checked + .switch__track .switch__thumb {
+  transform: translateX(1.25rem);
+}
+
+.switch--disabled .switch__track {
+  background-color: var(--theme-neutral-200);
+}
+
+.switch--disabled .switch__control-wrapper:hover .switch__track {
+  background-color: var(--theme-neutral-200);
+}

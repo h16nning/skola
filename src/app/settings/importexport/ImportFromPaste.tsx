@@ -1,5 +1,7 @@
-import { Stack, TextInput, Textarea } from "@mantine/core";
 import { useEffect, useState } from "react";
+import { Stack } from "../../../components/ui/Stack";
+import { TextInput } from "../../../components/ui/TextInput";
+import { Textarea } from "../../../components/ui/Textarea";
 import ImportButton from "./ImportButton";
 import { ImportFromSourceProps } from "./ImportModal";
 import { importCards } from "./importLogic";
@@ -16,7 +18,6 @@ export default function ImportFromPaste({
   const [questionAnswerSeperator, setQuestionAnswerSeperator] =
     useState<string>("\t");
 
-  // Clear textarea after successful import
   useEffect(() => {
     if (importStatus === "success") {
       setPastedText("");
@@ -24,14 +25,13 @@ export default function ImportFromPaste({
   }, [importStatus]);
 
   return (
-    <Stack align="start">
+    <Stack align="start" gap="md">
       <Textarea
         label="Paste your cards here"
         placeholder="Question1&#9;Answer1&#10;Question2&#9;Answer2&#10;..."
         value={pastedText}
         onChange={(e) => setPastedText(e.currentTarget.value)}
         minRows={8}
-        autosize
         style={{ width: "100%" }}
       />
       <TextInput
@@ -39,6 +39,7 @@ export default function ImportFromPaste({
         value={questionAnswerSeperator}
         onChange={(e) => setQuestionAnswerSeperator(e.currentTarget.value)}
         description="Default is Tab character. Change if your data uses a different separator."
+        style={{ width: "100%" }}
       />
       <ImportButton
         importFunction={async () => {

@@ -1,32 +1,36 @@
 import DangerousConfirmModal from "@/components/DangerousConfirmModal";
-import { Button, Card, FileButton, Stack, Text, Title } from "@mantine/core";
+import { Button } from "@/components/ui/Button";
+import { Paper } from "@/components/ui/Paper";
+import { Stack } from "@/components/ui/Stack";
 import {
   IconDatabaseExport,
   IconDatabaseImport,
   IconTrash,
 } from "@tabler/icons-react";
 import { exportDB, importInto } from "dexie-export-import";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../../logic/db";
-import classes from "./DatabaseSettingsView.module.css";
+import "./DatabaseSettingsView.css";
 import StorageSection from "./StorageSection";
+
+const BASE = "database-settings-view";
 
 export default function DatabaseSettingsView() {
   const navigate = useNavigate();
   const [deleteAllDataModalOpened, setDeleteAllDataModalOpened] =
     useState<boolean>(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <>
       <Stack gap="xl" align="start">
         <StorageSection />
         <Button
-          leftSection={<IconDatabaseExport />}
+          leftSection={<IconDatabaseExport size={18} />}
           onClick={async () => {
             const now = new Date(Date.now());
             const blob = await exportDB(db);
-            //convert blob to file and download it
             const a = document.createElement("a");
             a.href = URL.createObjectURL(blob);
             a.download = `skola-export-${now.toLocaleDateString()}-${now.toLocaleTimeString()}.json`;
@@ -35,15 +39,20 @@ export default function DatabaseSettingsView() {
         >
           Export All
         </Button>
-        <Card withBorder className={classes.dangerZone}>
+        <Paper withBorder className={`${BASE}__danger-zone`}>
           <Stack gap="md" align="start">
-            <Title order={6}>Danger Zone</Title>
-            <Text size="sm">
+            <h6 className={`${BASE}__danger-title`}>Danger Zone</h6>
+            <p className={`${BASE}__danger-text`}>
               This section contains potentially dangerous settings. Proceed with
               utmost caution!
-            </Text>
-            <FileButton
-              onChange={(file) => {
+            </p>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".json"
+              className={`${BASE}__file-input`}
+              onChange={(e) => {
+                const file = e.target.files?.[0];
                 if (file) {
                   const reader = new FileReader();
                   reader.onload = async (event) => {
@@ -61,28 +70,25 @@ export default function DatabaseSettingsView() {
                   reader.readAsText(file);
                 }
               }}
-              accept=".json"
-            >
-              {(props) => (
-                <Button
-                  leftSection={<IconDatabaseImport />}
-                  color="red"
-                  {...props}
-                >
-                  Import Database (overwrites conflicting data, e.g. settings)
-                </Button>
-              )}
-            </FileButton>
+            />
             <Button
-              leftSection={<IconTrash />}
-              variant="filled"
-              color="red"
+              leftSection={<IconDatabaseImport size={18} />}
+              variant="primary"
+              style={{ backgroundColor: "#dc2626" }}
+              onClick={() => fileInputRef.current?.click()}
+            >
+              Import Database (overwrites conflicting data, e.g. settings)
+            </Button>
+            <Button
+              leftSection={<IconTrash size={18} />}
+              variant="primary"
+              style={{ backgroundColor: "#dc2626" }}
               onClick={() => setDeleteAllDataModalOpened(true)}
             >
               Delete all Data
             </Button>
           </Stack>
-        </Card>
+        </Paper>
       </Stack>
       <DangerousConfirmModal
         dangerousAction={() => {

@@ -1,0 +1,39 @@
+.deck-tree__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.deck-tree__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xs);
+  margin: calc(-1 * var(--spacing-xs));
+  margin-right: calc(-1 * var(--spacing-sm));
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  color: var(--theme-neutral-400);
+  transition: transform 0.15s ease, color 0.15s ease, background-color 0.1s ease;
+}
+
+.deck-tree__toggle:hover {
+  color: var(--theme-neutral-600);
+}
+
+.deck-tree__toggle--open {
+  transform: rotate(90deg);
+}
+
+.deck-tree__toggle:focus-visible {
+  outline: var(--ring-outline);
+  box-shadow: var(--ring-shadow);
+}
+
+.deck-tree__children {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--spacing-xs);
+  gap: var(--spacing-xs);
+}

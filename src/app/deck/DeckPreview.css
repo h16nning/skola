@@ -1,0 +1,23 @@
+@import "./DeckCardBase.css";
+
+.deck-preview {
+  padding: var(--spacing-lg);
+  cursor: pointer;
+  aspect-ratio: 3 / 2;
+}
+
+.deck-preview__content {
+  z-index: 1;
+}
+
+.deck-preview:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.deck-preview:active {
+  transform: scale(0.98);
+}
+
+.deck-preview__details {
+  height: var(--spacing-lg);
+}

@@ -1,4 +1,4 @@
-import { Stack } from "@mantine/core";
+import { Stack } from "@/components/ui/Stack";
 import { useTranslation } from "react-i18next";
 import LanguageSelect from "./LanguageSelect";
 import SettingsInput from "./SettingsInput";

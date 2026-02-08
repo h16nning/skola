@@ -1,6 +1,9 @@
-import { Group, Paper, RingProgress, Text } from "@mantine/core";
+import { Paper } from "@/components/ui/Paper";
 import { t } from "i18next";
 import { useEffect, useState } from "react";
+import "./StorageSection.css";
+
+const BASE = "storage-section";
 
 type StorageInfo = StorageEstimate & {
   usageString?: string;
@@ -33,6 +36,41 @@ async function calulateStorageInfo(setStorageInfo: Function) {
   }
 }
 
+function RingProgress({ percentage }: { percentage: number }) {
+  const radius = 32;
+  const strokeWidth = 8;
+  const normalizedRadius = radius - strokeWidth / 2;
+  const circumference = normalizedRadius * 2 * Math.PI;
+  const strokeDashoffset = circumference - (percentage / 100) * circumference;
+
+  return (
+    <svg width={80} height={80} className={`${BASE}__ring`}>
+      <circle
+        className={`${BASE}__ring-background`}
+        stroke="var(--theme-neutral-200)"
+        fill="transparent"
+        strokeWidth={strokeWidth}
+        r={normalizedRadius}
+        cx={40}
+        cy={40}
+      />
+      <circle
+        className={`${BASE}__ring-progress`}
+        stroke="var(--theme-primary-600)"
+        fill="transparent"
+        strokeWidth={strokeWidth}
+        strokeDasharray={`${circumference} ${circumference}`}
+        style={{ strokeDashoffset }}
+        strokeLinecap="round"
+        r={normalizedRadius}
+        cx={40}
+        cy={40}
+        transform="rotate(-90 40 40)"
+      />
+    </svg>
+  );
+}
+
 export default function StorageSection() {
   const [storageInfo, setStorageInfo] = useState<StorageInfo>({});
 
@@ -41,25 +79,17 @@ export default function StorageSection() {
   }, []);
 
   return (
-    <Paper w="100%" withBorder shadow="xs" p="sm" radius="sm">
+    <Paper withBorder className={BASE}>
       {storageInfo.usage !== undefined && storageInfo.quota !== undefined && (
-        <Group justify="space-between">
+        <div className={`${BASE}__content`}>
           <RingProgress
-            size={80}
-            sections={[
-              {
-                value: (storageInfo.usage / storageInfo.quota) * 100,
-                color: "forest",
-              },
-            ]}
-            thickness={8}
-            roundCaps
+            percentage={(storageInfo.usage / storageInfo.quota) * 100}
           />
-          <Text fw={600}>
+          <p className={`${BASE}__text`}>
             {storageInfo.usageString} / {storageInfo.quotaString}{" "}
             {t("settings.database.storage-used")}
-          </Text>
-        </Group>
+          </p>
+        </div>
       )}
     </Paper>
   );

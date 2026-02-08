@@ -1,0 +1,29 @@
+.cognitive-prompt-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.cognitive-prompt-connector__spacer {
+  height: var(--spacing-md);
+}
+
+.cognitive-prompt-connector__line-top {
+  width: 2px;
+  height: var(--spacing-md);
+  margin-bottom: 0;
+  z-index: 0;
+  transition: background-color 0.3s ease;
+  background-color: var(--theme-neutral-300);
+}
+
+.cognitive-prompt-connector__line-bottom {
+  width: 2px;
+  height: var(--spacing-md);
+  margin-top: 0;
+  z-index: 0;
+  transition: background-color 0.3s ease;
+  background-color: var(--theme-neutral-300);
+}

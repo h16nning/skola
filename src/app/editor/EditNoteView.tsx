@@ -1,14 +1,19 @@
+import { Group } from "@/components/ui/Group";
+import { Stack } from "@/components/ui/Stack";
+import { Text } from "@/components/ui/Text";
 import { getAdapter } from "@/logic/NoteTypeAdapter";
 import { NoteTypeLabels } from "@/logic/card/card";
 import { useDeckOf } from "@/logic/deck/hooks/useDeckOf";
 import { getNote } from "@/logic/note/getNote";
 import { Note, NoteType } from "@/logic/note/note";
-import { Group, Stack, Text } from "@mantine/core";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import LinkedNotesSection from "../explorer/LinkedNotesSection";
+import "./EditNoteView.css";
 import NoteMenu from "./NoteMenu";
 import NoteSubmitButton from "./NoteSubmitButton";
+
+const BASE_URL = "edit-note";
 
 type SetOpenedNote = (note: Note<NoteType> | undefined) => void;
 
@@ -27,7 +32,7 @@ export function EditNoteView({
 
 export function NoNoteView() {
   return (
-    <Text fz="sm" c="dimmed">
+    <Text size="sm" variant="dimmed">
       No note selected
     </Text>
   );
@@ -57,12 +62,12 @@ function NoteView({
   }, [note, deck, requestedFinish, setRequestedFinish]);
 
   return (
-    <Stack style={{ height: "100%", overflowY: "scroll" }} gap="xl">
+    <Stack className={BASE_URL} gap="xl">
       <Group justify="space-between" wrap="nowrap">
         <Group>
-          <Text fz="xs" fw={600}>
+          <Text size="xs" weight="semibold">
             {t("note.edit.title")}{" "}
-            <Text c="dimmed" span fz="xs" fw={600}>
+            <Text variant="dimmed" size="xs" weight="semibold">
               ({NoteTypeLabels[note.content.type]})
             </Text>
           </Text>

@@ -1,0 +1,26 @@
+.learn-view-header__progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(100%);
+}
+
+.learn-view-header,
+.learn-view-header__left-group,
+.learn-view-header__right-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.learn-view-header {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.learn-view-header__left-group,
+.learn-view-header__right-group {
+  gap: var(--spacing-md);
+}

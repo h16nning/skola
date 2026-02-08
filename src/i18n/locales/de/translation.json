@@ -83,7 +83,8 @@
     "no-decks-found": "Du hast noch keine Stapel erstellt.",
     "title": "Startseite",
     "welcome": "Willkommen!",
-    "welcome-user": "Willkommen zurück, {{name}}!"
+    "welcome-user": "Willkommen zurück, {{name}}!",
+    "welcome-subtitle": "Bist du bereit zu lernen?"
   },
   "learning": {
     "cognitive-prompts": {
@@ -206,11 +207,19 @@
       "color-scheme-dark": "Dunkel",
       "color-scheme-description": "Wähle ein immer helles oder dunkles Erscheinungsbild oder benutze deine Systemeinstellungen.",
       "color-scheme-light": "Hell",
+      "density": "Dichte",
+      "density-auto": "Auto",
+      "density-compact": "Kompakt",
+      "density-description": "Wähle zwischen entspanntem oder kompaktem Abstand. Auto verwendet kompakt auf Desktop und entspannt auf Touch-Geräten.",
+      "density-relaxed": "Entspannt",
       "title": "Erscheinungsbild"
     },
     "database": {
       "storage-used": "benutzt",
       "title": "Datenbank"
+    },
+    "cloud": {
+      "title": "Cloud-Synchronisierung"
     },
     "developer": {
       "description": "",

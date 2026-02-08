@@ -1,0 +1,6 @@
+.input-error {
+  font-size: var(--font-size-sm);
+  color: var(--theme-error-600, #dc2626);
+  font-family: var(--font-sans);
+  line-height: 1.4;
+}

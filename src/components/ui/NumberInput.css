@@ -1,0 +1,62 @@
+.number-input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  width: 100%;
+}
+
+.number-input__field {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-md);
+  font-family: var(--font-sans);
+  color: var(--theme-neutral-900);
+  background-color: var(--theme-neutral-50);
+  border: 1px solid var(--theme-neutral-300);
+  box-shadow: var(--inset-shadow-xs);
+  border-radius: var(--radius-md);
+  transition: var(--transition-input);
+}
+
+.number-input__field:hover {
+  background-color: var(--theme-neutral-100);
+}
+
+.number-input__field:focus {
+  outline: none;
+  border-color: var(--theme-primary-500);
+  box-shadow: 0 0 0 3px var(--theme-primary-100);
+}
+
+.number-input__field:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: var(--theme-neutral-100);
+}
+
+.number-input--error .number-input__field {
+  border-color: #dc2626;
+}
+
+.number-input--error .number-input__field:focus {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.number-input__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.number-input__right-section {
+  position: absolute;
+  right: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.number-input__wrapper .number-input__field {
+  padding-right: 2.5rem;
+}

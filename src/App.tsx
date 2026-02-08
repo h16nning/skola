@@ -1,16 +1,7 @@
-import "@mantine/core/styles.css";
-import "@mantine/charts/styles.css";
-import "@mantine/notifications/styles.css";
-import "@mantine/spotlight/styles.css";
-import "mantine-datatable/styles.css";
+import "./app/shell/AppShell.css";
 import "./style/index.css";
+import "./style/shell.css";
 
-import classes from "./App.module.css";
-import { cssVariablesResolver, presetTheme } from "./style/StyleProvider";
-
-import { AppShell, Center, MantineProvider, Stack } from "@mantine/core";
-import { useDisclosure, useLocalStorage } from "@mantine/hooks";
-import { Notifications } from "@mantine/notifications";
 import { useEffect } from "react";
 import { I18nextProvider } from "react-i18next";
 import { Outlet, useLocation } from "react-router-dom";
@@ -18,8 +9,21 @@ import WelcomeView from "./app/WelcomeView";
 import LoginUI from "./app/login/LoginUI";
 import Header from "./app/shell/Header/Header";
 import Sidebar from "./app/shell/Sidebar/Sidebar";
+import {
+  NotificationContainer,
+  NotificationProvider,
+  useNotificationSetup,
+} from "./components/Notification";
+import { useDensity } from "./hooks/useDensity";
+import { useTheme } from "./hooks/useTheme";
 import i18n from "./i18n";
+import { breakpoints } from "./lib/breakpoints";
+import { useDisclosure } from "./lib/hooks/useDisclosure";
+import { useLocalStorage } from "./lib/hooks/useLocalStorage";
+import { useMediaQuery } from "./lib/hooks/useMediaQuery";
 import { useSetting } from "./logic/settings/hooks/useSetting";
+
+const BASE = "app-shell";
 
 function useRestoreLanguage() {
   const [language] = useSetting("language");
@@ -30,76 +34,83 @@ function useRestoreLanguage() {
   return language;
 }
 
-export default function App() {
-  const [colorSchemePreference] = useSetting("colorSchemePreference");
+function AppContent() {
+  useDensity();
+  useTheme();
   useRestoreLanguage();
-  const [sidebarMenuOpened, sidebarhandlers] = useDisclosure(false);
+  useNotificationSetup();
+  const [sidebarMenuOpened, sidebarHandlers] = useDisclosure(false);
 
-  const [registered] = useLocalStorage({
-    key: "registered",
-    defaultValue: false,
-  });
+  const [registered] = useLocalStorage("registered", false);
 
-  const routeIsLearn = useLocation().pathname.includes("learn");
+  const routeIsLearn = useLocation().pathname.startsWith("/learn");
+  const isXsOrSmaller = useMediaQuery(`(max-width: ${breakpoints.xs}px)`);
+  const fullscreenMode = isXsOrSmaller || routeIsLearn;
+
   useEffect(() => {
     if (routeIsLearn) {
-      sidebarhandlers.close();
+      sidebarHandlers.close();
     } else {
-      sidebarhandlers.open();
+      sidebarHandlers.open();
     }
   }, [routeIsLearn]);
 
+  const overlayClasses = [
+    `${BASE}__overlay`,
+    fullscreenMode && sidebarMenuOpened && `${BASE}__overlay--visible`,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <I18nextProvider i18n={i18n}>
-      <MantineProvider
-        defaultColorScheme={colorSchemePreference}
-        cssVariablesResolver={cssVariablesResolver}
-        theme={presetTheme}
-      >
-        <Notifications
-          transitionDuration={400}
-          containerWidth="20rem"
-          position="bottom-center"
-          autoClose={2000}
-          limit={1}
-        />
-        {registered ? (
-          <AppShell
-            layout="alt"
-            navbar={{
-              width: { xs: "3.5rem", lg: 300 },
-              breakpoint: "xs",
-              collapsed: {
-                mobile: !sidebarMenuOpened,
-                desktop: !sidebarMenuOpened,
-              },
-            }}
-            header={{ height: 60 }}
-          >
-            <Header
-              menuOpened={sidebarMenuOpened}
-              menuHandlers={sidebarhandlers}
-            />
-            <AppShell.Navbar>
+      <NotificationContainer />
+      {registered ? (
+        <div className={BASE}>
+          <Header
+            menuOpened={sidebarMenuOpened}
+            menuHandlers={sidebarHandlers}
+          />
+          <div className={`${BASE}__body`}>
+            <nav className={`${BASE}__navbar`}>
               <Sidebar
                 menuOpened={sidebarMenuOpened}
-                menuHandlers={sidebarhandlers}
+                menuHandlers={sidebarHandlers}
               />
-            </AppShell.Navbar>
-
-            <AppShell.Main>
-              <Stack h="100%">
-                <Center className={classes.main} p="md" h="100%" mih={0}>
+            </nav>
+            <div
+              className={overlayClasses}
+              onClick={sidebarHandlers.close}
+              onKeyDown={(e) => {
+                if (e.key === "Escape" || e.key === "Enter" || e.key === " ") {
+                  sidebarHandlers.close();
+                }
+              }}
+              role="button"
+              tabIndex={fullscreenMode && sidebarMenuOpened ? 0 : -1}
+              aria-label="Close sidebar"
+            />
+            <main className={`${BASE}__main`}>
+              <div className={`${BASE}__main-content`}>
+                <div className={`${BASE}__main-center`}>
                   <Outlet />
-                </Center>
-              </Stack>
-            </AppShell.Main>
-            <LoginUI />
-          </AppShell>
-        ) : (
-          <WelcomeView />
-        )}
-      </MantineProvider>
+                </div>
+              </div>
+            </main>
+          </div>
+          <LoginUI />
+        </div>
+      ) : (
+        <WelcomeView />
+      )}
     </I18nextProvider>
+  );
+}
+
+export default function App() {
+  return (
+    <NotificationProvider>
+      <AppContent />
+    </NotificationProvider>
   );
 }

@@ -1,8 +1,7 @@
 import { NoteSortFunction } from "@/logic/note/sort";
-import { Box, Table } from "@mantine/core";
 import { IconArrowUp } from "@tabler/icons-react";
-import cx from "clsx";
-import classes from "./NoteTable.module.css";
+
+const BASE = "note-table";
 
 interface NoteTableHeadItemProps {
   name: string;
@@ -17,25 +16,28 @@ export default function NoteTableHeadItem({
   sort,
   setSort,
 }: NoteTableHeadItemProps) {
+  const isActive = sort[0] === sortFunction;
+  const isDescending = isActive && !sort[1];
+
+  const classes = [
+    `${BASE}__head-cell`,
+    isActive ? `${BASE}__head-cell--active` : "",
+    isDescending ? `${BASE}__head-cell--desc` : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <Table.Th
-      className={classes.th}
-      component="th"
-      onClick={() => {
-        setSort([sortFunction, sort[0] === sortFunction ? !sort[1] : true]);
-      }}
+    <th
+      className={classes}
+      onClick={() => setSort([sortFunction, isActive ? !sort[1] : true])}
     >
-      <Box
-        className={cx(classes.thInnerWrapper, {
-          [classes.thInnerWrapperActive]: sort[0] === sortFunction,
-          [classes.thInnerWrapperActiveDesc]:
-            sort[0] === sortFunction && !sort[1],
-        })}
-        component="div"
-      >
+      <span className={`${BASE}__head-cell-content`}>
         <span>{name}</span>
-        {<IconArrowUp size={16} />}
-      </Box>
-    </Table.Th>
+        <span className={`${BASE}__sort-icon`}>
+          <IconArrowUp size={14} />
+        </span>
+      </span>
+    </th>
   );
 }

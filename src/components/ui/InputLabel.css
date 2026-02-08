@@ -1,0 +1,11 @@
+.input-label {
+  font-size: var(--font-size-md);
+  font-weight: 500;
+  color: var(--theme-neutral-900);
+  font-family: var(--font-sans);
+  display: block;
+}
+
+.input-label--disabled {
+  opacity: 0.6;
+}

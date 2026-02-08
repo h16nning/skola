@@ -1,0 +1,35 @@
+.visual-feedback {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  pointer-events: none;
+  box-shadow: none;
+  opacity: 0.6;
+  transition: box-shadow ease-out 0.05s;
+}
+
+.visual-feedback--easy,
+.visual-feedback--good,
+.visual-feedback--hard,
+.visual-feedback--again {
+  transition: none;
+}
+
+.visual-feedback--good {
+  box-shadow: inset 0 0 40px 10px var(--theme-primary-600);
+}
+
+.visual-feedback--easy {
+  box-shadow: inset 0 0 40px 10px var(--theme-sky-600);
+}
+
+.visual-feedback--hard {
+  box-shadow: inset 0 0 40px 10px var(--theme-orange-600);
+}
+
+.visual-feedback--again {
+  box-shadow: inset 0 0 40px 10px var(--theme-red-600);
+}

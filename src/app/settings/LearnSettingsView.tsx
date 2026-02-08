@@ -1,5 +1,6 @@
+import { Badge } from "@/components/ui/Badge";
+import { Stack } from "@/components/ui/Stack";
 import { useSetting } from "@/logic/settings/hooks/useSetting";
-import { Badge, Group, Stack, Text } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import SettingsInput from "./SettingsInput";
 
@@ -17,12 +18,18 @@ export default function LearnSettingsView() {
       />
       <SettingsInput
         label={
-          <Group gap="xs">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "var(--spacing-xs)",
+            }}
+          >
             {t("settings.learn.show-cognitive-prompts")}
-            <Badge color="red" size="xs">
+            <Badge color="primary" size="sm">
               Beta
             </Badge>
-          </Group>
+          </div>
         }
         description={t("settings.learn.show-cognitive-prompts-description")}
         settingsKey="showCognitivePrompts"
@@ -52,7 +59,9 @@ export default function LearnSettingsView() {
         settingsKey="learn_newToReviewRatio"
         inputType="number"
       />
-      <Text>{w.join(",")}</Text>
+      <p style={{ fontSize: "0.875rem", color: "var(--theme-neutral-600)" }}>
+        {w.join(",")}
+      </p>
     </Stack>
   );
 }
