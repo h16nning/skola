@@ -1,5 +1,6 @@
 .tooltip-wrapper {
   display: inline-flex;
+  width: 100% w;
 }
 
 .tooltip {

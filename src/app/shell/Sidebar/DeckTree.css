@@ -1,7 +1,6 @@
 .deck-tree__container {
   display: flex;
   flex-direction: column;
-  padding: var(--spacing-xs);
 }
 
 .deck-tree__toggle {
@@ -35,4 +34,6 @@
 .deck-tree__children {
   display: flex;
   flex-direction: column;
+  margin-top: var(--spacing-xs);
+  gap: var(--spacing-xs);
 }

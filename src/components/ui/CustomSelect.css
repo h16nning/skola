@@ -10,30 +10,42 @@
   justify-content: space-between;
   gap: var(--spacing-sm);
   width: 100%;
-  padding: var(--spacing-xs) var(--spacing-md);
-  background: var(--theme-neutral-50);
-  border: 1px solid var(--theme-neutral-300);
-  border-radius: var(--radius-md);
-  color: var(--theme-neutral-900);
-  font-size: 0.875rem;
+  padding: var(--spacing-sm) var(--spacing-md);
+  padding-right: var(--spacing-xl);
+  font-size: var(--font-size-md);
+  font-family: var(--font-sans);
   font-weight: 500;
+  color: var(--theme-neutral-900);
+  background-color: var(--theme-neutral-50);
+  border: 1px solid var(--theme-neutral-300);
+  box-shadow: var(--inset-shadow-xs);
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 150ms ease;
+  transition: var(--transition-input);
 }
 
 .custom-select__trigger:hover {
-  background: var(--theme-neutral-100);
-  border-color: var(--theme-neutral-400);
+  background-color: var(--theme-neutral-100);
+}
+
+.custom-select__trigger--open {
+  border-color: var(--theme-primary-500);
+  box-shadow: 0 0 0 3px var(--theme-primary-100);
 }
 
 .custom-select__trigger:focus-visible {
-  outline: 2px solid var(--theme-primary-500);
-  outline-offset: 2px;
+  outline: var(--ring-outline);
+  box-shadow: var(--ring-shadow);
 }
 
 .custom-select__trigger:disabled {
-  opacity: 0.5;
+  opacity: 0.6;
   cursor: not-allowed;
+  background-color: var(--theme-neutral-100);
+}
+
+.custom-select__trigger:disabled:hover {
+  background-color: var(--theme-neutral-100);
 }
 
 .custom-select__value {
@@ -44,12 +56,15 @@
 }
 
 .custom-select__chevron {
+  position: absolute;
+  right: var(--spacing-sm);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: transform 150ms ease;
+  pointer-events: none;
   color: var(--theme-neutral-500);
+  transition: transform 0.2s ease;
 }
 
 .custom-select__chevron--open {
@@ -61,23 +76,29 @@
   top: calc(100% + var(--spacing-xs));
   left: 0;
   right: 0;
-  background: var(--theme-neutral-50);
-  border: 1px solid var(--theme-neutral-300);
-  border-radius: var(--radius-md);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 0;
+  padding: var(--spacing-xs);
+  border: 1px solid var(--theme-neutral-200);
+  border-radius: var(--radius-lg);
+  background-color: var(--theme-neutral-50);
+  box-shadow: var(--shadow-lg);
+  max-height: 16rem;
+  overflow-y: auto;
   z-index: 1000;
-  overflow: hidden;
-  animation: slideDown 150ms ease;
+  opacity: 0;
+  transform: scale(0.95) translateY(-4px);
+  animation: slideDown var(--transition-duration-fast)
+    var(--transition-timing-ease) forwards;
 }
 
 @keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: scale(0.95) translateY(-4px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1) translateY(0);
   }
 }
 
@@ -86,28 +107,45 @@
   align-items: center;
   gap: var(--spacing-xs);
   width: 100%;
-  padding: var(--spacing-sm) var(--spacing-md);
-  background: transparent;
+  padding: var(--spacing-sm) var(--spacing-sm);
   border: none;
-  color: var(--theme-neutral-900);
-  font-size: 0.875rem;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--theme-neutral-800);
+  font-size: var(--font-size-md);
+  font-family: var(--font-sans);
   font-weight: 500;
   cursor: pointer;
-  transition: background 100ms ease;
   text-align: left;
+  white-space: nowrap;
+  user-select: none;
+  transition: background-color var(--transition-duration-fast)
+    var(--transition-timing-ease);
 }
 
 .custom-select__option:hover,
 .custom-select__option--highlighted {
-  background: var(--theme-neutral-100);
+  background-color: var(--theme-neutral-100);
+}
+
+.custom-select__option:active {
+  background-color: var(--theme-neutral-200);
 }
 
 .custom-select__option--selected {
-  background: var(--theme-primary-500);
-  color: white;
+  background-color: var(--theme-primary-50);
+  color: var(--theme-primary-700);
 }
 
 .custom-select__option--selected:hover,
 .custom-select__option--selected.custom-select__option--highlighted {
-  background: var(--theme-primary-600);
+  background-color: var(--theme-primary-100);
+}
+
+.custom-select__option--selected:active {
+  background-color: var(--theme-primary-200);
+}
+
+.custom-select--disabled {
+  opacity: 0.6;
 }

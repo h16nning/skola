@@ -1,54 +1,55 @@
-import { IconCards, IconHome } from "@tabler/icons-react";
+import {
+  BreadcrumbItem,
+  BreadcrumbSeparator,
+  Breadcrumbs,
+} from "@/components/ui";
+import { useViewportSize } from "@/lib/hooks/useViewportSize";
+import { Deck } from "@/logic/deck/deck";
+import { IconHome } from "@tabler/icons-react";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import {
-  Breadcrumbs,
-  BreadcrumbItem,
-  BreadcrumbSeparator,
-} from "../../../components/ui";
-import { Deck } from "../../../logic/deck/deck";
-import { useViewportSize } from "../../../lib/hooks/useViewportSize";
-import classes from "./SuperDecksBreadcrumbs.module.css";
-
-const BASE_URL = "super-decks-breadcrumbs";
 
 interface SuperDecksBreadcrumbsProps {
+  deck?: Deck;
   superDecks: Deck[] | undefined;
 }
 
-function SuperDecksBreadcrumbs({ superDecks }: SuperDecksBreadcrumbsProps) {
+function SuperDecksBreadcrumbs({
+  deck,
+  superDecks,
+}: SuperDecksBreadcrumbsProps) {
   const navigate = useNavigate();
   const [t] = useTranslation();
   const { width } = useViewportSize();
 
   return (
     <div
-      className={`${BASE_URL}__wrapper ${classes.wrapper}`}
       style={{
         width: width / 3,
         flexGrow: 2,
       }}
     >
-      <Breadcrumbs className={classes.breadcrumbs}>
-        <BreadcrumbItem onClick={() => navigate("/home")}>
+      <Breadcrumbs>
+        <BreadcrumbItem onClick={() => navigate("/home")} isActive>
           <IconHome size="1em" /> {t("home.title")}
         </BreadcrumbItem>
 
-        {superDecks && superDecks.length > 0 && (
-          <>
-            {superDecks.map((deck, idx) => (
-              <React.Fragment key={deck.id}>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem
-                  onClick={() => navigate("/deck/" + deck.id)}
-                  isActive={idx === superDecks.length - 1}
-                >
-                  <IconCards size="1rem" /> {deck.name}
-                </BreadcrumbItem>
-              </React.Fragment>
-            ))}
-          </>
+        {superDecks &&
+          superDecks.length > 0 &&
+          superDecks.map((deck) => (
+            <React.Fragment key={deck.id}>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem onClick={() => navigate("/deck/" + deck.id)}>
+                {deck.name}
+              </BreadcrumbItem>
+            </React.Fragment>
+          ))}
+        <BreadcrumbSeparator />
+        {deck && (
+          <BreadcrumbItem onClick={() => navigate("/deck/" + deck.id)}>
+            {deck.name}
+          </BreadcrumbItem>
         )}
       </Breadcrumbs>
     </div>

@@ -40,7 +40,7 @@ function DeckView() {
     <>
       <AppHeaderContent>
         <div className={`${BASE_URL}__header`}>
-          <SuperDecksBreadcrumbs superDecks={superDecks} />
+          <SuperDecksBreadcrumbs deck={deck} superDecks={superDecks} />
           <div className={`${BASE_URL}__actions`}>
             <Tooltip
               position="left"

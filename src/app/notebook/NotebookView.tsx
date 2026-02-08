@@ -7,7 +7,6 @@ import {
   MenuItem,
   MenuTrigger,
 } from "@/components/ui/Menu";
-import { Switch } from "@/components/ui/Switch";
 import { Tooltip } from "@/components/ui/Tooltip";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { useListState } from "@/lib/hooks/useListState";
@@ -18,8 +17,8 @@ import { NoteSortFunction, NoteSorts } from "@/logic/note/sort";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import {
   IconCalendar,
+  IconCheck,
   IconDots,
-  IconEye,
   IconMenuOrder,
   IconTextCaption,
 } from "@tabler/icons-react";
@@ -29,8 +28,8 @@ import { Note } from "../../logic/note/note";
 import NotebookCard from "./NotebookCard";
 import "./NotebookView.css";
 
-const BASE_URL = "notebook";
-const NOTEBOOK_LIMIT = 50;
+const BASE = "notebook";
+const NOTEBOOK_LIMIT = 100;
 
 export default function NotebookView() {
   const [deck] = useDeckFromUrl();
@@ -62,8 +61,8 @@ export default function NotebookView() {
   }, [notes, sortOption, sortOrder, setSortedNotes]);
 
   return (
-    <div className={BASE_URL}>
-      <div className={`${BASE_URL}__toolbar`}>
+    <div className={BASE}>
+      <div className={`${BASE}__toolbar`}>
         <SortSelect sortOption={sortOption} setSortOption={setSortOption} />
         <NotebookMenu
           excludeSubDecks={excludeSubDecks}
@@ -73,9 +72,9 @@ export default function NotebookView() {
         />
       </div>
       {deck?.notes && deck?.notes?.length > NOTEBOOK_LIMIT && (
-        <div className={`${BASE_URL}__limit-notice`}>
+        <div className={`${BASE}__limit-notice`}>
           Currently there is a limit of {NOTEBOOK_LIMIT} notes displayed.{" "}
-          {deck.notes.length - NOTEBOOK_LIMIT} notes are not shown.
+          {deck.notes.length - NOTEBOOK_LIMIT} notes have been omitted.
         </div>
       )}
       {useCustomSort ? (
@@ -93,7 +92,7 @@ export default function NotebookView() {
               <div
                 {...provided.droppableProps}
                 ref={provided.innerRef}
-                className={`${BASE_URL}__list`}
+                className={`${BASE}__list`}
               >
                 {state.map((card, index) => (
                   <NotebookCard
@@ -110,7 +109,7 @@ export default function NotebookView() {
           </Droppable>
         </DragDropContext>
       ) : (
-        <div className={`${BASE_URL}__list`}>
+        <div className={`${BASE}__list`}>
           {sortedNotes.map((note, index) => (
             <NotebookCard
               key={note.id}
@@ -194,7 +193,7 @@ function NotebookMenu({
 }) {
   const [t] = useTranslation();
 
-  useHotkeys([["Shift+Space", () => setShowAnswer(!showAnswer)]]);
+  useHotkeys([["-", () => setShowAnswer(!showAnswer)]]);
 
   return (
     <Menu closeOnItemClick={false}>
@@ -205,15 +204,7 @@ function NotebookMenu({
       </MenuTrigger>
       <MenuDropdown>
         <MenuItem
-          leftSection={<IconTextCaption />}
-          rightSection={
-            <Switch
-              checked={excludeSubDecks}
-              onChange={(event) => {
-                setExcludeSubDecks(event.currentTarget.checked);
-              }}
-            />
-          }
+          leftSection={excludeSubDecks && <IconCheck />}
           onClick={() => {
             setExcludeSubDecks(!excludeSubDecks);
           }}
@@ -223,20 +214,12 @@ function NotebookMenu({
         <Tooltip
           label={
             <>
-              Press <Kbd>Shift</Kbd> + <Kbd>Space</Kbd> to toggle all answers
+              Press <Kbd>-</Kbd> to toggle all answers
             </>
           }
         >
           <MenuItem
-            leftSection={<IconEye />}
-            rightSection={
-              <Switch
-                checked={showAnswer}
-                onChange={(event) => {
-                  setShowAnswer(event.currentTarget.checked);
-                }}
-              />
-            }
+            leftSection={showAnswer && <IconCheck />}
             onClick={() => {
               setShowAnswer(!showAnswer);
             }}
