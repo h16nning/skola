@@ -10,6 +10,7 @@ interface ModalProps {
   title?: ReactNode;
   children: ReactNode;
   showCloseButton?: boolean;
+  exitOnEscape?: boolean;
   fullscreen?: boolean;
 }
 
@@ -19,6 +20,7 @@ export function Modal({
   title,
   children,
   showCloseButton = true,
+  exitOnEscape = false,
   fullscreen = false,
 }: ModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -40,7 +42,9 @@ export function Modal({
 
     function handleCancel(event: Event) {
       event.preventDefault();
-      onClose();
+      if (exitOnEscape) {
+        onClose();
+      }
     }
 
     function handleClick(event: MouseEvent) {
@@ -56,7 +60,7 @@ export function Modal({
       dialog.removeEventListener("cancel", handleCancel);
       dialog.removeEventListener("click", handleClick);
     };
-  }, [onClose]);
+  }, [onClose, exitOnEscape]);
 
   useEffect(() => {
     if (!opened) return;

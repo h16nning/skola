@@ -26,7 +26,9 @@ export default function LoginUI() {
       {loginUI.alerts &&
         loginUI.alerts.length > 0 &&
         loginUI.alerts.map((alert) => (
-          <Paper key={alert.messageCode}>{resolveText(alert)}</Paper>
+          <Paper key={alert.messageCode} withBorder>
+            {resolveText(alert)}
+          </Paper>
         ))}
       <form
         className={`${BASE}__form`}
@@ -71,6 +73,7 @@ export default function LoginUI() {
   return (
     <Modal
       opened={loginUI !== undefined}
+      exitOnEscape={false}
       onClose={loginUI?.onCancel ?? (() => {})}
       title={title}
     >

@@ -14,6 +14,11 @@
   color: #ffffffcc;
 }
 
+.cloud-sync-sign-in .badge {
+  background-color: #ffffffcc;
+  color: var(--color-neutral-700);
+}
+
 .cloud-sync-sign-in h1 {
   font-size: var(--font-size-3xl);
   text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
@@ -23,8 +28,24 @@
 }
 
 .cloud-sync-sign-in p {
+  text-align: center;
   font-size: var(--font-size-md);
   text-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
   font-family: var(--font-sans);
-  margin-top: var(--spacing-2xl);
+  margin-bottom: var(--spacing-3xl);
+}
+
+@media (max-width: 768px) {
+  .cloud-sync-sign-in {
+    aspect-ratio: 4 / 3;
+  }
+
+  .cloud-sync-sign-in h1 {
+    font-size: var(--font-size-2xl);
+  }
+
+  .cloud-sync-sign-in p {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-xl);
+  }
 }

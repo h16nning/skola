@@ -42,15 +42,15 @@
   color: white;
 }
 
-.badge--filled.badge--neutral {
-  background-color: var(--theme-neutral-700);
-  color: var(--theme-neutral-100);
-}
-
 .badge--outline.badge--primary {
   background-color: transparent;
   color: var(--theme-primary-700);
   border: 1px solid var(--theme-primary-300);
+}
+
+.badge--filled.badge--neutral {
+  background-color: var(--theme-neutral-700);
+  color: var(--theme-neutral-100);
 }
 
 .badge--outline.badge--neutral {
