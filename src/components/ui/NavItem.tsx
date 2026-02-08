@@ -1,4 +1,4 @@
-import type { ReactNode, MouseEvent } from "react";
+import type { MouseEvent, ReactNode } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./NavItem.css";
 
@@ -30,7 +30,8 @@ export function NavItem({
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isActive = active ?? (path ? location.pathname.startsWith(path) : false);
+  const isActive =
+    active ?? (path ? location.pathname.startsWith(path) : false);
 
   const handleClick = () => {
     if (path) {
@@ -52,7 +53,10 @@ export function NavItem({
     .filter(Boolean)
     .join(" ");
 
-  const style = indent > 0 ? { paddingLeft: `calc(var(--spacing-md) + ${indent * 0.75}rem)` } : undefined;
+  const style =
+    indent > 0
+      ? { paddingLeft: `calc(var(--spacing-md) + ${indent * 0.75}rem)` }
+      : undefined;
 
   return (
     <button

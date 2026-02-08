@@ -2,7 +2,7 @@ import { CognitivePrompt } from "@/logic/cognitivePrompts";
 import CognitivePromptPills from "./CognitivePromptPills";
 import "./CognitivePromptConnector.css";
 
-const BASE_URL = "cognitive-prompt-connector";
+const BASE = "cognitive-prompt-connector";
 
 interface CognitivePromptConnectorProps {
   onToggle: (prompt: CognitivePrompt) => void;
@@ -14,17 +14,17 @@ function CognitivePromptConnector({
   selectedPrompt,
 }: CognitivePromptConnectorProps) {
   return (
-    <div className={BASE_URL}>
+    <div className={BASE}>
       {selectedPrompt ? (
-        <div className={`${BASE_URL}__line-top`} />
+        <div className={`${BASE}__line-top`} />
       ) : (
-        <div className={`${BASE_URL}__spacer`} />
+        <div className={`${BASE}__spacer`} />
       )}
       <CognitivePromptPills
         onToggle={onToggle}
         selectedPrompt={selectedPrompt}
       />
-      {selectedPrompt && <div className={`${BASE_URL}__line-bottom`} />}
+      {selectedPrompt && <div className={`${BASE}__line-bottom`} />}
     </div>
   );
 }

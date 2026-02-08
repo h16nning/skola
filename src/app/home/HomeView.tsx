@@ -13,7 +13,7 @@ import NewDeckModal from "../deck/NewDeckModal";
 import { AppHeaderContent } from "../shell/Header/Header";
 import "./HomeView.css";
 
-const BASE_URL = "home-view";
+const BASE = "home-view";
 
 export default function HomeView() {
   useDocumentTitle("Skola");
@@ -47,19 +47,19 @@ export default function HomeView() {
         </Tooltip>
       </AppHeaderContent>
 
-      <div className={`${BASE_URL}__content`}>
-        <section className={`${BASE_URL}__welcome-section`}>
-          <h1 className={`${BASE_URL}__welcome-title`}>
+      <div className={`${BASE}__content`}>
+        <section className={`${BASE}__welcome-section`}>
+          <h1 className={`${BASE}__welcome-title`}>
             {userName
               ? t("home.welcome-user", { name: userName })
               : t("home.welcome")}
           </h1>
-          <sub className={`${BASE_URL}__welcome-subtitle`}>
+          <sub className={`${BASE}__welcome-subtitle`}>
             {t("home.welcome-subtitle")}
           </sub>
         </section>
         {isReady && decks?.length === 0 ? (
-          <div className={`${BASE_URL}__empty-state`}>
+          <div className={`${BASE}__empty-state`}>
             <EmptyNotice
               icon={IconFolder}
               description={t("home.no-decks-found")}

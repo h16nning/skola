@@ -9,13 +9,14 @@ import { Stack } from "@/components/ui/Stack";
 import { Text } from "@/components/ui/Text";
 import { EditMode } from "@/logic/NoteTypeAdapter";
 import { Deck } from "@/logic/deck/deck";
-import { NoteType } from "@/logic/note/note";
-import { Note } from "@/logic/note/note";
+import { Note, NoteType } from "@/logic/note/note";
 import { DoubleSidedNoteTypeAdapter } from "@/logic/type-implementations/double-sided/DoubleSidedNote";
 import { Editor } from "@tiptap/react";
 import { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import classes from "./DoubleSidedCardEditor.module.css";
+import "./DoubleSidedCardEditor.css";
+
+const BASE = "double-sided-card-editor";
 
 interface DoubleSidedCardEditorProps {
   note: Note<NoteType.DoubleSided> | null;
@@ -73,7 +74,7 @@ function DoubleSidedCardEditor({
         <Text size="sm" weight="semibold">
           {t("note.edit.type-specific.double-sided.front")}
         </Text>
-        <NoteEditor editor={editor1} key="front" className={classes} />
+        <NoteEditor editor={editor1} key="front" className={`${BASE}__field`} />
       </Stack>
       <Stack gap="xs">
         <Text size="sm" weight="semibold">
@@ -94,7 +95,6 @@ async function finish(
   editor2: Editor | null
 ) {
   if (mode === "edit") {
-    //SAVE
     try {
       if (!note) throw new Error("Note is null");
       await DoubleSidedNoteTypeAdapter.updateNote(
@@ -109,7 +109,6 @@ async function finish(
       saveFailed();
     }
   } else {
-    //NEW
     try {
       await DoubleSidedNoteTypeAdapter.createNote(
         {

@@ -120,7 +120,9 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
       function handleClickOutside(event: MouseEvent) {
         if (
           containerRef.current &&
-          !containerRef.current.contains(event.target as Node)
+          !containerRef.current.contains(event.target as Node) &&
+          listboxRef.current &&
+          !listboxRef.current.contains(event.target as Node)
         ) {
           setIsOpen(false);
         }
@@ -297,7 +299,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
                         ? `${BASE}__option--highlighted`
                         : ""
                     }`}
-                    onClick={() => handleSelect(option.value)}
+                    onClick={(e) => handleSelect(option.value)}
                     onMouseEnter={() => setHighlightedIndex(index)}
                     role="option"
                     aria-selected={option.value === value}

@@ -19,7 +19,7 @@ import QuickAddNote from "./QuickAddNote";
 import VisualFeedback from "./VisualFeedback";
 import { useLearnSession } from "./useLearnSession";
 
-const BASE_URL = "learn-view";
+const BASE = "learn-view";
 
 function LearnView() {
   const [useVisualFeedback] = useSetting("useVisualFeedback");
@@ -60,7 +60,7 @@ function LearnView() {
   }
 
   return (
-    <div className={BASE_URL}>
+    <div className={BASE}>
       <AppHeaderContent>
         <LearnViewHeader
           currentCard={controller.currentCard ?? undefined}
@@ -69,14 +69,14 @@ function LearnView() {
         />
       </AppHeaderContent>
 
-      <div className={`${BASE_URL}__wrapper`}>
+      <div className={`${BASE}__wrapper`}>
         {useVisualFeedback && <VisualFeedback rating={currentRating} />}
-        <div className={`${BASE_URL}__card-container`}>
-          <div className={`${BASE_URL}__card-stack`}>
+        <div className={`${BASE}__card-container`}>
+          <div className={`${BASE}__card-stack`}>
             <LearnViewCurrentCardStateIndicator
               currentCardModel={controller.currentCard?.model}
             />
-            <Paper className={`${BASE_URL}__card`} shadow="xs" withBorder>
+            <Paper className={`${BASE}__card`} shadow="xs" withBorder>
               {!controller.showingAnswer &&
                 controller.currentCard &&
                 getAdapter(controller.currentCard).displayQuestion(

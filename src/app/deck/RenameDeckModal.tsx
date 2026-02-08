@@ -1,10 +1,14 @@
 import { genericFail } from "@/components/Notification/Notification";
+import { Button, Modal, TextInput } from "@/components/ui";
+import { Deck } from "@/logic/deck/deck";
 import { renameDeck } from "@/logic/deck/renameDeck";
-import { getHotkeyHandler, useHotkeys } from "@mantine/hooks";
+import { getHotkeyHandler } from "@/lib/hooks/getHotkeyHandler";
+import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { t } from "i18next";
 import { useCallback, useEffect, useState } from "react";
-import { Deck } from "../../logic/deck/deck";
-import { Button, Modal, TextInput } from "@/components/ui";
+import "./RenameDeckModal.css";
+
+const BASE = "rename-deck-modal";
 
 interface RenameDeckModalProps {
   deck: Deck;
@@ -35,7 +39,7 @@ function RenameDeckModal({ deck, opened, setOpened }: RenameDeckModalProps) {
       opened={opened}
       onClose={() => setOpened(false)}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: "var(--spacing-md)" }}>
+      <div className={`${BASE}__content`}>
         <TextInput
           data-autofocus
           label={t("deck.rename.new-name")}
@@ -43,11 +47,15 @@ function RenameDeckModal({ deck, opened, setOpened }: RenameDeckModalProps) {
           onChange={(e) => setNameValue(e.currentTarget.value)}
           onKeyDown={getHotkeyHandler([["mod+Enter", () => tryRenameDeck()]])}
         />
-        <div style={{ display: "flex", justifyContent: "flex-end", gap: "var(--spacing-sm)" }}>
+        <div className={`${BASE}__actions`}>
           <Button variant="default" onClick={() => setOpened(false)}>
             {t("global.cancel")}
           </Button>
-          <Button disabled={nameValue === ""} onClick={tryRenameDeck} variant="primary">
+          <Button
+            disabled={nameValue === ""}
+            onClick={tryRenameDeck}
+            variant="primary"
+          >
             {t("deck.rename.rename-button")}
           </Button>
         </div>

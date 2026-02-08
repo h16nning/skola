@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { StopwatchResult } from "react-timer-hook";
 import "./FinishedLearningView.css";
 
-const BASE_URL = "finished-learning-view";
+const BASE = "finished-learning-view";
 
 interface FinishedLearningViewProps {
   time: StopwatchResult;
@@ -53,60 +53,60 @@ function FinishedLearningView({
   const deckColor = deck?.color || "lime";
 
   return (
-    <div className={BASE_URL} data-color={deckColor}>
-      <div className={`${BASE_URL}__content`}>
-        <h1 className={`${BASE_URL}__title`}>
+    <div className={BASE} data-color={deckColor}>
+      <div className={`${BASE}__content`}>
+        <h1 className={`${BASE}__title`}>
           {name
             ? t("learning.finished-congrats-name", { name: name })
             : t("learning.finished-congrats")}
         </h1>
-        <p className={`${BASE_URL}__subtitle`}>{t("learning.finished-info")}</p>
+        <p className={`${BASE}__subtitle`}>{t("learning.finished-info")}</p>
 
-        <div className={`${BASE_URL}__stats`}>
-          <div className={`${BASE_URL}__stat`}>
-            <IconClockHour9 className={`${BASE_URL}__stat-icon`} size={32} />
-            <div className={`${BASE_URL}__stat-value`}>
+        <div className={`${BASE}__stats`}>
+          <div className={`${BASE}__stat`}>
+            <IconClockHour9 className={`${BASE}__stat-icon`} size={32} />
+            <div className={`${BASE}__stat-value`}>
               {time ? time.minutes + "m " + time.seconds + "s" : "—"}
             </div>
-            <div className={`${BASE_URL}__stat-label`}>
+            <div className={`${BASE}__stat-label`}>
               {t("learning.finished-duration")}
             </div>
           </div>
 
-          <div className={`${BASE_URL}__stat`}>
-            <IconTrophy className={`${BASE_URL}__stat-icon`} size={32} />
-            <div className={`${BASE_URL}__stat-value`}>
+          <div className={`${BASE}__stat`}>
+            <IconTrophy className={`${BASE}__stat-icon`} size={32} />
+            <div className={`${BASE}__stat-value`}>
               {accuracy ? accuracy + "%" : "—"}
             </div>
-            <div className={`${BASE_URL}__stat-label`}>
+            <div className={`${BASE}__stat-label`}>
               {t("learning.finished-accuracy-ratio")}
             </div>
           </div>
 
-          <div className={`${BASE_URL}__stat`}>
-            <IconTallymarks className={`${BASE_URL}__stat-icon`} size={32} />
-            <div className={`${BASE_URL}__stat-value`}>
+          <div className={`${BASE}__stat`}>
+            <IconTallymarks className={`${BASE}__stat-icon`} size={32} />
+            <div className={`${BASE}__stat-value`}>
               {statistics.ratingsList.length}
             </div>
-            <div className={`${BASE_URL}__stat-label`}>
+            <div className={`${BASE}__stat-label`}>
               {t("learning.finished-repetions-count")}
             </div>
           </div>
         </div>
 
-        <div className={`${BASE_URL}__actions`}>
+        <div className={`${BASE}__actions`}>
           <Button
             onClick={() => navigate("/home")}
             leftSection={<IconHome />}
-            size="md"
-            variant="primary"
+            size="lg"
+            variant="white"
           >
             {t("learning.finished-button-home")}
           </Button>
           <Button
             onClick={() => navigate(`/deck/${deck?.id}`)}
             size="md"
-            variant="subtle"
+            variant="transparent-ghost"
           >
             {t("learning.finished-button-to-deck")}
           </Button>

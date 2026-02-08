@@ -76,7 +76,9 @@ function TabsList({ children, className = "" }: TabsListProps) {
         const hasOverflow = scrollWidth > clientWidth;
 
         setShowLeftGradient(hasOverflow && scrollLeft > 0);
-        setShowRightGradient(hasOverflow && scrollLeft < scrollWidth - clientWidth - 1);
+        setShowRightGradient(
+          hasOverflow && scrollLeft < scrollWidth - clientWidth - 1
+        );
       }
     };
 

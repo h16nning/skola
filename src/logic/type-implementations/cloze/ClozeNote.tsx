@@ -12,8 +12,7 @@ import { newNote } from "@/logic/note/newNote";
 import { NoteType } from "@/logic/note/note";
 import { Note } from "@/logic/note/note";
 import { updateNoteContent } from "@/logic/note/updateNoteContent";
-import { Text, UnstyledButton } from "@mantine/core";
-import cx from "clsx";
+import { Text } from "@/components/ui/Text";
 import parse, {
   DOMNode,
   Element,
@@ -21,8 +20,9 @@ import parse, {
   domToReact,
 } from "html-react-parser";
 import { ReactNode, memo, useState } from "react";
-import classes from "./ClozeNote.module.css";
 import { ClozeNoteContent } from "./types";
+
+const BASE = "cloze-note";
 
 export const ClozeNoteTypeAdapter: NoteTypeAdapter<NoteType.Cloze> = {
   createNote(
@@ -70,7 +70,6 @@ export const ClozeNoteTypeAdapter: NoteTypeAdapter<NoteType.Cloze> = {
         type: NoteType.Cloze,
         text: params.text,
       });
-      //might want to update occlusion numbers or delete cards if they are removed from the note?
     });
   },
 
@@ -141,7 +140,6 @@ export const ClozeNoteTypeAdapter: NoteTypeAdapter<NoteType.Cloze> = {
     );
   },
 
-  //DEPRECATED
   async deleteCard(card: Card<NoteType.Cloze>) {
     db.transaction("rw", db.decks, db.cards, db.notes, async () => {
       const noteText = await getNote(card.note).then((n) =>
@@ -199,7 +197,6 @@ const ClozeComponent = memo(
         )}</span>`
     );
 
-    console.log(finalText);
     const options: HTMLReactParserOptions = {
       replace(domNode) {
         if (
@@ -208,7 +205,6 @@ const ClozeComponent = memo(
           domNode.attribs.class.includes("interactive-cloze-field-replace")
         ) {
           const isActive = domNode.attribs.class.endsWith("active");
-          console.log(isActive);
           return (
             <ClozeField
               active={isActive}
@@ -222,7 +218,7 @@ const ClozeComponent = memo(
     };
 
     return (
-      <Text className={classes.clozeCard}>{parse(finalText, options)}</Text>
+      <Text className={`${BASE}__card`}>{parse(finalText, options)}</Text>
     );
   }
 );
@@ -234,24 +230,82 @@ function ClozeField({
 }: { children: ReactNode; controlledIsVisible?: boolean; active?: boolean }) {
   const [isVisible, setIsVisible] = useState(false);
 
+  const classNames = [
+    `${BASE}__field`,
+    active && `${BASE}__field--active`,
+    controlledIsVisible === undefined && `${BASE}__field--interactive`,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const occludableClassNames = [
+    `${BASE}__occludable`,
+    (controlledIsVisible === undefined ? isVisible : controlledIsVisible) &&
+      `${BASE}__occludable--visible`,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <UnstyledButton
-      className={cx({
-        [classes.clozeField]: true,
-        [classes.active]: active,
-        [classes.interactive]: controlledIsVisible === undefined,
-      })}
+    <button
+      className={classNames}
       onClick={() => setIsVisible(!isVisible)}
+      type="button"
     >
-      <span
-        className={cx({
-          [classes.occludable]: true,
-          [classes.visible]:
-            controlledIsVisible === undefined ? isVisible : controlledIsVisible,
-        })}
-      >
-        {children}
-      </span>
-    </UnstyledButton>
+      <span className={occludableClassNames}>{children}</span>
+    </button>
   );
+}
+
+const styles = `
+.${BASE}__card {
+  line-height: 1.5;
+}
+
+.${BASE}__field {
+  all: unset;
+  vertical-align: baseline;
+  padding: 0 var(--spacing-xs);
+  border-radius: var(--radius-sm);
+  background-color: var(--theme-neutral-100);
+  border-bottom: solid 2px var(--theme-neutral-400);
+  cursor: text;
+  display: inline;
+}
+
+.${BASE}__field--active {
+  background-color: var(--theme-primary-100);
+  border-bottom-color: var(--theme-primary-600);
+}
+
+.${BASE}__field--active .${BASE}__occludable {
+  transition: none;
+}
+
+.${BASE}__field--interactive {
+  cursor: pointer;
+}
+
+.${BASE}__field--interactive:hover {
+  background-color: var(--theme-neutral-200);
+}
+
+.${BASE}__occludable {
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+.${BASE}__occludable--visible {
+  opacity: 1;
+}
+`;
+
+if (typeof document !== "undefined") {
+  const styleId = `${BASE}-styles`;
+  if (!document.getElementById(styleId)) {
+    const styleElement = document.createElement("style");
+    styleElement.id = styleId;
+    styleElement.textContent = styles;
+    document.head.appendChild(styleElement);
+  }
 }

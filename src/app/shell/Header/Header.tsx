@@ -6,6 +6,7 @@ import { createPortal } from "react-dom";
 import { useLocation } from "react-router-dom";
 import "./Header.css";
 
+
 const BASE = "header";
 
 interface HeaderProps {

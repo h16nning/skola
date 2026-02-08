@@ -1,14 +1,7 @@
-import "@mantine/core/styles.css";
-import "@mantine/notifications/styles.css";
-import "@mantine/spotlight/styles.css";
-import "mantine-datatable/styles.css";
-import "./app/shell/AppShell.css";
 import "./style/index.css";
+import "./style/shell.css";
+import "./app/shell/AppShell.css";
 
-import { cssVariablesResolver, presetTheme } from "./style/StyleProvider";
-
-import { MantineProvider } from "@mantine/core";
-import { Notifications } from "@mantine/notifications";
 import { useEffect } from "react";
 import { I18nextProvider } from "react-i18next";
 import { Outlet, useLocation } from "react-router-dom";
@@ -16,6 +9,7 @@ import WelcomeView from "./app/WelcomeView";
 import LoginUI from "./app/login/LoginUI";
 import Header from "./app/shell/Header/Header";
 import Sidebar from "./app/shell/Sidebar/Sidebar";
+import { NotificationContainer, NotificationProvider, useNotificationSetup } from "./components/Notification";
 import { useDensity } from "./hooks/useDensity";
 import { useTheme } from "./hooks/useTheme";
 import i18n from "./i18n";
@@ -36,11 +30,11 @@ function useRestoreLanguage() {
   return language;
 }
 
-export default function App() {
-  const [colorSchemePreference] = useSetting("colorSchemePreference");
+function AppContent() {
   useDensity();
   useTheme();
   useRestoreLanguage();
+  useNotificationSetup();
   const [sidebarMenuOpened, sidebarHandlers] = useDisclosure(false);
 
   const [registered] = useLocalStorage("registered", false);
@@ -66,18 +60,7 @@ export default function App() {
 
   return (
     <I18nextProvider i18n={i18n}>
-      <MantineProvider
-        defaultColorScheme={colorSchemePreference}
-        cssVariablesResolver={cssVariablesResolver}
-        theme={presetTheme}
-      >
-        <Notifications
-          transitionDuration={400}
-          containerWidth="20rem"
-          position="bottom-center"
-          autoClose={2000}
-          limit={1}
-        />
+        <NotificationContainer />
         {registered ? (
           <div className={BASE}>
             <Header
@@ -120,7 +103,14 @@ export default function App() {
         ) : (
           <WelcomeView />
         )}
-      </MantineProvider>
     </I18nextProvider>
+  );
+}
+
+export default function App() {
+  return (
+    <NotificationProvider>
+      <AppContent />
+    </NotificationProvider>
   );
 }

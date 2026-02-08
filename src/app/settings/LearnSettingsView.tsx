@@ -1,6 +1,6 @@
-import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { Badge } from "@/components/ui/Badge";
 import { Stack } from "@/components/ui/Stack";
+import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { useTranslation } from "react-i18next";
 import SettingsInput from "./SettingsInput";
 
@@ -18,7 +18,13 @@ export default function LearnSettingsView() {
       />
       <SettingsInput
         label={
-          <div style={{ display: "flex", alignItems: "center", gap: "var(--spacing-xs)" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "var(--spacing-xs)",
+            }}
+          >
             {t("settings.learn.show-cognitive-prompts")}
             <Badge color="primary" size="sm">
               Beta

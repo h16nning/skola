@@ -1,7 +1,6 @@
-import { Badge, Paper } from "@/components/ui";
+import { Alert, Badge, Paper } from "@/components/ui";
 import { useCardsOf } from "@/logic/card/hooks/useCardsOf";
 import { useSimplifiedStatesOf } from "@/logic/card/hooks/useSimplifiedStatesOf";
-import { Alert } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Deck } from "../../logic/deck/deck";
@@ -60,7 +59,7 @@ export default function DeckPreview({ deck }: DeckPreviewProps) {
       </div>
     </Paper>
   ) : (
-    <Alert title="Error" color="red" variant="filled">
+    <Alert variant="error">
       {t("deck.error-failed-to-load")}
     </Alert>
   );

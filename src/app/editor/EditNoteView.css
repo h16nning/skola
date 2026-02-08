@@ -1,0 +1,43 @@
+.edit-note {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  height: 100%;
+  overflow-y: auto;
+}
+
+.edit-note__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.edit-note__title-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.edit-note__title {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--theme-neutral-900);
+}
+
+.edit-note__note-type {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--theme-neutral-600);
+}
+
+.edit-note__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+}
+
+.edit-note__no-note {
+  font-size: var(--font-size-sm);
+  color: var(--theme-neutral-600);
+}

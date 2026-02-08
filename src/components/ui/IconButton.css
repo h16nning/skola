@@ -8,15 +8,15 @@
   padding: var(--spacing-sm);
   border-radius: var(--radius-sm);
   color: var(--theme-neutral-700);
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: var(--transition-button);
 }
 
 .icon-button:hover {
-  background-color: var(--theme-neutral-100);
+  background-color: var(--theme-neutral-200);
 }
 
 .icon-button:active {
-  background-color: var(--theme-neutral-200);
+  transform: scale(0.95);
 }
 
 .icon-button:focus-visible {

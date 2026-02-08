@@ -7,17 +7,38 @@ import { NoteType } from "@/logic/note/note";
 import { Note } from "@/logic/note/note";
 import { NoteSorts } from "@/logic/note/sort";
 import { useShowShortcutHints } from "@/logic/settings/hooks/useShowShortcutHints";
-import { Group, Kbd, UnstyledButton, rem } from "@mantine/core";
-import { useDebouncedState, useOs } from "@mantine/hooks";
-import { Spotlight, spotlight } from "@mantine/spotlight";
 import { IconCards, IconSearch, IconSquare } from "@tabler/icons-react";
 import cx from "clsx";
 import { t } from "i18next";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import classes from "./Spotlight.module.css";
+import { Kbd } from "@/components/ui/Kbd";
+import { useDebouncedState } from "@/lib/hooks/useDebouncedState";
+import { useOs } from "@/lib/hooks/useOs";
+import { useHotkeys } from "@/lib/hooks/useHotkeys";
+import "./Spotlight.css";
+
+const BASE_URL = "spotlight";
+
 interface NoteWithPreview extends Note<NoteType> {
   breadcrumb: string[];
+}
+
+interface SpotlightAction {
+  id: string;
+  label: string;
+  description?: string;
+  onClick: () => void;
+  leftSection?: ReactNode;
+  tabAction?: {
+    label: string;
+    action: () => void;
+  };
+}
+
+interface SpotlightGroup {
+  group: string;
+  actions: SpotlightAction[];
 }
 
 const useSearchNote = (filter: string) => {
@@ -62,6 +83,26 @@ const useSearchNote = (filter: string) => {
   return filteredNotes;
 };
 
+function highlightQuery(text: string, query: string): ReactNode {
+  if (!query) return text;
+
+  const lowerText = text.toLowerCase();
+  const lowerQuery = query.toLowerCase();
+  const index = lowerText.indexOf(lowerQuery);
+
+  if (index === -1) return text;
+
+  return (
+    <>
+      {text.slice(0, index)}
+      <mark className={`${BASE_URL}__highlight`}>
+        {text.slice(index, index + query.length)}
+      </mark>
+      {text.slice(index + query.length)}
+    </>
+  );
+}
+
 export default function SpotlightCard({
   minimalMode,
 }: { minimalMode: boolean }) {
@@ -69,102 +110,249 @@ export default function SpotlightCard({
   const os = useOs();
   const showShortcutHints = useShowShortcutHints();
 
-  const [filter, setFilter] = useDebouncedState("", 250);
-  const [filteredDecks] = useDecks();
-  const filteredNotes = useSearchNote(filter);
+  const [opened, setOpened] = useState(false);
+  const [query, setQuery, immediateQuery] = useDebouncedState("", 250);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const possibleActions = [
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  const [allDecks] = useDecks();
+  const filteredNotes = useSearchNote(query);
+
+  const filteredDecks = (allDecks || []).filter((deck) =>
+    deck.name.toLowerCase().includes(query.toLowerCase())
+  );
+
+  const possibleActions: SpotlightGroup[] = [
     {
       group: "Decks",
       actions: [
-        ...(filteredDecks || []).map((deck) => {
-          return {
-            id: deck.id,
-            label: deck.name,
-            description: deck.description,
-            onClick: () => navigate(`/deck/${deck.id}`),
-            leftSection: (
-              <IconCards
-                style={{ width: rem(24), height: rem(24) }}
-                stroke={1.5}
-              />
-            ),
-          };
-        }),
+        ...filteredDecks.map((deck) => ({
+          id: deck.id,
+          label: deck.name,
+          description: deck.description,
+          onClick: () => navigate(`/deck/${deck.id}`),
+          leftSection: <IconCards style={{ width: "1.5rem", height: "1.5rem" }} stroke={1.5} />,
+          tabAction: {
+            label: "to study",
+            action: () => navigate(`/learn/${deck.id}`),
+          },
+        })),
       ],
     },
     {
       group: "Notes",
       actions: [
-        ...filteredNotes.map((note) => {
-          return {
-            id: note.id,
-            label: getAdapter(note).getSortFieldFromNoteContent(note.content),
-            description: note.breadcrumb.join(" > "),
-            onClick: () => navigate(`/deck/${note.deck}`),
-            leftSection: (
-              <IconSquare
-                style={{ width: rem(24), height: rem(24) }}
-                stroke={1.5}
-              />
-            ),
-          };
-        }),
+        ...filteredNotes.map((note) => ({
+          id: note.id,
+          label: getAdapter(note).getSortFieldFromNoteContent(note.content),
+          description: note.breadcrumb.join(" > "),
+          onClick: () => navigate(`/deck/${note.deck}`),
+          leftSection: <IconSquare style={{ width: "1.5rem", height: "1.5rem" }} stroke={1.5} />,
+        })),
       ],
     },
   ];
 
+  const limitedActions: SpotlightGroup[] = [];
+  let actionCount = 0;
+  for (const group of possibleActions) {
+    if (actionCount >= 10) break;
+    const availableSlots = 10 - actionCount;
+    const groupActions = group.actions.slice(0, availableSlots);
+    if (groupActions.length > 0) {
+      limitedActions.push({ group: group.group, actions: groupActions });
+      actionCount += groupActions.length;
+    }
+  }
+
+  const flatActions = limitedActions.flatMap((group) => group.actions);
+  const totalActions = flatActions.length;
+
+  useEffect(() => {
+    setSelectedIndex(0);
+  }, [query]);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    if (opened && !dialog.open) {
+      dialog.showModal();
+      searchInputRef.current?.focus();
+      setSelectedIndex(0);
+    } else if (!opened && dialog.open) {
+      dialog.close();
+      setQuery("");
+    }
+  }, [opened, setQuery]);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    function handleClick(event: MouseEvent) {
+      if (event.target === dialog) {
+        setOpened(false);
+      }
+    }
+
+    function handleCancel(event: Event) {
+      event.preventDefault();
+      setOpened(false);
+    }
+
+    dialog.addEventListener("click", handleClick);
+    dialog.addEventListener("cancel", handleCancel);
+
+    return () => {
+      dialog.removeEventListener("click", handleClick);
+      dialog.removeEventListener("cancel", handleCancel);
+    };
+  }, []);
+
+  useHotkeys([
+    [
+      os === "macos" ? "meta+k" : "ctrl+k",
+      (e) => {
+        e.preventDefault();
+        setOpened((prev) => !prev);
+      },
+    ],
+  ]);
+
+  useEffect(() => {
+    if (!opened) return;
+
+    function handleKeyDown(event: KeyboardEvent) {
+      event.stopPropagation();
+
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        if (totalActions > 0) {
+          setSelectedIndex((prev) => (prev + 1) % totalActions);
+        }
+      } else if (event.key === "ArrowUp") {
+        event.preventDefault();
+        if (totalActions > 0) {
+          setSelectedIndex((prev) => (prev - 1 + totalActions) % totalActions);
+        }
+      } else if (event.key === "Enter") {
+        event.preventDefault();
+        if (flatActions[selectedIndex]) {
+          flatActions[selectedIndex].onClick();
+          setOpened(false);
+        }
+      } else if (event.key === "Tab") {
+        event.preventDefault();
+        if (flatActions[selectedIndex]?.tabAction) {
+          flatActions[selectedIndex].tabAction!.action();
+          setOpened(false);
+        }
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown, true);
+    return () => document.removeEventListener("keydown", handleKeyDown, true);
+  }, [opened, selectedIndex, totalActions, flatActions]);
+
   return (
     <>
-      <Group justify="space-between">
-        <UnstyledButton
-          onClick={spotlight.open}
-          className={cx({
-            [classes.spotlightButton]: true,
-            [classes.minimalMode]: minimalMode,
-          })}
-          variant="default"
-          w="100%"
-          c="dimmed"
-        >
-          {minimalMode ? (
-            <IconSearch size={14} className={classes.spotlightButtonIcon} />
-          ) : (
-            <>
-              <span className={classes.spotlightButtonSection}>
-                <IconSearch size={14} className={classes.spotlightButtonIcon} />
-                Search
+      <button
+        type="button"
+        onClick={() => setOpened(true)}
+        className={cx(`${BASE_URL}__button`, {
+          [`${BASE_URL}__button--minimal`]: minimalMode,
+        })}
+      >
+        {minimalMode ? (
+          <IconSearch className={`${BASE_URL}__button-icon`} />
+        ) : (
+          <>
+            <span className={`${BASE_URL}__button-section`}>
+              <IconSearch className={`${BASE_URL}__button-icon`} />
+              Search
+            </span>
+            {showShortcutHints && (
+              <span className={`${BASE_URL}__button-section`}>
+                <Kbd>{`${os === "macos" ? "⌘" : "Ctrl"} + K`}</Kbd>
               </span>
-              {showShortcutHints && (
-                <span className={classes.spotlightButtonSection}>
-                  <Kbd c="dimmed" size="xs">
-                    {os === "macos" ? "⌘" : "Ctrl"}
-                  </Kbd>{" "}
-                  +{" "}
-                  <Kbd c="dimmed" size="xs">
-                    K
-                  </Kbd>
-                </span>
-              )}
-            </>
-          )}
-        </UnstyledButton>
-      </Group>
-      <Spotlight
-        className={classes.spotlight}
-        actions={possibleActions}
-        closeOnClickOutside
-        nothingFound={t("spotlight.no-results")}
-        highlightQuery
-        onQueryChange={setFilter}
-        limit={10}
-        scrollable={true}
-        searchProps={{
-          leftSection: <IconSearch size={18} stroke={2} />,
-          placeholder: "Search...",
-        }}
-        transitionProps={{ transition: "pop", duration: 100 }}
-      />
+            )}
+          </>
+        )}
+      </button>
+
+      <dialog ref={dialogRef} className={`${BASE_URL}__dialog`}>
+        <div className={`${BASE_URL}__content`}>
+          <div className={`${BASE_URL}__search-wrapper`}>
+            <IconSearch className={`${BASE_URL}__search-icon`} stroke={2} />
+            <input
+              ref={searchInputRef}
+              type="text"
+              className={`${BASE_URL}__search-input`}
+              placeholder="Search..."
+              onChange={(e) => setQuery(e.target.value)}
+              value={immediateQuery}
+            />
+          </div>
+
+          <div className={`${BASE_URL}__results`}>
+            {totalActions === 0 ? (
+              <div className={`${BASE_URL}__empty`}>{t("spotlight.no-results")}</div>
+            ) : (
+              limitedActions.map((group, groupIndex) => {
+                const groupStartIndex = limitedActions
+                  .slice(0, groupIndex)
+                  .reduce((acc, g) => acc + g.actions.length, 0);
+
+                return (
+                  <div key={group.group} className={`${BASE_URL}__group`}>
+                    <div className={`${BASE_URL}__group-label`}>{group.group}</div>
+                    {group.actions.map((action, localIndex) => {
+                      const globalIndex = groupStartIndex + localIndex;
+
+                      return (
+                        <button
+                          type="button"
+                          key={action.id}
+                          className={cx(`${BASE_URL}__action`, {
+                            [`${BASE_URL}__action--selected`]: globalIndex === selectedIndex,
+                          })}
+                          onClick={() => {
+                            action.onClick();
+                            setOpened(false);
+                          }}
+                          onMouseEnter={() => setSelectedIndex(globalIndex)}
+                        >
+                          {action.leftSection && (
+                            <span className={`${BASE_URL}__action-icon`}>{action.leftSection}</span>
+                          )}
+                          <div className={`${BASE_URL}__action-content`}>
+                            <div className={`${BASE_URL}__action-label`}>
+                              {highlightQuery(action.label, query)}
+                            </div>
+                            {action.description && (
+                              <div className={`${BASE_URL}__action-description`}>
+                                {action.description}
+                              </div>
+                            )}
+                          </div>
+                          {action.tabAction && globalIndex === selectedIndex && (
+                            <span className={`${BASE_URL}__action-tab`}>
+                              <Kbd>Tab</Kbd> {action.tabAction.label}
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </div>
+      </dialog>
     </>
   );
 }

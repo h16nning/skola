@@ -25,10 +25,10 @@ export function useHotkeys(hotkeys: HotkeyDefinition[]) {
 
         if (!mainKey) continue;
 
-        const ctrlMatch = requiresCtrl ? event.ctrlKey : true;
-        const altMatch = requiresAlt ? event.altKey : true;
-        const shiftMatch = requiresShift ? event.shiftKey : true;
-        const metaMatch = requiresMeta ? event.metaKey : true;
+        const ctrlMatch = requiresCtrl ? event.ctrlKey : !event.ctrlKey;
+        const altMatch = requiresAlt ? event.altKey : !event.altKey;
+        const shiftMatch = requiresShift ? event.shiftKey : !event.shiftKey;
+        const metaMatch = requiresMeta ? event.metaKey : !event.metaKey;
 
         if (
           eventKey === mainKey &&

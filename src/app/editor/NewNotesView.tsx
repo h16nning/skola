@@ -94,7 +94,6 @@ function NewNotesView() {
 
         <div className={BASE + "__editor-container"}>
           <Paper className={BASE + "__editor-header"} withTexture={false}>
-            margin-top: var(--spacing-xl);
             <SelectDecksHeader
               label={t("note.new.adding-to-deck", { deckName: deck.name })}
               decks={decks}

@@ -1,19 +1,19 @@
-import { Editor } from "@tiptap/react";
 import {
   IconBold,
-  IconItalic,
-  IconUnderline,
-  IconStrikethrough,
-  IconHighlight,
-  IconCode,
-  IconSubscript,
-  IconSuperscript,
   IconClearFormatting,
-  IconList,
-  IconListNumbers,
+  IconCode,
+  IconHighlight,
+  IconItalic,
   IconLink,
   IconLinkOff,
+  IconList,
+  IconListNumbers,
+  IconStrikethrough,
+  IconSubscript,
+  IconSuperscript,
+  IconUnderline,
 } from "@tabler/icons-react";
+import { Editor } from "@tiptap/react";
 import { RichTextEditorControl } from "./RichTextEditor";
 
 import { useCallback } from "react";
@@ -175,7 +175,12 @@ export function LinkControl({ editor }: ControlProps) {
       return;
     }
 
-    editor?.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+    editor
+      ?.chain()
+      .focus()
+      .extendMarkRange("link")
+      .setLink({ href: url })
+      .run();
   }, [editor]);
 
   return (

@@ -14,6 +14,7 @@ import { t } from "i18next";
 import { useLocation } from "react-router-dom";
 import DeckList from "./DeckList";
 import "./Sidebar.css";
+import { SpotlightCard } from "../Spotlight";
 
 const BASE = "sidebar";
 const APP_VERSION = import.meta.env.VITE_APP_VERSION || "0.0.0";
@@ -77,6 +78,7 @@ function Sidebar({ menuOpened, menuHandlers }: SidebarProps) {
           </header>
 
           <nav className={`${BASE}__nav`}>
+            <SpotlightCard minimalMode={minimalMode} />
             <NavItem
               label={t("home.title")}
               path="/home"

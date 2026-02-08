@@ -1,13 +1,13 @@
-import EditorOptionsMenu from "@/app/editor/EditorOptionsMenu";
 import { AppHeaderContent } from "@/app/shell/Header/Header";
 import SelectDecksHeader from "@/components/SelectDecksHeader";
+import { TextInput } from "@/components/ui";
 import { useDecks } from "@/logic/deck/hooks/useDecks";
 import { getNote } from "@/logic/note/getNote";
 import { useNotesWith } from "@/logic/note/hooks/useNotesWith";
 import { Note, NoteType } from "@/logic/note/note";
 import { NoteSortFunction, NoteSorts } from "@/logic/note/sort";
-import { Box, Group, Space, Stack, TextInput, Title } from "@mantine/core";
-import { useDebouncedState, useDocumentTitle } from "@mantine/hooks";
+import { useDebouncedState } from "@/lib/hooks/useDebouncedState";
+import { useDocumentTitle } from "@/lib/hooks/useDocumentTitle";
 import { IconSearch } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useEffect, useState } from "react";
@@ -15,8 +15,9 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import NoteTable from "../NoteTable/NoteTable";
 import EditNoteModal from "../editor/EditNoteModal";
 import { EditNoteView } from "../editor/EditNoteView";
-import classes from "./NoteExplorerView.module.css";
+import "./NoteExplorerView.css";
 
+const BASE = "note-explorer-view";
 const ALL_DECKS_ID = "all";
 
 function NoteExplorerView() {
@@ -36,7 +37,7 @@ function NoteExplorerView() {
   }: { sortFunction?: keyof typeof NoteSorts; sortDirection?: boolean } =
     location.state ?? {};
 
-  const [filter, setFilter] = useDebouncedState<string>("", 250);
+  const [filter, setFilter, immediateFilter] = useDebouncedState<string>("", 250);
 
   const [sort, setSort] = useState<[NoteSortFunction, boolean]>([
     sortFunction !== undefined
@@ -56,7 +57,7 @@ function NoteExplorerView() {
         )
         .toArray()
         .then((m) => m.sort(sort[0](sort[1] ? 1 : -1))),
-    [location, filter, location, sort]
+    [location, filter, sort]
   );
 
   const [editNoteModalOpened, setEditNoteModalOpened] =
@@ -75,36 +76,25 @@ function NoteExplorerView() {
   }, [noteId]);
 
   return (
-    <Stack
-      style={{
-        overflow: "hidden",
-        width: "100%",
-        height: "100%",
-      }}
-    >
+    <div className={BASE}>
       <AppHeaderContent>
-        <AppHeaderContent>
-          <Group justify="space-between" gap="xs" wrap="nowrap">
-            <Space />
-            <Title order={3}>{t("manage-cards.title")}</Title>
-            <EditorOptionsMenu />
-          </Group>
-        </AppHeaderContent>
+        <h3 className={`${BASE}__title`}>{t("manage-cards.title")}</h3>
       </AppHeaderContent>
-      <Group align="end" gap="xs">
+
+      <div className={`${BASE}__controls`}>
         <SelectDecksHeader
           label="Showing Notes in"
           decks={decks}
           onSelect={(deckId) => navigate(`/notes/${deckId}`)}
         />
-      </Group>
-      <div className={classes.container}>
-        <Stack>
+      </div>
+
+      <div className={`${BASE}__container`}>
+        <div className={`${BASE}__table-section`}>
           <TextInput
             leftSection={<IconSearch size={16} />}
-            defaultValue={filter}
+            value={immediateFilter}
             placeholder="Filter Notes"
-            w="100%"
             onChange={(event) => setFilter(event.currentTarget.value)}
           />
           {notes && (
@@ -117,11 +107,13 @@ function NoteExplorerView() {
               setSort={setSort}
             />
           )}
-        </Stack>
-        <Box className={classes.noteDisplay}>
+        </div>
+
+        <div className={`${BASE}__note-display`}>
           <EditNoteView note={openedNote} setOpenedNote={setOpenedNote} />
-        </Box>
+        </div>
       </div>
+
       {openedNote && (
         <EditNoteModal
           note={openedNote}
@@ -129,7 +121,7 @@ function NoteExplorerView() {
           opened={editNoteModalOpened}
         />
       )}
-    </Stack>
+    </div>
   );
 }
 

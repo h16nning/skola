@@ -20,7 +20,7 @@ import DeckHeroSection from "./DeckHeroSection/DeckHeroSection";
 import SubDeckSection from "./SubDeckSection";
 import SuperDecksBreadcrumbs from "./SuperDecksBreadcrumbs/SuperDecksBreadcrumbs";
 
-const BASE_URL = "deck-view";
+const BASE = "deck-view";
 
 function DeckView() {
   const navigate = useNavigate();
@@ -39,9 +39,9 @@ function DeckView() {
   return (
     <>
       <AppHeaderContent>
-        <div className={`${BASE_URL}__header`}>
+        <div className={`${BASE}__header`}>
           <SuperDecksBreadcrumbs deck={deck} superDecks={superDecks} />
-          <div className={`${BASE_URL}__actions`}>
+          <div className={`${BASE}__actions`}>
             <Tooltip
               position="left"
               label={
@@ -63,7 +63,7 @@ function DeckView() {
           </div>
         </div>
       </AppHeaderContent>
-      <div className={BASE_URL}>
+      <div className={BASE}>
         <DeckHeroSection deck={deck} isDeckReady={isDeckReady} />
 
         <Tabs defaultValue="subdecks" variant="outline">

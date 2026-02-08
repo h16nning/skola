@@ -1,21 +1,21 @@
-import { useSettings } from "@/logic/settings/hooks/useSettings";
-import { Editor } from "@tiptap/react";
 import { RichTextEditor } from "@/components/ui/RichTextEditor";
 import {
   BoldControl,
-  ItalicControl,
-  UnderlineControl,
-  StrikethroughControl,
-  HighlightControl,
+  BulletListControl,
+  ClearFormattingControl,
   CodeControl,
+  HighlightControl,
+  ItalicControl,
+  LinkControl,
+  OrderedListControl,
+  StrikethroughControl,
   SubscriptControl,
   SuperscriptControl,
-  ClearFormattingControl,
-  BulletListControl,
-  OrderedListControl,
-  LinkControl,
+  UnderlineControl,
   UnlinkControl,
 } from "@/components/ui/RichTextEditorControls";
+import { useSettings } from "@/logic/settings/hooks/useSettings";
+import { Editor } from "@tiptap/react";
 import AddImageControl from "../AddImageControl";
 import classes from "./NoteEditor.module.css";
 
@@ -41,9 +41,7 @@ export function NoteEditorControls({
         {settings.showHighlightOptionInEditor && (
           <HighlightControl editor={editor} />
         )}
-        {settings.showCodeOptionInEditor && (
-          <CodeControl editor={editor} />
-        )}
+        {settings.showCodeOptionInEditor && <CodeControl editor={editor} />}
         {settings.showSubAndSuperScriptOptionInEditor && (
           <>
             <SubscriptControl editor={editor} />
@@ -71,9 +69,7 @@ export function NoteEditorControls({
           <UnlinkControl editor={editor} />
         </RichTextEditor.ControlsGroup>
       )}
-      <RichTextEditor.ControlsGroup>
-        {controls}
-      </RichTextEditor.ControlsGroup>
+      <RichTextEditor.ControlsGroup>{controls}</RichTextEditor.ControlsGroup>
     </div>
   );
 }

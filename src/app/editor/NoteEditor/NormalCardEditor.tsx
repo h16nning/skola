@@ -14,8 +14,10 @@ import { Text } from "@/components/ui/Text";
 import { Editor } from "@tiptap/react";
 import { t } from "i18next";
 import { useCallback, useEffect } from "react";
-import classes from "./NormalCardEditor.module.css";
 import NoteEditor, { useNoteEditor } from "./NoteEditor";
+import "./NormalCardEditor.css";
+
+const BASE = "normal-card-editor";
 
 interface NormalCardEditorProps {
   note: Note<NoteType.Basic> | null;
@@ -74,7 +76,7 @@ function NormalCardEditor({
         <NoteEditor
           editor={frontEditor}
           key="front"
-          className={classes.front}
+          className={`${BASE}__front`}
         />
       </Stack>
       <Stack gap="xs">
@@ -96,7 +98,6 @@ async function finish(
   backEditor: Editor | null
 ) {
   if (mode === "edit") {
-    //SAVE
     try {
       if (note === null) {
         throw new Error("Note is null");

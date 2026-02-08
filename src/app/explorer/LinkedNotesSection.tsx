@@ -1,7 +1,7 @@
+import { Badge, Button } from "@/components/ui";
 import { getAdapter } from "@/logic/NoteTypeAdapter";
 import { db } from "@/logic/db";
 import { Note, NoteType } from "@/logic/note/note";
-import { Anchor, Badge, Box, Group, Stack, Title } from "@mantine/core";
 import { useLiveQuery } from "dexie-react-hooks";
 
 interface LinkedNotesSectionProps {
@@ -17,14 +17,13 @@ function LinkedNoteDisplay({
   onSelect?: (noteId: string) => void;
 }) {
   return (
-    <Anchor
-      component="button"
-      type="button"
-      fz="sm"
+    <Button
+      size="sm"
+      variant="ghost"
       onClick={() => onSelect?.(note.id)}
     >
       {getAdapter(note).getSortFieldFromNoteContent(note.content)}
-    </Anchor>
+    </Button>
   );
 }
 
@@ -50,16 +49,16 @@ export default function LinkedNotesSection({
   }
 
   return (
-    <Box component="section">
-      <Group gap="xs">
-        <Title order={4} mb={2}>
+    <section>
+      <header>
+        <h4>
           Linked Notes
-        </Title>
-        <Badge color="red" size="xs">
+        </h4>
+        <Badge color="red">
           Beta
         </Badge>
-      </Group>
-      <Stack gap="xs" align="start">
+      </header>
+      <li>
         {definedNotes.map((note) => (
           <LinkedNoteDisplay
             key={note.id}
@@ -67,7 +66,7 @@ export default function LinkedNotesSection({
             onSelect={onSelectNote}
           />
         ))}
-      </Stack>
-    </Box>
+      </li>
+    </section>
   );
 }

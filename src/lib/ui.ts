@@ -1,4 +1,3 @@
-import { MantineTheme } from "@mantine/core";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -9,20 +8,16 @@ export function useScrollResetOnLocationChange() {
   }, [location]);
 }
 
-export function useDynamicPageTheme(
-  theme: MantineTheme,
-  colorScheme: "light" | "dark"
-) {
+export function useDynamicPageTheme(theme: "light" | "dark") {
   useEffect(() => {
-    if (document && document.querySelector("meta[name='theme-color']")) {
-      // @ts-ignore
-      document.querySelector("meta[name='theme-color']").setAttribute(
+    const metaThemeColor = document.querySelector("meta[name='theme-color']");
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute(
         "content",
-
-        colorScheme === "light" ? "#fff" : theme.colors.dark[7]
+        theme === "light" ? "#ffffff" : "#171717"
       );
     }
-  }, [theme, colorScheme]);
+  }, [theme]);
 }
 
 export function useEventListener(
@@ -35,5 +30,5 @@ export function useEventListener(
     return () => {
       window.removeEventListener(event, callback);
     };
-  }, [event, ...dependencies]);
+  }, [event, callback, ...dependencies]);
 }

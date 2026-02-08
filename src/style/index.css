@@ -12,6 +12,7 @@
 
 :root {
   --density-compact: 0.875;
+  --max-input-width: 12rem;
 }
 
 body {
@@ -61,8 +62,12 @@ html,
 body,
 #root,
 .app-shell {
+  color: var(--theme-neutral-900);
   height: 100%;
   margin: 0;
+  * {
+    box-sizing: border-box;
+  }
 }
 
 button .tabler-icon,

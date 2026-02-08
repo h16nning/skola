@@ -1,0 +1,106 @@
+.note-table {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.note-table__table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--font-size-md);
+}
+
+.note-table__head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: var(--theme-neutral-50);
+}
+
+.note-table__head-cell {
+  padding: var(--spacing-sm) var(--spacing-md);
+  text-align: left;
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  color: var(--theme-neutral-500);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--theme-neutral-200);
+}
+
+.note-table__head-cell:hover {
+  color: var(--theme-neutral-700);
+}
+
+.note-table__head-cell-content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.note-table__sort-icon {
+  display: inline-flex;
+  opacity: 0;
+  transition: var(--transition-icon);
+}
+
+.note-table__head-cell:hover .note-table__sort-icon {
+  opacity: 0.4;
+}
+
+.note-table__head-cell--active .note-table__sort-icon {
+  opacity: 1;
+}
+
+.note-table__head-cell--desc .note-table__sort-icon {
+  transform: rotate(180deg);
+}
+
+.note-table__body {
+  /* body-level styles if needed */
+}
+
+.note-table__row {
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  transition: none;
+}
+
+.note-table__row:nth-child(odd) {
+  background-color: var(--theme-neutral-100);
+}
+
+.note-table__row:hover {
+  background-color: var(--theme-neutral-200);
+}
+
+.note-table__row--selected,
+.note-table__row--selected:nth-child(odd),
+.note-table__row--selected:hover {
+  background-color: var(--theme-primary-200);
+  color: var(--theme-primary-950);
+}
+
+.note-table__cell {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 0;
+}
+
+.note-table__cell:first-child {
+  width: 50%;
+}
+
+.note-table__empty {
+  padding: var(--spacing-xl) var(--spacing-md);
+  text-align: center;
+  color: var(--theme-neutral-400);
+  font-size: var(--font-size-md);
+}

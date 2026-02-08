@@ -16,7 +16,7 @@
   background-color: var(--theme-neutral-50);
   box-shadow: var(--shadow-lg);
   min-width: 12rem;
-  z-index: 1000;
+  z-index: 2100;
   opacity: 0;
   transform: scale(0.95) translateY(-4px);
   transition: opacity var(--transition-duration-fast)

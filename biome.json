@@ -56,5 +56,10 @@
     "formatter": {
       "trailingCommas": "es5"
     }
+  },
+  "css": {
+    "parser": {
+      "cssModules": true
+    }
   }
 }

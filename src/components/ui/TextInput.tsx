@@ -15,10 +15,15 @@ interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: ReactNode;
   description?: ReactNode;
   error?: ReactNode;
+  leftSection?: ReactNode;
+  rightSection?: ReactNode;
 }
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
-  function TextInput({ label, description, error, className = "", id, ...props }, ref) {
+  function TextInput(
+    { label, description, error, leftSection, rightSection, className = "", id, ...props },
+    ref
+  ) {
     const generatedId = useId();
     const inputId = id ?? generatedId;
 
@@ -30,13 +35,21 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       <div className={classes}>
         {label && <InputLabel htmlFor={inputId}>{label}</InputLabel>}
         {description && <InputDescription>{description}</InputDescription>}
-        <input
-          ref={ref}
-          type="text"
-          id={inputId}
-          className={`${BASE}__field`}
-          {...props}
-        />
+        <div className={`${BASE}__wrapper`}>
+          {leftSection && (
+            <span className={`${BASE}__left-section`}>{leftSection}</span>
+          )}
+          <input
+            ref={ref}
+            type="text"
+            id={inputId}
+            className={`${BASE}__field`}
+            {...props}
+          />
+          {rightSection && (
+            <span className={`${BASE}__right-section`}>{rightSection}</span>
+          )}
+        </div>
         <InputError>{error}</InputError>
       </div>
     );

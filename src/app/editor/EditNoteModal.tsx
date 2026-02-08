@@ -1,12 +1,14 @@
 import { getAdapter } from "@/logic/NoteTypeAdapter";
 import { useDeckOf } from "@/logic/deck/hooks/useDeckOf";
 import { NoteType } from "@/logic/note/note";
-import { Group, Modal } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { useMemo, useState } from "react";
 import { Note } from "../../logic/note/note";
-import classes from "./EditNoteModal.module.css";
+import { Modal } from "@/components/ui/Modal";
 import NoteSubmitButton from "./NoteSubmitButton";
+import "./EditNoteModal.css";
+
+const BASE = "edit-note-modal";
 
 interface EditNoteModalProps {
   note: Note<NoteType>;
@@ -38,34 +40,23 @@ export default function EditNoteModal({
 
   return (
     <Modal
-      className={classes.modal}
-      title={
-        <Group justify="space-between" align="center" w="100%" flex-grow={1}>
-          <span>Edit Note</span>
-          {/*<Button
-            variant="subtle"
-            color="gray"
-            rightSection={<IconArrowUpRight />}
-            onClick={() => deck && navigate(`/notes/${note.deck}/${note.id}`)}
-          >
-            Open In Manage Cards
-          </Button>*/}
-        </Group>
-      }
-      fullScreen={isMobile}
+      title="Edit Note"
+      fullscreen={isMobile}
       opened={opened}
       onClose={setClose}
     >
-      {CardEditor}
-      <Group justify="end" pt="md">
-        <NoteSubmitButton
-          finish={() => {
-            setRequestedFinish(true);
-            setClose();
-          }}
-          mode="edit"
-        />
-      </Group>
+      <div className={BASE}>
+        <div className={`${BASE}__content`}>{CardEditor}</div>
+        <div className={`${BASE}__footer`}>
+          <NoteSubmitButton
+            finish={() => {
+              setRequestedFinish(true);
+              setClose();
+            }}
+            mode="edit"
+          />
+        </div>
+      </div>
     </Modal>
   );
 }

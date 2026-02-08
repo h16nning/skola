@@ -1,0 +1,56 @@
+.note-explorer-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.note-explorer-view__title {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--theme-neutral-900);
+}
+
+.note-explorer-view__controls {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--spacing-xs);
+}
+
+.note-explorer-view__container {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-md);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  align-items: stretch;
+}
+
+.note-explorer-view__table-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.note-explorer-view__note-display {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--theme-neutral-200);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+@media (max-width: 800px) {
+  .note-explorer-view__note-display {
+    display: none;
+  }
+}

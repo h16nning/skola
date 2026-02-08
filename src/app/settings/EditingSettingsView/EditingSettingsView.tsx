@@ -1,15 +1,15 @@
 import { Paper } from "@/components/ui/Paper";
 import {
-    IconCode,
-    IconHighlight,
-    IconInfoCircle,
-    IconLink,
-    IconLinkOff,
-    IconList,
-    IconListNumbers,
-    IconStrikethrough,
-    IconSubscript,
-    IconSuperscript,
+  IconCode,
+  IconHighlight,
+  IconInfoCircle,
+  IconLink,
+  IconLinkOff,
+  IconList,
+  IconListNumbers,
+  IconStrikethrough,
+  IconSubscript,
+  IconSuperscript,
 } from "@tabler/icons-react";
 import { t } from "i18next";
 import Section from "../Section";

@@ -1,28 +1,29 @@
-import { Button, Center, Group, Stack, Text } from "@mantine/core";
 import { IconHome } from "@tabler/icons-react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "./ui/Button";
+import "./MissingObject.css";
+
+const BASE_URL = "missing-object";
 
 function MissingObject() {
   const navigate = useNavigate();
   return (
-    <Center>
-      <Stack w="600">
-        <Text color="red" fw="bold" fz="20px">
-          Something went wrong!
-        </Text>
-        <Text>Unfortunately what you are looking for couldn't be found.</Text>
-        <Group justify="flex-start">
-          <Button
-            variant="default"
-            leftSection={<IconHome />}
-            onClick={() => navigate("/home")}
-          >
-            Go home
-          </Button>
-        </Group>
-      </Stack>
-    </Center>
+    <div className={`${BASE_URL}`}>
+      <div className={`${BASE_URL}__content`}>
+        <h1 className={`${BASE_URL}__title`}>Something went wrong!</h1>
+        <p className={`${BASE_URL}__message`}>
+          Unfortunately what you are looking for couldn't be found.
+        </p>
+        <Button
+          variant="default"
+          leftSection={<IconHome />}
+          onClick={() => navigate("/home")}
+        >
+          Go home
+        </Button>
+      </div>
+    </div>
   );
 }
 
