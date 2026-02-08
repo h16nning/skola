@@ -217,9 +217,7 @@ const ClozeComponent = memo(
       },
     };
 
-    return (
-      <Text className={`${BASE}__card`}>{parse(finalText, options)}</Text>
-    );
+    return <Text className={`${BASE}__card`}>{parse(finalText, options)}</Text>;
   }
 );
 

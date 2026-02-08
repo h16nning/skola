@@ -59,8 +59,6 @@ export default function DeckPreview({ deck }: DeckPreviewProps) {
       </div>
     </Paper>
   ) : (
-    <Alert variant="error">
-      {t("deck.error-failed-to-load")}
-    </Alert>
+    <Alert variant="error">{t("deck.error-failed-to-load")}</Alert>
   );
 }

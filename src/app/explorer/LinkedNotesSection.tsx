@@ -17,11 +17,7 @@ function LinkedNoteDisplay({
   onSelect?: (noteId: string) => void;
 }) {
   return (
-    <Button
-      size="sm"
-      variant="ghost"
-      onClick={() => onSelect?.(note.id)}
-    >
+    <Button size="sm" variant="ghost" onClick={() => onSelect?.(note.id)}>
       {getAdapter(note).getSortFieldFromNoteContent(note.content)}
     </Button>
   );
@@ -51,12 +47,8 @@ export default function LinkedNotesSection({
   return (
     <section>
       <header>
-        <h4>
-          Linked Notes
-        </h4>
-        <Badge color="red">
-          Beta
-        </Badge>
+        <h4>Linked Notes</h4>
+        <Badge color="red">Beta</Badge>
       </header>
       <li>
         {definedNotes.map((note) => (

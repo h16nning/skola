@@ -37,7 +37,10 @@ function NoteExplorerView() {
   }: { sortFunction?: keyof typeof NoteSorts; sortDirection?: boolean } =
     location.state ?? {};
 
-  const [filter, setFilter, immediateFilter] = useDebouncedState<string>("", 250);
+  const [filter, setFilter, immediateFilter] = useDebouncedState<string>(
+    "",
+    250
+  );
 
   const [sort, setSort] = useState<[NoteSortFunction, boolean]>([
     sortFunction !== undefined

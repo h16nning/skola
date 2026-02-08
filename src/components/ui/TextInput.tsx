@@ -21,7 +21,16 @@ interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
   function TextInput(
-    { label, description, error, leftSection, rightSection, className = "", id, ...props },
+    {
+      label,
+      description,
+      error,
+      leftSection,
+      rightSection,
+      className = "",
+      id,
+      ...props
+    },
     ref
   ) {
     const generatedId = useId();

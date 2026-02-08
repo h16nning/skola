@@ -100,10 +100,7 @@ export default function WelcomeView() {
         </div>
 
         <div className={`${BASE}__actions`}>
-          <Button
-            onClick={() => setRegistered(true)}
-            variant="primary"
-          >
+          <Button onClick={() => setRegistered(true)} variant="primary">
             Get Started Now
           </Button>
         </div>

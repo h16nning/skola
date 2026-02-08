@@ -14,7 +14,7 @@ export default function displayDoubleSidedQuestion(
             (card.content.frontIsField1 ? content?.field1 : content?.field2) ??
             "error",
         }}
-        />
+      />
     );
   }
   return <FrontComponent />;

@@ -30,9 +30,7 @@ export default function NoteTableHeadItem({
   return (
     <th
       className={classes}
-      onClick={() =>
-        setSort([sortFunction, isActive ? !sort[1] : true])
-      }
+      onClick={() => setSort([sortFunction, isActive ? !sort[1] : true])}
     >
       <span className={`${BASE}__head-cell-content`}>
         <span>{name}</span>

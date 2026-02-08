@@ -133,7 +133,12 @@ export default function SpotlightCard({
           label: deck.name,
           description: deck.description,
           onClick: () => navigate(`/deck/${deck.id}`),
-          leftSection: <IconCards style={{ width: "1.5rem", height: "1.5rem" }} stroke={1.5} />,
+          leftSection: (
+            <IconCards
+              style={{ width: "1.5rem", height: "1.5rem" }}
+              stroke={1.5}
+            />
+          ),
           tabAction: {
             label: "to study",
             action: () => navigate(`/learn/${deck.id}`),
@@ -149,7 +154,12 @@ export default function SpotlightCard({
           label: getAdapter(note).getSortFieldFromNoteContent(note.content),
           description: note.breadcrumb.join(" > "),
           onClick: () => navigate(`/deck/${note.deck}`),
-          leftSection: <IconSquare style={{ width: "1.5rem", height: "1.5rem" }} stroke={1.5} />,
+          leftSection: (
+            <IconSquare
+              style={{ width: "1.5rem", height: "1.5rem" }}
+              stroke={1.5}
+            />
+          ),
         })),
       ],
     },
@@ -299,7 +309,9 @@ export default function SpotlightCard({
 
           <div className={`${BASE_URL}__results`}>
             {totalActions === 0 ? (
-              <div className={`${BASE_URL}__empty`}>{t("spotlight.no-results")}</div>
+              <div className={`${BASE_URL}__empty`}>
+                {t("spotlight.no-results")}
+              </div>
             ) : (
               limitedActions.map((group, groupIndex) => {
                 const groupStartIndex = limitedActions
@@ -308,7 +320,9 @@ export default function SpotlightCard({
 
                 return (
                   <div key={group.group} className={`${BASE_URL}__group`}>
-                    <div className={`${BASE_URL}__group-label`}>{group.group}</div>
+                    <div className={`${BASE_URL}__group-label`}>
+                      {group.group}
+                    </div>
                     {group.actions.map((action, localIndex) => {
                       const globalIndex = groupStartIndex + localIndex;
 
@@ -317,7 +331,8 @@ export default function SpotlightCard({
                           type="button"
                           key={action.id}
                           className={cx(`${BASE_URL}__action`, {
-                            [`${BASE_URL}__action--selected`]: globalIndex === selectedIndex,
+                            [`${BASE_URL}__action--selected`]:
+                              globalIndex === selectedIndex,
                           })}
                           onClick={() => {
                             action.onClick();
@@ -326,23 +341,28 @@ export default function SpotlightCard({
                           onMouseEnter={() => setSelectedIndex(globalIndex)}
                         >
                           {action.leftSection && (
-                            <span className={`${BASE_URL}__action-icon`}>{action.leftSection}</span>
+                            <span className={`${BASE_URL}__action-icon`}>
+                              {action.leftSection}
+                            </span>
                           )}
                           <div className={`${BASE_URL}__action-content`}>
                             <div className={`${BASE_URL}__action-label`}>
                               {highlightQuery(action.label, query)}
                             </div>
                             {action.description && (
-                              <div className={`${BASE_URL}__action-description`}>
+                              <div
+                                className={`${BASE_URL}__action-description`}
+                              >
                                 {action.description}
                               </div>
                             )}
                           </div>
-                          {action.tabAction && globalIndex === selectedIndex && (
-                            <span className={`${BASE_URL}__action-tab`}>
-                              <Kbd>Tab</Kbd> {action.tabAction.label}
-                            </span>
-                          )}
+                          {action.tabAction &&
+                            globalIndex === selectedIndex && (
+                              <span className={`${BASE_URL}__action-tab`}>
+                                <Kbd>Tab</Kbd> {action.tabAction.label}
+                              </span>
+                            )}
                         </button>
                       );
                     })}

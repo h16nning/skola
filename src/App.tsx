@@ -9,7 +9,11 @@ import WelcomeView from "./app/WelcomeView";
 import LoginUI from "./app/login/LoginUI";
 import Header from "./app/shell/Header/Header";
 import Sidebar from "./app/shell/Sidebar/Sidebar";
-import { NotificationContainer, NotificationProvider, useNotificationSetup } from "./components/Notification";
+import {
+  NotificationContainer,
+  NotificationProvider,
+  useNotificationSetup,
+} from "./components/Notification";
 import { useDensity } from "./hooks/useDensity";
 import { useTheme } from "./hooks/useTheme";
 import i18n from "./i18n";
@@ -60,6 +64,7 @@ function AppContent() {
 
   return (
     <I18nextProvider i18n={i18n}>
+<<<<<<< HEAD
         <NotificationContainer />
         {registered ? (
           <div className={BASE}>
@@ -89,20 +94,53 @@ function AppContent() {
                 role="button"
                 tabIndex={fullscreenMode && sidebarMenuOpened ? 0 : -1}
                 aria-label="Close sidebar"
+=======
+      <NotificationContainer />
+      {registered ? (
+        <div className={BASE}>
+          <Header
+            menuOpened={sidebarMenuOpened}
+            menuHandlers={sidebarHandlers}
+          />
+          <div className={`${BASE}__body`}>
+            <nav className={`${BASE}__navbar`}>
+              <Sidebar
+                menuOpened={sidebarMenuOpened}
+                menuHandlers={sidebarHandlers}
+>>>>>>> 0913089 (feat: final changes and update readme.md)
               />
-              <main className={`${BASE}__main`}>
-                <div className={`${BASE}__main-content`}>
-                  <div className={`${BASE}__main-center`}>
-                    <Outlet />
-                  </div>
+            </nav>
+            <div
+              className={overlayClasses}
+              onClick={sidebarHandlers.close}
+              onKeyDown={(e) => {
+                if (e.key === "Escape" || e.key === "Enter" || e.key === " ") {
+                  sidebarHandlers.close();
+                }
+              }}
+              role="button"
+              tabIndex={fullscreenMode && sidebarMenuOpened ? 0 : -1}
+              aria-label="Close sidebar"
+            />
+            <main className={`${BASE}__main`}>
+              <div className={`${BASE}__main-content`}>
+                <div className={`${BASE}__main-center`}>
+                  <Outlet />
                 </div>
-              </main>
-            </div>
-            <LoginUI />
+              </div>
+            </main>
           </div>
+<<<<<<< HEAD
         ) : (
           <WelcomeView />
         )}
+=======
+          <LoginUI />
+        </div>
+      ) : (
+        <WelcomeView />
+      )}
+>>>>>>> 0913089 (feat: final changes and update readme.md)
     </I18nextProvider>
   );
 }

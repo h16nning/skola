@@ -1,8 +1,8 @@
-import React from 'react';
-import { useNotifications } from './NotificationContext';
-import './NotificationContainer.css';
+import React from "react";
+import { useNotifications } from "./NotificationContext";
+import "./NotificationContainer.css";
 
-const BASE_URL = 'notification-container';
+const BASE_URL = "notification-container";
 
 export function NotificationContainer() {
   const { notifications } = useNotifications();

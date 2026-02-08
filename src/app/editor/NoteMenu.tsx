@@ -5,7 +5,12 @@ import {
 } from "@/components/Notification/Notification";
 import { IconButton } from "@/components/ui/IconButton";
 import { Kbd } from "@/components/ui/Kbd";
-import { Menu, MenuTrigger, MenuDropdown, MenuItem } from "@/components/ui/Menu";
+import {
+  Menu,
+  MenuTrigger,
+  MenuDropdown,
+  MenuItem,
+} from "@/components/ui/Menu";
 import { useDisclosure } from "@/lib/hooks/useDisclosure";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { deleteNote } from "@/logic/note/deleteNote";
