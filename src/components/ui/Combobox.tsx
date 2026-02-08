@@ -8,10 +8,10 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
+import "./Combobox.css";
 import { InputDescription } from "./InputDescription";
 import { InputError } from "./InputError";
 import { InputLabel } from "./InputLabel";
-import "./Combobox.css";
 
 const BASE = "combobox";
 
@@ -234,7 +234,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
                 type="text"
                 className={`${BASE}__search-input`}
                 value={searchQuery}
-                onChange={(e) => {
+                onChange={() => {
                   setSearchQuery(e.target.value);
                   setHighlightedIndex(0);
                 }}

@@ -1,12 +1,12 @@
+import { Deck } from "@/logic/deck/deck";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { Deck } from "@/logic/deck/deck";
 import DeckPreview from "./DeckPreview";
 
 import EmptyNotice from "@/components/EmptyNotice";
+import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { IconCards } from "@tabler/icons-react";
 import "./DeckTable.css";
-import { useHotkeys } from "@/lib/hooks/useHotkeys";
 
 interface DeckTableProps {
   deckList?: Deck[];

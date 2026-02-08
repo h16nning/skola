@@ -1,8 +1,8 @@
-import { NoteType } from "@/logic/note/note";
 import ModalProps from "@/components/ModalProps";
-import { Card } from "@/logic/card/card";
-import CardHistory from "./CardHistory";
 import { Modal } from "@/components/ui";
+import { Card } from "@/logic/card/card";
+import { NoteType } from "@/logic/note/note";
+import CardHistory from "./CardHistory";
 
 interface DeckOptionsModalProps extends ModalProps {
   card?: Card<NoteType>;

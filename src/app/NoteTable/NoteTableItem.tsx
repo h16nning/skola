@@ -1,5 +1,5 @@
-import { Note, NoteType } from "@/logic/note/note";
 import { NoteTypeLabels } from "@/logic/card/card";
+import { Note, NoteType } from "@/logic/note/note";
 
 const BASE = "note-table";
 

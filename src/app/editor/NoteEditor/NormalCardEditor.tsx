@@ -4,18 +4,17 @@ import {
   successfullyAdded,
   successfullySaved,
 } from "@/components/Notification/Notification";
-import { EditMode } from "@/logic/NoteTypeAdapter";
-import { Deck } from "@/logic/deck/deck";
-import { NoteType } from "@/logic/note/note";
-import { Note } from "@/logic/note/note";
-import { BasicNoteTypeAdapter } from "@/logic/type-implementations/normal/BasicNote";
 import { Stack } from "@/components/ui/Stack";
 import { Text } from "@/components/ui/Text";
+import { EditMode } from "@/logic/NoteTypeAdapter";
+import { Deck } from "@/logic/deck/deck";
+import { Note, NoteType } from "@/logic/note/note";
+import { BasicNoteTypeAdapter } from "@/logic/type-implementations/normal/BasicNote";
 import { Editor } from "@tiptap/react";
 import { t } from "i18next";
 import { useCallback, useEffect } from "react";
-import NoteEditor, { useNoteEditor } from "./NoteEditor";
 import "./NormalCardEditor.css";
+import NoteEditor, { useNoteEditor } from "./NoteEditor";
 
 const BASE = "normal-card-editor";
 

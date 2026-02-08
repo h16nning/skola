@@ -7,15 +7,14 @@ import { IconButton } from "@/components/ui/IconButton";
 import { Kbd } from "@/components/ui/Kbd";
 import {
   Menu,
-  MenuTrigger,
   MenuDropdown,
   MenuItem,
+  MenuTrigger,
 } from "@/components/ui/Menu";
 import { useDisclosure } from "@/lib/hooks/useDisclosure";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { deleteNote } from "@/logic/note/deleteNote";
-import { NoteType } from "@/logic/note/note";
-import { Note } from "@/logic/note/note";
+import { Note, NoteType } from "@/logic/note/note";
 import { useShowShortcutHints } from "@/logic/settings/hooks/useShowShortcutHints";
 import {
   IconArrowsExchange,

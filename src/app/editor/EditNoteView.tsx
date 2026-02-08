@@ -1,3 +1,6 @@
+import { Group } from "@/components/ui/Group";
+import { Stack } from "@/components/ui/Stack";
+import { Text } from "@/components/ui/Text";
 import { getAdapter } from "@/logic/NoteTypeAdapter";
 import { NoteTypeLabels } from "@/logic/card/card";
 import { useDeckOf } from "@/logic/deck/hooks/useDeckOf";
@@ -5,13 +8,10 @@ import { getNote } from "@/logic/note/getNote";
 import { Note, NoteType } from "@/logic/note/note";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Group } from "@/components/ui/Group";
-import { Stack } from "@/components/ui/Stack";
-import { Text } from "@/components/ui/Text";
 import LinkedNotesSection from "../explorer/LinkedNotesSection";
+import "./EditNoteView.css";
 import NoteMenu from "./NoteMenu";
 import NoteSubmitButton from "./NoteSubmitButton";
-import "./EditNoteView.css";
 
 const BASE_URL = "edit-note";
 

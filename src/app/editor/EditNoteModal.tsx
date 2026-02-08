@@ -1,12 +1,12 @@
+import { Modal } from "@/components/ui/Modal";
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { getAdapter } from "@/logic/NoteTypeAdapter";
 import { useDeckOf } from "@/logic/deck/hooks/useDeckOf";
 import { NoteType } from "@/logic/note/note";
-import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { useMemo, useState } from "react";
 import { Note } from "../../logic/note/note";
-import { Modal } from "@/components/ui/Modal";
-import NoteSubmitButton from "./NoteSubmitButton";
 import "./EditNoteModal.css";
+import NoteSubmitButton from "./NoteSubmitButton";
 
 const BASE = "edit-note-modal";
 

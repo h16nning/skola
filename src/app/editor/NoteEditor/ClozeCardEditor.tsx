@@ -10,11 +10,11 @@ import {
   successfullyAdded,
   successfullySaved,
 } from "@/components/Notification/Notification";
+import { RichTextEditorControl } from "@/components/ui/RichTextEditor";
 import { Note } from "@/logic/note/note";
 import { ClozeNoteTypeAdapter } from "@/logic/type-implementations/cloze/ClozeNote";
 import { Editor } from "@tiptap/react";
 import { useCallback, useEffect, useMemo } from "react";
-import { RichTextEditorControl } from "@/components/ui/RichTextEditor";
 import "./ClozeCardEditor.css";
 
 const BASE = "cloze-card-editor";

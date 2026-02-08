@@ -1,9 +1,9 @@
 import { genericFail } from "@/components/Notification/Notification";
 import { Button, Modal, TextInput } from "@/components/ui";
-import { Deck } from "@/logic/deck/deck";
-import { renameDeck } from "@/logic/deck/renameDeck";
 import { getHotkeyHandler } from "@/lib/hooks/getHotkeyHandler";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
+import { Deck } from "@/logic/deck/deck";
+import { renameDeck } from "@/logic/deck/renameDeck";
 import { t } from "i18next";
 import { useCallback, useEffect, useState } from "react";
 import "./RenameDeckModal.css";

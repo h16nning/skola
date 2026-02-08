@@ -1,6 +1,6 @@
+import { Select } from "@/components/ui/Select";
 import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { setSetting } from "@/logic/settings/setSetting";
-import { Select } from "@/components/ui/Select";
 import { useTranslation } from "react-i18next";
 import { SupportedLanguages } from "../../logic/settings/Settings";
 

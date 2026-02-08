@@ -1,4 +1,5 @@
 import ClozeCardEditor from "@/app/editor/NoteEditor/ClozeCardEditor";
+import { Text } from "@/components/ui/Text";
 import { NoteEditorProps, NoteTypeAdapter } from "@/logic/NoteTypeAdapter";
 import { Card, HTMLtoPreviewString } from "@/logic/card/card";
 import { createCardSkeleton } from "@/logic/card/createCardSkeleton";
@@ -9,10 +10,8 @@ import { Deck } from "@/logic/deck/deck";
 import { NoteContent } from "@/logic/note/NoteContent";
 import { getNote } from "@/logic/note/getNote";
 import { newNote } from "@/logic/note/newNote";
-import { NoteType } from "@/logic/note/note";
-import { Note } from "@/logic/note/note";
+import { Note, NoteType } from "@/logic/note/note";
 import { updateNoteContent } from "@/logic/note/updateNoteContent";
-import { Text } from "@/components/ui/Text";
 import parse, {
   DOMNode,
   Element,

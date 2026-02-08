@@ -1,9 +1,9 @@
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { Note, NoteType } from "@/logic/note/note";
 import { NoteSortFunction, NoteSorts } from "@/logic/note/sort";
-import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
+import "./NoteTable.css";
 import NoteTableHeadItem from "./NoteTableHeadItem";
 import { NoteTableItem } from "./NoteTableItem";
-import "./NoteTable.css";
 
 const BASE = "note-table";
 

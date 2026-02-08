@@ -1,8 +1,8 @@
+import { Alert } from "@/components/ui/Alert";
+import { Button } from "@/components/ui/Button";
+import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 import { IconInfoCircle } from "@tabler/icons-react";
 import { useEffect } from "react";
-import { Button } from "@/components/ui/Button";
-import { Alert } from "@/components/ui/Alert";
-import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 import "./WelcomeView.css";
 
 const BASE = "welcome-view";
