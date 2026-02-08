@@ -48,9 +48,9 @@
     "format": "biome check --apply",
     "tauri": "tauri",
     "add-domain": "echo https://skola.cards> dist/CNAME",
-    "predeploy": "npm run add-domain && npm run build",
+    "predeploy": "pnpm run add-domain && pnpm run build",
     "deploy": "gh-pages -d dist",
-    "build-and-deploy": "npm run predeploy && npm run deploy"
+    "build-and-deploy": "pnpm run predeploy && pnpm run deploy"
   },
   "eslintConfig": {
     "extends": [
