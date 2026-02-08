@@ -20,8 +20,8 @@
 }
 
 .icon-button:focus-visible {
-  outline: 2px solid var(--theme-primary-500);
-  outline-offset: 2px;
+  outline: var(--ring-outline);
+  box-shadow: var(--ring-shadow);
 }
 
 .icon-button:disabled {
@@ -30,8 +30,8 @@
 }
 
 .icon-button svg {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
   stroke-width: 1.5;
 }
 

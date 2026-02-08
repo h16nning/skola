@@ -1,12 +1,12 @@
-import { useState } from "react";
+import NewDeckModal from "@/app/deck/NewDeckModal";
+import { breakpoints } from "@/lib/breakpoints";
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
+import { useTopLevelDecks } from "@/logic/deck/hooks/useTopLevelDecks";
 import { IconPlus } from "@tabler/icons-react";
 import { t } from "i18next";
-import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
-import { breakpoints } from "@/lib/breakpoints";
-import { useTopLevelDecks } from "@/logic/deck/hooks/useTopLevelDecks";
-import NewDeckModal from "@/app/deck/NewDeckModal";
-import DeckTree from "./DeckTree";
+import { useState } from "react";
 import "./DeckList.css";
+import DeckTree from "./DeckTree";
 
 const BASE = "deck-list";
 

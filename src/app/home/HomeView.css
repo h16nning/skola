@@ -24,7 +24,7 @@
 }
 
 .home-view__welcome-title {
-  font-size: var(--font-size-3xl);
+  font-size: var(--font-size-2xl);
   font-family: var(--font-serif);
   font-weight: 500;
   color: var(--theme-neutral-900);
@@ -32,7 +32,7 @@
 }
 
 .home-view__welcome-subtitle {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-lg);
   color: var(--theme-neutral-700);
   margin: 0;
 }
@@ -44,6 +44,10 @@
   }
 
   .home-view__welcome-title {
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-xl);
+  }
+
+  .home-view__welcome-subtitle {
+    font-size: var(--font-size-md);
   }
 }

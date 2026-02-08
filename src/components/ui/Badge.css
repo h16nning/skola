@@ -9,6 +9,7 @@
   font-family: var(--font-sans);
   white-space: nowrap;
   line-height: 1;
+  z-index: 1;
 }
 
 .badge--sm {
@@ -52,7 +53,6 @@
   border: 1px solid var(--theme-primary-300);
 }
 
-.badge--outline.badge--gray,
 .badge--outline.badge--neutral {
   background-color: transparent;
   color: var(--theme-neutral-700);

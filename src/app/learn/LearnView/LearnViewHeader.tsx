@@ -1,23 +1,22 @@
-import { Group } from "@/components/ui/Group";
 import { IconButton } from "@/components/ui/IconButton";
 import { Kbd } from "@/components/ui/Kbd";
 import { Progress } from "@/components/ui/Progress";
 import { Tooltip } from "@/components/ui/Tooltip";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
+import { Card } from "@/logic/card/card";
+import { Deck } from "@/logic/deck/deck";
+import { LearnController } from "@/logic/learn";
 import { NoteType } from "@/logic/note/note";
 import { IconX } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { StopwatchResult, useStopwatch } from "react-timer-hook";
-import { Card } from "../../../logic/card/card";
-import { Deck } from "../../../logic/deck/deck";
-import { LearnController } from "../../../logic/learn";
 import CardMenu from "../../editor/CardMenu";
 import RemainingCardsIndicator from "../RemainingCardsIndicator/RemainingCardsIndicator";
 import "./LearnViewHeader.css";
 
-const BASE_URL = "learn-view-header";
+const BASE = "learn-view-header";
 
 export let stopwatchResult: StopwatchResult;
 
@@ -72,9 +71,10 @@ function LearnViewHeader({
 
   return (
     <>
-      <Group justify="space-between" wrap="nowrap" style={{ width: "100%" }}>
-        <Group wrap="nowrap" gap="xs">
+      <div className={BASE}>
+        <div className={BASE + "__left-group"}>
           <Tooltip
+            position="right"
             label={
               <>
                 {t("learning.back-to-deck")} <Kbd>d</Kbd>
@@ -89,15 +89,15 @@ function LearnViewHeader({
             </IconButton>
           </Tooltip>
           <Stopwatch />
-        </Group>
+        </div>
 
-        <Group justify="end" wrap="nowrap" gap="xs">
+        <div className={BASE + "__right-group"}>
           <RemainingCardsIndicator controller={controller} />
           <CardMenu card={currentCard} onDelete={controller.requestNextCard} />
-        </Group>
-      </Group>
+        </div>
+      </div>
       <Progress
-        className={BASE_URL + "__progress-bar"}
+        className={BASE + "__progress-bar"}
         size="xs"
         value={progress}
         style={{ width: "100%", borderRadius: 0 }}

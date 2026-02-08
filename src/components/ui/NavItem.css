@@ -50,6 +50,8 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
   color: var(--theme-neutral-500);
 }
 

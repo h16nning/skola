@@ -1,16 +1,24 @@
 .remaining-cards-indicator {
-  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-sm);
+}
+
+.remaining-cards-indicator__tiny-stat {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-xs);
 }
 
 .remaining-cards-indicator__icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.25rem;
-  height: 1.25rem;
+  width: var(--icon-size-xs);
+  height: var(--icon-size-xs);
 }
 
-.remaining-cards-indicator__icon svg {
-  width: 100%;
-  height: 100%;
+.remaining-cards-indicator__value {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
 }

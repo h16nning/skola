@@ -24,14 +24,15 @@ export default function DeckPreview({ deck }: DeckPreviewProps) {
   const color = deck.color ?? COLORS[0];
   return deck ? (
     <Paper
-      className={`${BASE} ${BASE}--color-${color}`}
+      className={`deck-card-base deck-card-base--color-${color} ${BASE} ${BASE}--color-${color}`}
       onClick={() => navigate(`/deck/${deck.id}`)}
       withTexture
       withBorder
+      id={`deck-preview-${deck.id}`}
     >
-      <div className={`${BASE}__footer`}>
-        <h3 className={`${BASE}__title`}>{deck.name}</h3>
-        <div className={`${BASE}__details`}>
+      <div className={`${BASE}__content`}>
+        <h3 className={`deck-card-base__title ${BASE}__title`}>{deck.name}</h3>
+        <div className={`deck-card-base__details ${BASE}__details`}>
           {states.review > 0 ? (
             <Badge variant="light">
               {t("deck.review-cards-label", { count: states.review })}

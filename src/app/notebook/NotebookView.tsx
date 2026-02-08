@@ -1,39 +1,37 @@
+import { CustomSelect, SelectOption } from "@/components/ui/CustomSelect";
+import { IconButton } from "@/components/ui/IconButton";
+import { Kbd } from "@/components/ui/Kbd";
+import {
+  Menu,
+  MenuDropdown,
+  MenuItem,
+  MenuTrigger,
+} from "@/components/ui/Menu";
+import { Switch } from "@/components/ui/Switch";
+import { Tooltip } from "@/components/ui/Tooltip";
+import { useHotkeys } from "@/lib/hooks/useHotkeys";
+import { useListState } from "@/lib/hooks/useListState";
 import { useDeckFromUrl } from "@/logic/deck/hooks/useDeckFromUrl";
 import { useNotesOf } from "@/logic/note/hooks/useNotesOf";
 import { NoteType } from "@/logic/note/note";
 import { NoteSortFunction, NoteSorts } from "@/logic/note/sort";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import {
-  ActionIcon,
-  Combobox,
-  Group,
-  InputBase,
-  Kbd,
-  Menu,
-  Stack,
-  Switch,
-  Text,
-  Tooltip,
-  useCombobox,
-} from "@mantine/core";
-import { useHotkeys, useListState } from "@mantine/hooks";
-import {
   IconCalendar,
   IconDots,
   IconEye,
   IconMenuOrder,
-  IconProps,
   IconTextCaption,
 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Note } from "../../logic/note/note";
 import NotebookCard from "./NotebookCard";
+import "./NotebookView.css";
 
-/**
- * The maximum number of notes to display in the notebook. Hard-coded to 50. Replace with a pagination feature or similar.
- */
+const BASE_URL = "notebook";
 const NOTEBOOK_LIMIT = 50;
+
 export default function NotebookView() {
   const [deck] = useDeckFromUrl();
 
@@ -46,7 +44,6 @@ export default function NotebookView() {
   const [sortOrder] = useState<1 | -1>(1);
   const [sortedNotes, setSortedNotes] = useState<Note<NoteType>[]>(notes ?? []);
 
-  //only for custom sort
   const [useCustomSort, setUseCustomSort] = useState(false);
   const [customOrderTouched, setCustomOrderTouched] = useState(false);
   const [state, handlers] = useListState(sortedNotes ?? []);
@@ -65,21 +62,21 @@ export default function NotebookView() {
   }, [notes, sortOption, sortOrder, setSortedNotes]);
 
   return (
-    <Stack gap="sm">
-      <Group gap="xs" justify="flex-end">
-        <SortComboBox sortOption={sortOption} setSortOption={setSortOption} />
+    <div className={BASE_URL}>
+      <div className={`${BASE_URL}__toolbar`}>
+        <SortSelect sortOption={sortOption} setSortOption={setSortOption} />
         <NotebookMenu
           excludeSubDecks={excludeSubDecks}
           setExcludeSubDecks={setExcludeSubDecks}
           showAnswer={showAnswer}
           setShowAnswer={setShowAnswer}
         />
-      </Group>
+      </div>
       {deck?.notes && deck?.notes?.length > NOTEBOOK_LIMIT && (
-        <Text c="gray" fz="sm" ta="center">
+        <div className={`${BASE_URL}__limit-notice`}>
           Currently there is a limit of {NOTEBOOK_LIMIT} notes displayed.{" "}
           {deck.notes.length - NOTEBOOK_LIMIT} notes are not shown.
-        </Text>
+        </div>
       )}
       {useCustomSort ? (
         <DragDropContext
@@ -93,7 +90,11 @@ export default function NotebookView() {
         >
           <Droppable droppableId="notebook" direction="vertical">
             {(provided) => (
-              <div {...provided.droppableProps} ref={provided.innerRef}>
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                className={`${BASE_URL}__list`}
+              >
                 {state.map((card, index) => (
                   <NotebookCard
                     key={card.id}
@@ -109,7 +110,7 @@ export default function NotebookView() {
           </Droppable>
         </DragDropContext>
       ) : (
-        <Stack gap="xs">
+        <div className={`${BASE_URL}__list`}>
           {sortedNotes.map((note, index) => (
             <NotebookCard
               key={note.id}
@@ -119,15 +120,15 @@ export default function NotebookView() {
               showAnswer={showAnswer}
             />
           ))}
-        </Stack>
+        </div>
       )}
-    </Stack>
+    </div>
   );
 }
 
 interface SortOption {
   value: string;
-  icon: React.FC<IconProps>;
+  icon: React.ComponentType<any>;
   label: string;
   sortFunction: NoteSortFunction;
 }
@@ -153,69 +154,30 @@ const sortOptions: SortOption[] = [
   },
 ];
 
-function SortComboBox({
+function SortSelect({
   sortOption,
   setSortOption,
 }: {
   sortOption: SortOption;
-  setSortOption: Function;
+  setSortOption: (option: SortOption) => void;
 }) {
-  const combobox = useCombobox({});
-
-  const options = sortOptions.map((s) => (
-    <Combobox.Option
-      value={s.value}
-      key={s.value}
-      active={sortOption.value === s.value}
-      onClick={() => {
-        setSortOption(s);
-        combobox.closeDropdown();
-      }}
-      style={{
-        backgroundColor:
-          sortOption.value === s.value
-            ? "var(--mantine-primary-color-filled)"
-            : "",
-        color:
-          sortOption.value === s.value
-            ? "var(--mantine-primary-color-contrast)"
-            : "",
-      }}
-    >
-      <Group gap="xs" wrap="nowrap" w="100%">
-        <s.icon width="1.2rem" strokeWidth="1.5px" />
-        <Text fz="sm" fw={500} style={{ whiteSpace: "nowrap" }}>
-          {s.label}
-        </Text>
-      </Group>
-    </Combobox.Option>
-  ));
+  const selectOptions: SelectOption<string>[] = sortOptions.map((s) => ({
+    value: s.value,
+    label: s.label,
+    icon: s.icon,
+  }));
 
   return (
-    <Combobox
-      store={combobox}
-      resetSelectionOnOptionHover
-      withinPortal={false}
-      width={200}
-      transitionProps={{ duration: 200, transition: "fade" }}
-    >
-      <Combobox.Target targetType="button">
-        <InputBase
-          component="button"
-          type="button"
-          pointer
-          rightSection={<Combobox.Chevron />}
-          rightSectionPointerEvents="none"
-          onClick={() => combobox.toggleDropdown()}
-        >
-          {sortOption.label}
-        </InputBase>
-      </Combobox.Target>
-
-      <Combobox.Dropdown>
-        <Combobox.Options>{options}</Combobox.Options>
-      </Combobox.Dropdown>
-    </Combobox>
+    <CustomSelect
+      value={sortOption.value}
+      onChange={(value) => {
+        const option = sortOptions.find((s) => s.value === value);
+        if (option) {
+          setSortOption(option);
+        }
+      }}
+      options={selectOptions}
+    />
   );
 }
 
@@ -236,13 +198,13 @@ function NotebookMenu({
 
   return (
     <Menu closeOnItemClick={false}>
-      <Menu.Target>
-        <ActionIcon variant="default" aria-label={t("notebook.options.menu")}>
+      <MenuTrigger>
+        <IconButton variant="default" aria-label={t("notebook.options.menu")}>
           <IconDots />
-        </ActionIcon>
-      </Menu.Target>
-      <Menu.Dropdown>
-        <Menu.Item
+        </IconButton>
+      </MenuTrigger>
+      <MenuDropdown>
+        <MenuItem
           leftSection={<IconTextCaption />}
           rightSection={
             <Switch
@@ -252,13 +214,12 @@ function NotebookMenu({
               }}
             />
           }
-          onClick={(event) => {
-            event.preventDefault();
+          onClick={() => {
             setExcludeSubDecks(!excludeSubDecks);
           }}
         >
           {t("notebook.options.exclude-subdecks")}
-        </Menu.Item>
+        </MenuItem>
         <Tooltip
           label={
             <>
@@ -266,7 +227,7 @@ function NotebookMenu({
             </>
           }
         >
-          <Menu.Item
+          <MenuItem
             leftSection={<IconEye />}
             rightSection={
               <Switch
@@ -276,15 +237,14 @@ function NotebookMenu({
                 }}
               />
             }
-            onClick={(event) => {
-              event.preventDefault();
+            onClick={() => {
               setShowAnswer(!showAnswer);
             }}
           >
             {t("notebook.options.show-answer")}
-          </Menu.Item>
+          </MenuItem>
         </Tooltip>
-      </Menu.Dropdown>
+      </MenuDropdown>
     </Menu>
   );
 }

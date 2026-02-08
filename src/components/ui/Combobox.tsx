@@ -1,12 +1,13 @@
 import {
-  type ReactNode,
   type InputHTMLAttributes,
+  type ReactNode,
   forwardRef,
-  useId,
-  useState,
-  useRef,
   useEffect,
+  useId,
+  useRef,
+  useState,
 } from "react";
+import { createPortal } from "react-dom";
 import { InputDescription } from "./InputDescription";
 import { InputError } from "./InputError";
 import { InputLabel } from "./InputLabel";
@@ -58,7 +59,9 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
     const [searchQuery, setSearchQuery] = useState("");
     const [highlightedIndex, setHighlightedIndex] = useState(0);
     const containerRef = useRef<HTMLDivElement>(null);
+    const fieldRef = useRef<HTMLDivElement>(null);
     const listboxRef = useRef<HTMLUListElement>(null);
+    const dropdownPortalRef = useRef<HTMLDivElement | null>(null);
 
     const selectedOption = data.find((option) => option.value === value);
 
@@ -69,9 +72,47 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
       : data;
 
     useEffect(() => {
+      if (!dropdownPortalRef.current) {
+        dropdownPortalRef.current = document.createElement("div");
+        document.body.appendChild(dropdownPortalRef.current);
+      }
+
+      return () => {
+        if (dropdownPortalRef.current) {
+          document.body.removeChild(dropdownPortalRef.current);
+          dropdownPortalRef.current = null;
+        }
+      };
+    }, []);
+
+    useEffect(() => {
       if (!isOpen) {
         setSearchQuery("");
         setHighlightedIndex(0);
+      }
+    }, [isOpen]);
+
+    useEffect(() => {
+      if (isOpen && fieldRef.current && listboxRef.current) {
+        const fieldRect = fieldRef.current.getBoundingClientRect();
+        const dropdownRect = listboxRef.current.getBoundingClientRect();
+        const verticalGap = 4;
+
+        let top = fieldRect.bottom + verticalGap;
+        let left = fieldRect.left;
+
+        top = Math.max(
+          8,
+          Math.min(top, window.innerHeight - dropdownRect.height - 8)
+        );
+        left = Math.max(
+          8,
+          Math.min(left, window.innerWidth - dropdownRect.width - 8)
+        );
+
+        listboxRef.current.style.top = `${top}px`;
+        listboxRef.current.style.left = `${left}px`;
+        listboxRef.current.style.width = `${fieldRect.width}px`;
       }
     }, [isOpen]);
 
@@ -163,13 +204,21 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
       .filter(Boolean)
       .join(" ");
 
+    const dropdownClasses = [
+      `${BASE}__listbox`,
+      isOpen && `${BASE}__listbox--open`,
+    ]
+      .filter(Boolean)
+      .join(" ");
+
     return (
       <div className={classes} ref={containerRef}>
         {label && <InputLabel htmlFor={inputId}>{label}</InputLabel>}
         {description && <InputDescription>{description}</InputDescription>}
         <div className={`${BASE}__wrapper`}>
           <div
-            className={`${BASE}__field ${isOpen ? `${BASE}__field--open` : ""}`}
+            ref={fieldRef}
+            className={`${BASE}__field ${isOpen ? `${BASE}__field--open` : ""} ${disabled ? `${BASE}__field--disabled` : ""}`}
             onClick={() => !disabled && setIsOpen(!isOpen)}
             onKeyDown={handleFieldKeyDown}
             role="button"
@@ -222,11 +271,15 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
               />
             </svg>
           </div>
-          {isOpen && (
+        </div>
+        <InputError>{error}</InputError>
+        {isOpen &&
+          dropdownPortalRef.current &&
+          createPortal(
             <ul
               ref={listboxRef}
               id={`${inputId}-listbox`}
-              className={`${BASE}__listbox`}
+              className={dropdownClasses}
               role="listbox"
             >
               {filteredData.length === 0 ? (
@@ -253,10 +306,9 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
                   </li>
                 ))
               )}
-            </ul>
+            </ul>,
+            dropdownPortalRef.current
           )}
-        </div>
-        <InputError>{error}</InputError>
       </div>
     );
   }

@@ -70,18 +70,9 @@
   align-items: center;
   gap: var(--spacing-sm);
   padding: var(--spacing-xl);
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: var(--radius-md);
-  backdrop-filter: blur(10px);
   min-width: 10rem;
   flex: 1;
   max-width: 15rem;
-  transition: all 200ms ease;
-}
-
-.finished-learning-view__stat:hover {
-  background-color: rgba(255, 255, 255, 0.25);
-  transform: translateY(-2px);
 }
 
 .finished-learning-view__stat-icon {

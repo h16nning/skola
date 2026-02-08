@@ -186,6 +186,9 @@
       "storage-used": "usado",
       "title": "Banco de dados"
     },
+    "cloud": {
+      "title": "Sincronização na Nuvem"
+    },
     "developer": {
       "description": "Esta é a aba de desenvolvedor. Ela irá conter configurações extras para desenvolvedores.",
       "title": "Desenvolvedor"

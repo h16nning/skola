@@ -3,11 +3,11 @@
   --font-size-base-sm: 0.75rem;
   --font-size-base-md: 0.875rem;
   --font-size-base-lg: 1rem;
-  --font-size-base-xl: 1.125rem;
-  --font-size-base-2xl: 1.25rem;
-  --font-size-base-3xl: 1.5rem;
-  --font-size-base-4xl: 1.875rem;
-  --font-size-base-5xl: 2.25rem;
+  --font-size-base-xl: 1.25rem;
+  --font-size-base-2xl: 1.5rem;
+  --font-size-base-3xl: 2rem;
+  --font-size-base-4xl: 3rem;
+  --font-size-base-5xl: 3.5rem;
 
   --font-size-xs: var(--font-size-base-xs);
   --font-size-sm: var(--font-size-base-sm);
@@ -18,6 +18,10 @@
   --font-size-3xl: var(--font-size-base-3xl);
   --font-size-4xl: var(--font-size-base-4xl);
   --font-size-5xl: var(--font-size-base-5xl);
+
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.02em;
 }
 
 [data-density="compact"] {

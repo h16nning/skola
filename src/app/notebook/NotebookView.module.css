@@ -1,33 +1,43 @@
 .card {
-    padding: var(--mantine-spacing-sm);
-    border: solid 1px var(--mantine-color-light-border);
-    cursor: pointer;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--theme-neutral-300);
+  border-radius: var(--radius-md);
+  background: var(--theme-neutral-50);
+  cursor: pointer;
+  transition: box-shadow 150ms ease;
+}
 
-    p,
-    div,
-    ul,
-    ol {
-        margin: 0;
-    }
-    ul {
-        padding-inline-start: 1.25rem;
-    }
+.card:hover {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
 
-    & img {
-        width: 75%;
-    }
+.card p,
+.card div,
+.card ul,
+.card ol {
+  margin: 0;
+}
+
+.card ul {
+  padding-inline-start: 1.25rem;
+}
+
+.card img {
+  width: 75%;
 }
 
 .cardWrapper {
-    margin-bottom: var(--mantine-spacing-xs);
-    background: transparent;
-    border-radius: var(--mantine-radius-sm);
+  margin-bottom: var(--spacing-xs);
+  background: transparent;
+  border-radius: var(--radius-sm);
+  transition: box-shadow 150ms ease;
+}
 
-    &:hover {
-        box-shadow: var(--mantine-shadow-xs);
-    }
+.cardWrapper:hover {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
 
-    &.dragging {
-        box-shadow: var(--mantine-shadow-md);
-    }
+.cardWrapper.dragging {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0.5;
 }

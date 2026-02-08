@@ -1,5 +1,6 @@
-import { Stack, TextInput } from "@mantine/core";
 import { useState } from "react";
+import { Stack } from "../../../components/ui/Stack";
+import { TextInput } from "../../../components/ui/TextInput";
 import FileImport from "./FileImport";
 import ImportButton from "./ImportButton";
 import { ImportFromSourceProps } from "./ImportModal";
@@ -20,7 +21,7 @@ export default function ImportFromPlainText({
   const [questionAnswerSeperator, setQuestionAnswerSeperator] =
     useState<string>("\t");
   return (
-    <Stack align="start">
+    <Stack align="start" gap="md">
       <FileImport
         file={file}
         setFile={setFile}
@@ -31,6 +32,7 @@ export default function ImportFromPlainText({
         label="Question / Answer Separator"
         value={questionAnswerSeperator}
         onChange={(e) => setQuestionAnswerSeperator(e.currentTarget.value)}
+        style={{ width: "100%" }}
       />
       <ImportButton
         importFunction={async () => {

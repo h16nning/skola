@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/Button";
 import { Group } from "@/components/ui/Group";
+import i18n from "@/i18n";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
+import { LearnController } from "@/logic/learn";
+import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { Rating } from "fsrs.js";
 import { t } from "i18next";
-import i18n from "../../../i18n";
-import { LearnController } from "../../../logic/learn";
-import { useSetting } from "../../../logic/settings/hooks/useSetting";
 import AnswerCardButton from "./AnswerCardButton";
 import "./LearnViewFooter.css";
 
@@ -49,8 +49,8 @@ function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
   const [enableHardAndEasy] = useSetting("learn_enableHardAndEasy");
 
   const baseHotkeys: [string, () => void][] = [
-    ["1", () => answer(Rating.Again)],
-    ["3", () => answer(Rating.Good)],
+    ["1", () => controller.showingAnswer && answer(Rating.Again)],
+    ["3", () => controller.showingAnswer && answer(Rating.Good)],
     [
       "Space",
       () =>
@@ -69,8 +69,8 @@ function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
 
   const hardAndEasyHotkeys: [string, () => void][] = enableHardAndEasy
     ? [
-        ["2", () => answer(Rating.Hard)],
-        ["4", () => answer(Rating.Easy)],
+        ["2", () => controller.showingAnswer && answer(Rating.Hard)],
+        ["4", () => controller.showingAnswer && answer(Rating.Easy)],
       ]
     : [];
 
@@ -81,12 +81,7 @@ function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
   return (
     <Group className={BASE_URL} justify="center">
       {controller.showingAnswer ? (
-        <Group
-          gap="xs"
-          wrap="nowrap"
-          justify="center"
-          style={{ width: "100%", maxWidth: "25rem" }}
-        >
+        <div className={BASE_URL + "__buttons"}>
           <AnswerCardButton
             label={t("learning.rate-again")}
             timeInfo={timeStringForRating(Rating.Again, controller)}
@@ -115,7 +110,7 @@ function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
               action={() => answer(Rating.Easy)}
             />
           )}
-        </Group>
+        </div>
       ) : (
         <Button
           onClick={controller.showAnswer}

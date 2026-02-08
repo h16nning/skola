@@ -5,25 +5,6 @@
   padding: var(--spacing-sm);
   border-top: 1px solid var(--theme-neutral-200);
   background-color: var(--theme-neutral-150, var(--theme-neutral-100));
-}
-
-.cloud-section__badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px var(--spacing-sm);
-  font-size: var(--font-size-xs);
-  font-weight: 600;
-  font-family: var(--font-sans);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #dc2626;
-  background-color: #fef2f2;
-  border-radius: var(--radius-full);
-  width: fit-content;
-}
-
-.cloud-section__info {
-  margin: 0;
   font-size: var(--font-size-sm);
   font-family: var(--font-sans);
   color: var(--theme-neutral-600);

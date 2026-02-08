@@ -62,8 +62,8 @@
 }
 
 .menu__item:focus-visible {
-  outline: 2px solid var(--theme-primary-500);
-  outline-offset: -2px;
+  outline: var(--ring-outline);
+  box-shadow: var(--ring-shadow);
 }
 
 .menu__item--red {

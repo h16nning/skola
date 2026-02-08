@@ -45,6 +45,8 @@
   --transition-checkbox: all var(--transition-duration-normal)
     var(--transition-timing-ease);
 
+  --transition-paper: all var(--transition-duration-normal);
+
   --transition-icon: opacity var(--transition-duration-normal)
     var(--transition-timing-ease), transform var(--transition-duration-normal)
     var(--transition-timing-ease);

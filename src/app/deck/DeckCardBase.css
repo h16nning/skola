@@ -1,0 +1,106 @@
+.deck-card-base {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: var(--radius-lg);
+  background-image: repeating-linear-gradient(
+    180deg,
+    transparent,
+    transparent 24px,
+    rgba(0, 0, 0, 0.05) 24px,
+    rgba(0, 0, 0, 0.05) 25px
+  );
+  transition: var(--transition-paper);
+  user-select: none;
+}
+
+[data-density="compact"] .deck-card-base {
+  background-image: repeating-linear-gradient(
+    180deg,
+    transparent,
+    transparent 21px,
+    rgba(0, 0, 0, 0.05) 21px,
+    rgba(0, 0, 0, 0.05) 22px
+  );
+}
+
+.deck-card-base::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--spacing-lg);
+  bottom: 0;
+  height: 100%;
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.deck-card-base__title {
+  display: inline-block;
+  text-box-trim: trim-both;
+  font-size: var(--font-size-2xl);
+  font-family: var(--font-serif);
+  font-weight: 500;
+  margin-top: calc(1px + var(--spacing-lg));
+  line-height: calc(2px + var(--spacing-lg));
+  height: calc(2px + var(--spacing-lg));
+  margin-bottom: calc(1px + var(--spacing-lg));
+}
+
+.deck-card-base__details {
+  display: flex;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+  height: var(--spacing-lg);
+}
+
+.deck-card-base--color-red {
+  background-color: var(--theme-red-200);
+  color: var(--theme-red-900);
+}
+
+.deck-card-base--color-red .badge {
+  color: var(--theme-red-900);
+  background-color: var(--theme-red-50);
+}
+
+.deck-card-base--color-fuchsia {
+  background-color: var(--theme-fuchsia-200);
+  color: var(--theme-fuchsia-900);
+}
+
+.deck-card-base--color-fuchsia .badge {
+  color: var(--theme-fuchsia-900);
+  background-color: var(--theme-fuchsia-50);
+}
+
+.deck-card-base--color-sky {
+  background-color: var(--theme-sky-200);
+  color: var(--theme-sky-900);
+}
+
+.deck-card-base--color-sky .badge {
+  color: var(--theme-sky-900);
+  background-color: var(--theme-sky-50);
+}
+
+.deck-card-base--color-lime {
+  background-color: var(--theme-lime-200);
+  color: var(--theme-lime-900);
+}
+
+.deck-card-base--color-lime .badge {
+  color: var(--theme-lime-900);
+  background-color: var(--theme-lime-50);
+}
+
+.deck-card-base--color-orange {
+  background-color: var(--theme-orange-200);
+  color: var(--theme-orange-900);
+}
+
+.deck-card-base--color-orange .badge {
+  color: var(--theme-orange-900);
+  background-color: var(--theme-orange-50);
+}

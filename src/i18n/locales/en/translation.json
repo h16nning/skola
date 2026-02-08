@@ -76,11 +76,11 @@
     "no-items-title": "It is looking empty here!"
   },
   "hero-deck-section": {
-    "all-cards-done-learn-anyway": "Learn anyway",
-    "all-cards-done-subtitle": "Return back tomorrow or choose to learn anyway.",
+    "all-cards-done-learn-anyway": "Study anyway",
+    "all-cards-done-subtitle": "Return back tomorrow or choose to study anyway.",
     "all-cards-done-title": "Congratulations! This deck is done for today!",
     "error": "Failed to load cards.",
-    "learn": "Learn",
+    "learn": "Study",
     "no-cards": "Start by creating some cards!"
   },
   "home": {
@@ -228,6 +228,9 @@
     "database": {
       "storage-used": "used",
       "title": "Database"
+    },
+    "cloud": {
+      "title": "Cloud Sync"
     },
     "developer": {
       "description": "This is the developer tab. It will contain extra settings for developers.",

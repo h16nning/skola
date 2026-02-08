@@ -58,6 +58,20 @@ export function Modal({
     };
   }, [onClose]);
 
+  useEffect(() => {
+    if (!opened) return;
+
+    function handleKeyDown(event: KeyboardEvent) {
+      event.stopPropagation();
+    }
+
+    document.addEventListener("keydown", handleKeyDown, true);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown, true);
+    };
+  }, [opened]);
+
   const hasHeader = title || showCloseButton;
 
   const classes = [

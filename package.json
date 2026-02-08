@@ -1,11 +1,10 @@
 {
   "name": "skola",
   "homepage": "https://skola.cards/",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": false,
   "dependencies": {
     "@hello-pangea/dnd": "16.5.0",
-    "@mantine/charts": "7.15.1",
     "@mantine/core": "7.15.1",
     "@mantine/hooks": "7.15.1",
     "@mantine/notifications": "7.15.1",

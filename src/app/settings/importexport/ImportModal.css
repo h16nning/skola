@@ -1,0 +1,21 @@
+.import-modal__status {
+  padding: var(--spacing-md);
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--theme-neutral-700);
+  text-transform: capitalize;
+}
+
+.import-modal .tabs__panel {
+  margin-top: var(--spacing-md);
+}
+
+.import-modal .tabs__tab {
+  gap: var(--spacing-xs);
+}
+
+.import-modal .tabs__tab svg {
+  width: 1rem;
+  height: 1rem;
+}

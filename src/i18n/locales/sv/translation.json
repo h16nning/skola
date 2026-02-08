@@ -181,6 +181,9 @@
       "storage-used": "",
       "title": "Databas"
     },
+    "cloud": {
+      "title": "Molnsynkronisering"
+    },
     "developer": {
       "description": "använt",
       "title": "Utvecklare"

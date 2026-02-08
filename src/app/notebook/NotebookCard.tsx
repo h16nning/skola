@@ -1,10 +1,10 @@
+import { Paper } from "@/components/ui/Paper";
+import { useDisclosure } from "@/lib/hooks/useDisclosure";
 import { getAdapter } from "@/logic/NoteTypeAdapter";
 import { NoteType } from "@/logic/note/note";
 import { Note } from "@/logic/note/note";
 import { updateNote } from "@/logic/note/updateNote";
 import { Draggable } from "@hello-pangea/dnd";
-import { Group, Paper } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 import { memo, useEffect } from "react";
 import NoteMenu from "../editor/NoteMenu";
 import classes from "./NotebookView.module.css";
@@ -26,17 +26,13 @@ function NotebookCard({
     if (useCustomSort) {
       updateNote(note.id, { customOrder: index });
     }
-  }, [index]);
+  }, [index, useCustomSort, note.id]);
 
   return useCustomSort ? (
     <Draggable key={note.id} index={index} draggableId={note.id}>
       {(provided, snapshot) => (
         <div
-          className={
-            classes.cardWrapper +
-            " " +
-            (snapshot.isDragging && classes.dragging)
-          }
+          className={`${classes.cardWrapper} ${snapshot.isDragging ? classes.dragging : ""}`}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
@@ -56,16 +52,36 @@ const InnerCard = memo(
     const [answerToggled, handlers] = useDisclosure(false);
 
     return (
-      <Paper p="md" className={classes.card}>
-        <Group align="top" justify="space-between" wrap="nowrap">
-          <Group align="center" w="100%" onClick={handlers.toggle}>
+      <Paper className={classes.card}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+            gap: "var(--spacing-sm)",
+          }}
+        >
+          <button
+            type="button"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              width: "100%",
+              background: "none",
+              border: "none",
+              padding: 0,
+              cursor: "pointer",
+              textAlign: "left",
+            }}
+            onClick={handlers.toggle}
+          >
             {getAdapter(note).displayNote(
               note,
               showAnswer ? "strict" : answerToggled ? "optional" : "none"
             )}
-          </Group>
+          </button>
           <NoteMenu note={note} withShortcuts={false} />
-        </Group>
+        </div>
       </Paper>
     );
   }

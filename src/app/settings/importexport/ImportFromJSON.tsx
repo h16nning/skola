@@ -1,12 +1,17 @@
-import { Alert, Button, Select, Stack, Text } from "@mantine/core";
-import { IconChevronRight, IconInfoCircle } from "@tabler/icons-react";
+import { Paper } from "@/components/ui";
+import { Button } from "@/components/ui/Button";
+import { Select } from "@/components/ui/Select";
+import { Stack } from "@/components/ui/Stack";
+import { Text } from "@/components/ui/Text";
+import { Deck } from "@/logic/deck/deck";
+import { IconChevronRight } from "@tabler/icons-react";
 import { useState } from "react";
-import { Deck } from "../../../logic/deck/deck";
 import FileImport from "./FileImport";
 import ImportButton from "./ImportButton";
 import { ImportFromSourceProps, ImportStatus } from "./ImportModal";
 
 interface ImportFromJSONProps extends ImportFromSourceProps {}
+
 export default function ImportFromJSON({
   file,
   setFile,
@@ -21,14 +26,14 @@ export default function ImportFromJSON({
     null
   );
   return (
-    <Stack align="start">
+    <Stack align="start" gap="md">
       {step === "selectFile" || !file ? (
         <>
-          <Alert color="gray" icon={<IconInfoCircle />}>
-            Here you can import decks from JSON such as those exportable using
+          <Paper>
+            You can import decks from JSON here such as those exportable using
             CrowdAnki. Please note, that there is only basic options and no
             media support.
-          </Alert>
+          </Paper>
 
           <FileImport
             file={file}
@@ -120,7 +125,6 @@ function ImportOptions({
   extractedData,
   importStatus,
   setImportStatus,
-  //deck,
 }: {
   extractedData: ExtractedData | null;
   importStatus: ImportStatus;
@@ -129,27 +133,30 @@ function ImportOptions({
 }) {
   const [frontField, setFrontField] = useState<string | null>(null);
   const [backField, setBackField] = useState<string | null>(null);
-  console.log(extractedData?.fields);
+
   if (!extractedData) {
     return null;
   }
+
   return (
-    <Stack align="start">
-      <Text fz="sm">Deck Name: {extractedData.name}</Text>
-      <Text fz="sm">Deck Description: {extractedData.description}</Text>
-      <Text fz="sm">Card Number: {extractedData.cards.length}</Text>
+    <Stack align="start" gap="md">
+      <Text size="sm">Deck Name: {extractedData.name}</Text>
+      <Text size="sm">Deck Description: {extractedData.description}</Text>
+      <Text size="sm">Card Number: {extractedData.cards.length}</Text>
       <Select
         label="Front"
         data={extractedData.fields}
         value={frontField}
         onChange={(value) => setFrontField(value)}
-      ></Select>
+        style={{ width: "100%" }}
+      />
       <Select
         label="Back"
         data={extractedData.fields}
         value={backField}
         onChange={(value) => setBackField(value)}
-      ></Select>
+        style={{ width: "100%" }}
+      />
       <ImportButton
         importFunction={async () => console.log("not supported right now")}
         importStatus={importStatus}
@@ -159,30 +166,3 @@ function ImportOptions({
     </Stack>
   );
 }
-/*
-async function importFunction(
-  frontField: string,
-  backField: string,
-  deckName: string,
-  description: string,
-  cards: { fields: string[] }[],
-  superDeck: Deck | undefined
-) {
-  const frontFieldIndex = parseInt(frontField);
-  const backFieldIndex = parseInt(backField);
-  const newDeckId = await newDeck(deckName, superDeck, description);
-  const newCards = await Promise.all(
-    cards.map(async (card) => {
-      return createNormalCard(
-        newDeckId,
-        card.fields[frontFieldIndex],
-        card.fields[backFieldIndex]
-      );
-    })
-  );
-  const createdDeck = await getDeck(newDeckId.toString());
-  if (!createdDeck) {
-    throw new Error("Failed to get the created deck");
-  }
-  return Promise.all(newCards.map((card) => newCard(card, createdDeck)));
-}*/

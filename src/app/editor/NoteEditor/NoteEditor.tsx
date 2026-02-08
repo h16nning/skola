@@ -1,8 +1,8 @@
-import { useSettings } from "@/logic/settings/hooks/useSettings";
 import { RichTextEditor } from "@/components/ui/RichTextEditor";
-import { Link } from "@tiptap/extension-link";
+import { useSettings } from "@/logic/settings/hooks/useSettings";
 import { Color } from "@tiptap/extension-color";
 import Highlight from "@tiptap/extension-highlight";
+import { Link } from "@tiptap/extension-link";
 import SubScript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
 import TextAlign from "@tiptap/extension-text-align";

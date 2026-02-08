@@ -1,13 +1,20 @@
-import { Button, Card, FileButton, Group, Text } from "@mantine/core";
-import React, { useEffect } from "react";
+import { Button } from "@/components/ui/Button";
+import { Group } from "@/components/ui/Group";
+import { Paper } from "@/components/ui/Paper";
+import { Text } from "@/components/ui/Text";
+import { useEffect } from "react";
+import "./FileImport.css";
+
+const BASE_URL = "file-import";
 
 interface FileImportProps {
   file: File | null;
-  setFile: Function;
-  setFileText: Function;
+  setFile: (file: File | null) => void;
+  setFileText: (text: string | null) => void;
   acceptedFormats: string;
 }
-function readFile(file: File, setFileText: Function) {
+
+function readFile(file: File, setFileText: (text: string) => void) {
   if (!file) {
     return;
   }
@@ -19,6 +26,7 @@ function readFile(file: File, setFileText: Function) {
   };
   reader.readAsText(file);
 }
+
 export default function FileImport({
   file,
   setFile,
@@ -27,34 +35,35 @@ export default function FileImport({
 }: FileImportProps) {
   useEffect(() => {
     file && readFile(file, setFileText);
-  }, [file]);
+  }, [file, setFileText]);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0] || null;
+    setFile(selectedFile);
+  };
 
   return (
-    <Card
-      withBorder
-      shadow="xs"
-      w="100%"
-      style={{ display: "flex", placeContent: "center" }}
-    >
+    <Paper withBorder shadow="xs" className={BASE_URL}>
       {!file ? (
-        <FileButton
-          onChange={(f) => {
-            setFile(f);
-          }}
-          accept={acceptedFormats}
-        >
-          {(props) => <Button {...props}>Choose File</Button>}
-        </FileButton>
+        <label className={`${BASE_URL}__label`}>
+          <input
+            type="file"
+            accept={acceptedFormats}
+            onChange={handleFileChange}
+            className={`${BASE_URL}__input`}
+          />
+          <Button as="span">Choose File</Button>
+        </label>
       ) : (
-        <Group justify="space-between" align="center" w="100%">
-          <Text fz="sm" fw={500}>
+        <Group justify="space-between" align="center" style={{ width: "100%" }}>
+          <Text size="sm" weight="medium">
             {file.name}
-          </Text>{" "}
+          </Text>
           <Button variant="default" onClick={() => setFile(null)}>
             Remove File
           </Button>
         </Group>
       )}
-    </Card>
+    </Paper>
   );
 }

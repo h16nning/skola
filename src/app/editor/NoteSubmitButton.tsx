@@ -1,10 +1,10 @@
+import { Button } from "@/components/ui/Button";
+import { Kbd } from "@/components/ui/Kbd";
+import { Tooltip } from "@/components/ui/Tooltip";
+import { useOs } from "@/lib/hooks/useOs";
 import { EditMode } from "@/logic/NoteTypeAdapter";
 import { IconDeviceFloppy, IconPlus } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
-import { Button } from "../../components/ui/Button";
-import { Kbd } from "../../components/ui/Kbd";
-import { Tooltip } from "../../components/ui/Tooltip";
-import { useOs } from "../../lib/hooks/useOs";
 
 interface NoteSubmitButtonProps {
   mode: EditMode;

@@ -1,5 +1,4 @@
-import { Group } from "@/components/ui/Group";
-import { Text } from "@/components/ui/Text";
+import { LearnController } from "@/logic/learn";
 import {
   IconBook,
   IconCircleArrowUpRight,
@@ -7,10 +6,9 @@ import {
   IconSparkles,
 } from "@tabler/icons-react";
 import { ReactNode } from "react";
-import { LearnController } from "../../../logic/learn";
 import "./RemainingCardsIndicator.css";
 
-const BASE_URL = "remaining-cards-indicator";
+const BASE = "remaining-cards-indicator";
 
 interface RemainingCardsIndicatorProps {
   controller: LearnController;
@@ -20,10 +18,10 @@ export default function RemainingCardsIndicator({
   controller,
 }: RemainingCardsIndicatorProps) {
   return (
-    <Group align="end" gap="xs" className={BASE_URL} wrap="nowrap">
+    <div className={BASE}>
       <TinyStat
         value={controller.newCardsNumber}
-        color="grape"
+        color="fuchsia"
         icon={<IconSparkles />}
       />
       <TinyStat
@@ -33,15 +31,15 @@ export default function RemainingCardsIndicator({
       />
       <TinyStat
         value={controller.toReviewCardsNumber}
-        color="blue"
+        color="sky"
         icon={<IconBook />}
       />
       <TinyStat
         value={controller.learnedCardsNumber}
-        color="gray"
+        color="neutral"
         icon={<IconInfoCircle />}
       />
-    </Group>
+    </div>
   );
 }
 
@@ -55,22 +53,22 @@ export function TinyStat({
   icon: ReactNode;
 }) {
   const colorMap: Record<string, string> = {
-    grape: "var(--theme-fuchsia-700)",
+    fuchsia: "var(--theme-fuchsia-700)",
     orange: "var(--theme-orange-700)",
-    blue: "var(--theme-sky-700)",
-    gray: "var(--theme-neutral-600)",
+    sky: "var(--theme-sky-700)",
+    neutral: "var(--theme-neutral-600)",
   };
 
   const iconColor = colorMap[color] || "var(--theme-neutral-600)";
 
   return (
-    <Group gap="xs" wrap="nowrap" style={{ color: iconColor }}>
-      <div className={`${BASE_URL}__icon`} style={{ color: iconColor }}>
+    <div className={`${BASE}__tiny-stat`}>
+      <div className={`${BASE}__icon`} style={{ color: iconColor }}>
         {icon}
       </div>
-      <Text size="sm" weight="semibold" style={{ color: iconColor }}>
+      <span className={`${BASE}__value`} style={{ color: iconColor }}>
         {value}
-      </Text>
-    </Group>
+      </span>
+    </div>
   );
 }

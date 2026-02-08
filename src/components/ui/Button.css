@@ -87,13 +87,36 @@
   background-color: var(--theme-neutral-100);
 }
 
-.button--ghost {
+.button--ghost,
+.button--ghost-transparent {
   background-color: transparent;
   color: var(--theme-neutral-700);
 }
 
 .button--ghost:hover {
   background-color: var(--theme-neutral-100);
+}
+
+.button--ghost-transparent:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .button--ghost-transparent:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.button--white {
+  background-color: #ffffffee;
+  color: var(--color-neutral-800);
+}
+
+.button--neutral {
+  background-color: var(--theme-neutral-700);
+  color: var(--theme-neutral-100);
+}
+
+.button--neutral:hover {
+  background-color: var(--theme-neutral-800);
 }
 
 .button--destructive {

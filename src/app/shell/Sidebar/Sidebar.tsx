@@ -1,3 +1,4 @@
+import { CloudSyncState } from "@/components/CloudSyncState";
 import { IconButton } from "@/components/ui/IconButton";
 import { NavItem } from "@/components/ui/NavItem";
 import { breakpoints } from "@/lib/breakpoints";
@@ -11,7 +12,6 @@ import {
 } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useLocation } from "react-router-dom";
-import CloudSection from "./CloudSection";
 import DeckList from "./DeckList";
 import "./Sidebar.css";
 
@@ -110,7 +110,7 @@ function Sidebar({ menuOpened, menuHandlers }: SidebarProps) {
           <DeckList minimalMode={minimalMode} />
         </div>
 
-        <CloudSection minimalMode={minimalMode} />
+        <CloudSyncState minimal={minimalMode} />
       </div>
     </aside>
   );

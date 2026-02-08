@@ -1,5 +1,6 @@
-import { Button } from "@mantine/core";
 import React from "react";
+import { Button } from "../../../components/ui/Button";
+import { Spinner } from "../../../components/ui/Spinner";
 import { ImportStatus } from "./ImportModal";
 
 interface ImportButtonProps {
@@ -15,24 +16,31 @@ export default function ImportButton({
   setImportStatus,
   disabled,
 }: ImportButtonProps) {
+  const isLoading = importStatus === "importing";
+
   return (
     <Button
+      variant="primary"
       style={{ alignSelf: "end" }}
-      loading={importStatus === "importing"}
-      disabled={disabled}
+      disabled={disabled || isLoading}
       onClick={async () => {
         setImportStatus("importing");
         try {
           await importFunction();
+          setImportStatus("success");
         } catch {
           setImportStatus("error");
-          return;
-        } finally {
-          setImportStatus("success");
         }
       }}
     >
-      Import and Add Cards
+      {isLoading ? (
+        <>
+          <Spinner size="sm" />
+          <span>Importing...</span>
+        </>
+      ) : (
+        "Import and Add Cards"
+      )}
     </Button>
   );
 }

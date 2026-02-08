@@ -1,11 +1,9 @@
 .tooltip-wrapper {
-  position: relative;
   display: inline-flex;
 }
 
 .tooltip {
-  position: absolute;
-  z-index: 1000;
+  z-index: 9999;
   padding: var(--spacing-xs) var(--spacing-sm);
   font-size: var(--font-size-sm);
   font-weight: 500;
@@ -20,28 +18,4 @@
 
 .tooltip--visible {
   opacity: 1;
-}
-
-.tooltip--top {
-  bottom: calc(100% + var(--spacing-xs));
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.tooltip--bottom {
-  top: calc(100% + var(--spacing-xs));
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.tooltip--left {
-  right: calc(100% + var(--spacing-xs));
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.tooltip--right {
-  left: calc(100% + var(--spacing-xs));
-  top: 50%;
-  transform: translateY(-50%);
 }

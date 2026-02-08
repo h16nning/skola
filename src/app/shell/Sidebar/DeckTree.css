@@ -1,6 +1,7 @@
 .deck-tree__container {
   display: flex;
   flex-direction: column;
+  padding: var(--spacing-xs);
 }
 
 .deck-tree__toggle {
@@ -8,7 +9,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--spacing-xs);
-  margin: calc(-j1 * var(--spacing-xs));
+  margin: calc(-1 * var(--spacing-xs));
   margin-right: calc(-1 * var(--spacing-sm));
   border: none;
   border-radius: var(--radius-sm);

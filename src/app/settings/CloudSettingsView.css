@@ -1,0 +1,44 @@
+.cloud-settings-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+.cloud-settings-view__logged-in {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  max-width: 600px;
+}
+
+.cloud-settings-view__logged-in > div:first-child {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--theme-neutral-100);
+  border-radius: var(--radius-md);
+}
+
+.cloud-settings-view__logged-in > div:first-child p:first-child {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--theme-neutral-600);
+  margin: 0;
+}
+
+.cloud-settings-view__logged-in > div:first-child p:last-child {
+  margin: 0;
+  font-size: var(--font-size-md);
+}
+
+.cloud-settings-view__logged-in > p {
+  font-size: var(--font-size-sm);
+  margin: 0;
+  text-align: center;
+}
+
+.cloud-settings-view article {
+  margin-top: var(--spacing-lg);
+  color: var(--theme-neutral-700);
+}

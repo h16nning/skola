@@ -14,7 +14,6 @@ import { deleteDeck } from "@/logic/deck/deleteDeck";
 import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { useShowShortcutHints } from "@/logic/settings/hooks/useShowShortcutHints";
 import {
-  IconAdjustmentsHorizontal,
   IconArrowsExchange,
   IconCards,
   IconCode,
@@ -33,10 +32,9 @@ import RenameDeckModal from "./RenameDeckModal";
 interface DeckMenuProps {
   deck?: Deck;
   isDeckReady: boolean;
-  setDeckOptionsOpened: Function;
 }
 
-function DeckMenu({ deck, isDeckReady, setDeckOptionsOpened }: DeckMenuProps) {
+function DeckMenu({ deck, isDeckReady }: DeckMenuProps) {
   const navigate = useNavigate();
   const [t] = useTranslation();
 
@@ -74,10 +72,14 @@ function DeckMenu({ deck, isDeckReady, setDeckOptionsOpened }: DeckMenuProps) {
   const showShortcutHints = useShowShortcutHints();
   useHotkeys([
     ["r", () => setRenameModalOpened(true)],
-    ["m", () => {}],
+    [
+      "m",
+      () => {
+        setMoveModalOpened(true);
+      },
+    ],
     ["b", manageCards],
     ["i", () => setImportModalOpened(true)],
-    ["o", () => setDeckOptionsOpened(true)],
     ["shift+d", () => setDebugModalOpened(true)],
     ["Backspace", () => setDeleteModalOpened(true)],
   ]);
@@ -122,13 +124,6 @@ function DeckMenu({ deck, isDeckReady, setDeckOptionsOpened }: DeckMenuProps) {
             onClick={() => setImportModalOpened(true)}
           >
             {t("deck.menu.import-cards")}
-          </MenuItem>
-          <MenuItem
-            leftSection={<IconAdjustmentsHorizontal size={16} />}
-            rightSection={showShortcutHints && <Kbd>o</Kbd>}
-            onClick={() => setDeckOptionsOpened(true)}
-          >
-            {t("deck.menu.options")}
           </MenuItem>
           {developerMode ? (
             <MenuItem

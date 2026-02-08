@@ -218,6 +218,9 @@
       "storage-used": "benutzt",
       "title": "Datenbank"
     },
+    "cloud": {
+      "title": "Cloud-Synchronisierung"
+    },
     "developer": {
       "description": "",
       "title": "Entwickler"

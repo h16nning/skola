@@ -1,10 +1,10 @@
-import { useSetting } from "@/logic/settings/hooks/useSetting";
-import { setSetting } from "@/logic/settings/setSetting";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { NumberInput } from "@/components/ui/NumberInput";
 import { Switch } from "@/components/ui/Switch";
 import { TextInput } from "@/components/ui/TextInput";
 import { useDebouncedValue } from "@/lib/hooks/useDebouncedValue";
+import { useSetting } from "@/logic/settings/hooks/useSetting";
+import { setSetting } from "@/logic/settings/setSetting";
 import React, { useEffect, useState } from "react";
 import { SettingsValues } from "../../logic/settings/Settings";
 import { SettingStatus, StatusIndicator } from "./SettingStatus";

@@ -2,6 +2,8 @@
   --app-header-base-height: 3.5rem;
   --sidebar-width: 15rem;
 
+  --max-content-width: 40rem;
+
   --minimal-sidebar-base-width: 3.5rem;
 
   --app-header-height: var(--app-header-base-height);

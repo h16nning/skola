@@ -8,6 +8,20 @@
   cursor: pointer;
   transition: var(--transition-button);
   font-family: var(--font-sans);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.answer-card-button__time-info {
+  line-height: 1;
+  font-size: var(--font-size-sm);
+}
+
+.answer-card-button__label {
+  line-height: 1.25;
+  font-size: var(--font-size-md);
+  font-weight: 600;
 }
 
 .answer-card-button:hover {

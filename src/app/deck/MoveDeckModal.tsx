@@ -5,9 +5,10 @@ import { Modal } from "@/components/ui/Modal";
 import { Deck } from "@/logic/deck/deck";
 import { useDecks } from "@/logic/deck/hooks/useDecks";
 import { moveDeck } from "@/logic/deck/moveDeck";
-import { IconArrowsExchange } from "@tabler/icons-react";
+import { IconArrowsExchange, IconNotes } from "@tabler/icons-react";
 import { useState } from "react";
 import "./MoveDeckModal.css";
+import EmptyNotice from "@/components/EmptyNotice";
 
 const BASE_URL = "move-deck-modal";
 
@@ -40,32 +41,35 @@ export default function MoveDeckModal({
     }
   };
 
-  const isValidSelection = areDecksReady && newDeckID && newDeckID !== oldSuperDeck;
+  const isValidSelection =
+    areDecksReady && newDeckID && newDeckID !== oldSuperDeck;
 
   return (
     <Modal title="Move Deck" opened={opened} onClose={() => setOpened(false)}>
       <div className={`${BASE_URL}__content`}>
-        <Combobox
-          searchable
-          label="Move To"
-          nothingFoundMessage="No Decks Found"
-          disabled={!areDecksReady}
-          data={
-            decks?.map((deck) => ({
-              value: deck.id,
-              label: deck.name,
-            })) ?? []
-          }
-          value={newDeckID}
-          onChange={(value: string | null) => {
-            setNewDeckID(value);
-          }}
-        />
-        {decks?.length === 0 && (
-          <p className={`${BASE_URL}__empty-message`}>
-            It seems like there are no other valid decks to move this deck to.
-            Try creating another one.
-          </p>
+        {decks?.length! > 1 ? (
+          <Combobox
+            searchable
+            label="Move To"
+            nothingFoundMessage="No Decks Found"
+            disabled={!areDecksReady}
+            data={
+              decks?.map((deck) => ({
+                value: deck.id,
+                label: deck.name,
+              })) ?? []
+            }
+            value={newDeckID}
+            onChange={(value: string | null) => {
+              setNewDeckID(value);
+            }}
+          />
+        ) : (
+          <EmptyNotice
+            icon={IconNotes}
+            title="You have just this one deck."
+            description="It seems like there are no other valid decks to move this deck to. Try creating another one."
+          />
         )}
         <div className={`${BASE_URL}__actions`}>
           <Button
