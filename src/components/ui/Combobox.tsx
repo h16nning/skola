@@ -234,7 +234,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
                 type="text"
                 className={`${BASE}__search-input`}
                 value={searchQuery}
-                onChange={() => {
+                onChange={(e) => {
                   setSearchQuery(e.target.value);
                   setHighlightedIndex(0);
                 }}
@@ -299,7 +299,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
                         ? `${BASE}__option--highlighted`
                         : ""
                     }`}
-                    onClick={(e) => handleSelect(option.value)}
+                    onClick={() => handleSelect(option.value)}
                     onMouseEnter={() => setHighlightedIndex(index)}
                     role="option"
                     aria-selected={option.value === value}

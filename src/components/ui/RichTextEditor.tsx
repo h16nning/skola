@@ -1,4 +1,4 @@
-import { EditorContent, Editor } from "@tiptap/react";
+import { Editor, EditorContent } from "@tiptap/react";
 import type { ReactNode } from "react";
 import "./RichTextEditor.css";
 

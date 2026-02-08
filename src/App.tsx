@@ -6,12 +6,13 @@ import { useEffect } from "react";
 import { I18nextProvider } from "react-i18next";
 import { Outlet, useLocation } from "react-router-dom";
 import WelcomeView from "./app/WelcomeView";
+import LoginUI from "./app/login/LoginUI";
 import Header from "./app/shell/Header/Header";
 import Sidebar from "./app/shell/Sidebar/Sidebar";
 import {
-    NotificationContainer,
-    NotificationProvider,
-    useNotificationSetup,
+  NotificationContainer,
+  NotificationProvider,
+  useNotificationSetup,
 } from "./components/Notification";
 import { useDensity } from "./hooks/useDensity";
 import { useTheme } from "./hooks/useTheme";
@@ -63,35 +64,18 @@ function AppContent() {
 
   return (
     <I18nextProvider i18n={i18n}>
-        <NotificationContainer />
-        {registered ? (
-          <div className={BASE}>
-            <Header
-              menuOpened={sidebarMenuOpened}
-              menuHandlers={sidebarHandlers}
-            />
-            <div className={`${BASE}__body`}>
-              <nav className={`${BASE}__navbar`}>
-                <Sidebar
-                  menuOpened={sidebarMenuOpened}
-                  menuHandlers={sidebarHandlers}
-                />
-              </nav>
-              <div
-                className={overlayClasses}
-                onClick={sidebarHandlers.close}
-                onKeyDown={() => {
-                  if (
-                    e.key === "Escape" ||
-                    e.key === "Enter" ||
-                    e.key === " "
-                  ) {
-                    sidebarHandlers.close();
-                  }
-                }}
-                role="button"
-                tabIndex={fullscreenMode && sidebarMenuOpened ? 0 : -1}
-                aria-label="Close sidebar"
+      <NotificationContainer />
+      {registered ? (
+        <div className={BASE}>
+          <Header
+            menuOpened={sidebarMenuOpened}
+            menuHandlers={sidebarHandlers}
+          />
+          <div className={`${BASE}__body`}>
+            <nav className={`${BASE}__navbar`}>
+              <Sidebar
+                menuOpened={sidebarMenuOpened}
+                menuHandlers={sidebarHandlers}
               />
             </nav>
             <div
@@ -114,9 +98,11 @@ function AppContent() {
               </div>
             </main>
           </div>
-        ) : (
-          <WelcomeView />
-        )}
+          <LoginUI />
+        </div>
+      ) : (
+        <WelcomeView />
+      )}
     </I18nextProvider>
   );
 }

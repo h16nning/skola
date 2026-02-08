@@ -1,21 +1,20 @@
+import { Kbd } from "@/components/ui/Kbd";
+import { useDebouncedState } from "@/lib/hooks/useDebouncedState";
+import { useHotkeys } from "@/lib/hooks/useHotkeys";
+import { useOs } from "@/lib/hooks/useOs";
 import { getAdapter } from "@/logic/NoteTypeAdapter";
 import { getDeck } from "@/logic/deck/getDeck";
 import { getSuperDecks } from "@/logic/deck/getSuperDecks";
 import { useDecks } from "@/logic/deck/hooks/useDecks";
 import { useNotesWith } from "@/logic/note/hooks/useNotesWith";
-import { NoteType } from "@/logic/note/note";
-import { Note } from "@/logic/note/note";
+import { Note, NoteType } from "@/logic/note/note";
 import { NoteSorts } from "@/logic/note/sort";
 import { useShowShortcutHints } from "@/logic/settings/hooks/useShowShortcutHints";
 import { IconCards, IconSearch, IconSquare } from "@tabler/icons-react";
 import cx from "clsx";
 import { t } from "i18next";
-import { useEffect, useState, useRef, type ReactNode } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Kbd } from "@/components/ui/Kbd";
-import { useDebouncedState } from "@/lib/hooks/useDebouncedState";
-import { useOs } from "@/lib/hooks/useOs";
-import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import "./Spotlight.css";
 
 const BASE_URL = "spotlight";

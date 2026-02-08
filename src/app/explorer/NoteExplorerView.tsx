@@ -1,13 +1,13 @@
 import { AppHeaderContent } from "@/app/shell/Header/Header";
 import SelectDecksHeader from "@/components/SelectDecksHeader";
 import { TextInput } from "@/components/ui";
+import { useDebouncedState } from "@/lib/hooks/useDebouncedState";
+import { useDocumentTitle } from "@/lib/hooks/useDocumentTitle";
 import { useDecks } from "@/logic/deck/hooks/useDecks";
 import { getNote } from "@/logic/note/getNote";
 import { useNotesWith } from "@/logic/note/hooks/useNotesWith";
 import { Note, NoteType } from "@/logic/note/note";
 import { NoteSortFunction, NoteSorts } from "@/logic/note/sort";
-import { useDebouncedState } from "@/lib/hooks/useDebouncedState";
-import { useDocumentTitle } from "@/lib/hooks/useDocumentTitle";
 import { IconSearch } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useEffect, useState } from "react";
