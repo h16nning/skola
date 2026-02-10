@@ -123,9 +123,26 @@ interface TabsTabProps {
   className?: string;
 }
 
+function useCenterActiveTab(isActive: boolean) {
+  const tabRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (isActive && tabRef.current) {
+      tabRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+    }
+  }, [isActive]);
+  return tabRef;
+}
+
 function TabsTab({ children, value, className = "" }: TabsTabProps) {
   const { value: activeValue, onChange } = useTabsContext();
   const isActive = activeValue === value;
+
+  const tabRef = useCenterActiveTab(isActive);
 
   const classes = [
     `${BASE}__tab`,
@@ -137,6 +154,7 @@ function TabsTab({ children, value, className = "" }: TabsTabProps) {
 
   return (
     <button
+      ref={tabRef}
       type="button"
       className={classes}
       onClick={() => onChange(value)}
@@ -156,15 +174,18 @@ interface TabsPanelProps {
 
 function TabsPanel({ children, value, className = "" }: TabsPanelProps) {
   const { value: activeValue } = useTabsContext();
+  const isActive = activeValue === value;
 
-  if (activeValue !== value) {
-    return null;
-  }
-
-  const classes = [`${BASE}__panel`, className].filter(Boolean).join(" ");
+  const classes = [
+    `${BASE}__panel`,
+    !isActive && `${BASE}__panel--hidden`,
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
-    <div className={classes} role="tabpanel">
+    <div className={classes} role="tabpanel" hidden={!isActive}>
       {children}
     </div>
   );

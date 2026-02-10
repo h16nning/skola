@@ -81,7 +81,6 @@
   font-weight: 500;
   font-family: var(--font-sans);
   cursor: pointer;
-  transition: var(--transition-tab);
   white-space: nowrap;
   position: relative;
   margin-bottom: -1px;

@@ -12,6 +12,7 @@ import {
   IconSettings,
 } from "@tabler/icons-react";
 import { t } from "i18next";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppHeaderContent } from "../shell/Header/Header";
 import AboutSettingsView from "./AboutSettingsView";
@@ -30,7 +31,18 @@ export default function SettingsView() {
   const navigate = useNavigate();
   const { section } = useParams();
 
-  const activeSection = section || "general";
+  const [activeSection, setActiveSection] = useState(section || "general");
+
+  useEffect(() => {
+    if (section) {
+      setActiveSection(section);
+    }
+  }, [section]);
+
+  const handleTabChange = (value: string) => {
+    setActiveSection(value);
+    navigate(`/settings/${value}`);
+  };
 
   return (
     <div className={BASE}>
@@ -41,7 +53,7 @@ export default function SettingsView() {
         variant="pills"
         value={activeSection}
         defaultValue="general"
-        onChange={(value) => navigate(`/settings/${value}`)}
+        onChange={handleTabChange}
       >
         <Tabs.List>
           <Tabs.Tab value="general">
