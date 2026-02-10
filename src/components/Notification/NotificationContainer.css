@@ -1,7 +1,7 @@
 .notification-container {
   position: fixed;
-  top: var(--spacing-lg);
-  right: var(--spacing-lg);
+  top: max(var(--spacing-lg), var(--safe-area-top));
+  right: max(var(--spacing-lg), var(--safe-area-right));
   z-index: 10000;
   display: flex;
   flex-direction: column;

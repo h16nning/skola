@@ -139,10 +139,7 @@
 }
 
 .tabs--pills .tabs__tab--active {
-  background-color: light-dark(
-    var(--theme-primary-600),
-    var(--theme-primary-500)
-  );
+  background-color: var(--color-primary-600);
   color: var(--color-primary-50);
   border-bottom: none;
 }

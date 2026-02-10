@@ -64,18 +64,12 @@
 }
 
 .button--primary {
-  background-color: light-dark(
-    var(--theme-primary-600),
-    var(--theme-primary-400)
-  );
+  background-color: var(--color-primary-600);
   color: white;
 }
 
 .button--primary:hover {
-  background-color: light-dark(
-    var(--theme-primary-700),
-    var(--theme-primary-500)
-  );
+  background-color: var(--theme-primary-500);
 }
 
 .button--subtle {

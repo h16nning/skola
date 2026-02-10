@@ -5,6 +5,10 @@
   align-items: center;
   justify-content: center;
   padding: var(--spacing-xl);
+  padding-top: max(var(--spacing-xl), var(--safe-area-top));
+  padding-left: max(var(--spacing-xl), var(--safe-area-left));
+  padding-right: max(var(--spacing-xl), var(--safe-area-right));
+  padding-bottom: max(var(--spacing-xl), var(--safe-area-bottom));
   transition: background-color 300ms ease;
 }
 

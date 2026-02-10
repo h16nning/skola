@@ -10,11 +10,14 @@
   max-height: 85vh;
   overflow: hidden;
   z-index: 2000;
+  overscroll-behavior: contain;
 }
 
 .modal::backdrop {
   background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(1px);
   z-index: 1999;
+  touch-action: none;
 }
 
 [data-theme="dark"] .modal::backdrop {
@@ -100,6 +103,8 @@
   padding: var(--spacing-lg);
   overflow-y: auto;
   max-height: calc(85vh - 4rem);
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal--no-header .modal__body {
@@ -107,17 +112,20 @@
 }
 
 .modal--fullscreen {
-  max-width: 100vw;
-  max-height: 100vh;
-  width: 100vw;
-  height: 100vh;
+  max-width: 100dvw;
+  max-height: 100dvh;
+  padding-top: var(--safe-area-top);
+  padding-bottom: var(--safe-area-bottom);
+  padding-left: var(--safe-area-left);
+  padding-right: var(--safe-area-right);
+  width: 100dvw;
+  height: 100dvh;
   border-radius: 0;
   border: none;
 }
 
 .modal--fullscreen .modal__body {
   max-height: calc(100vh - 4rem);
-  padding: 0;
 }
 
 .modal--fullscreen.modal--no-header .modal__body {

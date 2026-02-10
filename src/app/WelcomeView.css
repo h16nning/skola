@@ -5,6 +5,7 @@
   width: 100%;
   padding: var(--spacing-3xl) var(--spacing-sm);
   min-height: 100%;
+  overflow-y: scroll;
 }
 
 .welcome-view__container {

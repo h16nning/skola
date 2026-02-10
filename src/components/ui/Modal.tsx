@@ -31,8 +31,12 @@ export function Modal({
 
     if (opened && !dialog.open) {
       dialog.showModal();
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
     } else if (!opened && dialog.open) {
       dialog.close();
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
     }
   }, [opened]);
 

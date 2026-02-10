@@ -5,6 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-bottom: calc(var(--spacing-md) + 0 * var(--safe-area-bottom));
 }
 
 .learn-view-footer__buttons {
