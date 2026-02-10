@@ -1,19 +1,15 @@
-import { Group } from "@/components/ui/Group";
-import { Stack } from "@/components/ui/Stack";
 import { Text } from "@/components/ui/Text";
 import { getAdapter } from "@/logic/NoteTypeAdapter";
 import { NoteTypeLabels } from "@/logic/card/card";
 import { useDeckOf } from "@/logic/deck/hooks/useDeckOf";
-import { getNote } from "@/logic/note/getNote";
 import { Note, NoteType } from "@/logic/note/note";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import LinkedNotesSection from "../explorer/LinkedNotesSection";
 import "./EditNoteView.css";
 import NoteMenu from "./NoteMenu";
 import NoteSubmitButton from "./NoteSubmitButton";
 
-const BASE_URL = "edit-note";
+const BASE = "edit-note";
 
 type SetOpenedNote = (note: Note<NoteType> | undefined) => void;
 
@@ -32,9 +28,11 @@ export function EditNoteView({
 
 export function NoNoteView() {
   return (
-    <Text size="sm" variant="dimmed">
-      No note selected
-    </Text>
+    <div className={`${BASE}__no-note`}>
+      <Text size="sm" variant="dimmed">
+        No note selected
+      </Text>
+    </div>
   );
 }
 
@@ -50,43 +48,45 @@ function NoteView({
   const [requestedFinish, setRequestedFinish] = useState(false);
 
   const NoteEditor = useMemo(() => {
-    return deck
-      ? getAdapter(note).editor({
-          note,
-          deck,
-          mode: "edit",
-          requestedFinish,
-          setRequestedFinish,
-        })
-      : null;
+    return deck ? (
+      getAdapter(note).editor({
+        note,
+        deck,
+        mode: "edit",
+        requestedFinish,
+        setRequestedFinish,
+      })
+    ) : (
+      <div />
+    );
   }, [note, deck, requestedFinish, setRequestedFinish]);
 
   return (
-    <Stack className={BASE_URL} gap="xl">
-      <Group justify="space-between" wrap="nowrap">
-        <Group>
+    <div className={BASE}>
+      <div className={`${BASE}__header`}>
+        <div className={`${BASE}__title-group`}>
           <Text size="xs" weight="semibold">
             {t("note.edit.title")}{" "}
             <Text variant="dimmed" size="xs" weight="semibold">
               ({NoteTypeLabels[note.content.type]})
             </Text>
           </Text>
-        </Group>
+        </div>
         <NoteMenu note={note} withEdit={false} />
-      </Group>
-      {NoteEditor}
-      <Group justify="end">
+      </div>
+      <div className={`${BASE}__content`}>{NoteEditor}</div>
+      <div className={`${BASE}__bottom-section`}>
         <NoteSubmitButton finish={() => setRequestedFinish(true)} mode="edit" />
-      </Group>
-      <LinkedNotesSection
+      </div>
+      {/*<LinkedNotesSection
         linkedNotes={note.linkedNotes}
         onSelectNote={
           setOpenedNote
             ? (noteId) => getNote(noteId).then((n) => n && setOpenedNote(n))
             : undefined
         }
-      />
-    </Stack>
+      />*/}
+    </div>
   );
 }
 export default EditNoteView;

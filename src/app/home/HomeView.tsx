@@ -20,7 +20,7 @@ export default function HomeView() {
   const [t] = useTranslation();
   const [newDeckModalOpened, setNewDeckModalOpened] = useState(false);
   const [decks, isReady] = useTopLevelDecks();
-  const [userName] = useSetting("name");
+  const [userName, userNameIsReady] = useSetting("#name");
 
   useHotkeys([["n", () => setNewDeckModalOpened(true)]]);
 
@@ -49,7 +49,9 @@ export default function HomeView() {
 
       <div className={`${BASE}__content`}>
         <section className={`${BASE}__welcome-section`}>
-          <h1 className={`${BASE}__welcome-title`}>
+          <h1
+            className={`${BASE}__welcome-title ${!userNameIsReady && "invisible"}`}
+          >
             {userName
               ? t("home.welcome-user", { name: userName })
               : t("home.welcome")}

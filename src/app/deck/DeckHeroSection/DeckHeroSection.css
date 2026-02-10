@@ -1,5 +1,9 @@
 @import "../DeckCardBase.css";
 
+.deck-hero-section__content {
+  animation: fadeIn 0.2s ease-in;
+}
+
 .deck-hero-section {
   padding: 0;
   min-height: 20rem;

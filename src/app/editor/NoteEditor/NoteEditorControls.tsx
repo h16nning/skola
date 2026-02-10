@@ -37,14 +37,14 @@ export function NoteEditorControls({
         <BoldControl editor={editor} />
         <ItalicControl editor={editor} />
         <UnderlineControl editor={editor} />
-        {settings.showStrikethroughOptionInEditor && (
+        {settings["#showStrikethroughOptionInEditor"] && (
           <StrikethroughControl editor={editor} />
         )}
-        {settings.showHighlightOptionInEditor && (
+        {settings["#showHighlightOptionInEditor"] && (
           <HighlightControl editor={editor} />
         )}
-        {settings.showCodeOptionInEditor && <CodeControl editor={editor} />}
-        {settings.showSubAndSuperScriptOptionInEditor && (
+        {settings["#showCodeOptionInEditor"] && <CodeControl editor={editor} />}
+        {settings["#showSubAndSuperScriptOptionInEditor"] && (
           <>
             <SubscriptControl editor={editor} />
             <SuperscriptControl editor={editor} />
@@ -55,7 +55,7 @@ export function NoteEditorControls({
       </RichTextEditor.ControlsGroup>
 
       <RichTextEditor.ControlsGroup>
-        {settings.showListOptionInEditor && (
+        {settings["#showListOptionInEditor"] && (
           <>
             <BulletListControl editor={editor} />
             <OrderedListControl editor={editor} />
@@ -65,7 +65,7 @@ export function NoteEditorControls({
         <AddImageControl editor={editor} />
       </RichTextEditor.ControlsGroup>
 
-      {settings.showLinkOptionInEditor && (
+      {settings["#showLinkOptionInEditor"] && (
         <RichTextEditor.ControlsGroup>
           <LinkControl editor={editor} />
           <UnlinkControl editor={editor} />

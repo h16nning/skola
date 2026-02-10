@@ -46,7 +46,7 @@ function timeStringForRating(rating: Rating, controller: LearnController) {
 }
 
 function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
-  const [enableHardAndEasy] = useSetting("learn_enableHardAndEasy");
+  const [enableHardAndEasy] = useSetting("#learn_enableHardAndEasy");
 
   const baseHotkeys: [string, () => void][] = [
     ["1", () => controller.showingAnswer && answer(Rating.Again)],

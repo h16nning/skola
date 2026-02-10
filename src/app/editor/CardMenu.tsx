@@ -42,7 +42,7 @@ interface CardMenuProps {
 function CardMenu({ card, onDelete }: CardMenuProps) {
   const navigate = useNavigate();
 
-  const [developerMode] = useSetting("developerMode");
+  const [developerMode] = useSetting("#developerMode");
 
   const [debugModalOpened, setDebugModalOpened] = useState<boolean>(false);
   const [statisticsModalOpened, setStatisticsModalOpened] =

@@ -4,7 +4,7 @@ import { useSetting } from "./useSetting";
 
 export function useShowShortcutHints() {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
-  const [showShortcutHints] = useSetting("showShortcutHints");
+  const [showShortcutHints] = useSetting("#showShortcutHints");
   useEventListener("touchstart", () => setIsTouchDevice(true), []);
   return !isTouchDevice && showShortcutHints;
 }

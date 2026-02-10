@@ -13,6 +13,7 @@ interface NoteEditorProps {
   editor: Editor | null;
   className?: string;
   controls?: React.ReactNode;
+  Footer?: React.ReactNode;
 }
 
 export interface UseNoteEditorProps {
@@ -34,8 +35,8 @@ export function useNoteEditor(props: UseNoteEditorProps) {
   );
 }
 
-function NoteEditor({ editor, controls, className }: NoteEditorProps) {
-  const [settings, areSettingsReady] = useSettings();
+function NoteEditor({ editor, controls, className, Footer }: NoteEditorProps) {
+  const [settings, settingsAreReady] = useSettings();
 
   const addImage = (data: DataTransfer) => {
     const { files } = data;
@@ -50,6 +51,10 @@ function NoteEditor({ editor, controls, className }: NoteEditorProps) {
     }
   };
 
+  if (!settingsAreReady) {
+    return null;
+  }
+
   return (
     <>
       <div
@@ -61,12 +66,12 @@ function NoteEditor({ editor, controls, className }: NoteEditorProps) {
         }}
       >
         <RichTextEditor editor={editor} className={className}>
-          {areSettingsReady && settings.useToolbar && editor && (
+          {settings["#useToolbar"] && editor && (
             <RichTextEditor.Toolbar className={`${BASE}__toolbar`}>
               <NoteEditorControls controls={controls} editor={editor} />
             </RichTextEditor.Toolbar>
           )}
-          {areSettingsReady && editor && settings.useBubbleMenu && (
+          {editor && settings["#useBubbleMenu"] && (
             <BubbleMenu editor={editor} tippyOptions={{ maxWidth: "none" }}>
               <div className={`${BASE}__bubble-menu-wrapper`}>
                 <NoteEditorControls controls={controls} editor={editor} />
@@ -74,6 +79,7 @@ function NoteEditor({ editor, controls, className }: NoteEditorProps) {
             </BubbleMenu>
           )}
         </RichTextEditor>
+        {Footer}
       </div>
     </>
   );

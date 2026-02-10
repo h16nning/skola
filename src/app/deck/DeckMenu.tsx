@@ -38,7 +38,7 @@ function DeckMenu({ deck, isDeckReady }: DeckMenuProps) {
   const navigate = useNavigate();
   const [t] = useTranslation();
 
-  const [developerMode] = useSetting("developerMode");
+  const [developerMode] = useSetting("#developerMode");
 
   const [deleteModalOpened, setDeleteModalOpened] = useState<boolean>(false);
   const [moveModalOpened, setMoveModalOpened] = useState<boolean>(false);

@@ -22,9 +22,9 @@ import { useLearnSession } from "./useLearnSession";
 const BASE = "learn-view";
 
 function LearnView() {
-  const [useVisualFeedback] = useSetting("useVisualFeedback");
-  const [showCognitivePrompts] = useSetting("showCognitivePrompts");
-  const [newToReviewRatio] = useSetting("learn_newToReviewRatio");
+  const [useVisualFeedback] = useSetting("#useVisualFeedback");
+  const [showCognitivePrompts] = useSetting("#showCognitivePrompts");
+  const [newToReviewRatio] = useSetting("#learn_newToReviewRatio");
 
   const navigate = useNavigate();
   const [deck, isReady, params] = useDeckFromUrl();

@@ -31,7 +31,7 @@ function FinishedLearningView({
 }: FinishedLearningViewProps) {
   const navigate = useNavigate();
   const [t] = useTranslation();
-  const [name] = useSetting("name");
+  const [name] = useSetting("#name");
 
   const accuracy = useRepetitionAccuracy(statistics.ratingsList);
   const [wroteStatistics, setWroteStatistics] = useState<boolean>(false);

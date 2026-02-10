@@ -7,7 +7,6 @@ import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { setSetting } from "@/logic/settings/setSetting";
 import React, { useEffect, useState } from "react";
 import { SettingsValues } from "../../logic/settings/Settings";
-import { SettingStatus, StatusIndicator } from "./SettingStatus";
 import "./SettingsInput.css";
 
 const BASE = "settings-input";
@@ -25,7 +24,6 @@ export default function SettingsInput({
   inputType,
   settingsKey,
 }: SettingsInputProps) {
-  const [status, setStatus] = useState(SettingStatus.NONE);
   const [setting] = useSetting(settingsKey);
 
   const [value, setValue] = useState<SettingsValues[typeof settingsKey]>(
@@ -38,20 +36,11 @@ export default function SettingsInput({
     250
   );
 
-  useEffect(() => {
-    if (touched) {
-      setStatus(SettingStatus.LOADING);
-    }
-  }, [touched, value]);
-
   useEffect(() => setValue(setting !== undefined ? setting : ""), [setting]);
 
   useEffect(() => {
     if (touched) {
-      setStatus(SettingStatus.LOADING);
-      setSetting(settingsKey, debounced)
-        .then(() => setStatus(SettingStatus.SUCCESS))
-        .catch(() => setStatus(SettingStatus.FAILED));
+      setSetting(settingsKey, debounced);
     }
   }, [touched, setting, debounced, settingsKey]);
 
@@ -68,9 +57,6 @@ export default function SettingsInput({
               setValue(event.currentTarget.value);
             }}
           />
-          <div className={`${BASE}__status`}>
-            <StatusIndicator status={status} />
-          </div>
         </div>
       );
     case "switch":
@@ -86,9 +72,6 @@ export default function SettingsInput({
               setValue(event.currentTarget.checked);
             }}
           />
-          <div className={`${BASE}__status`}>
-            <StatusIndicator status={status} />
-          </div>
         </div>
       );
     case "checkbox":
@@ -103,9 +86,6 @@ export default function SettingsInput({
               setValue(event.currentTarget.checked);
             }}
           />
-          <div className={`${BASE}__status`}>
-            <StatusIndicator status={status} />
-          </div>
         </div>
       );
     case "number":
@@ -120,9 +100,6 @@ export default function SettingsInput({
               setValue(e);
             }}
           />
-          <div className={`${BASE}__status`}>
-            <StatusIndicator status={status} />
-          </div>
         </div>
       );
   }

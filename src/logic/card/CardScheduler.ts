@@ -6,9 +6,9 @@ import { setSetting } from "../settings/setSetting";
 const scheduler = new fsrsjs.FSRS();
 
 export function useGlobalScheduler() {
-  const [maximumInterval] = useSetting("globalScheduler_maximumInterval");
-  const [requestRetention] = useSetting("globalScheduler_requestRetention");
-  const [w] = useSetting("globalScheduler_w");
+  const [maximumInterval] = useSetting("#globalScheduler_maximumInterval");
+  const [requestRetention] = useSetting("#globalScheduler_requestRetention");
+  const [w] = useSetting("#globalScheduler_w");
 
   useEffect(() => {
     scheduler.p.maximum_interval = maximumInterval;
@@ -19,7 +19,10 @@ export function useGlobalScheduler() {
 }
 
 export function updateGlobalScheduler() {
-  setSetting("globalScheduler_maximumInterval", scheduler.p.maximum_interval);
-  setSetting("globalScheduler_requestRetention", scheduler.p.request_retention);
-  setSetting("globalScheduler_w", scheduler.p.w);
+  setSetting("#globalScheduler_maximumInterval", scheduler.p.maximum_interval);
+  setSetting(
+    "#globalScheduler_requestRetention",
+    scheduler.p.request_retention
+  );
+  setSetting("#globalScheduler_w", scheduler.p.w);
 }

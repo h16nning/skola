@@ -26,7 +26,7 @@ import { useSetting } from "./logic/settings/hooks/useSetting";
 const BASE = "app-shell";
 
 function useRestoreLanguage() {
-  const [language] = useSetting("language");
+  const [language] = useSetting("#language");
   useEffect(() => {
     i18n.changeLanguage(language);
   }, [language]);

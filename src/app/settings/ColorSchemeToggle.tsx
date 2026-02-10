@@ -11,12 +11,12 @@ import "./ColorSchemeToggle.css";
 const BASE = "color-scheme-toggle";
 
 export default function ColorSchemeToggle() {
-  const [colorSchemePreference] = useSetting("colorSchemePreference");
+  const [colorSchemePreference] = useSetting("#colorSchemePreference");
 
   const handleColorSchemeChange = (value: string) => {
     setSetting(
-      "colorSchemePreference",
-      (value as SettingsValues["colorSchemePreference"]) || "light"
+      "#colorSchemePreference",
+      (value as SettingsValues["#colorSchemePreference"]) || "light"
     );
 
     const html = document.documentElement;

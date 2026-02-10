@@ -25,13 +25,13 @@ export default function EditingSettingsView() {
         <SettingsInput
           label={t("settings.editing.use-toolbar")}
           description={t("settings.editing.use-toolbar-description")}
-          settingsKey="useToolbar"
+          settingsKey="#useToolbar"
           inputType="checkbox"
         />
         <SettingsInput
           label={t("settings.editing.use-bubble-menu")}
           description={t("settings.editing-use-bubble-menu-description")}
-          settingsKey="useBubbleMenu"
+          settingsKey="#useBubbleMenu"
           inputType="checkbox"
         />
         <Paper withBorder className={`${BASE}__alert`}>
@@ -47,13 +47,13 @@ export default function EditingSettingsView() {
         <SettingsInput
           label={<IconStrikethrough size={18} />}
           description={t("settings.editing.show-strikethrough-option")}
-          settingsKey="showStrikethroughOptionInEditor"
+          settingsKey="#showStrikethroughOptionInEditor"
           inputType="checkbox"
         />
         <SettingsInput
           label={<IconHighlight size={18} />}
           description={t("settings.editing.show-highlight-option")}
-          settingsKey="showHighlightOptionInEditor"
+          settingsKey="#showHighlightOptionInEditor"
           inputType="checkbox"
         />
         <SettingsInput
@@ -64,13 +64,13 @@ export default function EditingSettingsView() {
             </div>
           }
           description={t("settings.editing.show-list-option")}
-          settingsKey="showListOptionInEditor"
+          settingsKey="#showListOptionInEditor"
           inputType="checkbox"
         />
         <SettingsInput
           label={<IconCode size={18} />}
           description={t("settings.editing.show-code-option")}
-          settingsKey="showCodeOptionInEditor"
+          settingsKey="#showCodeOptionInEditor"
           inputType="checkbox"
         />
         <SettingsInput
@@ -83,7 +83,7 @@ export default function EditingSettingsView() {
           description={t(
             "settings.editing.show-options-for-subscript-and-superscript"
           )}
-          settingsKey="showSubAndSuperScriptOptionInEditor"
+          settingsKey="#showSubAndSuperScriptOptionInEditor"
           inputType="checkbox"
         />
         <SettingsInput
@@ -94,7 +94,7 @@ export default function EditingSettingsView() {
             </div>
           }
           description={t("settings.editing.show-link-option")}
-          settingsKey="showLinkOptionInEditor"
+          settingsKey="#showLinkOptionInEditor"
           inputType="checkbox"
         />
       </Section>

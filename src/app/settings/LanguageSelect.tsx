@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { SupportedLanguages } from "../../logic/settings/Settings";
 
 export default function LanguageSelect() {
-  const [language] = useSetting("language");
+  const [language] = useSetting("#language");
   const [t, i18n] = useTranslation();
 
   return (
@@ -15,7 +15,7 @@ export default function LanguageSelect() {
       description={t("settings.general.language-description")}
       onChange={(value) => {
         if (value !== null) {
-          setSetting("language", value as SupportedLanguages);
+          setSetting("#language", value as SupportedLanguages);
           i18n.changeLanguage(value);
           window.location.reload();
         }

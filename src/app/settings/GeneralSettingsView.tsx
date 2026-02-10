@@ -10,20 +10,20 @@ export default function GeneralSettingsView() {
       <SettingsInput
         label={t("settings.general.name")}
         description={t("settings.general.name-description")}
-        settingsKey={"name"}
+        settingsKey={"#name"}
         inputType={"text"}
       />
       <LanguageSelect />
       <SettingsInput
         label={t("settings.general.show-shortcut-hints")}
         description={t("settings.general.show-shortcut-hints-description")}
-        settingsKey="showShortcutHints"
+        settingsKey="#showShortcutHints"
         inputType={"checkbox"}
       />
       <SettingsInput
         label={t("settings.general.enable-developer-mode")}
         description={t("settings.general.enable-developer-mode-description")}
-        settingsKey="developerMode"
+        settingsKey="#developerMode"
         inputType={"checkbox"}
       />
     </Stack>

@@ -15,12 +15,12 @@ import "./DensityToggle.css";
 const BASE = "density-toggle";
 
 export default function DensityToggle() {
-  const [densityPreference] = useSetting("densityPreference");
+  const [densityPreference] = useSetting("#densityPreference");
 
   const handleDensityChange = (value: string) => {
     setSetting(
-      "densityPreference",
-      (value as SettingsValues["densityPreference"]) || "auto"
+      "#densityPreference",
+      (value as SettingsValues["#densityPreference"]) || "auto"
     );
 
     const html = document.documentElement;

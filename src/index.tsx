@@ -70,11 +70,16 @@ root.render(
   </React.StrictMode>
 );
 
-navigator.serviceWorker.getRegistrations().then((registrations) => {
-  for (const registration of registrations) {
-    registration.unregister();
-  }
-});
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("/sw.js")
+    .then((registration) => {
+      console.log("Service Worker registered with scope:", registration.scope);
+    })
+    .catch((error) => {
+      console.error("Service Worker registration failed:", error);
+    });
+}
 
 async function persist() {
   return (

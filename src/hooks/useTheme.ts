@@ -30,7 +30,7 @@ if (storedPreference) {
 }
 
 export function useTheme() {
-  const [colorSchemePreference] = useSetting("colorSchemePreference");
+  const [colorSchemePreference] = useSetting("#colorSchemePreference");
 
   useEffect(() => {
     applyThemeFromPreference(colorSchemePreference);

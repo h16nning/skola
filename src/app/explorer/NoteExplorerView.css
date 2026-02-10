@@ -40,7 +40,6 @@
   flex: 1;
   min-width: 0;
   height: 100%;
-  padding: var(--spacing-sm);
   border: 1px solid var(--theme-neutral-200);
   border-radius: var(--radius-md);
   overflow: hidden;

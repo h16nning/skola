@@ -85,6 +85,11 @@ html[data-theme="dark"] {
   color-scheme: dark;
 }
 
+/* We use this global class to hide elements in a short way from JSX. This is especially meant to be used for hiding elements while they are still loading. We can prevent layout shifting comparing this to the HTML attribute hidden. */
+.invisible {
+  visibility: hidden;
+}
+
 button .tabler-icon,
 input .tabler-icon {
   stroke-width: 1.5px;

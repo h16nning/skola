@@ -18,107 +18,111 @@ interface DeckHeroSectionProps {
   isDeckReady: boolean;
 }
 
-function DeckHeroSection({ deck }: DeckHeroSectionProps) {
+interface HeroWrapperProps {
+  color: string;
+  isDone?: boolean;
+  isReady?: boolean;
+  children: React.ReactNode;
+}
+
+interface MessageContentProps {
+  title?: string;
+  subtitle?: string;
+}
+
+function HeroWrapper({ color, isDone, isReady, children }: HeroWrapperProps) {
+  const doneClass = isDone ? ` ${BASE}--done` : "";
+  const invisibleClass = isReady === false ? " invisible" : "";
+  return (
+    <Paper
+      className={`deck-card-base deck-card-base--color-${color} ${BASE} ${BASE}--color-${color}${doneClass}${invisibleClass}`}
+      withTexture
+      withBorder
+    >
+      {children}
+    </Paper>
+  );
+}
+
+function HeroContent({
+  deck,
+  children,
+}: { deck?: Deck; children?: React.ReactNode }) {
+  return (
+    <div className={`${BASE}__content`}>
+      <h3 className={`deck-card-base__title ${BASE}__title`}>{deck?.name}</h3>
+      {children}
+    </div>
+  );
+}
+
+function MessageContent({ title, subtitle }: MessageContentProps) {
+  return (
+    <div className={`${BASE}__message`}>
+      {title && <p className={`${BASE}__message-title`}>{title}</p>}
+      {subtitle && <p className={`${BASE}__message-subtitle`}>{subtitle}</p>}
+    </div>
+  );
+}
+
+function DeckHeroSection({ deck, isDeckReady }: DeckHeroSectionProps) {
   const navigate = useNavigate();
   const [t] = useTranslation();
 
   const [cards, areCardsReady] = useCardsOf(deck);
   const states = useSimplifiedStatesOf(cards);
 
-  useHotkeys([["Space", startLearning]]);
-
-  function isDone() {
-    return states.new + states.learning + states.review === 0;
-  }
+  const color = deck?.color ?? COLORS[0];
+  const isDone = states.new + states.learning + states.review === 0;
 
   function startLearning() {
-    cards?.length! > 0 &&
-      navigate("/learn/" + deck?.id + (isDone() ? "/all" : ""));
+    if (cards?.length! > 0) {
+      navigate("/learn/" + deck?.id + (isDone ? "/all" : ""));
+    }
   }
 
-  const color = deck?.color ?? COLORS[0];
+  useHotkeys([["Space", startLearning]]);
 
   if (!areCardsReady) {
     return (
-      <Paper
-        className={`deck-card-base deck-card-base--color-${color} ${BASE} ${BASE}--color-${color}`}
-        withTexture
-        withBorder
-      >
-        <div className={`${BASE}__content`}>
-          <h3 className={`deck-card-base__title ${BASE}__title`}>
-            {deck?.name}
-          </h3>
-        </div>
-      </Paper>
+      <HeroWrapper color={color} isReady={isDeckReady}>
+        <HeroContent deck={deck} />
+      </HeroWrapper>
     );
   }
 
   if (!cards) {
     return (
-      <Paper
-        className={`deck-card-base deck-card-base--color-${color} ${BASE} ${BASE}--color-${color}`}
-        withTexture
-        withBorder
-      >
-        <div className={`${BASE}__content`}>
-          <h3 className={`deck-card-base__title ${BASE}__title`}>
-            {deck?.name}
-          </h3>
-          <div className={`${BASE}__message`}>
-            <p className={`${BASE}__message-title`}>
-              {t("hero-deck-section.error")}
-            </p>
-          </div>
-        </div>
-      </Paper>
+      <HeroWrapper color={color}>
+        <HeroContent deck={deck}>
+          <MessageContent title={t("hero-deck-section.error")} />
+        </HeroContent>
+      </HeroWrapper>
     );
   }
 
   if (cards.length === 0) {
     return (
-      <Paper
-        className={`deck-card-base deck-card-base--color-${color} ${BASE} ${BASE}--color-${color}`}
-        withTexture
-        withBorder
-      >
-        <div className={`${BASE}__content`}>
-          <h3 className={`deck-card-base__title ${BASE}__title`}>
-            {deck?.name}
-          </h3>
-          <div className={`${BASE}__message`}>
-            <p className={`${BASE}__message-title`}>
-              {t("global.no-items-title")}
-            </p>
-            <p className={`${BASE}__message-subtitle`}>
-              {t("hero-deck-section.no-cards")}
-            </p>
-          </div>
-        </div>
-      </Paper>
+      <HeroWrapper color={color}>
+        <HeroContent deck={deck}>
+          <MessageContent
+            title={t("global.no-items-title")}
+            subtitle={t("hero-deck-section.no-cards")}
+          />
+        </HeroContent>
+      </HeroWrapper>
     );
   }
 
-  if (isDone()) {
+  if (isDone) {
     return (
-      <Paper
-        className={`deck-card-base deck-card-base--color-${color} ${BASE} ${BASE}--color-${color} ${BASE}--done`}
-        withTexture
-        withBorder
-      >
-        <div className={`${BASE}__content`}>
-          <h3 className={`deck-card-base__title ${BASE}__title`}>
-            {deck?.name}
-          </h3>
-          <div className={`${BASE}__message`}>
-            <p className={`${BASE}__message-title`}>
-              {t("hero-deck-section.all-cards-done-title")}
-            </p>
-            <p className={`${BASE}__message-subtitle`}>
-              {t("hero-deck-section.all-cards-done-subtitle")}
-            </p>
-          </div>
-        </div>
+      <HeroWrapper color={color} isDone>
+        <HeroContent deck={deck}>
+          <MessageContent
+            title={t("hero-deck-section.all-cards-done-title")}
+            subtitle={t("hero-deck-section.all-cards-done-subtitle")}
+          />
+        </HeroContent>
         <Button
           variant="subtle"
           className={`${BASE}__action-button`}
@@ -126,18 +130,13 @@ function DeckHeroSection({ deck }: DeckHeroSectionProps) {
         >
           {t("hero-deck-section.all-cards-done-learn-anyway")}
         </Button>
-      </Paper>
+      </HeroWrapper>
     );
   }
 
   return (
-    <Paper
-      className={`deck-card-base deck-card-base--color-${color} ${BASE} ${BASE}--color-${color}`}
-      withTexture
-      withBorder
-    >
-      <div className={`${BASE}__content`}>
-        <h3 className={`deck-card-base__title ${BASE}__title`}>{deck?.name}</h3>
+    <HeroWrapper color={color}>
+      <HeroContent deck={deck}>
         <div className={`deck-card-base__details ${BASE}__details`}>
           {states.review > 0 && (
             <Badge variant="light">
@@ -155,16 +154,16 @@ function DeckHeroSection({ deck }: DeckHeroSectionProps) {
             </Badge>
           )}
         </div>
-      </div>
+      </HeroContent>
       <Button
-        disabled={!deck || states.new + states.learning + states.review === 0}
+        disabled={!deck || isDone}
         leftSection={<IconBolt />}
         className={`${BASE}__action-button`}
         onClick={startLearning}
       >
         {t("hero-deck-section.learn")}
       </Button>
-    </Paper>
+    </HeroWrapper>
   );
 }
 

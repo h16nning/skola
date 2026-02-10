@@ -45,7 +45,7 @@ if (storedPreference && typeof window !== "undefined") {
 }
 
 export function useDensity() {
-  const [densityPreference] = useSetting("densityPreference");
+  const [densityPreference] = useSetting("#densityPreference");
 
   useEffect(() => {
     applyDensityFromPreference(densityPreference);

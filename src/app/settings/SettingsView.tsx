@@ -27,7 +27,7 @@ import "./SettingsView.css";
 const BASE = "settings-view";
 
 export default function SettingsView() {
-  const [developerMode] = useSetting("developerMode");
+  const [developerMode] = useSetting("#developerMode");
   const navigate = useNavigate();
   const { section } = useParams();
 
