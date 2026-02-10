@@ -1,0 +1,19 @@
+.note-editor__content-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.note-editor__toolbar {
+  margin-bottom: var(--spacing-sm);
+}
+
+.note-editor__bubble-menu-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs);
+  background-color: var(--theme-neutral-50);
+  border: 1px solid var(--theme-neutral-200);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+}

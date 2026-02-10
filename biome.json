@@ -11,7 +11,7 @@
   },
   "linter": {
     "enabled": true,
-    "rules": {
+    "rules": {"
       "a11y": {
         "useKeyWithClickEvents": "warn",
         "noSvgWithoutTitle": "warn",
@@ -30,7 +30,8 @@
         "noNonNullAssertion": "off",
         "useSelfClosingElements": "off",
         "useImportType": "off",
-        "noUselessElse": "off"
+        "noUselessElse": "off",
+        "useSingleVarDeclarator": "off",
       },
       "complexity": {
         "noBannedTypes": "off",

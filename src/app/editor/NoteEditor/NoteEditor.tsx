@@ -1,28 +1,13 @@
 import { RichTextEditor } from "@/components/ui/RichTextEditor";
 import { useSettings } from "@/logic/settings/hooks/useSettings";
-import { Color } from "@tiptap/extension-color";
-import Highlight from "@tiptap/extension-highlight";
-import { Link } from "@tiptap/extension-link";
-import SubScript from "@tiptap/extension-subscript";
-import Superscript from "@tiptap/extension-superscript";
-import TextAlign from "@tiptap/extension-text-align";
-import { TextStyle } from "@tiptap/extension-text-style";
-import Underline from "@tiptap/extension-underline";
-import {
-  BubbleMenu,
-  Editor,
-  EditorOptions,
-  Extension,
-  useEditor,
-} from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
+import { BubbleMenu, Editor, EditorOptions, useEditor } from "@tiptap/react";
 import React from "react";
 
-import { ImageDrop } from "./ImageDrop";
-import classes from "./NoteEditor.module.css";
+import "./NoteEditor.css";
 import { NoteEditorControls } from "./NoteEditorControls";
+import getExtensions from "./extensions";
 
-import { CustomHardBreak } from "./tiptap/CustomHardBreak";
+const BASE = "note-editor";
 
 interface NoteEditorProps {
   editor: Editor | null;
@@ -30,47 +15,18 @@ interface NoteEditorProps {
   controls?: React.ReactNode;
 }
 
-export function useNoteEditor(props: {
+export interface UseNoteEditorProps {
   content: string;
   onUpdate?: EditorOptions["onUpdate"];
   extensions?: any[];
   finish?: () => void;
   focusSelectNoteType?: () => void;
-}) {
+}
+
+export function useNoteEditor(props: UseNoteEditorProps) {
   return useEditor(
     {
-      extensions: [
-        Extension.create({
-          name: "addcard",
-          addKeyboardShortcuts() {
-            return {
-              "Mod-Enter": () => {
-                props.finish && props.finish();
-                return false;
-              },
-              "Mod-j": () => {
-                this.editor.commands.blur();
-                props.focusSelectNoteType && props.focusSelectNoteType();
-                return false;
-              },
-            };
-          },
-        }),
-        StarterKit.configure({
-          hardBreak: false,
-        }),
-        CustomHardBreak,
-        Underline,
-        Link,
-        Superscript,
-        SubScript,
-        Highlight,
-        TextAlign.configure({ types: ["heading", "paragraph"] }),
-        Color,
-        TextStyle,
-        ImageDrop,
-        ...(props.extensions ?? []),
-      ],
+      extensions: getExtensions(props),
       content: props.content,
       onUpdate: props.onUpdate || (() => {}),
     },
@@ -97,7 +53,7 @@ function NoteEditor({ editor, controls, className }: NoteEditorProps) {
   return (
     <>
       <div
-        className={classes.contentWrapper}
+        className={`${BASE}__content-wrapper`}
         onDrop={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -106,13 +62,13 @@ function NoteEditor({ editor, controls, className }: NoteEditorProps) {
       >
         <RichTextEditor editor={editor} className={className}>
           {areSettingsReady && settings.useToolbar && editor && (
-            <RichTextEditor.Toolbar className={classes.toolbar}>
+            <RichTextEditor.Toolbar className={`${BASE}__toolbar`}>
               <NoteEditorControls controls={controls} editor={editor} />
             </RichTextEditor.Toolbar>
           )}
           {areSettingsReady && editor && settings.useBubbleMenu && (
             <BubbleMenu editor={editor} tippyOptions={{ maxWidth: "none" }}>
-              <div className={classes.bubbleMenuWrapper}>
+              <div className={`${BASE}__bubble-menu-wrapper`}>
                 <NoteEditorControls controls={controls} editor={editor} />
               </div>
             </BubbleMenu>

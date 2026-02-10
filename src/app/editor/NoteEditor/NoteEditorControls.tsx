@@ -17,7 +17,9 @@ import {
 import { useSettings } from "@/logic/settings/hooks/useSettings";
 import { Editor } from "@tiptap/react";
 import AddImageControl from "../AddImageControl";
-import classes from "./NoteEditor.module.css";
+import "./NoteEditorControls.css";
+
+const BASE = "note-editor-controls";
 
 export interface NoteEditorControlsProps {
   editor: Editor | null;
@@ -30,7 +32,7 @@ export function NoteEditorControls({
 }: NoteEditorControlsProps) {
   const [settings] = useSettings();
   return (
-    <div className={classes.controlsWrapper} tabIndex={-1}>
+    <div className={`${BASE}__wrapper`} tabIndex={-1}>
       <RichTextEditor.ControlsGroup>
         <BoldControl editor={editor} />
         <ItalicControl editor={editor} />

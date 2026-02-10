@@ -16,7 +16,7 @@
   border-radius: var(--radius-md);
   background-color: transparent;
   box-shadow: var(--inset-shadow-xs);
-  color: var(--theme-neutral-900);
+  color: var(--theme-neutral-700);
   font-size: var(--font-size-md);
   line-height: 1.55;
   min-height: 100px;
@@ -59,7 +59,7 @@
 
 .rich-text-editor__content .ProseMirror code {
   background-color: var(--theme-neutral-200);
-  padding: 0.125rem 0.25rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--radius-xs);
   font-family: monospace;
   font-size: 0.9em;
@@ -67,7 +67,7 @@
 
 .rich-text-editor__content .ProseMirror mark {
   background-color: var(--theme-orange-200);
-  padding: 0.125rem 0;
+  padding: var(--spacing-xs) 0;
   border-radius: var(--radius-xs);
 }
 
@@ -136,12 +136,13 @@
 }
 
 .rich-text-editor__control[data-active] {
-  background-color: var(--theme-primary-500);
+  background-color: var(--color-primary-500);
   color: white;
 }
 
 .rich-text-editor__control[data-active]:hover {
   background-color: var(--theme-primary-600);
+  color: white;
 }
 
 .rich-text-editor__control:disabled {
@@ -150,8 +151,8 @@
 }
 
 .rich-text-editor__control svg {
-  width: 1.125rem;
-  height: 1.125rem;
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
   display: block;
 }
 
