@@ -48,12 +48,12 @@ function AppContent() {
   const fullscreenMode = isXsOrSmaller || routeIsLearn;
 
   useEffect(() => {
-    if (routeIsLearn) {
+    if (routeIsLearn || fullscreenMode) {
       sidebarHandlers.close();
     } else {
       sidebarHandlers.open();
     }
-  }, [routeIsLearn]);
+  }, [routeIsLearn, fullscreenMode]);
 
   const overlayClasses = [
     `${BASE}__overlay`,

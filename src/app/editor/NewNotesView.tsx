@@ -93,7 +93,7 @@ function NewNotesView() {
         </AppHeaderContent>
 
         <div className={BASE + "__editor-container"}>
-          <Paper className={BASE + "__editor-header"} withTexture={false}>
+          <div className={BASE + "__editor-header"}>
             <SelectDecksHeader
               label={t("note.new.adding-to-deck", { deckName: deck.name })}
               decks={decks}
@@ -139,8 +139,10 @@ function NewNotesView() {
                 ]}
               />
             </Tooltip>
+          </div>
+          <Paper withBorder withTexture={false}>
+            {NoteEditor}
           </Paper>
-          <Paper withBorder>{NoteEditor}</Paper>
         </div>
       </div>
       <NewNotesFooter setRequestedFinish={setRequestedFinish} deck={deck} />
