@@ -1,4 +1,4 @@
-import MissingObject from "@/components/MissingObject";
+import NotFound from "@/components/NotFound";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Kbd } from "@/components/ui/Kbd";
@@ -33,7 +33,7 @@ function DeckView() {
   useHotkeys([["n", () => navigate("/new/" + deck?.id)]]);
 
   if (isDeckReady && !deck) {
-    return <MissingObject />;
+    return <NotFound />;
   }
 
   return (

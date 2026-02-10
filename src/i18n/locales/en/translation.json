@@ -292,7 +292,9 @@
   "statistics": {
     "title": "Statistics"
   },
-  "today": {
-    "title": "Today"
+  "not-found": {
+    "title": "Not Found",
+    "message": "We couldn't find what you are look for. Please try again.",
+    "go-back-home": "Go back home"
   }
 }

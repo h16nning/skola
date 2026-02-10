@@ -7,7 +7,7 @@ import {
 } from "@tabler/icons-react";
 
 import AppHeaderTitle from "@/components/AppHeaderTitle";
-import MissingObject from "@/components/MissingObject";
+import NotFound from "@/components/NotFound";
 import SelectDecksHeader from "@/components/SelectDecksHeader";
 import { IconButton, Kbd, Paper, Select, Tooltip } from "@/components/ui";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
@@ -67,7 +67,7 @@ function NewNotesView() {
   }, [navigate, deck]);
 
   if (isReady && !deck) {
-    return <MissingObject />;
+    return <NotFound />;
   }
 
   if (!deck) {

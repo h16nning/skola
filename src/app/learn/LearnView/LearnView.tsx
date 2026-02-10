@@ -1,5 +1,5 @@
 import { AppHeaderContent } from "@/app/shell/Header/Header";
-import MissingObject from "@/components/MissingObject";
+import NotFound from "@/components/NotFound";
 import { Modal } from "@/components/ui/Modal";
 import { Paper } from "@/components/ui/Paper";
 import { useDebouncedValue } from "@/lib/hooks/useDebouncedValue";
@@ -56,7 +56,7 @@ function LearnView() {
   }, [controller.isFinished]);
 
   if (isReady && !deck) {
-    return <MissingObject />;
+    return <NotFound />;
   }
 
   return (

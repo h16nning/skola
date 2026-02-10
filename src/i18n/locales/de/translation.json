@@ -272,8 +272,8 @@
     "title": "Einstellungen"
   },
   "sidebar": {
-    "decks-add": "",
-    "decks-title": ""
+    "decks-add": "Stapel hinzufügen",
+    "decks-title": "Stapel"
   },
   "spotlight": {
     "no-results": "Keine Ergenisse"
@@ -281,7 +281,9 @@
   "statistics": {
     "title": "Statistik"
   },
-  "today": {
-    "title": "Heute"
+  "not-found": {
+    "title": "Nichts gefunden",
+    "message": "Leider konnte wir das nicht finden. Bitte versuche es erneut.",
+    "go-back-home": "Zurück nach Hause"
   }
 }
