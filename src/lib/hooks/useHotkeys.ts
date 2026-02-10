@@ -6,6 +6,16 @@ type HotkeyDefinition = [string, HotkeyHandler, { preventDefault?: boolean }?];
 export function useHotkeys(hotkeys: HotkeyDefinition[]) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement;
+      const isEditableElement =
+        target.tagName === "INPUT" ||
+        target.tagName === "TEXTAREA" ||
+        target.isContentEditable;
+
+      if (isEditableElement) {
+        return;
+      }
+
       for (const [key, handler, options] of hotkeys) {
         const keys = key.toLowerCase().split("+");
         let eventKey = event.key.toLowerCase();
