@@ -13,7 +13,7 @@
   font-family: var(--font-sans);
   transition: var(--transition-button);
   white-space: nowrap;
-  border: 1px solid var(--theme-neutral-300);;
+  border: 1px solid var(--theme-neutral-300);
 }
 
 .button:hover {
@@ -107,7 +107,11 @@
 }
 
 .button--neutral {
-  background: linear-gradient(to bottom, var(--theme-neutral-700), var(--theme-neutral-800));
+  background: linear-gradient(
+    to bottom,
+    var(--theme-neutral-700),
+    var(--theme-neutral-800)
+  );
   border-color: var(--theme-neutral-800);
   color: var(--theme-neutral-100);
 }

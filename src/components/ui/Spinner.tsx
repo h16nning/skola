@@ -15,8 +15,8 @@ export function Spinner({ size = "md", className = "" }: SpinnerProps) {
     .join(" ");
 
   return (
-    <div className={classes} role="status" aria-label="Loading">
+    <output className={classes} aria-label="Loading">
       <div className={`${BASE}__circle`} />
-    </div>
+    </output>
   );
 }

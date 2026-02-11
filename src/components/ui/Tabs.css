@@ -139,8 +139,11 @@
 }
 
 .tabs--pills .tabs__tab--active {
-  background-color: var(--color-primary-600);
-  background: linear-gradient(to bottom, var(--color-primary-500), var(--color-primary-600));
+  background: linear-gradient(
+    to bottom,
+    var(--color-primary-500),
+    var(--color-primary-600)
+  );
   color: var(--color-primary-50);
   border: solid 1px var(--color-primary-600);
   border-bottom: none;

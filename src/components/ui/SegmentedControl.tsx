@@ -54,7 +54,6 @@ export function SegmentedControl({
           <button
             key={option.value}
             type="button"
-            role="radio"
             aria-checked={isActive}
             className={buttonClasses}
             onClick={() => handleChange(option.value)}

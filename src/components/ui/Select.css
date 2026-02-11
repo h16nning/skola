@@ -58,6 +58,3 @@
   pointer-events: none;
   color: var(--theme-neutral-500);
 }
-
-.select__field:focus ~ .select__chevron {
-}

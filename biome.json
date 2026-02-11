@@ -14,6 +14,8 @@
     "rules": {
       "a11y": {
         "useKeyWithClickEvents": "warn",
+        "useSemanticElements": "warn",
+        "useFocusableInteractive": "warn",
         "noSvgWithoutTitle": "warn",
         "noAutofocus": "warn",
         "noNoninteractiveElementToInteractiveRole": "warn"

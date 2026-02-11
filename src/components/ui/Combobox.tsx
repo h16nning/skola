@@ -282,7 +282,6 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
               ref={listboxRef}
               id={`${inputId}-listbox`}
               className={dropdownClasses}
-              role="listbox"
             >
               {filteredData.length === 0 ? (
                 <li className={`${BASE}__option ${BASE}__option--empty`}>
