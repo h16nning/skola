@@ -8,11 +8,7 @@ import { t } from "i18next";
 import { useRef } from "react";
 import "./NormalCardEditor.css";
 import NoteEditor, { useNoteEditor } from "./NoteEditor";
-import {
-  useAutoSave,
-  useClearEditors,
-  useNoteCreation,
-} from "./hooks";
+import { useAutoSave, useClearEditors, useNoteCreation } from "./hooks";
 
 const BASE = "normal-card-editor";
 

@@ -1,14 +1,17 @@
-import { useCallback, useEffect, useRef } from "react";
-import { Editor } from "@tiptap/react";
+import {
+  addFailed,
+  successfullyAdded,
+} from "@/components/Notification/Notification";
 import { EditMode } from "@/logic/NoteTypeAdapter";
 import { Deck } from "@/logic/deck/deck";
 import { Note, NoteType } from "@/logic/note/note";
-import { addFailed, successfullyAdded } from "@/components/Notification/Notification";
-import { useNoteEditor, UseNoteEditorProps } from "./NoteEditor";
+import { Editor } from "@tiptap/react";
+import { useCallback, useEffect, useRef } from "react";
+import { UseNoteEditorProps, useNoteEditor } from "./NoteEditor";
 
 export function useDebouncedAutoSave(
   autoSaveFn: () => Promise<void>,
-  delay: number = 10
+  delay = 10
 ) {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -69,12 +72,14 @@ export function useNoteEditorWithAutoSave(
   });
 }
 
-
 export function useNoteCreation<T extends NoteType>(
   mode: EditMode,
   deck: Deck,
   getContent: () => any,
-  createFn: (params: any, deck: Deck) => Promise<string | undefined> | undefined,
+  createFn: (
+    params: any,
+    deck: Deck
+  ) => Promise<string | undefined> | undefined,
   clearFn: () => void,
   requestedFinish?: boolean,
   setRequestedFinish?: (finish: boolean) => void

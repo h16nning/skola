@@ -9,11 +9,7 @@ import { Note } from "@/logic/note/note";
 import { ClozeNoteTypeAdapter } from "@/logic/type-implementations/cloze/ClozeNote";
 import { useMemo, useRef } from "react";
 import "./ClozeCardEditor.css";
-import {
-  useAutoSave,
-  useClearEditors,
-  useNoteCreation,
-} from "./hooks";
+import { useAutoSave, useClearEditors, useNoteCreation } from "./hooks";
 
 const BASE = "cloze-card-editor";
 

@@ -153,8 +153,7 @@ export default function SpotlightCard({
           label: getAdapter(note).getSortFieldFromNoteContent(note.content),
           description: note.breadcrumb.join(" > "),
           onClick: () => navigate(`/deck/${note.deck}`),
-          leftSection: (
-            <IconSquare/>),
+          leftSection: <IconSquare />,
         })),
       ],
     },
@@ -315,9 +314,7 @@ export default function SpotlightCard({
 
                 return (
                   <div key={group.group} className={`${BASE}__group`}>
-                    <div className={`${BASE}__group-label`}>
-                      {group.group}
-                    </div>
+                    <div className={`${BASE}__group-label`}>{group.group}</div>
                     {group.actions.map((action, localIndex) => {
                       const globalIndex = groupStartIndex + localIndex;
 
@@ -345,9 +342,7 @@ export default function SpotlightCard({
                               {highlightQuery(action.label, query)}
                             </div>
                             {action.description && (
-                              <div
-                                className={`${BASE}__action-description`}
-                              >
+                              <div className={`${BASE}__action-description`}>
                                 {action.description}
                               </div>
                             )}

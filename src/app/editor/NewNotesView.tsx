@@ -1,9 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import {
-    IconChevronLeft
-} from "@tabler/icons-react";
+import { IconChevronLeft } from "@tabler/icons-react";
 
 import AppHeaderTitle from "@/components/AppHeaderTitle";
 import NotFound from "@/components/NotFound";

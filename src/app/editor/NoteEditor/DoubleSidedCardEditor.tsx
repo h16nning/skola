@@ -8,11 +8,7 @@ import { DoubleSidedNoteTypeAdapter } from "@/logic/type-implementations/double-
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import "./DoubleSidedCardEditor.css";
-import {
-  useAutoSave,
-  useClearEditors,
-  useNoteCreation,
-} from "./hooks";
+import { useAutoSave, useClearEditors, useNoteCreation } from "./hooks";
 
 const BASE = "double-sided-card-editor";
 
@@ -92,7 +88,11 @@ function DoubleSidedCardEditor({
         <Text size="sm" weight="semibold">
           {t("note.edit.type-specific.double-sided.front")}
         </Text>
-        <NoteEditor editor={editor1} key="editor-1" className={`${BASE}__field`} />
+        <NoteEditor
+          editor={editor1}
+          key="editor-1"
+          className={`${BASE}__field`}
+        />
       </Stack>
       <Stack gap="xs">
         <Text size="sm" weight="semibold">

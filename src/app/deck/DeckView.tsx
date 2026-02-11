@@ -16,11 +16,11 @@ import NotebookView from "../notebook/NotebookView";
 import { AppHeaderContent } from "../shell/Header/Header";
 import DeckMenu from "./DeckMenu";
 import "./DeckView.css";
+import { useCardsOf } from "@/logic/card/hooks/useCardsOf";
+import { useSimplifiedStatesOf } from "@/logic/card/hooks/useSimplifiedStatesOf";
 import DeckHeroSection from "./DeckHeroSection/DeckHeroSection";
 import SubDeckSection from "./SubDeckSection";
 import SuperDecksBreadcrumbs from "./SuperDecksBreadcrumbs/SuperDecksBreadcrumbs";
-import { useCardsOf } from "@/logic/card/hooks/useCardsOf";
-import { useSimplifiedStatesOf } from "@/logic/card/hooks/useSimplifiedStatesOf";
 
 const BASE = "deck-view";
 
@@ -109,7 +109,8 @@ function DeckView() {
               <SubDeckSection deck={deck} />
             </Tabs.Panel>
           </Tabs>
-        </div>)}
+        </div>
+      )}
     </>
   );
 }
