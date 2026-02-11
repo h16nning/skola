@@ -131,3 +131,99 @@
 .modal--fullscreen.modal--no-header .modal__body {
   max-height: 100vh;
 }
+
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1999;
+}
+
+[data-theme="dark"] .drawer-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.drawer-content {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--theme-neutral-50);
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 2000;
+  outline: none;
+  overscroll-behavior: contain;
+}
+
+.drawer-content--fullscreen {
+  max-height: 100vh;
+  border-radius: 0;
+  padding-top: var(--safe-area-top);
+  padding-bottom: var(--safe-area-bottom);
+}
+
+.drawer-handle {
+  width: 2.5rem;
+  height: 0.0rem;
+  background-color: var(--theme-neutral-300);
+  border-radius: 100%;
+  margin: var(--spacing-md) auto var(--spacing-sm);
+  flex-shrink: 0;
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md) var(--spacing-lg);
+  padding-bottom: 0;
+  flex-shrink: 0;
+}
+
+.drawer-title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--theme-neutral-900);
+}
+
+.drawer-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xs);
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  color: var(--theme-neutral-500);
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
+  cursor: pointer;
+}
+
+.drawer-close:hover {
+  background-color: var(--theme-neutral-100);
+  color: var(--theme-neutral-700);
+}
+
+.drawer-close:active {
+  background-color: var(--theme-neutral-200);
+}
+
+.drawer-close svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  stroke-width: 2;
+}
+
+.drawer-body {
+  padding: var(--spacing-lg);
+  overflow-y: auto;
+  flex: 1;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}

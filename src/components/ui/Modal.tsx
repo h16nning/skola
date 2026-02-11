@@ -1,5 +1,6 @@
 import { IconX } from "@tabler/icons-react";
-import { type ReactNode, useEffect, useRef } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
+import { Drawer } from "vaul";
 import "./Modal.css";
 
 const BASE = "modal";
@@ -14,14 +15,32 @@ interface ModalProps {
   fullscreen?: boolean;
 }
 
-export function Modal({
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.innerWidth < 768;
+  });
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  return isMobile;
+}
+
+function DesktopModal({
   opened,
   onClose,
   title,
   children,
-  showCloseButton = true,
-  exitOnEscape = false,
-  fullscreen = false,
+  showCloseButton,
+  exitOnEscape,
+  fullscreen,
 }: ModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -110,4 +129,56 @@ export function Modal({
       <div className={`${BASE}__body`}>{children}</div>
     </dialog>
   );
+}
+
+function MobileDrawer({
+  opened,
+  onClose,
+  title,
+  children,
+  showCloseButton,
+  fullscreen,
+}: ModalProps) {
+  const hasHeader = title || showCloseButton;
+
+  return (
+    <Drawer.Root open={opened} onOpenChange={(open) => !open && onClose()}>
+      <Drawer.Portal>
+        <Drawer.Overlay className="drawer-overlay" />
+        <Drawer.Content
+          className={`drawer-content ${fullscreen ? "drawer-content--fullscreen" : ""}`}
+        >
+          <Drawer.Handle className="drawer-handle" />
+          {hasHeader && (
+            <header className="drawer-header">
+              {title && (
+                <Drawer.Title className="drawer-title">{title}</Drawer.Title>
+              )}
+              {showCloseButton && (
+                <button
+                  type="button"
+                  className="drawer-close"
+                  onClick={onClose}
+                  aria-label="Close"
+                >
+                  <IconX />
+                </button>
+              )}
+            </header>
+          )}
+          <div className="drawer-body">{children}</div>
+        </Drawer.Content>
+      </Drawer.Portal>
+    </Drawer.Root>
+  );
+}
+
+export function Modal(props: ModalProps) {
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return <MobileDrawer {...props} />;
+  }
+
+  return <DesktopModal {...props} />;
 }
