@@ -72,7 +72,7 @@ export function useNoteEditorWithAutoSave(
   });
 }
 
-export function useNoteCreation<T extends NoteType>(
+export function useNoteCreation(
   mode: EditMode,
   deck: Deck,
   getContent: () => any,
