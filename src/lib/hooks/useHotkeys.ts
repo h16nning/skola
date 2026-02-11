@@ -1,7 +1,12 @@
 import { useEffect } from "react";
 
 type HotkeyHandler = (event: KeyboardEvent) => void;
-type HotkeyDefinition = [string, HotkeyHandler, { preventDefault?: boolean }?];
+interface HotkeyOptions {
+  preventDefault?: boolean;
+  enableOnInputs?: boolean;
+}
+
+type HotkeyDefinition = [string, HotkeyHandler, HotkeyOptions?];
 
 export function useHotkeys(hotkeys: HotkeyDefinition[]) {
   useEffect(() => {
@@ -12,11 +17,11 @@ export function useHotkeys(hotkeys: HotkeyDefinition[]) {
         target.tagName === "TEXTAREA" ||
         target.isContentEditable;
 
-      if (isEditableElement) {
-        return;
-      }
-
       for (const [key, handler, options] of hotkeys) {
+        if (isEditableElement && !options?.enableOnInputs) {
+          continue;
+        }
+
         const keys = key.toLowerCase().split("+");
         let eventKey = event.key.toLowerCase();
 

@@ -10,7 +10,7 @@ import { useNotesWith } from "@/logic/note/hooks/useNotesWith";
 import { Note, NoteType } from "@/logic/note/note";
 import { NoteSorts } from "@/logic/note/sort";
 import { useShowShortcutHints } from "@/logic/settings/hooks/useShowShortcutHints";
-import { IconCards, IconSearch, IconSquare } from "@tabler/icons-react";
+import { IconCards, IconSearch, IconSquare, IconX } from "@tabler/icons-react";
 import cx from "clsx";
 import { t } from "i18next";
 import { type ReactNode, useEffect, useRef, useState } from "react";
@@ -223,6 +223,7 @@ export default function SpotlightCard({
         e.preventDefault();
         setOpened((prev) => !prev);
       },
+      { enableOnInputs: true },
     ],
   ]);
 
@@ -232,7 +233,13 @@ export default function SpotlightCard({
     function handleKeyDown(event: KeyboardEvent) {
       event.stopPropagation();
 
-      if (event.key === "ArrowDown") {
+      const isToggleKey =
+        event.key.toLowerCase() === "k" && (event.metaKey || event.ctrlKey);
+
+      if (isToggleKey) {
+        event.preventDefault();
+        setOpened(false);
+      } else if (event.key === "ArrowDown") {
         event.preventDefault();
         if (totalActions > 0) {
           setSelectedIndex((prev) => (prev + 1) % totalActions);
@@ -299,6 +306,14 @@ export default function SpotlightCard({
               onChange={(e) => setQuery(e.target.value)}
               value={immediateQuery}
             />
+            <button
+              type="button"
+              className={`${BASE}__close-button`}
+              onClick={() => setOpened(false)}
+              aria-label="Close"
+            >
+              <IconX />
+            </button>
           </div>
 
           <div className={`${BASE}__results`}>

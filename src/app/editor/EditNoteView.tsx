@@ -37,7 +37,6 @@ export function NoNoteView() {
 
 function NoteView({
   note,
-  setOpenedNote,
 }: {
   note: Note<NoteType>;
   setOpenedNote?: SetOpenedNote;
