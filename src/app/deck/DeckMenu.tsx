@@ -31,10 +31,9 @@ import RenameDeckModal from "./RenameDeckModal";
 
 interface DeckMenuProps {
   deck?: Deck;
-  isDeckReady: boolean;
 }
 
-function DeckMenu({ deck, isDeckReady }: DeckMenuProps) {
+function DeckMenu({ deck }: DeckMenuProps) {
   const navigate = useNavigate();
   const [t] = useTranslation();
 
@@ -91,7 +90,7 @@ function DeckMenu({ deck, isDeckReady }: DeckMenuProps) {
           <IconButton
             variant="subtle"
             aria-label={t("deck.menu.label")}
-            disabled={isDeckReady && !deck}
+            disabled={!deck}
           >
             <IconDots />
           </IconButton>

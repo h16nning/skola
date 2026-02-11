@@ -17,7 +17,7 @@ import { type ReactNode, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Spotlight.css";
 
-const BASE_URL = "spotlight";
+const BASE = "spotlight";
 
 interface NoteWithPreview extends Note<NoteType> {
   breadcrumb: string[];
@@ -94,7 +94,7 @@ function highlightQuery(text: string, query: string): ReactNode {
   return (
     <>
       {text.slice(0, index)}
-      <mark className={`${BASE_URL}__highlight`}>
+      <mark className={`${BASE}__highlight`}>
         {text.slice(index, index + query.length)}
       </mark>
       {text.slice(index + query.length)}
@@ -110,7 +110,7 @@ export default function SpotlightCard({
   const showShortcutHints = useShowShortcutHints();
 
   const [opened, setOpened] = useState(false);
-  const [query, setQuery, immediateQuery] = useDebouncedState("", 250);
+  const [query, setQuery, immediateQuery] = useDebouncedState("", 50);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -154,11 +154,7 @@ export default function SpotlightCard({
           description: note.breadcrumb.join(" > "),
           onClick: () => navigate(`/deck/${note.deck}`),
           leftSection: (
-            <IconSquare
-              style={{ width: "1.5rem", height: "1.5rem" }}
-              stroke={1.5}
-            />
-          ),
+            <IconSquare/>),
         })),
       ],
     },
@@ -271,20 +267,20 @@ export default function SpotlightCard({
       <button
         type="button"
         onClick={() => setOpened(true)}
-        className={cx(`${BASE_URL}__button`, {
-          [`${BASE_URL}__button--minimal`]: minimalMode,
+        className={cx(`${BASE}__button`, {
+          [`${BASE}__button--minimal`]: minimalMode,
         })}
       >
         {minimalMode ? (
-          <IconSearch className={`${BASE_URL}__button-icon`} />
+          <IconSearch className={`${BASE}__button-icon`} />
         ) : (
           <>
-            <span className={`${BASE_URL}__button-section`}>
-              <IconSearch className={`${BASE_URL}__button-icon`} />
+            <span className={`${BASE}__button-section`}>
+              <IconSearch className={`${BASE}__button-icon`} />
               Search
             </span>
             {showShortcutHints && (
-              <span className={`${BASE_URL}__button-section`}>
+              <span className={`${BASE}__button-section`}>
                 <Kbd>{`${os === "macos" ? "⌘" : "Ctrl"} + K`}</Kbd>
               </span>
             )}
@@ -292,23 +288,23 @@ export default function SpotlightCard({
         )}
       </button>
 
-      <dialog ref={dialogRef} className={`${BASE_URL}__dialog`}>
-        <div className={`${BASE_URL}__content`}>
-          <div className={`${BASE_URL}__search-wrapper`}>
-            <IconSearch className={`${BASE_URL}__search-icon`} stroke={2} />
+      <dialog ref={dialogRef} className={`${BASE}__dialog`}>
+        <div className={`${BASE}__content`}>
+          <div className={`${BASE}__search-wrapper`}>
+            <IconSearch className={`${BASE}__search-icon`} stroke={2} />
             <input
               ref={searchInputRef}
               type="text"
-              className={`${BASE_URL}__search-input`}
+              className={`${BASE}__search-input`}
               placeholder="Search..."
               onChange={(e) => setQuery(e.target.value)}
               value={immediateQuery}
             />
           </div>
 
-          <div className={`${BASE_URL}__results`}>
+          <div className={`${BASE}__results`}>
             {totalActions === 0 ? (
-              <div className={`${BASE_URL}__empty`}>
+              <div className={`${BASE}__empty`}>
                 {t("spotlight.no-results")}
               </div>
             ) : (
@@ -318,8 +314,8 @@ export default function SpotlightCard({
                   .reduce((acc, g) => acc + g.actions.length, 0);
 
                 return (
-                  <div key={group.group} className={`${BASE_URL}__group`}>
-                    <div className={`${BASE_URL}__group-label`}>
+                  <div key={group.group} className={`${BASE}__group`}>
+                    <div className={`${BASE}__group-label`}>
                       {group.group}
                     </div>
                     {group.actions.map((action, localIndex) => {
@@ -329,8 +325,8 @@ export default function SpotlightCard({
                         <button
                           type="button"
                           key={action.id}
-                          className={cx(`${BASE_URL}__action`, {
-                            [`${BASE_URL}__action--selected`]:
+                          className={cx(`${BASE}__action`, {
+                            [`${BASE}__action--selected`]:
                               globalIndex === selectedIndex,
                           })}
                           onClick={() => {
@@ -340,17 +336,17 @@ export default function SpotlightCard({
                           onMouseEnter={() => setSelectedIndex(globalIndex)}
                         >
                           {action.leftSection && (
-                            <span className={`${BASE_URL}__action-icon`}>
+                            <span className={`${BASE}__action-icon`}>
                               {action.leftSection}
                             </span>
                           )}
-                          <div className={`${BASE_URL}__action-content`}>
-                            <div className={`${BASE_URL}__action-label`}>
+                          <div className={`${BASE}__action-content`}>
+                            <div className={`${BASE}__action-label`}>
                               {highlightQuery(action.label, query)}
                             </div>
                             {action.description && (
                               <div
-                                className={`${BASE_URL}__action-description`}
+                                className={`${BASE}__action-description`}
                               >
                                 {action.description}
                               </div>
@@ -358,7 +354,7 @@ export default function SpotlightCard({
                           </div>
                           {action.tabAction &&
                             globalIndex === selectedIndex && (
-                              <span className={`${BASE_URL}__action-tab`}>
+                              <span className={`${BASE}__action-tab`}>
                                 <Kbd>Tab</Kbd> {action.tabAction.label}
                               </span>
                             )}

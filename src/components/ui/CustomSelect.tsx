@@ -118,7 +118,7 @@ export function CustomSelect<T = string>({
         type="button"
         id={buttonId}
         className={`${BASE}__trigger ${isOpen ? `${BASE}__trigger--open` : ""}`}
-        onClick={() => !disabled && setIsOpen(!isOpen)}
+        onMouseDown={() => !disabled && setIsOpen(!isOpen)}
         onKeyDown={handleKeyDown}
         disabled={disabled}
         aria-expanded={isOpen}

@@ -3,11 +3,10 @@ import { getAdapter } from "@/logic/NoteTypeAdapter";
 import { NoteTypeLabels } from "@/logic/card/card";
 import { useDeckOf } from "@/logic/deck/hooks/useDeckOf";
 import { Note, NoteType } from "@/logic/note/note";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import "./EditNoteView.css";
 import NoteMenu from "./NoteMenu";
-import NoteSubmitButton from "./NoteSubmitButton";
 
 const BASE = "edit-note";
 
@@ -23,7 +22,7 @@ export function EditNoteView({
   if (!note) {
     return <NoNoteView />;
   }
-  return <NoteView key={note.id} note={note} setOpenedNote={setOpenedNote} />;
+  return <NoteView note={note} setOpenedNote={setOpenedNote} />;
 }
 
 export function NoNoteView() {
@@ -45,7 +44,6 @@ function NoteView({
 }) {
   const [t] = useTranslation();
   const [deck] = useDeckOf(note);
-  const [requestedFinish, setRequestedFinish] = useState(false);
 
   const NoteEditor = useMemo(() => {
     return deck ? (
@@ -53,13 +51,11 @@ function NoteView({
         note,
         deck,
         mode: "edit",
-        requestedFinish,
-        setRequestedFinish,
       })
     ) : (
       <div />
     );
-  }, [note, deck, requestedFinish, setRequestedFinish]);
+  }, [note, deck]);
 
   return (
     <div className={BASE}>
@@ -75,9 +71,6 @@ function NoteView({
         <NoteMenu note={note} withEdit={false} />
       </div>
       <div className={`${BASE}__content`}>{NoteEditor}</div>
-      <div className={`${BASE}__bottom-section`}>
-        <NoteSubmitButton finish={() => setRequestedFinish(true)} mode="edit" />
-      </div>
       {/*<LinkedNotesSection
         linkedNotes={note.linkedNotes}
         onSelectNote={

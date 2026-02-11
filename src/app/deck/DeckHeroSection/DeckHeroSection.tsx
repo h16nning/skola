@@ -3,19 +3,20 @@ import { Button } from "@/components/ui/Button";
 import { Paper } from "@/components/ui/Paper";
 import { COLORS } from "@/lib/ColorIdentifier";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
-import { useCardsOf } from "@/logic/card/hooks/useCardsOf";
 import { useSimplifiedStatesOf } from "@/logic/card/hooks/useSimplifiedStatesOf";
 import { Deck } from "@/logic/deck/deck";
 import { IconBolt } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import "./DeckHeroSection.css";
+import { Card } from "@/logic/card/card";
 
 const BASE = "deck-hero-section";
 
 interface DeckHeroSectionProps {
   deck?: Deck;
-  isDeckReady: boolean;
+  cards?: Card<any>[];
+  states: ReturnType<typeof useSimplifiedStatesOf>;
 }
 
 interface HeroWrapperProps {
@@ -30,12 +31,10 @@ interface MessageContentProps {
   subtitle?: string;
 }
 
-function HeroWrapper({ color, isDone, isReady, children }: HeroWrapperProps) {
-  const doneClass = isDone ? ` ${BASE}--done` : "";
-  const invisibleClass = isReady === false ? " invisible" : "";
+function HeroWrapper({ color, children }: HeroWrapperProps) {
   return (
     <Paper
-      className={`deck-card-base deck-card-base--color-${color} ${BASE} ${BASE}--color-${color}${doneClass}${invisibleClass}`}
+      className={`deck-card-base deck-card-base--color-${color} ${BASE} ${BASE}--color-${color}`}
       withTexture
       withBorder
     >
@@ -65,12 +64,9 @@ function MessageContent({ title, subtitle }: MessageContentProps) {
   );
 }
 
-function DeckHeroSection({ deck, isDeckReady }: DeckHeroSectionProps) {
+function DeckHeroSection({ deck, cards, states }: DeckHeroSectionProps) {
   const navigate = useNavigate();
   const [t] = useTranslation();
-
-  const [cards, areCardsReady] = useCardsOf(deck);
-  const states = useSimplifiedStatesOf(cards);
 
   const color = deck?.color ?? COLORS[0];
   const isDone = states.new + states.learning + states.review === 0;
@@ -82,14 +78,6 @@ function DeckHeroSection({ deck, isDeckReady }: DeckHeroSectionProps) {
   }
 
   useHotkeys([["Space", startLearning]]);
-
-  if (!areCardsReady) {
-    return (
-      <HeroWrapper color={color} isReady={isDeckReady}>
-        <HeroContent deck={deck} />
-      </HeroWrapper>
-    );
-  }
 
   if (!cards) {
     return (

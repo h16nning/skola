@@ -11,6 +11,14 @@ import "./Tooltip.css";
 
 const BASE = "tooltip";
 
+const isTouchDevice = () => {
+  return (
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0 ||
+    (navigator as any).msMaxTouchPoints > 0
+  );
+};
+
 type TooltipPosition = "top" | "bottom" | "left" | "right";
 
 interface TooltipProps {
@@ -30,6 +38,7 @@ export function Tooltip({
   const [coords, setCoords] = useState({ top: 0, left: 0 });
   const timeoutRef = useRef<NodeJS.Timeout>();
   const wrapperRef = useRef<HTMLSpanElement>(null);
+  const isTouchScreen = useRef(isTouchDevice());
 
   const updatePosition = () => {
     if (!wrapperRef.current) return;
@@ -42,7 +51,7 @@ export function Tooltip({
   };
 
   const showTooltip = () => {
-    if (disabled) return;
+    if (disabled || isTouchScreen.current) return;
     updatePosition();
     timeoutRef.current = setTimeout(() => {
       setIsVisible(true);

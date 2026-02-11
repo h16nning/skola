@@ -6,6 +6,7 @@
   background: transparent;
   cursor: pointer;
   padding: var(--spacing-sm);
+  border: 1px solid transparent;
   border-radius: var(--radius-sm);
   color: var(--theme-neutral-700);
   transition: var(--transition-button);
@@ -49,6 +50,6 @@
 }
 
 .icon-button--lg svg {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
 }

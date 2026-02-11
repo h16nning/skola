@@ -16,7 +16,6 @@
 
 .notebook__limit-notice {
   color: var(--theme-neutral-500);
-  font-size: 0.875rem;
   text-align: center;
   padding: var(--spacing-sm);
 }

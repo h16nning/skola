@@ -48,9 +48,8 @@
 
 .spotlight__dialog {
   position: fixed;
-  border: 1px solid var(--theme-neutral-200);
+  border: 1px solid var(--theme-neutral-300);
   border-radius: var(--radius-lg);
-  background-color: var(--theme-neutral-50);
   box-shadow: var(--shadow-xl);
   padding: 0;
   max-width: min(90vw, 40rem);
@@ -60,39 +59,11 @@
 }
 
 .spotlight__dialog::backdrop {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 [data-theme="dark"] .spotlight__dialog::backdrop {
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-.spotlight__dialog[open] {
-  animation: spotlight-fade-in 0.1s ease-out;
-}
-
-.spotlight__dialog[open]::backdrop {
-  animation: spotlight-backdrop-fade-in 0.1s ease-out;
-}
-
-@keyframes spotlight-fade-in {
-  from {
-    opacity: 0;
-    transform: scale(0.96) translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-@keyframes spotlight-backdrop-fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .spotlight__content {
@@ -110,8 +81,8 @@
 }
 
 .spotlight__search-icon {
-  width: 1.125rem;
-  height: 1.125rem;
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
   color: var(--theme-neutral-400);
   flex-shrink: 0;
 }
@@ -220,7 +191,7 @@
 .spotlight__highlight {
   background-color: var(--theme-primary-200);
   color: var(--theme-primary-900);
-  padding: 0.125rem 0;
+  padding: var(--spacing-xs) 0;
   border-radius: var(--radius-xs);
 }
 

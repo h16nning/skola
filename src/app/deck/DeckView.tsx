@@ -19,6 +19,8 @@ import "./DeckView.css";
 import DeckHeroSection from "./DeckHeroSection/DeckHeroSection";
 import SubDeckSection from "./SubDeckSection";
 import SuperDecksBreadcrumbs from "./SuperDecksBreadcrumbs/SuperDecksBreadcrumbs";
+import { useCardsOf } from "@/logic/card/hooks/useCardsOf";
+import { useSimplifiedStatesOf } from "@/logic/card/hooks/useSimplifiedStatesOf";
 
 const BASE = "deck-view";
 
@@ -27,10 +29,15 @@ function DeckView() {
 
   const [deck, isDeckReady] = useDeckFromUrl();
   const [superDecks] = useSuperDecks(deck);
+  const [cards, areCardsReady] = useCardsOf(deck);
+  const states = useSimplifiedStatesOf(cards);
+
   useScrollResetOnLocationChange();
 
   useDocumentTitle(deck?.name ? deck?.name : "Skola");
   useHotkeys([["n", () => navigate("/new/" + deck?.id)]]);
+
+  const ready = isDeckReady && areCardsReady;
 
   if (isDeckReady && !deck) {
     return <NotFound />;
@@ -59,50 +66,50 @@ function DeckView() {
                 {t("deck.add-cards")}
               </Button>
             </Tooltip>
-            <DeckMenu deck={deck} isDeckReady={isDeckReady} />
+            {ready && <DeckMenu deck={deck} />}
           </div>
         </div>
       </AppHeaderContent>
-      <div className={BASE}>
-        <DeckHeroSection deck={deck} isDeckReady={isDeckReady} />
-
-        <Tabs defaultValue="subdecks" variant="outline">
-          <Tabs.List>
-            <Tabs.Tab value="subdecks">
-              {t("deck.subdeck.title")}
-              {(deck?.subDecks.length as number) > 0 && (
-                <Badge
-                  size="sm"
-                  variant="light"
-                  color={deck?.subDecks.length ? undefined : "neutral"}
-                  style={{ textOverflow: "clip" }}
-                >
-                  {deck?.subDecks.length}
-                </Badge>
-              )}
-            </Tabs.Tab>
-            <Tabs.Tab value="notebook">
-              {t("deck.notebook.title")}
-              {(deck?.notes.length as number) > 0 && (
-                <Badge
-                  size="sm"
-                  variant="light"
-                  color={deck?.notes.length ? undefined : "neutral"}
-                  style={{ textOverflow: "clip" }}
-                >
-                  {deck?.notes.length}
-                </Badge>
-              )}
-            </Tabs.Tab>
-          </Tabs.List>
-          <Tabs.Panel value="notebook">
-            <NotebookView />
-          </Tabs.Panel>
-          <Tabs.Panel value="subdecks">
-            <SubDeckSection deck={deck} />
-          </Tabs.Panel>
-        </Tabs>
-      </div>
+      {ready && (
+        <div className={BASE}>
+          <DeckHeroSection deck={deck} cards={cards} states={states} />
+          <Tabs defaultValue="subdecks" variant="outline">
+            <Tabs.List>
+              <Tabs.Tab value="subdecks">
+                {t("deck.subdeck.title")}
+                {(deck?.subDecks.length as number) > 0 && (
+                  <Badge
+                    size="sm"
+                    variant="light"
+                    color={deck?.subDecks.length ? undefined : "neutral"}
+                    style={{ textOverflow: "clip" }}
+                  >
+                    {deck?.subDecks.length}
+                  </Badge>
+                )}
+              </Tabs.Tab>
+              <Tabs.Tab value="notebook">
+                {t("deck.notebook.title")}
+                {(deck?.notes.length as number) > 0 && (
+                  <Badge
+                    size="sm"
+                    variant="light"
+                    color={deck?.notes.length ? undefined : "neutral"}
+                    style={{ textOverflow: "clip" }}
+                  >
+                    {deck?.notes.length}
+                  </Badge>
+                )}
+              </Tabs.Tab>
+            </Tabs.List>
+            <Tabs.Panel value="notebook">
+              <NotebookView />
+            </Tabs.Panel>
+            <Tabs.Panel value="subdecks">
+              <SubDeckSection deck={deck} />
+            </Tabs.Panel>
+          </Tabs>
+        </div>)}
     </>
   );
 }

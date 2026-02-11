@@ -1,20 +1,18 @@
 import NoteEditor, { useNoteEditor } from "@/app/editor/NoteEditor/NoteEditor";
-import {
-  addFailed,
-  saveFailed,
-  successfullyAdded,
-  successfullySaved,
-} from "@/components/Notification/Notification";
 import { Stack } from "@/components/ui/Stack";
 import { Text } from "@/components/ui/Text";
 import { EditMode } from "@/logic/NoteTypeAdapter";
 import { Deck } from "@/logic/deck/deck";
 import { Note, NoteType } from "@/logic/note/note";
 import { DoubleSidedNoteTypeAdapter } from "@/logic/type-implementations/double-sided/DoubleSidedNote";
-import { Editor } from "@tiptap/react";
-import { useCallback, useEffect } from "react";
+import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import "./DoubleSidedCardEditor.css";
+import {
+  useAutoSave,
+  useClearEditors,
+  useNoteCreation,
+} from "./hooks";
 
 const BASE = "double-sided-card-editor";
 
@@ -22,8 +20,8 @@ interface DoubleSidedCardEditorProps {
   note: Note<NoteType.DoubleSided> | null;
   deck: Deck;
   mode: EditMode;
-  requestedFinish: boolean;
-  setRequestedFinish: (finish: boolean) => void;
+  requestedFinish?: boolean;
+  setRequestedFinish?: (finish: boolean) => void;
   focusSelectNoteType?: () => void;
 }
 
@@ -43,30 +41,50 @@ function DoubleSidedCardEditor({
     field2: "",
   };
 
+  const field1ContentRef = useRef(noteContent.field1);
+  const field2ContentRef = useRef(noteContent.field2);
+
+  const getContent = () => ({
+    field1: field1ContentRef.current,
+    field2: field2ContentRef.current,
+  });
+
+  const debouncedAutoSave = useAutoSave(
+    mode,
+    note,
+    getContent,
+    DoubleSidedNoteTypeAdapter.updateNote
+  );
+
   const editor1 = useNoteEditor({
     content: noteContent.field1,
-    finish: () => setRequestedFinish(true),
-    focusSelectNoteType: focusSelectNoteType,
+    onUpdate: ({ editor }) => {
+      field1ContentRef.current = editor.getHTML();
+      debouncedAutoSave();
+    },
+    focusSelectNoteType,
   });
 
   const editor2 = useNoteEditor({
     content: noteContent.field2,
-    finish: () => setRequestedFinish(true),
-    focusSelectNoteType: focusSelectNoteType,
+    onUpdate: ({ editor }) => {
+      field2ContentRef.current = editor.getHTML();
+      debouncedAutoSave();
+    },
+    focusSelectNoteType,
   });
 
-  const clear = useCallback(() => {
-    editor1?.commands.setContent("");
-    editor2?.commands.setContent("");
-    editor1?.commands.focus();
-  }, [editor1, editor2]);
+  const clear = useClearEditors(editor1, editor2);
 
-  useEffect(() => {
-    if (requestedFinish) {
-      finish(mode, clear, deck, note, editor1, editor2);
-      setRequestedFinish(false);
-    }
-  }, [requestedFinish, mode, clear, deck, note, editor1, editor2]);
+  useNoteCreation(
+    mode,
+    deck,
+    getContent,
+    DoubleSidedNoteTypeAdapter.createNote,
+    clear,
+    requestedFinish,
+    setRequestedFinish
+  );
 
   return (
     <Stack gap="xl">
@@ -74,55 +92,16 @@ function DoubleSidedCardEditor({
         <Text size="sm" weight="semibold">
           {t("note.edit.type-specific.double-sided.front")}
         </Text>
-        <NoteEditor editor={editor1} key="front" className={`${BASE}__field`} />
+        <NoteEditor editor={editor1} key="editor-1" className={`${BASE}__field`} />
       </Stack>
       <Stack gap="xs">
         <Text size="sm" weight="semibold">
           {t("note.edit.type-specific.double-sided.back")}
         </Text>
-        <NoteEditor editor={editor2} key="back" />
+        <NoteEditor editor={editor2} key="editor-2" />
       </Stack>
     </Stack>
   );
-}
-
-async function finish(
-  mode: EditMode,
-  clear: () => void,
-  deck: Deck,
-  note: Note<NoteType.DoubleSided> | null,
-  editor1: Editor | null,
-  editor2: Editor | null
-) {
-  if (mode === "edit") {
-    try {
-      if (!note) throw new Error("Note is null");
-      await DoubleSidedNoteTypeAdapter.updateNote(
-        {
-          field1: editor1?.getHTML() ?? "",
-          field2: editor2?.getHTML() ?? "",
-        },
-        note
-      );
-      successfullySaved();
-    } catch {
-      saveFailed();
-    }
-  } else {
-    try {
-      await DoubleSidedNoteTypeAdapter.createNote(
-        {
-          field1: editor1?.getHTML() ?? "",
-          field2: editor2?.getHTML() ?? "",
-        },
-        deck
-      );
-      clear && clear();
-      successfullyAdded();
-    } catch {
-      addFailed();
-    }
-  }
 }
 
 export default DoubleSidedCardEditor;

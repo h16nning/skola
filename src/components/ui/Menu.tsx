@@ -222,7 +222,7 @@ export function MenuItem({
     <button
       type="button"
       className={classes}
-      onClick={handleClick}
+      onMouseUp={handleClick}
       role="menuitem"
       disabled={disabled}
     >

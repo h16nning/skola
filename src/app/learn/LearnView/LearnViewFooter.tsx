@@ -9,7 +9,7 @@ import { t } from "i18next";
 import AnswerCardButton from "./AnswerCardButton";
 import "./LearnViewFooter.css";
 
-const BASE_URL = "learn-view-footer";
+const BASE = "learn-view-footer";
 
 const DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24;
 const MINUTE_IN_MILLISECONDS = 1000 * 60;
@@ -79,9 +79,9 @@ function LearnViewFooter({ controller, answer }: LearnViewFooterProps) {
   );
 
   return (
-    <Group className={BASE_URL} justify="center">
+    <Group className={BASE} justify="center">
       {controller.showingAnswer ? (
-        <div className={BASE_URL + "__buttons"}>
+        <div className={BASE + "__buttons"}>
           <AnswerCardButton
             label={t("learning.rate-again")}
             timeInfo={timeStringForRating(Rating.Again, controller)}

@@ -5,7 +5,7 @@ export function useScrollResetOnLocationChange() {
   const location = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [location]);
+  }, [location.pathname]);
 }
 
 export function useDynamicPageTheme(theme: "light" | "dark") {

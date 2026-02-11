@@ -4,18 +4,16 @@ import { NoteType } from "@/logic/note/note";
 import { IconBracketsContain } from "@tabler/icons-react";
 import NoteEditor, { useNoteEditor } from "./NoteEditor";
 
-import {
-  addFailed,
-  saveFailed,
-  successfullyAdded,
-  successfullySaved,
-} from "@/components/Notification/Notification";
 import { RichTextEditorControl } from "@/components/ui/RichTextEditor";
 import { Note } from "@/logic/note/note";
 import { ClozeNoteTypeAdapter } from "@/logic/type-implementations/cloze/ClozeNote";
-import { Editor } from "@tiptap/react";
-import { useCallback, useEffect, useMemo } from "react";
+import { useMemo, useRef } from "react";
 import "./ClozeCardEditor.css";
+import {
+  useAutoSave,
+  useClearEditors,
+  useNoteCreation,
+} from "./hooks";
 
 const BASE = "cloze-card-editor";
 
@@ -23,8 +21,8 @@ interface ClozeCardEditorProps {
   note: Note<NoteType.Cloze> | null;
   deck: Deck;
   mode: EditMode;
-  requestedFinish: boolean;
-  setRequestedFinish: (finish: boolean) => void;
+  requestedFinish?: boolean;
+  setRequestedFinish?: (finish: boolean) => void;
   focusSelectNoteType?: () => void;
 }
 
@@ -38,12 +36,27 @@ export default function ClozeCardEditor({
 }: ClozeCardEditorProps) {
   const noteContent = note?.content ?? { type: NoteType.Cloze, text: "" };
 
+  const contentRef = useRef(noteContent.text);
+
+  const getContent = () => ({
+    text: contentRef.current,
+    occlusionNumberSet: getOcclusionNumberSet(contentRef.current),
+  });
+
+  const debouncedAutoSave = useAutoSave(
+    mode,
+    note,
+    getContent,
+    ClozeNoteTypeAdapter.updateNote
+  );
+
   const editor = useNoteEditor({
     content: noteContent.text,
-    finish: () => {
-      setRequestedFinish(true);
+    onUpdate: ({ editor }) => {
+      contentRef.current = editor.getHTML();
+      debouncedAutoSave();
     },
-    focusSelectNoteType: focusSelectNoteType,
+    focusSelectNoteType,
   });
 
   const smallestAvailableOcclusionNumber = useMemo(() => {
@@ -56,21 +69,22 @@ export default function ClozeCardEditor({
     return 9;
   }, [editor?.getHTML()]);
 
-  const clear = useCallback(() => {
-    editor?.commands.setContent("");
-    editor?.commands.focus();
-  }, [editor]);
+  const clear = useClearEditors(editor);
 
-  useEffect(() => {
-    if (requestedFinish) {
-      finish(mode, clear, deck, note, editor);
-      setRequestedFinish(false);
-    }
-  }, [requestedFinish, mode, clear, deck, note, editor]);
+  useNoteCreation(
+    mode,
+    deck,
+    getContent,
+    ClozeNoteTypeAdapter.createNote,
+    clear,
+    requestedFinish,
+    setRequestedFinish
+  );
 
   return (
     <NoteEditor
       editor={editor}
+      key="editor-1"
       className={BASE}
       controls={
         <RichTextEditorControl
@@ -92,47 +106,6 @@ export default function ClozeCardEditor({
       }
     />
   );
-}
-
-async function finish(
-  mode: EditMode,
-  clear: Function,
-  deck: Deck,
-  note: Note<NoteType.Cloze> | null,
-  editor: Editor | null
-) {
-  if (mode === "edit") {
-    try {
-      if (!note) throw new Error("Note not found");
-      await ClozeNoteTypeAdapter.updateNote(
-        {
-          text: editor?.getHTML() ?? "",
-          occlusionNumberSet: getOcclusionNumberSet(editor?.getHTML() ?? ""),
-        },
-        note
-      );
-      successfullySaved();
-    } catch {
-      saveFailed();
-    }
-  } else {
-    const occlusionNumberSet: number[] = getOcclusionNumberSet(
-      editor?.getHTML() ?? ""
-    );
-    try {
-      ClozeNoteTypeAdapter.createNote(
-        {
-          text: editor?.getHTML() ?? "",
-          occlusionNumberSet: occlusionNumberSet,
-        },
-        deck
-      );
-      clear();
-      successfullyAdded();
-    } catch {
-      addFailed();
-    }
-  }
 }
 
 function getOcclusionNumberSet(text: string) {

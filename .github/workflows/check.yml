@@ -19,11 +19,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
       - name: Setup JS
         uses: actions/setup-node@v4
         with:
-          cache: "npm"
+          cache: "pnpm"
       - name: Install
-        run: npm ci
+        run: pnpm install --frozen-lockfile
       - name: Type check
         run: npx tsc --noEmit

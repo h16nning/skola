@@ -2,8 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
-  IconAdjustmentsHorizontal,
-  IconChevronLeft,
+    IconChevronLeft
 } from "@tabler/icons-react";
 
 import AppHeaderTitle from "@/components/AppHeaderTitle";
@@ -83,12 +82,6 @@ function NewNotesView() {
               <IconChevronLeft />
             </IconButton>
             <AppHeaderTitle>{t("note.new.title")}</AppHeaderTitle>
-            <IconButton
-              onClick={() => navigate("/settings/editing")}
-              variant="subtle"
-            >
-              <IconAdjustmentsHorizontal />
-            </IconButton>
           </div>
         </AppHeaderContent>
 

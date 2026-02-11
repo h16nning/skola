@@ -57,8 +57,8 @@ export interface NoteEditorProps {
   note: Note<NoteType> | null;
   deck: Deck;
   mode: EditMode;
-  requestedFinish: boolean;
-  setRequestedFinish: (finish: boolean) => void;
+  requestedFinish?: boolean;
+  setRequestedFinish?: (finish: boolean) => void;
   setNoteType?: (type: NoteType) => void;
   focusSelectNoteType?: () => void;
 }
