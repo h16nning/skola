@@ -44,8 +44,8 @@
 
 .button__left-section svg,
 .button__right-section svg {
-  width: 1.2rem;
-  height: 1.2rem;
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
   stroke-width: 1.5;
 }
 

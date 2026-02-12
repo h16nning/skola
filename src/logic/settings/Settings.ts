@@ -36,5 +36,5 @@ export interface SettingsValues {
 
   "#globalScheduler_maximumInterval": number;
   "#globalScheduler_requestRetention": number;
-  "#globalScheduler_w": number[];
+  "#globalScheduler_w": string;
 }

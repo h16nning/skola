@@ -278,7 +278,10 @@
       "newToReviewRatioDescription": "This determines how many new cards will be new cards will be shown per review on average. A value of 0.5 means that reviews and new cards will be ordered in equal amounts.",
       "requestRetention": "Requested retention",
       "requestRetentionDescription": "Set which percentage of questions you want to be able to remember in the long-term. Note: High values will lead to more reviews and shorter intervals. Lower percentages will generally reduce the amount of learning. If requested retention is too low, you will forget your cards too often which may result in an increased learning demand. Recommended values lie between 0.70 and 0.95.",
-      "title": "Learning"
+      "schedulerWeights": "FSRS Scheduler Weighting",
+      "schedulerWeightsDescription": "FSRS calculates the next interval based on these parameters. For more information, please refer to the FSRS documentation. We may add additional documentation and tools to help you optimize these values in the future.",
+      "title": "Learning",
+      "scheduler-options": "Scheduler options"
     },
     "title": "Settings"
   },

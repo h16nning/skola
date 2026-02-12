@@ -267,7 +267,8 @@
       "newToReviewRatioDescription": "Dies bestimmt, wie viele neue Karten im Schnitt pro Wiederholung gezeigt werden. Ein Wert von 0,5 bedeutet, dass Wiederholungen und neue Karten in gleicher Menge angezeigt werden.",
       "requestRetention": "Erwünschte Abrufbarkeit",
       "requestRetentionDescription": "Lege fest, an wie viel Prozent Fragen du dich langfristig erinnern möchtest. Achtung: Hohe Werte werden zu mehr Wiederholungen und kürzeren Intervallen führen. Niedrigere Werte werden im Allgemeinen den Lernumfang verringern. Wenn die erwünschte Abrufbarkeit zu niedrig ist, wirst du die Karten öfter vergessen, was u. U. zu einem erhöhten Lernbedarf führt. \nEmpfohlene Werte liegen zwischen 0,70 und 0,95.",
-      "title": "Lernen"
+      "title": "Lernen",
+      "scheduler-options": "Kartenplanung"
     },
     "title": "Einstellungen"
   },
