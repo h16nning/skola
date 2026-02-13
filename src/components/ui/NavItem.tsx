@@ -34,10 +34,10 @@ export function NavItem({
     active ?? (path ? location.pathname.startsWith(path) : false);
 
   const handleClick = () => {
+    onClick?.();
     if (path) {
       navigate(path);
     }
-    onClick?.();
   };
 
   const handleRightElementClick = (e: MouseEvent) => {
