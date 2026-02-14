@@ -32,7 +32,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-overflow-scrolling: touch;
-  font-family: var(--font-sans);
   margin: 0;
   padding: 0;
 }
@@ -70,6 +69,7 @@ body,
 .app-shell {
   color: var(--theme-neutral-900);
   background-color: var(--theme-neutral-50);
+  font-family: var(--font-sans);
   height: calc(100% + var(--safe-area-bottom));
   margin: 0;
   * {

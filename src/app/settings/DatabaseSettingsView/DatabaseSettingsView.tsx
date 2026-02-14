@@ -1,7 +1,5 @@
 import DangerousConfirmModal from "@/components/DangerousConfirmModal";
 import { Button } from "@/components/ui/Button";
-import { Paper } from "@/components/ui/Paper";
-import { Stack } from "@/components/ui/Stack";
 import {
   IconDatabaseExport,
   IconDatabaseImport,
@@ -12,6 +10,7 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../../logic/db";
 import "./DatabaseSettingsView.css";
+import Section from "../Section";
 import StorageSection from "./StorageSection";
 
 const BASE = "database-settings-view";
@@ -24,10 +23,10 @@ export default function DatabaseSettingsView() {
 
   return (
     <>
-      <Stack gap="xl" align="start">
+      <div>
         <StorageSection />
         <Button
-          leftSection={<IconDatabaseExport size={18} />}
+          leftSection={<IconDatabaseExport />}
           onClick={async () => {
             const now = new Date(Date.now());
             const blob = await exportDB(db);
@@ -39,57 +38,52 @@ export default function DatabaseSettingsView() {
         >
           Export All
         </Button>
-        <Paper withBorder className={`${BASE}__danger-zone`}>
-          <Stack gap="md" align="start">
-            <h6 className={`${BASE}__danger-title`}>Danger Zone</h6>
-            <p className={`${BASE}__danger-text`}>
-              This section contains potentially dangerous settings. Proceed with
-              utmost caution!
-            </p>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".json"
-              className={`${BASE}__file-input`}
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) {
-                  const reader = new FileReader();
-                  reader.onload = async (event) => {
-                    if (event.target) {
-                      const blob = new Blob([event.target.result as string], {
-                        type: "application/json",
-                      });
-                      try {
-                        await importInto(db, blob, { overwriteValues: true });
-                      } catch (error) {
-                        console.error(error);
-                      }
+        <Section title="Danger Zone" className={`${BASE}__danger-zone`}>
+          <p className={`${BASE}__danger-text`}>
+            This section contains potentially dangerous settings. Proceed with
+            utmost caution!
+          </p>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".json"
+            className={`${BASE}__file-input`}
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                const reader = new FileReader();
+                reader.onload = async (event) => {
+                  if (event.target) {
+                    const blob = new Blob([event.target.result as string], {
+                      type: "application/json",
+                    });
+                    try {
+                      await importInto(db, blob, { overwriteValues: true });
+                    } catch (error) {
+                      console.error(error);
                     }
-                  };
-                  reader.readAsText(file);
-                }
-              }}
-            />
-            <Button
-              leftSection={<IconDatabaseImport size={18} />}
-              variant="primary"
-              style={{ backgroundColor: "#dc2626" }}
-              onClick={() => fileInputRef.current?.click()}
-            >
-              Import Database (overwrites conflicting data, e.g. settings)
-            </Button>
-            <Button
-              leftSection={<IconTrash size={18} />}
-              variant="primary"
-              style={{ backgroundColor: "#dc2626" }}
-              onClick={() => setDeleteAllDataModalOpened(true)}
-            >
-              Delete all Data
-            </Button>
-          </Stack>
-        </Paper>
-      </Stack>
+                  }
+                };
+                reader.readAsText(file);
+              }
+            }}
+          />
+          <Button
+            leftSection={<IconDatabaseImport />}
+            variant="destructive"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            Import Database (overwrites conflicting data, e.g. settings)
+          </Button>
+          <Button
+            leftSection={<IconTrash />}
+            variant="destructive"
+            onClick={() => setDeleteAllDataModalOpened(true)}
+          >
+            Delete all Data
+          </Button>
+        </Section>
+      </div>
       <DangerousConfirmModal
         dangerousAction={() => {
           db.delete();

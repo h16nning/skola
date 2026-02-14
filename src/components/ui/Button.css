@@ -3,7 +3,6 @@
   align-items: center;
   justify-content: center;
   gap: var(--spacing-sm);
-  border: none;
   background: transparent;
   cursor: pointer;
   padding: var(--spacing-sm) var(--spacing-md);
@@ -121,12 +120,13 @@
 }
 
 .button--destructive {
-  background-color: var(--theme-red-500);
+  background-color: var(--color-red-600);
+  border-color: var(--color-red-600);
   color: white;
 }
 
 .button--destructive:hover {
-  background-color: light-dark(var(--theme-red-700), var(--theme-red-500));
+  background-color: var(--theme-red-500);
 }
 
 .button--sm {

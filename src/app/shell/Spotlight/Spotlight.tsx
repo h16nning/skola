@@ -32,6 +32,7 @@ interface SpotlightAction {
   tabAction?: {
     label: string;
     action: () => void;
+    disabled?: boolean;
   };
 }
 
@@ -136,6 +137,12 @@ export default function SpotlightCard({
           tabAction: {
             label: "to study",
             action: () => navigate(`/learn/${deck.id}`),
+            disabled:
+              deck.statCache &&
+              deck.statCache.counts.new +
+                deck.statCache.counts.learning +
+                deck.statCache.counts.review ===
+                0,
           },
         })),
       ],
@@ -252,7 +259,10 @@ export default function SpotlightCard({
         }
       } else if (event.key === "Tab") {
         event.preventDefault();
-        if (flatActions[selectedIndex]?.tabAction) {
+        if (
+          flatActions[selectedIndex]?.tabAction &&
+          !flatActions[selectedIndex].tabAction!.disabled
+        ) {
           flatActions[selectedIndex].tabAction!.action();
           setOpened(false);
         }
@@ -358,6 +368,7 @@ export default function SpotlightCard({
                             )}
                           </div>
                           {action.tabAction &&
+                            !action.tabAction.disabled &&
                             globalIndex === selectedIndex && (
                               <span className={`${BASE}__action-tab`}>
                                 <Kbd>Tab</Kbd> {action.tabAction.label}
