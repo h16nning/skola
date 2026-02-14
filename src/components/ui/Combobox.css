@@ -90,7 +90,7 @@
   box-shadow: var(--shadow-lg);
   max-height: 16rem;
   overflow-y: auto;
-  z-index: 2100;
+  z-index: 9999;
   list-style: none;
   opacity: 0;
   transform: scale(0.95) translateY(-4px);

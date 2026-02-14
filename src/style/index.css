@@ -69,7 +69,6 @@ body,
 .app-shell {
   color: var(--theme-neutral-900);
   background-color: var(--theme-neutral-50);
-  font-family: var(--font-sans);
   height: calc(100% + var(--safe-area-bottom));
   margin: 0;
   * {

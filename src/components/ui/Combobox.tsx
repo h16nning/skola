@@ -74,12 +74,17 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
     useEffect(() => {
       if (!dropdownPortalRef.current) {
         dropdownPortalRef.current = document.createElement("div");
-        document.body.appendChild(dropdownPortalRef.current);
+
+        const closestDialog = containerRef.current?.closest("dialog");
+        const portalTarget = closestDialog || document.body;
+        portalTarget.appendChild(dropdownPortalRef.current);
       }
 
       return () => {
-        if (dropdownPortalRef.current) {
-          document.body.removeChild(dropdownPortalRef.current);
+        if (dropdownPortalRef.current && dropdownPortalRef.current.parentNode) {
+          dropdownPortalRef.current.parentNode.removeChild(
+            dropdownPortalRef.current
+          );
           dropdownPortalRef.current = null;
         }
       };

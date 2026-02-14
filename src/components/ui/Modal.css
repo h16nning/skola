@@ -227,3 +227,8 @@
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
 }
+
+.modal input,
+.drawer input {
+  width: 100% !important;
+}
