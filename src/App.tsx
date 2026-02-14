@@ -21,6 +21,7 @@ import { breakpoints } from "./lib/breakpoints";
 import { useDisclosure } from "./lib/hooks/useDisclosure";
 import { useLocalStorage } from "./lib/hooks/useLocalStorage";
 import { useMediaQuery } from "./lib/hooks/useMediaQuery";
+import { useDeckStatsCacheInit } from "./logic/deck/hooks/useDeckStatsCacheInit";
 import { useSetting } from "./logic/settings/hooks/useSetting";
 
 const BASE = "app-shell";
@@ -39,6 +40,7 @@ function AppContent() {
   useTheme();
   useRestoreLanguage();
   useNotificationSetup();
+  useDeckStatsCacheInit();
   const [sidebarMenuOpened, sidebarHandlers] = useDisclosure(false);
 
   const [registered] = useLocalStorage("registered", false);

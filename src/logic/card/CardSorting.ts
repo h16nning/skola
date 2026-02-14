@@ -8,8 +8,18 @@ export type CardSortFunction = (sortOrder: 1 | -1) => (...args: any) => number;
 
 export const CardSorts: Record<any, CardSortFunction> = {
   byCreationDate:
-    (sortOrder: 1 | -1) => (a: Card<NoteType>, b: Card<NoteType>) =>
-      (a.creationDate.getTime() - b.creationDate.getTime()) * sortOrder,
+    (sortOrder: 1 | -1) => (a: Card<NoteType>, b: Card<NoteType>) => {
+      if (
+        typeof a.creationDate.getTime !== "function" ||
+        typeof b.creationDate.getTime !== "function"
+      ) {
+        console.warn(
+          "Failed to get time from creation date. Is it a date object? Treating as equal."
+        );
+        return 0;
+      }
+      return (a.creationDate.getTime() - b.creationDate.getTime()) * sortOrder;
+    },
   /*bySortField:
     (sortOrder: 1 | -1) => (a: Card<CardType>, b: Card<CardType>) => {
       if (a.preview === undefined || b.preview === undefined) {

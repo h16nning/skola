@@ -16,8 +16,8 @@ import NotebookView from "../notebook/NotebookView";
 import { AppHeaderContent } from "../shell/Header/Header";
 import DeckMenu from "./DeckMenu";
 import "./DeckView.css";
+import { useCardStateCounts } from "@/logic/card/hooks/useCardStateCounts";
 import { useCardsOf } from "@/logic/card/hooks/useCardsOf";
-import { useSimplifiedStatesOf } from "@/logic/card/hooks/useSimplifiedStatesOf";
 import DeckHeroSection from "./DeckHeroSection/DeckHeroSection";
 import SubDeckSection from "./SubDeckSection";
 import SuperDecksBreadcrumbs from "./SuperDecksBreadcrumbs/SuperDecksBreadcrumbs";
@@ -30,14 +30,14 @@ function DeckView() {
   const [deck, isDeckReady] = useDeckFromUrl();
   const [superDecks] = useSuperDecks(deck);
   const [cards, areCardsReady] = useCardsOf(deck);
-  const states = useSimplifiedStatesOf(cards);
+  const [states, areStatesReady] = useCardStateCounts(deck);
 
   useScrollResetOnLocationChange();
 
   useDocumentTitle(deck?.name ? deck?.name : "Skola");
   useHotkeys([["n", () => navigate("/new/" + deck?.id)]]);
 
-  const ready = isDeckReady && areCardsReady;
+  const ready = isDeckReady && areCardsReady && areStatesReady;
 
   if (isDeckReady && !deck) {
     return <NotFound />;
@@ -70,7 +70,7 @@ function DeckView() {
           </div>
         </div>
       </AppHeaderContent>
-      {ready && (
+      {ready && states && (
         <div className={BASE}>
           <DeckHeroSection deck={deck} cards={cards} states={states} />
           <Tabs defaultValue="subdecks" variant="outline">

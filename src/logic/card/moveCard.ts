@@ -1,5 +1,6 @@
 import { db } from "../db";
 import { Deck } from "../deck/deck";
+import { invalidateDeckStatsCache } from "../deck/deckStatsCacheManager";
 import { NoteType } from "../note/note";
 import { Card } from "./card";
 
@@ -21,5 +22,10 @@ export async function moveCard(card: Card<NoteType>, newDeck: Deck) {
   await db.decks.update(newDeck.id, { cards: newDeck.cards });
   //Update in card object
   card.deck = newDeck.id;
-  return db.cards.update(card.id, { deck: newDeck.id });
+  await db.cards.update(card.id, { deck: newDeck.id });
+
+  if (oldDeck) {
+    await invalidateDeckStatsCache(oldDeck.id);
+  }
+  await invalidateDeckStatsCache(newDeck.id);
 }

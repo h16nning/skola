@@ -15,10 +15,6 @@ export async function newNote<T extends NoteType>(
   deck: Deck,
   content: NoteContent<T>
 ) {
-  console.log("creating new note");
-  console.log(
-    getAdapterOfType(content.type).getSortFieldFromNoteContent(content)
-  );
   const note = {
     ...createNoteSkeleton(deck.id),
     content,

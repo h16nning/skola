@@ -1,4 +1,11 @@
 import { ColorIdentifier } from "@/lib/ColorIdentifier";
+import { SimplifiedState } from "../card/getSimplifiedStatesOf";
+
+export interface DeckStatCache {
+  counts: Record<SimplifiedState, number>;
+  lastUpdated: Date;
+  includesSubdecks: boolean;
+}
 
 export interface Deck {
   id: string;
@@ -10,6 +17,7 @@ export interface Deck {
   description?: string;
   options: DeckOptions;
   color?: ColorIdentifier;
+  statCache?: DeckStatCache;
 }
 
 export interface DeckOptions {

@@ -91,7 +91,7 @@ async function persist() {
 
 async function isStoragePersisted() {
   return (
-    (await navigator.storage) &&
+    navigator.storage &&
     navigator.storage.persisted &&
     navigator.storage.persisted()
   );
