@@ -147,7 +147,7 @@ export default function SpotlightCard({
           id: note.id,
           label: getAdapter(note).getSortFieldFromNoteContent(note.content),
           description: note.breadcrumb.join(" > "),
-          onClick: () => navigate(`/notes/${note.id}`),
+          onClick: () => navigate(`/notes/${note.deck}/${note.id}`),
           leftSection: <IconSquare />,
         })),
       ],
