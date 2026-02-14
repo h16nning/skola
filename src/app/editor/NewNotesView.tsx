@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { IconChevronLeft } from "@tabler/icons-react";
 
-import AppHeaderTitle from "@/components/AppHeaderTitle";
+import { AppBreadcrumbs } from "@/components/AppBreadcrumbs";
 import NotFound from "@/components/NotFound";
 import SelectDecksHeader from "@/components/SelectDecksHeader";
 import { IconButton, Kbd, Paper, Select, Tooltip } from "@/components/ui";
@@ -79,7 +79,12 @@ function NewNotesView() {
             <IconButton onClick={closeView} variant="subtle">
               <IconChevronLeft />
             </IconButton>
-            <AppHeaderTitle>{t("note.new.title")}</AppHeaderTitle>
+            <AppBreadcrumbs
+              segments={[
+                { label: deck.name, path: `/deck/${deck.id}` },
+                { label: t("note.new.title") },
+              ]}
+            />
           </div>
         </AppHeaderContent>
 

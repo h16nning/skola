@@ -1,4 +1,4 @@
-import AppHeaderTitle from "@/components/AppHeaderTitle/AppHeaderTitle";
+import { AppBreadcrumbs } from "@/components/AppBreadcrumbs";
 import { Tabs } from "@/components/ui/Tabs";
 import { useSetting } from "@/logic/settings/hooks/useSetting";
 import {
@@ -47,7 +47,7 @@ export default function SettingsView() {
   return (
     <div className={BASE}>
       <AppHeaderContent>
-        <AppHeaderTitle>{t("settings.title")}</AppHeaderTitle>
+        <AppBreadcrumbs segments={[{ label: t("settings.title") }]} />
       </AppHeaderContent>
       <Tabs
         variant="pills"

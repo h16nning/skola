@@ -1,3 +1,4 @@
+import { AppBreadcrumbs, BreadcrumbSegment } from "@/components/AppBreadcrumbs";
 import NotFound from "@/components/NotFound";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -20,7 +21,6 @@ import { useCardStateCounts } from "@/logic/card/hooks/useCardStateCounts";
 import { useCardsOf } from "@/logic/card/hooks/useCardsOf";
 import DeckHeroSection from "./DeckHeroSection/DeckHeroSection";
 import SubDeckSection from "./SubDeckSection";
-import SuperDecksBreadcrumbs from "./SuperDecksBreadcrumbs/SuperDecksBreadcrumbs";
 
 const BASE = "deck-view";
 
@@ -43,11 +43,21 @@ function DeckView() {
     return <NotFound />;
   }
 
+  const breadcrumbSegments: BreadcrumbSegment[] = [
+    ...(superDecks?.map((superDeck) => ({
+      label: superDeck.name,
+      path: `/deck/${superDeck.id}`,
+    })) || []),
+    ...(deck ? [{ label: deck.name, path: `/deck/${deck.id}` }] : []),
+  ];
+
   return (
     <>
       <AppHeaderContent>
         <div className={`${BASE}__header`}>
-          <SuperDecksBreadcrumbs deck={deck} superDecks={superDecks} />
+          <div style={{ flexGrow: 2, minWidth: 0 }}>
+            <AppBreadcrumbs segments={breadcrumbSegments} />
+          </div>
           <div className={`${BASE}__actions`}>
             <Tooltip
               position="left"

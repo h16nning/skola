@@ -132,12 +132,7 @@ export default function SpotlightCard({
           label: deck.name,
           description: deck.description,
           onClick: () => navigate(`/deck/${deck.id}`),
-          leftSection: (
-            <IconCards
-              style={{ width: "1.5rem", height: "1.5rem" }}
-              stroke={1.5}
-            />
-          ),
+          leftSection: <IconCards />,
           tabAction: {
             label: "to study",
             action: () => navigate(`/learn/${deck.id}`),
@@ -152,7 +147,7 @@ export default function SpotlightCard({
           id: note.id,
           label: getAdapter(note).getSortFieldFromNoteContent(note.content),
           description: note.breadcrumb.join(" > "),
-          onClick: () => navigate(`/deck/${note.deck}`),
+          onClick: () => navigate(`/notes/${note.id}`),
           leftSection: <IconSquare />,
         })),
       ],

@@ -1,4 +1,4 @@
-import AppHeaderTitle from "@/components/AppHeaderTitle/AppHeaderTitle";
+import { AppBreadcrumbs } from "@/components/AppBreadcrumbs";
 import EmptyNotice from "@/components/EmptyNotice";
 import { Button, Kbd, Tooltip } from "@/components/ui";
 import { useDocumentTitle } from "@/lib/hooks/useDocumentTitle";
@@ -27,7 +27,7 @@ export default function HomeView() {
   return (
     <>
       <AppHeaderContent>
-        <AppHeaderTitle></AppHeaderTitle>
+        <AppBreadcrumbs />
         <Tooltip
           label={
             <>

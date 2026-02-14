@@ -1,11 +1,11 @@
-import AppHeaderTitle from "@/components/AppHeaderTitle/AppHeaderTitle";
+import { AppBreadcrumbs } from "@/components/AppBreadcrumbs";
 import { AppHeaderContent } from "../shell/Header/Header";
 
 function StatsView() {
   return (
     <>
       <AppHeaderContent>
-        <AppHeaderTitle>Statistics</AppHeaderTitle>
+        <AppBreadcrumbs segments={[{ label: "Statistics" }]} />
       </AppHeaderContent>
       <article
         style={{

@@ -1,4 +1,5 @@
 import { AppHeaderContent } from "@/app/shell/Header/Header";
+import { AppBreadcrumbs } from "@/components/AppBreadcrumbs";
 import SelectDecksHeader from "@/components/SelectDecksHeader";
 import { TextInput } from "@/components/ui";
 import { useDebouncedState } from "@/lib/hooks/useDebouncedState";
@@ -39,7 +40,7 @@ function NoteExplorerView() {
 
   const [filter, setFilter, immediateFilter] = useDebouncedState<string>(
     "",
-    250
+    50
   );
 
   const [sort, setSort] = useState<[NoteSortFunction, boolean]>([
@@ -81,7 +82,7 @@ function NoteExplorerView() {
   return (
     <div className={BASE}>
       <AppHeaderContent>
-        <h3 className={`${BASE}__title`}>{t("manage-cards.title")}</h3>
+        <AppBreadcrumbs segments={[{ label: t("manage-cards.title") }]} />
       </AppHeaderContent>
 
       <div className={`${BASE}__controls`}>
