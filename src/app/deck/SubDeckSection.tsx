@@ -4,8 +4,8 @@ import { IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Deck } from "../../logic/deck/deck";
+import DeckModal from "./DeckModal";
 import DeckTable from "./DeckTable";
-import NewDeckModal from "./NewDeckModal";
 
 interface SubDeckSectionProps {
   deck?: Deck;
@@ -52,7 +52,8 @@ function SubDeckSection({ deck }: SubDeckSectionProps) {
             <span>{t("deck.subdeck.load-fail")}</span>
           ))}
       </div>
-      <NewDeckModal
+      <DeckModal
+        mode="create"
         opened={newDeckModalOpened}
         setOpened={setNewDeckModalOpened}
         superDeck={deck}

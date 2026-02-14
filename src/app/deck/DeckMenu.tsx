@@ -26,8 +26,8 @@ import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import DebugDeckModal from "./DebugDeckModal";
+import DeckModal from "./DeckModal";
 import MoveDeckModal from "./MoveDeckModal";
-import RenameDeckModal from "./RenameDeckModal";
 
 interface DeckMenuProps {
   deck?: Deck;
@@ -101,7 +101,7 @@ function DeckMenu({ deck }: DeckMenuProps) {
             rightSection={showShortcutHints && <Kbd>r</Kbd>}
             onClick={() => setRenameModalOpened(true)}
           >
-            {t("deck.menu.rename")}
+            {t("deck.menu.edit")}
           </MenuItem>
           <MenuItem
             leftSection={<IconArrowsExchange size={16} />}
@@ -167,7 +167,8 @@ function DeckMenu({ deck }: DeckMenuProps) {
             opened={deleteModalOpened}
             setOpened={setDeleteModalOpened}
           />
-          <RenameDeckModal
+          <DeckModal
+            mode="edit"
             deck={deck}
             opened={renameModalOpened}
             setOpened={setRenameModalOpened}

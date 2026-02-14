@@ -1,4 +1,4 @@
-import NewDeckModal from "@/app/deck/NewDeckModal";
+import DeckModal from "@/app/deck/DeckModal";
 import { breakpoints } from "@/lib/breakpoints";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { useTopLevelDecks } from "@/logic/deck/hooks/useTopLevelDecks";
@@ -41,7 +41,8 @@ export default function DeckList({ minimalMode }: DeckListProps) {
         </button>
       </div>
 
-      <NewDeckModal
+      <DeckModal
+        mode="create"
         opened={newDeckModalOpened}
         setOpened={setNewDeckModalOpened}
       />

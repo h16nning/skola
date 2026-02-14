@@ -3,27 +3,48 @@ import { Button, Modal, TextInput } from "@/components/ui";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import type { Deck } from "@/logic/deck/deck";
 import { newDeck } from "@/logic/deck/newDeck";
+import { updateDeck } from "@/logic/deck/updateDeck";
 import { t } from "i18next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./NewDeckModal.css";
+import "./DeckModal.css";
 import { ColorIdentifier } from "@/lib/ColorIdentifier";
 import DeckColorChooser from "./DeckColorChooser";
 
-const BASE = "new-deck-modal";
+const BASE = "deck-modal";
 
-interface NewDeckModalProps extends ModalProps {
+interface DeckModalProps extends ModalProps {
+  mode: "create" | "edit";
+  deck?: Deck;
   superDeck?: Deck;
 }
 
-function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
+function DeckModal({
+  opened,
+  setOpened,
+  mode,
+  deck,
+  superDeck,
+}: DeckModalProps) {
   const navigate = useNavigate();
 
   const [nameValue, setNameValue] = useState<string>("");
   const [descriptionValue, setDescriptionValue] = useState<string>("");
   const [deckColor, setDeckColor] = useState<ColorIdentifier>("sky");
-  const [addingDeck, setAddingDeck] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [status, setStatus] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (mode === "edit" && deck) {
+      setNameValue(deck.name);
+      setDescriptionValue(deck.description || "");
+      setDeckColor(deck.color || "sky");
+    } else {
+      setNameValue("");
+      setDescriptionValue("");
+      setDeckColor("sky");
+    }
+  }, [mode, deck, opened]);
 
   function isInputValid(): boolean {
     return nameValue.trim() !== "";
@@ -31,41 +52,55 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
 
   function handleClose() {
     setOpened(false);
+    setStatus(null);
   }
 
-  async function tryAddDeck() {
+  async function handleSubmit() {
     if (!isInputValid()) return;
-    setAddingDeck(true);
+    setIsSubmitting(true);
+    setStatus(null);
+
     try {
-      const id = await newDeck(
-        nameValue,
-        superDeck,
-        descriptionValue,
-        deckColor
-      );
-      setNameValue("");
-      setOpened(false);
-      navigate("/deck/" + id);
+      if (mode === "create") {
+        const id = await newDeck(
+          nameValue,
+          superDeck,
+          descriptionValue,
+          deckColor
+        );
+        setOpened(false);
+        navigate("/deck/" + id);
+      } else if (mode === "edit" && deck) {
+        await updateDeck(deck.id, nameValue, descriptionValue, deckColor);
+        setOpened(false);
+      }
     } catch (error) {
-      setStatus("Failed to add deck: " + error);
+      setStatus(
+        `Failed to ${mode === "create" ? "add" : "update"} deck: ${error}`
+      );
+    } finally {
+      setIsSubmitting(false);
     }
-    setAddingDeck(false);
-    setNameValue("");
-    setDescriptionValue("");
   }
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
       event.preventDefault();
-      void tryAddDeck();
+      void handleSubmit();
     }
   }
 
-  useHotkeys([["mod+Enter", () => tryAddDeck()]]);
+  useHotkeys([["mod+Enter", () => handleSubmit()]]);
 
-  const title = superDeck
-    ? t("deck.new-deck-modal.new-subdeck", { superDeck: superDeck.name })
-    : t("deck.new-deck-modal.new-deck");
+  const title =
+    mode === "create"
+      ? superDeck
+        ? t("deck.new-deck-modal.new-subdeck", { superDeck: superDeck.name })
+        : t("deck.new-deck-modal.new-deck")
+      : t("deck.edit.title", { deckName: deck?.name || "" });
+
+  const submitButtonText =
+    mode === "create" ? t("deck.new-deck-modal.submit") : t("deck.edit.submit");
 
   return (
     <Modal opened={opened} onClose={handleClose} title={title}>
@@ -92,11 +127,11 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
             {t("global.cancel")}
           </Button>
           <Button
-            disabled={!isInputValid() || addingDeck}
+            disabled={!isInputValid() || isSubmitting}
             variant="primary"
-            onClick={() => void tryAddDeck()}
+            onClick={() => void handleSubmit()}
           >
-            {addingDeck ? "..." : t("deck.new-deck-modal.submit")}
+            {isSubmitting ? "..." : submitButtonText}
           </Button>
         </div>
       </div>
@@ -104,4 +139,4 @@ function NewDeckModal({ opened, setOpened, superDeck }: NewDeckModalProps) {
   );
 }
 
-export default NewDeckModal;
+export default DeckModal;

@@ -24,12 +24,12 @@
     "menu": {
       "debug": "Debug",
       "delete": "Delete",
+      "edit": "Edit",
       "import-cards": "Import Cards",
       "label": "Menu",
       "manage-cards": "Manage Cards",
       "move": "Move",
-      "options": "Options",
-      "rename": "Rename"
+      "options": "Options"
     },
     "new-cards-label": "New",
     "new-cards-label_one": "1 New",
@@ -47,6 +47,10 @@
     "no-decks-found": "There are no decks here. Click the button above to create one!",
     "notebook": {
       "title": "Notebook"
+    },
+    "edit": {
+      "submit": "Save",
+      "title": "Edit \"{{deckName}}\""
     },
     "rename": {
       "new-name": "New Name",

@@ -8,8 +8,8 @@ import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { IconFolder, IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import DeckModal from "../deck/DeckModal";
 import DeckTable from "../deck/DeckTable";
-import NewDeckModal from "../deck/NewDeckModal";
 import { AppHeaderContent } from "../shell/Header/Header";
 import "./HomeView.css";
 
@@ -79,7 +79,8 @@ export default function HomeView() {
           <DeckTable deckList={decks} isReady={isReady} />
         )}
       </div>
-      <NewDeckModal
+      <DeckModal
+        mode="create"
         opened={newDeckModalOpened}
         setOpened={setNewDeckModalOpened}
       />
