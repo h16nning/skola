@@ -1,7 +1,7 @@
 @import "../DeckCardBase.css";
 
 .deck-hero-section__content {
-  animation: fadeIn 0.2s ease-in;
+  /* animation: fadeIn 0.2s ease-in; */
 }
 
 .deck-hero-section {
