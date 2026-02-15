@@ -7,15 +7,15 @@ import { useDocumentTitle } from "@/lib/hooks/useDocumentTitle";
 import { useDecks } from "@/logic/deck/hooks/useDecks";
 import { getNote } from "@/logic/note/getNote";
 import { useNotesWith } from "@/logic/note/hooks/useNotesWith";
-import { Note, NoteType } from "@/logic/note/note";
 import { NoteSortFunction, NoteSorts } from "@/logic/note/sort";
 import { IconSearch } from "@tabler/icons-react";
 import { t } from "i18next";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import NoteTable from "../NoteTable/NoteTable";
 import EditNoteModal from "../editor/EditNoteModal";
 import { EditNoteView } from "../editor/EditNoteView";
+import { useNoteSelection } from "./hooks/useNoteSelection";
 import "./NoteExplorerView.css";
 
 const BASE = "note-explorer-view";
@@ -67,7 +67,16 @@ function NoteExplorerView() {
   const [editNoteModalOpened, setEditNoteModalOpened] =
     useState<boolean>(false);
 
-  const [openedNote, setOpenedNote] = useState<Note<NoteType> | undefined>();
+  const {
+    selectedNoteIds,
+    openedNote,
+    setOpenedNote,
+    handleNoteClick,
+    handleKeyDown,
+    setRowRef,
+  } = useNoteSelection({ notes });
+
+  const tableRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (noteId) {
@@ -77,7 +86,15 @@ function NoteExplorerView() {
         }
       });
     }
-  }, [noteId]);
+  }, [noteId, setOpenedNote]);
+
+  useEffect(() => {
+    const element = tableRef.current;
+    if (element) {
+      element.addEventListener("keydown", handleKeyDown);
+      return () => element.removeEventListener("keydown", handleKeyDown);
+    }
+  }, [handleKeyDown]);
 
   return (
     <div className={BASE}>
@@ -91,27 +108,41 @@ function NoteExplorerView() {
           decks={decks}
           onSelect={(deckId) => navigate(`/notes/${deckId}`)}
         />
+
+        <TextInput
+          leftSection={<IconSearch size={16} />}
+          value={immediateFilter}
+          placeholder="Filter Notes"
+          onChange={(event) => setFilter(event.currentTarget.value)}
+        />
       </div>
 
       <div className={`${BASE}__container`}>
-        <div className={`${BASE}__table-section`}>
-          <TextInput
-            leftSection={<IconSearch size={16} />}
-            value={immediateFilter}
-            placeholder="Filter Notes"
-            onChange={(event) => setFilter(event.currentTarget.value)}
-          />
+        {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-noninteractive-tabindex */}
+        <section
+          className={`${BASE}__table-section`}
+          ref={tableRef}
+          tabIndex={0}
+          aria-label="Note list"
+          onKeyDown={(e) => {
+            if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+              e.preventDefault();
+            }
+          }}
+        >
           {notes && (
             <NoteTable
               noteSet={notes ?? []}
               openedNote={openedNote}
-              setOpenedNote={setOpenedNote}
+              selectedNoteIds={selectedNoteIds}
+              onNoteClick={handleNoteClick}
+              onSetRowRef={setRowRef}
               openModal={() => setEditNoteModalOpened(true)}
               sort={sort}
               setSort={setSort}
             />
           )}
-        </div>
+        </section>
 
         <div className={`${BASE}__note-display`}>
           <EditNoteView note={openedNote} setOpenedNote={setOpenedNote} />

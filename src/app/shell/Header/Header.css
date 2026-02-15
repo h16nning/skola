@@ -13,18 +13,11 @@
   padding-right: var(--safe-area-right);
 }
 
-@media (min-width: 577px) {
+@media (min-width: 576px) {
   .header {
     left: var(--sidebar-width);
   }
 }
-
-@media (min-width: 577px) and (max-width: 1200px) {
-  .header {
-    left: var(--minimal-sidebar-width);
-  }
-}
-
 .header--fullwidth {
   left: 0;
 }

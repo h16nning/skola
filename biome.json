@@ -17,6 +17,7 @@
         "useSemanticElements": "warn",
         "useFocusableInteractive": "warn",
         "noSvgWithoutTitle": "warn",
+        "noNoninteractiveTabindex": "off",
         "noAutofocus": "warn",
         "noNoninteractiveElementToInteractiveRole": "warn"
       },

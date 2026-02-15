@@ -9,7 +9,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--spacing-sm) !important;
   flex-wrap: nowrap;
   padding: 0;
   flex-shrink: 0;

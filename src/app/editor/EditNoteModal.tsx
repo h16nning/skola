@@ -6,7 +6,6 @@ import { NoteType } from "@/logic/note/note";
 import { useMemo, useState } from "react";
 import { Note } from "../../logic/note/note";
 import "./EditNoteModal.css";
-import NoteSubmitButton from "./NoteSubmitButton";
 
 const BASE = "edit-note-modal";
 
@@ -47,15 +46,6 @@ export default function EditNoteModal({
     >
       <div className={BASE}>
         <div className={`${BASE}__content`}>{CardEditor}</div>
-        <div className={`${BASE}__footer`}>
-          <NoteSubmitButton
-            finish={() => {
-              setRequestedFinish(true);
-              setClose();
-            }}
-            mode="edit"
-          />
-        </div>
       </div>
     </Modal>
   );

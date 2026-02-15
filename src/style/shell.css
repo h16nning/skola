@@ -1,13 +1,25 @@
 :root {
   --app-header-base-height: 3.5rem;
-  --sidebar-width: 15rem;
+  --sidebar-base-width: 3.5rem;
 
   --max-content-width: 40rem;
 
-  --minimal-sidebar-base-width: 3.5rem;
-
   --app-header-height: var(--app-header-base-height);
-  --minimal-sidebar-width: var(--minimal-sidebar-base-width);
+  --sidebar-width: var(--sidebar-base-width);
+
+  --density-compact: 0.85;
+}
+
+@media (max-width: 575.98px) {
+  :root {
+    --sidebar-width: 0;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --sidebar-width: 15rem;
+  }
 }
 
 [data-density="compact"] {
@@ -16,8 +28,17 @@
     var(--density-compact)
   );
 
-  --minimal-sidebar-width: calc(
-    var(--minimal-sidebar-base-width) *
-    var(--density-compact)
-  );
+  --sidebar-width: calc(var(--sidebar-base-width) * var(--density-compact));
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --sidebar-width: 15rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  :root {
+    --sidebar-width: 0;
+  }
 }

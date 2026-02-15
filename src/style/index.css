@@ -71,6 +71,7 @@ body,
   background-color: var(--theme-neutral-50);
   height: calc(100% + var(--safe-area-bottom));
   margin: 0;
+  font-family: var(--font-sans);
   * {
     box-sizing: border-box;
   }

@@ -12,7 +12,13 @@ interface NoteTableProps {
   sort: [NoteSortFunction, boolean];
   setSort: (sort: [NoteSortFunction, boolean]) => void;
   openedNote: Note<NoteType> | undefined;
-  setOpenedNote: (note: Note<NoteType> | undefined) => void;
+  selectedNoteIds: Set<string>;
+  onNoteClick: (
+    note: Note<NoteType>,
+    index: number,
+    event: React.MouseEvent
+  ) => void;
+  onSetRowRef: (index: number, element: HTMLTableRowElement | null) => void;
   openModal: () => void;
 }
 
@@ -21,20 +27,25 @@ function NoteTable({
   sort,
   setSort,
   openedNote,
-  setOpenedNote,
+  selectedNoteIds,
+  onNoteClick,
+  onSetRowRef,
   openModal,
 }: NoteTableProps) {
   const isMobile = useMediaQuery("(max-width: 50em)");
 
-  function handleRowSelect(note: Note<NoteType>) {
-    setOpenedNote(note);
-    if (isMobile) {
+  function handleRowSelect(
+    note: Note<NoteType>,
+    index: number,
+    event: React.MouseEvent
+  ) {
+    onNoteClick(note, index, event);
+    if (isMobile && !event.shiftKey && !event.metaKey && !event.ctrlKey) {
       openModal();
     }
   }
 
-  function handleRowOpen(note: Note<NoteType>) {
-    setOpenedNote(note);
+  function handleRowOpen() {
     openModal();
   }
 
@@ -71,13 +82,16 @@ function NoteTable({
               </td>
             </tr>
           ) : (
-            noteSet.map((note) => (
+            noteSet.map((note, index) => (
               <NoteTableItem
                 key={note.id}
                 note={note}
-                isSelected={note.id === openedNote?.id}
-                onSelect={() => handleRowSelect(note)}
-                onOpen={() => handleRowOpen(note)}
+                index={index}
+                isSelected={selectedNoteIds.has(note.id)}
+                isOpened={note.id === openedNote?.id}
+                onSelect={(event) => handleRowSelect(note, index, event)}
+                onOpen={handleRowOpen}
+                onSetRef={onSetRowRef}
               />
             ))
           )}

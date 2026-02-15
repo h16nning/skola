@@ -7,7 +7,7 @@
 
 .cloud-sync-state--minimal {
   justify-content: center;
-  height: var(--minimial-sidebar-width);
+  height: var(--sidebar-width);
 }
 
 .cloud-sync-state__indicator {

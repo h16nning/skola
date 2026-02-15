@@ -9,10 +9,7 @@
   padding-right: var(--safe-area-right);
 
   @mixin larger-than 576px {
-    padding-left: max(var(--minimal-sidebar-width), var(--safe-area-left));
-  }
-  @mixin larger-than 768px {
-    padding-left: var(--sidebar-width);
+    padding-left: max(var(--sidebar-width), var(--safe-area-left));
   }
 
   display: flex;

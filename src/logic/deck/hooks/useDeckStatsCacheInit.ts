@@ -52,10 +52,6 @@ export function useDeckStatsCacheInit() {
   );
 
   useEffect(() => {
-    console.log(
-      "Initializing deck stats cache with newDayStartHour:",
-      newDayStartHour
-    );
     let isMounted = true;
     let rolloverTimeout: NodeJS.Timeout | null = null;
 

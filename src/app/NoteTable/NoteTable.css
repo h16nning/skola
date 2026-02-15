@@ -68,6 +68,7 @@
   cursor: pointer;
   border-radius: var(--radius-md);
   transition: none;
+  user-select: none;
 }
 
 .note-table__row:nth-child(odd) {
@@ -83,6 +84,14 @@
 .note-table__row--selected:hover {
   background-color: var(--theme-primary-200);
   color: var(--theme-primary-950);
+}
+
+.note-table__row--opened,
+.note-table__row--opened:nth-child(odd),
+.note-table__row--opened:hover {
+  background-color: var(--theme-primary-300);
+  color: var(--theme-primary-950);
+  font-weight: 600;
 }
 
 .note-table__cell {

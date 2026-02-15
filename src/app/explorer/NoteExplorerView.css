@@ -1,9 +1,14 @@
 .note-explorer-view {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
-  width: 100%;
-  height: 100%;
+  width: min(calc(100% - var(--sidebar-width)), 100%);
+  height: calc(100% - var(--app-header-height));
+  overflow: hidden;
+  position: absolute;
+  top: var(--app-header-height);
+  left: var(--sidebar-width);
+  bottom: 0;
+  right: 0;
 }
 
 .note-explorer-view__title {
@@ -17,15 +22,17 @@
   display: flex;
   align-items: flex-end;
   gap: var(--spacing-xs);
+  padding: var(--spacing-sm);
+  background-color: var(--theme-neutral-100);
 }
 
 .note-explorer-view__container {
   display: flex;
   flex-direction: row;
-  gap: var(--spacing-md);
+  align-items: stretch;
   width: 100%;
   height: 100%;
-  align-items: stretch;
+  border-top: 1px solid var(--theme-neutral-200);
 }
 
 .note-explorer-view__table-section {
@@ -34,15 +41,20 @@
   gap: var(--spacing-md);
   flex: 1;
   min-width: 0;
+  outline: none;
+}
+
+.note-explorer-view__table-section:focus-visible {
+  outline: none;
 }
 
 .note-explorer-view__note-display {
   flex: 1;
   min-width: 0;
+  max-width: 30rem;
   height: 100%;
-  border: 1px solid var(--theme-neutral-200);
-  border-radius: var(--radius-md);
   overflow: hidden;
+  border-left: 1px solid var(--theme-neutral-200);
 }
 
 @media (max-width: 800px) {

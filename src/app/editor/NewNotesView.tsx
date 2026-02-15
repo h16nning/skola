@@ -1,12 +1,10 @@
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import { IconChevronLeft } from "@tabler/icons-react";
 
 import { AppBreadcrumbs } from "@/components/AppBreadcrumbs";
 import NotFound from "@/components/NotFound";
 import SelectDecksHeader from "@/components/SelectDecksHeader";
-import { IconButton, Kbd, Paper, Select, Tooltip } from "@/components/ui";
+import { Kbd, Paper, Select, Tooltip } from "@/components/ui";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { useOs } from "@/lib/hooks/useOs";
 import { getAdapterOfType } from "@/logic/NoteTypeAdapter";
@@ -59,10 +57,6 @@ function NewNotesView() {
       : null;
   }, [deck, noteType, setNoteType, requestedFinish, setRequestedFinish]);
 
-  const closeView = useCallback(() => {
-    navigate(deck ? "/deck/" + deck?.id : "/home");
-  }, [navigate, deck]);
-
   if (isReady && !deck) {
     return <NotFound />;
   }
@@ -75,17 +69,12 @@ function NewNotesView() {
     <div className={BASE}>
       <div className={BASE + "__content"}>
         <AppHeaderContent>
-          <div className={BASE + "__header"} style={{ marginRight: "auto" }}>
-            <IconButton onClick={closeView} variant="subtle">
-              <IconChevronLeft />
-            </IconButton>
-            <AppBreadcrumbs
-              segments={[
-                { label: deck.name, path: `/deck/${deck.id}` },
-                { label: t("note.new.title") },
-              ]}
-            />
-          </div>
+          <AppBreadcrumbs
+            segments={[
+              { label: deck.name, path: `/deck/${deck.id}` },
+              { label: t("note.new.title") },
+            ]}
+          />
         </AppHeaderContent>
 
         <div className={BASE + "__editor-container"}>

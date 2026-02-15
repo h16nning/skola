@@ -1,5 +1,5 @@
 .sidebar {
-  width: 15rem;
+  width: var(--sidebar-width);
   height: 100%;
   background-color: var(--theme-neutral-100);
   border-right: 1px solid var(--theme-neutral-200);
@@ -71,10 +71,6 @@
   flex-direction: column;
   gap: var(--spacing-xs);
   padding: 0 var(--spacing-xs);
-}
-
-.sidebar--minimal {
-  width: var(--minimal-sidebar-width);
 }
 
 .sidebar--minimal .sidebar__header {
