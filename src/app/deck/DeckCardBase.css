@@ -39,7 +39,7 @@
 .deck-card-base__title {
   display: inline-block;
   text-box-trim: trim-both;
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-lg);
   font-family: var(--font-serif);
   font-weight: 500;
   margin-top: calc(1px + var(--spacing-lg));
