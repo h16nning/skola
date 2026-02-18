@@ -126,9 +126,7 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
               rightSection={
                 showShortcutHints && (
                   <Group gap="xs" align="center">
-                    <Kbd>shift</Kbd>
-                    <span>+</span>
-                    <Kbd>d</Kbd>
+                    <Kbd>&#8679; d</Kbd>
                   </Group>
                 )
               }

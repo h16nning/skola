@@ -4,7 +4,7 @@
   justify-content: center;
   padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--radius-full);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
   font-weight: 500;
   font-family: var(--font-sans);
   white-space: nowrap;
@@ -14,17 +14,17 @@
 
 .badge--sm {
   padding: calc(var(--spacing-xs) * 0.5) var(--spacing-xs);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
 }
 
 .badge--md {
   padding: var(--spacing-xs) var(--spacing-sm);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
 }
 
 .badge--lg {
   padding: var(--spacing-sm) var(--spacing-md);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-lg);
 }
 
 .badge--light.badge--primary {

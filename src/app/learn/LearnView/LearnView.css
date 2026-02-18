@@ -35,8 +35,8 @@
 
 .learn-view__card {
   position: relative;
-  padding: var(--spacing-md);
   transition: height 0.2s ease;
+  padding: 0;
 }
 
 .learn-view__card p:first-of-type {

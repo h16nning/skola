@@ -3,7 +3,6 @@ import {
   BreadcrumbSeparator,
   Breadcrumbs,
 } from "@/components/ui";
-import { IconHome } from "@tabler/icons-react";
 import React, { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -51,7 +50,7 @@ export function AppBreadcrumbs({
         onClick={handleHomeClick}
         isActive={segments.length === 0}
       >
-        <IconHome size="1em" /> {effectiveHomeLabel}
+        {effectiveHomeLabel}
       </BreadcrumbItem>
 
       {segments.map((segment, index) => {

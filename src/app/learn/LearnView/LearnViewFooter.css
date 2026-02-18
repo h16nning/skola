@@ -1,4 +1,6 @@
 .learn-view-footer {
+  position: relative;
+  z-index: 10;
   background-color: var(--theme-neutral-50);
   padding: var(--spacing-md);
   border-top: solid 1px var(--theme-neutral-200);

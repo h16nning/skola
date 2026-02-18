@@ -1,5 +1,4 @@
 # Skola
-
 _Note: Skola is still in early-ish development. Expect bugs, missing features, and breaking changes. Feedback is very welcome!_
 
 <img width="1512" alt="Skola Main Interface" src="https://github.com/user-attachments/assets/466477b2-7a60-4587-b161-d17f14a1f4e2" />

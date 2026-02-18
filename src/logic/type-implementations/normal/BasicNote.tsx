@@ -1,5 +1,4 @@
 import NormalCardEditor from "@/app/editor/NoteEditor/NormalCardEditor";
-import { Divider, Stack } from "@/components/ui";
 import { NoteEditorProps, NoteTypeAdapter } from "@/logic/NoteTypeAdapter";
 import { Card, HTMLtoPreviewString } from "@/logic/card/card";
 import { createCardSkeleton } from "@/logic/card/createCardSkeleton";
@@ -12,7 +11,11 @@ import { newNote } from "@/logic/note/newNote";
 import { NoteType } from "@/logic/note/note";
 import { Note } from "@/logic/note/note";
 import { updateNoteContent } from "@/logic/note/updateNoteContent";
-import { useState } from "react";
+import {
+  NoteDisplay,
+  QuestionOnly,
+  QuestionWithAnswer,
+} from "../shared/QuestionAnswerDisplay";
 
 export const BasicNoteTypeAdapter: NoteTypeAdapter<NoteType.Basic> = {
   async createNote(params: { front: string; back: string }, deck: Deck) {
@@ -51,30 +54,18 @@ export const BasicNoteTypeAdapter: NoteTypeAdapter<NoteType.Basic> = {
     _: Card<NoteType.Basic>,
     content?: NoteContent<NoteType.Basic>
   ) {
-    return (
-      <h3
-        style={{
-          fontFamily: "var(--font-serif)",
-          fontSize: "1.25rem",
-          fontWeight: 600,
-          margin: 0,
-        }}
-        dangerouslySetInnerHTML={{ __html: content?.front ?? "" }}
-      />
-    );
+    return <QuestionOnly html={content?.front ?? ""} />;
   },
 
   displayAnswer(
-    card: Card<NoteType.Basic>,
-    content?: NoteContent<NoteType.Basic>,
-    place?: "learn" | "notebook"
+    _: Card<NoteType.Basic>,
+    content?: NoteContent<NoteType.Basic>
   ) {
     return (
-      <Stack gap={place === "notebook" ? "sm" : "lg"} style={{ width: "100%" }}>
-        {BasicNoteTypeAdapter.displayQuestion(card, content)}
-        <Divider />
-        <div dangerouslySetInnerHTML={{ __html: content?.back ?? "" }}></div>
-      </Stack>
+      <QuestionWithAnswer
+        questionHtml={content?.front ?? ""}
+        answerHtml={content?.back ?? ""}
+      />
     );
   },
 
@@ -82,32 +73,12 @@ export const BasicNoteTypeAdapter: NoteTypeAdapter<NoteType.Basic> = {
     note: Note<NoteType.Basic>,
     showAllAnswers: "strict" | "optional" | "none"
   ) {
-    const [individualShowAnswer, setIndividualShowAnswer] = useState(false);
-
     return (
-      <Stack
-        gap="sm"
-        style={{ width: "100%" }}
-        onClick={() => setIndividualShowAnswer(!individualShowAnswer)}
-      >
-        <h3
-          style={{
-            fontFamily: "var(--font-serif)",
-            fontSize: "1.25rem",
-            fontWeight: 600,
-            margin: 0,
-          }}
-          dangerouslySetInnerHTML={{ __html: note.content?.front ?? "" }}
-        />
-        {showAllAnswers !== "none" && (
-          <>
-            <Divider />
-            <div
-              dangerouslySetInnerHTML={{ __html: note.content?.back ?? "" }}
-            />
-          </>
-        )}
-      </Stack>
+      <NoteDisplay
+        questionHtml={note.content?.front ?? ""}
+        answerHtml={note.content?.back ?? ""}
+        showAnswer={showAllAnswers !== "none"}
+      />
     );
   },
 

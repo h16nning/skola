@@ -100,7 +100,7 @@ function LearnViewHeader({
         className={BASE + "__progress-bar"}
         size="xs"
         value={progress}
-        style={{ width: "100%", borderRadius: 0 }}
+        style={{ width: "100%" }}
       />
     </>
   );

@@ -52,7 +52,7 @@
 
 .sidebar__title {
   font-family: var(--font-serif);
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-md);
   font-weight: 500;
   margin: 0;
   color: var(--theme-neutral-800);
@@ -61,7 +61,7 @@
 
 .sidebar__version {
   font-family: var(--font-mono);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
   color: var(--theme-neutral-500);
   line-height: 1;
 }

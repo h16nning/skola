@@ -13,6 +13,7 @@ import { useListState } from "@/lib/hooks/useListState";
 import { useDeckFromUrl } from "@/logic/deck/hooks/useDeckFromUrl";
 import { useNotesOf } from "@/logic/note/hooks/useNotesOf";
 import { NoteType } from "@/logic/note/note";
+import { Note } from "@/logic/note/note";
 import { NoteSortFunction, NoteSorts } from "@/logic/note/sort";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import {
@@ -24,7 +25,6 @@ import {
 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Note } from "../../logic/note/note";
 import NotebookCard from "./NotebookCard";
 import "./NotebookView.css";
 

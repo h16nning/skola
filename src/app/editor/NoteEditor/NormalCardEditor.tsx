@@ -5,7 +5,7 @@ import { Deck } from "@/logic/deck/deck";
 import { Note, NoteType } from "@/logic/note/note";
 import { BasicNoteTypeAdapter } from "@/logic/type-implementations/normal/BasicNote";
 import { t } from "i18next";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import "./NormalCardEditor.css";
 import NoteEditor, { useNoteEditor } from "./NoteEditor";
 import { useAutoSave, useClearEditors, useNoteCreation } from "./hooks";
@@ -37,6 +37,11 @@ function NormalCardEditor({
 
   const frontContentRef = useRef(noteContent.front);
   const backContentRef = useRef(noteContent.back);
+
+  useEffect(() => {
+    frontContentRef.current = noteContent.front;
+    backContentRef.current = noteContent.back;
+  }, [noteContent.front, noteContent.back]);
 
   const getContent = () => ({
     front: frontContentRef.current,

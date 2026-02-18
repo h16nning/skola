@@ -5,13 +5,14 @@
   border-radius: var(--radius-md);
   overflow: hidden;
   position: relative;
+  border-radius: 0;
 }
 
 .progress__bar {
   height: 100%;
   background-color: var(--theme-primary-600);
   transition: width 0.2s ease-in-out;
-  border-radius: var(--radius-md);
+  border-radius: 0;
 }
 
 .progress--xs {

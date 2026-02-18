@@ -36,6 +36,20 @@ body {
   padding: 0;
 }
 
+body::after {
+  content: "";
+  display: block;
+  position: fixed;
+  z-index: 999999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  background: var(--pattern-noise);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
 article {
   h1,
   h2,

@@ -118,7 +118,6 @@ function NoteExplorerView() {
       </div>
 
       <div className={`${BASE}__container`}>
-        {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-noninteractive-tabindex */}
         <section
           className={`${BASE}__table-section`}
           ref={tableRef}
@@ -144,9 +143,9 @@ function NoteExplorerView() {
           )}
         </section>
 
-        <div className={`${BASE}__note-display`}>
+        <section className={`${BASE}__note-display`}>
           <EditNoteView note={openedNote} setOpenedNote={setOpenedNote} />
-        </div>
+        </section>
       </div>
 
       {openedNote && (

@@ -45,7 +45,6 @@
 }
 
 .breadcrumbs__item--active {
-  font-weight: 700;
   color: var(--theme-neutral-700);
   cursor: default;
 

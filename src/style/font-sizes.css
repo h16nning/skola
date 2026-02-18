@@ -4,10 +4,9 @@
   --font-size-base-md: 0.875rem;
   --font-size-base-lg: 1rem;
   --font-size-base-xl: 1.25rem;
-  --font-size-base-2xl: 1.5rem;
-  --font-size-base-3xl: 2rem;
-  --font-size-base-4xl: 3rem;
-  --font-size-base-5xl: 3.5rem;
+  --font-size-base-2xl: 1.75rem;
+  --font-size-base-3xl: 2.5rem;
+  --font-size-base-4xl: 4rem;
 
   --font-size-xs: var(--font-size-base-xs);
   --font-size-sm: var(--font-size-base-sm);

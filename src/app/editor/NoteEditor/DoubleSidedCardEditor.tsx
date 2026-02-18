@@ -5,7 +5,7 @@ import { EditMode } from "@/logic/NoteTypeAdapter";
 import { Deck } from "@/logic/deck/deck";
 import { Note, NoteType } from "@/logic/note/note";
 import { DoubleSidedNoteTypeAdapter } from "@/logic/type-implementations/double-sided/DoubleSidedNote";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import "./DoubleSidedCardEditor.css";
 import { useAutoSave, useClearEditors, useNoteCreation } from "./hooks";
@@ -39,6 +39,11 @@ function DoubleSidedCardEditor({
 
   const field1ContentRef = useRef(noteContent.field1);
   const field2ContentRef = useRef(noteContent.field2);
+
+  useEffect(() => {
+    field1ContentRef.current = noteContent.field1;
+    field2ContentRef.current = noteContent.field2;
+  }, [noteContent.field1, noteContent.field2]);
 
   const getContent = () => ({
     field1: field1ContentRef.current,

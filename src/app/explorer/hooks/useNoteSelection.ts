@@ -48,38 +48,41 @@ export function useNoteSelection({
     []
   );
 
-  const scrollToIndex = useCallback((index: number) => {
-    const element = rowRefs.current.get(index);
-    if (!element) return;
+  const scrollToIndex = useCallback(
+    (index: number, behavior?: ScrollBehavior) => {
+      const element = rowRefs.current.get(index);
+      if (!element) return;
 
-    const container = element.closest(".note-table");
-    if (!container) return;
+      const container = element.closest(".note-table");
+      if (!container) return;
 
-    const containerRect = container.getBoundingClientRect();
-    const elementRect = element.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      const elementRect = element.getBoundingClientRect();
 
-    const padding = 80;
-    const isAboveView = elementRect.top < containerRect.top + padding;
-    const isBelowView = elementRect.bottom > containerRect.bottom - padding;
+      const padding = 80;
+      const isAboveView = elementRect.top < containerRect.top + padding;
+      const isBelowView = elementRect.bottom > containerRect.bottom - padding;
 
-    if (isAboveView || isBelowView) {
-      const elementTop = element.offsetTop;
-      const containerHeight = container.clientHeight;
-      const elementHeight = element.clientHeight;
+      if (isAboveView || isBelowView) {
+        const elementTop = element.offsetTop;
+        const containerHeight = container.clientHeight;
+        const elementHeight = element.clientHeight;
 
-      let targetScroll: number;
-      if (isAboveView) {
-        targetScroll = elementTop - padding;
-      } else {
-        targetScroll = elementTop - containerHeight + elementHeight + padding;
+        let targetScroll: number;
+        if (isAboveView) {
+          targetScroll = elementTop - padding;
+        } else {
+          targetScroll = elementTop - containerHeight + elementHeight + padding;
+        }
+
+        container.scrollTo({
+          top: targetScroll,
+          behavior: behavior || "smooth",
+        });
       }
-
-      container.scrollTo({
-        top: targetScroll,
-        behavior: "smooth",
-      });
-    }
-  }, []);
+    },
+    []
+  );
 
   const clearSelection = useCallback(() => {
     setSelectedNoteIds(new Set());
@@ -151,6 +154,27 @@ export function useNoteSelection({
             setOpenedNote(notes[0]);
             setAnchorIndex(0);
           }
+        }
+      } else if (
+        (event.metaKey || event.ctrlKey) &&
+        event.key === "ArrowDown"
+      ) {
+        event.preventDefault();
+        const lastIndex = notes.length - 1;
+        if (lastIndex !== currentIndex) {
+          const nextNote = notes[lastIndex];
+          setSelectedNoteIds(new Set([nextNote.id]));
+          setOpenedNote(nextNote);
+          scrollToIndex(lastIndex, "instant");
+        }
+      } else if ((event.metaKey || event.ctrlKey) && event.key === "ArrowUp") {
+        event.preventDefault();
+        const firstIndex = 0;
+        if (firstIndex !== currentIndex) {
+          const nextNote = notes[firstIndex];
+          setSelectedNoteIds(new Set([nextNote.id]));
+          setOpenedNote(nextNote);
+          scrollToIndex(firstIndex, "instant");
         }
       } else if (event.key === "ArrowDown") {
         event.preventDefault();

@@ -7,7 +7,6 @@ import { updateNote } from "@/logic/note/updateNote";
 import { Draggable } from "@hello-pangea/dnd";
 import { memo, useEffect } from "react";
 import NoteMenu from "../editor/NoteMenu";
-import classes from "./NotebookView.module.css";
 
 interface NotebookCardProps {
   index: number;
@@ -30,9 +29,8 @@ function NotebookCard({
 
   return useCustomSort ? (
     <Draggable key={note.id} index={index} draggableId={note.id}>
-      {(provided, snapshot) => (
+      {(provided) => (
         <div
-          className={`${classes.cardWrapper} ${snapshot.isDragging ? classes.dragging : ""}`}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
@@ -52,34 +50,22 @@ const InnerCard = memo(
     const [answerToggled, handlers] = useDisclosure(false);
 
     return (
-      <Paper className={classes.card}>
+      <Paper
+        onClick={handlers.toggle}
+        withBorder
+        style={{ position: "relative", padding: 0, cursor: "pointer" }}
+      >
+        {getAdapter(note).displayNote(
+          note,
+          showAnswer ? "strict" : answerToggled ? "optional" : "none"
+        )}
         <div
           style={{
-            display: "flex",
-            alignItems: "flex-start",
-            justifyContent: "space-between",
-            gap: "var(--spacing-sm)",
+            position: "absolute",
+            top: "var(--spacing-sm)",
+            right: "var(--spacing-sm)",
           }}
         >
-          <button
-            type="button"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              width: "100%",
-              background: "none",
-              border: "none",
-              padding: 0,
-              cursor: "pointer",
-              textAlign: "left",
-            }}
-            onClick={handlers.toggle}
-          >
-            {getAdapter(note).displayNote(
-              note,
-              showAnswer ? "strict" : answerToggled ? "optional" : "none"
-            )}
-          </button>
           <NoteMenu note={note} withShortcuts={false} />
         </div>
       </Paper>

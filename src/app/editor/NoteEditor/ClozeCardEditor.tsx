@@ -7,7 +7,7 @@ import NoteEditor, { useNoteEditor } from "./NoteEditor";
 import { RichTextEditorControl } from "@/components/ui/RichTextEditor";
 import { Note } from "@/logic/note/note";
 import { ClozeNoteTypeAdapter } from "@/logic/type-implementations/cloze/ClozeNote";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import "./ClozeCardEditor.css";
 import { useAutoSave, useClearEditors, useNoteCreation } from "./hooks";
 
@@ -33,6 +33,10 @@ export default function ClozeCardEditor({
   const noteContent = note?.content ?? { type: NoteType.Cloze, text: "" };
 
   const contentRef = useRef(noteContent.text);
+
+  useEffect(() => {
+    contentRef.current = noteContent.text;
+  }, [noteContent.text]);
 
   const getContent = () => ({
     text: contentRef.current,

@@ -1,5 +1,4 @@
 import ClozeCardEditor from "@/app/editor/NoteEditor/ClozeCardEditor";
-import { Text } from "@/components/ui/Text";
 import { NoteEditorProps, NoteTypeAdapter } from "@/logic/NoteTypeAdapter";
 import { Card, HTMLtoPreviewString } from "@/logic/card/card";
 import { createCardSkeleton } from "@/logic/card/createCardSkeleton";
@@ -216,7 +215,7 @@ const ClozeComponent = memo(
       },
     };
 
-    return <Text className={`${BASE}__card`}>{parse(finalText, options)}</Text>;
+    return <div className={`${BASE}__card`}>{parse(finalText, options)}</div>;
   }
 );
 
@@ -257,6 +256,8 @@ function ClozeField({
 const styles = `
 .${BASE}__card {
   line-height: 1.5;
+	font-size: var(--font-size-md);
+	padding: var(--spacing-md);
 }
 
 .${BASE}__field {

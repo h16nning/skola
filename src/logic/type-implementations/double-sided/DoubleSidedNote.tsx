@@ -1,5 +1,4 @@
 import DoubleSidedCardEditor from "@/app/editor/NoteEditor/DoubleSidedCardEditor";
-import { Divider, Stack } from "@/components/ui";
 import { NoteEditorProps, NoteTypeAdapter } from "@/logic/NoteTypeAdapter";
 import { Card, HTMLtoPreviewString } from "@/logic/card/card";
 import { deleteCard } from "@/logic/card/deleteCard";
@@ -8,6 +7,11 @@ import { NoteContent } from "@/logic/note/NoteContent";
 import { Note, NoteType } from "@/logic/note/note";
 import createDoubleSidedNote from "./createDoubleSidedNote";
 import { updateDoubleSidedNote } from "./updateDoubleSidedNote";
+import {
+  QuestionOnly,
+  QuestionWithAnswer,
+  NoteDisplay,
+} from "../shared/QuestionAnswerDisplay";
 
 export const DoubleSidedNoteTypeAdapter: NoteTypeAdapter<NoteType.DoubleSided> =
   {
@@ -19,53 +23,28 @@ export const DoubleSidedNoteTypeAdapter: NoteTypeAdapter<NoteType.DoubleSided> =
       card: Card<NoteType.DoubleSided>,
       content?: NoteContent<NoteType.DoubleSided>
     ) {
-      function FrontComponent() {
-        return (
-          <h3
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: "1.25rem",
-              fontWeight: 600,
-              margin: 0,
-            }}
-            dangerouslySetInnerHTML={{
-              __html:
-                (card.content.frontIsField1
-                  ? content?.field1
-                  : content?.field2) ?? "error",
-            }}
-          />
-        );
-      }
-      return <FrontComponent />;
+      const frontHtml = card.content.frontIsField1
+        ? content?.field1
+        : content?.field2;
+      return <QuestionOnly html={frontHtml ?? "error"} />;
     },
 
     displayAnswer(
       card: Card<NoteType.DoubleSided>,
       content?: NoteContent<NoteType.DoubleSided>,
-      place?: "learn" | "notebook"
+      _place?: "learn" | "notebook"
     ) {
-      function BackComponent() {
-        return (
-          <span
-            dangerouslySetInnerHTML={{
-              __html:
-                (card.content.frontIsField1
-                  ? content?.field2
-                  : content?.field1) ?? "error",
-            }}
-          ></span>
-        );
-      }
+      const frontHtml = card.content.frontIsField1
+        ? content?.field1
+        : content?.field2;
+      const backHtml = card.content.frontIsField1
+        ? content?.field2
+        : content?.field1;
       return (
-        <Stack
-          gap={place === "notebook" ? "sm" : "lg"}
-          style={{ width: "100%" }}
-        >
-          {DoubleSidedNoteTypeAdapter.displayQuestion(card, content)}
-          <Divider />
-          <BackComponent />
-        </Stack>
+        <QuestionWithAnswer
+          questionHtml={frontHtml ?? "error"}
+          answerHtml={backHtml ?? "error"}
+        />
       );
     },
 
@@ -74,25 +53,11 @@ export const DoubleSidedNoteTypeAdapter: NoteTypeAdapter<NoteType.DoubleSided> =
       showAllAnswers: "strict" | "optional" | "none"
     ) {
       return (
-        <Stack gap="sm" style={{ width: "100%" }}>
-          <h3
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: "1.25rem",
-              fontWeight: 600,
-              margin: 0,
-            }}
-            dangerouslySetInnerHTML={{ __html: note.content.field1 ?? "" }}
-          />
-          {showAllAnswers !== "none" && (
-            <>
-              <Divider />
-              <div
-                dangerouslySetInnerHTML={{ __html: note.content.field2 ?? "" }}
-              />
-            </>
-          )}
-        </Stack>
+        <NoteDisplay
+          questionHtml={note.content.field1 ?? ""}
+          answerHtml={note.content.field2 ?? ""}
+          showAnswer={showAllAnswers !== "none"}
+        />
       );
     },
 
@@ -120,7 +85,6 @@ export const DoubleSidedNoteTypeAdapter: NoteTypeAdapter<NoteType.DoubleSided> =
       );
     },
 
-    //DEPRECATED
     async deleteCard(card: Card<NoteType.DoubleSided>) {
       db.transaction("rw", db.decks, db.cards, db.notes, async () => {
         await deleteCard(card);

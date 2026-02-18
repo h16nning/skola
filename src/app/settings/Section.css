@@ -14,7 +14,7 @@
 }
 
 .settings-section__title {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg);
   font-weight: 500;
   color: var(--theme-neutral-900);
   margin-bottom: var(--spacing-md);

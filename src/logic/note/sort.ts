@@ -30,8 +30,11 @@ export const NoteSorts: Record<any, NoteSortFunction> = {
     a.content.type.localeCompare(b.content.type) * sortOrder,
   byDeckName:
     (sortOrder: 1 | -1) =>
-    (a: NoteWithComparableDeckName, b: NoteWithComparableDeckName) =>
-      a.deckName.localeCompare(b.deckName) * sortOrder,
+    (a: NoteWithComparableDeckName, b: NoteWithComparableDeckName) => {
+      const aDeckName = a.deckName ?? "";
+      const bDeckName = b.deckName ?? "";
+      return aDeckName.localeCompare(bDeckName) * sortOrder;
+    },
 };
 
 export interface NoteWithComparableDeckName extends Note<NoteType> {

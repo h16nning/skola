@@ -8,6 +8,7 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
+import { IconCheck } from "@tabler/icons-react";
 import "./Menu.css";
 
 const BASE = "menu";
@@ -190,6 +191,7 @@ interface MenuItemProps {
   onClick?: () => void;
   color?: MenuItemColor;
   disabled?: boolean;
+  checked?: boolean;
 }
 
 export function MenuItem({
@@ -199,6 +201,7 @@ export function MenuItem({
   onClick,
   color = "default",
   disabled = false,
+  checked,
 }: MenuItemProps) {
   const { close, closeOnItemClick } = useMenuContext();
 
@@ -226,6 +229,15 @@ export function MenuItem({
       role="menuitem"
       disabled={disabled}
     >
+      {checked !== undefined && (
+        <span className={`${BASE}__item-left`}>
+          {checked ? (
+            <IconCheck size={16} />
+          ) : (
+            <span style={{ width: 16, height: 16, display: "inline-block" }} />
+          )}
+        </span>
+      )}
       {leftSection && (
         <span className={`${BASE}__item-left`}>{leftSection}</span>
       )}

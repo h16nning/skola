@@ -27,7 +27,7 @@ import { useState } from "react";
 import EditNoteModal from "./EditNoteModal";
 import MoveNoteModal from "./MoveNoteModal";
 
-interface NoteMenuProps {
+interface NoteMenuProps extends React.HTMLAttributes<HTMLDivElement> {
   note: Note<NoteType> | undefined;
   withEdit?: boolean;
   withShortcuts?: boolean;
@@ -39,6 +39,7 @@ function NoteMenu({
   onDelete,
   withEdit = true,
   withShortcuts = true,
+  ...props
 }: NoteMenuProps) {
   const [editModalOpened, editModal] = useDisclosure(false);
   const [moveModalOpened, setMoveModalOpened] = useState<boolean>(false);
@@ -76,9 +77,9 @@ function NoteMenu({
 
   return (
     <>
-      <Menu position="bottom-end">
+      <Menu position="bottom-end" {...props}>
         <MenuTrigger>
-          <IconButton variant="subtle">
+          <IconButton variant="subtle" size="sm">
             <IconDots />
           </IconButton>
         </MenuTrigger>

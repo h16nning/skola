@@ -39,7 +39,7 @@
 .deck-card-base__title {
   display: inline-block;
   text-box-trim: trim-both;
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
   font-family: var(--font-serif);
   font-weight: 500;
   margin-top: calc(1px + var(--spacing-lg));
@@ -53,6 +53,9 @@
   gap: var(--spacing-xs);
   flex-wrap: wrap;
   height: var(--spacing-lg);
+  .badge {
+    font-family: var(--font-mono);
+  }
 }
 
 .deck-card-base--color-red {
