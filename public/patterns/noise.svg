@@ -2,7 +2,7 @@
   <filter id='noiseFilter'>
     <feTurbulence
       type='turbulence'
-      baseFrequency='0.95'
+      baseFrequency='0.65'
       numOctaves='1'
       stitchTiles='stitch' />
     <feColorMatrix in="noise" type="saturate" values="0" />
