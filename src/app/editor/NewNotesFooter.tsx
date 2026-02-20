@@ -23,9 +23,14 @@ export default function NewNotesFooter({
   const os = useOs();
 
   const showHistory = useCallback(() => {
-    navigate("/notes" + (deck ? `/${deck.id}` : ""), {
-      state: { sortFunction: "byCreationDate", sortDirection: false },
+    const params = new URLSearchParams({
+      sort: "byCreationDate",
+      sortDir: "desc",
     });
+    if (deck) {
+      params.set("deck", deck.id);
+    }
+    navigate(`/notes?${params.toString()}`);
   }, [deck, navigate]);
 
   useHotkeys([["Mod+Shift+H", showHistory]]);

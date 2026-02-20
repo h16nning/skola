@@ -1,11 +1,11 @@
 import { Deck } from "@/logic/deck/deck";
-import { useParams } from "react-router-dom";
 import { Combobox } from "./ui";
 
 interface SelectDecksHeaderProps {
   label: string;
   disableAll?: boolean;
   decks?: Deck[];
+  selectedValue?: string;
   onSelect: (deckId: string | null) => void;
 }
 
@@ -13,9 +13,9 @@ export default function SelectDecksHeader({
   decks,
   label,
   disableAll,
+  selectedValue = "",
   onSelect,
 }: SelectDecksHeaderProps) {
-  const deckId = useParams().deckId || "";
   return (
     <Combobox
       label={label}
@@ -27,7 +27,7 @@ export default function SelectDecksHeader({
           label: deck.name,
         })) ?? []
       )}
-      value={deckId}
+      value={selectedValue}
       onChange={(value) => onSelect(value)}
     />
   );

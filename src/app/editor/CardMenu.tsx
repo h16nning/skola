@@ -53,7 +53,7 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
     ["s", () => setStatisticsModalOpened(true)],
     ["o", () => {}],
     ["shift+d", () => setDebugModalOpened(true)],
-    ["e", () => navigate(`/notes/${note?.deck}/${note?.id}`)],
+    ["e", () => navigate(`/notes?deck=${note?.deck}&note=${note?.id}`)],
     ["Backspace", () => setDeleteModalOpened(true)],
   ]);
 
@@ -101,7 +101,9 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
             <MenuItem
               leftSection={<IconEdit size={16} />}
               rightSection={showShortcutHints && <Kbd>e</Kbd>}
-              onClick={() => navigate(`/notes/${note.deck}/${note.id}`)}
+              onClick={() =>
+                navigate(`/notes?deck=${note.deck}&note=${note.id}`)
+              }
             >
               {t("note.menu.edit")}
             </MenuItem>

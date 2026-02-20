@@ -10,8 +10,8 @@ import { useNotesWith } from "@/logic/note/hooks/useNotesWith";
 import { NoteSortFunction, NoteSorts } from "@/logic/note/sort";
 import { IconSearch } from "@tabler/icons-react";
 import { t } from "i18next";
-import { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import NoteTable from "../NoteTable/NoteTable";
 import EditNoteModal from "../editor/EditNoteModal";
 import { EditNoteView } from "../editor/EditNoteView";
@@ -21,34 +21,60 @@ import "./NoteExplorerView.css";
 const BASE = "note-explorer-view";
 const ALL_DECKS_ID = "all";
 
+type SortKey = keyof typeof NoteSorts;
+
+function isValidSortKey(key: string | null): key is SortKey {
+  return key !== null && key in NoteSorts;
+}
+
 function NoteExplorerView() {
   useDocumentTitle(`${t("manage-cards.title")} | Skola`);
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const deckParam = searchParams.get("deck");
+  const noteParam = searchParams.get("note");
+  const sortParam = searchParams.get("sort");
+  const sortDirParam = searchParams.get("sortDir");
+
+  const deckId =
+    deckParam === ALL_DECKS_ID ? undefined : (deckParam ?? undefined);
 
   const [decks] = useDecks();
-  let deckId = useParams().deckId;
-  if (deckId === ALL_DECKS_ID) deckId = undefined;
-
-  const noteId = useParams().noteId;
-
-  const {
-    sortFunction,
-    sortDirection,
-  }: { sortFunction?: keyof typeof NoteSorts; sortDirection?: boolean } =
-    location.state ?? {};
 
   const [filter, setFilter, immediateFilter] = useDebouncedState<string>(
     "",
     50
   );
 
-  const [sort, setSort] = useState<[NoteSortFunction, boolean]>([
-    sortFunction !== undefined
-      ? NoteSorts[sortFunction]
-      : NoteSorts.bySortField,
-    sortDirection !== undefined ? sortDirection : true,
+  const initialSortFunction: NoteSortFunction =
+    sortParam && isValidSortKey(sortParam)
+      ? NoteSorts[sortParam]
+      : NoteSorts.bySortField;
+  const initialSortDirection =
+    sortDirParam !== null ? sortDirParam === "asc" : true;
+
+  const [sort, setSortState] = useState<[NoteSortFunction, boolean]>([
+    initialSortFunction,
+    initialSortDirection,
   ]);
+
+  const setSort = useCallback(
+    (newSort: [NoteSortFunction, boolean]) => {
+      setSortState(newSort);
+      const sortKey = Object.entries(NoteSorts).find(
+        ([, fn]) => fn === newSort[0]
+      )?.[0];
+      if (sortKey) {
+        setSearchParams((prev) => {
+          const next = new URLSearchParams(prev);
+          next.set("sort", sortKey);
+          next.set("sortDir", newSort[1] ? "asc" : "desc");
+          return next;
+        });
+      }
+    },
+    [setSearchParams]
+  );
 
   const [notes] = useNotesWith(
     (n) =>
@@ -61,7 +87,7 @@ function NoteExplorerView() {
         )
         .toArray()
         .then((m) => m.sort(sort[0](sort[1] ? 1 : -1))),
-    [location, filter, sort]
+    [deckId, filter, sort]
   );
 
   const [editNoteModalOpened, setEditNoteModalOpened] =
@@ -79,14 +105,14 @@ function NoteExplorerView() {
   const tableRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (noteId) {
-      getNote(noteId).then((note) => {
+    if (noteParam) {
+      getNote(noteParam).then((note) => {
         if (note) {
           setOpenedNote(note);
         }
       });
     }
-  }, [noteId, setOpenedNote]);
+  }, [noteParam, setOpenedNote]);
 
   useEffect(() => {
     const element = tableRef.current;
@@ -95,6 +121,22 @@ function NoteExplorerView() {
       return () => element.removeEventListener("keydown", handleKeyDown);
     }
   }, [handleKeyDown]);
+
+  const handleDeckSelect = useCallback(
+    (selectedDeckId: string | null) => {
+      setSearchParams((prev) => {
+        const next = new URLSearchParams(prev);
+        if (!selectedDeckId || selectedDeckId === ALL_DECKS_ID) {
+          next.delete("deck");
+        } else {
+          next.set("deck", selectedDeckId);
+        }
+        next.delete("note");
+        return next;
+      });
+    },
+    [setSearchParams]
+  );
 
   return (
     <div className={BASE}>
@@ -106,7 +148,8 @@ function NoteExplorerView() {
         <SelectDecksHeader
           label="Showing Notes in"
           decks={decks}
-          onSelect={(deckId) => navigate(`/notes/${deckId}`)}
+          selectedValue={deckParam ?? ""}
+          onSelect={handleDeckSelect}
         />
 
         <TextInput

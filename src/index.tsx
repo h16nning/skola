@@ -47,11 +47,7 @@ const router = createHashRouter(
           element: <LearnView />,
         },
         {
-          path: "/notes/:deckId?",
-          element: <NoteExplorerView />,
-        },
-        {
-          path: "/notes/:deckId/:noteId?",
+          path: "/notes",
           element: <NoteExplorerView />,
         },
         {
