@@ -9,7 +9,7 @@ A modern, open-source spaced repetition application that reimagines flashcard le
 
 **Local-First Architecture** — Your data lives in your browser using IndexedDB, ensuring privacy, speed, and complete ownership of your learning materials. No account required.
 
-**Progressive Web App** — Install Skola on any device and use it offline. Full PWA support with caching.\*\*
+**Progressive Web App** — Install Skola on any device and use it offline. Full PWA support with caching.**
 
 **Cloud Sync** — Optional cloud synchronization powered by Dexie Cloud lets to access your decks across devices.
 
