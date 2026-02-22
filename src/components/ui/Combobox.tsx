@@ -1,5 +1,4 @@
 import {
-  type InputHTMLAttributes,
   type ReactNode,
   forwardRef,
   useEffect,
@@ -7,7 +6,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { createPortal } from "react-dom";
 import "./Combobox.css";
 import { IconChevronDown } from "@tabler/icons-react";
 import { InputDescription } from "./InputDescription";
@@ -21,11 +19,7 @@ interface ComboboxOption {
   label: string;
 }
 
-interface ComboboxProps
-  extends Omit<
-    InputHTMLAttributes<HTMLInputElement>,
-    "onChange" | "value" | "data"
-  > {
+interface ComboboxProps {
   label?: ReactNode;
   description?: ReactNode;
   error?: ReactNode;
@@ -34,9 +28,12 @@ interface ComboboxProps
   value?: string | null;
   searchable?: boolean;
   nothingFoundMessage?: string;
+  disabled?: boolean;
+  id?: string;
+  className?: string;
 }
 
-export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
+export const Combobox = forwardRef<HTMLButtonElement, ComboboxProps>(
   function Combobox(
     {
       label,
@@ -50,19 +47,17 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
       searchable = false,
       nothingFoundMessage = "No options found",
       disabled,
-      ...props
     },
     ref
   ) {
     const generatedId = useId();
-    const inputId = id ?? generatedId;
-    const [isOpen, setIsOpen] = useState(false);
+    const buttonId = id ?? generatedId;
+    const popoverId = `${buttonId}-popover`;
     const [searchQuery, setSearchQuery] = useState("");
     const [highlightedIndex, setHighlightedIndex] = useState(0);
-    const containerRef = useRef<HTMLDivElement>(null);
-    const fieldRef = useRef<HTMLDivElement>(null);
-    const listboxRef = useRef<HTMLUListElement>(null);
-    const dropdownPortalRef = useRef<HTMLDivElement | null>(null);
+    const listboxRef = useRef<HTMLDivElement>(null);
+    const searchInputRef = useRef<HTMLInputElement>(null);
+    const triggerRef = useRef<HTMLButtonElement>(null);
 
     const selectedOption = data.find((option) => option.value === value);
 
@@ -73,99 +68,51 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
       : data;
 
     useEffect(() => {
-      if (!dropdownPortalRef.current) {
-        dropdownPortalRef.current = document.createElement("div");
+      const listbox = listboxRef.current;
+      if (!listbox) return;
 
-        const closestDialog = containerRef.current?.closest("dialog");
-        const portalTarget = closestDialog || document.body;
-        portalTarget.appendChild(dropdownPortalRef.current);
-      }
-
-      return () => {
-        if (dropdownPortalRef.current && dropdownPortalRef.current.parentNode) {
-          dropdownPortalRef.current.parentNode.removeChild(
-            dropdownPortalRef.current
-          );
-          dropdownPortalRef.current = null;
+      const handleToggle = (e: ToggleEvent) => {
+        if (e.newState === "closed") {
+          setSearchQuery("");
+          setHighlightedIndex(0);
+        } else if (e.newState === "open" && searchable) {
+          setTimeout(() => searchInputRef.current?.focus(), 0);
         }
       };
-    }, []);
 
-    useEffect(() => {
-      if (!isOpen) {
-        setSearchQuery("");
-        setHighlightedIndex(0);
-      }
-    }, [isOpen]);
-
-    useEffect(() => {
-      if (isOpen && fieldRef.current && listboxRef.current) {
-        const fieldRect = fieldRef.current.getBoundingClientRect();
-        const dropdownRect = listboxRef.current.getBoundingClientRect();
-        const verticalGap = 4;
-
-        let top = fieldRect.bottom + verticalGap;
-        let left = fieldRect.left;
-
-        top = Math.max(
-          8,
-          Math.min(top, window.innerHeight - dropdownRect.height - 8)
-        );
-        left = Math.max(
-          8,
-          Math.min(left, window.innerWidth - dropdownRect.width - 8)
-        );
-
-        listboxRef.current.style.top = `${top}px`;
-        listboxRef.current.style.left = `${left}px`;
-        listboxRef.current.style.width = `${fieldRect.width}px`;
-      }
-    }, [isOpen]);
-
-    useEffect(() => {
-      function handleClickOutside(event: MouseEvent) {
-        if (
-          containerRef.current &&
-          !containerRef.current.contains(event.target as Node) &&
-          listboxRef.current &&
-          !listboxRef.current.contains(event.target as Node)
-        ) {
-          setIsOpen(false);
-        }
-      }
-
-      document.addEventListener("mousedown", handleClickOutside);
+      listbox.addEventListener("toggle", handleToggle as EventListener);
       return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
+        listbox.removeEventListener("toggle", handleToggle as EventListener);
       };
-    }, []);
+    }, [searchable]);
 
     useEffect(() => {
-      if (isOpen && listboxRef.current) {
-        const highlighted = listboxRef.current.children[
-          highlightedIndex
-        ] as HTMLElement;
-        if (highlighted) {
-          highlighted.scrollIntoView({ block: "nearest" });
-        }
-      }
-    }, [highlightedIndex, isOpen]);
+      const listbox = listboxRef.current;
+      if (!listbox?.matches(":popover-open")) return;
+
+      const optionElements = listbox.querySelectorAll(
+        `.${BASE}__option:not(.${BASE}__option--empty)`
+      );
+      const highlighted = optionElements[highlightedIndex] as HTMLElement;
+      highlighted?.scrollIntoView({ block: "nearest" });
+    }, [highlightedIndex]);
 
     const handleSelect = (optionValue: string) => {
-      if (onChange) {
-        onChange(optionValue);
-      }
-      setIsOpen(false);
+      onChange?.(optionValue);
+      listboxRef.current?.hidePopover();
+      triggerRef.current?.focus();
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
       if (disabled) return;
 
+      const isOpen = listboxRef.current?.matches(":popover-open");
+
       switch (e.key) {
         case "ArrowDown":
           e.preventDefault();
           if (!isOpen) {
-            setIsOpen(true);
+            listboxRef.current?.showPopover();
           } else {
             setHighlightedIndex((prev) =>
               prev < filteredData.length - 1 ? prev + 1 : prev
@@ -179,32 +126,17 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
           }
           break;
         case "Enter":
-          e.preventDefault();
           if (isOpen && filteredData[highlightedIndex]) {
+            e.preventDefault();
             handleSelect(filteredData[highlightedIndex].value);
-          } else {
-            setIsOpen(true);
           }
-          break;
-        case "Escape":
-          e.preventDefault();
-          setIsOpen(false);
           break;
         case " ":
-          if (!searchable) {
+          if (!searchable && !isOpen) {
             e.preventDefault();
-            setIsOpen(!isOpen);
+            listboxRef.current?.showPopover();
           }
           break;
-      }
-    };
-
-    const handleFieldKeyDown = (e: React.KeyboardEvent) => {
-      if (disabled) return;
-
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        setIsOpen(!isOpen);
       }
     };
 
@@ -212,97 +144,88 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
       .filter(Boolean)
       .join(" ");
 
-    const dropdownClasses = [
-      `${BASE}__listbox`,
-      isOpen && `${BASE}__listbox--open`,
-    ]
-      .filter(Boolean)
-      .join(" ");
-
     return (
-      <div className={classes} ref={containerRef}>
-        {label && <InputLabel htmlFor={inputId}>{label}</InputLabel>}
+      <div className={classes}>
+        {label && <InputLabel htmlFor={buttonId}>{label}</InputLabel>}
         {description && <InputDescription>{description}</InputDescription>}
         <div className={`${BASE}__wrapper`}>
-          <div
-            ref={fieldRef}
-            className={`${BASE}__field ${isOpen ? `${BASE}__field--open` : ""} ${disabled ? `${BASE}__field--disabled` : ""}`}
-            onClick={() => !disabled && setIsOpen(!isOpen)}
-            onKeyDown={handleFieldKeyDown}
-            role="button"
-            tabIndex={disabled ? -1 : 0}
-            aria-label={label ? undefined : "Select option"}
+          <button
+            ref={(node) => {
+              (triggerRef as React.MutableRefObject<HTMLButtonElement | null>).current = node;
+              if (typeof ref === "function") ref(node);
+              else if (ref) ref.current = node;
+            }}
+            type="button"
+            id={buttonId}
+            className={`${BASE}__trigger`}
+            popoverTarget={popoverId}
+            onKeyDown={!searchable ? handleKeyDown : undefined}
+            disabled={disabled}
+            aria-haspopup="listbox"
           >
-            {searchable && isOpen ? (
-              <input
-                ref={ref}
-                id={inputId}
-                type="text"
-                className={`${BASE}__search-input`}
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setHighlightedIndex(0);
-                }}
-                onKeyDown={handleKeyDown}
-                placeholder="Search..."
-                autoFocus
-                disabled={disabled}
-                {...props}
-              />
-            ) : (
-              <div
-                className={`${BASE}__display`}
-                role="combobox"
-                aria-expanded={isOpen}
-                aria-controls={`${inputId}-listbox`}
-                aria-haspopup="listbox"
-              >
-                {selectedOption?.label || "Select..."}
+            <span className={`${BASE}__value`}>
+              {selectedOption?.label || "Select..."}
+            </span>
+            <IconChevronDown className={`${BASE}__chevron`} aria-hidden="true" />
+          </button>
+          <div
+            ref={listboxRef}
+            id={popoverId}
+            className={`${BASE}__dropdown`}
+            popover="auto"
+            role="listbox"
+          >
+            {searchable && (
+              <div className={`${BASE}__search-wrapper`}>
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  className={`${BASE}__search-input`}
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setHighlightedIndex(0);
+                  }}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Search..."
+                />
               </div>
             )}
-            <IconChevronDown
-              className={`${BASE}__chevron ${isOpen ? `${BASE}__chevron--open` : ""}`}
-              aria-hidden="true"
-            />
-          </div>
-        </div>
-        <InputError>{error}</InputError>
-        {isOpen &&
-          dropdownPortalRef.current &&
-          createPortal(
-            <ul
-              ref={listboxRef}
-              id={`${inputId}-listbox`}
-              className={dropdownClasses}
-            >
-              {filteredData.length === 0 ? (
-                <li className={`${BASE}__option ${BASE}__option--empty`}>
-                  {nothingFoundMessage}
-                </li>
-              ) : (
-                filteredData.map((option, index) => (
-                  <li
+            {filteredData.length === 0 ? (
+              <div className={`${BASE}__option ${BASE}__option--empty`}>
+                {nothingFoundMessage}
+              </div>
+            ) : (
+              filteredData.map((option, index) => {
+                const isSelected = option.value === value;
+                const isHighlighted = index === highlightedIndex;
+
+                const optionClasses = [
+                  `${BASE}__option`,
+                  isSelected ? `${BASE}__option--selected` : "",
+                  isHighlighted ? `${BASE}__option--highlighted` : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ");
+
+                return (
+                  <button
                     key={option.value}
-                    className={`${BASE}__option ${
-                      option.value === value ? `${BASE}__option--selected` : ""
-                    } ${
-                      index === highlightedIndex
-                        ? `${BASE}__option--highlighted`
-                        : ""
-                    }`}
+                    type="button"
+                    className={optionClasses}
                     onClick={() => handleSelect(option.value)}
                     onMouseEnter={() => setHighlightedIndex(index)}
                     role="option"
-                    aria-selected={option.value === value}
+                    aria-selected={isSelected}
                   >
                     {option.label}
-                  </li>
-                ))
-              )}
-            </ul>,
-            dropdownPortalRef.current
-          )}
+                  </button>
+                );
+              })
+            )}
+          </div>
+        </div>
+        <InputError>{error}</InputError>
       </div>
     );
   }
