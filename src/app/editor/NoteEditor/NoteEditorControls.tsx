@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/RichTextEditorControls";
 import { useSettings } from "@/logic/settings/hooks/useSettings";
 import { Editor } from "@tiptap/react";
+import { memo } from "react";
 import AddImageControl from "../AddImageControl";
 import "./NoteEditorControls.css";
 
@@ -26,7 +27,7 @@ export interface NoteEditorControlsProps {
   controls?: React.ReactNode;
 }
 
-export function NoteEditorControls({
+export const NoteEditorControls = memo(function NoteEditorControls({
   editor,
   controls,
 }: NoteEditorControlsProps) {
@@ -74,4 +75,4 @@ export function NoteEditorControls({
       <RichTextEditor.ControlsGroup>{controls}</RichTextEditor.ControlsGroup>
     </div>
   );
-}
+});

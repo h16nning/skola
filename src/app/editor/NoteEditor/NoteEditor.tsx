@@ -1,7 +1,7 @@
 import { RichTextEditor } from "@/components/ui/RichTextEditor";
 import { useSettings } from "@/logic/settings/hooks/useSettings";
 import { BubbleMenu, Editor, EditorOptions, useEditor } from "@tiptap/react";
-import React from "react";
+import React, { useMemo } from "react";
 
 import "./NoteEditor.css";
 import { NoteEditorControls } from "./NoteEditorControls";
@@ -25,11 +25,18 @@ export interface UseNoteEditorProps {
 }
 
 export function useNoteEditor(props: UseNoteEditorProps) {
+  const extensions = useMemo(
+    () => getExtensions(props),
+    [props.finish, props.focusSelectNoteType, props.extensions]
+  );
+
+  const onUpdate = props.onUpdate || (() => {});
+
   return useEditor(
     {
-      extensions: getExtensions(props),
+      extensions,
       content: props.content,
-      onUpdate: props.onUpdate || (() => {}),
+      onUpdate,
     },
     [props.content]
   );

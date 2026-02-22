@@ -5,7 +5,7 @@ import { EditMode } from "@/logic/NoteTypeAdapter";
 import { Deck } from "@/logic/deck/deck";
 import { Note, NoteType } from "@/logic/note/note";
 import { DoubleSidedNoteTypeAdapter } from "@/logic/type-implementations/double-sided/DoubleSidedNote";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import "./DoubleSidedCardEditor.css";
 import { useAutoSave, useClearEditors, useNoteCreation } from "./hooks";
@@ -45,10 +45,13 @@ function DoubleSidedCardEditor({
     field2ContentRef.current = noteContent.field2;
   }, [noteContent.field1, noteContent.field2]);
 
-  const getContent = () => ({
-    field1: field1ContentRef.current,
-    field2: field2ContentRef.current,
-  });
+  const getContent = useCallback(
+    () => ({
+      field1: field1ContentRef.current,
+      field2: field2ContentRef.current,
+    }),
+    []
+  );
 
   const debouncedAutoSave = useAutoSave(
     mode,
@@ -57,21 +60,31 @@ function DoubleSidedCardEditor({
     DoubleSidedNoteTypeAdapter.updateNote
   );
 
-  const editor1 = useNoteEditor({
-    content: noteContent.field1,
-    onUpdate: ({ editor }) => {
+  const handleEditor1Update = useCallback(
+    ({ editor }: { editor: any }) => {
       field1ContentRef.current = editor.getHTML();
       debouncedAutoSave();
     },
+    [debouncedAutoSave]
+  );
+
+  const handleEditor2Update = useCallback(
+    ({ editor }: { editor: any }) => {
+      field2ContentRef.current = editor.getHTML();
+      debouncedAutoSave();
+    },
+    [debouncedAutoSave]
+  );
+
+  const editor1 = useNoteEditor({
+    content: noteContent.field1,
+    onUpdate: handleEditor1Update,
     focusSelectNoteType,
   });
 
   const editor2 = useNoteEditor({
     content: noteContent.field2,
-    onUpdate: ({ editor }) => {
-      field2ContentRef.current = editor.getHTML();
-      debouncedAutoSave();
-    },
+    onUpdate: handleEditor2Update,
     focusSelectNoteType,
   });
 

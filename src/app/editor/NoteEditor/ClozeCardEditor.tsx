@@ -7,7 +7,7 @@ import NoteEditor, { useNoteEditor } from "./NoteEditor";
 import { RichTextEditorControl } from "@/components/ui/RichTextEditor";
 import { Note } from "@/logic/note/note";
 import { ClozeNoteTypeAdapter } from "@/logic/type-implementations/cloze/ClozeNote";
-import { useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import "./ClozeCardEditor.css";
 import { useAutoSave, useClearEditors, useNoteCreation } from "./hooks";
 
@@ -38,10 +38,13 @@ export default function ClozeCardEditor({
     contentRef.current = noteContent.text;
   }, [noteContent.text]);
 
-  const getContent = () => ({
-    text: contentRef.current,
-    occlusionNumberSet: getOcclusionNumberSet(contentRef.current),
-  });
+  const getContent = useCallback(
+    () => ({
+      text: contentRef.current,
+      occlusionNumberSet: getOcclusionNumberSet(contentRef.current),
+    }),
+    []
+  );
 
   const debouncedAutoSave = useAutoSave(
     mode,
@@ -50,12 +53,17 @@ export default function ClozeCardEditor({
     ClozeNoteTypeAdapter.updateNote
   );
 
-  const editor = useNoteEditor({
-    content: noteContent.text,
-    onUpdate: ({ editor }) => {
+  const handleEditorUpdate = useCallback(
+    ({ editor }: { editor: any }) => {
       contentRef.current = editor.getHTML();
       debouncedAutoSave();
     },
+    [debouncedAutoSave]
+  );
+
+  const editor = useNoteEditor({
+    content: noteContent.text,
+    onUpdate: handleEditorUpdate,
     focusSelectNoteType,
   });
 

@@ -16,13 +16,13 @@ import {
 import { Editor } from "@tiptap/react";
 import { RichTextEditorControl } from "./RichTextEditor";
 
-import { useCallback } from "react";
+import { memo, useCallback } from "react";
 
 interface ControlProps {
   editor: Editor | null;
 }
 
-export function BoldControl({ editor }: ControlProps) {
+export const BoldControl = memo(function BoldControl({ editor }: ControlProps) {
   return (
     <RichTextEditorControl
       onClick={() => editor?.chain().focus().toggleBold().run()}
@@ -33,9 +33,11 @@ export function BoldControl({ editor }: ControlProps) {
       <IconBold />
     </RichTextEditorControl>
   );
-}
+});
 
-export function ItalicControl({ editor }: ControlProps) {
+export const ItalicControl = memo(function ItalicControl({
+  editor,
+}: ControlProps) {
   return (
     <RichTextEditorControl
       onClick={() => editor?.chain().focus().toggleItalic().run()}
@@ -46,9 +48,11 @@ export function ItalicControl({ editor }: ControlProps) {
       <IconItalic />
     </RichTextEditorControl>
   );
-}
+});
 
-export function UnderlineControl({ editor }: ControlProps) {
+export const UnderlineControl = memo(function UnderlineControl({
+  editor,
+}: ControlProps) {
   return (
     <RichTextEditorControl
       onClick={() => editor?.chain().focus().toggleUnderline().run()}
@@ -59,9 +63,11 @@ export function UnderlineControl({ editor }: ControlProps) {
       <IconUnderline />
     </RichTextEditorControl>
   );
-}
+});
 
-export function StrikethroughControl({ editor }: ControlProps) {
+export const StrikethroughControl = memo(function StrikethroughControl({
+  editor,
+}: ControlProps) {
   return (
     <RichTextEditorControl
       onClick={() => editor?.chain().focus().toggleStrike().run()}
@@ -72,9 +78,11 @@ export function StrikethroughControl({ editor }: ControlProps) {
       <IconStrikethrough />
     </RichTextEditorControl>
   );
-}
+});
 
-export function HighlightControl({ editor }: ControlProps) {
+export const HighlightControl = memo(function HighlightControl({
+  editor,
+}: ControlProps) {
   return (
     <RichTextEditorControl
       onClick={() => editor?.chain().focus().toggleHighlight().run()}
@@ -85,9 +93,9 @@ export function HighlightControl({ editor }: ControlProps) {
       <IconHighlight />
     </RichTextEditorControl>
   );
-}
+});
 
-export function CodeControl({ editor }: ControlProps) {
+export const CodeControl = memo(function CodeControl({ editor }: ControlProps) {
   return (
     <RichTextEditorControl
       onClick={() => editor?.chain().focus().toggleCode().run()}
@@ -98,9 +106,11 @@ export function CodeControl({ editor }: ControlProps) {
       <IconCode />
     </RichTextEditorControl>
   );
-}
+});
 
-export function SubscriptControl({ editor }: ControlProps) {
+export const SubscriptControl = memo(function SubscriptControl({
+  editor,
+}: ControlProps) {
   return (
     <RichTextEditorControl
       onClick={() => editor?.chain().focus().toggleSubscript().run()}
@@ -111,9 +121,11 @@ export function SubscriptControl({ editor }: ControlProps) {
       <IconSubscript />
     </RichTextEditorControl>
   );
-}
+});
 
-export function SuperscriptControl({ editor }: ControlProps) {
+export const SuperscriptControl = memo(function SuperscriptControl({
+  editor,
+}: ControlProps) {
   return (
     <RichTextEditorControl
       onClick={() => editor?.chain().focus().toggleSuperscript().run()}
@@ -124,9 +136,11 @@ export function SuperscriptControl({ editor }: ControlProps) {
       <IconSuperscript />
     </RichTextEditorControl>
   );
-}
+});
 
-export function ClearFormattingControl({ editor }: ControlProps) {
+export const ClearFormattingControl = memo(function ClearFormattingControl({
+  editor,
+}: ControlProps) {
   return (
     <RichTextEditorControl
       onClick={() => editor?.chain().focus().clearNodes().unsetAllMarks().run()}
@@ -135,9 +149,11 @@ export function ClearFormattingControl({ editor }: ControlProps) {
       <IconClearFormatting />
     </RichTextEditorControl>
   );
-}
+});
 
-export function BulletListControl({ editor }: ControlProps) {
+export const BulletListControl = memo(function BulletListControl({
+  editor,
+}: ControlProps) {
   return (
     <RichTextEditorControl
       onClick={() => editor?.chain().focus().toggleBulletList().run()}
@@ -147,9 +163,11 @@ export function BulletListControl({ editor }: ControlProps) {
       <IconList />
     </RichTextEditorControl>
   );
-}
+});
 
-export function OrderedListControl({ editor }: ControlProps) {
+export const OrderedListControl = memo(function OrderedListControl({
+  editor,
+}: ControlProps) {
   return (
     <RichTextEditorControl
       onClick={() => editor?.chain().focus().toggleOrderedList().run()}
@@ -159,9 +177,9 @@ export function OrderedListControl({ editor }: ControlProps) {
       <IconListNumbers />
     </RichTextEditorControl>
   );
-}
+});
 
-export function LinkControl({ editor }: ControlProps) {
+export const LinkControl = memo(function LinkControl({ editor }: ControlProps) {
   const setLink = useCallback(() => {
     const previousUrl = editor?.getAttributes("link").href;
     const url = window.prompt("URL", previousUrl);
@@ -192,9 +210,11 @@ export function LinkControl({ editor }: ControlProps) {
       <IconLink />
     </RichTextEditorControl>
   );
-}
+});
 
-export function UnlinkControl({ editor }: ControlProps) {
+export const UnlinkControl = memo(function UnlinkControl({
+  editor,
+}: ControlProps) {
   return (
     <RichTextEditorControl
       onClick={() => editor?.chain().focus().unsetLink().run()}
@@ -204,4 +224,4 @@ export function UnlinkControl({ editor }: ControlProps) {
       <IconLinkOff />
     </RichTextEditorControl>
   );
-}
+});
