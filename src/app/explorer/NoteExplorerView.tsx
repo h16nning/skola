@@ -91,6 +91,14 @@ function NoteExplorerView() {
   const [editNoteModalOpened, setEditNoteModalOpened] =
     useState<boolean>(false);
 
+  const openModal = useCallback(() => {
+    setEditNoteModalOpened(true);
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setEditNoteModalOpened(false);
+  }, []);
+
   const {
     selectedNoteIds,
     openedNote,
@@ -169,7 +177,7 @@ function NoteExplorerView() {
               selectedNoteIds={selectedNoteIds}
               onNoteClick={handleNoteClick}
               onSetRowRef={setRowRef}
-              openModal={() => setEditNoteModalOpened(true)}
+              openModal={openModal}
               sort={sort}
               setSort={setSort}
             />
@@ -184,7 +192,7 @@ function NoteExplorerView() {
       {openedNote && (
         <EditNoteModal
           note={openedNote}
-          setClose={() => setEditNoteModalOpened(false)}
+          setClose={closeModal}
           opened={editNoteModalOpened}
         />
       )}

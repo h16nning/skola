@@ -48,7 +48,6 @@ const InnerCard = memo(
     return (
       <Paper
         onClick={handlers.toggle}
-        onMouseEnter={() => setHasHovered(true)}
         withBorder
         style={{ position: "relative", padding: 0, cursor: "pointer" }}
       >
@@ -69,6 +68,7 @@ const InnerCard = memo(
             <IconButton
               variant="subtle"
               aria-label="Menu"
+              onMouseEnter={() => setHasHovered(true)}
               onClick={(e) => {
                 e.stopPropagation();
                 setHasHovered(true);

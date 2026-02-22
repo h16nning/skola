@@ -30,6 +30,16 @@ export function useNoteSelection({
   const [openedNote, setOpenedNote] = useState<Note<NoteType> | undefined>();
   const [anchorIndex, setAnchorIndex] = useState<number>(-1);
   const rowRefs = useRef<Map<number, HTMLTableRowElement>>(new Map());
+  const openedNoteRef = useRef<Note<NoteType> | undefined>(openedNote);
+  const anchorIndexRef = useRef<number>(anchorIndex);
+
+  useEffect(() => {
+    openedNoteRef.current = openedNote;
+  }, [openedNote]);
+
+  useEffect(() => {
+    anchorIndexRef.current = anchorIndex;
+  }, [anchorIndex]);
 
   useEffect(() => {
     if (onOpenNote) {
@@ -98,31 +108,33 @@ export function useNoteSelection({
       const isShiftKey = event.shiftKey;
 
       if (isShiftKey) {
-        const startIndex = anchorIndex !== -1 ? anchorIndex : 0;
+        const startIndex = anchorIndexRef.current !== -1 ? anchorIndexRef.current : 0;
         const start = Math.min(startIndex, index);
         const end = Math.max(startIndex, index);
         const rangeIds = new Set(notes.slice(start, end + 1).map((n) => n.id));
         setSelectedNoteIds(rangeIds);
         setOpenedNote(note);
       } else if (isMetaKey) {
-        const newSelection = new Set(selectedNoteIds);
-        if (newSelection.has(note.id)) {
-          newSelection.delete(note.id);
-          if (note.id === openedNote?.id) {
-            const remainingIds = Array.from(newSelection);
-            const newOpenedNote =
-              remainingIds.length > 0
-                ? notes.find(
-                    (n) => n.id === remainingIds[remainingIds.length - 1]
-                  )
-                : undefined;
-            setOpenedNote(newOpenedNote);
+        setSelectedNoteIds((prevSelectedNoteIds) => {
+          const newSelection = new Set(prevSelectedNoteIds);
+          if (newSelection.has(note.id)) {
+            newSelection.delete(note.id);
+            if (note.id === openedNoteRef.current?.id) {
+              const remainingIds = Array.from(newSelection);
+              const newOpenedNote =
+                remainingIds.length > 0
+                  ? notes.find(
+                      (n) => n.id === remainingIds[remainingIds.length - 1]
+                    )
+                  : undefined;
+              setOpenedNote(newOpenedNote);
+            }
+          } else {
+            newSelection.add(note.id);
+            setOpenedNote(note);
           }
-        } else {
-          newSelection.add(note.id);
-          setOpenedNote(note);
-        }
-        setSelectedNoteIds(newSelection);
+          return newSelection;
+        });
         setAnchorIndex(index);
       } else {
         setSelectedNoteIds(new Set([note.id]));
@@ -130,31 +142,34 @@ export function useNoteSelection({
         setAnchorIndex(index);
       }
     },
-    [notes, selectedNoteIds, openedNote, anchorIndex]
+    [notes]
   );
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (!notes || notes.length === 0) return;
 
-      const currentIndex = openedNote
-        ? notes.findIndex((n) => n.id === openedNote.id)
+      const currentIndex = openedNoteRef.current
+        ? notes.findIndex((n) => n.id === openedNoteRef.current?.id)
         : -1;
 
       if ((event.metaKey || event.ctrlKey) && event.key === "a") {
         event.preventDefault();
-        const allIds = new Set(notes.map((n) => n.id));
-        const allSelected = notes.every((n) => selectedNoteIds.has(n.id));
+        setSelectedNoteIds((prevSelectedNoteIds) => {
+          const allIds = new Set(notes.map((n) => n.id));
+          const allSelected = notes.every((n) => prevSelectedNoteIds.has(n.id));
 
-        if (allSelected) {
-          clearSelection();
-        } else {
-          setSelectedNoteIds(allIds);
-          if (!openedNote && notes.length > 0) {
-            setOpenedNote(notes[0]);
-            setAnchorIndex(0);
+          if (allSelected) {
+            clearSelection();
+            return new Set();
+          } else {
+            if (!openedNoteRef.current && notes.length > 0) {
+              setOpenedNote(notes[0]);
+              setAnchorIndex(0);
+            }
+            return allIds;
           }
-        }
+        });
       } else if (
         (event.metaKey || event.ctrlKey) &&
         event.key === "ArrowDown"
@@ -183,7 +198,7 @@ export function useNoteSelection({
         if (nextIndex !== currentIndex) {
           const nextNote = notes[nextIndex];
           if (event.shiftKey) {
-            const startIndex = anchorIndex !== -1 ? anchorIndex : currentIndex;
+            const startIndex = anchorIndexRef.current !== -1 ? anchorIndexRef.current : currentIndex;
             const start = Math.min(startIndex, nextIndex);
             const end = Math.max(startIndex, nextIndex);
             const rangeIds = new Set(
@@ -203,7 +218,7 @@ export function useNoteSelection({
         if (prevIndex !== currentIndex) {
           const prevNote = notes[prevIndex];
           if (event.shiftKey) {
-            const startIndex = anchorIndex !== -1 ? anchorIndex : currentIndex;
+            const startIndex = anchorIndexRef.current !== -1 ? anchorIndexRef.current : currentIndex;
             const start = Math.min(startIndex, prevIndex);
             const end = Math.max(startIndex, prevIndex);
             const rangeIds = new Set(
@@ -221,9 +236,6 @@ export function useNoteSelection({
     },
     [
       notes,
-      openedNote,
-      anchorIndex,
-      selectedNoteIds,
       clearSelection,
       scrollToIndex,
     ]

@@ -26,9 +26,10 @@ interface DeckMenuProps {
   deck?: Deck;
   ready: boolean;
   triggerSize?: "sm" | "md";
+  withShortcuts?: boolean;
 }
 
-function DeckMenu({ deck, ready, triggerSize = "md" }: DeckMenuProps) {
+function DeckMenu({ deck, ready, triggerSize = "md", withShortcuts = true }: DeckMenuProps) {
   const navigate = useNavigate();
   const [t] = useTranslation();
 
@@ -39,6 +40,11 @@ function DeckMenu({ deck, ready, triggerSize = "md" }: DeckMenuProps) {
   const [renameModalOpened, setRenameModalOpened] = useState<boolean>(false);
   const [importModalOpened, setImportModalOpened] = useState<boolean>(false);
   const [debugModalOpened, setDebugModalOpened] = useState<boolean>(false);
+
+  const [hasOpenedRename, setHasOpenedRename] = useState(false);
+  const [hasOpenedMove, setHasOpenedMove] = useState(false);
+  const [hasOpenedImport, setHasOpenedImport] = useState(false);
+  const [hasOpenedDebug, setHasOpenedDebug] = useState(false);
 
   const handleDelete = useCallback(async () => {
     if (!deck) {
@@ -64,19 +70,33 @@ function DeckMenu({ deck, ready, triggerSize = "md" }: DeckMenuProps) {
   }, [deck, navigate]);
 
   const showShortcutHints = useShowShortcutHints();
-  useHotkeys([
-    ["r", () => setRenameModalOpened(true)],
-    [
-      "m",
-      () => {
-        setMoveModalOpened(true);
-      },
-    ],
-    ["b", manageCards],
-    ["i", () => setImportModalOpened(true)],
-    ["shift+d", () => setDebugModalOpened(true)],
-    ["Backspace", () => setDeleteModalOpened(true)],
-  ]);
+  useHotkeys(
+    withShortcuts
+      ? [
+          ["r", () => {
+            setHasOpenedRename(true);
+            setRenameModalOpened(true);
+          }],
+          [
+            "m",
+            () => {
+              setHasOpenedMove(true);
+              setMoveModalOpened(true);
+            },
+          ],
+          ["b", manageCards],
+          ["i", () => {
+            setHasOpenedImport(true);
+            setImportModalOpened(true);
+          }],
+          ["shift+d", () => {
+            setHasOpenedDebug(true);
+            setDebugModalOpened(true);
+          }],
+          ["Backspace", () => setDeleteModalOpened(true)],
+        ]
+      : []
+  );
 
   return (
     <>
@@ -97,29 +117,38 @@ function DeckMenu({ deck, ready, triggerSize = "md" }: DeckMenuProps) {
       >
         <MenuItem
           leftSection={<IconCursorText />}
-          rightSection={showShortcutHints && <Kbd>r</Kbd>}
-          onClick={() => setRenameModalOpened(true)}
+          rightSection={withShortcuts && showShortcutHints && <Kbd>r</Kbd>}
+          onClick={() => {
+            setHasOpenedRename(true);
+            setRenameModalOpened(true);
+          }}
         >
           {t("deck.menu.edit")}
         </MenuItem>
         <MenuItem
           leftSection={<IconArrowsExchange />}
-          rightSection={showShortcutHints && <Kbd>m</Kbd>}
-          onClick={() => setMoveModalOpened(true)}
+          rightSection={withShortcuts && showShortcutHints && <Kbd>m</Kbd>}
+          onClick={() => {
+            setHasOpenedMove(true);
+            setMoveModalOpened(true);
+          }}
         >
           {t("deck.menu.move")}
         </MenuItem>
         <MenuItem
           leftSection={<IconCards />}
-          rightSection={showShortcutHints && <Kbd>b</Kbd>}
+          rightSection={withShortcuts && showShortcutHints && <Kbd>b</Kbd>}
           onClick={manageCards}
         >
           {t("deck.menu.manage-cards")}
         </MenuItem>
         <MenuItem
           leftSection={<IconFileImport />}
-          rightSection={showShortcutHints && <Kbd>i</Kbd>}
-          onClick={() => setImportModalOpened(true)}
+          rightSection={withShortcuts && showShortcutHints && <Kbd>i</Kbd>}
+          onClick={() => {
+            setHasOpenedImport(true);
+            setImportModalOpened(true);
+          }}
         >
           {t("deck.menu.import-cards")}
         </MenuItem>
@@ -127,7 +156,7 @@ function DeckMenu({ deck, ready, triggerSize = "md" }: DeckMenuProps) {
           <MenuItem
             leftSection={<IconCode />}
             rightSection={
-              showShortcutHints && (
+              withShortcuts && showShortcutHints && (
                 <span
                   style={{
                     display: "flex",
@@ -139,7 +168,10 @@ function DeckMenu({ deck, ready, triggerSize = "md" }: DeckMenuProps) {
                 </span>
               )
             }
-            onClick={() => setDebugModalOpened(true)}
+            onClick={() => {
+              setHasOpenedDebug(true);
+              setDebugModalOpened(true);
+            }}
           >
             {t("deck.menu.debug")}
           </MenuItem>
@@ -147,7 +179,7 @@ function DeckMenu({ deck, ready, triggerSize = "md" }: DeckMenuProps) {
         <MenuItem
           color="red"
           leftSection={<IconTrash />}
-          rightSection={showShortcutHints && <Kbd>←</Kbd>}
+          rightSection={withShortcuts && showShortcutHints && <Kbd>←</Kbd>}
           onClick={() => setDeleteModalOpened(true)}
         >
           {t("deck.menu.delete")}
@@ -165,27 +197,35 @@ function DeckMenu({ deck, ready, triggerSize = "md" }: DeckMenuProps) {
             opened={deleteModalOpened}
             setOpened={setDeleteModalOpened}
           />
-          <DeckModal
-            mode="edit"
-            deck={deck}
-            opened={renameModalOpened}
-            setOpened={setRenameModalOpened}
-          />
-          <MoveDeckModal
-            deck={deck}
-            opened={moveModalOpened}
-            setOpened={setMoveModalOpened}
-          />
-          <DebugDeckModal
-            deck={deck}
-            opened={debugModalOpened}
-            setOpened={setDebugModalOpened}
-          />
-          <ImportModal
-            deck={deck}
-            opened={importModalOpened}
-            setOpened={setImportModalOpened}
-          />
+          {hasOpenedRename && (
+            <DeckModal
+              mode="edit"
+              deck={deck}
+              opened={renameModalOpened}
+              setOpened={setRenameModalOpened}
+            />
+          )}
+          {hasOpenedMove && (
+            <MoveDeckModal
+              deck={deck}
+              opened={moveModalOpened}
+              setOpened={setMoveModalOpened}
+            />
+          )}
+          {hasOpenedDebug && (
+            <DebugDeckModal
+              deck={deck}
+              opened={debugModalOpened}
+              setOpened={setDebugModalOpened}
+            />
+          )}
+          {hasOpenedImport && (
+            <ImportModal
+              deck={deck}
+              opened={importModalOpened}
+              setOpened={setImportModalOpened}
+            />
+          )}
         </>
       )}
     </>

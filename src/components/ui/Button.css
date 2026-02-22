@@ -12,6 +12,7 @@
   font-family: var(--font-sans);
   transition: var(--transition-button);
   white-space: nowrap;
+  user-select: none;
   border: 1px solid var(--theme-neutral-300);
 }
 

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Note, NoteType } from "@/logic/note/note";
 import { NoteWithComparableDeckName } from "@/logic/note/sort";
 
@@ -15,23 +16,31 @@ interface NoteTableItemProps {
   index: number;
   isSelected: boolean;
   isOpened: boolean;
-  onSelect: (event: React.MouseEvent) => void;
+  onNoteClick: (
+    note: Note<NoteType>,
+    index: number,
+    event: React.MouseEvent
+  ) => void;
   onOpen: () => void;
   onSetRef: (index: number, element: HTMLTableRowElement | null) => void;
   noteTypeLabels: Record<NoteType, string>;
   visibleColumns: ColumnConfig[];
+  isMobile: boolean;
+  openModal: () => void;
 }
 
-export function NoteTableItem({
+export const NoteTableItem = memo(function NoteTableItem({
   note,
   index,
   isSelected,
   isOpened,
-  onSelect,
+  onNoteClick,
   onOpen,
   onSetRef,
   noteTypeLabels,
   visibleColumns,
+  isMobile,
+  openModal,
 }: NoteTableItemProps) {
   const classes = [
     `${BASE}__row`,
@@ -58,13 +67,22 @@ export function NoteTableItem({
     }
   };
 
+  const handleClick = (event: React.MouseEvent) => {
+    onNoteClick(note, index, event);
+    if (isMobile && !event.shiftKey && !event.metaKey && !event.ctrlKey) {
+      openModal();
+    }
+  };
+
+  const handleRef = (el: HTMLTableRowElement | null) => {
+    onSetRef(index, el);
+  };
+
   return (
     <tr
-      ref={el => {
-        onSetRef(index, el);
-      }}
+      ref={handleRef}
       className={classes}
-      onClick={onSelect}
+      onClick={handleClick}
       onDoubleClick={onOpen}
     >
       {visibleColumns.map((column) => (
@@ -74,4 +92,15 @@ export function NoteTableItem({
       ))}
     </tr>
   );
-}
+}, (prevProps, nextProps) => {
+  const prevNote = prevProps.note as NoteWithComparableDeckName;
+  const nextNote = nextProps.note as NoteWithComparableDeckName;
+
+  return (
+    prevProps.note.id === nextProps.note.id &&
+    prevProps.isSelected === nextProps.isSelected &&
+    prevProps.isOpened === nextProps.isOpened &&
+    prevProps.visibleColumns === nextProps.visibleColumns &&
+    prevNote.deckName === nextNote.deckName
+  );
+});

@@ -1,7 +1,7 @@
 {
   "name": "skola",
   "homepage": "https://skola.cards/",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "private": false,
   "dependencies": {
     "@hello-pangea/dnd": "16.5.0",
@@ -72,6 +72,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@react-grab/mcp": "^0.1.18",
     "@tauri-apps/cli": "^2.10.0",
     "@types/lodash": "4.17.0",
     "@types/node": "22.5.5",
@@ -87,6 +88,7 @@
     "postcss-cli": "11.0.0",
     "postcss-preset-mantine": "1.13.0",
     "postcss-simple-vars": "7.0.1",
+    "react-grab": "^0.1.18",
     "typescript": "5.5.2",
     "vite": "5.2.13",
     "vite-plugin-checker": "0.6.4",

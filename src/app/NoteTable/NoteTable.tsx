@@ -8,7 +8,7 @@ import {
   getNotesWithComparableDeckName,
 } from "@/logic/note/sort";
 import { IconDots } from "@tabler/icons-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import NoteTableHeadItem from "./NoteTableHeadItem";
 import { NoteTableItem } from "./NoteTableItem";
@@ -97,24 +97,17 @@ function NoteTable({
     [NoteType.Undefined]: t("note.type.undefined"),
   };
 
-  const visibleColumns = columns.filter((col) => col.visible);
+  const visibleColumns = useMemo(
+    () => columns.filter((col) => col.visible),
+    [columns]
+  );
+
   const displayNotes =
     notesWithDeckNames.length > 0 ? notesWithDeckNames : noteSet;
 
-  function handleRowSelect(
-    note: Note<NoteType>,
-    index: number,
-    event: React.MouseEvent
-  ) {
-    onNoteClick(note, index, event);
-    if (isMobile && !event.shiftKey && !event.metaKey && !event.ctrlKey) {
-      openModal();
-    }
-  }
-
-  function handleRowOpen() {
+  const handleRowOpen = useCallback(() => {
     openModal();
-  }
+  }, [openModal]);
 
   function toggleColumn(columnKey: string) {
     setColumns((prevColumns) =>
@@ -177,11 +170,13 @@ function NoteTable({
                 index={index}
                 isSelected={selectedNoteIds.has(note.id)}
                 isOpened={note.id === openedNote?.id}
-                onSelect={(event) => handleRowSelect(note, index, event)}
+                onNoteClick={onNoteClick}
                 onOpen={handleRowOpen}
                 onSetRef={onSetRowRef}
                 noteTypeLabels={noteTypeLabels}
                 visibleColumns={visibleColumns}
+                isMobile={isMobile}
+                openModal={openModal}
               />
             ))
           )}
