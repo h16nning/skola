@@ -40,13 +40,13 @@ export function CloudSyncState({ minimal = false }: CloudSyncStateProps) {
   const getPhaseIcon = () => {
     switch (phase) {
       case "pushing":
-        return <IconCloudUpload size={14} />;
+        return <IconCloudUpload />;
       case "pulling":
-        return <IconCloudDownload size={14} />;
+        return <IconCloudDownload />;
       case "offline":
-        return <IconCloudOff size={14} />;
+        return <IconCloudOff />;
       case "error":
-        return <IconCloudOff size={14} />;
+        return <IconCloudOff />;
       default:
         return null;
     }
@@ -101,7 +101,7 @@ export function CloudSyncState({ minimal = false }: CloudSyncStateProps) {
     .join(" ");
 
   return (
-    <div className={classes}>
+    <a className={classes} href="#settings/cloud">
       <div className={`${BASE}__indicator`}>
         <div
           className={`${BASE}__status-dot ${BASE}__status-dot--${statusColor}`}
@@ -129,6 +129,6 @@ export function CloudSyncState({ minimal = false }: CloudSyncStateProps) {
       )}
 
       {phaseIcon && <div className={`${BASE}__phase-icon`}>{phaseIcon}</div>}
-    </div>
+    </a>
   );
 }
