@@ -13,9 +13,17 @@ import { useShowShortcutHints } from "@/logic/settings/hooks/useShowShortcutHint
 import { IconCards, IconSearch, IconSquare, IconX } from "@tabler/icons-react";
 import cx from "clsx";
 import { t } from "i18next";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import "./Spotlight.css";
+import { IconButton } from "@/components/ui";
+import { NavItem } from "@/components/ui/NavItem";
 
 const BASE = "spotlight";
 
@@ -59,25 +67,24 @@ const useSearchNote = (filter: string) => {
         ),
     [filter]
   );
+
   useEffect(() => {
-    async function filterNotes(notes: Note<NoteType>[]) {
-      const decksPromises = notes?.map(async (note) => {
-        const deck = await getDeck(note.deck);
-        const superDecks = await getSuperDecks(deck);
-        return [
-          ...(superDecks[0] || []).map((sd) => sd.name),
-          deck?.name || "Empty",
-        ];
-      });
-      const decks = await Promise.all(decksPromises);
+    async function enrich(notes: Note<NoteType>[]) {
+      const decks = await Promise.all(
+        notes.map(async (note) => {
+          const deck = await getDeck(note.deck);
+          const superDecks = await getSuperDecks(deck);
+          return [
+            ...(superDecks[0] ?? []).map((sd) => sd.name),
+            deck?.name ?? "Empty",
+          ];
+        })
+      );
       setFilteredNotes(
-        notes.map((note, i) => ({
-          ...note,
-          breadcrumb: decks[i],
-        }))
+        notes.map((note, i) => ({ ...note, breadcrumb: decks[i] }))
       );
     }
-    filterNotes(notes || []);
+    enrich(notes ?? []);
   }, [notes]);
 
   return filteredNotes;
@@ -85,13 +92,10 @@ const useSearchNote = (filter: string) => {
 
 function highlightQuery(text: string, query: string): ReactNode {
   if (!query) return text;
-
   const lowerText = text.toLowerCase();
   const lowerQuery = query.toLowerCase();
   const index = lowerText.indexOf(lowerQuery);
-
   if (index === -1) return text;
-
   return (
     <>
       {text.slice(0, index)}
@@ -103,61 +107,53 @@ function highlightQuery(text: string, query: string): ReactNode {
   );
 }
 
-export default function SpotlightCard({
-  minimalMode,
-}: { minimalMode: boolean }) {
+export default function SpotlightCard() {
   const navigate = useNavigate();
   const os = useOs();
   const showShortcutHints = useShowShortcutHints();
 
-  const [opened, setOpened] = useState(false);
   const [query, setQuery, immediateQuery] = useDebouncedState("", 50);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const [allDecks] = useDecks();
   const filteredNotes = useSearchNote(query);
 
-  const filteredDecks = (allDecks || []).filter((deck) =>
+  const filteredDecks = (allDecks ?? []).filter((deck) =>
     deck.name.toLowerCase().includes(query.toLowerCase())
   );
 
   const possibleActions: SpotlightGroup[] = [
     {
       group: "Decks",
-      actions: [
-        ...filteredDecks.map((deck) => ({
-          id: deck.id,
-          label: deck.name,
-          description: deck.description,
-          onClick: () => navigate(`/deck/${deck.id}`),
-          leftSection: <IconCards />,
-          tabAction: {
-            label: "to study",
-            action: () => navigate(`/learn/${deck.id}`),
-            disabled:
-              deck.statCache &&
-              deck.statCache.counts.new +
-                deck.statCache.counts.learning +
-                deck.statCache.counts.review ===
-                0,
-          },
-        })),
-      ],
+      actions: filteredDecks.map((deck) => ({
+        id: deck.id,
+        label: deck.name,
+        description: deck.description,
+        onClick: () => navigate(`/deck/${deck.id}`),
+        leftSection: <IconCards />,
+        tabAction: {
+          label: "to study",
+          action: () => navigate(`/learn/${deck.id}`),
+          disabled:
+            deck.statCache &&
+            deck.statCache.counts.new +
+              deck.statCache.counts.learning +
+              deck.statCache.counts.review ===
+              0,
+        },
+      })),
     },
     {
       group: "Notes",
-      actions: [
-        ...filteredNotes.map((note) => ({
-          id: note.id,
-          label: getAdapter(note).getSortFieldFromNoteContent(note.content),
-          description: note.breadcrumb.join(" > "),
-          onClick: () => navigate(`/notes?deck=${note.deck}&note=${note.id}`),
-          leftSection: <IconSquare />,
-        })),
-      ],
+      actions: filteredNotes.map((note) => ({
+        id: note.id,
+        label: getAdapter(note).getSortFieldFromNoteContent(note.content),
+        description: note.breadcrumb.join(" > "),
+        onClick: () => navigate(`/notes?deck=${note.deck}&note=${note.id}`),
+        leftSection: <IconSquare />,
+      })),
     },
   ];
 
@@ -165,160 +161,133 @@ export default function SpotlightCard({
   let actionCount = 0;
   for (const group of possibleActions) {
     if (actionCount >= 10) break;
-    const availableSlots = 10 - actionCount;
-    const groupActions = group.actions.slice(0, availableSlots);
+    const slots = 10 - actionCount;
+    const groupActions = group.actions.slice(0, slots);
     if (groupActions.length > 0) {
       limitedActions.push({ group: group.group, actions: groupActions });
       actionCount += groupActions.length;
     }
   }
 
-  const flatActions = limitedActions.flatMap((group) => group.actions);
+  const flatActions = limitedActions.flatMap((g) => g.actions);
   const totalActions = flatActions.length;
 
-  useEffect(() => {
+  const flatActionsRef = useRef(flatActions);
+  flatActionsRef.current = flatActions;
+  const selectedIndexRef = useRef(selectedIndex);
+  selectedIndexRef.current = selectedIndex;
+  const totalActionsRef = useRef(totalActions);
+  totalActionsRef.current = totalActions;
+
+  const open = useCallback(() => {
+    const dialog = dialogRef.current;
+    if (!dialog || dialog.open) return;
     setSelectedIndex(0);
-  }, [query]);
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-
-    if (opened && !dialog.open) {
-      dialog.showModal();
-      searchInputRef.current?.focus();
-      setSelectedIndex(0);
-    } else if (!opened && dialog.open) {
-      dialog.close();
-      setQuery("");
-    }
-  }, [opened, setQuery]);
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-
-    function handleClick(event: MouseEvent) {
-      if (event.target === dialog) {
-        setOpened(false);
-      }
-    }
-
-    function handleCancel(event: Event) {
-      event.preventDefault();
-      setOpened(false);
-    }
-
-    dialog.addEventListener("click", handleClick);
-    dialog.addEventListener("cancel", handleCancel);
-
-    return () => {
-      dialog.removeEventListener("click", handleClick);
-      dialog.removeEventListener("cancel", handleCancel);
-    };
+    dialog.showModal();
   }, []);
+
+  const close = useCallback(() => {
+    dialogRef.current?.close();
+  }, []);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    const onClose = () => {
+      setQuery("");
+      setSelectedIndex(0);
+    };
+    dialog.addEventListener("close", onClose);
+    return () => dialog.removeEventListener("close", onClose);
+  }, [setQuery]);
 
   useHotkeys([
     [
       os === "macos" ? "meta+k" : "ctrl+k",
       (e) => {
         e.preventDefault();
-        setOpened((prev) => !prev);
+        open();
       },
       { enableOnInputs: true },
     ],
   ]);
 
   useEffect(() => {
-    if (!opened) return;
+    const dialog = dialogRef.current;
+    if (!dialog) return;
 
-    function handleKeyDown(event: KeyboardEvent) {
-      event.stopPropagation();
+    const onKeyDown = (e: KeyboardEvent) => {
+      const flat = flatActionsRef.current;
+      const idx = selectedIndexRef.current;
+      const total = totalActionsRef.current;
 
-      const isToggleKey =
-        event.key.toLowerCase() === "k" && (event.metaKey || event.ctrlKey);
-
-      if (isToggleKey) {
-        event.preventDefault();
-        setOpened(false);
-      } else if (event.key === "ArrowDown") {
-        event.preventDefault();
-        if (totalActions > 0) {
-          setSelectedIndex((prev) => (prev + 1) % totalActions);
-        }
-      } else if (event.key === "ArrowUp") {
-        event.preventDefault();
-        if (totalActions > 0) {
-          setSelectedIndex((prev) => (prev - 1 + totalActions) % totalActions);
-        }
-      } else if (event.key === "Enter") {
-        event.preventDefault();
-        if (flatActions[selectedIndex]) {
-          flatActions[selectedIndex].onClick();
-          setOpened(false);
-        }
-      } else if (event.key === "Tab") {
-        event.preventDefault();
-        if (
-          flatActions[selectedIndex]?.tabAction &&
-          !flatActions[selectedIndex].tabAction!.disabled
-        ) {
-          flatActions[selectedIndex].tabAction!.action();
-          setOpened(false);
+      if (e.key.toLowerCase() === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        e.stopPropagation();
+        close();
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (total > 0) setSelectedIndex((prev) => (prev + 1) % total);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (total > 0) setSelectedIndex((prev) => (prev - 1 + total) % total);
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        flat[idx]?.onClick();
+        close();
+      } else if (e.key === "Tab") {
+        e.preventDefault();
+        const tab = flat[idx]?.tabAction;
+        if (tab && !tab.disabled) {
+          tab.action();
+          close();
         }
       }
-    }
+    };
 
-    document.addEventListener("keydown", handleKeyDown, true);
-    return () => document.removeEventListener("keydown", handleKeyDown, true);
-  }, [opened, selectedIndex, totalActions, flatActions]);
+    dialog.addEventListener("keydown", onKeyDown);
+    return () => dialog.removeEventListener("keydown", onKeyDown);
+  }, [close]);
+
+  useEffect(() => {
+    setSelectedIndex(0);
+  }, [query]);
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpened(true)}
-        className={cx(`${BASE}__button`, {
-          [`${BASE}__button--minimal`]: minimalMode,
-        })}
-      >
-        {minimalMode ? (
-          <IconSearch className={`${BASE}__button-icon`} />
-        ) : (
-          <>
-            <span className={`${BASE}__button-section`}>
-              <IconSearch className={`${BASE}__button-icon`} />
-              Search
-            </span>
-            {showShortcutHints && (
-              <span className={`${BASE}__button-section`}>
-                <Kbd>{`${os === "macos" ? "⌘" : "Ctrl"} + K`}</Kbd>
-              </span>
-            )}
-          </>
-        )}
-      </button>
+      <NavItem
+        onClick={open}
+        label="Search"
+        icon={<IconSearch />}
+        rightElement={
+          showShortcutHints && <Kbd>{os === "macos" ? "⌘" : "Ctrl"} + K</Kbd>
+        }
+      />
 
-      <dialog ref={dialogRef} className={`${BASE}__dialog`}>
+      <dialog
+        ref={dialogRef}
+        className={`${BASE}__dialog`}
+        aria-label={t("spotlight.title", "Command palette")}
+        {...({ closedby: "any" } as React.HTMLAttributes<HTMLDialogElement>)}
+      >
         <div className={`${BASE}__content`}>
           <div className={`${BASE}__search-wrapper`}>
             <IconSearch className={`${BASE}__search-icon`} stroke={2} />
             <input
-              ref={searchInputRef}
+              autoFocus
               type="text"
               className={`${BASE}__search-input`}
               placeholder="Search..."
               onChange={(e) => setQuery(e.target.value)}
               value={immediateQuery}
             />
-            <button
-              type="button"
+            <IconButton
               className={`${BASE}__close-button`}
-              onClick={() => setOpened(false)}
-              aria-label="Close"
+              onClick={close}
+              size="sm"
             >
               <IconX />
-            </button>
+            </IconButton>
           </div>
 
           <div className={`${BASE}__results`}>
@@ -337,7 +306,6 @@ export default function SpotlightCard({
                     <div className={`${BASE}__group-label`}>{group.group}</div>
                     {group.actions.map((action, localIndex) => {
                       const globalIndex = groupStartIndex + localIndex;
-
                       return (
                         <button
                           type="button"
@@ -348,7 +316,7 @@ export default function SpotlightCard({
                           })}
                           onClick={() => {
                             action.onClick();
-                            setOpened(false);
+                            close();
                           }}
                           onMouseEnter={() => setSelectedIndex(globalIndex)}
                         >

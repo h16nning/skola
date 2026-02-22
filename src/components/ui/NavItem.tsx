@@ -4,7 +4,7 @@ import "./NavItem.css";
 
 const BASE = "nav-item";
 
-interface NavItemProps {
+interface NavItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   path?: string;
   icon: ReactNode;
@@ -26,6 +26,7 @@ export function NavItem({
   onClick,
   active,
   size = "default",
+  ...props
 }: NavItemProps) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -65,6 +66,7 @@ export function NavItem({
       onClick={handleClick}
       title={collapsed ? label : undefined}
       style={style}
+      {...props}
     >
       <span className={`${BASE}__icon`}>{icon}</span>
       {!collapsed && <span className={`${BASE}__label`}>{label}</span>}

@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Paper } from "@/components/ui/Paper";
 import { COLORS } from "@/lib/ColorIdentifier";
@@ -127,19 +126,17 @@ function DeckHeroSection({ deck, cards, states }: DeckHeroSectionProps) {
       <HeroContent deck={deck}>
         <div className={`deck-card-base__details ${BASE}__details`}>
           {states.review > 0 && (
-            <Badge variant="light">
+            <span>
               {t("deck.review-cards-label", { count: states.review })}
-            </Badge>
+            </span>
           )}
           {states.new > 0 && (
-            <Badge variant="light">
-              {t("deck.new-cards-label", { count: states.new })}
-            </Badge>
+            <span>{t("deck.new-cards-label", { count: states.new })}</span>
           )}
           {states.learning > 0 && (
-            <Badge variant="light">
+            <span>
               {t("deck.learning-cards-label", { count: states.learning })}
-            </Badge>
+            </span>
           )}
         </div>
       </HeroContent>

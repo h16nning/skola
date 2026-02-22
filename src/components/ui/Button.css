@@ -129,6 +129,18 @@
   background-color: var(--theme-red-500);
 }
 
+.button--xs {
+  padding: var(--spacing-xxs) var(--spacing-xs);
+  font-size: var(--font-size-xs);
+  gap: var(--spacing-xs);
+}
+
+.button--xs svg,
+.button--xs svg {
+  width: var(--icon-size-xs);
+  height: var(--icon-size-xs);
+}
+
 .button--sm {
   padding: var(--spacing-xs) var(--spacing-sm);
   font-size: var(--font-size-sm);

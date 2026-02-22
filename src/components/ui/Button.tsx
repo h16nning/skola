@@ -13,7 +13,7 @@ type ButtonVariant =
   | "transparent-ghost"
   | "destructive";
 
-type ButtonSize = "sm" | "md" | "lg";
+type ButtonSize = "xs" | "sm" | "md" | "lg";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;

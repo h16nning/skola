@@ -13,7 +13,6 @@ import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { StopwatchResult, useStopwatch } from "react-timer-hook";
 import CardMenu from "../../editor/CardMenu";
-import RemainingCardsIndicator from "../RemainingCardsIndicator/RemainingCardsIndicator";
 import "./LearnViewHeader.css";
 
 const BASE = "learn-view-header";
@@ -92,7 +91,6 @@ function LearnViewHeader({
         </div>
 
         <div className={BASE + "__right-group"}>
-          <RemainingCardsIndicator controller={controller} />
           <CardMenu card={currentCard} onDelete={controller.requestNextCard} />
         </div>
       </div>

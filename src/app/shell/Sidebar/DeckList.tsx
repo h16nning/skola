@@ -6,6 +6,7 @@ import { IconPlus } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useState } from "react";
 import "./DeckList.css";
+import { Button } from "@/components/ui/Button";
 import DeckTree from "./DeckTree";
 
 const BASE = "deck-list";
@@ -25,20 +26,22 @@ export default function DeckList({ minimalMode }: DeckListProps) {
 
   return (
     <section className={BASE}>
-      <h2 className={`${BASE}__title`}>{t("sidebar.decks-title")}</h2>
+      <header className={`${BASE}__header`}>
+        <h2 className={`${BASE}__title`}>{t("sidebar.decks-title")}</h2>
+        <Button
+          size="sm"
+          variant="ghost"
+          className={`${BASE}__add-button`}
+          onClick={() => setNewDeckModalOpened(true)}
+          leftSection={<IconPlus />}
+        >
+          <span>{t("sidebar.decks-add")}</span>
+        </Button>
+      </header>
 
       <div className={`${BASE}__items`}>
         {isReady &&
           decks?.map((deck) => <DeckTree deck={deck} key={deck.id} />)}
-
-        <button
-          type="button"
-          className={`${BASE}__add-button`}
-          onClick={() => setNewDeckModalOpened(true)}
-        >
-          <IconPlus />
-          <span>{t("sidebar.decks-add")}</span>
-        </button>
       </div>
 
       <DeckModal

@@ -93,8 +93,9 @@ html[data-theme="dark"] {
   visibility: hidden;
 }
 
-button .tabler-icon,
-input .tabler-icon {
+button svg,
+input svg {
   stroke-width: 1.5px;
   width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
 }

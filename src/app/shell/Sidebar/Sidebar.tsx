@@ -78,7 +78,7 @@ function Sidebar({ menuOpened, menuHandlers }: SidebarProps) {
           </header>
 
           <nav className={`${BASE}__nav`}>
-            <SpotlightCard minimalMode={minimalMode} />
+            <SpotlightCard />
             <NavItem
               label={t("home.title")}
               path="/home"

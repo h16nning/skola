@@ -8,6 +8,7 @@
   background-color: var(--theme-neutral-100);
   padding-left: var(--safe-area-left);
   padding-right: var(--safe-area-right);
+  --content-width: 30rem;
 }
 
 .learn-view__wrapper {
@@ -24,13 +25,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-lg);
+  padding: var(--spacing-md);
   height: 100%;
 }
 
 .learn-view__card-stack {
   width: 100%;
-  max-width: 600px;
+  max-width: var(--content-width);
 }
 
 .learn-view__card {

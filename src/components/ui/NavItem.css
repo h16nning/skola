@@ -23,8 +23,8 @@
 }
 
 .nav-item:focus-visible {
-  outline: 2px solid var(--theme-primary-500);
-  outline-offset: -2px;
+  outline: var(--ring-outline);
+  box-shadow: var(--ring-shadow);
 }
 
 .nav-item--active {
@@ -60,9 +60,8 @@
 }
 
 .nav-item__icon svg {
-  width: 1.125rem;
-  height: 1.125rem;
-  stroke-width: 1.75;
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
 }
 
 .nav-item__label {
@@ -79,6 +78,10 @@
   flex-wrap: nowrap;
   gap: var(--spacing-xs);
   visibility: hidden;
+}
+
+.nav-item__right .icon-button {
+  margin: calc(-1 * var(--spacing-sm));
 }
 
 .nav-item:hover .nav-item__right {
@@ -127,8 +130,8 @@
 }
 
 .nav-item--small .nav-item__icon svg {
-  width: 1rem;
-  height: 1rem;
+  width: var(--icon-size-xs);
+  height: var(--icon-size-xs);
 }
 
 .sidebar--minimal .nav-item {
