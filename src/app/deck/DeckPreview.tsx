@@ -1,11 +1,11 @@
 import { Alert, Badge, Paper } from "@/components/ui";
+import { COLORS } from "@/lib/ColorIdentifier";
 import { useCardsOf } from "@/logic/card/hooks/useCardsOf";
 import { useSimplifiedStatesOf } from "@/logic/card/hooks/useSimplifiedStatesOf";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Deck } from "../../logic/deck/deck";
 import "./DeckPreview.css";
-import { COLORS } from "@/lib/ColorIdentifier";
 
 type DeckPreviewProps = {
   deck: Deck;

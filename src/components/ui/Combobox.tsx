@@ -239,7 +239,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(
                 type="text"
                 className={`${BASE}__search-input`}
                 value={searchQuery}
-                onChange={(e) => {
+                onChange={() => {
                   setSearchQuery(e.target.value);
                   setHighlightedIndex(0);
                 }}
