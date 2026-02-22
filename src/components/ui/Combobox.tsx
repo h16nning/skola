@@ -151,7 +151,9 @@ export const Combobox = forwardRef<HTMLButtonElement, ComboboxProps>(
         <div className={`${BASE}__wrapper`}>
           <button
             ref={(node) => {
-              (triggerRef as React.MutableRefObject<HTMLButtonElement | null>).current = node;
+              (
+                triggerRef as React.MutableRefObject<HTMLButtonElement | null>
+              ).current = node;
               if (typeof ref === "function") ref(node);
               else if (ref) ref.current = node;
             }}
@@ -166,7 +168,10 @@ export const Combobox = forwardRef<HTMLButtonElement, ComboboxProps>(
             <span className={`${BASE}__value`}>
               {selectedOption?.label || "Select..."}
             </span>
-            <IconChevronDown className={`${BASE}__chevron`} aria-hidden="true" />
+            <IconChevronDown
+              className={`${BASE}__chevron`}
+              aria-hidden="true"
+            />
           </button>
           <div
             ref={listboxRef}

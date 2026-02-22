@@ -1,5 +1,5 @@
-import { Paper } from "@/components/ui/Paper";
 import { IconButton } from "@/components/ui/IconButton";
+import { Paper } from "@/components/ui/Paper";
 import { useDisclosure } from "@/lib/hooks/useDisclosure";
 import { getAdapter } from "@/logic/NoteTypeAdapter";
 import { NoteType } from "@/logic/note/note";

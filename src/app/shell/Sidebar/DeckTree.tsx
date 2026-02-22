@@ -1,5 +1,5 @@
-import { NavItem } from "@/components/ui/NavItem";
 import { IconButton } from "@/components/ui/IconButton";
+import { NavItem } from "@/components/ui/NavItem";
 import { Deck } from "@/logic/deck/deck";
 import { useSubDecks } from "@/logic/deck/hooks/useSubDecks";
 import { IconCards, IconChevronRight, IconDots } from "@tabler/icons-react";
@@ -28,7 +28,11 @@ function DeckTree({ deck: parentDeck, level = 0 }: DeckTreeProps) {
 export default DeckTree;
 
 const DeckTreeItem = memo(
-  ({ deck, subDecks, level }: { deck: Deck; subDecks: Deck[]; level: number }) => {
+  ({
+    deck,
+    subDecks,
+    level,
+  }: { deck: Deck; subDecks: Deck[]; level: number }) => {
     const [isOpened, setIsOpened] = useState(false);
     const [hasHovered, setHasHovered] = useState(false);
     const navigate = useNavigate();

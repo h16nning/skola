@@ -1,5 +1,5 @@
 import { NoteContent } from "@/logic/note/NoteContent";
-import { ReactNode, type JSX } from "react";
+import { type JSX, ReactNode } from "react";
 import { Card } from "./card/card";
 import { Deck } from "./deck/deck";
 import { NoteType } from "./note/note";

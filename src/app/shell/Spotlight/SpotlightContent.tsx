@@ -108,9 +108,7 @@ export function SpotlightContent({
 
       <div className={`${BASE}__results`}>
         {totalActions === 0 ? (
-          <div className={`${BASE}__empty`}>
-            {t("spotlight.no-results")}
-          </div>
+          <div className={`${BASE}__empty`}>{t("spotlight.no-results")}</div>
         ) : (
           limitedActions.map((group, groupIndex) => {
             const groupStartIndex = limitedActions

@@ -5,8 +5,9 @@
   background-color: var(--theme-neutral-50);
   box-shadow: var(--shadow-lg);
   margin-top: var(--spacing-sm);
+  /* biome-ignore lint/correctness/noUnknownProperty: this property is part of the new anchor positioning api which is Baseline is of Jan 2026 */
   position-area: bottom span-left;
-  position-try-options: flip-block;
+  position-try: flip-block;
   min-width: 12rem;
   opacity: 0;
   transform: scaleY(0.9);

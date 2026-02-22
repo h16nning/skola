@@ -92,8 +92,9 @@
   box-shadow: var(--shadow-lg);
   max-height: 16rem;
   overflow-y: auto;
+  /* biome-ignore lint/correctness/noUnknownProperty: this rule is part of the new anchor positioning api and is as of Jan 2026 part of Baseline. We will need before biome recognizes it... */
   position-area: bottom span-left;
-  position-try-options: flip-block;
+  position-try: flip-block;
   width: anchor-size(width);
   margin-top: var(--spacing-xs);
   opacity: 0;

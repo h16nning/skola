@@ -111,9 +111,8 @@ export default function SpotlightCard() {
         ) as HTMLElement;
         if (tabAction) {
           const button = selectedAction as HTMLButtonElement;
-          const tabButton = button?.querySelector(
-            ".kbd"
-          )?.nextSibling as HTMLElement;
+          const tabButton = button?.querySelector(".kbd")
+            ?.nextSibling as HTMLElement;
           if (tabButton) {
             button.click();
           }

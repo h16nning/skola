@@ -108,7 +108,8 @@ export function useNoteSelection({
       const isShiftKey = event.shiftKey;
 
       if (isShiftKey) {
-        const startIndex = anchorIndexRef.current !== -1 ? anchorIndexRef.current : 0;
+        const startIndex =
+          anchorIndexRef.current !== -1 ? anchorIndexRef.current : 0;
         const start = Math.min(startIndex, index);
         const end = Math.max(startIndex, index);
         const rangeIds = new Set(notes.slice(start, end + 1).map((n) => n.id));
@@ -198,7 +199,10 @@ export function useNoteSelection({
         if (nextIndex !== currentIndex) {
           const nextNote = notes[nextIndex];
           if (event.shiftKey) {
-            const startIndex = anchorIndexRef.current !== -1 ? anchorIndexRef.current : currentIndex;
+            const startIndex =
+              anchorIndexRef.current !== -1
+                ? anchorIndexRef.current
+                : currentIndex;
             const start = Math.min(startIndex, nextIndex);
             const end = Math.max(startIndex, nextIndex);
             const rangeIds = new Set(
@@ -218,7 +222,10 @@ export function useNoteSelection({
         if (prevIndex !== currentIndex) {
           const prevNote = notes[prevIndex];
           if (event.shiftKey) {
-            const startIndex = anchorIndexRef.current !== -1 ? anchorIndexRef.current : currentIndex;
+            const startIndex =
+              anchorIndexRef.current !== -1
+                ? anchorIndexRef.current
+                : currentIndex;
             const start = Math.min(startIndex, prevIndex);
             const end = Math.max(startIndex, prevIndex);
             const rangeIds = new Set(
@@ -234,11 +241,7 @@ export function useNoteSelection({
         }
       }
     },
-    [
-      notes,
-      clearSelection,
-      scrollToIndex,
-    ]
+    [notes, clearSelection, scrollToIndex]
   );
 
   return {

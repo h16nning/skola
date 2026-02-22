@@ -79,7 +79,8 @@ function SelectInner<T = string>(
     };
 
     listbox.addEventListener("toggle", handleToggle as EventListener);
-    return () => listbox.removeEventListener("toggle", handleToggle as EventListener);
+    return () =>
+      listbox.removeEventListener("toggle", handleToggle as EventListener);
   }, []);
 
   useEffect(() => {

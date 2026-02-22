@@ -29,7 +29,12 @@ interface DeckMenuProps {
   withShortcuts?: boolean;
 }
 
-function DeckMenu({ deck, ready, triggerSize = "md", withShortcuts = true }: DeckMenuProps) {
+function DeckMenu({
+  deck,
+  ready,
+  triggerSize = "md",
+  withShortcuts = true,
+}: DeckMenuProps) {
   const navigate = useNavigate();
   const [t] = useTranslation();
 
@@ -73,10 +78,13 @@ function DeckMenu({ deck, ready, triggerSize = "md", withShortcuts = true }: Dec
   useHotkeys(
     withShortcuts
       ? [
-          ["r", () => {
-            setHasOpenedRename(true);
-            setRenameModalOpened(true);
-          }],
+          [
+            "r",
+            () => {
+              setHasOpenedRename(true);
+              setRenameModalOpened(true);
+            },
+          ],
           [
             "m",
             () => {
@@ -85,14 +93,20 @@ function DeckMenu({ deck, ready, triggerSize = "md", withShortcuts = true }: Dec
             },
           ],
           ["b", manageCards],
-          ["i", () => {
-            setHasOpenedImport(true);
-            setImportModalOpened(true);
-          }],
-          ["shift+d", () => {
-            setHasOpenedDebug(true);
-            setDebugModalOpened(true);
-          }],
+          [
+            "i",
+            () => {
+              setHasOpenedImport(true);
+              setImportModalOpened(true);
+            },
+          ],
+          [
+            "shift+d",
+            () => {
+              setHasOpenedDebug(true);
+              setDebugModalOpened(true);
+            },
+          ],
           ["Backspace", () => setDeleteModalOpened(true)],
         ]
       : []
@@ -156,7 +170,8 @@ function DeckMenu({ deck, ready, triggerSize = "md", withShortcuts = true }: Dec
           <MenuItem
             leftSection={<IconCode />}
             rightSection={
-              withShortcuts && showShortcutHints && (
+              withShortcuts &&
+              showShortcutHints && (
                 <span
                   style={{
                     display: "flex",

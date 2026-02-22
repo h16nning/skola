@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
 import { getAdapter } from "@/logic/NoteTypeAdapter";
 import { getDeck } from "@/logic/deck/getDeck";
 import { getSuperDecks } from "@/logic/deck/getSuperDecks";
 import { useNotesWith } from "@/logic/note/hooks/useNotesWith";
 import { Note, NoteType } from "@/logic/note/note";
 import { NoteSorts } from "@/logic/note/sort";
+import { useEffect, useState } from "react";
 
 /**
- * Extended note type that includes breadcrumb information for display
+ * Extended note type that includes breadcrumb info for display
  */
 export interface NoteWithPreview extends Note<NoteType> {
   breadcrumb: string[];
@@ -15,9 +15,8 @@ export interface NoteWithPreview extends Note<NoteType> {
 
 /**
  * Searches and filters notes based on a query string.
- * Enriches matching notes with deck breadcrumb information (parent deck hierarchy).
+ * Enriches matching notes with deck breadcrumb info.
  *
- * The hook does the following:
  * 1. Query all notes / filters by  search query
  * 2. Sort results by sort field
  * 3. Enrich each note with full deck path
