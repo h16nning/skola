@@ -1,5 +1,3 @@
-import { Group } from "@/components/ui/Group";
-import { Text } from "@/components/ui/Text";
 import {
   IconBook,
   IconCircleArrowUpRight,
@@ -37,17 +35,10 @@ function Indicator({
   const iconColor = colorMap[color] || "var(--theme-neutral-600)";
 
   return (
-    <Group
-      className={BASE}
-      gap="xs"
-      align="center"
-      style={{ color: iconColor, alignSelf: "flex-start" }}
-    >
-      <Icon size={16} />
-      <Text size="sm" weight="medium">
-        {text}
-      </Text>
-    </Group>
+    <div className={BASE} style={{ color: iconColor }}>
+      <Icon />
+      <span className={`${BASE}__text`}>{text}</span>
+    </div>
   );
 }
 
