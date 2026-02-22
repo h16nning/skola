@@ -76,7 +76,7 @@ function DeckView() {
                 {t("deck.add-cards")}
               </Button>
             </Tooltip>
-            {ready && <DeckMenu deck={deck} />}
+            <DeckMenu deck={deck} ready={ready} />
           </div>
         </div>
       </AppHeaderContent>

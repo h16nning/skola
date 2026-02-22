@@ -38,7 +38,7 @@ function DesktopModal({
   onClose,
   title,
   children,
-  showCloseButton,
+  showCloseButton = true,
   exitOnEscape,
   fullscreen,
 }: ModalProps) {

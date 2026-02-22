@@ -31,9 +31,10 @@ import MoveDeckModal from "./MoveDeckModal";
 
 interface DeckMenuProps {
   deck?: Deck;
+  ready: boolean;
 }
 
-function DeckMenu({ deck }: DeckMenuProps) {
+function DeckMenu({ deck, ready }: DeckMenuProps) {
   const navigate = useNavigate();
   const [t] = useTranslation();
 
@@ -90,7 +91,8 @@ function DeckMenu({ deck }: DeckMenuProps) {
           <IconButton
             variant="subtle"
             aria-label={t("deck.menu.label")}
-            disabled={!deck}
+            aria-disabled={!deck || !ready}
+            disabled={!deck || !ready}
           >
             <IconDots />
           </IconButton>
