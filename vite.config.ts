@@ -24,7 +24,11 @@ export default defineConfig({
     },
   },
   plugins: [
-    react(),
+    react({
+      babel: {
+        plugins: ["babel-plugin-react-compiler"],
+      },
+    }),
     viteTsconfigPaths(),
     Checker({ typescript: true }),
     VitePWA({

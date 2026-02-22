@@ -79,6 +79,8 @@
     "@types/react-dom": "19.2.3",
     "@types/uuid": "9.0.8",
     "@vitejs/plugin-react": "4.2.1",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "eslint-plugin-react-hooks": "^7.0.1",
     "gh-pages": "^6.3.0",
     "i18next-parser": "9.0.2",
     "postcss": "8.4.47",

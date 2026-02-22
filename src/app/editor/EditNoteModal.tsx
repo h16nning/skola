@@ -35,7 +35,7 @@ export default function EditNoteModal({
           setRequestedFinish,
         })
       : null;
-  }, [note, deck, requestedFinish, setRequestedFinish]);
+  }, [note, deck]);
 
   return (
     <Modal

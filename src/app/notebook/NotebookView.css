@@ -26,6 +26,11 @@
   gap: var(--spacing-xs);
 }
 
+.notebook__list > * {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 200px;
+}
+
 .notebook__card-wrapper {
   transition: transform 150ms ease, opacity 150ms ease;
 }

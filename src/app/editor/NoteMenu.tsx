@@ -12,9 +12,10 @@ import { Note, NoteType } from "@/logic/note/note";
 import { useShowShortcutHints } from "@/logic/settings/hooks/useShowShortcutHints";
 import { IconArrowsExchange, IconEdit, IconTrash } from "@tabler/icons-react";
 import { t } from "i18next";
-import { useState } from "react";
-import EditNoteModal from "./EditNoteModal";
-import MoveNoteModal from "./MoveNoteModal";
+import { Suspense, lazy, useState } from "react";
+
+const EditNoteModal = lazy(() => import("./EditNoteModal"));
+const MoveNoteModal = lazy(() => import("./MoveNoteModal"));
 
 interface NoteMenuProps extends React.HTMLAttributes<HTMLDivElement> {
   note: Note<NoteType> | undefined;
@@ -33,6 +34,9 @@ function NoteMenu({
   const [editModalOpened, editModal] = useDisclosure(false);
   const [moveModalOpened, setMoveModalOpened] = useState<boolean>(false);
   const [deleteModalOpened, setDeleteModalOpened] = useState<boolean>(false);
+
+  const [hasOpenedEdit, setHasOpenedEdit] = useState(false);
+  const [hasOpenedMove, setHasOpenedMove] = useState(false);
 
   async function tryDeleteNote() {
     if (!note) {
@@ -56,7 +60,13 @@ function NoteMenu({
   useHotkeys(
     withShortcuts
       ? [
-          ["e", editModal.open],
+          [
+            "e",
+            () => {
+              setHasOpenedEdit(true);
+              editModal.open();
+            },
+          ],
           ["Backspace", () => setDeleteModalOpened(true)],
         ]
       : []
@@ -71,7 +81,10 @@ function NoteMenu({
           <MenuItem
             leftSection={<IconEdit size={16} />}
             rightSection={withShortcuts && showShortcutHints && <Kbd>e</Kbd>}
-            onClick={editModal.open}
+            onClick={() => {
+              setHasOpenedEdit(true);
+              editModal.open();
+            }}
           >
             {t("note.menu.edit")}
           </MenuItem>
@@ -79,7 +92,10 @@ function NoteMenu({
         <MenuItem
           leftSection={<IconArrowsExchange size={16} />}
           rightSection={withShortcuts && showShortcutHints && <Kbd>m</Kbd>}
-          onClick={() => setMoveModalOpened(true)}
+          onClick={() => {
+            setHasOpenedMove(true);
+            setMoveModalOpened(true);
+          }}
         >
           {t("note.menu.move")}
         </MenuItem>
@@ -100,16 +116,24 @@ function NoteMenu({
         opened={deleteModalOpened}
         setOpened={setDeleteModalOpened}
       />
-      <EditNoteModal
-        note={note}
-        opened={editModalOpened}
-        setClose={editModal.close}
-      />
-      <MoveNoteModal
-        note={note}
-        opened={moveModalOpened}
-        setOpened={setMoveModalOpened}
-      />
+      {hasOpenedEdit && (
+        <Suspense fallback={null}>
+          <EditNoteModal
+            note={note}
+            opened={editModalOpened}
+            setClose={editModal.close}
+          />
+        </Suspense>
+      )}
+      {hasOpenedMove && (
+        <Suspense fallback={null}>
+          <MoveNoteModal
+            note={note}
+            opened={moveModalOpened}
+            setOpened={setMoveModalOpened}
+          />
+        </Suspense>
+      )}
     </>
   );
 }

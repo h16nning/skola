@@ -4,6 +4,7 @@ import { Select, SelectOption } from "@/components/ui/Select";
 import { Tooltip } from "@/components/ui/Tooltip";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { useListState } from "@/lib/hooks/useListState";
+import { db } from "@/logic/db";
 import { useDeckFromUrl } from "@/logic/deck/hooks/useDeckFromUrl";
 import { useNotesOf } from "@/logic/note/hooks/useNotesOf";
 import { NoteType } from "@/logic/note/note";
@@ -21,7 +22,7 @@ import NotebookCard from "./NotebookCard";
 import "./NotebookView.css";
 
 const BASE = "notebook";
-const NOTEBOOK_LIMIT = 100;
+const NOTEBOOK_LIMIT = 1000;
 
 export default function NotebookView() {
   const [deck] = useDeckFromUrl();
@@ -72,11 +73,24 @@ export default function NotebookView() {
       {useCustomSort ? (
         <DragDropContext
           onDragEnd={({ destination, source }) => {
+            if (!destination) return;
+
+            const newState = [...state];
+            const [removed] = newState.splice(source.index, 1);
+            newState.splice(destination.index, 0, removed);
+
             handlers.reorder({
               from: source.index,
-              to: destination?.index || 0,
+              to: destination.index,
             });
             setCustomOrderTouched(true);
+
+            db.notes.bulkUpdate(
+              newState.map((note, index) => ({
+                key: note.id,
+                changes: { customOrder: index },
+              }))
+            );
           }}
         >
           <Droppable droppableId="notebook" direction="vertical">

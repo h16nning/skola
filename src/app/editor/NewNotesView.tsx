@@ -41,6 +41,14 @@ function NewNotesView() {
     ],
   ]);
 
+  const focusSelectNoteType = useMemo(
+    () => () => {
+      noteTypeSelectRef.current?.focus();
+      noteTypeSelectRef.current?.click();
+    },
+    []
+  );
+
   const NoteEditor = useMemo(() => {
     return deck
       ? getAdapterOfType(noteType).editor({
@@ -50,13 +58,10 @@ function NewNotesView() {
           requestedFinish,
           setRequestedFinish,
           setNoteType,
-          focusSelectNoteType: () => {
-            noteTypeSelectRef.current?.focus();
-            noteTypeSelectRef.current?.click();
-          },
+          focusSelectNoteType,
         })
       : null;
-  }, [deck, noteType, setNoteType, requestedFinish, setRequestedFinish]);
+  }, [deck, noteType, setNoteType, focusSelectNoteType]);
 
   if (isReady && !deck) {
     return <NotFound />;
