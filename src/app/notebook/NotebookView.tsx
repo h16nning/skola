@@ -18,7 +18,6 @@ import { NoteSortFunction, NoteSorts } from "@/logic/note/sort";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import {
   IconCalendar,
-  IconCheck,
   IconDots,
   IconMenuOrder,
   IconTextCaption,
@@ -204,7 +203,7 @@ function NotebookMenu({
       </MenuTrigger>
       <MenuDropdown>
         <MenuItem
-          leftSection={excludeSubDecks && <IconCheck />}
+          checked={excludeSubDecks}
           onClick={() => {
             setExcludeSubDecks(!excludeSubDecks);
           }}
@@ -219,7 +218,7 @@ function NotebookMenu({
           }
         >
           <MenuItem
-            leftSection={showAnswer && <IconCheck />}
+            checked={showAnswer}
             onClick={() => {
               setShowAnswer(!showAnswer);
             }}
