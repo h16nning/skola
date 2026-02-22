@@ -3,7 +3,6 @@ import {
   deleteFailed,
   successfullyDeleted,
 } from "@/components/Notification/Notification";
-import { IconButton } from "@/components/ui/IconButton";
 import { Kbd } from "@/components/ui/Kbd";
 import { Menu, MenuItem } from "@/components/ui/Menu";
 import { useDisclosure } from "@/lib/hooks/useDisclosure";
@@ -11,12 +10,7 @@ import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { deleteNote } from "@/logic/note/deleteNote";
 import { Note, NoteType } from "@/logic/note/note";
 import { useShowShortcutHints } from "@/logic/settings/hooks/useShowShortcutHints";
-import {
-  IconArrowsExchange,
-  IconDots,
-  IconEdit,
-  IconTrash,
-} from "@tabler/icons-react";
+import { IconArrowsExchange, IconEdit, IconTrash } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useState } from "react";
 import EditNoteModal from "./EditNoteModal";

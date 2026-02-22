@@ -84,7 +84,7 @@ function DeckMenu({ deck, ready, triggerSize = "md" }: DeckMenuProps) {
         position="bottom-end"
         renderTrigger={({ id }) => (
           <IconButton
-            popovertarget={id}
+            popoverTarget={id}
             variant="subtle"
             size={triggerSize}
             aria-label={t("deck.menu.label")}

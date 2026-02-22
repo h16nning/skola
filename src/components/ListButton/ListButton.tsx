@@ -1,5 +1,5 @@
 import { IconChevronRight } from "@tabler/icons-react";
-import React from "react";
+import React, { type JSX } from "react";
 import classes from "./ListButton.module.css";
 
 const BASE_URL = "list-button";

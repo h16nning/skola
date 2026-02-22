@@ -23,7 +23,7 @@ type TooltipPosition = "top" | "bottom" | "left" | "right";
 
 interface TooltipProps {
   label: ReactNode;
-  children: ReactElement;
+  children: ReactElement<any>;
   position?: TooltipPosition;
   disabled?: boolean;
 }
@@ -36,7 +36,7 @@ export function Tooltip({
 }: TooltipProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [coords, setCoords] = useState({ top: 0, left: 0 });
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<NodeJS.Timeout>(undefined);
   const wrapperRef = useRef<HTMLSpanElement>(null);
   const isTouchScreen = useRef(isTouchDevice());
 

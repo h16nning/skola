@@ -26,7 +26,7 @@ export interface UseSwipeOptions extends SwipeCallbacks {
 
 export function useSwipe<T extends HTMLElement = HTMLDivElement>(
   options: UseSwipeOptions = {}
-): [RefObject<T>, SwipeState] {
+): [RefObject<T | null>, SwipeState] {
   const {
     threshold = 50,
     velocityThreshold = 0.3,
@@ -197,7 +197,7 @@ export function useSwipe<T extends HTMLElement = HTMLDivElement>(
     handlePointerUp,
   ]);
 
-  const observerRef = useRef<MutationObserver>();
+  const observerRef = useRef<MutationObserver>(undefined);
 
   const observe = useCallback(() => {
     if (!ref.current) return;

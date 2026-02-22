@@ -60,7 +60,9 @@ export function NoteTableItem({
 
   return (
     <tr
-      ref={(el) => onSetRef(index, el)}
+      ref={el => {
+        onSetRef(index, el);
+      }}
       className={classes}
       onClick={onSelect}
       onDoubleClick={onOpen}

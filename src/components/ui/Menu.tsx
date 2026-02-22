@@ -28,7 +28,7 @@ export function Menu({ children, renderTrigger }: MenuProps) {
   const trigger = renderTrigger ? (
     renderTrigger({ id })
   ) : (
-    <IconButton popovertarget={id} variant="subtle" aria-label="Menu">
+    <IconButton popoverTarget={id} variant="subtle" aria-label="Menu">
       <IconDots />
     </IconButton>
   );

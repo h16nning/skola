@@ -5,7 +5,7 @@ import { TextInput } from "@/components/ui/TextInput";
 import { useDebouncedValue } from "@/lib/hooks/useDebouncedValue";
 import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { setSetting } from "@/logic/settings/setSetting";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, type JSX } from "react";
 import { SettingsValues } from "../../logic/settings/Settings";
 import "./SettingsInput.css";
 

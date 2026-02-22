@@ -132,7 +132,7 @@ function NoteTable({
         <Menu
           closeOnItemClick={false}
           renderTrigger={({ id }) => (
-            <IconButton popovertarget={id}>
+            <IconButton popoverTarget={id}>
               <IconDots />
             </IconButton>
           )}

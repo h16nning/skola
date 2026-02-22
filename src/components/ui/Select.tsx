@@ -225,4 +225,4 @@ function SelectInner<T = string>(
 
 export const Select = forwardRef(SelectInner) as <T = string>(
   props: SelectProps<T> & { ref?: React.Ref<SelectRef> }
-) => React.ReactElement;
+) => React.ReactElement<any>;
