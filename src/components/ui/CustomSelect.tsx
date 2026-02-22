@@ -1,4 +1,11 @@
-import { useEffect, useId, useRef, useState } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useId,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import "./CustomSelect.css";
 
 const BASE = "custom-select";
@@ -17,20 +24,45 @@ interface CustomSelectProps<T = string> {
   disabled?: boolean;
 }
 
-export function CustomSelect<T = string>({
-  value,
-  onChange,
-  options,
-  className = "",
-  disabled = false,
-}: CustomSelectProps<T>) {
+export interface CustomSelectRef {
+  focus: () => void;
+  click: () => void;
+}
+
+// We use a generic type T for the value, but forwardRef + generics is tricky in React.
+// Usually, we have to cast the component or use a specific trick.
+// For simplicity in this file replacement, we will define the component function first.
+
+function CustomSelectInner<T = string>(
+  {
+    value,
+    onChange,
+    options,
+    className = "",
+    disabled = false,
+  }: CustomSelectProps<T>,
+  ref: React.Ref<CustomSelectRef>
+) {
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const listboxRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const buttonId = useId();
 
   const selectedOption = options.find((option) => option.value === value);
+
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      triggerRef.current?.focus();
+    },
+    click: () => {
+      if (!disabled) {
+        setIsOpen((prev) => !prev);
+        triggerRef.current?.focus();
+      }
+    },
+  }));
 
   useEffect(() => {
     if (!isOpen) {
@@ -70,6 +102,7 @@ export function CustomSelect<T = string>({
   const handleSelect = (optionValue: T) => {
     onChange(optionValue);
     setIsOpen(false);
+    triggerRef.current?.focus();
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -104,6 +137,7 @@ export function CustomSelect<T = string>({
       case "Escape":
         e.preventDefault();
         setIsOpen(false);
+        triggerRef.current?.focus();
         break;
     }
   };
@@ -115,6 +149,7 @@ export function CustomSelect<T = string>({
   return (
     <div className={classes} ref={containerRef}>
       <button
+        ref={triggerRef}
         type="button"
         id={buttonId}
         className={`${BASE}__trigger ${isOpen ? `${BASE}__trigger--open` : ""}`}
@@ -131,7 +166,9 @@ export function CustomSelect<T = string>({
           <span>{selectedOption?.label || "Select..."}</span>
         </span>
         <svg
-          className={`${BASE}__chevron ${isOpen ? `${BASE}__chevron--open` : ""}`}
+          className={`${BASE}__chevron ${
+            isOpen ? `${BASE}__chevron--open` : ""
+          }`}
           width="16"
           height="16"
           viewBox="0 0 16 16"
@@ -182,3 +219,8 @@ export function CustomSelect<T = string>({
     </div>
   );
 }
+
+// Cast to correct type to support generics with forwardRef
+export const CustomSelect = forwardRef(CustomSelectInner) as <T = string>(
+  props: CustomSelectProps<T> & { ref?: React.Ref<CustomSelectRef> }
+) => React.ReactElement;

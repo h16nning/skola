@@ -43,12 +43,14 @@ function DesktopModal({
   fullscreen,
 }: ModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const lastFocusedElement = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
 
     if (opened && !dialog.open) {
+      lastFocusedElement.current = document.activeElement as HTMLElement;
       dialog.showModal();
       document.body.style.overflow = "hidden";
       document.body.style.touchAction = "none";
@@ -56,6 +58,9 @@ function DesktopModal({
       dialog.close();
       document.body.style.overflow = "";
       document.body.style.touchAction = "";
+      if (lastFocusedElement.current) {
+        lastFocusedElement.current.focus();
+      }
     }
   }, [opened]);
 
@@ -86,18 +91,19 @@ function DesktopModal({
   }, [onClose, exitOnEscape]);
 
   useEffect(() => {
-    if (!opened) return;
+    const dialog = dialogRef.current;
+    if (!dialog) return;
 
     function handleKeyDown(event: KeyboardEvent) {
       event.stopPropagation();
     }
 
-    document.addEventListener("keydown", handleKeyDown, true);
+    dialog.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown, true);
+      dialog.removeEventListener("keydown", handleKeyDown);
     };
-  }, [opened]);
+  }, []);
 
   const hasHeader = title || showCloseButton;
 

@@ -10,13 +10,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--theme-neutral-400);
+  color: var(--theme-neutral-500);
   margin-bottom: var(--spacing-xs);
 }
 
 .empty-notice__icon svg {
   width: var(--icon-size-lg);
   height: var(--icon-size-lg);
+  stroke-width: 1.2;
+  margin-bottom: var(--spacing-md);
 }
 
 .empty-notice__title {

@@ -1,3 +1,4 @@
+import { IconCheck } from "@tabler/icons-react";
 import {
   type ReactNode,
   createContext,
@@ -8,7 +9,6 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import { IconCheck } from "@tabler/icons-react";
 import "./Menu.css";
 
 const BASE = "menu";

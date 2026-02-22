@@ -27,7 +27,7 @@
 }
 
 .paper--with-border {
-  border: 1px solid light-dark(#00000022, #ffffff22);
+  border: 1px solid var(--theme-neutral-200);
 }
 
 .paper--shadow-xs {

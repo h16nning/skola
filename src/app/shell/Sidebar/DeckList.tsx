@@ -36,7 +36,7 @@ export default function DeckList({ minimalMode }: DeckListProps) {
           className={`${BASE}__add-button`}
           onClick={() => setNewDeckModalOpened(true)}
         >
-          <IconPlus size={16} />
+          <IconPlus />
           <span>{t("sidebar.decks-add")}</span>
         </button>
       </div>

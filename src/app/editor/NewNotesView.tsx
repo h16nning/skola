@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { AppBreadcrumbs } from "@/components/AppBreadcrumbs";
 import NotFound from "@/components/NotFound";
 import SelectDecksHeader from "@/components/SelectDecksHeader";
-import { Kbd, Paper, Select, Tooltip } from "@/components/ui";
+import { Kbd, Paper, Tooltip } from "@/components/ui";
+import { CustomSelect, CustomSelectRef } from "@/components/ui/CustomSelect";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { useOs } from "@/lib/hooks/useOs";
 import { getAdapterOfType } from "@/logic/NoteTypeAdapter";
@@ -13,7 +14,6 @@ import { useDeckFromUrl } from "@/logic/deck/hooks/useDeckFromUrl";
 import { useDecks } from "@/logic/deck/hooks/useDecks";
 import { NoteType } from "@/logic/note/note";
 import { t } from "i18next";
-import React from "react";
 import { AppHeaderContent } from "../shell/Header/Header";
 import NewNotesFooter from "./NewNotesFooter";
 import "./NewNotesView.css";
@@ -29,7 +29,8 @@ function NewNotesView() {
   const [noteType, setNoteType] = useState<NoteType>(NoteType.Basic);
   const [requestedFinish, setRequestedFinish] = useState(false);
 
-  const noteTypeSelectRef = React.createRef<HTMLSelectElement>();
+  const noteTypeSelectRef = useRef<CustomSelectRef>(null);
+
   useHotkeys([
     [
       "Mod+J",
@@ -93,36 +94,37 @@ function NewNotesView() {
                 </>
               }
             >
-              <Select
-                ref={noteTypeSelectRef}
-                value={noteType}
-                onChange={(type) => {
-                  setNoteType((type as NoteType) ?? NoteType.Basic);
-                }}
-                label={t("note.new.select-note-type.label")}
-                data={[
-                  {
-                    label: NoteTypeLabels[NoteType.Basic],
-                    value: NoteType.Basic,
-                  },
-                  {
-                    label: NoteTypeLabels[NoteType.DoubleSided],
-                    value: NoteType.DoubleSided,
-                  },
-                  {
-                    label:
-                      NoteTypeLabels[NoteType.Cloze] +
-                      t("global.feature-status.in-development"),
-                    value: NoteType.Cloze,
-                  },
-                  {
-                    label:
-                      NoteTypeLabels[NoteType.ImageOcclusion] +
-                      t("global.feature-status.planned"),
-                    value: NoteType.ImageOcclusion,
-                  },
-                ]}
-              />
+              <div>
+                <CustomSelect
+                  ref={noteTypeSelectRef}
+                  value={noteType}
+                  onChange={(type) => {
+                    setNoteType((type as NoteType) ?? NoteType.Basic);
+                  }}
+                  options={[
+                    {
+                      label: NoteTypeLabels[NoteType.Basic],
+                      value: NoteType.Basic,
+                    },
+                    {
+                      label: NoteTypeLabels[NoteType.DoubleSided],
+                      value: NoteType.DoubleSided,
+                    },
+                    {
+                      label:
+                        NoteTypeLabels[NoteType.Cloze] +
+                        t("global.feature-status.in-development"),
+                      value: NoteType.Cloze,
+                    },
+                    {
+                      label:
+                        NoteTypeLabels[NoteType.ImageOcclusion] +
+                        t("global.feature-status.planned"),
+                      value: NoteType.ImageOcclusion,
+                    },
+                  ]}
+                />
+              </div>
             </Tooltip>
           </div>
           <Paper withBorder withTexture={false}>

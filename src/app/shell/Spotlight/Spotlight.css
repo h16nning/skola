@@ -51,7 +51,6 @@
   border: 1px solid var(--theme-neutral-300);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-xl);
-  font-family: var(--font-sans);
   padding: 0;
   max-width: min(90vw, 40rem);
   width: 100%;
@@ -110,7 +109,10 @@
 .spotlight__content {
   display: flex;
   flex-direction: column;
-  height: 100%;
+
+  * {
+    font-family: var(--font-sans);
+  }
 }
 
 .spotlight__search-wrapper {
@@ -213,6 +215,7 @@
 
 .spotlight__action-label {
   font-size: var(--font-size-md);
+  font-weight: 500;
   color: var(--theme-neutral-900);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -238,9 +241,9 @@
 .spotlight__action-tab {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
+  gap: 0;
   margin-left: auto;
   flex-shrink: 0;
   font-size: var(--font-size-xs);
-  color: var(--theme-neutral-600);
+  color: var(--theme-neutral-700);
 }

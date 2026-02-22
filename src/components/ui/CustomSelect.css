@@ -10,7 +10,7 @@
   justify-content: space-between;
   gap: var(--spacing-sm);
   width: 100%;
-  padding: var(--spacing-xs) var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   padding-right: var(--spacing-xl);
   font-size: var(--font-size-md);
   font-family: var(--font-sans);
@@ -51,20 +51,26 @@
 .custom-select__value {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-sm);
   white-space: nowrap;
 }
 
 .custom-select__chevron {
   position: absolute;
   right: var(--spacing-sm);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   pointer-events: none;
-  color: var(--theme-neutral-500);
   transition: transform 0.2s ease;
+}
+
+.custom-select__chevron svg {
+  width: 1rem;
+  height: 1rem;
+  stroke-width: 1.5;
+  color: var(--theme-neutral-500);
 }
 
 .custom-select__chevron--open {
@@ -105,7 +111,7 @@
 .custom-select__option {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-sm);
   width: 100%;
   padding: var(--spacing-sm) var(--spacing-sm);
   border: none;
@@ -148,4 +154,18 @@
 
 .custom-select--disabled {
   opacity: 0.6;
+}
+
+.custom-select__option svg {
+  width: 1rem;
+  height: 1rem;
+  stroke-width: 1.5;
+  color: var(--theme-neutral-500);
+}
+
+.custom-select__value svg {
+  width: 1rem;
+  height: 1rem;
+  stroke-width: 1.5;
+  color: var(--theme-neutral-500);
 }

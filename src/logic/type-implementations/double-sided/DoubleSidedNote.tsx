@@ -5,13 +5,13 @@ import { deleteCard } from "@/logic/card/deleteCard";
 import { db } from "@/logic/db";
 import { NoteContent } from "@/logic/note/NoteContent";
 import { Note, NoteType } from "@/logic/note/note";
-import createDoubleSidedNote from "./createDoubleSidedNote";
-import { updateDoubleSidedNote } from "./updateDoubleSidedNote";
 import {
+  NoteDisplay,
   QuestionOnly,
   QuestionWithAnswer,
-  NoteDisplay,
 } from "../shared/QuestionAnswerDisplay";
+import createDoubleSidedNote from "./createDoubleSidedNote";
+import { updateDoubleSidedNote } from "./updateDoubleSidedNote";
 
 export const DoubleSidedNoteTypeAdapter: NoteTypeAdapter<NoteType.DoubleSided> =
   {

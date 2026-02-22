@@ -4,12 +4,6 @@ import { Deck } from "@/logic/deck/deck";
 import { useRepetitionAccuracy } from "@/logic/learn";
 import { useSetting } from "@/logic/settings/hooks/useSetting";
 import { DeckStatistics, writeStatistics } from "@/logic/statistics";
-import {
-  IconClockHour9,
-  IconHome,
-  IconTallymarks,
-  IconTrophy,
-} from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -50,10 +44,8 @@ function FinishedLearningView({
     setWroteStatistics(true);
   }, [deck?.id, wroteStatistics, statistics]);
 
-  const deckColor = deck?.color || "lime";
-
   return (
-    <div className={BASE} data-color={deckColor}>
+    <div className={BASE}>
       <div className={`${BASE}__content`}>
         <h1 className={`${BASE}__title`}>
           {name
@@ -64,7 +56,6 @@ function FinishedLearningView({
 
         <div className={`${BASE}__stats`}>
           <div className={`${BASE}__stat`}>
-            <IconClockHour9 className={`${BASE}__stat-icon`} size={32} />
             <div className={`${BASE}__stat-value`}>
               {time ? time.minutes + "m " + time.seconds + "s" : "—"}
             </div>
@@ -74,7 +65,6 @@ function FinishedLearningView({
           </div>
 
           <div className={`${BASE}__stat`}>
-            <IconTrophy className={`${BASE}__stat-icon`} size={32} />
             <div className={`${BASE}__stat-value`}>
               {accuracy ? accuracy + "%" : "—"}
             </div>
@@ -84,7 +74,6 @@ function FinishedLearningView({
           </div>
 
           <div className={`${BASE}__stat`}>
-            <IconTallymarks className={`${BASE}__stat-icon`} size={32} />
             <div className={`${BASE}__stat-value`}>
               {statistics.ratingsList.length}
             </div>
@@ -95,18 +84,13 @@ function FinishedLearningView({
         </div>
 
         <div className={`${BASE}__actions`}>
-          <Button
-            onClick={() => navigate("/home")}
-            leftSection={<IconHome />}
-            size="lg"
-            variant="white"
-          >
+          <Button onClick={() => navigate("/home")} size="lg">
             {t("learning.finished-button-home")}
           </Button>
           <Button
             onClick={() => navigate(`/deck/${deck?.id}`)}
             size="md"
-            variant="transparent-ghost"
+            variant="ghost"
           >
             {t("learning.finished-button-to-deck")}
           </Button>

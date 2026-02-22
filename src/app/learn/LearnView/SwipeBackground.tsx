@@ -9,9 +9,15 @@ interface SwipeBackgroundProps {
 
 const BASE = "swipe-background";
 
-function SwipeBackground({ swipeProgress, direction, children }: SwipeBackgroundProps) {
-  const leftOpacity = direction === "right" ? Math.min(swipeProgress * 2, 1) : 0;
-  const rightOpacity = direction === "left" ? Math.min(swipeProgress * 2, 1) : 0;
+function SwipeBackground({
+  swipeProgress,
+  direction,
+  children,
+}: SwipeBackgroundProps) {
+  const leftOpacity =
+    direction === "right" ? Math.min(swipeProgress * 2, 1) : 0;
+  const rightOpacity =
+    direction === "left" ? Math.min(swipeProgress * 2, 1) : 0;
 
   const getIntensity = (progress: number): number => {
     return Math.floor(progress * 9);
