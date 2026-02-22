@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: flex-end;
   gap: var(--spacing-xs);
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .notebook__limit-notice {

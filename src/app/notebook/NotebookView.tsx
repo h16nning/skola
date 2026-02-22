@@ -1,4 +1,3 @@
-import { CustomSelect, SelectOption } from "@/components/ui/CustomSelect";
 import { IconButton } from "@/components/ui/IconButton";
 import { Kbd } from "@/components/ui/Kbd";
 import {
@@ -7,6 +6,7 @@ import {
   MenuItem,
   MenuTrigger,
 } from "@/components/ui/Menu";
+import { Select, SelectOption } from "@/components/ui/Select";
 import { Tooltip } from "@/components/ui/Tooltip";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { useListState } from "@/lib/hooks/useListState";
@@ -166,7 +166,7 @@ function SortSelect({
   }));
 
   return (
-    <CustomSelect
+    <Select
       value={sortOption.value}
       onChange={(value) => {
         const option = sortOptions.find((s) => s.value === value);

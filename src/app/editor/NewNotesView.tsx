@@ -5,7 +5,7 @@ import { AppBreadcrumbs } from "@/components/AppBreadcrumbs";
 import NotFound from "@/components/NotFound";
 import SelectDecksHeader from "@/components/SelectDecksHeader";
 import { Kbd, Paper, Tooltip } from "@/components/ui";
-import { CustomSelect, CustomSelectRef } from "@/components/ui/CustomSelect";
+import { Select, SelectRef } from "@/components/ui/Select";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { useOs } from "@/lib/hooks/useOs";
 import { getAdapterOfType } from "@/logic/NoteTypeAdapter";
@@ -29,7 +29,7 @@ function NewNotesView() {
   const [noteType, setNoteType] = useState<NoteType>(NoteType.Basic);
   const [requestedFinish, setRequestedFinish] = useState(false);
 
-  const noteTypeSelectRef = useRef<CustomSelectRef>(null);
+  const noteTypeSelectRef = useRef<SelectRef>(null);
 
   useHotkeys([
     [
@@ -95,7 +95,7 @@ function NewNotesView() {
               }
             >
               <div>
-                <CustomSelect
+                <Select
                   ref={noteTypeSelectRef}
                   value={noteType}
                   onChange={(type) => {

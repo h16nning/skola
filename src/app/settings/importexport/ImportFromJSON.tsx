@@ -145,17 +145,15 @@ function ImportOptions({
       <Text size="sm">Card Number: {extractedData.cards.length}</Text>
       <Select
         label="Front"
-        data={extractedData.fields}
-        value={frontField}
-        onChange={(value) => setFrontField(value)}
-        style={{ width: "100%" }}
+        options={extractedData.fields}
+        value={frontField || ""}
+        onChange={(value) => setFrontField(value || null)}
       />
       <Select
         label="Back"
-        data={extractedData.fields}
-        value={backField}
-        onChange={(value) => setBackField(value)}
-        style={{ width: "100%" }}
+        options={extractedData.fields}
+        value={backField || ""}
+        onChange={(value) => setBackField(value || null)}
       />
       <ImportButton
         importFunction={async () => console.log("not supported right now")}
