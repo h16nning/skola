@@ -1,185 +1,46 @@
-import { IconCheck } from "@tabler/icons-react";
-import {
-  type ReactNode,
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useId,
-  useState,
-} from "react";
-import { createPortal } from "react-dom";
+import { IconCheck, IconDots } from "@tabler/icons-react";
+import { type ReactNode, useId } from "react";
 import "./Menu.css";
+import { IconButton } from "./IconButton";
 
 const BASE = "menu";
 
 type MenuPosition = "bottom-start" | "bottom-end" | "top-start" | "top-end";
 
-interface MenuContextValue {
-  dropdownElement: HTMLDivElement | null;
-  setTriggerElement: (el: HTMLDivElement | null) => void;
-  triggerElement: HTMLDivElement | null;
-  close: () => void;
-  closeOnItemClick: boolean;
-}
-
-const MenuContext = createContext<MenuContextValue | null>(null);
-
-function useMenuContext() {
-  const ctx = useContext(MenuContext);
-  if (!ctx)
-    throw new Error("Menu compound components must be used within <Menu>");
-  return ctx;
-}
-
+/**
+ * A dropdown menu component, using the native Popover and Anchor positioning APIs.
+ *
+ * @param children The menu items to display inside the menu.
+ * @renderTrigger An optional render prop to replace the default *three dots* trigger button. It receives an object with the `id` of the popover, which must be passed to the trigger element as `popover-target` attribute.
+ * @param position The position of the menu relative to the trigger button. Defaults to `bottom-start`.
+ * @param closeOnItemClick Whether the menu should close when a menu item is clicked. Defaults to `true`.
+ **/
 interface MenuProps {
   children: ReactNode;
+  renderTrigger?: (props: { id: string }) => ReactNode;
   position?: MenuPosition;
   closeOnItemClick?: boolean;
 }
 
-export function Menu({
-  children,
-  position = "bottom-end",
-  closeOnItemClick = true,
-}: MenuProps) {
-  const popoverId = useId();
-  const [triggerElement, setTriggerElement] = useState<HTMLDivElement | null>(
-    null
+export function Menu({ children, renderTrigger }: MenuProps) {
+  const id = useId();
+
+  const trigger = renderTrigger ? (
+    renderTrigger({ id })
+  ) : (
+    <IconButton popovertarget={id} variant="subtle" aria-label="Menu">
+      <IconDots />
+    </IconButton>
   );
-  const [dropdownElement, setDropdownElement] = useState<HTMLDivElement | null>(
-    null
-  );
-  const [isOpen, setIsOpen] = useState(false);
-
-  const close = useCallback(() => {
-    if (!dropdownElement) return;
-    try {
-      (dropdownElement as any).hidePopover();
-    } catch {
-      // already hidden
-    }
-  }, [dropdownElement]);
-
-  useEffect(() => {
-    if (!dropdownElement) return;
-
-    dropdownElement.setAttribute("popover", "auto");
-
-    function handleToggle(event: Event) {
-      const opening = (event as any).newState === "open";
-      setIsOpen(opening);
-      if (opening) {
-        positionDropdown();
-      }
-    }
-
-    function positionDropdown() {
-      if (!triggerElement || !dropdownElement) return;
-
-      const triggerRect = triggerElement.getBoundingClientRect();
-      const dropdownRect = dropdownElement.getBoundingClientRect();
-      const verticalGap = 4;
-
-      let top: number;
-      let left: number;
-
-      if (position.startsWith("top")) {
-        top = triggerRect.top - dropdownRect.height - verticalGap;
-      } else {
-        top = triggerRect.bottom + verticalGap;
-      }
-
-      if (position.endsWith("end")) {
-        left = triggerRect.right - dropdownRect.width;
-      } else {
-        left = triggerRect.left;
-      }
-
-      top = Math.max(
-        8,
-        Math.min(top, window.innerHeight - dropdownRect.height - 8)
-      );
-      left = Math.max(
-        8,
-        Math.min(left, window.innerWidth - dropdownRect.width - 8)
-      );
-
-      dropdownElement.style.top = `${top}px`;
-      dropdownElement.style.left = `${left}px`;
-    }
-
-    dropdownElement.addEventListener("toggle", handleToggle);
-    return () => dropdownElement.removeEventListener("toggle", handleToggle);
-  }, [dropdownElement, triggerElement, position]);
-
-  const contextValue: MenuContextValue = {
-    dropdownElement,
-    setTriggerElement,
-    triggerElement,
-    close,
-    closeOnItemClick,
-  };
-
-  const dropdownClasses = [
-    `${BASE}__dropdown`,
-    isOpen && `${BASE}__dropdown--open`,
-  ]
-    .filter(Boolean)
-    .join(" ");
 
   return (
-    <MenuContext.Provider value={contextValue}>
-      <div className={BASE}>
+    <>
+      {trigger}
+      <div className={`${BASE}__popover`} id={id} role="menu" popover="auto">
         {children}
-        <div
-          ref={setDropdownElement}
-          id={popoverId}
-          className={dropdownClasses}
-          role="menu"
-        />
       </div>
-    </MenuContext.Provider>
+    </>
   );
-}
-
-interface MenuTriggerProps {
-  children: ReactNode;
-}
-
-export function MenuTrigger({ children }: MenuTriggerProps) {
-  const { dropdownElement, setTriggerElement } = useMenuContext();
-
-  function handleClick() {
-    if (!dropdownElement) return;
-    try {
-      (dropdownElement as any).togglePopover();
-    } catch {
-      // popover not supported
-    }
-  }
-
-  return (
-    <div
-      ref={setTriggerElement}
-      className={`${BASE}__trigger`}
-      onClick={handleClick}
-    >
-      {children}
-    </div>
-  );
-}
-
-interface MenuDropdownProps {
-  children: ReactNode;
-}
-
-export function MenuDropdown({ children }: MenuDropdownProps) {
-  const { dropdownElement } = useMenuContext();
-
-  if (!dropdownElement) return null;
-
-  return createPortal(children, dropdownElement);
 }
 
 type MenuItemColor = "default" | "red";
@@ -203,14 +64,12 @@ export function MenuItem({
   disabled = false,
   checked,
 }: MenuItemProps) {
-  const { close, closeOnItemClick } = useMenuContext();
-
   function handleClick() {
     if (disabled) return;
     onClick?.();
-    if (closeOnItemClick) {
-      close();
-    }
+    // if (closeOnItemClick) {
+    //   close();
+    // }
   }
 
   const classes = [

@@ -1,13 +1,6 @@
 import ImportModal from "@/app/settings/importexport/ImportModal";
 import DangerousConfirmModal from "@/components/DangerousConfirmModal";
-import {
-  IconButton,
-  Kbd,
-  Menu,
-  MenuDropdown,
-  MenuItem,
-  MenuTrigger,
-} from "@/components/ui";
+import { IconButton, Kbd, Menu, MenuItem } from "@/components/ui";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { Deck } from "@/logic/deck/deck";
 import { deleteDeck } from "@/logic/deck/deleteDeck";
@@ -32,9 +25,10 @@ import MoveDeckModal from "./MoveDeckModal";
 interface DeckMenuProps {
   deck?: Deck;
   ready: boolean;
+  triggerSize?: "sm" | "md";
 }
 
-function DeckMenu({ deck, ready }: DeckMenuProps) {
+function DeckMenu({ deck, ready, triggerSize = "md" }: DeckMenuProps) {
   const navigate = useNavigate();
   const [t] = useTranslation();
 
@@ -86,76 +80,78 @@ function DeckMenu({ deck, ready }: DeckMenuProps) {
 
   return (
     <>
-      <Menu position="bottom-end">
-        <MenuTrigger>
+      <Menu
+        position="bottom-end"
+        renderTrigger={({ id }) => (
           <IconButton
+            popovertarget={id}
             variant="subtle"
+            size={triggerSize}
             aria-label={t("deck.menu.label")}
             aria-disabled={!deck || !ready}
             disabled={!deck || !ready}
           >
             <IconDots />
           </IconButton>
-        </MenuTrigger>
-        <MenuDropdown>
+        )}
+      >
+        <MenuItem
+          leftSection={<IconCursorText />}
+          rightSection={showShortcutHints && <Kbd>r</Kbd>}
+          onClick={() => setRenameModalOpened(true)}
+        >
+          {t("deck.menu.edit")}
+        </MenuItem>
+        <MenuItem
+          leftSection={<IconArrowsExchange />}
+          rightSection={showShortcutHints && <Kbd>m</Kbd>}
+          onClick={() => setMoveModalOpened(true)}
+        >
+          {t("deck.menu.move")}
+        </MenuItem>
+        <MenuItem
+          leftSection={<IconCards />}
+          rightSection={showShortcutHints && <Kbd>b</Kbd>}
+          onClick={manageCards}
+        >
+          {t("deck.menu.manage-cards")}
+        </MenuItem>
+        <MenuItem
+          leftSection={<IconFileImport />}
+          rightSection={showShortcutHints && <Kbd>i</Kbd>}
+          onClick={() => setImportModalOpened(true)}
+        >
+          {t("deck.menu.import-cards")}
+        </MenuItem>
+        {developerMode ? (
           <MenuItem
-            leftSection={<IconCursorText size={16} />}
-            rightSection={showShortcutHints && <Kbd>r</Kbd>}
-            onClick={() => setRenameModalOpened(true)}
+            leftSection={<IconCode />}
+            rightSection={
+              showShortcutHints && (
+                <span
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.25rem",
+                  }}
+                >
+                  <Kbd>&#8679; d</Kbd>
+                </span>
+              )
+            }
+            onClick={() => setDebugModalOpened(true)}
           >
-            {t("deck.menu.edit")}
+            {t("deck.menu.debug")}
           </MenuItem>
-          <MenuItem
-            leftSection={<IconArrowsExchange size={16} />}
-            rightSection={showShortcutHints && <Kbd>m</Kbd>}
-            onClick={() => setMoveModalOpened(true)}
-          >
-            {t("deck.menu.move")}
-          </MenuItem>
-          <MenuItem
-            leftSection={<IconCards size={16} />}
-            rightSection={showShortcutHints && <Kbd>b</Kbd>}
-            onClick={manageCards}
-          >
-            {t("deck.menu.manage-cards")}
-          </MenuItem>
-          <MenuItem
-            leftSection={<IconFileImport size={16} />}
-            rightSection={showShortcutHints && <Kbd>i</Kbd>}
-            onClick={() => setImportModalOpened(true)}
-          >
-            {t("deck.menu.import-cards")}
-          </MenuItem>
-          {developerMode ? (
-            <MenuItem
-              leftSection={<IconCode size={16} />}
-              rightSection={
-                showShortcutHints && (
-                  <span
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.25rem",
-                    }}
-                  >
-                    <Kbd>&#8679; d</Kbd>
-                  </span>
-                )
-              }
-              onClick={() => setDebugModalOpened(true)}
-            >
-              {t("deck.menu.debug")}
-            </MenuItem>
-          ) : null}
-          <MenuItem
-            color="red"
-            leftSection={<IconTrash size={16} />}
-            rightSection={showShortcutHints && <Kbd>←</Kbd>}
-            onClick={() => setDeleteModalOpened(true)}
-          >
-            {t("deck.menu.delete")}
-          </MenuItem>
-        </MenuDropdown>
+        ) : null}
+        <MenuItem
+          color="red"
+          leftSection={<IconTrash />}
+          rightSection={showShortcutHints && <Kbd>←</Kbd>}
+          onClick={() => setDeleteModalOpened(true)}
+        >
+          {t("deck.menu.delete")}
+        </MenuItem>
       </Menu>
       {deck && (
         <>

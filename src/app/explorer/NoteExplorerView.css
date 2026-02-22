@@ -17,14 +17,6 @@
   color: var(--theme-neutral-900);
 }
 
-.note-explorer-view__controls {
-  display: flex;
-  align-items: flex-end;
-  gap: var(--spacing-xs);
-  padding: var(--spacing-sm);
-  background-color: var(--theme-neutral-100);
-}
-
 .note-explorer-view__container {
   display: flex;
   flex-direction: row;

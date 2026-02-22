@@ -9,7 +9,7 @@
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
   color: var(--theme-neutral-700);
-  transition: var(--transition-button);
+  /* transition: var(--transition-button); */
 }
 
 .icon-button:hover {
@@ -17,7 +17,7 @@
 }
 
 .icon-button:active {
-  transform: scale(0.95);
+  background-color: var(--theme-neutral-300);
 }
 
 .icon-button:focus-visible {

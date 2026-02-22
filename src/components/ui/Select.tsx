@@ -179,7 +179,7 @@ function SelectInner<T = string>(
         >
           <span className={`${BASE}__value`}>
             {selectedOption?.icon && (
-              <selectedOption.icon width="1.2rem" strokeWidth="1.5px" />
+              <selectedOption.icon width="var(--icon-size-sm)" />
             )}
             <span>{selectedOption?.label || "Select..."}</span>
           </span>
@@ -210,9 +210,7 @@ function SelectInner<T = string>(
                   onClick={() => handleSelect(option.value)}
                   onMouseEnter={() => setHighlightedIndex(index)}
                 >
-                  {option.icon && (
-                    <option.icon width="1.2rem" strokeWidth="1.5px" />
-                  )}
+                  {option.icon && <option.icon width="var(--icon-size-sm)" />}
                   <span>{option.label}</span>
                 </button>
               );

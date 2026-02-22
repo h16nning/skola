@@ -84,9 +84,8 @@
 }
 
 .select__chevron svg {
-  width: 1rem;
-  height: 1rem;
-  stroke-width: 1.5;
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
   color: var(--theme-neutral-500);
 }
 
@@ -174,15 +173,13 @@
 }
 
 .select__option svg {
-  width: 1rem;
-  height: 1rem;
-  stroke-width: 1.5;
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
   color: var(--theme-neutral-500);
 }
 
 .select__value svg {
-  width: 1rem;
-  height: 1rem;
-  stroke-width: 1.5;
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
   color: var(--theme-neutral-500);
 }

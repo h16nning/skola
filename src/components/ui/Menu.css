@@ -1,36 +1,29 @@
-.menu {
-  position: relative;
-  display: inline-flex;
-}
-
-.menu__trigger {
-  display: inline-flex;
-}
-
-.menu__dropdown {
-  position: fixed;
-  margin: 0;
+.menu__popover {
   padding: var(--spacing-xs);
   border: 1px solid var(--theme-neutral-200);
   border-radius: var(--radius-lg);
   background-color: var(--theme-neutral-50);
   box-shadow: var(--shadow-lg);
+  margin-top: var(--spacing-sm);
+  position-area: bottom span-left;
+  position-try-options: flip-block;
   min-width: 12rem;
-  z-index: 2100;
   opacity: 0;
-  transform: scale(0.95) translateY(-4px);
-  transition: opacity var(--transition-duration-fast)
-    var(--transition-timing-ease), transform var(--transition-duration-fast)
-    var(--transition-timing-ease);
+  transform: scaleY(0.9);
+  transform-origin: top;
+  transition: opacity 150ms, transform 150ms, display 150ms allow-discrete,
+    overlay 150ms allow-discrete;
 }
 
-.menu__dropdown:popover-open {
+.menu__popover:popover-open {
   opacity: 1;
-  transform: scale(1) translateY(0);
+  transform: scaleY(1);
 }
-
-.menu__dropdown::backdrop {
-  background: transparent;
+@starting-style {
+  .menu__popover:popover-open {
+    opacity: 0;
+    transform: scaleY(0.9);
+  }
 }
 
 .menu__item {
@@ -100,9 +93,8 @@
 }
 
 .menu__item-left svg {
-  width: 1rem;
-  height: 1rem;
-  stroke-width: 1.5;
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
 }
 
 .menu__item-label {
@@ -118,6 +110,6 @@
   flex-shrink: 0;
 }
 
-.menu .tooltip-wrapper {
+.menu__popover .tooltip-wrapper {
   width: 100%;
 }

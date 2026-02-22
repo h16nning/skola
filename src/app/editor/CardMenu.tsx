@@ -5,14 +5,8 @@ import {
   successfullyDeleted,
 } from "@/components/Notification/Notification";
 import { Group } from "@/components/ui/Group";
-import { IconButton } from "@/components/ui/IconButton";
 import { Kbd } from "@/components/ui/Kbd";
-import {
-  Menu,
-  MenuDropdown,
-  MenuItem,
-  MenuTrigger,
-} from "@/components/ui/Menu";
+import { Menu, MenuItem } from "@/components/ui/Menu";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { Card } from "@/logic/card/card";
 import { deleteNote } from "@/logic/note/deleteNote";
@@ -25,7 +19,6 @@ import {
   IconAdjustmentsHorizontal,
   IconChartBar,
   IconCode,
-  IconDots,
   IconEdit,
   IconTrash,
 } from "@tabler/icons-react";
@@ -90,62 +83,53 @@ function CardMenu({ card, onDelete }: CardMenuProps) {
   if (!card) return null;
   return (
     <>
-      <Menu position="bottom-end">
-        <MenuTrigger>
-          <IconButton variant="subtle">
-            <IconDots />
-          </IconButton>
-        </MenuTrigger>
-        <MenuDropdown>
-          {note && (
-            <MenuItem
-              leftSection={<IconEdit size={16} />}
-              rightSection={showShortcutHints && <Kbd>e</Kbd>}
-              onClick={() =>
-                navigate(`/notes?deck=${note.deck}&note=${note.id}`)
-              }
-            >
-              {t("note.menu.edit")}
-            </MenuItem>
-          )}
+      <Menu>
+        {note && (
           <MenuItem
-            leftSection={<IconChartBar size={16} />}
-            rightSection={showShortcutHints && <Kbd>s</Kbd>}
-            onClick={() => setStatisticsModalOpened(true)}
+            leftSection={<IconEdit size={16} />}
+            rightSection={showShortcutHints && <Kbd>e</Kbd>}
+            onClick={() => navigate(`/notes?deck=${note.deck}&note=${note.id}`)}
           >
-            {t("card.menu.statistics")}
+            {t("note.menu.edit")}
           </MenuItem>
+        )}
+        <MenuItem
+          leftSection={<IconChartBar size={16} />}
+          rightSection={showShortcutHints && <Kbd>s</Kbd>}
+          onClick={() => setStatisticsModalOpened(true)}
+        >
+          {t("card.menu.statistics")}
+        </MenuItem>
+        <MenuItem
+          leftSection={<IconAdjustmentsHorizontal size={16} />}
+          rightSection={showShortcutHints && <Kbd>o</Kbd>}
+          disabled
+        >
+          {t("card.menu.options")}
+        </MenuItem>
+        {developerMode && (
           <MenuItem
-            leftSection={<IconAdjustmentsHorizontal size={16} />}
-            rightSection={showShortcutHints && <Kbd>o</Kbd>}
-            disabled
+            leftSection={<IconCode size={16} />}
+            rightSection={
+              showShortcutHints && (
+                <Group gap="xs" align="center">
+                  <Kbd>&#8679; d</Kbd>
+                </Group>
+              )
+            }
+            onClick={() => setDebugModalOpened(true)}
           >
-            {t("card.menu.options")}
+            {t("card.menu.debug")}
           </MenuItem>
-          {developerMode && (
-            <MenuItem
-              leftSection={<IconCode size={16} />}
-              rightSection={
-                showShortcutHints && (
-                  <Group gap="xs" align="center">
-                    <Kbd>&#8679; d</Kbd>
-                  </Group>
-                )
-              }
-              onClick={() => setDebugModalOpened(true)}
-            >
-              {t("card.menu.debug")}
-            </MenuItem>
-          )}
-          <MenuItem
-            color="red"
-            leftSection={<IconTrash size={16} />}
-            rightSection={showShortcutHints && <Kbd>←</Kbd>}
-            onClick={() => setDeleteModalOpened(true)}
-          >
-            {t("note.menu.delete")}
-          </MenuItem>
-        </MenuDropdown>
+        )}
+        <MenuItem
+          color="red"
+          leftSection={<IconTrash size={16} />}
+          rightSection={showShortcutHints && <Kbd>←</Kbd>}
+          onClick={() => setDeleteModalOpened(true)}
+        >
+          {t("note.menu.delete")}
+        </MenuItem>
       </Menu>
       <CardStatisticsModal
         opened={statisticsModalOpened}

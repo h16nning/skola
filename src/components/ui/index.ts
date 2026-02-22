@@ -13,7 +13,7 @@ export { Group } from "./Group";
 export { HamburgerButton } from "./HamburgerButton";
 export { IconButton } from "./IconButton";
 export { Kbd } from "./Kbd";
-export { Menu, MenuDropdown, MenuItem, MenuTrigger } from "./Menu";
+export { Menu, MenuItem } from "./Menu";
 export { Modal } from "./Modal";
 export { NavItem } from "./NavItem";
 export { NumberInput } from "./NumberInput";

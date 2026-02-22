@@ -5,12 +5,7 @@ import {
 } from "@/components/Notification/Notification";
 import { IconButton } from "@/components/ui/IconButton";
 import { Kbd } from "@/components/ui/Kbd";
-import {
-  Menu,
-  MenuDropdown,
-  MenuItem,
-  MenuTrigger,
-} from "@/components/ui/Menu";
+import { Menu, MenuItem } from "@/components/ui/Menu";
 import { useDisclosure } from "@/lib/hooks/useDisclosure";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { deleteNote } from "@/logic/note/deleteNote";
@@ -77,38 +72,31 @@ function NoteMenu({
 
   return (
     <>
-      <Menu position="bottom-end" {...props}>
-        <MenuTrigger>
-          <IconButton variant="subtle" size="sm">
-            <IconDots />
-          </IconButton>
-        </MenuTrigger>
-        <MenuDropdown>
-          {withEdit && (
-            <MenuItem
-              leftSection={<IconEdit size={16} />}
-              rightSection={withShortcuts && showShortcutHints && <Kbd>e</Kbd>}
-              onClick={editModal.open}
-            >
-              {t("note.menu.edit")}
-            </MenuItem>
-          )}
+      <Menu {...props}>
+        {withEdit && (
           <MenuItem
-            leftSection={<IconArrowsExchange size={16} />}
-            rightSection={withShortcuts && showShortcutHints && <Kbd>m</Kbd>}
-            onClick={() => setMoveModalOpened(true)}
+            leftSection={<IconEdit size={16} />}
+            rightSection={withShortcuts && showShortcutHints && <Kbd>e</Kbd>}
+            onClick={editModal.open}
           >
-            {t("note.menu.move")}
+            {t("note.menu.edit")}
           </MenuItem>
-          <MenuItem
-            color="red"
-            leftSection={<IconTrash size={16} />}
-            rightSection={withShortcuts && showShortcutHints && <Kbd>←</Kbd>}
-            onClick={() => setDeleteModalOpened(true)}
-          >
-            {t("note.menu.delete")}
-          </MenuItem>
-        </MenuDropdown>
+        )}
+        <MenuItem
+          leftSection={<IconArrowsExchange size={16} />}
+          rightSection={withShortcuts && showShortcutHints && <Kbd>m</Kbd>}
+          onClick={() => setMoveModalOpened(true)}
+        >
+          {t("note.menu.move")}
+        </MenuItem>
+        <MenuItem
+          color="red"
+          leftSection={<IconTrash size={16} />}
+          rightSection={withShortcuts && showShortcutHints && <Kbd>←</Kbd>}
+          onClick={() => setDeleteModalOpened(true)}
+        >
+          {t("note.menu.delete")}
+        </MenuItem>
       </Menu>
       <DangerousConfirmModal
         dangerousAction={() => tryDeleteNote()}

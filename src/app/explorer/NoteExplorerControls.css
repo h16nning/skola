@@ -1,0 +1,7 @@
+.note-explorer-controls {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md);
+  background-color: var(--theme-neutral-100);
+}

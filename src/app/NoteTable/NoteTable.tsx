@@ -1,9 +1,4 @@
-import {
-  Menu,
-  MenuDropdown,
-  MenuItem,
-  MenuTrigger,
-} from "@/components/ui/Menu";
+import { Menu, MenuItem } from "@/components/ui/Menu";
 import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 import { Note, NoteType } from "@/logic/note/note";
 import {
@@ -134,23 +129,23 @@ function NoteTable({
       <div
         style={{ display: "flex", justifyContent: "flex-end", padding: "8px" }}
       >
-        <Menu closeOnItemClick={false}>
-          <MenuTrigger>
-            <IconButton>
+        <Menu
+          closeOnItemClick={false}
+          renderTrigger={({ id }) => (
+            <IconButton popovertarget={id}>
               <IconDots />
             </IconButton>
-          </MenuTrigger>
-          <MenuDropdown>
-            {columns.map((column) => (
-              <MenuItem
-                key={column.key}
-                onClick={() => toggleColumn(column.key)}
-                checked={column.visible}
-              >
-                {column.name}
-              </MenuItem>
-            ))}
-          </MenuDropdown>
+          )}
+        >
+          {columns.map((column) => (
+            <MenuItem
+              key={column.key}
+              onClick={() => toggleColumn(column.key)}
+              checked={column.visible}
+            >
+              {column.name}
+            </MenuItem>
+          ))}
         </Menu>
       </div>
       <table className={`${BASE}__table`}>

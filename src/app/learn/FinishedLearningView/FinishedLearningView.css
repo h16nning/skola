@@ -22,21 +22,18 @@
 }
 
 .finished-learning-view__title {
-  font-size: 4rem;
-  font-weight: 700;
+  font-size: var(--font-size-xl);
+  font-family: var(--font-serif);
   margin: 0;
   text-align: center;
-  color: var(--theme-text);
   letter-spacing: -0.02em;
-  line-height: 1.1;
 }
 
 .finished-learning-view__subtitle {
-  font-size: 1.5rem;
-  font-weight: 400;
+  font-size: var(--font-size-lg);
   margin: 0;
   text-align: center;
-  color: var(--theme-text-secondary);
+  color: var(--theme-neutral-700);
   line-height: 1.5;
   letter-spacing: -0.01em;
 }
@@ -82,7 +79,7 @@
   margin-top: var(--spacing-3xl);
 }
 
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
   .finished-learning-view {
     padding: var(--spacing-2xl);
   }
@@ -133,4 +130,4 @@
   .finished-learning-view__stat-label {
     font-size: 0.75rem;
   }
-}
+}*/

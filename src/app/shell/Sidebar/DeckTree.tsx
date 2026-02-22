@@ -5,6 +5,7 @@ import { IconCards, IconChevronRight } from "@tabler/icons-react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./DeckTree.css";
+import DeckMenu from "@/app/deck/DeckMenu";
 
 const BASE = "deck-tree";
 
@@ -53,7 +54,12 @@ function DeckTree({ deck: parentDeck, level = 0 }: DeckTreeProps) {
         onClick={handleClick}
         active={isActive}
         indent={level}
-        rightElement={expandButton}
+        rightElement={
+          <>
+            <DeckMenu deck={parentDeck} ready={isReady} triggerSize="sm" />
+            {expandButton}
+          </>
+        }
       />
 
       {hasSubDecks && isOpened && (

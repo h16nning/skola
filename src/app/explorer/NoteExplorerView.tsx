@@ -1,20 +1,18 @@
 import { AppHeaderContent } from "@/app/shell/Header/Header";
 import { AppBreadcrumbs } from "@/components/AppBreadcrumbs";
-import SelectDecksHeader from "@/components/SelectDecksHeader";
-import { TextInput } from "@/components/ui";
 import { useDebouncedState } from "@/lib/hooks/useDebouncedState";
 import { useDocumentTitle } from "@/lib/hooks/useDocumentTitle";
 import { useDecks } from "@/logic/deck/hooks/useDecks";
 import { getNote } from "@/logic/note/getNote";
 import { useNotesWith } from "@/logic/note/hooks/useNotesWith";
 import { NoteSortFunction, NoteSorts } from "@/logic/note/sort";
-import { IconSearch } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import NoteTable from "../NoteTable/NoteTable";
 import EditNoteModal from "../editor/EditNoteModal";
 import { EditNoteView } from "../editor/EditNoteView";
+import { NoteExplorerControls } from "./NoteExplorerControls";
 import { useNoteSelection } from "./hooks/useNoteSelection";
 import "./NoteExplorerView.css";
 
@@ -144,21 +142,13 @@ function NoteExplorerView() {
         <AppBreadcrumbs segments={[{ label: t("manage-cards.title") }]} />
       </AppHeaderContent>
 
-      <div className={`${BASE}__controls`}>
-        <SelectDecksHeader
-          label="Showing Notes in"
-          decks={decks}
-          selectedValue={deckParam ?? ""}
-          onSelect={handleDeckSelect}
-        />
-
-        <TextInput
-          leftSection={<IconSearch size={16} />}
-          value={immediateFilter}
-          placeholder="Filter Notes"
-          onChange={(event) => setFilter(event.currentTarget.value)}
-        />
-      </div>
+      <NoteExplorerControls
+        decks={decks}
+        selectedDeckParam={deckParam ?? ""}
+        onDeckSelect={handleDeckSelect}
+        filterValue={immediateFilter}
+        onFilterChange={setFilter}
+      />
 
       <div className={`${BASE}__container`}>
         <section

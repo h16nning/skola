@@ -1,11 +1,5 @@
-import { IconButton } from "@/components/ui/IconButton";
 import { Kbd } from "@/components/ui/Kbd";
-import {
-  Menu,
-  MenuDropdown,
-  MenuItem,
-  MenuTrigger,
-} from "@/components/ui/Menu";
+import { Menu, MenuItem } from "@/components/ui/Menu";
 import { Select, SelectOption } from "@/components/ui/Select";
 import { Tooltip } from "@/components/ui/Tooltip";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
@@ -18,7 +12,6 @@ import { NoteSortFunction, NoteSorts } from "@/logic/note/sort";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import {
   IconCalendar,
-  IconDots,
   IconMenuOrder,
   IconTextCaption,
 } from "@tabler/icons-react";
@@ -195,38 +188,31 @@ function NotebookMenu({
   useHotkeys([["-", () => setShowAnswer(!showAnswer)]]);
 
   return (
-    <Menu closeOnItemClick={false}>
-      <MenuTrigger>
-        <IconButton variant="default" aria-label={t("notebook.options.menu")}>
-          <IconDots />
-        </IconButton>
-      </MenuTrigger>
-      <MenuDropdown>
+    <Menu>
+      <MenuItem
+        checked={excludeSubDecks}
+        onClick={() => {
+          setExcludeSubDecks(!excludeSubDecks);
+        }}
+      >
+        {t("notebook.options.exclude-subdecks")}
+      </MenuItem>
+      <Tooltip
+        label={
+          <>
+            Press <Kbd>-</Kbd> to toggle all answers
+          </>
+        }
+      >
         <MenuItem
-          checked={excludeSubDecks}
+          checked={showAnswer}
           onClick={() => {
-            setExcludeSubDecks(!excludeSubDecks);
+            setShowAnswer(!showAnswer);
           }}
         >
-          {t("notebook.options.exclude-subdecks")}
+          {t("notebook.options.show-answer")}
         </MenuItem>
-        <Tooltip
-          label={
-            <>
-              Press <Kbd>-</Kbd> to toggle all answers
-            </>
-          }
-        >
-          <MenuItem
-            checked={showAnswer}
-            onClick={() => {
-              setShowAnswer(!showAnswer);
-            }}
-          >
-            {t("notebook.options.show-answer")}
-          </MenuItem>
-        </Tooltip>
-      </MenuDropdown>
+      </Tooltip>
     </Menu>
   );
 }
