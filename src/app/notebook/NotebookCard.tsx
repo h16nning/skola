@@ -24,18 +24,23 @@ function NotebookCard({
 }: NotebookCardProps) {
   return useCustomSort ? (
     <Draggable key={note.id} index={index} draggableId={note.id}>
-      {(provided) => (
+      {(provided, snapshot) => (
         <div
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
+          className={`notebook__card-wrapper ${
+            snapshot.isDragging ? "notebook__card-wrapper--dragging" : ""
+          }`}
         >
           <InnerCard note={note} showAnswer={showAnswer} />
         </div>
       )}
     </Draggable>
   ) : (
-    <InnerCard note={note} showAnswer={showAnswer} />
+    <div className="notebook__card-wrapper">
+      <InnerCard note={note} showAnswer={showAnswer} />
+    </div>
   );
 }
 export default memo(NotebookCard);
@@ -49,7 +54,11 @@ const InnerCard = memo(
       <Paper
         onClick={handlers.toggle}
         withBorder
-        style={{ position: "relative", padding: 0, cursor: "pointer" }}
+        style={{
+          position: "relative",
+          padding: 0,
+          cursor: "pointer",
+        }}
       >
         {getAdapter(note).displayNote(
           note,

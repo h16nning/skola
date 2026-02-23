@@ -20,22 +20,16 @@
   padding: var(--spacing-sm);
 }
 
-.notebook__list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-}
-
 .notebook__list > * {
   content-visibility: auto;
   contain-intrinsic-size: auto 200px;
 }
 
 .notebook__card-wrapper {
-  transition: transform 150ms ease, opacity 150ms ease;
+  transition: opacity 150ms ease;
+  margin-bottom: var(--spacing-sm);
 }
 
 .notebook__card-wrapper--dragging {
-  opacity: 0.5;
-  transform: scale(0.98);
+  opacity: 0.6;
 }
