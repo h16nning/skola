@@ -24,6 +24,7 @@ function EmptyNotice({
   return (
     <div className={classes}>
       <div className={`${BASE}__icon`}>
+        <div className={`${BASE}__rings`} />
         <Icon />
       </div>
       {!hideTitle && (

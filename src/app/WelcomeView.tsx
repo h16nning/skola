@@ -1,8 +1,5 @@
-import { Alert } from "@/components/ui/Alert";
 import { Button } from "@/components/ui/Button";
 import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
-import { IconInfoCircle } from "@tabler/icons-react";
-import { useEffect } from "react";
 import "./WelcomeView.css";
 
 const BASE = "welcome-view";
@@ -10,100 +7,121 @@ const BASE = "welcome-view";
 export default function WelcomeView() {
   const [_, setRegistered] = useLocalStorage("registered", false);
 
-  useEffect(() => {}, []);
-
   return (
     <div className={BASE}>
       <div className={`${BASE}__container`}>
-        <div className={`${BASE}__logo-wrapper`}>
-          <img
-            src="/logo.svg"
-            alt=""
-            className={`${BASE}__logo ${BASE}__logo-blur`}
-          />
-        </div>
-
-        <div className={`${BASE}__section`}>
-          <h1 className={`${BASE}__title`}>Welcome to Skola!</h1>
-          <p className={`${BASE}__subtitle`}>
-            A flash card learning app here in your browser.
+        <header className={`${BASE}__header`}>
+          <h1 className={`${BASE}__title`}>Skola</h1>
+          <p className={`${BASE}__tagline`}>
+            A local-first spaced-repetition flashcard app right here in your
+            browser.
           </p>
+        </header>
 
-          <div className={`${BASE}__feature-list`}>
-            {[
-              "No sign-up required",
-              "Free and open source",
-              "Directly in your browser",
-              "No tracking",
-            ].map((item) => (
-              <div key={item} className={`${BASE}__feature-item`}>
-                <svg
-                  className={`${BASE}__check-icon`}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span className={`${BASE}__feature-text`}>{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <Alert variant="info" icon={<IconInfoCircle />}>
-          Please note that this app is still in early development. You may
-          encounter bugs and missing features. If you find any issues, consider
-          reporting them on the{" "}
-          <a
-            href="https://www.github.com/h16nning/skola"
-            target="_blank"
-            rel="noopener noreferrer"
+        <section className={`${BASE}__hero`}>
+          <p className={`${BASE}__description`}>
+            Your learning materials live in your browser using IndexedDB. No
+            account required, no tracking and complete ownership.
+          </p>
+          <Button
+            onClick={() => setRegistered(true)}
+            size="lg"
+            variant="primary"
           >
-            GitHub repository
-          </a>
-          .
-        </Alert>
+            Get Studying
+          </Button>
+        </section>
 
-        <div className={`${BASE}__section`}>
-          <h3 className={`${BASE}__heading`}>About the project</h3>
-          <p className={`${BASE}__text`}>
-            Skola is a project developed by a student aiming to provide an
-            alternative to spaced repetition apps like Anki and SuperMemo. It is
-            open-source and completely free to use. The focus lies on creating a
-            fun to use and intuitive experience. You can find more information
-            on the{" "}
+        <section className={`${BASE}__features`}>
+          <div className={`${BASE}__feature`}>
+            <h2 className={`${BASE}__feature-title`}>Local-First Design</h2>
+            <p className={`${BASE}__feature-text`}>
+              Data stored directly in your browser. Private by default and
+              incredibly fast. You are never going to wait for responses from
+              some server.
+            </p>
+          </div>
+
+          <div className={`${BASE}__feature`}>
+            <h2 className={`${BASE}__feature-title`}>FSRS Scheduling</h2>
+            <p className={`${BASE}__feature-text`}>
+              We use the Free Spaced Repetition Scheduler algorithm, a state of
+              the art scheduling algorithm that optimizes timing based on your
+              past performance.
+            </p>
+          </div>
+
+          <div className={`${BASE}__feature`}>
+            <h2 className={`${BASE}__feature-title`}>Works Everywhere</h2>
+            <p className={`${BASE}__feature-text`}>
+              Skola is a progressive web app, meaning it can install everywhere.
+              It is even availabe offline and optimized for mobile and desktop.
+            </p>
+          </div>
+
+          <div className={`${BASE}__feature`}>
+            <h2 className={`${BASE}__feature-title`}>Rich Card Types</h2>
+            <p className={`${BASE}__feature-text`}>
+              Create standard, double-sided, and cloze deletion cards with full
+              HTML editing capabilities.
+            </p>
+          </div>
+
+          <div className={`${BASE}__feature`}>
+            <h2 className={`${BASE}__feature-title`}>Higher-Order Thinking</h2>
+            <p className={`${BASE}__feature-text`}>
+              Cognitive prompts challenge you to go beyond memorization by
+              rethinking cards you've mastered, encouraging deeper
+              understanding.
+            </p>
+          </div>
+
+          <div className={`${BASE}__feature`}>
+            <h2 className={`${BASE}__feature-title`}>Free & Open Source</h2>
+            <p className={`${BASE}__feature-text`}>
+              Skola is open source and free, it will forever stay that way. We
+              just believe thoughtful learning software.
+            </p>
+          </div>
+        </section>
+
+        <section className={`${BASE}__philosophy`}>
+          <h2 className={`${BASE}__section-title`}>Philosophy</h2>
+          <p className={`${BASE}__body-text`}>
+            Spaced repetition software should be open source, yet still
+            approachable and friendly. Effective tools shouldn't sacrifice
+            design for functionality or lock features behind paywalls. Skola is
+            being built by an flashcard enthusiatist who is frustrated with the
+            current open-source options.
+          </p>
+          <p className={`${BASE}__body-text`}>
+            <i style={{ fontFamily: "var(--font-serif)" }}>A word on AI.</i>{" "}
+            Creating flashcards is part of the learning process. Skola is
+            designed to support that work, not bypass it. AI has its place, but
+            not in replacing the cognitive effort of card creation. Instead,
+            Skola explores how technology can encourage higher-order thinking
+            through features like cognitive prompts that challenge you to
+            reconsider material you've already learned.
+          </p>
+        </section>
+
+        <footer className={`${BASE}__footer`}>
+          <div className={`${BASE}__footer-branding`}>
+            <img src="/logo.svg" alt="" className={`${BASE}__footer-logo`} />
+            <span className={`${BASE}__footer-name`}>Skola</span>
+          </div>
+          <p className={`${BASE}__footer-text`}>
+            Still in early development. Expect bugs and evolving features.{" "}
             <a
-              href="https://www.github.com/h16nning/skola"
+              href="https://github.com/h16nning/skola"
               target="_blank"
               rel="noopener noreferrer"
+              className={`${BASE}__link`}
             >
-              GitHub repository
+              Contribute on GitHub
             </a>
-            .
           </p>
-        </div>
-
-        <div className={`${BASE}__section`}>
-          <h3 className={`${BASE}__heading`}>About privacy</h3>
-          <p className={`${BASE}__text`}>
-            Privacy is a priority of this project. Skola saves decks and cards
-            locally in your browser using the IndexedDB API. Furthermore local
-            storage and cookies are being used to store relevant data. We do not
-            collect any personal data. Currently, a syncing feature is under
-            development allowing you to store your data in the cloud. However,
-            this feature is totally optional.
-          </p>
-        </div>
-
-        <div className={`${BASE}__actions`}>
-          <Button onClick={() => setRegistered(true)} variant="primary">
-            Get Started Now
-          </Button>
-        </div>
+        </footer>
       </div>
     </div>
   );

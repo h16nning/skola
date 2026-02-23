@@ -71,6 +71,7 @@
 
 .button--primary:hover {
   background-color: var(--theme-primary-500);
+  border-color: var(--theme-primary-500);
 }
 
 .button--subtle {
