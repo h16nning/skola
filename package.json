@@ -25,7 +25,7 @@
     "clsx": "^2.1.1",
     "dexie": "^4.3.0",
     "dexie-cloud-addon": "^4.3.9",
-    "dexie-export-import": "4.1.1",
+    "dexie-export-import": "4.1.4",
     "dexie-react-hooks": "1.1.7",
     "fsrs.js": "1.2.2",
     "html-react-parser": "5.1.8",
