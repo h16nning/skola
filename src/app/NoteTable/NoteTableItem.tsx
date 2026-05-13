@@ -1,4 +1,5 @@
 import { Note, NoteType } from "@/logic/note/note";
+import { getNotePreview } from "@/logic/note/preview";
 import { NoteWithComparableDeckName } from "@/logic/note/sort";
 import { memo } from "react";
 
@@ -56,7 +57,7 @@ export const NoteTableItem = memo(
     const getCellContent = (columnKey: string) => {
       switch (columnKey) {
         case "name":
-          return note.sortField;
+          return <NotePreviewCell note={note} />;
         case "creationDate":
           return note.creationDate.toLocaleDateString();
         case "noteType":
@@ -107,3 +108,20 @@ export const NoteTableItem = memo(
     );
   }
 );
+
+function NotePreviewCell({
+  note,
+}: {
+  note: Note<NoteType> | NoteWithComparableDeckName;
+}) {
+  const preview = getNotePreview(note);
+
+  return (
+    <div className={`${BASE}__preview`}>
+      <div className={`${BASE}__preview-front`}>{preview.front}</div>
+      {preview.back && (
+        <div className={`${BASE}__preview-back`}>{preview.back}</div>
+      )}
+    </div>
+  );
+}

@@ -1,8 +1,8 @@
-import { getAdapter } from "@/logic/NoteTypeAdapter";
 import { getDeck } from "@/logic/deck/getDeck";
 import { getSuperDecks } from "@/logic/deck/getSuperDecks";
 import { useNotesWith } from "@/logic/note/hooks/useNotesWith";
 import { Note, NoteType } from "@/logic/note/note";
+import { noteMatchesSearch } from "@/logic/note/search";
 import { NoteSorts } from "@/logic/note/sort";
 import { useEffect, useState } from "react";
 
@@ -32,12 +32,7 @@ export function useSearchNote(filter: string): NoteWithPreview[] {
         .toArray()
         .then((m) =>
           m
-            .filter((note) =>
-              getAdapter(note)
-                .getSortFieldFromNoteContent(note.content)
-                .toLowerCase()
-                .includes(filter.toLowerCase())
-            )
+            .filter((note) => noteMatchesSearch(note, filter))
             .sort(NoteSorts.bySortField(1))
         ),
     [filter]

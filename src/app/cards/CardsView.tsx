@@ -1,6 +1,7 @@
 import { Kbd } from "@/components/ui/Kbd";
 import { Menu, MenuItem } from "@/components/ui/Menu";
 import { Select, SelectOption } from "@/components/ui/Select";
+import { TextInput } from "@/components/ui/TextInput";
 import { Tooltip } from "@/components/ui/Tooltip";
 import { useHotkeys } from "@/lib/hooks/useHotkeys";
 import { useListState } from "@/lib/hooks/useListState";
@@ -9,32 +10,42 @@ import { useDeckFromUrl } from "@/logic/deck/hooks/useDeckFromUrl";
 import { useNotesOf } from "@/logic/note/hooks/useNotesOf";
 import { NoteType } from "@/logic/note/note";
 import { Note } from "@/logic/note/note";
+import { noteMatchesSearch } from "@/logic/note/search";
 import { NoteSortFunction, NoteSorts } from "@/logic/note/sort";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import {
   IconCalendar,
   IconMenuOrder,
+  IconSearch,
   IconTextCaption,
 } from "@tabler/icons-react";
-import { useEffect, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import NotebookCard from "./NotebookCard";
-import "./NotebookView.css";
+import CardItem from "./CardItem";
+import "./CardsView.css";
 
-const BASE = "notebook";
-const NOTEBOOK_LIMIT = 1000;
+const BASE = "cards-view";
+const CARDS_LIMIT = 5000;
 
-export default function NotebookView() {
+export default function CardsView() {
   const [deck] = useDeckFromUrl();
 
   const [excludeSubDecks, setExcludeSubDecks] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const deferredSearchQuery = useDeferredValue(searchQuery);
 
-  const [notes] = useNotesOf(deck, excludeSubDecks, NOTEBOOK_LIMIT);
+  const [notes] = useNotesOf(deck, excludeSubDecks, CARDS_LIMIT);
+  const filteredNotes = useMemo(
+    () => filterNotes(notes ?? [], deferredSearchQuery),
+    [notes, deferredSearchQuery]
+  );
 
   const [sortOption, setSortOption] = useState<SortOption>(sortOptions[0]);
   const [sortOrder] = useState<1 | -1>(1);
-  const [sortedNotes, setSortedNotes] = useState<Note<NoteType>[]>(notes ?? []);
+  const [sortedNotes, setSortedNotes] = useState<Note<NoteType>[]>(
+    filteredNotes ?? []
+  );
 
   const [useCustomSort, setUseCustomSort] = useState(false);
   const [customOrderTouched, setCustomOrderTouched] = useState(false);
@@ -49,25 +60,34 @@ export default function NotebookView() {
   useEffect(() => {
     setUseCustomSort(sortOption.value === "custom_order");
     setSortedNotes(
-      (notes ?? []).slice(0).sort(sortOption.sortFunction(sortOrder))
+      filteredNotes.slice(0).sort(sortOption.sortFunction(sortOrder))
     );
-  }, [notes, sortOption, sortOrder, setSortedNotes]);
+  }, [filteredNotes, sortOption, sortOrder, setSortedNotes]);
+
+  const omittedNoteCount = Math.max((deck?.notes.length ?? 0) - CARDS_LIMIT, 0);
 
   return (
     <div className={BASE}>
       <div className={`${BASE}__toolbar`}>
+        <TextInput
+          className={`${BASE}__search`}
+          value={searchQuery}
+          onChange={(event) => setSearchQuery(event.currentTarget.value)}
+          placeholder="Search front and back..."
+          leftSection={<IconSearch />}
+          aria-label="Search cards"
+        />
         <SortSelect sortOption={sortOption} setSortOption={setSortOption} />
-        <NotebookMenu
+        <CardsMenu
           excludeSubDecks={excludeSubDecks}
           setExcludeSubDecks={setExcludeSubDecks}
           showAnswer={showAnswer}
           setShowAnswer={setShowAnswer}
         />
       </div>
-      {deck?.notes && deck?.notes?.length > NOTEBOOK_LIMIT && (
+      {omittedNoteCount > 0 && (
         <div className={`${BASE}__limit-notice`}>
-          Currently there is a limit of {NOTEBOOK_LIMIT} notes displayed.{" "}
-          {deck.notes.length - NOTEBOOK_LIMIT} notes have been omitted.
+          {`Currently there is a limit of ${CARDS_LIMIT} cards displayed. ${omittedNoteCount} cards have been omitted.`}
         </div>
       )}
       {useCustomSort ? (
@@ -93,7 +113,7 @@ export default function NotebookView() {
             );
           }}
         >
-          <Droppable droppableId="notebook" direction="vertical">
+          <Droppable droppableId="cards" direction="vertical">
             {(provided) => (
               <div
                 {...provided.droppableProps}
@@ -101,7 +121,7 @@ export default function NotebookView() {
                 className={`${BASE}__list`}
               >
                 {state.map((card, index) => (
-                  <NotebookCard
+                  <CardItem
                     key={card.id}
                     note={card}
                     index={index}
@@ -117,7 +137,7 @@ export default function NotebookView() {
       ) : (
         <div className={`${BASE}__list`}>
           {sortedNotes.map((note, index) => (
-            <NotebookCard
+            <CardItem
               key={note.id}
               note={note}
               index={index}
@@ -129,6 +149,10 @@ export default function NotebookView() {
       )}
     </div>
   );
+}
+
+function filterNotes(notes: Note<NoteType>[], query: string) {
+  return notes.filter((note) => noteMatchesSearch(note, query));
 }
 
 interface SortOption {
@@ -186,7 +210,7 @@ function SortSelect({
   );
 }
 
-function NotebookMenu({
+function CardsMenu({
   excludeSubDecks,
   setExcludeSubDecks,
   showAnswer,
@@ -209,7 +233,7 @@ function NotebookMenu({
           setExcludeSubDecks(!excludeSubDecks);
         }}
       >
-        {t("notebook.options.exclude-subdecks")}
+        {t("cards.options.exclude-subdecks")}
       </MenuItem>
       <Tooltip
         label={
@@ -224,7 +248,7 @@ function NotebookMenu({
             setShowAnswer(!showAnswer);
           }}
         >
-          {t("notebook.options.show-answer")}
+          {t("cards.options.show-answer")}
         </MenuItem>
       </Tooltip>
     </Menu>

@@ -8,7 +8,8 @@ export async function getNotesOf(
   limit?: number
 ): Promise<Note<NoteType>[] | undefined> {
   if (!deck) return undefined;
-  let notes: Note<NoteType>[] = (await db.notes.bulkGet(deck.notes))
+  const limitedNoteIds = deck.notes.slice(0, limit ?? 999999);
+  let notes: Note<NoteType>[] = (await db.notes.bulkGet(limitedNoteIds))
     .slice(0, limit ?? 999999)
     .filter((n) => n !== undefined);
   if (!directMembersOnly && notes.length < (limit ?? 999999)) {

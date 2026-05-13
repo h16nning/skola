@@ -44,8 +44,8 @@
       "submit": "Erstellen"
     },
     "no-decks-found": "Es gibt noch keine Stapel hier. Füge einen neuen hinzu!",
-    "notebook": {
-      "title": "Notizbuch"
+    "cards": {
+      "title": "Karten"
     },
     "rename": {
       "new-name": "Neuer Name",
@@ -189,7 +189,7 @@
     },
     "type-double-sided": "Beidseitig"
   },
-  "notebook": {
+  "cards": {
     "individual-show-answer-toggle-tooltip": "Klicke, um die Antwort anzuzeigen",
     "options": {
       "exclude-subdecks": "Unterstapel ausschließen",

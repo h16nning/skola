@@ -24,15 +24,13 @@ export interface NoteTypeAdapter<T extends NoteType> {
   displayQuestion(
     card: Card<T>,
     content?: NoteContent<T>,
-    // TODO: rename this parameter
-    place?: "learn" | "notebook"
+    place?: "learn" | "cards"
   ): ReactNode;
 
   displayAnswer(
     card: Card<T>,
     content?: NoteContent<T>,
-    // TODO: rename this parameter
-    place?: "learn" | "notebook"
+    place?: "learn" | "cards"
   ): ReactNode;
 
   /**

@@ -32,15 +32,9 @@ export default function ImportButton({
           setImportStatus("error");
         }
       }}
+      leftSection={isLoading ? <Spinner size="sm" /> : undefined}
     >
-      {isLoading ? (
-        <>
-          <Spinner size="sm" />
-          <span>Importing...</span>
-        </>
-      ) : (
-        "Import and Add Cards"
-      )}
+      {isLoading ? "Importing..." : "Import and Add Cards"}
     </Button>
   );
 }

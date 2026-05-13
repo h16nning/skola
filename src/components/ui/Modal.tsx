@@ -150,11 +150,11 @@ function MobileDrawer({
   return (
     <Drawer.Root open={opened} onOpenChange={(open) => !open && onClose()}>
       <Drawer.Portal>
-        <Drawer.Overlay className="drawer-overlay" />
+        {!fullscreen && <Drawer.Overlay className="drawer-overlay" />}
         <Drawer.Content
           className={`drawer-content ${fullscreen ? "drawer-content--fullscreen" : ""}`}
         >
-          <Drawer.Handle className="drawer-handle" />
+          {!fullscreen && <Drawer.Handle className="drawer-handle" />}
           {hasHeader && (
             <header className="drawer-header">
               {title && (

@@ -61,7 +61,7 @@ function NewNotesView() {
           focusSelectNoteType,
         })
       : null;
-  }, [deck, noteType, setNoteType, focusSelectNoteType]);
+  }, [deck, noteType, requestedFinish, setNoteType, focusSelectNoteType]);
 
   if (isReady && !deck) {
     return <NotFound />;
@@ -89,6 +89,7 @@ function NewNotesView() {
               label={t("note.new.adding-to-deck", { deckName: deck.name })}
               decks={decks}
               disableAll
+              selectedValue={deck.id}
               onSelect={(deckId) => navigate(`/new/${deckId}`)}
             />
             <Tooltip

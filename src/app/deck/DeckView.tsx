@@ -13,7 +13,7 @@ import { useSuperDecks } from "@/logic/deck/hooks/useSuperDecks";
 import { IconPlus } from "@tabler/icons-react";
 import { t } from "i18next";
 import { useNavigate } from "react-router-dom";
-import NotebookView from "../notebook/NotebookView";
+import CardsView from "../cards/CardsView";
 import { AppHeaderContent } from "../shell/Header/Header";
 import DeckMenu from "./DeckMenu";
 import "./DeckView.css";
@@ -98,8 +98,8 @@ function DeckView() {
                   </Badge>
                 )}
               </Tabs.Tab>
-              <Tabs.Tab value="notebook">
-                {t("deck.notebook.title")}
+              <Tabs.Tab value="cards">
+                {t("deck.cards.title")}
                 {(deck?.notes.length as number) > 0 && (
                   <Badge
                     size="sm"
@@ -112,8 +112,8 @@ function DeckView() {
                 )}
               </Tabs.Tab>
             </Tabs.List>
-            <Tabs.Panel value="notebook">
-              <NotebookView />
+            <Tabs.Panel value="cards">
+              <CardsView />
             </Tabs.Panel>
             <Tabs.Panel value="subdecks">
               <SubDeckSection deck={deck} />
