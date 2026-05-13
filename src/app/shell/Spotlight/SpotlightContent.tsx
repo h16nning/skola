@@ -1,7 +1,7 @@
 import { IconButton } from "@/components/ui";
 import { Kbd } from "@/components/ui/Kbd";
-import { getAdapter } from "@/logic/NoteTypeAdapter";
 import { useDecks } from "@/logic/deck/hooks/useDecks";
+import { getNotePreviewText } from "@/logic/note/preview";
 import { IconCards, IconSearch, IconSquare, IconX } from "@tabler/icons-react";
 import cx from "clsx";
 import { t } from "i18next";
@@ -63,7 +63,7 @@ export function SpotlightContent({
       group: "Notes",
       actions: filteredNotes.map((note) => ({
         id: note.id,
-        label: getAdapter(note).getSortFieldFromNoteContent(note.content),
+        label: getNotePreviewText(note),
         description: note.breadcrumb.join(" > "),
         onClick: () => navigate(`/notes?deck=${note.deck}&note=${note.id}`),
         leftSection: <IconSquare />,

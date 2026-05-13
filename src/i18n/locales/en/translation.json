@@ -45,8 +45,8 @@
       "submit": "Create"
     },
     "no-decks-found": "There are no decks here. Click the button above to create one!",
-    "notebook": {
-      "title": "Notebook"
+    "cards": {
+      "title": "Cards"
     },
     "edit": {
       "submit": "Save",
@@ -203,11 +203,11 @@
     },
     "type-double-sided": "Double Sided"
   },
-  "notebook": {
+  "cards": {
     "individual-show-answer-toggle-tooltip": "Click to Show Answer",
     "options": {
       "exclude-subdecks": "Exclude subdecks",
-      "menu": "Notebook menu",
+      "menu": "Cards menu",
       "show-answer": "Show Answers"
     }
   },

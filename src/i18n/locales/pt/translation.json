@@ -45,8 +45,8 @@
       "submit": "Criar"
     },
     "no-decks-found": "Não há novos decks aqui. Clique no botão acima para criar um!",
-    "notebook": {
-      "title": "Caderno"
+    "cards": {
+      "title": "Cartões"
     },
     "rename": {
       "new-name": "Novo Nome",
@@ -156,11 +156,11 @@
     },
     "type-double-sided": "Face Dupla"
   },
-  "notebook": {
+  "cards": {
     "individual-show-answer-toggle-tooltip": "Clique Para Mostrar a Resposta",
     "options": {
       "exclude-subdecks": "Excluir subdecks",
-      "menu": "Menu do caderno",
+      "menu": "Menu de cartões",
       "show-answer": "Mostrar respostas"
     }
   },

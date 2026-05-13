@@ -32,7 +32,7 @@ export const DoubleSidedNoteTypeAdapter: NoteTypeAdapter<NoteType.DoubleSided> =
     displayAnswer(
       card: Card<NoteType.DoubleSided>,
       content?: NoteContent<NoteType.DoubleSided>,
-      _place?: "learn" | "notebook"
+      _place?: "learn" | "cards"
     ) {
       const frontHtml = card.content.frontIsField1
         ? content?.field1

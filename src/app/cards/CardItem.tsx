@@ -4,24 +4,20 @@ import { useDisclosure } from "@/lib/hooks/useDisclosure";
 import { getAdapter } from "@/logic/NoteTypeAdapter";
 import { NoteType } from "@/logic/note/note";
 import { Note } from "@/logic/note/note";
+import { getNotePreview } from "@/logic/note/preview";
 import { Draggable } from "@hello-pangea/dnd";
 import { IconDots } from "@tabler/icons-react";
 import { memo, useState } from "react";
 import NoteMenu from "../editor/NoteMenu";
 
-interface NotebookCardProps {
+interface CardItemProps {
   index: number;
   note: Note<NoteType>;
   useCustomSort: boolean;
   showAnswer: boolean;
 }
 
-function NotebookCard({
-  note,
-  index,
-  useCustomSort,
-  showAnswer,
-}: NotebookCardProps) {
+function CardItem({ note, index, useCustomSort, showAnswer }: CardItemProps) {
   return useCustomSort ? (
     <Draggable key={note.id} index={index} draggableId={note.id}>
       {(provided, snapshot) => (
@@ -29,8 +25,8 @@ function NotebookCard({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
-          className={`notebook__card-wrapper ${
-            snapshot.isDragging ? "notebook__card-wrapper--dragging" : ""
+          className={`cards-view__card-wrapper ${
+            snapshot.isDragging ? "cards-view__card-wrapper--dragging" : ""
           }`}
         >
           <InnerCard note={note} showAnswer={showAnswer} />
@@ -38,12 +34,12 @@ function NotebookCard({
       )}
     </Draggable>
   ) : (
-    <div className="notebook__card-wrapper">
+    <div className="cards-view__card-wrapper">
       <InnerCard note={note} showAnswer={showAnswer} />
     </div>
   );
 }
-export default memo(NotebookCard);
+export default memo(CardItem);
 
 const InnerCard = memo(
   ({ note, showAnswer }: { note: Note<NoteType>; showAnswer: boolean }) => {
@@ -60,10 +56,11 @@ const InnerCard = memo(
           cursor: "pointer",
         }}
       >
-        {getAdapter(note).displayNote(
-          note,
-          showAnswer ? "strict" : answerToggled ? "optional" : "none"
-        )}
+        <CardPreview
+          note={note}
+          showAnswer={showAnswer}
+          answerToggled={answerToggled}
+        />
         <div
           style={{
             position: "absolute",
@@ -91,3 +88,31 @@ const InnerCard = memo(
     );
   }
 );
+
+function CardPreview({
+  note,
+  showAnswer,
+  answerToggled,
+}: {
+  note: Note<NoteType>;
+  showAnswer: boolean;
+  answerToggled: boolean;
+}) {
+  if (note.content.type === NoteType.Cloze) {
+    return getAdapter(note).displayNote(
+      note,
+      showAnswer ? "strict" : answerToggled ? "optional" : "none"
+    );
+  }
+
+  const preview = getNotePreview(note);
+
+  return (
+    <div className="cards-view__preview">
+      <h3 className="cards-view__preview-front">{preview.front}</h3>
+      {preview.back && (
+        <div className="cards-view__preview-back">{preview.back}</div>
+      )}
+    </div>
+  );
+}

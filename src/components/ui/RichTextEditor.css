@@ -17,6 +17,7 @@
   background-color: transparent;
   box-shadow: var(--inset-shadow-xs);
   color: var(--theme-neutral-700);
+  font-family: var(--font-sans);
   font-size: var(--font-size-md);
   line-height: 1.55;
   min-height: 100px;

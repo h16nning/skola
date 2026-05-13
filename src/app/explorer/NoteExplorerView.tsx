@@ -5,6 +5,7 @@ import { useDocumentTitle } from "@/lib/hooks/useDocumentTitle";
 import { useDecks } from "@/logic/deck/hooks/useDecks";
 import { getNote } from "@/logic/note/getNote";
 import { useNotesWith } from "@/logic/note/hooks/useNotesWith";
+import { noteMatchesSearch } from "@/logic/note/search";
 import { NoteSortFunction, NoteSorts } from "@/logic/note/sort";
 import { t } from "i18next";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -80,7 +81,7 @@ function NoteExplorerView() {
         .orderBy("sortField")
         .filter(
           (note) =>
-            note.sortField.toLowerCase().includes(filter.toLowerCase()) &&
+            noteMatchesSearch(note, filter) &&
             (deckId === undefined || note.deck === deckId)
         )
         .toArray()

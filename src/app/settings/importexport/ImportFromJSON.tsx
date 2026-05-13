@@ -3,12 +3,19 @@ import { Button } from "@/components/ui/Button";
 import { Select } from "@/components/ui/Select";
 import { Stack } from "@/components/ui/Stack";
 import { Text } from "@/components/ui/Text";
-import { Deck } from "@/logic/deck/deck";
+import type { Deck } from "@/logic/deck/deck";
+import { BasicNoteTypeAdapter } from "@/logic/type-implementations/normal/BasicNote";
 import { IconChevronRight } from "@tabler/icons-react";
 import { useState } from "react";
 import FileImport from "./FileImport";
 import ImportButton from "./ImportButton";
 import { ImportFromSourceProps, ImportStatus } from "./ImportModal";
+import { bulkImportBasicNotes } from "./bulkImportBasicNotes";
+import {
+  type ExtractedCrowdAnkiData,
+  importCrowdAnkiCards,
+  parseCrowdAnkiFile,
+} from "./crowdAnkiImport";
 
 interface ImportFromJSONProps extends ImportFromSourceProps {}
 
@@ -22,9 +29,8 @@ export default function ImportFromJSON({
   deck,
 }: ImportFromJSONProps) {
   const [step, setStep] = useState<"selectFile" | "options">("selectFile");
-  const [extractedData, setExtractedData] = useState<ExtractedData | null>(
-    null
-  );
+  const [extractedData, setExtractedData] =
+    useState<ExtractedCrowdAnkiData | null>(null);
   return (
     <Stack align="start" gap="md">
       {step === "selectFile" || !file ? (
@@ -44,9 +50,9 @@ export default function ImportFromJSON({
           <Button
             rightSection={<IconChevronRight />}
             onClick={async () => {
-              let ed: ExtractedData | null = null;
+              let ed: ExtractedCrowdAnkiData | null = null;
               try {
-                ed = await parseFile(fileText);
+                ed = parseCrowdAnkiFile(fileText);
               } catch {
                 setImportStatus("error");
                 return;
@@ -78,55 +84,13 @@ export default function ImportFromJSON({
   );
 }
 
-interface ExtractedData {
-  description: string;
-  name: string;
-  fields: { label: string; value: string }[];
-  cards: { fields: string[] }[];
-  warnMessages: string[];
-}
-
-async function parseFile(fileText: string | null): Promise<ExtractedData> {
-  if (!fileText) {
-    throw new Error("This file has no contents.");
-  }
-  const jsonObject = JSON.parse(fileText);
-  const warnMessages: string[] = [];
-  if (jsonObject.__type__ !== "Deck") {
-    throw new Error("At the moment only decks can be imported from JSON");
-  }
-  const noteModels = jsonObject.note_models;
-  if (!noteModels || noteModels.length === 0) {
-    throw new Error("No note models found");
-  } else if (noteModels.length > 1) {
-    warnMessages.push(
-      "Multiple note models found, only cards of the first one will be used"
-    );
-  }
-  const firstNoteModel = noteModels[0];
-  const cards = jsonObject.notes.map((note: any) => {
-    return {
-      fields: note.fields,
-    };
-  });
-  return {
-    description: jsonObject.desc,
-    name: jsonObject.name,
-    fields: firstNoteModel.flds.map((field: any) => ({
-      label: field.name,
-      value: field.ord.toString(),
-    })),
-    cards,
-    warnMessages,
-  };
-}
-
 function ImportOptions({
   extractedData,
   importStatus,
   setImportStatus,
+  deck,
 }: {
-  extractedData: ExtractedData | null;
+  extractedData: ExtractedCrowdAnkiData | null;
   importStatus: ImportStatus;
   setImportStatus: (status: ImportStatus) => void;
   deck?: Deck;
@@ -156,10 +120,19 @@ function ImportOptions({
         onChange={(value) => setBackField(value || null)}
       />
       <ImportButton
-        importFunction={async () => console.log("not supported right now")}
+        importFunction={() =>
+          importCrowdAnkiCards(
+            extractedData,
+            deck,
+            frontField,
+            backField,
+            BasicNoteTypeAdapter.createNote,
+            bulkImportBasicNotes
+          )
+        }
         importStatus={importStatus}
         setImportStatus={setImportStatus}
-        disabled={!frontField || !backField}
+        disabled={!frontField || !backField || !deck}
       />
     </Stack>
   );
